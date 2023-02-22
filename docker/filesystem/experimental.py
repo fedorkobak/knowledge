@@ -4,12 +4,19 @@
     как docker работает с файлами.
 '''
 
-file = open("my_datafile", "w")
+import pandas as pd
+import numpy as np
 
-while True:
-    l = input("Что добавить? (q для выхода)")
-    if l == "q":
-        break
-    file.write(l + "\n")
 
-file.close()
+data = pd.read_csv("my_datafile.csv")
+
+rand_d = pd.DataFrame(
+    np.random.rand(1, 2),
+    columns = data.columns
+)
+
+pd.concat(
+    [data, rand_d], axis=0
+).to_csv(
+    "my_datafile.csv", index=None
+)
