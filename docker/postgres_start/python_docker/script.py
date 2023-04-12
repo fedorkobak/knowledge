@@ -7,6 +7,9 @@ conn = psycopg2.connect(
     dbname = "docker_app_db",
     user = "docker_app",
     password = "docker_app",
+    # интерестно, что имя хоста совпадает
+    # с наименованием контейнера в котором
+    # развернута база
     host = "database"
 )
 
