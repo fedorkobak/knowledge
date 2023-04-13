@@ -1,0 +1,12 @@
+# простой dockerfile
+FROM python:3.10 AS BUILD
+
+WORKDIR some_dir
+COPY example.csv example.csv
+COPY requirements.txt requirements.txt
+COPY generation.py generation.py
+
+RUN python -m pip install --upgrade pip && pip install -r requirements.txt
+RUN python generation.py
+
+CMD ["cat", "means.csv"]
