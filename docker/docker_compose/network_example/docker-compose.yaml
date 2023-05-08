@@ -8,7 +8,13 @@ services:
       POSTGRES_USER: admin
       POSTGRES_DB: test
     volumes:
-      - ex_vol:/var/lib/postgresql/data
+      - pg_vol:/var/lib/postgresql/data
+    networks:
+      - some_net
 
 volumes:
-  ex_vol:
+  pg_vol:
+
+networks:
+  some_net:
+    name: example_name
