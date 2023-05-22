@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>knowledge_bank - docker built - сборка образа</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      knowledge_bank
+      </li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">knowledge_bank</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Docker</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Docker/sources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sources</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Docker/image.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with images</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#базовые-инструкции" id="toc-базовые-инструкции" class="nav-link active" data-scroll-target="#базовые-инструкции">Базовые инструкции</a></li>
+  <li><a href="#команды-контейнеру-при-запуске-образа" id="toc-команды-контейнеру-при-запуске-образа" class="nav-link" data-scroll-target="#команды-контейнеру-при-запуске-образа">Команды контейнеру при запуске образа</a>
+  <ul class="collapse">
+  <li><a href="#entrypoint" id="toc-entrypoint" class="nav-link" data-scroll-target="#entrypoint">ENTRYPOINT</a></li>
+  <li><a href="#cmd" id="toc-cmd" class="nav-link" data-scroll-target="#cmd">CMD</a></li>
+  <li><a href="#комбинация" id="toc-комбинация" class="nav-link" data-scroll-target="#комбинация">Комбинация</a></li>
+  <li><a href="#особенности-интерактивного-режима" id="toc-особенности-интерактивного-режима" class="nav-link" data-scroll-target="#особенности-интерактивного-режима">Особенности интерактивного режима</a></li>
+  </ul></li>
+  <li><a href="#детали-которые-следует-иметь-ввиду" id="toc-детали-которые-следует-иметь-ввиду" class="nav-link" data-scroll-target="#детали-которые-следует-иметь-ввиду">Детали которые следует иметь ввиду</a>
+  <ul class="collapse">
+  <li><a href="#если-файл-создается-в-каком-либо-слое-то-он-в-образе-навстегда" id="toc-если-файл-создается-в-каком-либо-слое-то-он-в-образе-навстегда" class="nav-link" data-scroll-target="#если-файл-создается-в-каком-либо-слое-то-он-в-образе-навстегда">Если файл создается в каком либо слое то он в образе навстегда</a></li>
+  </ul></li>
+  <li><a href="#docker-commit" id="toc-docker-commit" class="nav-link" data-scroll-target="#docker-commit"><code>docker commit</code></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><code>docker built</code> - сборка образа</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><strong>Создание docker образа</strong></p>
+<p>Создают “Dockerfile” (так и называется), который описывает конструируемый образ.</p>
+<p>Для того, чтобы собрать образ используется комманда <code>docker build</code>.</p>
+<ul>
+<li><code>-t</code> - задать имя и тэг нашего образа;</li>
+<li><code>-f</code> - задать имя файла из которго собирается образ (но лучше всегда исопльзовать “dockerfile”);</li>
+</ul>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t custom_ubuntu:test <span class="op">-</span>f my_first_dockerfile .</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>docker images</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#1 [internal] load build definition from my_first_dockerfile
+#1 transferring dockerfile: 144B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:20.04
+#3 DONE 0.8s
+
+#4 [1/2] FROM docker.io/library/ubuntu:20.04@sha256:4a45212e9518f35983a976eead0de5eecc555a2f047134e9dd2cfc589076a00d
+#4 DONE 0.0s
+
+#5 [2/2] WORKDIR /home/Dranikf
+#5 CACHED
+
+#6 exporting to image
+#6 exporting layers done
+#6 writing image sha256:22f900fb5004ca141af637bbb739ef7cef58e304a24779b8eb51c1a6bff9dc93 done
+#6 naming to docker.io/library/custom_ubuntu:test done
+#6 DONE 0.0s</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>REPOSITORY               TAG       IMAGE ID       CREATED          SIZE
+custom_ubuntu            test      22f900fb5004   12 minutes ago   72.8MB
+redis                    latest    888d403d53d8   5 days ago       117MB
+postgres                 latest    387fe63603d1   5 days ago       379MB
+ubuntu                   latest    58db3edaf2be   11 days ago      77.8MB
+node                     latest    3d8ab8fd7e2a   12 days ago      998MB
+python                   latest    63490c269128   13 days ago      934MB
+golang                   latest    8295ad49803f   3 weeks ago      992MB
+nginx                    1.23      a99a39d070bf   3 weeks ago      142MB
+nginx                    latest    a99a39d070bf   3 weeks ago      142MB
+kcoursedocker/task-2.9   latest    6975591fdaef   6 months ago     48.7MB
+hello-world              latest    feb5d9fea6a5   16 months ago    13.3kB</code></pre>
+</div>
+</div>
+<section id="базовые-инструкции" class="level1">
+<h1>Базовые инструкции</h1>
+<p>Тут пречислены самые базовые инструкции которые могут быть указаны в dockerfile.</p>
+<ul>
+<li><code>FROM</code> - указыват на основе какого базового образа будет собираемый;</li>
+<li><code>WORKDIR</code> - задает рабочую директорию;</li>
+<li><code>COPY &lt;компьютер&gt; &lt;контейнер&gt;</code> скопировать файл в образ;</li>
+<li><code>RUN</code> позволяет запустить некоторые команды при сборке образа.</li>
+</ul>
+<p>Пример образа использующего все эти команды. Предствален в файле <code>my_first_dockerfile</code> (образы так называть нельзя).</p>
+</section>
+<section id="команды-контейнеру-при-запуске-образа" class="level1">
+<h1>Команды контейнеру при запуске образа</h1>
+<p>Следующие две комманды будут выполняться в образе в момент его запуска.</p>
+<section id="entrypoint" class="level3">
+<h3 class="anchored" data-anchor-id="entrypoint">ENTRYPOINT</h3>
+<p>К комманде записанной такио образом будут дописаны аргументы переденные при запуске docker. Так, собирая образ по файлу (Dockerfile_ENTRYPOINT):</p>
+<pre><code>FROM ubuntu:20.04
+COPY script.sh script.sh
+ENTRYPOINT [ "bash" ]</code></pre>
+<p>И приписывая туда “scrip.sh”, мы при запуске в комбинации получим комманду <code>bash script.sh</code></p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm entrypoing_example script.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1
+2
+3
+4
+5</code></pre>
+</div>
+</div>
+</section>
+<section id="cmd" class="level3">
+<h3 class="anchored" data-anchor-id="cmd">CMD</h3>
+<p>Этой же комманде приписок сделать не получиться. Если мы добавляем аргумент при запуске контейнера. Но комманда записанная в <code>CMD</code> просто удалится. Так при запуске контейнера собранного на остове следующего файла:</p>
+<pre><code>FROM ubuntu:20.04
+COPY script.sh script.sh
+CMD [ "bash" ]</code></pre>
+<p><code>bash</code> был перезаписан на <code>ls</code> поэтому в результате были выведены папки рабочей дирректории.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm cmd_example ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>bin
+boot
+dev
+etc
+home
+lib
+lib32
+lib64
+libx32
+media
+mnt
+opt
+proc
+root
+run
+sbin
+script.sh
+srv
+sys
+tmp
+usr
+var</code></pre>
+</div>
+</div>
+</section>
+<section id="комбинация" class="level3">
+<h3 class="anchored" data-anchor-id="комбинация">Комбинация</h3>
+<p>С помощью комбинации, в <code>ENTRYPOINT</code> можно задать обязательно выполняющуюся часть комманды а в <code>CMD</code> ту, которая будет изменятся в завимимости от входа. Так образ созданный по Dockerfile вида:</p>
+<pre><code>FROM ubuntu:20.04
+ENTRYPOINT ["echo"]
+CMD ["wow"]</code></pre>
+<p>(Dockerfile_ENTRYPOIND_CMD)</p>
+<p>Будет работать следующим образом.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm entrypoind_cmd_example</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm entrypoind_cmd_example hello</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>wow
+hello</code></pre>
+</div>
+</div>
+</section>
+<section id="особенности-интерактивного-режима" class="level3">
+<h3 class="anchored" data-anchor-id="особенности-интерактивного-режима">Особенности интерактивного режима</h3>
+<p>Следует иметь ввиду, что если исопользуются комманды <code>ENTRYPOINT</code> или <code>CMD</code> то можно не попасть в интерактивный режим как это привычно происходит в случае использования опций <code>-it</code>, потому как комманды туда не всегда заложенные не ожидают в себя ввода. Так например контейнер из примера выше:</p>
+<p><img src="docker cmd it example.png"></p>
+</section>
+</section>
+<section id="детали-которые-следует-иметь-ввиду" class="level1">
+<h1>Детали которые следует иметь ввиду</h1>
+<section id="если-файл-создается-в-каком-либо-слое-то-он-в-образе-навстегда" class="level3">
+<h3 class="anchored" data-anchor-id="если-файл-создается-в-каком-либо-слое-то-он-в-образе-навстегда">Если файл создается в каком либо слое то он в образе навстегда</h3>
+<p>Удаление файла не уменьшает размер образа. То есть <code>docker</code> захеширует даже файл который затем будет удален таким образом файл будет сидеть в образе.</p>
+<p><strong>Для примера рассмотрим два dockerfile</strong></p>
+<p>Первый файл <code>dockerfile_rm_example1</code>:</p>
+<pre><code>    FROM ubuntu:20.04
+    COPY script.sh</code></pre>
+<p>Второй файл <code>dockerfile_rm_example2</code>:</p>
+<pre><code>    FROM ubunty:20.04
+    COPY script.sh
+    RUN rm script.sh</code></pre>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t ubuntu_rm_example:<span class="dv">1</span> <span class="op">-</span>f Dockerfile_rm_example1 .</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t ubunty_rm_exmaple:<span class="dv">2</span> <span class="op">-</span>f Dockerfile_rm_example2 .</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>docker images</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#1 [internal] load .dockerignore
+#1 transferring context: 2B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile_rm_example1
+#2 transferring dockerfile: 150B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:20.04
+#3 DONE 0.6s
+
+#4 [1/2] FROM docker.io/library/ubuntu:20.04@sha256:4a45212e9518f35983a976eead0de5eecc555a2f047134e9dd2cfc589076a00d
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 89B done
+#5 DONE 0.0s
+
+#6 [2/2] COPY script.sh script.sh
+#6 CACHED
+
+#7 exporting to image
+#7 exporting layers done
+#7 writing image sha256:e0101b7dadac1213bbb9f162f293e250b501dcb2f114a4db1e1382c2a6f45afe done
+#7 naming to docker.io/library/ubuntu_rm_example:1 done
+#7 DONE 0.0s
+#1 [internal] load .dockerignore
+#1 transferring context: 2B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile_rm_example2
+#2 transferring dockerfile: 167B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:20.04
+#3 DONE 0.2s
+
+#4 [1/3] FROM docker.io/library/ubuntu:20.04@sha256:4a45212e9518f35983a976eead0de5eecc555a2f047134e9dd2cfc589076a00d
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 89B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY script.sh script.sh
+#6 CACHED
+
+#7 [3/3] RUN rm script.sh
+#7 DONE 0.3s
+
+#8 exporting to image
+#8 exporting layers
+#8 exporting layers 0.7s done
+#8 writing image sha256:adf81384c31af577c7b86f6ae86d59cdd14a4508fdab73701f8ac277677eeab8 done
+#8 naming to docker.io/library/ubunty_rm_exmaple:2 done
+#8 DONE 0.7s</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>REPOSITORY          TAG       IMAGE ID       CREATED          SIZE
+ubunty_rm_exmaple   2         adf81384c31a   1 second ago     72.8MB
+ubuntu_rm_example   1         e0101b7dadac   49 seconds ago   72.8MB</code></pre>
+</div>
+</div>
+<p>Так обращаю внимание на колонку <code>SIZE</code> не смотря на то что во втором сборщике были удален файл по сравнению со вторым образом размеры образов не отличаются.</p>
+</section>
+</section>
+<section id="docker-commit" class="level1">
+<h1><code>docker commit</code></h1>
+<p>Позволяет состояние некоторго запущенного контейнера сохранить как образ. Вот например в запущеннй контейнер ubuntu я символически в нем обновляю пакеты, сохраняю под новым именем и просматриваю список образов в котром, конечно находится новый образ.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name commit_example <span class="op">-</span>itd ubuntu</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> commit_example apt<span class="op">-</span>get <span class="op">-</span>qq update <span class="op">-</span>qq</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a> docker commit commit_example com_ex_image</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>docker stop commit_example</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>docker images</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cec8962c53bdb8ac1452aa866fd60402c2958877e9b9f315bc9f4b788fde059a
+sha256:57aab818f4ab0b6a29428defb8c559aa60bf51240041abb04a75a3488f51f773
+commit_example
+REPOSITORY                 TAG       IMAGE ID       CREATED          SIZE
+com_ex_image               latest    57aab818f4ab   11 seconds ago   120MB
+vpn_test                   latest    815afb0694a5   3 hours ago      236MB
+ubuntu_curl                latest    fe83ed6a1465   47 hours ago     127MB
+log_example                latest    3508238c8b52   2 weeks ago      925MB
+nginx                      1.23      904b8cb13b93   3 weeks ago      142MB
+nginx                      latest    904b8cb13b93   3 weeks ago      142MB
+postgres                   14        176399451347   3 weeks ago      377MB
+ubuntu                     latest    74f2314a03de   3 weeks ago      77.8MB
+yandex/clickhouse-server   latest    c739327b5607   14 months ago    826MB</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
