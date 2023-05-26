@@ -1,1 +1,0 @@
-echo "It's a script.sh from the images_creation_files"

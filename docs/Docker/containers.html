@@ -158,6 +158,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Working with containers</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+ <span class="menu-text">Docker/image_creation.ipynb</span>
+  </li>
+          <li class="sidebar-item">
+ <span class="menu-text">Docker/docker_commands.ipunb</span>
+  </li>
       </ul>
   </li>
     </ul>
@@ -319,13 +325,23 @@ unbuntu_container</code></pre>
 </section>
 <section id="e---environment-variables" class="level5">
 <h5 class="anchored" data-anchor-id="e---environment-variables"><code>-e</code> - environment variables</h5>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name e_example <span class="op">-</span>e TEST_VAR<span class="op">=</span><span class="st">"значение переменной"</span> ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name e_example <span class="op">-</span>e TEST_VAR<span class="op">=</span><span class="st">"value"</span> ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> e_example bash <span class="op">-</span>c <span class="st">"echo \$TEST_VAR"</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>docker stop e_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>значение переменной</code></pre>
+<pre><code>value</code></pre>
+</div>
+</div>
+<p>You can also pass the values of the variables of the system you are calling from.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name e_example <span class="op">-</span>e FEDOR_TEST_VAR<span class="op">=</span>$HOME ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> e_example bash <span class="op">-</span>c <span class="st">"echo \$FEDOR_TEST_VAR"</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>docker stop e_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>/home/fedor</code></pre>
 </div>
 </div>
 </section>
@@ -335,17 +351,17 @@ unbuntu_container</code></pre>
 <p>In the next cell, I build a ubuntu container that prints “hello world” when it starts. Like all standard ubuntu containers it quits, which we can see in the <code>STATUS</code> of the <code>ps</code> command. Then by <code>docker start</code> the container is reactivated.</p>
 <p>For some reason it only works when I use the <code>-i</code> option for <code>docker start</code>.</p>
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>cd containers_files</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_ubuntu . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====First start====="</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name u1 test_ubuntu</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====List of all containers====="</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Restart====="</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>docker start <span class="op">-</span>i u1</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>docker rm u1 <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cd containers_files</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_ubuntu . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====First start====="</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name u1 test_ubuntu</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====List of all containers====="</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Restart====="</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>docker start <span class="op">-</span>i u1</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>docker rm u1 <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=====First start=====
 hello world
@@ -361,14 +377,14 @@ hello world</code></pre>
 <h3 class="anchored" data-anchor-id="docker-stop---stop-some-container"><code>docker stop</code> - stop some container</h3>
 <p>In the following example, I start a container with Ubuntu in such a way that it stays running, which was proven by using <code>docker ps</code>. But after using <code>docker stop</code> the same container is in the state “Exited”.</p>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>itd <span class="op">--</span>name test_ubuntu ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Just started container====="</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Stoped container (STATUS </span><span class="ch">\"</span><span class="st">Exited</span><span class="ch">\"</span><span class="st">)====="</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>docker rm test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>itd <span class="op">--</span>name test_ubuntu ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Just started container====="</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Stoped container (STATUS </span><span class="ch">\"</span><span class="st">Exited</span><span class="ch">\"</span><span class="st">)====="</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>docker rm test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=====Just started container=====
 CONTAINER ID   IMAGE     COMMAND       CREATED                  STATUS                  PORTS     NAMES
@@ -383,10 +399,10 @@ e175ae336dcb   ubuntu    "/bin/bash"   10 seconds ago   Exited (137) Less than a
 <h3 class="anchored" data-anchor-id="docker-exec---run-a-command-in-the-container"><code>docker exec</code> - run a command in the container</h3>
 <p>In the next command I start ubuntu conteiner. Then using <code>docker exec' I run the</code>ls’ command in the container and get a typical Linux result for that command.</p>
 <div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>itd <span class="op">--</span>rm <span class="op">--</span>name test_ubuntu ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_ubuntu ls</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>itd <span class="op">--</span>rm <span class="op">--</span>name test_ubuntu ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_ubuntu ls</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>bin
 boot
