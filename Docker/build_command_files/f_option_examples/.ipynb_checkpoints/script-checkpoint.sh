@@ -1,0 +1,1 @@
+echo "It's a script.sh from the run folder"

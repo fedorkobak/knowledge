@@ -158,6 +158,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Dockerfile instructions</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Docker/image_creation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Image creation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Docker/docker_volumes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Volumes</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -173,19 +185,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#working-with-containers" id="toc-working-with-containers" class="nav-link active" data-scroll-target="#working-with-containers">Working with containers</a>
   <ul class="collapse">
   <li><a href="#docker-ps---show-containers" id="toc-docker-ps---show-containers" class="nav-link" data-scroll-target="#docker-ps---show-containers"><code>docker ps</code> - show containers</a></li>
-  <li><a href="#docker-history---show-layers-of-the-package" id="toc-docker-history---show-layers-of-the-package" class="nav-link" data-scroll-target="#docker-history---show-layers-of-the-package"><code>docker history</code> - show layers of the package</a></li>
-  <li><a href="#docker-run---create-the-container-from-image" id="toc-docker-run---create-the-container-from-image" class="nav-link" data-scroll-target="#docker-run---create-the-container-from-image"><code>docker run</code> - create the container from image</a></li>
+  <li><a href="#docker-history---show-layers-of-the-image" id="toc-docker-history---show-layers-of-the-image" class="nav-link" data-scroll-target="#docker-history---show-layers-of-the-image"><code>docker history</code> - show layers of the image</a></li>
   <li><a href="#docker-start---activate-exited-container" id="toc-docker-start---activate-exited-container" class="nav-link" data-scroll-target="#docker-start---activate-exited-container"><code>docker start</code> - activate exited container</a></li>
   <li><a href="#docker-stop---stop-some-container" id="toc-docker-stop---stop-some-container" class="nav-link" data-scroll-target="#docker-stop---stop-some-container"><code>docker stop</code> - stop some container</a></li>
   <li><a href="#docker-exec---run-a-command-in-the-container" id="toc-docker-exec---run-a-command-in-the-container" class="nav-link" data-scroll-target="#docker-exec---run-a-command-in-the-container"><code>docker exec</code> - run a command in the container</a></li>
   </ul></li>
+  <li><a href="#docker-run---container-from-image" id="toc-docker-run---container-from-image" class="nav-link" data-scroll-target="#docker-run---container-from-image"><code>docker run</code> - container from image</a>
+  <ul class="collapse">
+  <li><a href="#rm---automatic-container-removal" id="toc-rm---automatic-container-removal" class="nav-link" data-scroll-target="#rm---automatic-container-removal"><code>-rm</code> - automatic container removal</a></li>
+  <li><a href="#name---set-name-for-the-container" id="toc-name---set-name-for-the-container" class="nav-link" data-scroll-target="#name---set-name-for-the-container"><code>--name</code> - set name for the container</a></li>
+  <li><a href="#d---make-container-not-to-lock-cli" id="toc-d---make-container-not-to-lock-cli" class="nav-link" data-scroll-target="#d---make-container-not-to-lock-cli"><code>-d</code> - make container not to lock CLI</a></li>
+  <li><a href="#i---interactive-mode" id="toc-i---interactive-mode" class="nav-link" data-scroll-target="#i---interactive-mode"><code>-i</code> - interactive mode</a></li>
+  <li><a href="#t-turn-on-tty" id="toc-t-turn-on-tty" class="nav-link" data-scroll-target="#t-turn-on-tty"><code>-t</code> turn on TTY</a></li>
+  <li><a href="#it---combination" id="toc-it---combination" class="nav-link" data-scroll-target="#it---combination"><code>-it</code> - combination</a></li>
+  <li><a href="#e---environment-variables" id="toc-e---environment-variables" class="nav-link" data-scroll-target="#e---environment-variables"><code>-e</code> - environment variables</a></li>
+  <li><a href="#sec-docker_run_com_on_start" id="toc-sec-docker_run_com_on_start" class="nav-link" data-scroll-target="#sec-docker_run_com_on_start">Command on container start</a></li>
+  <li><a href="#v---map-folder-on-container-to-folder-on-host" id="toc-v---map-folder-on-container-to-folder-on-host" class="nav-link" data-scroll-target="#v---map-folder-on-container-to-folder-on-host"><code>-v</code> - map folder on container to folder on host</a></li>
+  <li><a href="#u---set-user" id="toc-u---set-user" class="nav-link" data-scroll-target="#u---set-user"><code>-u</code> - set user</a></li>
   <li><a href="#working-with-images" id="toc-working-with-images" class="nav-link" data-scroll-target="#working-with-images">Working with images</a>
   <ul class="collapse">
   <li><a href="#docker-pull---download-image-from-dockerhub.com" id="toc-docker-pull---download-image-from-dockerhub.com" class="nav-link" data-scroll-target="#docker-pull---download-image-from-dockerhub.com"><code>docker pull</code> - download image from dockerhub.com</a></li>
   <li><a href="#docker-images---show-list-of-available-images" id="toc-docker-images---show-list-of-available-images" class="nav-link" data-scroll-target="#docker-images---show-list-of-available-images"><code>docker images</code> - show list of available images;</a></li>
   <li><a href="#docker-rmi---delete-images" id="toc-docker-rmi---delete-images" class="nav-link" data-scroll-target="#docker-rmi---delete-images"><code>docker rmi</code> - delete images;</a></li>
+  <li><a href="#docker-build---build-image-from-dockerfile" id="toc-docker-build---build-image-from-dockerfile" class="nav-link" data-scroll-target="#docker-build---build-image-from-dockerfile"><code>docker build</code> - build image from dockerfile</a></li>
   </ul></li>
-  <li><a href="#build-command" id="toc-build-command" class="nav-link" data-scroll-target="#build-command"><code>build</code> command</a></li>
+  </ul></li>
+  <li><a href="#docker-cp---copy-files-fromto-container" id="toc-docker-cp---copy-files-fromto-container" class="nav-link" data-scroll-target="#docker-cp---copy-files-fromto-container"><code>docker cp</code> - copy files from/to container</a>
+  <ul class="collapse">
+  <li><a href="#host---container" id="toc-host---container" class="nav-link" data-scroll-target="#host---container">host -&gt; container</a></li>
+  <li><a href="#container---host" id="toc-container---host" class="nav-link" data-scroll-target="#container---host">container -&gt; host</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -224,7 +253,7 @@ b17984f2b882   python:3.10   "python3"   1 second ago   Up Less than a second   
 </div>
 </div>
 <section id="a-show-all-containers" class="level5">
-<h5 class="anchored" data-anchor-id="a-show-all-containers"><code>-a</code> show all containers</h5>
+<h5 class="anchored" data-anchor-id="a-show-all-containers"><strong><code>-a</code> show all containers</strong></h5>
 <p>By default, inactive containers are hidden.</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
@@ -244,158 +273,25 @@ ad0439c23847   ubuntu    "/bin/bash"   Less than a second ago   Exited (0) Less 
 </div>
 </section>
 </section>
-<section id="docker-history---show-layers-of-the-package" class="level3">
-<h3 class="anchored" data-anchor-id="docker-history---show-layers-of-the-package"><code>docker history</code> - show layers of the package</h3>
-</section>
-<section id="docker-run---create-the-container-from-image" class="level3">
-<h3 class="anchored" data-anchor-id="docker-run---create-the-container-from-image"><code>docker run</code> - create the container from image</h3>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"================before start====================="</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"===============after start======================"</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name temp_container ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>docker rm temp_container</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>================before start=====================
-CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-===============after start======================
-CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS                              PORTS     NAMES
-cd0f144063c5   ubuntu    "/bin/bash"   1 second ago   Exited (0) Less than a second ago             temp_container
-temp_container</code></pre>
-</div>
-</div>
-<section id="rm---automatic-container-removal" class="level5">
-<h5 class="anchored" data-anchor-id="rm---automatic-container-removal"><code>-rm</code> - automatic container removal</h5>
-<p>After stopping, the container is removed. In the following example there are two containers of ubuntu, one with the <code>--rm</code> option and the other without. Both containers stops by default - but only one stays with <code>STATUS == Exited</code>.</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name no_rm_ubuntu ubuntu</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name ubuntu_with_rm ubuntu</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>docker rm no_rm_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS                              PORTS     NAMES
-7acc3cc0c61c   ubuntu    "/bin/bash"   1 second ago   Exited (0) Less than a second ago             no_rm_ubuntu</code></pre>
-</div>
-</div>
-</section>
-<section id="name---set-name-for-the-container" class="level5">
-<h5 class="anchored" data-anchor-id="name---set-name-for-the-container"><code>--name</code> - set name for the container</h5>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name unbuntu_container <span class="op">-</span>d ubuntu</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>docker ps</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>docker stop unbuntu_container</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>7116dcdaa0a131a8507f9cbe149719498456fe356a23f1ddfc48f65080cfe660
-CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS                  PORTS     NAMES
-7116dcdaa0a1   ubuntu    "/bin/bash"   1 second ago   Up Less than a second             unbuntu_container
-unbuntu_container</code></pre>
-</div>
-</div>
-</section>
-<section id="d---make-container-not-to-lock-cli" class="level5">
-<h5 class="anchored" data-anchor-id="d---make-container-not-to-lock-cli"><code>-d</code> - make container not to lock CLI</h5>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d <span class="op">--</span>name temp_nginx nginx <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>docker ps</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>docker stop temp_nginx <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>CONTAINER ID   IMAGE     COMMAND                  CREATED                  STATUS                  PORTS     NAMES
-09175cb8c6d9   nginx     "/docker-entrypoint.…"   Less than a second ago   Up Less than a second   80/tcp    temp_nginx</code></pre>
-</div>
-</div>
-</section>
-<section id="i---interactive-mode" class="level5">
-<h5 class="anchored" data-anchor-id="i---interactive-mode"><code>-i</code> - interactive mode</h5>
-<p>Mode that allows to interapt with container.</p>
-<p>Unfortunately it is not possible to show how this mode will work in jupyter. So here is a gif of me experimenting with the following command:</p>
-<p><code>docker run -i --rm --name test_ubuntu ubuntu</code></p>
-<p><img src="containers_files/docker -i option.gif"></p>
-<p>In the example, the ubuntu container has been started and is stopped by default. The <code>-i</code> option causes it to lock the terminal. Extremely interesting that you will be able to send messages to the container and get results (as I showed with <code>ls</code> and <code>exit</code> commands), but you won’t get the description of the user common for Linux terminal.</p>
-</section>
-<section id="t-turn-on-tty" class="level5">
-<h5 class="anchored" data-anchor-id="t-turn-on-tty"><code>-t</code> turn on TTY</h5>
-<p>TTY is something on backend language. The point here is that in combination with the <code>-i</code> option you can make will show you the “description” of the user which was mentioned in the previous section. And the terminal will be blocked waiting for input. But this option don’t allow you to send anything to the container.</p>
-<p>The following <code>.gif</code> show what you will get in case using command <code>docker run -t --rm --name temp_ubuntu ubuntu</code>.</p>
-<p><img src="containers_files/docker -t option.gif"></p>
-</section>
-<section id="it---combination" class="level5">
-<h5 class="anchored" data-anchor-id="it---combination"><code>-it</code> - combination</h5>
-<p>Both options were discovered above, but they are really often used in combination. So Ubuntu provides full CLI interface with this options.</p>
-<p><img src="containers_files/docker -it option.png"></p>
-</section>
-<section id="e---environment-variables" class="level5">
-<h5 class="anchored" data-anchor-id="e---environment-variables"><code>-e</code> - environment variables</h5>
-<div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name e_example <span class="op">-</span>e TEST_VAR<span class="op">=</span><span class="st">"value"</span> ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> e_example bash <span class="op">-</span>c <span class="st">"echo \$TEST_VAR"</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>docker stop e_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>value</code></pre>
-</div>
-</div>
-<p>You can also pass the values of the variables of the system you are calling from.</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name e_example <span class="op">-</span>e FEDOR_TEST_VAR<span class="op">=</span>$HOME ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> e_example bash <span class="op">-</span>c <span class="st">"echo \$FEDOR_TEST_VAR"</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>docker stop e_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>/home/fedor</code></pre>
-</div>
-</div>
-</section>
-<section id="sec-docker_run_com_on_start" class="level5">
-<h5 class="anchored" data-anchor-id="sec-docker_run_com_on_start"><strong>Command on container start</strong></h5>
-<p>In the <code>docker run</code> command, after the name of the base image, you can specify a command that will be executed when the container starts. So in the next example I will show you how to run <code>echo "hello world"</code> in a new ubuntu container.</p>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm ubuntu echo <span class="st">"hello world"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>hello world</code></pre>
-</div>
-</div>
-<ul>
-<li>If you want to run several commands you have to use <code>bash -c "&lt;command&gt;"</code>, like in following example:</li>
-</ul>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm ubuntu bash <span class="op">-</span>c <span class="st">"</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="er">    echo \"hello world\"; </span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    echo \<span class="st">"hello world2</span><span class="ch">\"</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="er">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>hello world
-hello world2</code></pre>
-</div>
-</div>
-<ul>
-<li>Note that when containers are in interactive mode, the command executed should take input, otherwise it will just leave container anyway, the follwing gif describe how it looks like: <img src="containers_files/docker command -it option.gif"></li>
-</ul>
-<p>In the example, I ran the <code>echo</code> command with container starts and showed that there were no containers created - because the container was stopped and removed just after it was started. But immediately I created a new container, but now with the command <code>bash -c "echo \"hello world\"; bash</code> - in this case the last command is <code>bash</code> which waits for input, so I’m comming back into the container.</p>
-</section>
+<section id="docker-history---show-layers-of-the-image" class="level3">
+<h3 class="anchored" data-anchor-id="docker-history---show-layers-of-the-image"><code>docker history</code> - show layers of the image</h3>
 </section>
 <section id="docker-start---activate-exited-container" class="level3">
 <h3 class="anchored" data-anchor-id="docker-start---activate-exited-container"><code>docker start</code> - activate exited container</h3>
 <p>In the next cell, I build a ubuntu container that prints “hello world” when it starts. Like all standard ubuntu containers it quits, which we can see in the <code>STATUS</code> of the <code>ps</code> command. Then by <code>docker start</code> the container is reactivated.</p>
 <p>For some reason it only works when I use the <code>-i</code> option for <code>docker start</code>.</p>
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>cd containers_files</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_ubuntu . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====First start====="</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name u1 test_ubuntu</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====List of all containers====="</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Restart====="</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>docker start <span class="op">-</span>i u1</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>docker rm u1 <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cd containers_files</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_ubuntu . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====First start====="</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name u1 test_ubuntu</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====List of all containers====="</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Restart====="</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>docker start <span class="op">-</span>i u1</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>docker rm u1 <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=====First start=====
 hello world
@@ -411,14 +307,14 @@ hello world</code></pre>
 <h3 class="anchored" data-anchor-id="docker-stop---stop-some-container"><code>docker stop</code> - stop some container</h3>
 <p>In the following example, I start a container with Ubuntu in such a way that it stays running, which was proven by using <code>docker ps</code>. But after using <code>docker stop</code> the same container is in the state “Exited”.</p>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>itd <span class="op">--</span>name test_ubuntu ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Just started container====="</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Stoped container (STATUS </span><span class="ch">\"</span><span class="st">Exited</span><span class="ch">\"</span><span class="st">)====="</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>docker rm test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>itd <span class="op">--</span>name test_ubuntu ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Just started container====="</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Stoped container (STATUS </span><span class="ch">\"</span><span class="st">Exited</span><span class="ch">\"</span><span class="st">)====="</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>docker rm test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=====Just started container=====
 CONTAINER ID   IMAGE     COMMAND       CREATED                  STATUS                  PORTS     NAMES
@@ -433,10 +329,10 @@ e175ae336dcb   ubuntu    "/bin/bash"   10 seconds ago   Exited (137) Less than a
 <h3 class="anchored" data-anchor-id="docker-exec---run-a-command-in-the-container"><code>docker exec</code> - run a command in the container</h3>
 <p>In the next command I start ubuntu conteiner. Then using <code>docker exec' I run the</code>ls’ command in the container and get a typical Linux result for that command.</p>
 <div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>itd <span class="op">--</span>rm <span class="op">--</span>name test_ubuntu ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_ubuntu ls</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>itd <span class="op">--</span>rm <span class="op">--</span>name test_ubuntu ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_ubuntu ls</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>bin
 boot
@@ -462,11 +358,152 @@ var</code></pre>
 </div>
 </div>
 <section id="it---take-control-of-the-container" class="level5">
-<h5 class="anchored" data-anchor-id="it---take-control-of-the-container"><code>-it</code> - take control of the container</h5>
+<h5 class="anchored" data-anchor-id="it---take-control-of-the-container"><strong><code>-it</code> - take control of the container</strong></h5>
 <p>It looks like the options individually have the same properties as in the <code>docker run</code> command. But the important thing is that you can take control of the detached container with this command.<br> The following example shows how I can get control in detached ubuntu by running the <code>bash</code> command with named options.</p>
 <p><img src="containers_files/docker exec -it.gif"></p>
 </section>
 </section>
+</section>
+<section id="docker-run---container-from-image" class="level1">
+<h1><code>docker run</code> - container from image</h1>
+<p>This command is related to the “Working with containers” section, but it is big enough and important enough to have its own section.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"================before start====================="</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"===============after start======================"</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name temp_container ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>docker rm temp_container</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>================before start=====================
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+===============after start======================
+CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS                              PORTS     NAMES
+cd0f144063c5   ubuntu    "/bin/bash"   1 second ago   Exited (0) Less than a second ago             temp_container
+temp_container</code></pre>
+</div>
+</div>
+<section id="rm---automatic-container-removal" class="level3">
+<h3 class="anchored" data-anchor-id="rm---automatic-container-removal"><code>-rm</code> - automatic container removal</h3>
+<p>After stopping, the container is removed. In the following example there are two containers of ubuntu, one with the <code>--rm</code> option and the other without. Both containers stops by default - but only one stays with <code>STATUS == Exited</code>.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name no_rm_ubuntu ubuntu</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name ubuntu_with_rm ubuntu</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>docker ps <span class="op">-</span>a</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>docker rm no_rm_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS                              PORTS     NAMES
+7acc3cc0c61c   ubuntu    "/bin/bash"   1 second ago   Exited (0) Less than a second ago             no_rm_ubuntu</code></pre>
+</div>
+</div>
+</section>
+<section id="name---set-name-for-the-container" class="level3">
+<h3 class="anchored" data-anchor-id="name---set-name-for-the-container"><code>--name</code> - set name for the container</h3>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name unbuntu_container <span class="op">-</span>d ubuntu</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>docker ps</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>docker stop unbuntu_container</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>7116dcdaa0a131a8507f9cbe149719498456fe356a23f1ddfc48f65080cfe660
+CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS                  PORTS     NAMES
+7116dcdaa0a1   ubuntu    "/bin/bash"   1 second ago   Up Less than a second             unbuntu_container
+unbuntu_container</code></pre>
+</div>
+</div>
+</section>
+<section id="d---make-container-not-to-lock-cli" class="level3">
+<h3 class="anchored" data-anchor-id="d---make-container-not-to-lock-cli"><code>-d</code> - make container not to lock CLI</h3>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d <span class="op">--</span>name temp_nginx nginx <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>docker ps</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>docker stop temp_nginx <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CONTAINER ID   IMAGE     COMMAND                  CREATED                  STATUS                  PORTS     NAMES
+09175cb8c6d9   nginx     "/docker-entrypoint.…"   Less than a second ago   Up Less than a second   80/tcp    temp_nginx</code></pre>
+</div>
+</div>
+</section>
+<section id="i---interactive-mode" class="level3">
+<h3 class="anchored" data-anchor-id="i---interactive-mode"><code>-i</code> - interactive mode</h3>
+<p>Mode that allows to interapt with container.</p>
+<p>Unfortunately it is not possible to show how this mode will work in jupyter. So here is a gif of me experimenting with the following command:</p>
+<p><code>docker run -i --rm --name test_ubuntu ubuntu</code></p>
+<p><img src="containers_files/docker -i option.gif"></p>
+<p>In the example, the ubuntu container has been started and is stopped by default. The <code>-i</code> option causes it to lock the terminal. Extremely interesting that you will be able to send messages to the container and get results (as I showed with <code>ls</code> and <code>exit</code> commands), but you won’t get the description of the user common for Linux terminal.</p>
+</section>
+<section id="t-turn-on-tty" class="level3">
+<h3 class="anchored" data-anchor-id="t-turn-on-tty"><code>-t</code> turn on TTY</h3>
+<p>TTY is something on backend language. The point here is that in combination with the <code>-i</code> option you can make will show you the “description” of the user which was mentioned in the previous section. And the terminal will be blocked waiting for input. But this option don’t allow you to send anything to the container.</p>
+<p>The following <code>.gif</code> show what you will get in case using command <code>docker run -t --rm --name temp_ubuntu ubuntu</code>.</p>
+<p><img src="containers_files/docker -t option.gif"></p>
+</section>
+<section id="it---combination" class="level3">
+<h3 class="anchored" data-anchor-id="it---combination"><code>-it</code> - combination</h3>
+<p>Both options were discovered above, but they are really often used in combination. So Ubuntu provides full CLI interface with this options.</p>
+<p><img src="containers_files/docker -it option.png"></p>
+</section>
+<section id="e---environment-variables" class="level3">
+<h3 class="anchored" data-anchor-id="e---environment-variables"><code>-e</code> - environment variables</h3>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name e_example <span class="op">-</span>e TEST_VAR<span class="op">=</span><span class="st">"value"</span> ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> e_example bash <span class="op">-</span>c <span class="st">"echo \$TEST_VAR"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>docker stop e_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>value</code></pre>
+</div>
+</div>
+<p>You can also pass the values of the variables of the system you are calling from.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name e_example <span class="op">-</span>e FEDOR_TEST_VAR<span class="op">=</span>$HOME ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> e_example bash <span class="op">-</span>c <span class="st">"echo \$FEDOR_TEST_VAR"</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>docker stop e_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>/home/fedor</code></pre>
+</div>
+</div>
+</section>
+<section id="sec-docker_run_com_on_start" class="level3">
+<h3 class="anchored" data-anchor-id="sec-docker_run_com_on_start">Command on container start</h3>
+<p>In the <code>docker run</code> command, after the name of the base image, you can specify a command that will be executed when the container starts. So in the next example I will show you how to run <code>echo "hello world"</code> in a new ubuntu container.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm ubuntu echo <span class="st">"hello world"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>hello world</code></pre>
+</div>
+</div>
+<ul>
+<li>If you want to run several commands you have to use <code>bash -c "&lt;command&gt;"</code>, like in following example:</li>
+</ul>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm ubuntu bash <span class="op">-</span>c <span class="st">"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="er">    echo \"hello world\"; </span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    echo \<span class="st">"hello world2</span><span class="ch">\"</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="er">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>hello world
+hello world2</code></pre>
+</div>
+</div>
+<ul>
+<li>Note that when containers are in interactive mode, the command executed should take input, otherwise it will just leave container anyway, the follwing gif describe how it looks like: <img src="containers_files/docker command -it option.gif"></li>
+</ul>
+<p>In the example, I ran the <code>echo</code> command with container starts and showed that there were no containers created - because the container was stopped and removed just after it was started. But immediately I created a new container, but now with the command <code>bash -c "echo \"hello world\"; bash</code> - in this case the last command is <code>bash</code> which waits for input, so I’m comming back into the container.</p>
+</section>
+<section id="v---map-folder-on-container-to-folder-on-host" class="level3">
+<h3 class="anchored" data-anchor-id="v---map-folder-on-container-to-folder-on-host"><code>-v</code> - map folder on container to folder on host</h3>
+<p>This is wide topic detailed in <a href="../Docker/docker_volumes.html">this</a> section;</p>
+</section>
+<section id="u---set-user" class="level3">
+<h3 class="anchored" data-anchor-id="u---set-user"><code>-u</code> - set user</h3>
+<p>By default, all docker containers have root privileges, but it can be useful to set user. For a more detailed description in the context of filesystem access, see <a href="../Docker/docker_volumes.html#sec-run_u_option">here</a>.</p>
 </section>
 <section id="working-with-images" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-images">Working with images</h2>
@@ -503,7 +540,7 @@ hello-world   latest    feb5d9fea6a5   16 months ago   13.3kB</code></pre>
 </div>
 </div>
 <section id="a--all---show-all-images" class="level5">
-<h5 class="anchored" data-anchor-id="a--all---show-all-images"><code>--a</code>,<code>--all</code> - show all images;</h5>
+<h5 class="anchored" data-anchor-id="a--all---show-all-images"><strong><code>--a</code>,<code>--all</code> - show all images</strong></h5>
 <p>By default, so called “intermediate”, images are hiden. Nowadays I don’t know what “intermediate” images are.</p>
 <div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
@@ -515,7 +552,7 @@ hello-world   latest    feb5d9fea6a5   16 months ago   13.3kB</code></pre>
 </div>
 </section>
 <section id="digests---show-digests" class="level5">
-<h5 class="anchored" data-anchor-id="digests---show-digests"><code>--digests</code> - show digests;</h5>
+<h5 class="anchored" data-anchor-id="digests---show-digests"><strong><code>--digests</code> - show digests</strong></h5>
 <div class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>docker images <span class="op">--</span>digests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -526,7 +563,7 @@ hello-world   latest    sha256:aa0cc8055b82dc2509bed2e19b275c8f463506616377219d9
 </div>
 </section>
 <section id="format---format-output" class="level5">
-<h5 class="anchored" data-anchor-id="format---format-output"><code>--format</code> - format output;</h5>
+<h5 class="anchored" data-anchor-id="format---format-output"><strong><code>--format</code> - format output</strong></h5>
 <p>Allows output to be formatted using GO templates.</p>
 <div class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
@@ -537,7 +574,7 @@ hello-world   latest    sha256:aa0cc8055b82dc2509bed2e19b275c8f463506616377219d9
 </div>
 </section>
 <section id="no-trunc---full-output" class="level5">
-<h5 class="anchored" data-anchor-id="no-trunc---full-output"><code>--no-trunc</code> - full output;</h5>
+<h5 class="anchored" data-anchor-id="no-trunc---full-output"><strong><code>--no-trunc</code> - full output</strong></h5>
 <div class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>docker images <span class="op">--</span>no<span class="op">-</span>trunc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -547,8 +584,8 @@ hello-world   latest    sha256:feb5d9fea6a5e9606aa995e879d862b825965ba48de054caa
 </div>
 </div>
 </section>
-<section id="q---quiet---print-only-images-ids." class="level5">
-<h5 class="anchored" data-anchor-id="q---quiet---print-only-images-ids."><code>-q</code>, <code>--quiet</code> - print only images ids.</h5>
+<section id="q---quiet---print-only-images-ids" class="level5">
+<h5 class="anchored" data-anchor-id="q---quiet---print-only-images-ids"><strong><code>-q</code>, <code>--quiet</code> - print only images ids</strong></h5>
 <div class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>docker images <span class="op">-</span>q</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -585,162 +622,51 @@ REPOSITORY   TAG       IMAGE ID   CREATED   SIZE</code></pre>
 </div>
 </div>
 </section>
+<section id="docker-build---build-image-from-dockerfile" class="level3">
+<h3 class="anchored" data-anchor-id="docker-build---build-image-from-dockerfile"><code>docker build</code> - build image from dockerfile</h3>
+<p>This command has description <a href="../Docker/image_creation.html#sec-docker_build_command">here</a></p>
 </section>
-<section id="build-command" class="level1">
-<h1><code>build</code> command</h1>
-<p>This is the command used to create a new docker image.</p>
-<p>Arguments:</p>
-<ul>
-<li>the last mandatory argument sets the build directory - you should use <code>.</code> to set the current directory.</li>
-<li><code>-t</code> - set the name and tag of the image;</li>
-<li><code>-f</code> - set the dockerfile name if it is different from the default <code>dockerfile</code>.</li>
-</ul>
-<div class="cell" data-execution_count="1">
+</section>
+</section>
+<section id="docker-cp---copy-files-fromto-container" class="level1">
+<h1><code>docker cp</code> - copy files from/to container</h1>
+<p>Allows files to be swapped between the host file system and the running container.</p>
+<section id="host---container" class="level3">
+<h3 class="anchored" data-anchor-id="host---container">host -&gt; container</h3>
+<p>There is the following syntax:</p>
+<p><code>docker cp &lt;host path&gt; &lt;cantainer name&gt;:&lt;container path&gt;</code></p>
+<p>The following example shows how to copy a file into a container.</p>
+</section>
+<section id="container---host" class="level3">
+<h3 class="anchored" data-anchor-id="container---host">container -&gt; host</h3>
+<p>There is syntax for m</p>
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>cd build_files</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t custom_ubuntu:test <span class="op">-</span>f my_first_dockerfile .</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>docker images <span class="op">|</span> grep custom_ubuntu</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>docker rmi custom_ubuntu:test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#1 [internal] load .dockerignore
-#1 transferring context: 2B done
-#1 DONE 0.0s
-
-#2 [internal] load build definition from my_first_dockerfile
-#2 transferring dockerfile: 291B done
-#2 DONE 0.0s
-
-#3 [internal] load metadata for docker.io/library/ubuntu:latest
-#3 DONE 0.0s
-
-#4 [1/3] FROM docker.io/library/ubuntu:latest
-#4 DONE 0.0s
-
-#5 [internal] load build context
-#5 transferring context: 90B done
-#5 DONE 0.0s
-
-#6 [2/3] WORKDIR /home/Dranikf
-#6 CACHED
-
-#7 [3/3] COPY script.sh script.sh
-#7 CACHED
-
-#8 exporting to image
-#8 exporting layers done
-#8 writing image sha256:b204cd5e8265b5fb93e193ca74a1bf739406b380dca02e654db0586dbe02f303 done
-#8 naming to docker.io/library/custom_ubuntu:test done
-#8 DONE 0.0s</code></pre>
-</div>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>cd filesystem_example</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name test_ubuntu <span class="op">-</span>itd ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>docker cp copied_message.txt test_ubuntu:copied_message.txt</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====copied to container====="</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_ubuntu cat copied_message.txt</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>echo <span class="st">""</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>docker cp test_ubuntu:copied_message.txt new_message.txt</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====copied from container====="</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>cat new_message.txt</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>rm new_message.txt</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>custom_ubuntu              test      b204cd5e8265   2 days ago      77.8MB
-Untagged: custom_ubuntu:test
-Deleted: sha256:b204cd5e8265b5fb93e193ca74a1bf739406b380dca02e654db0586dbe02f303</code></pre>
+<pre><code>=====copied to container=====
+This message is for checking the copy functions.
+=====copied from container=====
+This message is for checking the copy functions.</code></pre>
 </div>
-</div>
-<p>You should see a difference between building directory and dockerfile. The <code>dockerfile</code> is only taken from the building directory if it is not specified in the <code>-f</code> option. But the files used for the build will in any case come from the build directory.</p>
-<p>In the following example I take the dockerfile from <code>/build_files</code> but set the build directory to <code>/build_files/test_folder</code>. The dockerfile is designed to copy <code>scipt.sh</code> from the building directory, but in named directories <code>script.sh</code> is different, so let’s check which one is executed.</p>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>cd build_files</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====tree of the build_files====="</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>tree</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====script from build_files====="</span></span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>bash script.sh</span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====script from test_folder====="</span></span>
-<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>bash test_folder<span class="op">/</span>script.sh</span>
-<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_ubuntu <span class="op">-</span>f my_first_dockerfile test_folder <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name test_ubuntu <span class="op">--</span>rm <span class="op">-</span>itd test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====message from container====="</span></span>
-<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_ubuntu bash script.sh</span>
-<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====tree of the build_files=====
-.
-├── my_first_dockerfile
-├── script.sh
-├── test_file
-└── test_folder
-    ├── dockerfile
-    └── script.sh
-
-1 directory, 5 files
-
-
-=====script from build_files=====
-It's a script.sh from the images_creation_files
-=====script from test_folder=====
-It's a script from test_folder
-
-
-=====message from container=====
-It's a script from test_folder</code></pre>
-</div>
-</div>
-<p>As a result, even though each dockerfile is in the <code>build_files</code> folder, the <code>script.sh</code> file is taken from the folder specified as the build folder.</p>
-<p>Just to check the opposite option. I will use docker file from <code>test_folder</code> but set <code>.</code> as build directory. So the script result will be from <code>images_creation_folder</code>. To know that container was built from dockerfile from <code>test_folder</code>, dockerfile will add “hello” to the result of the executed script.</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>cd build_files</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====script from build_files====="</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>bash script.sh</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====script from test_folder====="</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>bash test_folder<span class="op">/</span>script.sh</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_ubuntu <span class="op">-</span>f test_folder<span class="op">/</span>dockerfile . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>name test_ubuntu <span class="op">--</span>rm <span class="op">-</span>itd test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====message from container====="</span></span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_ubuntu bash script.sh</span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>docker stop test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====script from build_files=====
-It's a script.sh from the images_creation_files
-=====script from test_folder=====
-It's a script from test_folder
-
-
-=====message from container=====
-It's a script.sh from the images_creation_files
-hello</code></pre>
-</div>
-</div>
-<p><strong>Note</strong> even if you have specified a folder as some assembly folder, you must still pass in the <code>-f</code> parameter the path relative to the startup folder.</p>
-<p>The next two cells show the difference:</p>
-<ul>
-<li>Not specifying a folder for <code>my_first_dockerfile</code> will cause an error;</li>
-</ul>
-<div class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>docker image build <span class="op">-</span>f my_first_dockerfile <span class="op">-</span>t ubuntu_test build_files <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>docker rmi ubuntu_test <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>CalledProcessError: Command 'b'docker image build -f my_first_dockerfile -t ubuntu_test image_creation_files &amp;&gt; /dev/null\nsleep 10\ndocker rmi ubuntu_test &amp;&gt; /dev/null\n'' returned non-zero exit status 1.</code></pre>
-</div>
-</div>
-<ul>
-<li>Specifying a folder leads to successful completion.</li>
-</ul>
-<div class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>docker image build <span class="op">-</span>f build_files<span class="op">/</span>my_first_dockerfile <span class="op">-</span>t ubuntu_test build_files <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>docker rmi ubuntu_test <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

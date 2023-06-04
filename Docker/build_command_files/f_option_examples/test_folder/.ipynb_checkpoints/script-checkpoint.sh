@@ -1,0 +1,1 @@
+echo "It's a script from test_folder"
