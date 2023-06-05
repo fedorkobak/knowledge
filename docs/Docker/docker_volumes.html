@@ -194,6 +194,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#runnig-with-setting-user--usec-run_u_option" id="toc-runnig-with-setting-user--usec-run_u_option" class="nav-link" data-scroll-target="#runnig-with-setting-user--usec-run_u_option">Runnig with setting user <code>-u</code>{sec-run_u_option}</a></li>
   <li><a href="#mounting-.dockerignore-files" id="toc-mounting-.dockerignore-files" class="nav-link" data-scroll-target="#mounting-.dockerignore-files">Mounting <code>.dockerignore</code> files</a></li>
   </ul></li>
+  <li><a href="#volume-by-default" id="toc-volume-by-default" class="nav-link" data-scroll-target="#volume-by-default">Volume by default</a></li>
+  <li><a href="#several-volumes-in-one-command" id="toc-several-volumes-in-one-command" class="nav-link" data-scroll-target="#several-volumes-in-one-command">Several volumes in one command</a></li>
   </ul>
 </nav>
     </div>
@@ -405,40 +407,163 @@ cat: secret_dir/secret_file: No such file or directory</code></pre>
 </section>
 <section id="mounting-.dockerignore-files" class="level3">
 <h3 class="anchored" data-anchor-id="mounting-.dockerignore-files">Mounting <code>.dockerignore</code> files</h3>
-<p>Even if you mount the file described in <code>.dockerignore</code>, we will still have it in the container.</p>
-<div class="cell" data-execution_count="15">
+<p>Even if you mount the file described in .dockerignore, we will still have it in the container.</p>
+<p>In the following example, I create <code>app/ignore_file.txt</code> and mention it in dockerignore. Build image using this .dockerignore, but in container based on this image I mount <code>app</code> folder. And as a result I can see contents of <code>ignore_file.txt</code> regardless of what I specified in the <code>.dockerignore</code>.</p>
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>cd filesystem_example</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>mkdir app</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"message in temp_file.txt"</span> <span class="op">&gt;</span> app<span class="op">/</span>temp_file.txt</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"message in ignore_file.txt"</span> <span class="op">&gt;</span> app<span class="op">/</span>ignore_file.txt</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====.dockerignore====="</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"app/temp_file.txt"</span> <span class="op">&gt;</span> .dockerignore</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"app/ignore_file.txt"</span> <span class="op">&gt;</span> .dockerignore</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>cat .dockerignore</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># запускаем контейнер монтируя файл, который указан в .dockerignore</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name ignore_ex<span class="op">\</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v $(pwd)<span class="op">/</span>app:<span class="op">/</span>app<span class="op">\</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====ignore-file из контейнера====="</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># убеждаемся, что наш секретный файл преспокойно сидит в контейнере</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> ignore_ex cat app<span class="op">/</span>ignore_file.txt</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>docker stop ignore_ex <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r app</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>rm .dockerignore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dockerfile====="</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"FROM ubuntu"</span> <span class="op">&gt;</span> dockerfile</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>cat dockerfile</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># build image with setted .dockerignore</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_image <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># start container mountig file mentioned in .dockerignore</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name ignore_ex<span class="op">\</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v $(pwd)<span class="op">/</span>app:<span class="op">/</span>app<span class="op">\</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====ignore-file from container====="</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure that this secret file is in the container</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> ignore_ex cat app<span class="op">/</span>ignore_file.txt</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>docker stop ignore_ex <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>docker rmi test_image <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r app</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>rm .dockerignore</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>rm dockerfile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=====.dockerignore=====
-=====ignore-file из контейнера=====</code></pre>
+app/ignore_file.txt
+=====dockerfile=====
+FROM ubuntu
+=====ignore-file from container=====
+message in ignore_file.txt</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>cat: .dockerignore: No such file or directory
-cat: app/ignore_file.txt: No such file or directory</code></pre>
 </div>
-</div>
-
-
 </section>
+</section>
+<section id="volume-by-default" class="level1">
+<h1>Volume by default</h1>
+<p>Some containers create their own volumes by default when they run, so you may find that your entire hard drive is flooded.</p>
+<p>For example <code>yandex/clickhouse-server</code>. In the following cell I have some containers <code>yandex/clickhouse-server</code> running and show that each container has created a volume.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====docker volume ls before====="</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>docker volume ls</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># run clickhouse</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>d <span class="op">--</span>name db_1 <span class="op">--</span>rm yandex<span class="op">/</span>clickhouse<span class="op">-</span>server <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>d <span class="op">--</span>name db_2 <span class="op">--</span>rm yandex<span class="op">/</span>clickhouse<span class="op">-</span>server <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>d <span class="op">--</span>name db_3 <span class="op">--</span>rm yandex<span class="op">/</span>clickhouse<span class="op">-</span>server <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># list volumes</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====docker volume ls after====="</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>docker volume ls</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>docker stop db_1 db_2 db_3 <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====docker volume ls before=====
+DRIVER    VOLUME NAME
+=====docker volume ls after=====
+DRIVER    VOLUME NAME
+local     66e881449c54eb455e1a0e16b6b1cfff0aac6fbe31739ea59d307d5631c04fa2
+local     b6d2ba76cf901665684319a3197166a61d8da5d75b8804945a8f0368de0c89ec
+local     d3ba9de2668e8e3f68d43ccfb02db72738f2c2b7048ed2bfc94b3134d00f53f1</code></pre>
+</div>
+</div>
+</section>
+<section id="several-volumes-in-one-command" class="level1">
+<h1>Several volumes in one command</h1>
+<p>You can repeat <code>-v</code> option in <code>docker run</code> many times as you need.</p>
+<p>Basic example.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>cd filesystem_example</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>mkdir test1 test2</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"message in test1"</span> <span class="op">&gt;</span> test1<span class="op">/</span>my_file</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"message in test2"</span> <span class="op">&gt;</span> test2<span class="op">/</span>my_file</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name example_cont <span class="op">-</span>itd<span class="op">\</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v $(pwd)<span class="op">/</span>test1:<span class="op">/</span>test1<span class="op">\</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v $(pwd)<span class="op">/</span>test2:<span class="op">/</span>test2<span class="op">\</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====files from container====="</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> example_cont cat test1<span class="op">/</span>my_file</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> example_cont cat test2<span class="op">/</span>my_file</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>docker stop example_cont <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r test1 test2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====files from container=====
+message in test1
+message in test2</code></pre>
+</div>
+</div>
+<p>But you can’t mount a directory on the container twice.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cd filesystem_example</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>mkdir test1 test2</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"message in test1"</span> <span class="op">&gt;</span> test1<span class="op">/</span>my_file</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"message in test2"</span> <span class="op">&gt;</span> test2<span class="op">/</span>my_file</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name example_cont <span class="op">-</span>itd<span class="op">\</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v $(pwd)<span class="op">/</span>test1:<span class="op">/</span>test<span class="op">\</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v $(pwd)<span class="op">/</span>test2:<span class="op">/</span>test<span class="op">\</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    ubuntu</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r test1 test2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>docker: Error response from daemon: Duplicate mount point: /test.
+See 'docker run --help'.</code></pre>
+</div>
+</div>
+<p>A directory from host to different folders in container is available. But you need to know that they are actually the same directory with different names - any change in one will happen in the other.</p>
+<p>In the following example, we mount <code>test</code> in host to <code>test1</code> and <code>test2</code> in container. Then we add the file <code>new_file</code> to <code>test1</code>, but it will appear not only in <code>test1</code> but also in <code>test2</code> and <code>test</code>.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cd filesystem_example</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>mkdir test</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name example_cont <span class="op">-</span>itd<span class="op">\</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v $(pwd)<span class="op">/</span>test:<span class="op">/</span>test1<span class="op">\</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v $(pwd)<span class="op">/</span>test:<span class="op">/</span>test2<span class="op">\</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> example_cont bash <span class="op">-</span>c <span class="st">"echo </span><span class="ch">\"</span><span class="st">hello from container</span><span class="ch">\"</span><span class="st"> &gt; test1/new_file"</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====ls test1 from container====="</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> example_cont ls test1</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====ls test2 from container====="</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> example_cont ls test2</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>docker stop example_cont <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====ls test====="</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>ls test</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====ls test1 from container=====
+new_file
+=====ls test2 from container=====
+new_file
+=====ls test=====
+new_file</code></pre>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->

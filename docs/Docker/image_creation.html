@@ -186,6 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#f---allow-to-chose-the-dockerfile" id="toc-f---allow-to-chose-the-dockerfile" class="nav-link" data-scroll-target="#f---allow-to-chose-the-dockerfile"><code>-f</code> - allow to chose the dockerfile</a></li>
   </ul></li>
+  <li><a href="#dockerignore---select-files-ignored-during-image-building" id="toc-dockerignore---select-files-ignored-during-image-building" class="nav-link" data-scroll-target="#dockerignore---select-files-ignored-during-image-building">.dockerignore - select files ignored during image building</a></li>
   </ul>
 </nav>
     </div>
@@ -461,9 +462,110 @@ It's a script from test_folder
 message from test_folder/specialdockerfile</code></pre>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="dockerignore---select-files-ignored-during-image-building" class="level1">
+<h1>.dockerignore - select files ignored during image building</h1>
+<p>In docker ignore, you should specify files to be ignored when building the image.</p>
+<p>For example lets try to build image with followig paremeters:</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>cd dockerignore</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dockerfile====="</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>cat dockerfile1</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====.dockerignore====="</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>cat .dockerignore</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====dockerfile=====
+FROM ubuntu
+COPY test_file test_file
+=====.dockerignore=====
+test_file
+test_folder/banned_file</code></pre>
+</div>
+</div>
+<p>So in dockerfile I try to copy <code>test_file</code> into image, but in docker ignore I bun this file. At the next cell, I’m trying to build such image - and getting error.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cd dockerignore</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_image <span class="op">-</span>f dockerfile1 .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#1 [internal] load build definition from dockerfile1
+#1 transferring dockerfile: 74B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 50B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:latest
+#3 DONE 0.0s
+
+#4 [1/2] FROM docker.io/library/ubuntu
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [2/2] COPY test_file test_file
+#6 ERROR: failed to calculate checksum of ref 40880b12-160a-424d-a82b-d59b9594f64c::7cmhtk0ygxakortpvzlpd8pwp: "/test_file": not found
+------
+ &gt; [2/2] COPY test_file test_file:
+------
+dockerfile1:2
+--------------------
+   1 |     FROM ubuntu
+   2 | &gt;&gt;&gt; COPY test_file test_file
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40880b12-160a-424d-a82b-d59b9594f64c::7cmhtk0ygxakortpvzlpd8pwp: "/test_file": not found</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>CalledProcessError: Command 'b'cd dockerignore\ndocker build -t test_image -f dockerfile1 .\n'' returned non-zero exit status 1.</code></pre>
+</div>
+</div>
+<p>On the other hand, if I copy an entire folder and only a few files are blocked in the folder, the folder will be copied without those files. The following example show such configuration:</p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>cd dockerignore</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dockerfile====="</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>cat dockerfile2</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====.dockerignore====="</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>cat .dockerignore</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====test_folder in host====="</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>ls test_folder</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_image <span class="op">-</span>f dockerfile2 . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name test_container <span class="op">-</span>itd test_image <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====test_folder in container====="</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_container ls test_folder</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>docker stop test_container <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>docker rmi test_image <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====dockerfile=====
+FROM ubuntu
+COPY test_folder test_folder
+=====.dockerignore=====
+test_file
+test_folder/banned_file
+
+=====test_folder in host=====
+accepted_file
+banned_file
+=====test_folder in container=====
+accepted_file</code></pre>
+</div>
+</div>
+<p>Here I copy the whole folder, but the file <code>banned_file</code> was mentioned in <code>.dockerignore</code>. So when we <code>ls temp_folder</code> from container we see only <code>accepted_file</code> in folder contents.</p>
+
+
 </section>
 
 </main> <!-- /main -->
