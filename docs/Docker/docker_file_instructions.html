@@ -183,6 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#run-something-with-start-of-container" id="toc-run-something-with-start-of-container" class="nav-link active" data-scroll-target="#run-something-with-start-of-container">Run something with start of container</a></li>
+  <li><a href="#environment-variables" id="toc-environment-variables" class="nav-link" data-scroll-target="#environment-variables">Environment variables</a></li>
   </ul>
 </nav>
     </div>
@@ -341,9 +342,33 @@ CMD ["echo", "default message2"]</code></pre>
 </div>
 </div>
 <p>So it looks like docker just ignored <code>CMD ["echo", "default message1"]</code></p>
-
-
 </section>
+</section>
+<section id="environment-variables" class="level1">
+<h1>Environment variables</h1>
+<p>For creating environment variable you can use <code>ENV</code> dockerfile instruction.</p>
+<p>In following example I create a dockefile vich use <code>ENV</code> to create <code>TEST_VAR</code> with value <code>"test variable value"</code>. Then print it from container.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cd basic_instructions</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"FROM ubuntu"</span> <span class="op">&gt;</span> envdockerfile</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"ENV TEST_VAR=</span><span class="ch">\"</span><span class="st">test variable value</span><span class="ch">\"</span><span class="st">"</span> <span class="op">&gt;&gt;</span> envdockerfile</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_image <span class="op">-</span>f envdockerfile . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name test_container test_image <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_container bash <span class="op">-</span>c <span class="st">"echo \$TEST_VAR"</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>docker stop test_container <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>docker rmi test_image <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>rm envdockerfile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>test variable value</code></pre>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
