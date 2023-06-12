@@ -189,6 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#docker-start---activate-exited-container" id="toc-docker-start---activate-exited-container" class="nav-link" data-scroll-target="#docker-start---activate-exited-container"><code>docker start</code> - activate exited container</a></li>
   <li><a href="#docker-stop---stop-some-container" id="toc-docker-stop---stop-some-container" class="nav-link" data-scroll-target="#docker-stop---stop-some-container"><code>docker stop</code> - stop some container</a></li>
   <li><a href="#docker-exec---run-a-command-in-the-container" id="toc-docker-exec---run-a-command-in-the-container" class="nav-link" data-scroll-target="#docker-exec---run-a-command-in-the-container"><code>docker exec</code> - run a command in the container</a></li>
+  <li><a href="#docker-logs---get-container-console" id="toc-docker-logs---get-container-console" class="nav-link" data-scroll-target="#docker-logs---get-container-console"><code>docker logs</code> - get container console</a></li>
   </ul></li>
   <li><a href="#docker-run---container-from-image" id="toc-docker-run---container-from-image" class="nav-link" data-scroll-target="#docker-run---container-from-image"><code>docker run</code> - container from image</a>
   <ul class="collapse">
@@ -215,6 +216,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#host---container" id="toc-host---container" class="nav-link" data-scroll-target="#host---container">host -&gt; container</a></li>
   <li><a href="#container---host" id="toc-container---host" class="nav-link" data-scroll-target="#container---host">container -&gt; host</a></li>
+  </ul></li>
+  <li><a href="#docker-instpect---docker-object-info" id="toc-docker-instpect---docker-object-info" class="nav-link" data-scroll-target="#docker-instpect---docker-object-info"><code>docker instpect</code> - docker object info</a>
+  <ul class="collapse">
+  <li><a href="#basic-examples" id="toc-basic-examples" class="nav-link" data-scroll-target="#basic-examples">Basic examples</a></li>
+  <li><a href="#special-cases" id="toc-special-cases" class="nav-link" data-scroll-target="#special-cases">Special cases</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -363,6 +369,10 @@ var</code></pre>
 <p>It looks like the options individually have the same properties as in the <code>docker run</code> command. But the important thing is that you can take control of the detached container with this command.<br> The following example shows how I can get control in detached ubuntu by running the <code>bash</code> command with named options.</p>
 <p><img src="containers_files/docker exec -it.gif"></p>
 </section>
+</section>
+<section id="docker-logs---get-container-console" class="level3">
+<h3 class="anchored" data-anchor-id="docker-logs---get-container-console"><code>docker logs</code> - get container console</h3>
+<p>Desrtiption of the command you can find <a href="../Docker/logs.html#sec-docker_logs_command">here</a>.</p>
 </section>
 </section>
 <section id="docker-run---container-from-image" class="level1">
@@ -669,6 +679,375 @@ This message is for checking the copy functions.
 This message is for checking the copy functions.</code></pre>
 </div>
 </div>
+</section>
+</section>
+<section id="docker-instpect---docker-object-info" class="level1">
+<h1><code>docker instpect</code> - docker object info</h1>
+<section id="basic-examples" class="level3">
+<h3 class="anchored" data-anchor-id="basic-examples">Basic examples</h3>
+<p>This command provide information about docker ojects in json format such as:</p>
+<ul>
+<li><strong>images</strong>:</li>
+</ul>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>docker inspect ubuntu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[
+    {
+        "Id": "sha256:74f2314a03de34a0a2d552b805411fc9553a02ea71c1291b815b2f645f565683",
+        "RepoTags": [
+            "ubuntu:latest"
+        ],
+        "RepoDigests": [
+            "ubuntu@sha256:2adf22367284330af9f832ffefb717c78239f6251d9d0f58de50b86229ed1427"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2023-03-01T04:38:49.239257335Z",
+        "Container": "298f60554671ae2f5bf43b9892526aaa221e8093c9cee1ca68ef65fc3ac67600",
+        "ContainerConfig": {
+            "Hostname": "298f60554671",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"/bin/bash\"]"
+            ],
+            "Image": "sha256:6088cf91777e3b0190e579c7c7cab9c65626f5ff625373bcdb02ae877a9118d8",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "DockerVersion": "20.10.12",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "sha256:6088cf91777e3b0190e579c7c7cab9c65626f5ff625373bcdb02ae877a9118d8",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 77810712,
+        "VirtualSize": 77810712,
+        "GraphDriver": {
+            "Data": {
+                "MergedDir": "/var/lib/docker/overlay2/dfcfb531746a088aaf673a8bc04602c8c8e19b1114680ff8164a95abfef8a0e6/merged",
+                "UpperDir": "/var/lib/docker/overlay2/dfcfb531746a088aaf673a8bc04602c8c8e19b1114680ff8164a95abfef8a0e6/diff",
+                "WorkDir": "/var/lib/docker/overlay2/dfcfb531746a088aaf673a8bc04602c8c8e19b1114680ff8164a95abfef8a0e6/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:202fe64c3ce39b94d8beda7d7506ccdfcf7a59f02f17c915078e4c62b5c2ed11"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>containers</strong>:</li>
+</ul>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name test <span class="op">-</span>itd ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>docker inspect test</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>docker stop test <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[
+    {
+        "Id": "020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5",
+        "Created": "2023-06-12T13:37:52.23307605Z",
+        "Path": "/bin/bash",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 32562,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2023-06-12T13:37:52.471660971Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:74f2314a03de34a0a2d552b805411fc9553a02ea71c1291b815b2f645f565683",
+        "ResolvConfPath": "/var/lib/docker/containers/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5/hostname",
+        "HostsPath": "/var/lib/docker/containers/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5/hosts",
+        "LogPath": "/var/lib/docker/containers/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5-json.log",
+        "Name": "/test",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": true,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/06b3ab167c3c359841177a3bc998d8bc5c32c1c8893d7518e2df4193a1dc98ee-init/diff:/var/lib/docker/overlay2/dfcfb531746a088aaf673a8bc04602c8c8e19b1114680ff8164a95abfef8a0e6/diff",
+                "MergedDir": "/var/lib/docker/overlay2/06b3ab167c3c359841177a3bc998d8bc5c32c1c8893d7518e2df4193a1dc98ee/merged",
+                "UpperDir": "/var/lib/docker/overlay2/06b3ab167c3c359841177a3bc998d8bc5c32c1c8893d7518e2df4193a1dc98ee/diff",
+                "WorkDir": "/var/lib/docker/overlay2/06b3ab167c3c359841177a3bc998d8bc5c32c1c8893d7518e2df4193a1dc98ee/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "020c99a8fbdc",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "ubuntu",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "422100341f6b603db62a0c616fa614091b66ac5a06796fa577503fd469b4ce56",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {},
+            "SandboxKey": "/var/run/docker/netns/422100341f6b",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "b2440d2f1d13674c667458fd051354ec32d2e11475db2308e20cd057e3b16037",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "cf037e1d3aeb308ae603f8028da3343134d92e79462fdcb5390b196a9e49c87d",
+                    "EndpointID": "b2440d2f1d13674c667458fd051354ec32d2e11475db2308e20cd057e3b16037",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>networks</strong>:</li>
+</ul>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>docker inspect bridge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[
+    {
+        "Name": "bridge",
+        "Id": "cf037e1d3aeb308ae603f8028da3343134d92e79462fdcb5390b196a9e49c87d",
+        "Created": "2023-06-12T08:14:24.801403507+03:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.0/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "1500"
+        },
+        "Labels": {}
+    }
+]</code></pre>
+</div>
+</div>
+</section>
+<section id="special-cases" class="level3">
+<h3 class="anchored" data-anchor-id="special-cases">Special cases</h3>
+<ul>
+<li>For more information about the <strong>path to container logs</strong>, you can look <a href="../Docker/logs.html#log_path_on_computer">here</a>.</li>
+</ul>
 
 
 </section>
