@@ -106,9 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      Knowledge bank
-      </li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../other/linux_backup.html">Other</a></li><li class="breadcrumb-item"><a href="../other/linux_backup.html">How to linux backup</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -180,6 +178,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../other/linux_backup.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">How to linux backup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../other/pltly_dash.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Experiments with plotly dash</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -194,6 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#basic-syntax" id="toc-basic-syntax" class="nav-link" data-scroll-target="#basic-syntax">Basic syntax</a></li>
   <li><a href="#r---copy-recursive" id="toc-r---copy-recursive" class="nav-link" data-scroll-target="#r---copy-recursive"><code>r</code> - copy <em>r</em>ecursive</a></li>
+  <li><a href="#a---attributes" id="toc-a---attributes" class="nav-link" data-scroll-target="#a---attributes"><code>-a</code> - attributes</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -285,69 +307,69 @@ file4.txt
 file5.txt</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
+</section>
+<section id="a---attributes" class="level3">
+<h3 class="anchored" data-anchor-id="a---attributes"><code>-a</code> - attributes</h3>
+<p>It works just like <code>r</code>, but also deals with file attributes (like creation time, user and so on). So in the following example:</p>
+<ul>
+<li>Few files was created in <code>dir1</code>;</li>
+<li>The user for these files has been changed from <code>root</code> to <code>user1</code>;</li>
+<li>Then I use <code>rsync</code> twice:
+<ul>
+<li>First with the <code>r</code> option, which puts the user back in <code>root</code>;</li>
+<li>Second, with the <code>a</code> option, which saves the user attribute as <code>user1</code> from source.</li>
+</ul></li>
+</ul>
+<div class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mkdir dir1 dir2</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>touch dir1<span class="op">/</span><span class="bu">file</span>{<span class="fl">1..5</span>}.txt</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sudo <span class="op">-</span>S ulun_julia_540 chown root dir1<span class="op">/*</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====content of dir1====="</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l dir1</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====no r option====="</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>rsync dir1<span class="op">/</span> dir2</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l dir2</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====r option====="</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>rsync <span class="op">-</span>a dir1<span class="op">/</span> dir2</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l dir2</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r dir1 dir2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>[sudo] password for fedor: Sorry, try again.
-[sudo] password for fedor: Sorry, try again.
-[sudo] password for fedor: sudo: 3 incorrect password attempts</code></pre>
-</div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># docker container for usperuser access</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name test_container <span class="op">-</span>i ubuntu</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get update <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install <span class="op">-</span>y rsync <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># creating file with some specific user</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>useradd user1</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>mkdir dir1 dir2</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>touch dir1<span class="op">/</span><span class="bu">file</span>{<span class="fl">1..5</span>}.txt</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>chown user1 dir1<span class="op">/</span><span class="bu">file</span><span class="op">*</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dir1====="</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l dir1</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dir2 after rsync -r====="</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>rsync <span class="op">-</span>r dir1<span class="op">/</span> dir2</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l dir2</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dir2 after rsync -a====="</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>rsync <span class="op">-</span>a dir1<span class="op">/</span> dir2</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l dir2</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>exit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>=====no r option=====
-skipping directory .
+<pre><code>=====dir1=====
 total 0
-=====r option=====
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file1.txt
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file2.txt
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file3.txt
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file4.txt
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file5.txt
+
+=====dir2 after rsync -r=====
 total 0
--rw-rw-r-- 1 fedor fedor 0 чэр 17 16:44 file1.txt
--rw-rw-r-- 1 fedor fedor 0 чэр 17 16:44 file2.txt
--rw-rw-r-- 1 fedor fedor 0 чэр 17 16:44 file3.txt
--rw-rw-r-- 1 fedor fedor 0 чэр 17 16:44 file4.txt
--rw-rw-r-- 1 fedor fedor 0 чэр 17 16:44 file5.txt</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name test_container <span class="op">-</span>i ubuntu</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ls</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>exit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>bin
-boot
-dev
-etc
-home
-lib
-lib32
-lib64
-libx32
-media
-mnt
-opt
-proc
-root
-run
-sbin
-srv
-sys
-tmp
-usr
-var</code></pre>
+-rw-r--r-- 1 root root 0 Jun 17 15:31 file1.txt
+-rw-r--r-- 1 root root 0 Jun 17 15:31 file2.txt
+-rw-r--r-- 1 root root 0 Jun 17 15:31 file3.txt
+-rw-r--r-- 1 root root 0 Jun 17 15:31 file4.txt
+-rw-r--r-- 1 root root 0 Jun 17 15:31 file5.txt
+
+=====dir2 after rsync -a=====
+total 0
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file1.txt
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file2.txt
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file3.txt
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file4.txt
+-rw-r--r-- 1 user1 root 0 Jun 17 15:31 file5.txt</code></pre>
 </div>
 </div>
 
