@@ -348,5 +348,33 @@
     "title": "About",
     "section": "",
     "text": "About this site"
+  },
+  {
+    "objectID": "python/virtual_environment.html",
+    "href": "python/virtual_environment.html",
+    "title": "Virutal environment in python",
+    "section": "",
+    "text": "Official documentation on virtual invironment in python;\nExtended tutorial."
+  },
+  {
+    "objectID": "python/virtual_environment.html#create",
+    "href": "python/virtual_environment.html#create",
+    "title": "Virutal environment in python",
+    "section": "Create",
+    "text": "Create\nTo create a new virtual environment, use the command python -m venv &lt;path to venv&gt;. This will create a virtual environment in the specified path.\n\n%%bash\nmkdir test_fold\ncd test_fold\n\npython3 -m venv env_folder\n\nls\ncd ..\nrm -r test_fold\n\nenv_folder"
+  },
+  {
+    "objectID": "python/virtual_environment.html#activatedeactivate",
+    "href": "python/virtual_environment.html#activatedeactivate",
+    "title": "Virutal environment in python",
+    "section": "Activate/deactivate",
+    "text": "Activate/deactivate\nFrom bash command line:\nsource &lt;path to venv&gt;/bin/activate\n\n# comands here will use python\n# from virtual environment\n\ndeactivate"
+  },
+  {
+    "objectID": "python/virtual_environment.html#for-python-script",
+    "href": "python/virtual_environment.html#for-python-script",
+    "title": "Virutal environment in python",
+    "section": "For python script",
+    "text": "For python script\nSo far no way has been found to specify the environment somehow in a python file, so to run a program in a certain environment you must first activate that environment.\n\n%%bash\ncd venv_files\n\n# create a new env and install specific version\n# of numpy in it\npython3 -m venv env_folder\nsource env_folder/bin/activate\npip3 install numpy==1.23.0 &&gt; /dev/null\ndeactivate\n\necho \"global numpy\" $(pip show numpy | grep Version)\n\necho \"=====no venv activated=====\"\npython3 test.py\n\necho \"=====venv activated=====\"\nsource env_folder/bin/activate\npython3 test.py\ndeactivate\n\nrm -r env_folder\n\nglobal numpy Version: 1.24.2\n=====no venv activated=====\nnumpy version: 1.24.2\n=====venv activated=====\nnumpy version: 1.23.0"
   }
 ]
