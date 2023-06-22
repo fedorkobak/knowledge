@@ -181,12 +181,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Other</span></a>
+ <span class="menu-text">Python</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../python/virtual_environment.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Virutal environment in python</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../other/linux_backup.html" class="sidebar-item-text sidebar-link">
@@ -199,21 +216,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Experiments with plotly dash</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">Python</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../python/virtual_environment.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Virutal environment in python</span></a>
+  <a href="../other/python_apache.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python with apache</span></a>
   </div>
 </li>
       </ul>
@@ -234,6 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#create" id="toc-create" class="nav-link" data-scroll-target="#create">Create</a></li>
   <li><a href="#activatedeactivate" id="toc-activatedeactivate" class="nav-link" data-scroll-target="#activatedeactivate">Activate/deactivate</a></li>
   <li><a href="#for-python-script" id="toc-for-python-script" class="nav-link" data-scroll-target="#for-python-script">For python script</a></li>
+  <li><a href="#instalation-without-activation" id="toc-instalation-without-activation" class="nav-link" data-scroll-target="#instalation-without-activation">Instalation without activation</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -326,6 +333,51 @@ deactivate</code></pre>
 numpy version: 1.24.2
 =====venv activated=====
 numpy version: 1.23.0</code></pre>
+</div>
+</div>
+</section>
+<section id="instalation-without-activation" class="level2">
+<h2 class="anchored" data-anchor-id="instalation-without-activation">Instalation without activation</h2>
+<p>Sometimes it is extremely useful to install the Python library in the virtual environment without activating the environment. It can be useful, for example, if you need to set up the environment while building the docker image.</p>
+<p>To install python library in virtual environment without environment actication, you should use command like: <br> <code>&lt;path to venv&gt;/bin/pip install &lt;library name&gt;</code></p>
+<p>In following example:</p>
+<ul>
+<li>Creating a python3 program that requires the <code>requests</code> library;</li>
+<li>Create a new virtual environment;</li>
+<li>Running the program in the new virtual environment will causes an error;</li>
+<li>Instaling of the <code>requests</code> library in the virtual environment;</li>
+<li>Now running the program in the virtual environment don’t causes an error.</li>
+</ul>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>cd venv_files</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>python3 <span class="op">-</span>m venv temp_venv</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"import requests"</span> <span class="op">&gt;</span> requests_loader.py</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"print(</span><span class="ch">\"</span><span class="st">message from python</span><span class="ch">\"</span><span class="st">)"</span> <span class="op">&gt;&gt;</span> requests_loader.py</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====no library instalation====="</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>source temp_venv<span class="op">/</span><span class="bu">bin</span><span class="op">/</span>activate</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>python3 requests_loader.py</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>deactivate</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>temp_venv<span class="op">/</span><span class="bu">bin</span><span class="op">/</span>pip install requests <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====library instalation====="</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>source temp_venv<span class="op">/</span><span class="bu">bin</span><span class="op">/</span>activate</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>python3 requests_loader.py</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>deactivate</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r temp_venv requests_loader.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====no library instalation=====
+=====library instalation=====
+message from python</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Traceback (most recent call last):
+  File "/home/fedor/Documents/knowledge_bank/python/venv_files/requests_loader.py", line 1, in &lt;module&gt;
+    import requests
+ModuleNotFoundError: No module named 'requests'</code></pre>
 </div>
 </div>
 

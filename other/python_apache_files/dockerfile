@@ -1,0 +1,12 @@
+# image that will be used for experiments
+# with apache webserver
+FROM ubuntu/apache2
+RUN apt-get update && apt-get -y install \
+    nano \
+    python3 \
+    libapache2-mod-wsgi-py3 \
+    python3.11-venv \
+    curl
+RUN mkdir /var/www/application && \
+    python3 -m venv /var/www/application/venv && \
+    /var/www/application/venv/bin/pip install Dash

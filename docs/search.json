@@ -376,5 +376,61 @@
     "title": "Virutal environment in python",
     "section": "For python script",
     "text": "For python script\nSo far no way has been found to specify the environment somehow in a python file, so to run a program in a certain environment you must first activate that environment.\n\n%%bash\ncd venv_files\n\n# create a new env and install specific version\n# of numpy in it\npython3 -m venv env_folder\nsource env_folder/bin/activate\npip3 install numpy==1.23.0 &&gt; /dev/null\ndeactivate\n\necho \"global numpy\" $(pip show numpy | grep Version)\n\necho \"=====no venv activated=====\"\npython3 test.py\n\necho \"=====venv activated=====\"\nsource env_folder/bin/activate\npython3 test.py\ndeactivate\n\nrm -r env_folder\n\nglobal numpy Version: 1.24.2\n=====no venv activated=====\nnumpy version: 1.24.2\n=====venv activated=====\nnumpy version: 1.23.0"
+  },
+  {
+    "objectID": "python/virtual_environment.html#instalation-without-activation",
+    "href": "python/virtual_environment.html#instalation-without-activation",
+    "title": "Virutal environment in python",
+    "section": "Instalation without activation",
+    "text": "Instalation without activation\nSometimes it is extremely useful to install the Python library in the virtual environment without activating the environment. It can be useful, for example, if you need to set up the environment while building the docker image.\nTo install python library in virtual environment without environment actication, you should use command like:  &lt;path to venv&gt;/bin/pip install &lt;library name&gt;\nIn following example:\n\nCreating a python3 program that requires the requests library;\nCreate a new virtual environment;\nRunning the program in the new virtual environment will causes an error;\nInstaling of the requests library in the virtual environment;\nNow running the program in the virtual environment don’t causes an error.\n\n\n%%bash\ncd venv_files\npython3 -m venv temp_venv\necho \"import requests\" &gt; requests_loader.py\necho \"print(\\\"message from python\\\")\" &gt;&gt; requests_loader.py\n\necho \"=====no library instalation=====\"\nsource temp_venv/bin/activate\npython3 requests_loader.py\ndeactivate\n\n\ntemp_venv/bin/pip install requests &&gt; /dev/null\necho \"=====library instalation=====\"\nsource temp_venv/bin/activate\npython3 requests_loader.py\ndeactivate\n\nrm -r temp_venv requests_loader.py\n\n=====no library instalation=====\n=====library instalation=====\nmessage from python\n\n\nTraceback (most recent call last):\n  File \"/home/fedor/Documents/knowledge_bank/python/venv_files/requests_loader.py\", line 1, in &lt;module&gt;\n    import requests\nModuleNotFoundError: No module named 'requests'"
+  },
+  {
+    "objectID": "other/python_apache.html",
+    "href": "other/python_apache.html",
+    "title": "Python with apache",
+    "section": "",
+    "text": "For examples in this notebook I use special docker containers - docker file for container shown in python_apache_files folder. So to run examples from this section you should build image by running command docker build -t my_apache . from python_apache_files directory. This docker image will contain:"
+  },
+  {
+    "objectID": "other/python_apache.html#ports.conf",
+    "href": "other/python_apache.html#ports.conf",
+    "title": "Python with apache",
+    "section": "ports.conf",
+    "text": "ports.conf\nConfig that describes which ports to listen on. By default, apache2 ports.conf only uses ports 80 and 443. But for some examples I need port 8050, so I use it as well.\n\n%%bash\ncat python_apache_files/ports.conf\n\n# If you just change the port or add more ports here, you will likely also\n# have to change the VirtualHost statement in\n# /etc/apache2/sites-enabled/000-default.conf\n\nListen 80\nListen 8050\n\n&lt;IfModule ssl_module&gt;\n        Listen 443\n&lt;/IfModule&gt;\n\n&lt;IfModule mod_gnutls.c&gt;\n        Listen 443\n&lt;/IfModule&gt;"
+  },
+  {
+    "objectID": "other/python_apache.html#launching",
+    "href": "other/python_apache.html#launching",
+    "title": "Python with apache",
+    "section": "Launching",
+    "text": "Launching\nBy running this section on our local host, a number of sites will be hosted:\n\n%%bash\ncd python_apache_files\n\ndocker run --rm --name test_apache -d -p 81:80 -p 82:8050 my_apache &&gt; /dev/null\n\n\ndocker cp ports.conf test_apache:/etc/apache2/ports.conf\n\n# wsgi basics\ndocker cp wsgi_example/wsgi_basic.wsgi test_apache:/var/www/application/wsgi_basic.wsgi\ndocker cp wsgi_example/suburl.wsgi test_apache:/var/www/application/suburl.wsgi\ndocker cp wsgi_example/wsgi_basic.conf test_apache:/etc/apache2/sites-available/wsgi_basic.conf\ndocker exec test_apache a2ensite wsgi_basic\n\n# specific port\ndocker cp use_specific_port/spec_port.wsgi test_apache:/var/www/application/spec_port.wsgi\ndocker cp use_specific_port/spec_port.conf test_apache:/etc/apache2/sites-available/spec_port.conf\ndocker exec test_apache a2ensite spec_port\n\n# dash application\n# docker exec test_apache mkdir /var/www/dash\ndocker cp dash/dash.wsgi test_apache:/var/www/application/dash.wsgi\ndocker cp dash/app.py test_apache:/var/www/application/app.py\n# docker cp dash/dash.wsgi test_apache:/var/www/dash/dash.wsgi\n# docker cp dash/app.py test_apache:/var/www/dash/app.py\n# docker cp dash/dash.conf test_apache:/etc/apache2/sites-available/dash.conf\n# docker exec test_apache a2ensite dash\n\n# docker exec test_apache chown -R :www-data /var/www/application\n# docker exec test_apache chmod -R o-rw /var/www/application\n\n\ndocker exec test_apache a2dissite 000-default\ndocker exec test_apache service apache2 reload\n\nEnabling site wsgi_basic.\nTo activate the new configuration, you need to run:\n  service apache2 reload\nEnabling site spec_port.\nTo activate the new configuration, you need to run:\n  service apache2 reload\nSite 000-default disabled.\nTo activate the new configuration, you need to run:\n  service apache2 reload\n * Reloading Apache httpd web server apache2\n * \n\n\nNote: for the site to work for any reason, it’s extremely important to stop apache2 default page with a2dissite 000-default command.\nBy runnig the following cell - sites will be stopped:\n\n%%bash\ndocker stop test_apache\n\ntest_apache"
+  },
+  {
+    "objectID": "other/python_apache.html#wsgi-application",
+    "href": "other/python_apache.html#wsgi-application",
+    "title": "Python with apache",
+    "section": "wsgi application",
+    "text": "wsgi application\nWe need a WSGI application - this is a Python program that is used when you ask for a specific URL. It should have essance with name application, in basic option it can be just function. So in the following example I show exactly this option:\n\n%%bash\ncat python_apache_files/wsgi_example/wsgi_basic.wsgi\n\ndef application(environ, start_response):\n    status = '200 OK'\n    output = b\"I'm application from root. Basic example of wsgi\"\n\n    response_headers = [('Content-type', 'text/plain'),\n                        ('Content-Length', str(len(output)))]\n    start_response(status, response_headers)\n\n    return [output]"
+  },
+  {
+    "objectID": "other/python_apache.html#site-config",
+    "href": "other/python_apache.html#site-config",
+    "title": "Python with apache",
+    "section": "Site config",
+    "text": "Site config\nReally important file that describe site behavior. Crusial information:\n\nShould be placed in /ect/apache2/apailible-sites;\nWSGIScriptAlias directive to describe which Python file will be used as the entry point, and which suburl of the site it will use;\nWSGIDaemonProcess -&gt; python-path describe which Python interpreter should be used.;\n\n\n%%bash\ncat python_apache_files/wsgi_example/wsgi_basic.conf\n\n&lt;VirtualHost *:80&gt;\n        ServerName application\n        ServerAdmin webmaster@localhost\n        DocumentRoot /var/www/application\n\n        ErrorLog ${APACHE_LOG_DIR}/error.log\n        CustomLog ${APACHE_LOG_DIR}/access.log combined\n\n        WSGIDaemonProcess application threads=5 user=www-data group=www-data python-path=/var/www/application/venv/lib/python3.11/site-packages python-home=/var/www/application/venv\n\n        WSGIScriptAlias /suburl /var/www/application/suburl.wsgi\n        WSGIScriptAlias / /var/www/application/wsgi_basic.wsgi\n        \n        &lt;Directory /var/www/application&gt;\n                Order deny,allow\n                Allow from all\n        &lt;/Directory&gt;\n\n&lt;/VirtualHost&gt;"
+  },
+  {
+    "objectID": "other/python_apache.html#dash-application-1",
+    "href": "other/python_apache.html#dash-application-1",
+    "title": "Python with apache",
+    "section": "dash application",
+    "text": "dash application\n\n%%bash\ncat python_apache_files/dash/app.py\n\nfrom dash import Dash, html\n\napp = Dash(__name__, requests_pathname_prefix='/dash/')\napp.layout = html.Div(\"Hello world\")\n\nserver = app.server\n\nif __name__ == \"__main__\":\n    app.run_server(debug=True, port=8051)\n\n\nNote: - server = app.server is very important - it is loaded in wsgi; - requests_pathname_prefix='/dash/' in Dash constructor will allow to run application with suburl dash."
+  },
+  {
+    "objectID": "other/python_apache.html#wsgi-file",
+    "href": "other/python_apache.html#wsgi-file",
+    "title": "Python with apache",
+    "section": "wsgi file",
+    "text": "wsgi file\nThe main purpose of the wsgi file here is to load dash.Dash as an application essence for wsgi.\n\n%%bash\ncat python_apache_files/dash/dash.wsgi\n\nimport sys\nsys.path.insert(0,\"/var/www/application/\")\nfrom app import server as application"
   }
 ]
