@@ -235,13 +235,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#sources" id="toc-sources" class="nav-link active" data-scroll-target="#sources">Sources</a></li>
-  <li><a href="#basic" id="toc-basic" class="nav-link" data-scroll-target="#basic"><strong>Basic</strong></a>
-  <ul class="collapse">
   <li><a href="#create" id="toc-create" class="nav-link" data-scroll-target="#create">Create</a></li>
   <li><a href="#activatedeactivate" id="toc-activatedeactivate" class="nav-link" data-scroll-target="#activatedeactivate">Activate/deactivate</a></li>
   <li><a href="#for-python-script" id="toc-for-python-script" class="nav-link" data-scroll-target="#for-python-script">For python script</a></li>
   <li><a href="#instalation-without-activation" id="toc-instalation-without-activation" class="nav-link" data-scroll-target="#instalation-without-activation">Instalation without activation</a></li>
-  </ul></li>
+  <li><a href="#load-from-requirements.txt" id="toc-load-from-requirements.txt" class="nav-link" data-scroll-target="#load-from-requirements.txt">Load from <code>requirements.txt</code></a></li>
   </ul>
 </nav>
     </div>
@@ -272,10 +270,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://realpython.com/python-virtual-environments-a-primer/">Extended tutorial</a>.</li>
 </ul>
 </section>
-<section id="basic" class="level1">
-<h1><strong>Basic</strong></h1>
-<section id="create" class="level2">
-<h2 class="anchored" data-anchor-id="create">Create</h2>
+<section id="create" class="level1">
+<h1>Create</h1>
 <p>To create a new virtual environment, use the command <code>python -m venv &lt;path to venv&gt;</code>. This will create a virtual environment in the specified path.</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
@@ -292,8 +288,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="activatedeactivate" class="level2">
-<h2 class="anchored" data-anchor-id="activatedeactivate">Activate/deactivate</h2>
+<section id="activatedeactivate" class="level1">
+<h1>Activate/deactivate</h1>
 <p>From bash command line:</p>
 <pre><code>source &lt;path to venv&gt;/bin/activate
 
@@ -302,8 +298,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 deactivate</code></pre>
 </section>
-<section id="for-python-script" class="level2">
-<h2 class="anchored" data-anchor-id="for-python-script">For python script</h2>
+<section id="for-python-script" class="level1">
+<h1>For python script</h1>
 <p>So far no way has been found to specify the environment somehow in a python file, so to run a program in a certain environment you must first activate that environment.</p>
 <div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
@@ -336,8 +332,8 @@ numpy version: 1.23.0</code></pre>
 </div>
 </div>
 </section>
-<section id="instalation-without-activation" class="level2">
-<h2 class="anchored" data-anchor-id="instalation-without-activation">Instalation without activation</h2>
+<section id="instalation-without-activation" class="level1">
+<h1>Instalation without activation</h1>
 <p>Sometimes it is extremely useful to install the Python library in the virtual environment without activating the environment. It can be useful, for example, if you need to set up the environment while building the docker image.</p>
 <p>To install python library in virtual environment without environment actication, you should use command like: <br> <code>&lt;path to venv&gt;/bin/pip install &lt;library name&gt;</code></p>
 <p>In following example:</p>
@@ -380,9 +376,50 @@ message from python</code></pre>
 ModuleNotFoundError: No module named 'requests'</code></pre>
 </div>
 </div>
-
-
 </section>
+<section id="load-from-requirements.txt" class="level1">
+<h1>Load from <code>requirements.txt</code></h1>
+<p>It should be tedious to manually rewrite installations with pip. So that python libraries and versions can be stored in a file with the typical (but not necessary) name <code>requirements.txt</code>, you can load it automatically using the following syntax:</p>
+<p><code>pip install -r requirements.txt</code></p>
+<p>In the following example:</p>
+<ul>
+<li>Create virtual environment;</li>
+<li>Install the libraries mentioned in <code>requirements.txt</code>;</li>
+<li>And then show the list of libraries in the virtual environment.</li>
+</ul>
+<p>Installed exactly the library versions I asked for in <code>requirements.txt</code>.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cd venv_files</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>python3<span class="fl">.10</span> <span class="op">-</span>m venv temp_venv</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====requirements.txt====="</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>cat requirements.txt</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>temp_venv<span class="op">/</span><span class="bu">bin</span><span class="op">/</span>pip install <span class="op">-</span>r requirements.txt <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====library list====="</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>temp_venv<span class="op">/</span><span class="bu">bin</span><span class="op">/</span>pip <span class="bu">list</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r temp_venv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====requirements.txt=====
+numpy==1.21.0
+pandas==1.4.0
+=====library list=====
+Package         Version
+--------------- -------
+numpy           1.21.0
+pandas          1.4.0
+pip             22.0.2
+python-dateutil 2.8.2
+pytz            2023.3
+setuptools      59.6.0
+six             1.16.0</code></pre>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
