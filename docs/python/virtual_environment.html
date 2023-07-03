@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -89,7 +89,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -109,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../python/virtual_environment.html">Python</a></li><li class="breadcrumb-item"><a href="../python/virtual_environment.html">Virutal environment in python</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -222,6 +223,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Python with apache</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../other/my_html.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><strong><code>style</code> set a style of element</strong></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -240,6 +247,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#for-python-script" id="toc-for-python-script" class="nav-link" data-scroll-target="#for-python-script">For python script</a></li>
   <li><a href="#instalation-without-activation" id="toc-instalation-without-activation" class="nav-link" data-scroll-target="#instalation-without-activation">Instalation without activation</a></li>
   <li><a href="#load-from-requirements.txt" id="toc-load-from-requirements.txt" class="nav-link" data-scroll-target="#load-from-requirements.txt">Load from <code>requirements.txt</code></a></li>
+  <li><a href="#copying" id="toc-copying" class="nav-link" data-scroll-target="#copying"><strong>Copying</strong></a>
+  <ul class="collapse">
+  <li><a href="#wrong-way" id="toc-wrong-way" class="nav-link" data-scroll-target="#wrong-way">Wrong way</a></li>
+  <li><a href="#correct-way" id="toc-correct-way" class="nav-link" data-scroll-target="#correct-way">Correct way</a></li>
+  </ul></li>
+  <li><a href="#using-with-jupyter-notebook" id="toc-using-with-jupyter-notebook" class="nav-link" data-scroll-target="#using-with-jupyter-notebook"><strong>Using with jupyter notebook</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -267,7 +280,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Sources</h1>
 <ul>
 <li><a href="https://docs.python.org/3/library/venv.html">Official documentation on virtual invironment in python</a>;</li>
-<li><a href="https://realpython.com/python-virtual-environments-a-primer/">Extended tutorial</a>.</li>
+<li><a href="https://realpython.com/python-virtual-environments-a-primer/">Extended tutorial</a>;</li>
+<li><a href="https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove">Jupyter Notebook Kernels: How to Add, Change, Remove</a>.</li>
 </ul>
 </section>
 <section id="create" class="level1">
@@ -418,6 +432,82 @@ setuptools      59.6.0
 six             1.16.0</code></pre>
 </div>
 </div>
+</section>
+<section id="copying" class="level1">
+<h1><strong>Copying</strong></h1>
+<section id="wrong-way" class="level2">
+<h2 class="anchored" data-anchor-id="wrong-way">Wrong way</h2>
+<p>The wrong way to do this is to just copy the virtual environment folder. It will lead to broken paths for the Python interpreter.</p>
+<p>In the following example, I copy the python3 environment from <code>venv1</code> to <code>venv2</code>, but when I run python from the copied environment and check <code>sys.path</code>, it’s still pointing to the path for <code>venv1</code>.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cd venv_files</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>mkdir venv1 venv2</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>python3<span class="fl">.10</span> <span class="op">-</span>m venv venv1<span class="op">/</span>venv</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>cp <span class="op">-</span>r venv1<span class="op">/</span>venv venv2<span class="op">/</span>venv</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>source venv2<span class="op">/</span>venv<span class="op">/</span><span class="bu">bin</span><span class="op">/</span>activate</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====sys.path[-1]====="</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>python3 <span class="op">-</span>c <span class="st">"import sys; print(sys.path[-1])"</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r venv1 venv2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====sys.path[-1]=====
+/home/fedor/Documents/knowledge_bank/python/venv_files/venv1/venv/lib/python3.10/site-packages</code></pre>
+</div>
+</div>
+</section>
+<section id="correct-way" class="level2">
+<h2 class="anchored" data-anchor-id="correct-way">Correct way</h2>
+<p>https://stackoverflow.com/questions/7438681/how-to-duplicate-virtualenv</p>
+</section>
+</section>
+<section id="using-with-jupyter-notebook" class="level1">
+<h1><strong>Using with jupyter notebook</strong></h1>
+<p>For more information, click <a href="https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove">here</a>.</p>
+<ul>
+<li><strong>Create</strong>:
+<ul>
+<li>Install jupyter in environment <code>pip install jupyter</code>;</li>
+<li>Run for environment <code>ipython kernel install --name "&lt;environment name&gt;" --user</code>;</li>
+</ul></li>
+<li><strong>List all available environments</strong> <code>jupyter kernelspec list</code>;</li>
+<li><strong>Delete</strong> <code>jupyter kernelspec remove &lt;kernel-name&gt;</code></li>
+</ul>
+<p>The following example shows the use of all the above commands.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>cd venv_files</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>python3 <span class="op">-</span>m venv test_venv</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====instalation====="</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>source test_venv<span class="op">/</span><span class="bu">bin</span><span class="op">/</span>activate</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>pip install jupyter <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>ipython kernel install <span class="op">--</span>name <span class="st">"test-env"</span> <span class="op">--</span>user</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>deactivate</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====list available kernels====="</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>jupyter kernelspec <span class="bu">list</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"====delete test_environment====="</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>jupyter kernelspec remove <span class="op">-</span>y test<span class="op">-</span>env</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r test_venv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====instalation=====
+Installed kernelspec test-env in /home/fedor/.local/share/jupyter/kernels/test-env
+=====list available kernels=====
+Available kernels:
+  python3     /home/fedor/.local/share/jupyter/kernels/python3
+  test-env    /home/fedor/.local/share/jupyter/kernels/test-env
+====delete test_environment=====
+Removed /home/fedor/.local/share/jupyter/kernels/test-env</code></pre>
+</div>
+</div>
+<p><strong>Note</strong> after reloading for example jupyter lab you will have refreshed list of kernels.</p>
+<p><img src="venv_files/new_kernel_in_jupyter_lab.png"></p>
 
 
 </section>
