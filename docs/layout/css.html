@@ -199,6 +199,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Virutal environment in python</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../python/excel_export.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">To excel import</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -345,10 +351,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#min-width" id="toc-min-width" class="nav-link" data-scroll-target="#min-width"><strong><code>min-width</code></strong></a></li>
   </ul></li>
   <li><a href="#box-model" id="toc-box-model" class="nav-link" data-scroll-target="#box-model">Box model</a></li>
-  <li><a href="#other-properties" id="toc-other-properties" class="nav-link" data-scroll-target="#other-properties">Other properties</a>
+  <li><a href="#font-properties" id="toc-font-properties" class="nav-link" data-scroll-target="#font-properties">Font properties</a>
   <ul class="collapse">
   <li><a href="#font-size---font-size" id="toc-font-size---font-size" class="nav-link" data-scroll-target="#font-size---font-size"><strong><code>font-size</code> - font size</strong></a></li>
+  <li><a href="#font-weight---boldthin-text" id="toc-font-weight---boldthin-text" class="nav-link" data-scroll-target="#font-weight---boldthin-text"><strong><code>font-weight</code> - bold/thin text</strong></a></li>
+  </ul></li>
+  <li><a href="#other-properties" id="toc-other-properties" class="nav-link" data-scroll-target="#other-properties">Other properties</a>
+  <ul class="collapse">
   <li><a href="#text-align---position-of-the-text" id="toc-text-align---position-of-the-text" class="nav-link" data-scroll-target="#text-align---position-of-the-text"><strong><code>text-align</code> - position of the text</strong></a></li>
+  <li><a href="#float---float-position" id="toc-float---float-position" class="nav-link" data-scroll-target="#float---float-position"><strong><code>float</code></strong> - float position</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -373,7 +384,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">'''</span></span>
@@ -383,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/style&gt;</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/head&gt;</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="15">
 
 
     <style>
@@ -1710,8 +1721,8 @@ border-color: &lt;color&gt;;</code></pre>
 <p><img src="css_files/border_box.png"></p>
 <p>Content size is adapted to meet the condition <code>&lt;padding&gt;+&lt;border&gt;+&lt;content width/height&gt;=200</code>.</p>
 </section>
-<section id="other-properties" class="level1">
-<h1>Other properties</h1>
+<section id="font-properties" class="level1">
+<h1>Font properties</h1>
 <section id="font-size---font-size" class="level2">
 <h2 class="anchored" data-anchor-id="font-size---font-size"><strong><code>font-size</code> - font size</strong></h2>
 <p><a href="#sec-sizes_measures">measures</a></p>
@@ -1734,16 +1745,62 @@ border-color: &lt;color&gt;;</code></pre>
 </div>
 </div>
 </section>
+<section id="font-weight---boldthin-text" class="level2">
+<h2 class="anchored" data-anchor-id="font-weight---boldthin-text"><strong><code>font-weight</code> - bold/thin text</strong></h2>
+<p>Shapes the weight (saturation) of the font.</p>
+<ul>
+<li><code>normal</code> - Sets normal font saturation (default value).</li>
+<li><code>bold</code> - Sets the font to bold.</li>
+<li><code>bolder</code> Increases font saturation by one level relative to the parent element.</li>
+<li><code>lighter</code> - Decreases the boldness of the font by one level relative to the parent element.</li>
+<li>Setting values between 100 and 900: These values define the specific font style, where 400 is equal to normal bold and 700 is equal to bold. Some browsers may not support all values in this range.</li>
+</ul>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>font_weigths_values <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>[<span class="st">"normal"</span>, <span class="st">"bold"</span>, <span class="st">"bolder"</span>, <span class="st">"lighter"</span>] <span class="op">+\</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>[i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">200</span>, <span class="dv">801</span>, <span class="dv">50</span>)]</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>html_line <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="st">"&lt;text style=</span><span class="ch">\"</span><span class="st">font-weight:</span><span class="sc">{fw}</span><span class="ch">\"</span><span class="st">&gt;</span><span class="sc">{fw}</span><span class="st">&lt;/text&gt;</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fw <span class="kw">in</span> font_weigths_values:</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>    html_line <span class="op">+=</span> pattern.<span class="bu">format</span>(fw<span class="op">=</span>fw)</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>HTML(html_line)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<text style="font-weight:normal">normal</text>
+<text style="font-weight:bold">bold</text>
+<text style="font-weight:bolder">bolder</text>
+<text style="font-weight:lighter">lighter</text>
+<text style="font-weight:200">200</text>
+<text style="font-weight:250">250</text>
+<text style="font-weight:300">300</text>
+<text style="font-weight:350">350</text>
+<text style="font-weight:400">400</text>
+<text style="font-weight:450">450</text>
+<text style="font-weight:500">500</text>
+<text style="font-weight:550">550</text>
+<text style="font-weight:600">600</text>
+<text style="font-weight:650">650</text>
+<text style="font-weight:700">700</text>
+<text style="font-weight:750">750</text>
+<text style="font-weight:800">800</text>
+</div>
+</div>
+</section>
+</section>
+<section id="other-properties" class="level1">
+<h1>Other properties</h1>
 <section id="text-align---position-of-the-text" class="level2">
 <h2 class="anchored" data-anchor-id="text-align---position-of-the-text"><strong><code>text-align</code> - position of the text</strong></h2>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>HTML(</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'''</span></span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p style="text-align:center"&gt;Centered text&lt;/p&gt;</span></span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p style="text-align:right"&gt;Rigth side text&lt;/p&gt;</span></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p style="text-align:left"&gt;Left side text&lt;/p&gt;</span></span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="st">    '''</span></span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>HTML(</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'''</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p style="text-align:center"&gt;Centered text&lt;/p&gt;</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p style="text-align:right"&gt;Rigth side text&lt;/p&gt;</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p style="text-align:left"&gt;Left side text&lt;/p&gt;</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="st">    '''</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 
     <p style="text-align:center">Centered text</p>
@@ -1752,6 +1809,10 @@ border-color: &lt;color&gt;;</code></pre>
     
 </div>
 </div>
+</section>
+<section id="float---float-position" class="level2">
+<h2 class="anchored" data-anchor-id="float---float-position"><strong><code>float</code></strong> - float position</h2>
+<p>The <code>float</code> CSS property places an element on the left or right side of its container, allowing text and inline elements to wrap around it.</p>
 
 
 </section>
