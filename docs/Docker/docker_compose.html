@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Knowledge bank - Experiments with plotly dash</title>
+<title>Knowledge bank - Docker-compose</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,7 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../other/linux_backup.html">Other</a></li><li class="breadcrumb-item"><a href="../other/pltly_dash.html">Experiments with plotly dash</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Knowledge bank
+      </li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -271,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../other/pltly_dash.html" class="sidebar-item-text sidebar-link active">
+  <a href="../other/pltly_dash.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Experiments with plotly dash</span></a>
   </div>
 </li>
@@ -293,12 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#sources" id="toc-sources" class="nav-link active" data-scroll-target="#sources">Sources</a></li>
-  <li><a href="#callbacks" id="toc-callbacks" class="nav-link" data-scroll-target="#callbacks">Callbacks</a>
-  <ul class="collapse">
-  <li><a href="#inputoutput-format" id="toc-inputoutput-format" class="nav-link" data-scroll-target="#inputoutput-format">Input/output format</a></li>
-  <li><a href="#callback-without-output" id="toc-callback-without-output" class="nav-link" data-scroll-target="#callback-without-output">Callback without output</a></li>
-  </ul></li>
+  <li><a href="#yaml" id="toc-yaml" class="nav-link active" data-scroll-target="#yaml">YAML</a></li>
   </ul>
 </nav>
     </div>
@@ -307,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Experiments with plotly dash</h1>
+<h1 class="title">Docker-compose</h1>
 </div>
 
 
@@ -322,143 +319,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="sources" class="level1">
-<h1>Sources</h1>
+<p>Docker-Compose is a tool that is presented as the next step of abstraction under Docker - a tool that allows to organise interactions between containers.</p>
+<section id="yaml" class="level1">
+<h1>YAML</h1>
+<p>The language used to describe the behaviour of docker-compose.</p>
+<p>YAML allows you to describe data structures consisting of lists and dictionaries:</p>
 <ul>
-<li><a href="https://dash.plotly.com/workspaces/using-dash-in-jupyter-and-workspaces">Using dash inside jupyter</a>;</li>
-<li><a href="https://dash.plotly.com/dash-core-components/checklist">Check list component in dash</a>;</li>
-<li><a href="https://dash.plotly.com/basic-callbacks">Dash basic callbacks;</a></li>
-<li><a href="https://github.com/plotly/dash/issues/1549">Callback without output - github discussion</a>.</li>
+<li>Each item in the list starts with the symbol <code>-</code>;</li>
+<li>Each new key in the dictionary sets like <code>&lt;key&gt;</code>;</li>
+<li>Templates (anchors) - the possibility to create the link to some essential and then use it in any place;</li>
+<li>The nesting of the structure is formed by indents.</li>
 </ul>
-</section>
-<section id="callbacks" class="level1">
-<h1>Callbacks</h1>
-<p>It is a mechanism that allows you to create a function that will be called when you perform an action. It realised. This is implemented via the <code>dash.callback</code> decorator. More details in the <a href="https://dash.plotly.com/basic-callbacks">documentation</a>. I will focus on some practical features.</p>
-<section id="inputoutput-format" class="level3">
-<h3 class="anchored" data-anchor-id="inputoutput-format">Input/output format</h3>
-<p>Input/Output, implemented by <code>dash.Input</code>/<code>dash.Output</code>, which should be passed as arguments to the <code>callback</code> decorator. Constructors of the classes require the following syntax <code>("&lt;object-id&gt;", "&lt;property&gt;")</code>, so you can choose which property to pass to the callback and which to change.</p>
-<p>In the following example, I simply take <code>dcc.Checklist.values</code> and link it to <code>ddc.Slider.marks</code> - the markers on the <code>dcc.slider</code> will exactly match the selected checkboxes on the <code>dcc.checklist</code>.</p>
+<p>Further examples will make it clearer.</p>
+<p>Python has a library called “yaml” that allows you to convert “yaml” markup to the corresponding Python data structures.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the following example, I create the dictionary with the keys <code>names</code>, <code>ages</code>, which contains the corresponding lists:</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> dcc, html, Input, Output, callback</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> JupyterDash(<span class="va">__name__</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">20</span>))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>value <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">5</span>]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>lst_val_to_slider_marks <span class="op">=</span> <span class="kw">lambda</span> value: {val:<span class="bu">str</span>(val) <span class="cf">for</span> val <span class="kw">in</span> value}</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span> html.Div(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    [</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        dcc.Checklist(</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            options,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>            value <span class="op">=</span> value,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            <span class="bu">id</span> <span class="op">=</span> <span class="st">"check-lst"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            inline <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        dcc.Slider(</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="bu">min</span>(options), <span class="bu">max</span>(options),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            step <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            marks <span class="op">=</span> lst_val_to_slider_marks(value),</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            <span class="bu">id</span> <span class="op">=</span> <span class="st">"slider"</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    style<span class="op">=</span>{<span class="st">'display'</span>: <span class="st">'flex'</span>, <span class="st">'flex-direction'</span>: <span class="st">'column'</span>}</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"slider"</span>, <span class="st">"marks"</span>),</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"check-lst"</span>, <span class="st">"value"</span>)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_callback(val):</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lst_val_to_slider_marks(val)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    app.run_server(debug<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>In site it will looks like:<br> <img src="pltly_dash_examples/callbacks_InpOut_formal.gif"><br> Any check box you click - it will add one more marker on slider.</p>
-</section>
-<section id="callback-without-output" class="level3">
-<h3 class="anchored" data-anchor-id="callback-without-output">Callback without output</h3>
-<p>It turns out that <code>dash</code> has no callback mechanism without output. So the only tricky way is to create a dummy object and set it as the output object. In the following example, I use <code>html.Div(id='dummy')</code>, or rather its <code>children</code> property. I also print out some messages with changes to <code>dcc.Checklist</code> to prove that everything is working.</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> dcc, html, Input, Output, callback</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> JupyterDash(<span class="va">__name__</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>check_values <span class="op">=</span> [<span class="st">"value1"</span>, <span class="st">"value2"</span>, <span class="st">"value3"</span>]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span> html.Div([</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    html.Div(<span class="bu">id</span><span class="op">=</span><span class="st">'dummy'</span>),</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    dcc.Checklist(</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        check_values,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span> <span class="op">=</span> <span class="st">"check-lst"</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>clicks_counter <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"dummy"</span>, <span class="st">"children"</span>),</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"check-lst"</span>, <span class="st">"value"</span>)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_callback(checklist_value):</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> clicks_counter</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    clicks_counter <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"=========================="</span>)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"    CLICK </span><span class="sc">{</span>clicks_counter<span class="sc">}</span><span class="ss">     "</span>)</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"=========================="</span>)</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-------value-------"</span>)</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(checklist_value)</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    app.run_server(debug<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>==========================
-    CLICK 1     
-==========================
--------value-------
-None
-==========================
-    CLICK 2     
-==========================
--------value-------
-['value2']
-==========================
-    CLICK 3     
-==========================
--------value-------
-['value2', 'value3']
-==========================
-    CLICK 4     
-==========================
--------value-------
-['value2', 'value3', 'value1']
-==========================
-    CLICK 5     
-==========================
--------value-------
-['value2', 'value3']
-==========================
-    CLICK 6     
-==========================
--------value-------
-['value3']</code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>yaml_str <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">names:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">    - peter</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">    - olga</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">ages:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">    - 22</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">    - 18</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>yaml.full_load(yaml_str)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>{'names': ['peter', 'olga'], 'ages': [22, 18]}</code></pre>
 </div>
 </div>
+<p>Note that there should be a space between <code>&lt;key&gt;</code> and <code>&lt;value&gt;</code>. Here, for comparison, is a correctly created dictionary under the key <code>postgres</code> and a dictionary under the key <code>clickhouse</code> which was created incorrectly.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
