@@ -436,7 +436,7 @@
   {
     "objectID": "machine_learning/metrix/chisquare.html",
     "href": "machine_learning/metrix/chisquare.html",
-    "title": "Knowledge bank",
+    "title": "Knowledge",
     "section": "",
     "text": "Разбор статистики \\(\\chi^2\\)\nИсточники: - расстояние Пирсона от Анатолия Карпова; - анализ таблиц сопряженности от Анатолия Карпова."
   },
@@ -471,7 +471,7 @@
   {
     "objectID": "machine_learning/var_vs_bias/quadratic.html",
     "href": "machine_learning/var_vs_bias/quadratic.html",
-    "title": "Knowledge bank",
+    "title": "Knowledge",
     "section": "",
     "text": "import numpy as np\nimport scipy.interpolate as inter\nimport matplotlib.pyplot as plt\nfrom sklearn.linear_model import LinearRegression\n\nnp.random.seed(4)\n\n# data generation\nx_p = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])\ny_p = np.array([2, 4, 3, 5, 4, 6, 5, 7, 6, 8, 10])\npoly = inter.lagrange(x_p, y_p)\ndef f(x):\n    X = np.concatenate(\n        [(x**a)[:, np.newaxis] for a in range(len(poly.coef))],\n        axis = 1\n    )\n    return np.dot(X, poly.coef[::-1][:, np.newaxis]).ravel()\n\ny = lambda x: f(x) + np.random.normal(0, 1, x.shape)\n\nX_sample = np.sort(np.random.uniform(0, 10, 200)).astype(np.longdouble)\nY_sample = y(X_sample)\n\n\n# models\ndef get_poly_matrix(X, p = 2):\n    return np.concatenate(\n        [np.array(X)[:, np.newaxis]**(i) for i in range(p+1)],\n        axis = 1\n    )\ndef get_poly_predict(X, y, p = 2):\n    \n    X_matr = get_poly_matrix(X, p)\n    return LinearRegression(\n        fit_intercept=False\n    ).fit(X_matr, y).predict(X_matr)\n\n\nCHANGE_ME = 17\nplt.scatter(X_sample, Y_sample, color = \"black\")\nplt.title(\"polynomial degree \" + str(CHANGE_ME))\nplt.plot(\n    X_sample,\n    get_poly_predict(X_sample, Y_sample, CHANGE_ME),\n    linewidth = 4\n)\nplt.savefig(\"poly16.png\")"
   },
@@ -1017,7 +1017,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Knowledge bank",
+    "title": "Knowledge",
     "section": "",
     "text": "Website provided by Fedor Kobak, with various studies in data science, computer science and related fields."
   },
