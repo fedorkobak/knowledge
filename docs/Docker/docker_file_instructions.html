@@ -322,7 +322,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#run-something-with-start-of-container" id="toc-run-something-with-start-of-container" class="nav-link active" data-scroll-target="#run-something-with-start-of-container">Run something with start of container</a></li>
+  <li><a href="#run-with-start-of-container" id="toc-run-with-start-of-container" class="nav-link active" data-scroll-target="#run-with-start-of-container">Run with start of container</a>
+  <ul class="collapse">
+  <li><a href="#entrypoint" id="toc-entrypoint" class="nav-link" data-scroll-target="#entrypoint"><code>ENTRYPOINT</code></a></li>
+  <li><a href="#cmd" id="toc-cmd" class="nav-link" data-scroll-target="#cmd"><code>CMD</code></a></li>
+  <li><a href="#entrypoint-cmd" id="toc-entrypoint-cmd" class="nav-link" data-scroll-target="#entrypoint-cmd"><code>ENTRYPOINT</code> + <code>CMD</code></a></li>
+  </ul></li>
   <li><a href="#environment-variables" id="toc-environment-variables" class="nav-link" data-scroll-target="#environment-variables">Environment variables</a></li>
   </ul>
 </nav>
@@ -354,11 +359,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>COPY &lt;host directory&gt; &lt;image directory&gt;</code> - copy file from host to the image;</li>
 <li><code>RUN</code> - allows to run command during container build.</li>
 </ul>
-<section id="run-something-with-start-of-container" class="level1">
-<h1>Run something with start of container</h1>
+<section id="run-with-start-of-container" class="level1">
+<h1>Run with start of container</h1>
 <p>The instructions provided in this section allow you to set container behaviour with the command specified when starting the container in <code>docker run</code>. So <a href="../Docker/docker_commands.html#sec-docker_run_com_on_start">here</a> you can find some useful tips.</p>
-<section id="entrypoint" class="level4">
-<h4 class="anchored" data-anchor-id="entrypoint"><code>ENTRYPOINT</code></h4>
+<section id="entrypoint" class="level2">
+<h2 class="anchored" data-anchor-id="entrypoint"><code>ENTRYPOINT</code></h2>
 <p>Allow command to run when container based on image is running. The feature of this instruction is that you can add something at the end of the <code>docker run</code> command, and it will be added to command described in <code>ENTRYPOINT</code>.</p>
 <p>Such dockerfile:</p>
 <pre><code>FROM ubuntu:20.04
@@ -381,8 +386,8 @@ ls</code></pre>
 </div>
 <p>So the lines I passed as arguments were just printed - just like <code>echo</code> does.</p>
 </section>
-<section id="cmd" class="level4">
-<h4 class="anchored" data-anchor-id="cmd"><code>CMD</code></h4>
+<section id="cmd" class="level2">
+<h2 class="anchored" data-anchor-id="cmd"><code>CMD</code></h2>
 <p>Allow command to run when container based on image is running. If using this instruction you set any command for <code>docker run</code>, the command described in <code>CMD</code> will be completely removed with new commad.</p>
 <p>Consider containers based on dockerfile:</p>
 <pre><code>FROM ubuntu:20.04
@@ -421,8 +426,8 @@ var</code></pre>
 </div>
 </div>
 </section>
-<section id="entrypoint-cmd" class="level4">
-<h4 class="anchored" data-anchor-id="entrypoint-cmd"><code>ENTRYPOINT</code> + <code>CMD</code></h4>
+<section id="entrypoint-cmd" class="level2">
+<h2 class="anchored" data-anchor-id="entrypoint-cmd"><code>ENTRYPOINT</code> + <code>CMD</code></h2>
 <p>By combining <code>ENTRYPOINT</code> and <code>CMD</code> you can do this: - in <code>ENTRYPOIN</code> set the necessary part of the command; - in <code>CMD</code> set the part of the command that can be changed.</p>
 <p>docker file like:</p>
 <pre><code>FROM ubuntu:20.04
@@ -462,7 +467,6 @@ ENTRYPOINT ["echo"]</code></pre>
 other message</code></pre>
 </div>
 </div>
-</section>
 <section id="several-cmdentrypoin" class="level4">
 <h4 class="anchored" data-anchor-id="several-cmdentrypoin">Several <code>CMD</code>/<code>ENTRYPOIN</code></h4>
 <p>Looks like, docker only takes the last mention of <code>CMD</code>/<code>ENTRY POINT</code>. Which makes sense in the case of ‘inheriting’ containers. So at the following example I’m using docker file:</p>
@@ -482,6 +486,7 @@ CMD ["echo", "default message2"]</code></pre>
 </div>
 </div>
 <p>So it looks like docker just ignored <code>CMD ["echo", "default message1"]</code></p>
+</section>
 </section>
 </section>
 <section id="environment-variables" class="level1">
