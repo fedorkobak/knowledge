@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Knowledge - Select all</title>
+<title>Knowledge - Select/Clear All</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,7 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../dash/callbacks.html">Dash</a></li><li class="breadcrumb-item"><a href="../dash/select_all.html">Select all</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Knowledge
+      </li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -294,11 +296,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../dash/select_all.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Select all</span></a>
-  </div>
-</li>
+ <span class="menu-text">dash/select_all.ipynb</span>
+  </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -330,14 +329,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#select" id="toc-select" class="nav-link active" data-scroll-target="#select">Select</a></li>
+  <li><a href="#clear" id="toc-clear" class="nav-link" data-scroll-target="#clear">Clear</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Select all</h1>
+<h1 class="title">Select/Clear All</h1>
 </div>
 
 
@@ -352,17 +358,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>It’s a common task to organise a mechanism to select all available options. So here I describe possible ways to do it.</p>
-<p>In the following example, there is a checklist and all the boxes can be selected by pressing the “Select all” button. There are some tricky details associated with this solution:</p>
-<ul>
-<li>You should set up the variable that describes the initial number of clicks on the button (in the example, <code>initial_clicks</code> plays this role). The point is that at program startup all callbacks are called, so the first callback should be skipped, and you can understand that it is the first callback only by comparing <code>n_clicks</code> with the initial number of clicks;</li>
-<li>If any call <code>select_all_button</code> callback is first, you must return exactly the same values as if it was before the call, thats why I needed to use <code>State("check-list", "value")</code> as one of the inputs for the callback.</li>
-</ul>
+<p>It’s a common task to organise a mechanism to select or disable all available options. So here I describe possible ways to do it.</p>
+<section id="select" class="level1">
+<h1>Select</h1>
+<p>In the following example, there is a checklist and all the boxes can be selected by pressing the “Select all” button. You should use <code>prevent_initial_call = True</code> for select all button callback in order to avoid all options in dashboard starting.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> (</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    dcc, </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    html, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    html,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    dcc,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    callback, </span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    Input, </span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    Output, </span>
@@ -371,73 +375,128 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> JupyterDash(<span class="va">__name__</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>initial_clicks <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span> html.Div([</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    html.Button(</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Select All"</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span><span class="op">=</span><span class="st">"select-all-button"</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        n_clicks <span class="op">=</span> initial_clicks</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    dcc.Checklist(</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        [</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelarusSales"</span>,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesNetworkBelarus"</span>,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelSalesNetwork"</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesNetworkBel"</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesOfBelarus"</span>,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelSalesNetworks"</span>,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelarusSalesNetwork"</span>,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesInBelarus"</span>,</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span> <span class="op">=</span> <span class="st">"check-list"</span>,</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        value <span class="op">=</span> []</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"check-list"</span>, <span class="st">"value"</span>),</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    State(<span class="st">"check-list"</span>, <span class="st">"options"</span>),</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    State(<span class="st">"check-list"</span>, <span class="st">"value"</span>),</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"select-all-button"</span>, <span class="st">"n_clicks"</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> select_all_button(</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    options: <span class="bu">list</span>,</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    value: <span class="bu">list</span>,</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    n_clicks: <span class="bu">int</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">        Callback that allows you to do </span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">        select all options in CheckList</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">        from pressing "select-all-button".</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span> html.Div([</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    html.Button(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Select All"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span><span class="op">=</span><span class="st">"select-all-button"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    dcc.Checklist(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelarusSales"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesNetworkBelarus"</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelSalesNetwork"</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesNetworkBel"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesOfBelarus"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelSalesNetworks"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelarusSalesNetwork"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesInBelarus"</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span> <span class="op">=</span> <span class="st">"check-list"</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        value <span class="op">=</span> []</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"check-list"</span>, <span class="st">"value"</span>),</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    State(<span class="st">"check-list"</span>, <span class="st">"options"</span>),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"select-all-button"</span>, <span class="st">"n_clicks"</span>),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    prevent_initial_call <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> select_all_button(</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    options: <span class="bu">list</span>,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    n_clicks: <span class="bu">int</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co">        Callback that allows you to do </span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="co">        select all options in CheckList</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">        from pressing "select-all-button".</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">        options : (list) list with options of Checkbox;</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">        n_clicks: (int) number of clicks on button.</span></span>
 <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="co">        options : (list) list with options of Checkbox;</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co">        value : (list) list with selected options</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co">                of Checkbox;</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">        n_clicks: (int) number of clicks on button.</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co">        (list) list of selected options of Checklist.</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n_clicks <span class="op">==</span> initial_clicks:</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if it is the first call of the</span></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>        <span class="co"># callback it means that I have to just</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>        <span class="co"># save values of Checklist</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> value</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> options</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>app.run_server(debug<span class="op">=</span><span class="va">True</span>, port <span class="op">=</span> <span class="dv">8051</span>)</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co">        (list) list of selected options of Checklist.</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> options</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>app.run_server(debug<span class="op">=</span><span class="va">True</span>, port <span class="op">=</span> <span class="dv">8051</span>)</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="select_all_examples/select_all_checklist.gif"></p>
+<p><img src="select_clear_all_examples/select_all_checklist.gif"></p>
+</section>
+<section id="clear" class="level1">
+<h1>Clear</h1>
+<p>In the following example, I create a button that deselects all values in the checklist. It’s really similar ideas to “Select all” and even easier. You have to set <code>prevent_initial_call = True</code> as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> (</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    html,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dcc,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    callback,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    Input,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    Output,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    State</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>initial_clicks <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> JupyterDash(<span class="va">__name__</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span> html.Div([</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    html.Button(</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Clear"</span>, <span class="bu">id</span> <span class="op">=</span> <span class="st">"clear-button"</span>, </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        n_clicks <span class="op">=</span> initial_clicks</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    dcc.Checklist(</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelarusSales"</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesNetworkBelarus"</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelSalesNetwork"</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesNetworkBel"</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesOfBelarus"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelSalesNetworks"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelarusSalesNetwork"</span>,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesInBelarus"</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span> <span class="op">=</span> <span class="st">"check-list"</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        value <span class="op">=</span> []</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"check-list"</span>, <span class="st">"value"</span>),</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"clear-button"</span>, <span class="st">"n_clicks"</span>),</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    prevent_initial_call <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> button_click(n_clicks: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">        The callback for clear button.</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">        value : (list) the value of Checklist;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co">        (list) a list of options to be selected in </span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="co">               the Checklist after pressing the call button;</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> []</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>app.run(port<span class="op">=</span><span class="dv">8052</span>)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="select_clear_all_examples/clear_all_example.gif"></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

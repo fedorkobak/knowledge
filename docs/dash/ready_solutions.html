@@ -296,11 +296,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../dash/select_all.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Select all</span></a>
-  </div>
-</li>
+ <span class="menu-text">dash/select_all.ipynb</span>
+  </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -336,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#dropdown-checklist" id="toc-dropdown-checklist" class="nav-link active" data-scroll-target="#dropdown-checklist">Dropdown checklist</a></li>
+  <li><a href="#dropchecklist" id="toc-dropchecklist" class="nav-link active" data-scroll-target="#dropchecklist">DropChecklist</a></li>
   </ul>
 </nav>
     </div>
@@ -361,85 +358,109 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>Here I will place a few solution for common tasks associated with dash and plotly.</p>
-<section id="dropdown-checklist" class="level1">
-<h1>Dropdown checklist</h1>
-<div class="cell">
+<section id="dropchecklist" class="level1">
+<h1>DropChecklist</h1>
+<p>There is a possible solution for this type of item when the checklist drops down from the detail item with “Select all” and “Clear” buttons in the summary. For better understanding details check this materials:</p>
+<ul>
+<li><a href="../dash/select_clear_all.html">Select/clear all</a> about building elements, which selects or deselects all in corresponding element types;</li>
+<li><a href="https://dash.plotly.com/duplicate-callback-outputs">How to deal with duplicate callback output</a>, this is important because both the Select All and Clear buttons should send their results to the same list.</li>
+</ul>
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> (</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    dcc, </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    html, </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    callback, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    Input, </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    Output, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    dcc,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    html,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    callback,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    Input,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    Output,</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    State</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> JupyterDash(<span class="va">__name__</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>initial_clicks <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span> html.Div([</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    html.Button(</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Select All"</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span><span class="op">=</span><span class="st">"select-all-button"</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        n_clicks <span class="op">=</span> initial_clicks</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    dcc.Checklist(</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        [</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelarusSales"</span>,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesNetworkBelarus"</span>,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelSalesNetwork"</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesNetworkBel"</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesOfBelarus"</span>,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelSalesNetworks"</span>,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>            <span class="st">"BelarusSalesNetwork"</span>,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SalesInBelarus"</span>,</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span> <span class="op">=</span> <span class="st">"check-list"</span>,</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        value <span class="op">=</span> []</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"check-list"</span>, <span class="st">"value"</span>),</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    State(<span class="st">"check-list"</span>, <span class="st">"options"</span>),</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    State(<span class="st">"check-list"</span>, <span class="st">"value"</span>),</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"select-all-button"</span>, <span class="st">"n_clicks"</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> select_all_button(</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    options: <span class="bu">list</span>,</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    value: <span class="bu">list</span>,</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    n_clicks: <span class="bu">int</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">        Callback that allows you to do </span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">        select all options in CheckList</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">        from pressing "select-all-button".</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>sel_all_button <span class="op">=</span> html.Button(<span class="st">"Select All"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>clear_all_button <span class="op">=</span> html.Button(<span class="st">"Clear"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>check_lst <span class="op">=</span> dcc.Checklist(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"BelarusSales"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SalesNetworkBelarus"</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"BelSalesNetwork"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SalesNetworkBel"</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SalesOfBelarus"</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"BelSalesNetworks"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"BelarusSalesNetwork"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SalesInBelarus"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> []</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span> html.Details([</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    html.Summary([</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        html.Label(<span class="st">"Some options"</span>),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        sel_all_button, clear_all_button</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    ]),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    check_lst</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    Output(check_lst, <span class="st">"value"</span>, allow_duplicate<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    State(check_lst, <span class="st">"options"</span>),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    Input(sel_all_button, <span class="st">"n_clicks"</span>),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    prevent_initial_call<span class="op">=</span><span class="va">True</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> select_all_button(</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    options: <span class="bu">list</span>,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    n_clicks: <span class="bu">int</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co">        Callback that allows you to </span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">        select all options in the Checklist</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">        to which the output is bound</span></span>
 <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="co">        options : (list) list with options of Checkbox;</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co">        value : (list) list with selected options</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co">                of Checkbox;</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">        n_clicks: (int) number of clicks on button.</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co">        (list) list of selected options of Checklist.</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n_clicks <span class="op">==</span> initial_clicks:</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if it is the first call of the</span></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>        <span class="co"># callback it means that I have to just</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>        <span class="co"># save values of Checklist</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> value</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> options</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>app.run_server(debug<span class="op">=</span><span class="va">True</span>, port <span class="op">=</span> <span class="dv">8051</span>)</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">        options : (list) list with options of Checkbox;</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="co">        n_clicks: (int) number of clicks on button.</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="co">        (list) list of selected options of Checklist.</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> options</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    Output(check_lst, <span class="st">"value"</span>, allow_duplicate<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    Input(clear_all_button, <span class="st">"n_clicks"</span>),</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    prevent_initial_call<span class="op">=</span><span class="va">True</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clear_all_click(n_clicks: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="co">        The callback for clear button.</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="co">        n_clicks : (int) number of clicks on button </span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="co">                    called this callback;</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="co">        (list) a list of options to be selected in </span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="co">               the Checklist after pressing the call button;</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> []</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>app.run_server(debug<span class="op">=</span><span class="va">True</span>, port <span class="op">=</span> <span class="st">"8051"</span>)</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><img src="ready_solutions/dropDown_check_box.gif"></p>
 
 
 </section>

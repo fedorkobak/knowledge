@@ -294,11 +294,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../dash/select_all.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Select all</span></a>
-  </div>
-</li>
+ <span class="menu-text">dash/select_all.ipynb</span>
+  </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -376,7 +373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Input/output format</h1>
 <p>Input/Output, implemented by <code>dash.Input</code>/<code>dash.Output</code>, which should be passed as arguments to the <code>callback</code> decorator. Constructors of the classes require the following syntax <code>("&lt;object-id&gt;", "&lt;property&gt;")</code>, so you can choose which property to pass to the callback and which to change.</p>
 <p>In the following example, I simply take <code>dcc.Checklist.values</code> and link it to <code>ddc.Slider.marks</code> - the markers on the <code>dcc.slider</code> will exactly match the selected checkboxes on the <code>dcc.checklist</code>.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> dcc, html, Input, Output, callback</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
@@ -409,11 +406,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"slider"</span>, <span class="st">"marks"</span>),</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"check-lst"</span>, <span class="st">"value"</span>)</span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_callback(val):</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_callback(val:<span class="bu">list</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lst_val_to_slider_marks(val)</span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    app.run_server(debug<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    app.run_server(debug<span class="op">=</span><span class="va">True</span>, port<span class="op">=</span><span class="dv">8051</span>)</span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In site it will looks like:<br> <img src="callbacks_examples/callbacks_InpOut_formal.gif"><br> Any check box you click - it will add one more marker on slider.</p>
@@ -459,7 +456,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    State(<span class="st">"check-lst"</span>, <span class="st">"value"</span>),</span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"button"</span>, <span class="st">"n_clicks"</span>)</span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_callback(val, n_clicks):</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_callback(val: <span class="bu">list</span>, n_clicks : <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
 <span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">        Callback for button.</span></span>
 <span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
