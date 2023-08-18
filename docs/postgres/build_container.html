@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Knowledge - Postgres in docker</title>
+<title>Knowledge - Build container</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Docker/sources.html">Docker</a></li><li class="breadcrumb-item"><a href="../Docker/postgres.html">Postgres in docker</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../postgres/build_container.html">Postgres</a></li><li class="breadcrumb-item"><a href="../postgres/build_container.html">Build container</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -175,12 +175,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../Docker/logs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logging in docker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../Docker/postgres.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Postgres in docker</span></a>
   </div>
 </li>
       </ul>
@@ -327,6 +321,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Postgres</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../postgres/build_container.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Build container</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../postgres/python_interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python interaction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -337,14 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#python-container" id="toc-python-container" class="nav-link active" data-scroll-target="#python-container">Python container</a>
-  <ul class="collapse">
-  <li><a href="#build-images" id="toc-build-images" class="nav-link" data-scroll-target="#build-images">Build images</a>
-  <ul class="collapse">
-  <li><a href="#python-container-1" id="toc-python-container-1" class="nav-link" data-scroll-target="#python-container-1">Python container</a></li>
-  </ul></li>
-  <li><a href="#start-containers" id="toc-start-containers" class="nav-link" data-scroll-target="#start-containers">Start containers</a></li>
-  </ul></li>
+  <li><a href="#initialisation-scripts" id="toc-initialisation-scripts" class="nav-link active" data-scroll-target="#initialisation-scripts">Initialisation scripts</a></li>
   </ul>
 </nav>
     </div>
@@ -353,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Postgres in docker</h1>
+<h1 class="title">Build container</h1>
 </div>
 
 
@@ -368,42 +378,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this page I will show you how to deploy and interact with a Postgres database in a Docker container.</p>
-<section id="python-container" class="level1">
-<h1>Python container</h1>
-<p>For me it’s common task to build interaption with container which handle python program.</p>
-<section id="build-images" class="level2">
-<h2 class="anchored" data-anchor-id="build-images">Build images</h2>
-<p>You don’t need to do this every time, you can do it once to create a specific version of Postgres and Python containers.</p>
-<section id="python-container-1" class="level3">
-<h3 class="anchored" data-anchor-id="python-container-1">Python container</h3>
-<p><a href="postgres/python_container/dockerfile">Dockerfile</a> for this container.<br> <a href="postgres/python_container/requirements.txt">requrements.txt</a> for this container. <br> <a href="postgres/python_container/script.py">script.py</a> for this container.</p>
-</section>
-</section>
-<section id="start-containers" class="level2">
-<h2 class="anchored" data-anchor-id="start-containers">Start containers</h2>
-<div class="cell">
+<p>The postgres section of this site will be inextricably linked to docker, so it is extremely important to dive into the intricacies of running docker containers with postgres.</p>
+<p>The greatest amount of information for this page is taken from <a href="https://hub.docker.com/_/postgres">official postgres dockerhub page</a>.</p>
+<section id="initialisation-scripts" class="level1">
+<h1>Initialisation scripts</h1>
+<p>If you need to organise the initialisation at container startup, you can mount a folder containing <code>*.sql</code> and <code>*.sh</code> initialisation scripts on <code>/docker-entrypoint-initdb.d</code>. This will execute the files in <code>/docker-entrypoint-initdb.d</code>.</p>
+<p>So in the following example, I start the docker container with the folder mounted as <code>/docker-entrypoint-initdb.d</code>. This folder only contains a <a href="build_container/initialisation_scripts/create_table.sql">create_table.sql</a> which creates an empty <code>main_table</code>. Then I check the existence of the table that should be created by <code>create_table.sql</code>.</p>
+<div class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># network</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>docker network create test_project_net</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># postgres</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name database<span class="op">\</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_USER<span class="op">=</span>docker_app<span class="op">\</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_PASSWORD<span class="op">=</span>docker_app<span class="op">\</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_DB<span class="op">=</span>docker_app_db<span class="op">\</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>net<span class="op">=</span>test_project_net<span class="op">\</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    postgres</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># python</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name python_psql<span class="op">\</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>net<span class="op">=</span>test_project_net<span class="op">\</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v .<span class="op">/</span>build_container<span class="op">/</span>initialisation_scripts:<span class="op">/</span>docker<span class="op">-</span>entrypoint<span class="op">-</span>initdb.d<span class="op">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_PASSWORD<span class="op">=</span>docker_app <span class="op">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name init_scripts_example <span class="op">\</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    postgres:<span class="fl">15.4</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">5</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====CHECK TABLE====="</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> init_scripts_example bash <span class="op">-</span>c <span class="st">"psql -U postgres -d postgres -c </span><span class="ch">\"</span><span class="st">\dt</span><span class="ch">\"</span><span class="st">"</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>docker stop  init_scripts_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====CHECK TABLE=====
+           List of relations
+ Schema |    Name    | Type  |  Owner   
+--------+------------+-------+----------
+ public | main_table | table | postgres
+(1 row)
+</code></pre>
+</div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
