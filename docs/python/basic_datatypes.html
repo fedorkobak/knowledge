@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Knowledge - Python interaction</title>
+<title>Knowledge - Basic data types</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../postgres/build_container.html">Postgres</a></li><li class="breadcrumb-item"><a href="../postgres/python_interaction.html">Python interaction</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../python/basic_datatypes.html">Python</a></li><li class="breadcrumb-item"><a href="../python/basic_datatypes.html">Basic data types</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../python/basic_datatypes.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/basic_datatypes.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Basic data types</span></a>
   </div>
 </li>
@@ -350,7 +350,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../postgres/python_interaction.html" class="sidebar-item-text sidebar-link active">
+  <a href="../postgres/python_interaction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Python interaction</span></a>
   </div>
 </li>
@@ -366,12 +366,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#python-from-container" id="toc-python-from-container" class="nav-link active" data-scroll-target="#python-from-container">Python from container</a>
+  <li><a href="#list" id="toc-list" class="nav-link active" data-scroll-target="#list">List</a>
   <ul class="collapse">
-  <li><a href="#build-images" id="toc-build-images" class="nav-link" data-scroll-target="#build-images">Build images</a></li>
-  <li><a href="#start-containers" id="toc-start-containers" class="nav-link" data-scroll-target="#start-containers">Start containers</a></li>
-  <li><a href="#stop-containers" id="toc-stop-containers" class="nav-link" data-scroll-target="#stop-containers">Stop containers</a></li>
-  <li><a href="#clear-images" id="toc-clear-images" class="nav-link" data-scroll-target="#clear-images">Clear images</a></li>
+  <li><a href="#pop---delete-by-index" id="toc-pop---delete-by-index" class="nav-link" data-scroll-target="#pop---delete-by-index"><code>pop</code> - delete by index</a></li>
+  <li><a href="#remove---delete-by-value" id="toc-remove---delete-by-value" class="nav-link" data-scroll-target="#remove---delete-by-value"><code>remove</code> - delete by value</a></li>
+  </ul></li>
+  <li><a href="#tuple" id="toc-tuple" class="nav-link" data-scroll-target="#tuple">Tuple</a>
+  <ul class="collapse">
+  <li><a href="#one-element-tuple" id="toc-one-element-tuple" class="nav-link" data-scroll-target="#one-element-tuple">One element tuple</a></li>
+  </ul></li>
+  <li><a href="#set" id="toc-set" class="nav-link" data-scroll-target="#set">Set</a>
+  <ul class="collapse">
+  <li><a href="#no-order" id="toc-no-order" class="nav-link" data-scroll-target="#no-order">No order</a></li>
+  <li><a href="#only-immutable" id="toc-only-immutable" class="nav-link" data-scroll-target="#only-immutable">Only immutable</a></li>
+  <li><a href="#add-new-value" id="toc-add-new-value" class="nav-link" data-scroll-target="#add-new-value"><code>add</code> new value</a></li>
+  <li><a href="#remove-delete-by-value" id="toc-remove-delete-by-value" class="nav-link" data-scroll-target="#remove-delete-by-value"><code>remove</code> delete by value</a></li>
+  <li><a href="#intercection" id="toc-intercection" class="nav-link" data-scroll-target="#intercection"><code>intercection</code></a></li>
+  <li><a href="#union" id="toc-union" class="nav-link" data-scroll-target="#union"><code>union</code></a></li>
+  <li><a href="#symmetric_difference" id="toc-symmetric_difference" class="nav-link" data-scroll-target="#symmetric_difference"><code>symmetric_difference</code></a></li>
+  <li><a href="#sets-difference-a-b" id="toc-sets-difference-a-b" class="nav-link" data-scroll-target="#sets-difference-a-b">Sets difference <code>A-B</code></a></li>
+  </ul></li>
+  <li><a href="#dict" id="toc-dict" class="nav-link" data-scroll-target="#dict">dict</a>
+  <ul class="collapse">
+  <li><a href="#get-extract-element" id="toc-get-extract-element" class="nav-link" data-scroll-target="#get-extract-element"><code>get</code> extract element</a>
+  <ul class="collapse">
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose">Purpose</a></li>
+  <li><a href="#default-argument" id="toc-default-argument" class="nav-link" data-scroll-target="#default-argument"><code>default</code> argument</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -381,7 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Python interaction</h1>
+<h1 class="title">Basic data types</h1>
 </div>
 
 
@@ -396,72 +417,239 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this page I will show you how to deploy and interact with a Postgres database in a Docker container.</p>
-<section id="python-from-container" class="level1">
-<h1>Python from container</h1>
-<p>For me it’s common task to build interaption with container which handle python program.</p>
-<p>So in this section I want to show you how to build such an interaction.</p>
-<section id="build-images" class="level2">
-<h2 class="anchored" data-anchor-id="build-images">Build images</h2>
-<p>You don’t need to do this every time, you can do it once to create a specific version of Postgres and Python containers.</p>
+<p>This page is dedicated to describing the operation of the basic data types: their properties, methods and features.</p>
+<section id="list" class="level1">
+<h1>List</h1>
+<p>Is an array that you can change at runtime.</p>
+<section id="pop---delete-by-index" class="level2">
+<h2 class="anchored" data-anchor-id="pop---delete-by-index"><code>pop</code> - delete by index</h2>
+<p>You can delete element by index and get it back.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>test_list <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">2</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Poped element"</span>, test_list.pop(<span class="dv">2</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Result list"</span>, test_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Poped element 5
+Result list [3, 4, 2]</code></pre>
+</div>
+</div>
+<p>By default it deltes the first element.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>test_list <span class="op">=</span> [<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Poped elemnt"</span>, test_list.pop())</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Result list"</span>, test_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Poped elemnt 3
+Result list [5, 6, 4]</code></pre>
+</div>
+</div>
+</section>
+<section id="remove---delete-by-value" class="level2">
+<h2 class="anchored" data-anchor-id="remove---delete-by-value"><code>remove</code> - delete by value</h2>
+<p>You can delete element by value.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>test_list <span class="op">=</span> [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initial list"</span>, test_list)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>test_list.remove(<span class="dv">4</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"resutl list"</span>, test_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>initial list [4, 5, 4, 5]
+resutl list [5, 4, 5]</code></pre>
+</div>
+</div>
+<p><strong>Note</strong> that if there’s no removing value in the source list, you’ll have an error.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>test_list <span class="op">=</span> [<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>test_list.remove(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: list.remove(x): x not in list</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="tuple" class="level1">
+<h1>Tuple</h1>
+<p>Is an array that can’t be changed at runtime.</p>
+<section id="one-element-tuple" class="level2">
+<h2 class="anchored" data-anchor-id="one-element-tuple">One element tuple</h2>
+<p>To create one element tuple you have to use the syntax <code>(&lt;element&gt;,)</code> not <del><code>(&lt;element&gt;)</code></del>. By default, parentheses are not used to create a tuple, but to prioritise executions in the expression, so you have to use at least one comma inside the parentheses to tell the interpreter that it is the tuple.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Just a variable"</span>, (<span class="dv">4</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"One element tuple"</span>, (<span class="dv">5</span>,))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Just a variable 4
+One element tuple (5,)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="set" class="level1">
+<h1>Set</h1>
+<p>Array of unique values. You can create it by using <code>{&lt;element1&gt;, &lt;element2&gt;, ..., &lt;elementn&gt;}</code> or <code>tuple</code> function.</p>
+<p>In the following example, I show that it can contain only unique elements. Although element 2 is specified twice, it appears only once as a result.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>{<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>{1, 2, 3, 4}</code></pre>
+</div>
+</div>
+<section id="no-order" class="level2">
+<h2 class="anchored" data-anchor-id="no-order">No order</h2>
+<p>One of the main features of the set datatype is that it doesn’t have any order. This has important implications:</p>
 <ul>
-<li><p>Python container:</p>
-<ul>
-<li><a href="python_interaction/python_container/dockerfile">Dockerfile</a> for python container;</li>
-<li><a href="python_interaction/python_container/requirements.txt">requrements.txt</a> for this container;</li>
-<li><a href="python_interaction/python_container/script.py">script.py</a> for this container;</li>
-</ul></li>
-<li><p>Postgres container:</p>
-<ul>
-<li><a href="python_interaction/postgres_container/dockerfile">Dockerfile</a> for postgres container;</li>
-<li><a href="python_interaction/postgres_container/create_table.sql">sql script</a> that creates experiment tables in the database.</li>
-</ul></li>
+<li>You can’t apply indexing syntax (the <code>[]</code> operator) to sets;</li>
+<li>There are no functions associated with indexing (e.g.&nbsp;<code>pop</code> in the list datatype).</li>
 </ul>
+</section>
+<section id="only-immutable" class="level2">
+<h2 class="anchored" data-anchor-id="only-immutable">Only immutable</h2>
+<p>In sets, you can only use immutable datatypes. The following cells show that if you add a mutable type to a tuple (e.g.&nbsp;list), you will get an error.</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t pg_example_python postgres<span class="op">/</span>python_container <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t pg_example_postgres postgres<span class="op">/</span>postgres_container <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>{<span class="dv">1</span>,<span class="st">"1"</span>, <span class="fl">9.4</span>, (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>{(1, 3, 4), '1', 1, 9.4}</code></pre>
 </div>
-</section>
-<section id="start-containers" class="level2">
-<h2 class="anchored" data-anchor-id="start-containers">Start containers</h2>
-<p>You should share the same net between containers, in the following example which is completed by <code>test_project_net</code>.</p>
+</div>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># network</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>docker network create test_project_net <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># postgres</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name pg_example_posgres_cont<span class="op">\</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_USER<span class="op">=</span>docker_app<span class="op">\</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_PASSWORD<span class="op">=</span>docker_app<span class="op">\</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_DB<span class="op">=</span>docker_app_db<span class="op">\</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>net<span class="op">=</span>test_project_net<span class="op">\</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    pg_example_postgres <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># python</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name pg_example_python_cont<span class="op">\</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>net<span class="op">=</span>test_project_net<span class="op">\</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    pg_example_python <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>{<span class="dv">1</span>,<span class="st">"1"</span>, <span class="fl">9.4</span>, (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>), [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>TypeError: unhashable type: 'list'</code></pre>
+</div>
 </div>
 </section>
-<section id="stop-containers" class="level2">
-<h2 class="anchored" data-anchor-id="stop-containers">Stop containers</h2>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>docker stop pg_example_posgres_cont pg_example_python_cont <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>docker network rm test_project_net <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="add-new-value" class="level2">
+<h2 class="anchored" data-anchor-id="add-new-value"><code>add</code> new value</h2>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initital set"</span>, test_set)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>test_set.add(<span class="st">"s"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"result set"</span>, test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>initital set {1, 2, 3}
+result set {1, 2, 3, 's'}</code></pre>
+</div>
+</div>
+<p><strong>Note</strong> that adding an element that already exists in the set won’t cause an error, it will simply be ignored.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initial set"</span>, test_set)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>test_set.add(<span class="dv">3</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"restult set"</span>, test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>initial set {1, 2, 3, 4}
+restult set {1, 2, 3, 4}</code></pre>
+</div>
 </div>
 </section>
-<section id="clear-images" class="level2">
-<h2 class="anchored" data-anchor-id="clear-images">Clear images</h2>
-<p>To avoid creating a lot of rubbish in docker images, you should delete the containers created for this example.</p>
-<div class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>docker rmi pg_example_python pg_example_postgres <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="remove-delete-by-value" class="level2">
+<h2 class="anchored" data-anchor-id="remove-delete-by-value"><code>remove</code> delete by value</h2>
+<p>You can delete element by value.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>}</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initial list"</span>, test_set)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>test_set.remove(<span class="dv">4</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"resutl list"</span>, test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>initial list {1, 2, 3, 4, 5}
+resutl list {1, 2, 3, 5}</code></pre>
+</div>
+</div>
+<p><strong>Note</strong> that if there’s no removing value in the source list, you’ll have an error.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>}</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>test_set.remove(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>KeyError: 6</code></pre>
+</div>
+</div>
+</section>
+<section id="intercection" class="level2">
+<h2 class="anchored" data-anchor-id="intercection"><code>intercection</code></h2>
+<p>This method allows you to get a set that contains only common elements for argument sets.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>test_set1.intersection(test_set2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>{2, 3}</code></pre>
+</div>
+</div>
+</section>
+<section id="union" class="level2">
+<h2 class="anchored" data-anchor-id="union"><code>union</code></h2>
+<p>This method allows you to get a set that contains all elements from both argument sets.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>test_set1.union(test_set2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>{1, 2, 3, 4}</code></pre>
+</div>
+</div>
+</section>
+<section id="symmetric_difference" class="level2">
+<h2 class="anchored" data-anchor-id="symmetric_difference"><code>symmetric_difference</code></h2>
+<p>This method allows you to get a set that contains elements that are present in only one of the argument sets, but not in both.</p>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>test_set1.symmetric_difference(test_set2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>{1, 4}</code></pre>
+</div>
+</div>
+</section>
+<section id="sets-difference-a-b" class="level2">
+<h2 class="anchored" data-anchor-id="sets-difference-a-b">Sets difference <code>A-B</code></h2>
+<p>In case you subtract set A from set B you get a set of elements from the set not contained in set B.</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">-</span> test_set2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>{1}</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="dict" class="level1">
+<h1>dict</h1>
+<p>Allow to build arrays that has <em>key&lt;-&gt;value</em> relationship.</p>
+<section id="get-extract-element" class="level2">
+<h2 class="anchored" data-anchor-id="get-extract-element"><code>get</code> extract element</h2>
+<p>By using this function you can get value by key from the dict.</p>
+<section id="purpose" class="level3">
+<h3 class="anchored" data-anchor-id="purpose">Purpose</h3>
+<p>It may not be clear why this is necessary, as there is a <code>[]</code> operator which allows you to perform exactly the same actions. The <strong>difference from the <code>[]</code> operator</strong> is that it doesn’t cause an error if there is no specified key in the dictionary.</p>
+<p>So the following cells show that the <code>[]</code> operator caused an error when you tried to load a non-existent key, but in the identical example the <code>get</code> method just returned None.</p>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict[<span class="st">"c"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>KeyError: 'c'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict.get(<span class="st">"c"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>None</code></pre>
+</div>
+</div>
+</section>
+<section id="default-argument" class="level3">
+<h3 class="anchored" data-anchor-id="default-argument"><code>default</code> argument</h3>
+<p>Allows to set value to be returned If there is no item with the requested key.</p>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict.get(<span class="st">"c"</span>, <span class="st">"default value"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>default value</code></pre>
+</div>
 </div>
 
 
+</section>
 </section>
 </section>
 

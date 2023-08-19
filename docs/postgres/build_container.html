@@ -190,6 +190,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../python/basic_datatypes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic data types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../python/operators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Operators</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../python/virtual_environment.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Virutal environment in python</span></a>
   </div>
@@ -384,7 +396,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Initialisation scripts</h1>
 <p>If you need to organise the initialisation at container startup, you can mount a folder containing <code>*.sql</code> and <code>*.sh</code> initialisation scripts on <code>/docker-entrypoint-initdb.d</code>. This will execute the files in <code>/docker-entrypoint-initdb.d</code>.</p>
 <p>So in the following example, I start the docker container with the folder mounted as <code>/docker-entrypoint-initdb.d</code>. This folder only contains a <a href="build_container/initialisation_scripts/create_table.sql">create_table.sql</a> which creates an empty <code>main_table</code>. Then I check the existence of the table that should be created by <code>create_table.sql</code>.</p>
-<div class="cell" data-execution_count="28">
+<div class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v .<span class="op">/</span>build_container<span class="op">/</span>initialisation_scripts:<span class="op">/</span>docker<span class="op">-</span>entrypoint<span class="op">-</span>initdb.d<span class="op">\</span></span>
