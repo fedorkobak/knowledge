@@ -375,7 +375,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#list" id="toc-list" class="nav-link" data-scroll-target="#list">list</a></li>
   <li><a href="#tuple" id="toc-tuple" class="nav-link" data-scroll-target="#tuple">tuple</a></li>
   <li><a href="#str" id="toc-str" class="nav-link" data-scroll-target="#str">str</a></li>
+  <li><a href="#dict" id="toc-dict" class="nav-link" data-scroll-target="#dict">dict</a></li>
   </ul></li>
+  <li><a href="#not-in" id="toc-not-in" class="nav-link" data-scroll-target="#not-in"><code>not in</code></a></li>
   <li><a href="#order" id="toc-order" class="nav-link" data-scroll-target="#order">Order</a>
   <ul class="collapse">
   <li><a href="#easy-examples" id="toc-easy-examples" class="nav-link" data-scroll-target="#easy-examples">Easy examples</a>
@@ -383,6 +385,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#operator-sequence" id="toc-operator-sequence" class="nav-link" data-scroll-target="#operator-sequence">Operator sequence</a></li>
   <li><a href="#associativity" id="toc-associativity" class="nav-link" data-scroll-target="#associativity">Associativity</a></li>
   </ul></li>
+  </ul></li>
+  <li><a href="#break" id="toc-break" class="nav-link" data-scroll-target="#break"><code>break</code></a>
+  <ul class="collapse">
+  <li><a href="#nested-loops" id="toc-nested-loops" class="nav-link" data-scroll-target="#nested-loops">Nested loops</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -483,6 +489,34 @@ False</code></pre>
 </div>
 </div>
 </section>
+<section id="dict" class="level2">
+<h2 class="anchored" data-anchor-id="dict">dict</h2>
+<p>Checks if the element on the left side of <code>in</code> is <strong>in the keys</strong> (not values) of the dictionary on the right side of <code>in</code>.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"a"</span> <span class="kw">in</span> test_dict)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">1</span> <span class="kw">in</span> test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>True
+False</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="not-in" class="level1">
+<h1><code>not in</code></h1>
+<p>This operator returns <code>True</code> if the collection from the right side of the operator contains the value from the left side of the operator, otherwise it returns <code>False</code>.</p>
+<p>Looks like it’s syntax sugar, because now I don’t see any cases where it differs from the expression <code>not (&lt;value&gt; in &lt;collection&gt;)</code>. The following example supports this idea.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>example_collection <span class="op">=</span> [<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="kw">not</span> (<span class="st">"a"</span> <span class="kw">in</span> example_collection)) </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"a"</span> <span class="kw">not</span> <span class="kw">in</span> example_collection)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>False
+False</code></pre>
+</div>
+</div>
 </section>
 <section id="order" class="level1">
 <h1>Order</h1>
@@ -497,8 +531,8 @@ False</code></pre>
 <h3 class="anchored" data-anchor-id="operator-sequence">Operator sequence</h3>
 <p>The following example show that <code>**</code> will be executed before <code>*</code> anyway. Calculation always follows the way <span class="math inline">\(4^2=16 \rightarrow 16*2 = 32\)</span> and never <span class="math inline">\(2*4=8 \rightarrow 8^2=64\)</span>.</p>
 <div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">2</span><span class="op">*</span><span class="dv">4</span><span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">4</span><span class="op">**</span><span class="dv">2</span><span class="op">*</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">2</span><span class="op">*</span><span class="dv">4</span><span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">4</span><span class="op">**</span><span class="dv">2</span><span class="op">*</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>32</code></pre>
 </div>
@@ -508,7 +542,7 @@ False</code></pre>
 <h3 class="anchored" data-anchor-id="associativity">Associativity</h3>
 <p>As mentioned for the operators <code>/</code> and <code>*</code>, they are executed from left to right. So the following example will use logic <span class="math inline">\(3/3=1 \rightarrow 1*2=2\)</span>, not <span class="math inline">\(3*2=6 \rightarrow 3/6=0.5\)</span>.</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="op">/</span><span class="dv">3</span><span class="op">*</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="op">/</span><span class="dv">3</span><span class="op">*</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>2.0</code></pre>
 </div>
@@ -519,16 +553,67 @@ False</code></pre>
 <li>In second case it uses logic <span class="math inline">\([3/3]=0 \rightarrow 0/3=0\)</span>.</li>
 </ul>
 <div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">3</span><span class="op">/</span><span class="dv">3</span><span class="op">%</span><span class="dv">3</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">3</span><span class="op">%</span><span class="dv">3</span><span class="op">/</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">3</span><span class="op">/</span><span class="dv">3</span><span class="op">%</span><span class="dv">3</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">3</span><span class="op">%</span><span class="dv">3</span><span class="op">/</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1.0
 0.0</code></pre>
 </div>
 </div>
-
-
 </section>
+</section>
+</section>
+<section id="break" class="level1">
+<h1><code>break</code></h1>
+<p>Lets you exit the cycle.</p>
+<section id="nested-loops" class="level2">
+<h2 class="anchored" data-anchor-id="nested-loops">Nested loops</h2>
+<p>What will happens if you put cycle incide two cycles? Will it leave both cycles or just the internal one?</p>
+<p><strong>It will leave only intertal loop.</strong></p>
+<p>So in the following example we will use the <code>break</code> operator inside the internal cycle only if we loop to a variable of the internal cycle that is equal to or greater than 2. As a result, we go through all the operations provided by the outer loop, but each interation of the internal loop is ended when the loop variable enriches 2.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"external loop"</span>, i)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> j <span class="op">&gt;=</span> <span class="dv">2</span>:</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"    internal loop"</span>, j)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>external loop 0
+    internal loop 0
+    internal loop 1
+external loop 1
+    internal loop 0
+    internal loop 1
+external loop 2
+    internal loop 0
+    internal loop 1
+external loop 3
+    internal loop 0
+    internal loop 1</code></pre>
+</div>
+</div>
+<p><strong>Solution</strong> the best solution for today is to organise a flag that will cause a <code>break</code> operator in the external cycle.</p>
+<p>So in the following example I have added a <code>flag</code> that gets a <code>True</code> value before exiting the internal loop, and if after exiting the internal loop <code>flag==True</code> it will cause exiting the external cycle as well.</p>
+<p><strong>No better solution has been found to date.</strong></p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"external loop"</span>, i)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> j <span class="op">&gt;=</span> <span class="dv">2</span>:</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            flag <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"    internal loop"</span>, j)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> flag: <span class="cf">break</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>external loop 0
+    internal loop 0
+    internal loop 1</code></pre>
+</div>
+</div>
+
+
 </section>
 </section>
 
