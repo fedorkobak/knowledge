@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -89,8 +89,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
@@ -110,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../python/basic_datatypes.html">Python</a></li><li class="breadcrumb-item"><a href="../python/exceptions.html">Exceptions</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -366,7 +365,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#get-type-of-excetption" id="toc-get-type-of-excetption" class="nav-link active" data-scroll-target="#get-type-of-excetption">Get type of excetption</a></li>
+  <li><a href="#several-exception-types" id="toc-several-exception-types" class="nav-link active" data-scroll-target="#several-exception-types">Several exception types</a>
+  <ul class="collapse">
+  <li><a href="#same-except-block" id="toc-same-except-block" class="nav-link" data-scroll-target="#same-except-block">Same <code>except</code> block</a></li>
+  <li><a href="#different-except-blocks" id="toc-different-except-blocks" class="nav-link" data-scroll-target="#different-except-blocks">Different <code>except</code> blocks</a></li>
+  <li><a href="#ony-one-exception-per-type" id="toc-ony-one-exception-per-type" class="nav-link" data-scroll-target="#ony-one-exception-per-type">Ony one <code>exception</code> per type</a></li>
+  </ul></li>
+  <li><a href="#default-except" id="toc-default-except" class="nav-link" data-scroll-target="#default-except">default <code>except</code></a></li>
+  <li><a href="#get-type-of-excetption" id="toc-get-type-of-excetption" class="nav-link" data-scroll-target="#get-type-of-excetption">Get type of excetption</a></li>
   </ul>
 </nav>
     </div>
@@ -390,23 +396,193 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<section id="several-exception-types" class="level1">
+<h1>Several exception types</h1>
+<p>If you want to handle multiple exceptions for a block, you can use one of the following options:</p>
+<section id="same-except-block" class="level2">
+<h2 class="anchored" data-anchor-id="same-except-block">Same <code>except</code> block</h2>
+<p>To use the same code to handle different types of exceptions, you can simply mention them as tuples in the condition for the <code>except</code> block.</p>
+<p>In the following example, I have called a random exception type, but only three of four possible error types are mentioned in the <code>except</code> block. So I will only get a message from the <code>except</code> block until I get the unmentioned error type.</p>
+<p>I would like to emphasise once again that this is not done to handle all error types, there is a special design for this which is described <a href="#default-except">here</a>.</p>
+<div class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>test_lst <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>try_functions <span class="op">=</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ZeroDivisionError"</span>: <span class="kw">lambda</span>: <span class="dv">8</span><span class="op">/</span><span class="dv">0</span>, <span class="co"># </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IndexError"</span> : <span class="kw">lambda</span>: test_lst[<span class="dv">5</span>],</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"TypeError"</span> : <span class="kw">lambda</span>: <span class="st">"hello"</span> <span class="op">+</span> <span class="dv">4</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NameError"</span> : <span class="kw">lambda</span>: unknown_name</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>error_types <span class="op">=</span> <span class="bu">list</span>(try_functions.keys())</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        this_type <span class="op">=</span> np.random.choice(error_types)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"====I got a type </span><span class="sc">{</span>this_type<span class="sc">}</span><span class="ss">===="</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        try_functions[this_type]()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> (<span class="pp">ZeroDivisionError</span>, <span class="pp">IndexError</span>, <span class="pp">TypeError</span>):</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"I handle all mentioned exceptions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>====I got a type IndexError====
+I handle all mentioned exceptions
+====I got a type TypeError====
+I handle all mentioned exceptions
+====I got a type ZeroDivisionError====
+I handle all mentioned exceptions
+====I got a type TypeError====
+I handle all mentioned exceptions
+====I got a type NameError====</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'unknown_name' is not defined</code></pre>
+</div>
+</div>
+</section>
+<section id="different-except-blocks" class="level2">
+<h2 class="anchored" data-anchor-id="different-except-blocks">Different <code>except</code> blocks</h2>
+<p>You can set code to handle a particular type of error, and do it several times for a <code>try</code> block. All you have to do is mention several <code>except</code> blocks one after the other.</p>
+<p>So in the following example, I call random error in a loop, and different errors have different handlers. You can see that there is a specific message for each iteration.</p>
+<div class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>test_lst <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>try_functions <span class="op">=</span> {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ZeroDivisionError"</span>: <span class="kw">lambda</span>: <span class="dv">8</span><span class="op">/</span><span class="dv">0</span>, <span class="co"># </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IndexError"</span> : <span class="kw">lambda</span>: test_lst[<span class="dv">5</span>],</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"TypeError"</span> : <span class="kw">lambda</span>: <span class="st">"hello"</span> <span class="op">+</span> <span class="dv">4</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>error_types <span class="op">=</span> <span class="bu">list</span>(try_functions.keys())</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        this_type <span class="op">=</span> np.random.choice(error_types)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"====I got a type </span><span class="sc">{</span>this_type<span class="sc">}</span><span class="ss">===="</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        try_functions[this_type]()</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"This is divison by zero (first option)"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">IndexError</span>:</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"This is wrong index (second option)"</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">TypeError</span>:</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"This is wrong operations with types (third option)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>====I got a type TypeError====
+This is wrong operations with types (third option)
+====I got a type ZeroDivisionError====
+This is divison by zero (first option)
+====I got a type TypeError====
+This is wrong operations with types (third option)
+====I got a type IndexError====
+This is wrong index (second option)
+====I got a type TypeError====
+This is wrong operations with types (third option)
+====I got a type TypeError====
+This is wrong operations with types (third option)
+====I got a type ZeroDivisionError====
+This is divison by zero (first option)
+====I got a type TypeError====
+This is wrong operations with types (third option)
+====I got a type ZeroDivisionError====
+This is divison by zero (first option)
+====I got a type TypeError====
+This is wrong operations with types (third option)</code></pre>
+</div>
+</div>
+</section>
+<section id="ony-one-exception-per-type" class="level2">
+<h2 class="anchored" data-anchor-id="ony-one-exception-per-type">Ony one <code>exception</code> per type</h2>
+<p>You can define any number of `except’ blocks for the same exception type, but only the first one will be called.</p>
+<p>In the following example, even though I declared two codes for the <code>ZeroDivisionError</code> type exception, only the first one was executed.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span><span class="op">/</span><span class="dv">0</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"First code to handle exception"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Second code to handle exception"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>First code to handle exception</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="default-except" class="level1">
+<h1>default <code>except</code></h1>
+<p>You can run some code with any type of exception, just without specifying the type of exception in the corresponding <code>except</code> block.</p>
+<p>In the following example, I call random exceptions in a loop, and each of them is handled by an <code>except</code> block.</p>
+<div class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>test_lst <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>try_functions <span class="op">=</span> {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ZeroDivisionError"</span>: <span class="kw">lambda</span>: <span class="dv">8</span><span class="op">/</span><span class="dv">0</span>, <span class="co"># </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IndexError"</span> : <span class="kw">lambda</span>: test_lst[<span class="dv">5</span>],</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"TypeError"</span> : <span class="kw">lambda</span>: <span class="st">"hello"</span> <span class="op">+</span> <span class="dv">4</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NameError"</span> : <span class="kw">lambda</span>: unknown_name</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>error_types <span class="op">=</span> <span class="bu">list</span>(try_functions.keys())</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        this_type <span class="op">=</span> np.random.choice(error_types)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"====I got a type </span><span class="sc">{</span>this_type<span class="sc">}</span><span class="ss">===="</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        try_functions[this_type]()</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"I handle all exceptions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>====I got a type ZeroDivisionError====
+I handle all exceptions
+====I got a type NameError====
+I handle all exceptions
+====I got a type IndexError====
+I handle all exceptions
+====I got a type IndexError====
+I handle all exceptions
+====I got a type NameError====
+I handle all exceptions
+====I got a type ZeroDivisionError====
+I handle all exceptions
+====I got a type NameError====
+I handle all exceptions
+====I got a type NameError====
+I handle all exceptions
+====I got a type NameError====
+I handle all exceptions
+====I got a type IndexError====
+I handle all exceptions</code></pre>
+</div>
+</div>
+<p><strong>Note</strong> that default <code>except</code> must be placed last.</p>
+<p>So it’s not possible if the default <code>except</code> hadnle all exceptions, even if you specify some specific ones - specific ones always have priority.</p>
+<p>In the following example, I am trying to place a specific exception after the default exception, but I am getting a syntax error.</p>
+<div class="cell" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"str"</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"I handle all exceptions"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">TypeError</span>:</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"I handle type error"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>SyntaxError: default 'except:' must be last (1507528251.py, line 3)</code></pre>
+</div>
+</div>
+</section>
 <section id="get-type-of-excetption" class="level1">
 <h1>Get type of excetption</h1>
 <p>You can get type of error as string by using <code>except Exception as e:</code> code in definition of <code>except</code> block.</p>
 <p>So in the following example I have a list of functions, some of which should work fine, but some of which should cause exceptions. And in <code>except</code> block I print the type of exception.</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>try_functions <span class="op">=</span> [</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span>: <span class="dv">8</span><span class="op">/</span><span class="dv">0</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span>: <span class="st">"hello"</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span>: <span class="st">"hello"</span> <span class="op">+</span> <span class="dv">4</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fun <span class="kw">in</span> try_functions:</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        fun()</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"no error"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"error type:"</span>, e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>try_functions <span class="op">=</span> [</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span>: <span class="dv">8</span><span class="op">/</span><span class="dv">0</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span>: <span class="st">"hello"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span>: <span class="st">"hello"</span> <span class="op">+</span> <span class="dv">4</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fun <span class="kw">in</span> try_functions:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        fun()</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"no error"</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"error type:"</span>, e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>error type: division by zero
 no error
