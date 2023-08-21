@@ -1,13 +1,12 @@
 CREATE TABLE main_table(
-    city VARCHAR(50),
-    city_ascii VARCHAR(50),
-    lat REAL,
-    lng REAL,
-    country VARCHAR(50),
-    iso2 VARCHAR(2),
-    iso3 VARCHAR(3),
-    admin_name VARCHAR(100),
-    capital VARCHAR(20),
-    population REAL,
-    id INT
+    sepallength REAL,
+    sepalwidth REAL,
+    petallength REAL,
+    petalwidth REAL,
+    class VARCHAR(20)
 );
+
+COPY main_table(sepallength, sepalwidth, petallength, petalwidth,class)
+FROM '/iris_csv.csv'
+DELIMITER ','
+CSV HEADER;
