@@ -2,18 +2,18 @@ import psycopg2
 import random
 import string
 
-# устанавливаю соединение с базой
+# establish connection with database
 conn = psycopg2.connect(
     dbname = "docker_app_db",
     user = "docker_app",
     password = "docker_app",
-    # интерестно, что имя хоста совпадает
-    # с наименованием контейнера в котором
-    # развернута база
-    host = "database"
+    # interesting that host name match
+    # with the container name
+    # where database deployed
+    host = "pg_example_posgres_cont"
 )
 
-# вставляем в базу 20 случайных записей
+# add 20 random values to the database
 cur = conn.cursor()
 for i in range(20):
     text = ''.join(random.choices(string.ascii_lowercase, k=20))
@@ -21,6 +21,8 @@ for i in range(20):
     cur.execute(query)
 cur.close()
 
-# отсылаем зименения и закрываем соединение
+print("Adding records is done!")
+
+# commit changes and close the connection
 conn.commit()
 conn.close()
