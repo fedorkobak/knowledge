@@ -211,20 +211,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../python/basics/virtual_environment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Virutal environment in python</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../python/basics/excel_export.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">To excel import</span></a>
+  <a href="../../python/basics/functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Functions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../python/basics/exceptions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Exceptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/basics/packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/basics/virtual_environment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Virutal environment in python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/basics/collections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>collections</code> library</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/basics/excel_export.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">To excel import</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -402,6 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pop---delete-by-index" id="toc-pop---delete-by-index" class="nav-link" data-scroll-target="#pop---delete-by-index"><code>pop</code> - delete by index</a></li>
   <li><a href="#remove---delete-by-value" id="toc-remove---delete-by-value" class="nav-link" data-scroll-target="#remove---delete-by-value"><code>remove</code> - delete by value</a></li>
   <li><a href="#index---index-of-value" id="toc-index---index-of-value" class="nav-link" data-scroll-target="#index---index-of-value"><code>index</code> - index of value</a></li>
+  <li><a href="#appned-vs" id="toc-appned-vs" class="nav-link" data-scroll-target="#appned-vs"><code>appned</code> vs <code>+</code></a></li>
   <li><a href="#drop-duplicates" id="toc-drop-duplicates" class="nav-link" data-scroll-target="#drop-duplicates">drop duplicates</a>
   <ul class="collapse">
   <li><a href="#listsetinput" id="toc-listsetinput" class="nav-link" data-scroll-target="#listsetinput"><code>list(set(&lt;input&gt;))</code></a></li>
@@ -439,6 +458,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#clear-delete-all" id="toc-clear-delete-all" class="nav-link" data-scroll-target="#clear-delete-all"><code>clear</code> delete all</a></li>
   <li><a href="#in-operator" id="toc-in-operator" class="nav-link" data-scroll-target="#in-operator"><code>in</code> operator</a></li>
+  </ul></li>
+  <li><a href="#str" id="toc-str" class="nav-link" data-scroll-target="#str"><code>str</code></a>
+  <ul class="collapse">
+  <li><a href="#istitle---is-first-capital" id="toc-istitle---is-first-capital" class="nav-link" data-scroll-target="#istitle---is-first-capital"><code>istitle</code> - is first capital</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -525,6 +548,28 @@ resutl list [5, 4, 5]</code></pre>
 </div>
 </div>
 </section>
+<section id="appned-vs" class="level2">
+<h2 class="anchored" data-anchor-id="appned-vs"><code>appned</code> vs <code>+</code></h2>
+<p>There are two common ways to extend a Python list: by using the <code>append</code> method and the <code>+</code> operator. There is a significant difference: <code>+</code> creates a new list and copies operands to it, but <code>append</code> changes the initial list.</p>
+<p>The following example:</p>
+<ul>
+<li>Prints “Initial list: <id>”;</id></li>
+<li>Prints id of list modified with <code>+</code> operator - it has different id with initial list;</li>
+<li>Prints the id of the list modified with the <code>append</code> method - it has the same id as the initial list.</li>
+</ul>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>internal_list <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Initial list:"</span>, <span class="bu">id</span>(internal_list))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Plus list:"</span>, <span class="bu">id</span>(internal_list <span class="op">+</span> [<span class="dv">3</span>]))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>internal_list.append(<span class="dv">3</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Append list:"</span>, <span class="bu">id</span>(internal_list))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Initial list: 139801266528704
+Plus list: 139801266465856
+Append list: 139801266528704</code></pre>
+</div>
+</div>
+</section>
 <section id="drop-duplicates" class="level2">
 <h2 class="anchored" data-anchor-id="drop-duplicates">drop duplicates</h2>
 <section id="listsetinput" class="level3">
@@ -533,8 +578,8 @@ resutl list [5, 4, 5]</code></pre>
 <p><strong>Note</strong> this option does not save the original order of the items in the list, because the `set’ data type ignores the order of the items.</p>
 <p>The following example allows you to obtain unique values, but despite the fact that the elements in the original list are not in ascending order, they are in the result of the transformation.</p>
 <div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>test_list <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>]</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(<span class="bu">set</span>(test_list))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>test_list <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(<span class="bu">set</span>(test_list))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>[1, 2, 3, 4]</code></pre>
 </div>
@@ -549,8 +594,8 @@ resutl list [5, 4, 5]</code></pre>
 </ul>
 <p>The following cell shows a possible implementation of the described algorithm. As a result, 4 appears immediately after 1, as in the original list.</p>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>test_list <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>[val <span class="cf">for</span> i, val <span class="kw">in</span> <span class="bu">enumerate</span>(test_list) <span class="cf">if</span> test_list.index(val) <span class="op">==</span> i]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>test_list <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>[val <span class="cf">for</span> i, val <span class="kw">in</span> <span class="bu">enumerate</span>(test_list) <span class="cf">if</span> test_list.index(val) <span class="op">==</span> i]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>[1, 4, 2, 3]</code></pre>
 </div>
@@ -565,8 +610,8 @@ resutl list [5, 4, 5]</code></pre>
 <h2 class="anchored" data-anchor-id="one-element-tuple">One element tuple</h2>
 <p>To create one element tuple you have to use the syntax <code>(&lt;element&gt;,)</code> not <del><code>(&lt;element&gt;)</code></del>. By default, parentheses are not used to create a tuple, but to prioritise executions in the expression, so you have to use at least one comma inside the parentheses to tell the interpreter that it is the tuple.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Just a variable"</span>, (<span class="dv">4</span>))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"One element tuple"</span>, (<span class="dv">5</span>,))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Just a variable"</span>, (<span class="dv">4</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"One element tuple"</span>, (<span class="dv">5</span>,))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Just a variable 4
 One element tuple (5,)</code></pre>
@@ -579,7 +624,7 @@ One element tuple (5,)</code></pre>
 <p>Array of unique values. You can create it by using <code>{&lt;element1&gt;, &lt;element2&gt;, ..., &lt;elementn&gt;}</code> or <code>tuple</code> function.</p>
 <p>In the following example, I show that it can contain only unique elements. Although element 2 is specified twice, it appears only once as a result.</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>{<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>{<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>{1, 2, 3, 4}</code></pre>
 </div>
@@ -594,8 +639,8 @@ One element tuple (5,)</code></pre>
 </ul>
 <p>The following cell shows that curly brackets alone create a <code>tuple</code> but not a <code>set</code>. And the <code>set()</code> expression will in turn create an instance of <code>set</code>.</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>({}))</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="bu">set</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>({}))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="bu">set</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'dict'&gt;
 &lt;class 'set'&gt;</code></pre>
@@ -603,14 +648,14 @@ One element tuple (5,)</code></pre>
 </div>
 <p>The following cell shows that using braces with a comma is an error.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>{,}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>{,}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>SyntaxError: invalid syntax (3645013520.py, line 1)</code></pre>
 </div>
 </div>
 <p>Interestingly, applying the print function to an empty set results in <code>set()</code> output.</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">set</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">set</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>set()</code></pre>
 </div>
@@ -628,13 +673,13 @@ One element tuple (5,)</code></pre>
 <h2 class="anchored" data-anchor-id="only-immutable">Only immutable</h2>
 <p>In sets, you can only use immutable datatypes. The following cells show that if you add a mutable type to a tuple (e.g.&nbsp;list), you will get an error.</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>{<span class="dv">1</span>,<span class="st">"1"</span>, <span class="fl">9.4</span>, (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>{<span class="dv">1</span>,<span class="st">"1"</span>, <span class="fl">9.4</span>, (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>{(1, 3, 4), '1', 1, 9.4}</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>{<span class="dv">1</span>,<span class="st">"1"</span>, <span class="fl">9.4</span>, (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>), [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>{<span class="dv">1</span>,<span class="st">"1"</span>, <span class="fl">9.4</span>, (<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>), [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>TypeError: unhashable type: 'list'</code></pre>
 </div>
@@ -643,10 +688,10 @@ One element tuple (5,)</code></pre>
 <section id="add-new-value" class="level2">
 <h2 class="anchored" data-anchor-id="add-new-value"><code>add</code> new value</h2>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initital set"</span>, test_set)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>test_set.add(<span class="st">"s"</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"result set"</span>, test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initital set"</span>, test_set)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>test_set.add(<span class="st">"s"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"result set"</span>, test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>initital set {1, 2, 3}
 result set {1, 2, 3, 's'}</code></pre>
@@ -654,10 +699,10 @@ result set {1, 2, 3, 's'}</code></pre>
 </div>
 <p><strong>Note</strong> that adding an element that already exists in the set won’t cause an error, it will simply be ignored.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initial set"</span>, test_set)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>test_set.add(<span class="dv">3</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"restult set"</span>, test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initial set"</span>, test_set)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>test_set.add(<span class="dv">3</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"restult set"</span>, test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>initial set {1, 2, 3, 4}
 restult set {1, 2, 3, 4}</code></pre>
@@ -668,10 +713,10 @@ restult set {1, 2, 3, 4}</code></pre>
 <h2 class="anchored" data-anchor-id="remove-delete-by-value"><code>remove</code> delete by value</h2>
 <p>You can delete element by value.</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>}</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initial list"</span>, test_set)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>test_set.remove(<span class="dv">4</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"resutl list"</span>, test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>}</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"initial list"</span>, test_set)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>test_set.remove(<span class="dv">4</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"resutl list"</span>, test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>initial list {1, 2, 3, 4, 5}
 resutl list {1, 2, 3, 5}</code></pre>
@@ -679,8 +724,8 @@ resutl list {1, 2, 3, 5}</code></pre>
 </div>
 <p><strong>Note</strong> that if there’s no removing value in the source list, you’ll have an error.</p>
 <div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>}</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>test_set.remove(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="op">=</span> {<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>}</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>test_set.remove(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>KeyError: 6</code></pre>
 </div>
@@ -690,9 +735,9 @@ resutl list {1, 2, 3, 5}</code></pre>
 <h2 class="anchored" data-anchor-id="intercection"><code>intercection</code></h2>
 <p>This method allows you to get a set that contains only common elements for argument sets.</p>
 <div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>test_set1.intersection(test_set2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>test_set1.intersection(test_set2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>{2, 3}</code></pre>
 </div>
@@ -702,9 +747,9 @@ resutl list {1, 2, 3, 5}</code></pre>
 <h2 class="anchored" data-anchor-id="union"><code>union</code></h2>
 <p>This method allows you to get a set that contains all elements from both argument sets.</p>
 <div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>test_set1.union(test_set2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>test_set1.union(test_set2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>{1, 2, 3, 4}</code></pre>
 </div>
@@ -714,9 +759,9 @@ resutl list {1, 2, 3, 5}</code></pre>
 <h2 class="anchored" data-anchor-id="symmetric_difference"><code>symmetric_difference</code></h2>
 <p>This method allows you to get a set that contains elements that are present in only one of the argument sets, but not in both.</p>
 <div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>test_set1.symmetric_difference(test_set2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>test_set1.symmetric_difference(test_set2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <pre><code>{1, 4}</code></pre>
 </div>
@@ -726,9 +771,9 @@ resutl list {1, 2, 3, 5}</code></pre>
 <h2 class="anchored" data-anchor-id="sets-difference-a-b">Sets difference <code>A-B</code></h2>
 <p>In case you subtract set A from set B you get a set of elements from the set not contained in set B.</p>
 <div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">-</span> test_set2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>}</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>test_set2 <span class="op">=</span> {<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>}</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>test_set1 <span class="op">-</span> test_set2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>{1}</code></pre>
 </div>
@@ -744,11 +789,11 @@ resutl list {1, 2, 3, 5}</code></pre>
 <li>Regular <code>set</code> causes an error.</li>
 </ul>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>regular_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">3</span>}</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>frozen_set <span class="op">=</span> <span class="bu">frozenset</span>([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>])</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Using a frozenset:"</span>, {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>, frozen_set})</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Using a regular set:"</span>, {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, regular_set, <span class="dv">1</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>regular_set <span class="op">=</span> {<span class="dv">1</span>,<span class="dv">3</span>}</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>frozen_set <span class="op">=</span> <span class="bu">frozenset</span>([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>])</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Using a frozenset:"</span>, {<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>, frozen_set})</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Using a regular set:"</span>, {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, regular_set, <span class="dv">1</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using a frozenset: {1, 2, 3, frozenset({1, 2, 3, 4})}</code></pre>
 </div>
@@ -768,15 +813,15 @@ resutl list {1, 2, 3, 5}</code></pre>
 <p>It may not be clear why this is necessary, as there is a <code>[]</code> operator which allows you to perform exactly the same actions. The <strong>difference from the <code>[]</code> operator</strong> is that it doesn’t cause an error if there is no specified key in the dictionary.</p>
 <p>So the following cells show that the <code>[]</code> operator caused an error when you tried to load a non-existent key, but in the identical example the <code>get</code> method just returned None.</p>
 <div class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict[<span class="st">"c"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict[<span class="st">"c"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>KeyError: 'c'</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict.get(<span class="st">"c"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict.get(<span class="st">"c"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>None</code></pre>
 </div>
@@ -786,8 +831,8 @@ resutl list {1, 2, 3, 5}</code></pre>
 <h3 class="anchored" data-anchor-id="default-argument"><code>default</code> argument</h3>
 <p>Allows to set value to be returned If there is no item with the requested key.</p>
 <div class="cell" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict.get(<span class="st">"c"</span>, <span class="st">"default value"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict.get(<span class="st">"c"</span>, <span class="st">"default value"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>default value</code></pre>
 </div>
@@ -800,18 +845,18 @@ resutl list {1, 2, 3, 5}</code></pre>
 <h3 class="anchored" data-anchor-id="del-operator"><code>del</code> operator</h3>
 <p>You can simply apply the <code>del</code> operator to the specific element. As in the following example:</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> test_dict[<span class="st">"a"</span>]</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> test_dict[<span class="st">"a"</span>]</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{'b': 2}</code></pre>
 </div>
 </div>
 <p><strong>Note</strong> If there is no item in the <code>dict</code> that you want to delete in this way, you will get the error. The next cell shows exactly this case:</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> test_dict[<span class="st">"c"</span>]</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> test_dict[<span class="st">"c"</span>]</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>KeyError: 'c'</code></pre>
 </div>
@@ -825,9 +870,9 @@ resutl list {1, 2, 3, 5}</code></pre>
 <li>In the second part, we’ll show that the dictionary no longer has an element with the key “a”.</li>
 </ul>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict.pop(<span class="st">"a"</span>))</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict.pop(<span class="st">"a"</span>))</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1
 {'b': 2}</code></pre>
@@ -835,8 +880,8 @@ resutl list {1, 2, 3, 5}</code></pre>
 </div>
 <p><strong>Note</strong> this method will still cause an error if you apply it to a key that doesn’t exist in the dictionary.</p>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>test_dict.pop(<span class="st">"C"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>test_dict.pop(<span class="st">"C"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>KeyError: 'C'</code></pre>
 </div>
@@ -847,9 +892,9 @@ resutl list {1, 2, 3, 5}</code></pre>
 <h2 class="anchored" data-anchor-id="clear-delete-all"><code>clear</code> delete all</h2>
 <p>This method allows you to delete all the values written in the dictionary. The following example shows what it can look like.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>test_dict.clear()</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>test_dict.clear()</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{}</code></pre>
 </div>
@@ -859,12 +904,44 @@ resutl list {1, 2, 3, 5}</code></pre>
 <h2 class="anchored" data-anchor-id="in-operator"><code>in</code> operator</h2>
 <p>Checks if the element on the left side of <code>in</code> is <strong>in the keys</strong> (not values) of the dictionary on the right side of <code>in</code>.</p>
 <div class="cell" data-execution_count="44">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"a"</span> <span class="kw">in</span> test_dict)</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">1</span> <span class="kw">in</span> test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>test_dict <span class="op">=</span> {<span class="st">"a"</span>:<span class="dv">1</span>, <span class="st">"b"</span>:<span class="dv">2</span>}</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"a"</span> <span class="kw">in</span> test_dict)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">1</span> <span class="kw">in</span> test_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>True
 False</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="str" class="level1">
+<h1><code>str</code></h1>
+<p>This data type describes the variables in which you want to store the text information.</p>
+<section id="istitle---is-first-capital" class="level2">
+<h2 class="anchored" data-anchor-id="istitle---is-first-capital"><code>istitle</code> - is first capital</h2>
+<p>Lets you check if all words in the calling string are capitalised.</p>
+<p>The following example shows how it works for</p>
+<ul>
+<li>Lower case only;</li>
+<li>One capitalised word;</li>
+<li>Line with several capitalised words;</li>
+<li>Line with several words but only the first one is capitalised.</li>
+</ul>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>test_lines <span class="op">=</span>[</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"test line"</span>,</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Test"</span>,</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Test Line"</span>,</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Test line"</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> test_line <span class="kw">in</span> test_lines:</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\"</span><span class="sc">{</span>test_line<span class="sc">}</span><span class="ch">\"</span><span class="ss">.istitle() -&gt; </span><span class="sc">{</span>test_line<span class="sc">.</span>istitle()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>"test line".istitle() -&gt; False
+"Test".istitle() -&gt; True
+"Test Line".istitle() -&gt; True
+"Test line".istitle() -&gt; False</code></pre>
 </div>
 </div>
 

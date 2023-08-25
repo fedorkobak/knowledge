@@ -211,20 +211,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../python/basics/virtual_environment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Virutal environment in python</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../python/basics/excel_export.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">To excel import</span></a>
+  <a href="../python/basics/functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Functions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../python/basics/exceptions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Exceptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../python/basics/packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../python/basics/virtual_environment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Virutal environment in python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../python/basics/collections.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>collections</code> library</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../python/basics/excel_export.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">To excel import</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -406,6 +424,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#stop-containers" id="toc-stop-containers" class="nav-link" data-scroll-target="#stop-containers">Stop containers</a></li>
   <li><a href="#clear-python-image" id="toc-clear-python-image" class="nav-link" data-scroll-target="#clear-python-image">Clear python image</a></li>
   </ul></li>
+  <li><a href="#python-on-host" id="toc-python-on-host" class="nav-link" data-scroll-target="#python-on-host">Python on host</a>
+  <ul class="collapse">
+  <li><a href="#database-container" id="toc-database-container" class="nav-link" data-scroll-target="#database-container">Database container</a></li>
+  <li><a href="#python-program" id="toc-python-program" class="nav-link" data-scroll-target="#python-program">Python program</a>
+  <ul class="collapse">
+  <li><a href="#establish-conneciton" id="toc-establish-conneciton" class="nav-link" data-scroll-target="#establish-conneciton">Establish conneciton</a></li>
+  </ul></li>
+  <li><a href="#insert-information" id="toc-insert-information" class="nav-link" data-scroll-target="#insert-information">Insert information</a></li>
+  <li><a href="#check-the-result" id="toc-check-the-result" class="nav-link" data-scroll-target="#check-the-result">Check the result</a></li>
+  <li><a href="#stop-container" id="toc-stop-container" class="nav-link" data-scroll-target="#stop-container">Stop container</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -538,6 +567,141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>docker rmi pg_example_python <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="python-on-host" class="level1">
+<h1>Python on host</h1>
+<p>Sometimes it’s good to run database-related code from your local machine. So I show a way to build interaption between the database and the host program.</p>
+<section id="database-container" class="level2">
+<h2 class="anchored" data-anchor-id="database-container">Database container</h2>
+<p>Just postgres container with <a href="python_interaction/postgres_container/create_table.sql">sql script</a> to create base table.</p>
+<p><strong>Note</strong> you need to specify the port to be referred to later in the Python program.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name pg_example_posgres_cont<span class="op">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_USER<span class="op">=</span>docker_app<span class="op">\</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_PASSWORD<span class="op">=</span>docker_app<span class="op">\</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_DB<span class="op">=</span>docker_app_db<span class="op">\</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>p <span class="dv">5431</span>:<span class="dv">5432</span><span class="op">\</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v .<span class="op">/</span>python_interaction<span class="op">/</span>create_table.sql:<span class="op">/</span>docker<span class="op">-</span>entrypoint<span class="op">-</span>initdb.d<span class="op">/</span>create_table.sql<span class="op">\</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    postgres:<span class="fl">15.4</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="python-program" class="level2">
+<h2 class="anchored" data-anchor-id="python-program">Python program</h2>
+<p>I’m just going to connect to the database from this notebook.</p>
+<section id="establish-conneciton" class="level3">
+<h3 class="anchored" data-anchor-id="establish-conneciton">Establish conneciton</h3>
+<p>In the <code>psycopg2.connect</code> function, mention <code>port</code> used in postgres container creation and <code>localhost</code> argument for <code>host</code> parameter.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> psycopg2.<span class="ex">connect</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    port <span class="op">=</span> <span class="st">"5431"</span>, <span class="co"># same as when creating a postgres container</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    dbname <span class="op">=</span> <span class="st">"docker_app_db"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    user <span class="op">=</span> <span class="st">"docker_app"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    password <span class="op">=</span> <span class="st">"docker_app"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    host<span class="op">=</span> <span class="st">"localhost"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="insert-information" class="level2">
+<h2 class="anchored" data-anchor-id="insert-information">Insert information</h2>
+<p>To understand that everything works insert a few lines into database.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> <span class="st">''</span>.join(random.choices(string.ascii_lowercase, k<span class="op">=</span><span class="dv">20</span>))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> <span class="ss">f"INSERT INTO main_table (id, text) VALUES ('</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">', '</span><span class="sc">{</span>text<span class="sc">}</span><span class="ss">');"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    cur.execute(query)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>cur.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="check-the-result" class="level2">
+<h2 class="anchored" data-anchor-id="check-the-result">Check the result</h2>
+<p>Query from python.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>cur.execute(<span class="st">"SELECT * FROM main_table;"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> cur:</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>cur.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>('0', 'hsehwcmxpbtamszipfnk')
+('1', 'kaqlzwklriihtmaomshb')
+('2', 'bxjyghghcopkezizliug')
+('3', 'pbdbazfbvurlfalgqjam')
+('4', 'aezqsciszlpamzxleorr')
+('5', 'lhtazvbdgpogvaveoirj')
+('6', 'msgmudlhwvrwhaovjusu')
+('7', 'dhjbmxfyfiwkldfkxbrb')
+('8', 'ciofcgizmcrhtldxplzo')
+('9', 'yimdyxfxuuchsfaxvhxo')
+('10', 'zmsukkgbbuzedxdyxlwr')
+('11', 'yaxbxgbijxsanoynpfaf')
+('12', 'ktglycpkszgbwoeibzxp')
+('13', 'sydethofplcyxcxwhiju')
+('14', 'iauhvlagywalaovfbaee')
+('15', 'rovfndivwpvulwbipubi')
+('16', 'euxrvimdiqzziaskeqbg')
+('17', 'zwldwelpwphmjptdzkdi')
+('18', 'oiywhhbnhhrktvnqdxrj')
+('19', 'jnzemljvxcjielikmqce')</code></pre>
+</div>
+</div>
+<p>Query from container.</p>
+<p><strong>Note</strong> Before quering from the container, you need to commit the changes from the connection.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>conn.commit()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> pg_example_posgres_cont <span class="op">\</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    psql <span class="op">--</span>username docker_app <span class="op">--</span>dbname docker_app_db <span class="op">-</span>c <span class="st">'SELECT * FROM main_table;'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> id |         text         
+----+----------------------
+ 0  | hsehwcmxpbtamszipfnk
+ 1  | kaqlzwklriihtmaomshb
+ 2  | bxjyghghcopkezizliug
+ 3  | pbdbazfbvurlfalgqjam
+ 4  | aezqsciszlpamzxleorr
+ 5  | lhtazvbdgpogvaveoirj
+ 6  | msgmudlhwvrwhaovjusu
+ 7  | dhjbmxfyfiwkldfkxbrb
+ 8  | ciofcgizmcrhtldxplzo
+ 9  | yimdyxfxuuchsfaxvhxo
+ 10 | zmsukkgbbuzedxdyxlwr
+ 11 | yaxbxgbijxsanoynpfaf
+ 12 | ktglycpkszgbwoeibzxp
+ 13 | sydethofplcyxcxwhiju
+ 14 | iauhvlagywalaovfbaee
+ 15 | rovfndivwpvulwbipubi
+ 16 | euxrvimdiqzziaskeqbg
+ 17 | zwldwelpwphmjptdzkdi
+ 18 | oiywhhbnhhrktvnqdxrj
+ 19 | jnzemljvxcjielikmqce
+(20 rows)
+</code></pre>
+</div>
+</div>
+<p>Close connection.</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>conn.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="stop-container" class="level2">
+<h2 class="anchored" data-anchor-id="stop-container">Stop container</h2>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>docker stop pg_example_posgres_cont</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>pg_example_posgres_cont</code></pre>
+</div>
 </div>
 
 
