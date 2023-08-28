@@ -285,6 +285,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Groupby</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/pandas/database_interaciton.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database interaction</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -426,11 +432,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#time" id="toc-time" class="nav-link active" data-scroll-target="#time"><code>%time</code></a>
+  <li><a href="#lsmagic" id="toc-lsmagic" class="nav-link active" data-scroll-target="#lsmagic"><code>%lsmagic</code></a></li>
+  <li><a href="#time" id="toc-time" class="nav-link" data-scroll-target="#time"><code>%time</code></a>
   <ul class="collapse">
   <li><a href="#basic-example" id="toc-basic-example" class="nav-link" data-scroll-target="#basic-example">Basic example</a></li>
   <li><a href="#metrics-meaning" id="toc-metrics-meaning" class="nav-link" data-scroll-target="#metrics-meaning">Metrics meaning</a></li>
   </ul></li>
+  <li><a href="#timeit" id="toc-timeit" class="nav-link" data-scroll-target="#timeit"><code>%timeit</code></a></li>
+  <li><a href="#system-command" id="toc-system-command" class="nav-link" data-scroll-target="#system-command"><code>!</code> - system command</a></li>
   <li><a href="#specific-code" id="toc-specific-code" class="nav-link" data-scroll-target="#specific-code">Specific code</a>
   <ul class="collapse">
   <li><a href="#bash" id="toc-bash" class="nav-link" data-scroll-target="#bash">bash</a></li>
@@ -472,6 +481,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>One line</strong> - begins with <code>%</code> and applies to the next expression;</li>
 <li><strong>Whole cell</strong> - begins with <code>%%</code> and applies to whole cell (you must use it in the first row of the cell.).</li>
 </ul>
+<section id="lsmagic" class="level1">
+<h1><code>%lsmagic</code></h1>
+<p>This command allows you to list available IPython magics</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>lsmagic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>Available line magics:
+%alias  %alias_magic  %autoawait  %autocall  %automagic  %autosave  %bookmark  %cat  %cd  %clear  %colors  %conda  %config  %connect_info  %cp  %debug  %dhist  %dirs  %doctest_mode  %ed  %edit  %env  %gui  %hist  %history  %killbgscripts  %ldir  %less  %lf  %lk  %ll  %load  %load_ext  %loadpy  %logoff  %logon  %logstart  %logstate  %logstop  %ls  %lsmagic  %lx  %macro  %magic  %man  %matplotlib  %mkdir  %more  %mv  %notebook  %page  %pastebin  %pdb  %pdef  %pdoc  %pfile  %pinfo  %pinfo2  %pip  %popd  %pprint  %precision  %prun  %psearch  %psource  %pushd  %pwd  %pycat  %pylab  %qtconsole  %quickref  %recall  %rehashx  %reload_ext  %rep  %rerun  %reset  %reset_selective  %rm  %rmdir  %run  %save  %sc  %set_env  %store  %sx  %system  %tb  %time  %timeit  %unalias  %unload_ext  %who  %who_ls  %whos  %xdel  %xmode
+
+Available cell magics:
+%%!  %%HTML  %%SVG  %%bash  %%capture  %%debug  %%file  %%html  %%javascript  %%js  %%latex  %%markdown  %%perl  %%prun  %%pypy  %%python  %%python2  %%python3  %%ruby  %%script  %%sh  %%svg  %%sx  %%system  %%time  %%timeit  %%writefile
+
+Automagic is ON, % prefix IS NOT needed for line magics.</code></pre>
+</div>
+</div>
+</section>
 <section id="time" class="level1">
 <h1><code>%time</code></h1>
 <p>Measures the time of execution of some expression.</p>
@@ -479,13 +504,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="basic-example">Basic example</h2>
 <p>Here I just have a function that runs a cycle with a given number of iterations, and show results for 10 and 500 iterations.</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> some_computing(i_count):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(i_count): <span class="dv">5</span><span class="op">+</span><span class="dv">5</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=====10 iterations====="</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>time some_computing(<span class="dv">10</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=====500 iterations====="</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>time some_computing(<span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> some_computing(i_count):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(i_count): <span class="dv">5</span><span class="op">+</span><span class="dv">5</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=====10 iterations====="</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>time some_computing(<span class="dv">10</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=====500 iterations====="</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>time some_computing(<span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=====10 iterations=====
 CPU times: user 2 µs, sys: 0 ns, total: 2 µs
@@ -510,6 +535,59 @@ Wall time: 16.7 µs</code></pre>
 <p><strong>Note</strong> Nowadays, I don’t know exactly what the difference is between the user side and the system side - but you should learn Linux to find out.</p>
 </section>
 </section>
+<section id="timeit" class="level1">
+<h1><code>%timeit</code></h1>
+<p>Estimates the execution time of a certain command over a series of runs.</p>
+<p>In the following example I have a function that runs a cycle with a given number of iterations, and show results for 10 and 500 iterations.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> some_computing(i_count):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(i_count): <span class="dv">5</span><span class="op">+</span><span class="dv">5</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=====10 iterations====="</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit some_computing(<span class="dv">10</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=====500 iterations====="</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit some_computing(<span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====10 iterations=====
+203 ns ± 6.87 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+=====500 iterations=====
+5.88 µs ± 115 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)</code></pre>
+</div>
+</div>
+</section>
+<section id="system-command" class="level1">
+<h1><code>!</code> - system command</h1>
+<p>You can access the environment you ran IPython from by simply adding <code>!</code> before the line. For linux/macOS this is usually terminal line for windows it is usually powerShall.</p>
+<p>In the following example, I ran the Linux <code>ls</code> command from Jupyter Cell.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls <span class="op">-</span>l</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>total 196
+-rwxrwxr-x 1 fedor fedor 34744 жні 26 20:36 basic_datatypes.ipynb
+drwxrwxr-x 2 fedor fedor  4096 жні 26 20:39 class_interface
+drwxrwxr-x 2 fedor fedor  4096 жні 26 20:39 class_spesials
+-rw-rw-r-- 1 fedor fedor 11496 жні 26 20:36 collections.ipynb
+drwxrwxr-x 2 fedor fedor  4096 жні 26 20:39 excel_export_files
+-rwxrwxr-x 1 fedor fedor  2109 жні 26 20:36 excel_export.ipynb
+-rwxrwxr-x 1 fedor fedor 14411 жні 26 20:36 exceptions.ipynb
+-rw-rw-r-- 1 fedor fedor  1696 жні 26 20:36 functions.ipynb
+drwxrwxr-x 4 fedor fedor  4096 жні 26 20:39 ipython_magics_files
+-rw-rw-r-- 1 fedor fedor 18796 жні 27 12:34 ipython_magics.ipynb
+drwxrwxr-x 2 fedor fedor  4096 жні 26 20:39 logging_files
+-rwxrwxr-x 1 fedor fedor 17750 жні 26 20:36 logging.ipynb
+-rwxrwxr-x 1 fedor fedor  5037 жні 26 20:36 multi_threads.ipynb
+drwxrwxr-x 2 fedor fedor  4096 жні 26 20:39 numpy
+drwxrwxr-x 2 fedor fedor  4096 жні 26 20:39 operators_files
+-rwxrwxr-x 1 fedor fedor 14722 жні 26 20:36 operators.ipynb
+-rwxrwxr-x 1 fedor fedor     0 жні 26 20:36 output.xlsx
+-rw-rw-r-- 1 fedor fedor  1448 жні 26 20:36 packages.ipynb
+drwxrwxr-x 2 fedor fedor  4096 жні 26 20:39 regex
+drwxrwxr-x 2 fedor fedor  4096 жні 26 20:39 tkinter
+drwxrwxr-x 2 fedor fedor  4096 жні 26 20:36 venv_files
+-rwxrwxr-x 1 fedor fedor 13168 жні 26 20:36 virtual_environment.ipynb</code></pre>
+</div>
+</div>
+</section>
 <section id="specific-code" class="level1">
 <h1>Specific code</h1>
 <p>You can use some other codes in IPython just specifying them with magic <code>&lt;code type&gt;</code>. Next, I list some of the options available.</p>
@@ -517,8 +595,8 @@ Wall time: 16.7 µs</code></pre>
 <section id="bash" class="level2">
 <h2 class="anchored" data-anchor-id="bash">bash</h2>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>total 16
 -rw-rw-r-- 1 fedor fedor 4127 жні 26 18:40 magic_commands.ipynb
@@ -530,8 +608,8 @@ drwxrwxr-x 4 fedor fedor 4096 жні 25 15:10 voila_vs_nbconvert_saving_html</co
 <section id="html" class="level2">
 <h2 class="anchored" data-anchor-id="html">HTML</h2>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>HTML</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>button<span class="op">&gt;</span>Button <span class="im">as</span> HTML element<span class="op">&lt;/</span>button<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>HTML</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>button<span class="op">&gt;</span>Button <span class="im">as</span> HTML element<span class="op">&lt;/</span>button<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <button>Button as HTML element</button>
 </div>
@@ -566,43 +644,43 @@ drwxrwxr-x 4 fedor fedor 4096 жні 25 15:10 voila_vs_nbconvert_saving_html</co
 </ul></li>
 </ul>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun1.py <span class="op">&lt;&lt;</span> EOF</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Original line from fun1.py"</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>EOF</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun2.py <span class="op">&lt;&lt;</span> EOF</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Original line from fun2.py"</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>EOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun1.py <span class="op">&lt;&lt;</span> EOF</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Original line from fun1.py"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>EOF</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun2.py <span class="op">&lt;&lt;</span> EOF</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Original line from fun2.py"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>EOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload explicit</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipython_magics_files <span class="im">import</span> fun1, fun2</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>aimport ipython_magics_files.fun1</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun1.return_line())</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun2.return_line())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload explicit</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipython_magics_files <span class="im">import</span> fun1, fun2</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>aimport ipython_magics_files.fun1</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun1.return_line())</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun2.return_line())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original line from fun1.py
 Original line from fun2.py</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun1.py <span class="op">&lt;&lt;</span> EOF</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"New line from fun1.py"</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>EOF</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun2.py <span class="op">&lt;&lt;</span> EOF</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"New line from fun2.py"</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>EOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun1.py <span class="op">&lt;&lt;</span> EOF</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"New line from fun1.py"</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>EOF</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun2.py <span class="op">&lt;&lt;</span> EOF</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"New line from fun2.py"</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>EOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun1.return_line())</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun2.return_line())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun1.return_line())</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun2.return_line())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>New line from fun1.py
 Original line from fun2.py</code></pre>
@@ -626,43 +704,43 @@ Original line from fun2.py</code></pre>
 </ul></li>
 </ul>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun1.py <span class="op">&lt;&lt;</span> EOF</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Original line from fun1.py"</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>EOF</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun2.py <span class="op">&lt;&lt;</span> EOF</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Original line from fun2.py"</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>EOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun1.py <span class="op">&lt;&lt;</span> EOF</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Original line from fun1.py"</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>EOF</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun2.py <span class="op">&lt;&lt;</span> EOF</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Original line from fun2.py"</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>EOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="bu">all</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipython_magics_files <span class="im">import</span> fun1, fun2</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>aimport <span class="op">-</span>ipython_magics_files.fun2</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun1.return_line())</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun2.return_line())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="bu">all</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipython_magics_files <span class="im">import</span> fun1, fun2</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>aimport <span class="op">-</span>ipython_magics_files.fun2</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun1.return_line())</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun2.return_line())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original line from fun1.py
 Original line from fun2.py</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun1.py <span class="op">&lt;&lt;</span> EOF</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"New line from fun1.py"</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>EOF</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun2.py <span class="op">&lt;&lt;</span> EOF</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"New line from fun2.py"</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>EOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun1.py <span class="op">&lt;&lt;</span> EOF</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"New line from fun1.py"</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>EOF</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>cat <span class="op">&gt;</span> ipython_magics_files<span class="op">/</span>fun2.py <span class="op">&lt;&lt;</span> EOF</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_line():</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"New line from fun2.py"</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>EOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun1.return_line())</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun2.return_line())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun1.return_line())</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fun2.return_line())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>New line from fun1.py
 Original line from fun2.py</code></pre>
