@@ -1726,21 +1726,21 @@
     "href": "python/plotly/hovers.html#basic",
     "title": "Hovers",
     "section": "Basic",
-    "text": "Basic\nSo in the following example there is a scatter with blue dots that have hovertemplate specified and a scatter with red dots that don’t have hovertemplate specified.\n\nimport numpy as np\nimport plotly.graph_objects as go\n\nsample_size = 100\n\nfig = go.Figure()\nfig.add_trace(\n    go.Scatter(\n        x = np.random.rand(sample_size),\n        y = np.random.rand(sample_size),\n        mode = \"markers\",\n        hovertemplate = \"x=%{x}&lt;br&gt;y=%{y}\",\n        name = \"I have hovertemplate\",\n        marker_size = 10\n    )\n)\nfig.add_trace(\n    go.Scatter(\n        x = np.random.rand(sample_size),\n        y = np.random.rand(sample_size),\n        mode = \"markers\",\n        marker={\"color\" : \"red\"},\n        name = \"No hovertemplate\",\n        marker_size = 10\n    )\n)\n\nfig.update_layout(\n    width = 700,\n    height = 700\n)"
+    "text": "Basic\nSo in the following example there is a scatter with blue dots that have hovertemplate specified and a scatter with red dots that don’t have hovertemplate specified.\n\nimport numpy as np\nimport plotly.graph_objects as go\n\nsample_size = 100\n\nfig = go.Figure()\nfig.add_trace(\n    go.Scatter(\n        x = np.random.rand(sample_size),\n        y = np.random.rand(sample_size),\n        mode = \"markers\",\n        hovertemplate = \"x=%{x}&lt;br&gt;y=%{y}\",\n        name = \"I have hovertemplate\",\n        marker_size = 10\n    )\n)\nfig.add_trace(\n    go.Scatter(\n        x = np.random.rand(sample_size),\n        y = np.random.rand(sample_size),\n        mode = \"markers\",\n        marker={\"color\" : \"red\"},\n        name = \"No hovertemplate\",\n        marker_size = 10\n    )\n)\n\nfig.update_layout(height = 700)"
   },
   {
     "objectID": "python/plotly/hovers.html#variable",
     "href": "python/plotly/hovers.html#variable",
     "title": "Hovers",
     "section": "%{variable}",
-    "text": "%{variable}\nYou can display different parameters of elements on the plots, just using syntax {%variable}. And you can add some formatting, see here and here for dates.\n\nimport numpy as np\nimport plotly.graph_objects as go\nfrom IPython.display import HTML\n\nsample_size = 100\n\nlanguages = [\"R\", \"Python\", \"Java Script\", \"Matlab\"]\nusers = [2, 5, 3, 2.5]\ntext = [\"textA\", \"TextB\", \"TextC\", \"TextD\"]\n\nfig = go.Figure()\nfig.add_trace(\n    go.Pie(\n        name = \"\",\n        values = users,\n        labels = languages,\n        text = text,\n        hovertemplate = \"%{label}: &lt;br&gt;Popularity: %{percent} &lt;br&gt;%{text}&lt;extra&gt;&lt;/extra&gt;\"\n    )\n)\ndisplay(HTML(fig.to_html()))\n\n\nfig = go.Figure()\nfig.add_trace(\n    go.Bar(\n        x = languages,\n        y = users,\n        text = text,\n        hovertemplate = \"%{x} has %{y} users &lt;extra&gt;&lt;/extra&gt;\"\n    )\n)\nHTML(fig.to_html())"
+    "text": "%{variable}\nYou can display different parameters of elements on the plots, just using syntax {%variable}. And you can add some formatting, see here and here for dates.\n\nimport numpy as np\nimport plotly.graph_objects as go\nfrom IPython.display import HTML\n\nsample_size = 100\n\nlanguages = [\"R\", \"Python\", \"Java Script\", \"Matlab\"]\nusers = [2, 5, 3, 2.5]\ntext = [\"textA\", \"TextB\", \"TextC\", \"TextD\"]\n\nfig = go.Figure()\nfig.add_trace(\n    go.Pie(\n        name = \"\",\n        values = users,\n        labels = languages,\n        text = text,\n        hovertemplate = \"%{label}: &lt;br&gt;Popularity: %{percent} &lt;br&gt;%{text}&lt;extra&gt;&lt;/extra&gt;\"\n    )\n)\nfig.show()\n\n\nfig = go.Figure()\nfig.add_trace(\n    go.Bar(\n        x = languages,\n        y = users,\n        text = text,\n        hovertemplate = \"%{x} has %{y} users &lt;extra&gt;&lt;/extra&gt;\"\n    )\n)\nfig.show()"
   },
   {
     "objectID": "python/plotly/hovers.html#extra",
     "href": "python/plotly/hovers.html#extra",
     "title": "Hovers",
     "section": "<extra>",
-    "text": "&lt;extra&gt;\nAn additional block is added to the tooltip - by default, it is a semi-prominent part to the left of the main tooltip. Its content is resolved by the &lt;extra&gt; tag in hovertemplate. To get rid of it, the &lt;extra&gt; tag should be left empty.\nSo in the following example, I build the scatter with different cases with &lt;extra&gt;:\n\nsample_size = 50\n\nplot_params = [\n    dict(name = \"No hovertemplate\"),\n    dict(\n        hovertemplate = \"%{x} - %{y}\",\n        name = \"No extra\",\n    ),\n    dict(\n        hovertemplate = \"%{x} - %{y}&lt;extra&gt;&lt;/extra&gt;\",\n        name = \"Empty extra\",\n    ),\n    dict(\n        hovertemplate = \"%{x} - %{y}&lt;extra&gt;random hovertext %{hovertext}&lt;/extra&gt;\",\n        name = \"Content in extra\",\n        hovertext = [\n            \"\".join(\n                np.random.choice([i for i in \"abdcefghijkilm\"], 10)\n            )\n            for i in range(sample_size)\n        ]\n    )\n]\n\nfig = go.Figure()\nfor pp in plot_params:\n    fig.add_trace(\n        go.Scatter(\n            x = np.random.rand(sample_size),\n            y = np.random.rand(sample_size),\n            mode = \"markers\",\n            marker_size = 10,\n            **pp\n        )\n    )\n\nfig.update_layout(\n    width = 700,\n    height = 700\n)\n\nfig.show()"
+    "text": "&lt;extra&gt;\nAn additional block is added to the tooltip - by default, it is a semi-prominent part to the left of the main tooltip. Its content is resolved by the &lt;extra&gt; tag in hovertemplate. To get rid of it, the &lt;extra&gt; tag should be left empty.\nSo in the following example, I build the scatter with different cases with &lt;extra&gt;:\n\nsample_size = 50\n\nplot_params = [\n    dict(name = \"No hovertemplate\"),\n    dict(\n        hovertemplate = \"%{x} - %{y}\",\n        name = \"No extra\",\n    ),\n    dict(\n        hovertemplate = \"%{x} - %{y}&lt;extra&gt;&lt;/extra&gt;\",\n        name = \"Empty extra\",\n    ),\n    dict(\n        hovertemplate = \"%{x} - %{y}&lt;extra&gt;random hovertext %{hovertext}&lt;/extra&gt;\",\n        name = \"Content in extra\",\n        hovertext = [\n            \"\".join(\n                np.random.choice([i for i in \"abdcefghijkilm\"], 10)\n            )\n            for i in range(sample_size)\n        ]\n    )\n]\n\nfig = go.Figure()\nfor pp in plot_params:\n    fig.add_trace(\n        go.Scatter(\n            x = np.random.rand(sample_size),\n            y = np.random.rand(sample_size),\n            mode = \"markers\",\n            marker_size = 10,\n            **pp\n        )\n    )\n\nfig.update_layout(height = 700)\n\nfig.show()"
   },
   {
     "objectID": "python/dash/callbacks.html",
@@ -1769,5 +1769,47 @@
     "title": "Database interaction",
     "section": "Read information",
     "text": "Read information\nYou can use pandas.read_sql and pass the created SQLAlchemy engine as con argument.\nSo in the following example, I start the postgres database in the docker container and then read information from it directly to pandas.\nSQL script for initialisation postgres datase used in this example.\n\n!docker run --rm -d\\\n    -v ./postgres_inter_files/simple_example_db:/docker-entrypoint-initdb.d\\\n    -e POSTGRES_PASSWORD=docker_app\\\n    --name read_postgres\\\n    -p 5431:5432\\\n    postgres:15.4 &&gt; /dev/null\n!sleep 10\n\nimport pandas as pd\nfrom sqlalchemy import URL, create_engine\nurl_object = URL.create(\n    \"postgresql+psycopg2\",\n    username=\"postgres\",\n    password=\"docker_app\",\n    host=\"localhost\",\n    port=5431,\n    database=\"postgres\",\n)\nengine = create_engine(url_object)\n\ndf = pd.read_sql('SELECT * FROM main_table', con=engine, index_col = \"id\")\nprint(df)\n!docker stop read_postgres &&gt; /dev/null\n\n     text\nid       \n0   Text1\n1   tExT2\n3   TEXT3"
+  },
+  {
+    "objectID": "python/plotly/computations.html",
+    "href": "python/plotly/computations.html",
+    "title": "Quarto Computations",
+    "section": "",
+    "text": "import numpy as np\na = np.arange(15).reshape(3, 5)\na\n\narray([[ 0,  1,  2,  3,  4],\n       [ 5,  6,  7,  8,  9],\n       [10, 11, 12, 13, 14]])"
+  },
+  {
+    "objectID": "python/plotly/computations.html#numpy",
+    "href": "python/plotly/computations.html#numpy",
+    "title": "Quarto Computations",
+    "section": "",
+    "text": "import numpy as np\na = np.arange(15).reshape(3, 5)\na\n\narray([[ 0,  1,  2,  3,  4],\n       [ 5,  6,  7,  8,  9],\n       [10, 11, 12, 13, 14]])"
+  },
+  {
+    "objectID": "python/plotly/computations.html#matplotlib",
+    "href": "python/plotly/computations.html#matplotlib",
+    "title": "Quarto Computations",
+    "section": "Matplotlib",
+    "text": "Matplotlib\n\nimport matplotlib.pyplot as plt\n\nfig = plt.figure()\nx = np.arange(10)\ny = 2.5 * np.sin(x / 20 * np.pi)\nyerr = np.linspace(0.05, 0.2, 10)\n\nplt.errorbar(x, y + 3, yerr=yerr, label='both limits (default)')\nplt.errorbar(x, y + 2, yerr=yerr, uplims=True, label='uplims=True')\nplt.errorbar(x, y + 1, yerr=yerr, uplims=True, lolims=True,\n             label='uplims=True, lolims=True')\n\nupperlimits = [True, False] * 5\nlowerlimits = [False, True] * 5\nplt.errorbar(x, y, yerr=yerr, uplims=upperlimits, lolims=lowerlimits,\n             label='subsets of uplims and lolims')\n\nplt.legend(loc='lower right')\nplt.show(fig)"
+  },
+  {
+    "objectID": "python/plotly/computations.html#plotly",
+    "href": "python/plotly/computations.html#plotly",
+    "title": "Quarto Computations",
+    "section": "Plotly",
+    "text": "Plotly\n\nimport plotly.express as px\nimport plotly.io as pio\ngapminder = px.data.gapminder()\ngapminder2007 = gapminder.query(\"year == 2007\")\nfig = px.scatter(gapminder2007, \n                 x=\"gdpPercap\", y=\"lifeExp\", color=\"continent\", \n                 size=\"pop\", size_max=60,\n                 hover_name=\"country\")\nfig.show()"
+  },
+  {
+    "objectID": "python/plotly/fdsaf.html",
+    "href": "python/plotly/fdsaf.html",
+    "title": "Knowledge",
+    "section": "",
+    "text": "import plotly.express as px\nimport plotly.io as pio\ngapminder = px.data.gapminder()\ngapminder2007 = gapminder.query(\"year == 2007\")\nfig = px.scatter(gapminder2007, \n                 x=\"gdpPercap\", y=\"lifeExp\", color=\"continent\", \n                 size=\"pop\", size_max=60,\n                 hover_name=\"country\")\nfig.show()"
+  },
+  {
+    "objectID": "python/plotly/fdsaf.html#basic",
+    "href": "python/plotly/fdsaf.html#basic",
+    "title": "Hovers",
+    "section": "Basic",
+    "text": "Basic\nSo in the following example there is a scatter with blue dots that have hovertemplate specified and a scatter with red dots that don’t have hovertemplate specified.\n\nimport plotly.express as px\nimport plotly.io as pio\ngapminder = px.data.gapminder()\ngapminder2007 = gapminder.query(\"year == 2007\")\nfig = px.scatter(gapminder2007, \n                 x=\"gdpPercap\", y=\"lifeExp\", color=\"continent\", \n                 size=\"pop\", size_max=60,\n                 hover_name=\"country\")\nfig.show()"
   }
 ]
