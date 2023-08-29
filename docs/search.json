@@ -1769,47 +1769,5 @@
     "title": "Database interaction",
     "section": "Read information",
     "text": "Read information\nYou can use pandas.read_sql and pass the created SQLAlchemy engine as con argument.\nSo in the following example, I start the postgres database in the docker container and then read information from it directly to pandas.\nSQL script for initialisation postgres datase used in this example.\n\n!docker run --rm -d\\\n    -v ./postgres_inter_files/simple_example_db:/docker-entrypoint-initdb.d\\\n    -e POSTGRES_PASSWORD=docker_app\\\n    --name read_postgres\\\n    -p 5431:5432\\\n    postgres:15.4 &&gt; /dev/null\n!sleep 10\n\nimport pandas as pd\nfrom sqlalchemy import URL, create_engine\nurl_object = URL.create(\n    \"postgresql+psycopg2\",\n    username=\"postgres\",\n    password=\"docker_app\",\n    host=\"localhost\",\n    port=5431,\n    database=\"postgres\",\n)\nengine = create_engine(url_object)\n\ndf = pd.read_sql('SELECT * FROM main_table', con=engine, index_col = \"id\")\nprint(df)\n!docker stop read_postgres &&gt; /dev/null\n\n     text\nid       \n0   Text1\n1   tExT2\n3   TEXT3"
-  },
-  {
-    "objectID": "python/plotly/computations.html",
-    "href": "python/plotly/computations.html",
-    "title": "Quarto Computations",
-    "section": "",
-    "text": "import numpy as np\na = np.arange(15).reshape(3, 5)\na\n\narray([[ 0,  1,  2,  3,  4],\n       [ 5,  6,  7,  8,  9],\n       [10, 11, 12, 13, 14]])"
-  },
-  {
-    "objectID": "python/plotly/computations.html#numpy",
-    "href": "python/plotly/computations.html#numpy",
-    "title": "Quarto Computations",
-    "section": "",
-    "text": "import numpy as np\na = np.arange(15).reshape(3, 5)\na\n\narray([[ 0,  1,  2,  3,  4],\n       [ 5,  6,  7,  8,  9],\n       [10, 11, 12, 13, 14]])"
-  },
-  {
-    "objectID": "python/plotly/computations.html#matplotlib",
-    "href": "python/plotly/computations.html#matplotlib",
-    "title": "Quarto Computations",
-    "section": "Matplotlib",
-    "text": "Matplotlib\n\nimport matplotlib.pyplot as plt\n\nfig = plt.figure()\nx = np.arange(10)\ny = 2.5 * np.sin(x / 20 * np.pi)\nyerr = np.linspace(0.05, 0.2, 10)\n\nplt.errorbar(x, y + 3, yerr=yerr, label='both limits (default)')\nplt.errorbar(x, y + 2, yerr=yerr, uplims=True, label='uplims=True')\nplt.errorbar(x, y + 1, yerr=yerr, uplims=True, lolims=True,\n             label='uplims=True, lolims=True')\n\nupperlimits = [True, False] * 5\nlowerlimits = [False, True] * 5\nplt.errorbar(x, y, yerr=yerr, uplims=upperlimits, lolims=lowerlimits,\n             label='subsets of uplims and lolims')\n\nplt.legend(loc='lower right')\nplt.show(fig)"
-  },
-  {
-    "objectID": "python/plotly/computations.html#plotly",
-    "href": "python/plotly/computations.html#plotly",
-    "title": "Quarto Computations",
-    "section": "Plotly",
-    "text": "Plotly\n\nimport plotly.express as px\nimport plotly.io as pio\ngapminder = px.data.gapminder()\ngapminder2007 = gapminder.query(\"year == 2007\")\nfig = px.scatter(gapminder2007, \n                 x=\"gdpPercap\", y=\"lifeExp\", color=\"continent\", \n                 size=\"pop\", size_max=60,\n                 hover_name=\"country\")\nfig.show()"
-  },
-  {
-    "objectID": "python/plotly/fdsaf.html",
-    "href": "python/plotly/fdsaf.html",
-    "title": "Knowledge",
-    "section": "",
-    "text": "import plotly.express as px\nimport plotly.io as pio\ngapminder = px.data.gapminder()\ngapminder2007 = gapminder.query(\"year == 2007\")\nfig = px.scatter(gapminder2007, \n                 x=\"gdpPercap\", y=\"lifeExp\", color=\"continent\", \n                 size=\"pop\", size_max=60,\n                 hover_name=\"country\")\nfig.show()"
-  },
-  {
-    "objectID": "python/plotly/fdsaf.html#basic",
-    "href": "python/plotly/fdsaf.html#basic",
-    "title": "Hovers",
-    "section": "Basic",
-    "text": "Basic\nSo in the following example there is a scatter with blue dots that have hovertemplate specified and a scatter with red dots that don’t have hovertemplate specified.\n\nimport plotly.express as px\nimport plotly.io as pio\ngapminder = px.data.gapminder()\ngapminder2007 = gapminder.query(\"year == 2007\")\nfig = px.scatter(gapminder2007, \n                 x=\"gdpPercap\", y=\"lifeExp\", color=\"continent\", \n                 size=\"pop\", size_max=60,\n                 hover_name=\"country\")\nfig.show()"
   }
 ]
