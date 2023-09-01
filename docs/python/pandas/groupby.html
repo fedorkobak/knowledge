@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -89,8 +89,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -114,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Python</li><li class="breadcrumb-item"><a href="../../python/pandas/loc.html">Pandas</a></li><li class="breadcrumb-item"><a href="../../python/pandas/groupby.html">Groupby</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -322,13 +321,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../python/pandas/loc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><dataframe series="">.loc</dataframe></span></a>
+ <span class="menu-text">&lt;DataFrame/Series&gt;.loc</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../python/pandas/groupby.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Groupby</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/pandas/datetime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">datetime</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -507,7 +512,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#apply---combine-results" id="toc-apply---combine-results" class="nav-link active" data-scroll-target="#apply---combine-results"><code>Apply</code> - combine results</a>
+  <li><a href="#basic-frame" id="toc-basic-frame" class="nav-link active" data-scroll-target="#basic-frame">Basic frame</a></li>
+  <li><a href="#pd.groupby" id="toc-pd.groupby" class="nav-link" data-scroll-target="#pd.groupby"><code>pd.groupby</code></a>
+  <ul class="collapse">
+  <li><a href="#as_idnex" id="toc-as_idnex" class="nav-link" data-scroll-target="#as_idnex"><code>as_idnex</code></a></li>
+  </ul></li>
+  <li><a href="#iterating" id="toc-iterating" class="nav-link" data-scroll-target="#iterating">Iterating</a>
+  <ul class="collapse">
+  <li><a href="#external-group-array" id="toc-external-group-array" class="nav-link" data-scroll-target="#external-group-array">External group array</a></li>
+  </ul></li>
+  <li><a href="#agg---rule-by-dict" id="toc-agg---rule-by-dict" class="nav-link" data-scroll-target="#agg---rule-by-dict"><code>agg</code> - rule by dict</a></li>
+  <li><a href="#apply---combine-results" id="toc-apply---combine-results" class="nav-link" data-scroll-target="#apply---combine-results"><code>Apply</code> - combine results</a>
   <ul class="collapse">
   <li><a href="#basic-idea" id="toc-basic-idea" class="nav-link" data-scroll-target="#basic-idea">Basic idea</a></li>
   <li><a href="#use-case" id="toc-use-case" class="nav-link" data-scroll-target="#use-case">Use case</a></li>
@@ -542,66 +557,277 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><code>pd.DataFrame.groupby</code> is a very useful tool, but sometimes working with it can be a bit confusing. So in this page I want to pay more attention to some functions and cases.</p>
 <p>The most useful page for learning is <a href="https://pandas.pydata.org/docs/reference/groupby.html">GroupBy object in pandas documentation</a>.</p>
-<section id="apply---combine-results" class="level1">
-<h1><code>Apply</code> - combine results</h1>
-<p><a href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.apply.html#pandas.core.groupby.DataFrameGroupBy.apply">Pandas documentation about apply function.</a></p>
-<section id="basic-idea" class="level2">
-<h2 class="anchored" data-anchor-id="basic-idea">Basic idea</h2>
-<p>The peculiarity of this method is that it uses <code>pandas.DataFrame</code> as the input for the aggregation function.</p>
-<p>The following example shows this: `example_funtion’ just prints the input and it always prints a DataFrame for each “A” variable option.</p>
-<div class="cell" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'A'</span>: [<span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'c'</span>],</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">'B'</span>: [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">5</span>],</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">'C'</span>: [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>]})</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> example_funtion(subdf):</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"========="</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(subdf)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">5</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> df.groupby(<span class="st">"A"</span>)[[<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>]].<span class="bu">apply</span>(example_funtion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=========
-   A  B   C
-0  a  2  10
-1  a  1  20
-=========
-   A  B   C
-2  b  3  30
-3  b  4  40
-=========
-   A  B   C
-4  c  6  50
-5  c  5  60</code></pre>
+<section id="basic-frame" class="level1">
+<h1>Basic frame</h1>
+<p>There are many examples of the same type in this section, so unless specified by default I will use the dataset declared below.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>basic_frame <span class="op">=</span> pd.DataFrame({<span class="st">'A'</span>: [<span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'c'</span>],</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">'B'</span>: [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">5</span>],</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">'C'</span>: [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>]})</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>basic_frame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>a</td>
+<td>2</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>a</td>
+<td>1</td>
+<td>20</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>b</td>
+<td>3</td>
+<td>30</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>b</td>
+<td>4</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>c</td>
+<td>6</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>c</td>
+<td>5</td>
+<td>60</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </div>
 </section>
-<section id="use-case" class="level2">
-<h2 class="anchored" data-anchor-id="use-case">Use case</h2>
-<p>So it’s perfect for cases where you need to get, for each variant of variable A, some value of variable C conditioned on the value of variable B.</p>
-<p>In particular, the following example shows how to obtain for each option of “A” the “C” value corresponding to the minimum “B” value.</p>
-<ul>
-<li>For <code>"A" == "a"</code> I got <code>"C" == 20</code>, because it corresponds to <code>"B"== 1</code>, which is the minimum for every <code>"A" == "a"</code>;</li>
-<li>For <code>"A" == "b"</code> I got <code>"C" == 30</code>, because it corresponds to <code>"B"== 3</code>, which is the minimum for every <code>"A" == "b"</code>;</li>
-<li>For <code>"A" == "c"</code> I got <code>"C" == 60</code>, because it corresponds to <code>"B"== 5</code>, which is the minimum for every <code>"A" == "c"</code>.</li>
-</ul>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'A'</span>: [<span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'c'</span>],</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">'B'</span>: [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">5</span>],</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">'C'</span>: [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>]})</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Initial frame&lt;/b&gt;"</span>))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>display(df)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> df.groupby(<span class="st">"A"</span>)[[<span class="st">"B"</span>, <span class="st">"C"</span>]].<span class="bu">apply</span>(</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> subset: subset.loc[subset[<span class="st">"B"</span>].idxmin(), <span class="st">"C"</span>]</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Result&lt;/b&gt;"</span>))</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>result.rename(<span class="st">"C"</span>).to_frame()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="pd.groupby" class="level1">
+<h1><code>pd.groupby</code></h1>
+<p>Here I describe basic usage of <code>pandas.groupby</code> function.</p>
+<section id="as_idnex" class="level2">
+<h2 class="anchored" data-anchor-id="as_idnex"><code>as_idnex</code></h2>
+<p>Setting this value to <code>True</code> allows you to say that the aggregation variable should not be used as an index.</p>
+<p>So in the following example I show the difference.</p>
+<p><strong>Note</strong> In the first case the return is <code>padnas.Series</code> just because I called it that way, but in the second case it’s not a dataframe that pandas has to use as a result.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;as_index=True&lt;/b&gt;"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>display(basic_frame.groupby(<span class="st">"A"</span>, as_index<span class="op">=</span><span class="va">True</span>)[<span class="st">"C"</span>].<span class="bu">sum</span>())</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;as_index=False&lt;/b&gt;"</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>display(basic_frame.groupby(<span class="st">"A"</span>, as_index<span class="op">=</span><span class="va">False</span>)[<span class="st">"C"</span>].<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<b>Initial frame</b>
+<b>as_index=True</b>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>A
+a     30
+b     70
+c    110
+Name: C, dtype: int64</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<b>as_index=False</b>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>a</td>
+<td>30</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>b</td>
+<td>70</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>c</td>
+<td>110</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="iterating" class="level1">
+<h1>Iterating</h1>
+<p>You can iterate trow <code>pandas.DataFrame.groupby</code> retults. In each eteration you will get tuple of two values:</p>
+<ul>
+<li>Value of the grouping variable for this iteration;</li>
+<li>Sub-sampling from the original data set corresponding to the considered value of the grouping variable.</li>
+</ul>
+<p>So in the following example I show the result of the first iteration under <code>pandas.DataFrameGroupby</code> result and then show a case of using it in the cycle.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Some iteration returns&lt;/b&gt;"</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>display(<span class="bu">next</span>(basic_frame.groupby(<span class="st">"A"</span>).<span class="fu">__iter__</span>()))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Whole cycle&lt;/b&gt;"</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a_val, subframe <span class="kw">in</span> basic_frame.groupby(<span class="st">"A"</span>):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"===="</span> <span class="op">+</span> a_val <span class="op">+</span> <span class="st">"====="</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    display(subframe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<b>Some iteration returns</b>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>('a',
+    A  B   C
+ 0  a  2  10
+ 1  a  1  20)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<b>Whole cycle</b>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>====a=====
+====b=====
+====c=====</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>a</td>
+<td>2</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>a</td>
+<td>1</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>b</td>
+<td>3</td>
+<td>30</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>b</td>
+<td>4</td>
+<td>40</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>c</td>
+<td>6</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>c</td>
+<td>5</td>
+<td>60</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="external-group-array" class="level2">
+<h2 class="anchored" data-anchor-id="external-group-array">External group array</h2>
+<p>You can use an arbitrary array (that is not a column of the dataframe being grouped) for grouping.</p>
+<p>So in the following example I use list shat markers to split the dataframe into two groups <code>x</code> and <code>y</code>.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>group_list <span class="op">=</span> [<span class="st">"x"</span>, <span class="st">"x"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"y"</span>, <span class="st">"y"</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Input dataframe&lt;/b&gt;"</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>display(basic_frame)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Group variable&lt;/b&gt;"</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>display(group_list)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>basic_frame.groupby(group_list).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<b>Input dataframe</b>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -659,6 +885,266 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell-output cell-output-display">
+<b>Group variable</b>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>['x', 'x', 'x', 'y', 'y', 'y']</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">x</td>
+<td>aab</td>
+<td>6</td>
+<td>60</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">y</td>
+<td>bcc</td>
+<td>15</td>
+<td>150</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>You can even mix two external variables.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>group_list1 <span class="op">=</span> [<span class="st">"x"</span>, <span class="st">"x"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"y"</span>, <span class="st">"y"</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>group_list2 <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Group variables&lt;/b&gt;"</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>display(group_list1, group_list2)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>basic_frame.groupby([group_list1, group_list2]).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<b>Group variables</b>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>['x', 'x', 'x', 'y', 'y', 'y']</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>[1, 1, 2, 2, 2, 1]</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">x</td>
+<td data-quarto-table-cell-role="th">1</td>
+<td>aa</td>
+<td>3</td>
+<td>30</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>b</td>
+<td>3</td>
+<td>30</td>
+</tr>
+<tr class="odd">
+<td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">y</td>
+<td data-quarto-table-cell-role="th">1</td>
+<td>c</td>
+<td>5</td>
+<td>60</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>bc</td>
+<td>10</td>
+<td>90</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Or mix external and internal variables in a <code>groupby</code>.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>group_list <span class="op">=</span> [<span class="st">"x"</span>, <span class="st">"x"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"y"</span>, <span class="st">"y"</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Group variable&lt;/b&gt;"</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>display(group_list)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>basic_frame.groupby([group_list1, <span class="st">"A"</span>]).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<b>Group variable</b>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>['x', 'x', 'x', 'y', 'y', 'y']</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">x</td>
+<td data-quarto-table-cell-role="th">a</td>
+<td>3</td>
+<td>30</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">b</td>
+<td>3</td>
+<td>30</td>
+</tr>
+<tr class="odd">
+<td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">y</td>
+<td data-quarto-table-cell-role="th">b</td>
+<td>4</td>
+<td>40</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">c</td>
+<td>11</td>
+<td>110</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="agg---rule-by-dict" class="level1">
+<h1><code>agg</code> - rule by dict</h1>
+<p>This is a way to apply aggregation functions using syntax <code>{&lt;var_name_1&gt;:&lt;aggregation_function_1&gt;, &lt;var_name_2&gt;:&lt;aggregation_function_2&gt;, ...}</code>.</p>
+<p>So in the following example, I use the above syntax to aggregate max <code>B</code> values and sum of <code>C</code> values by <code>A</code> subsets:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Aggregation&lt;/b&gt;"</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>display(basic_frame.groupby(<span class="st">"A"</span>).agg({<span class="st">"B"</span>:<span class="st">"max"</span>, <span class="st">"C"</span>:<span class="st">"sum"</span>}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<b>Aggregation</b>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">a</td>
+<td>2</td>
+<td>30</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">b</td>
+<td>4</td>
+<td>70</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">c</td>
+<td>6</td>
+<td>110</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="apply---combine-results" class="level1">
+<h1><code>Apply</code> - combine results</h1>
+<p><a href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.apply.html#pandas.core.groupby.DataFrameGroupBy.apply">Pandas documentation about apply function.</a></p>
+<section id="basic-idea" class="level2">
+<h2 class="anchored" data-anchor-id="basic-idea">Basic idea</h2>
+<p>The peculiarity of this method is that it uses <code>pandas.DataFrame</code> as the input for the aggregation function.</p>
+<p>The following example shows this: `example_funtion’ just prints the input and it always prints a DataFrame for each “A” variable option.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> example_funtion(subdf):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"========="</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(subdf)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">5</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> basic_frame.groupby(<span class="st">"A"</span>)[</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>]</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>].<span class="bu">apply</span>(example_funtion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=========
+   A  B   C
+0  a  2  10
+1  a  1  20
+=========
+   A  B   C
+2  b  3  30
+3  b  4  40
+=========
+   A  B   C
+4  c  6  50
+5  c  5  60</code></pre>
+</div>
+</div>
+</section>
+<section id="use-case" class="level2">
+<h2 class="anchored" data-anchor-id="use-case">Use case</h2>
+<p>So it’s perfect for cases where you need to get, for each variant of variable A, some value of variable C conditioned on the value of variable B.</p>
+<p>In particular, the following example shows how to obtain for each option of “A” the “C” value corresponding to the minimum “B” value.</p>
+<ul>
+<li>For <code>"A" == "a"</code> I got <code>"C" == 20</code>, because it corresponds to <code>"B"== 1</code>, which is the minimum for every <code>"A" == "a"</code>;</li>
+<li>For <code>"A" == "b"</code> I got <code>"C" == 30</code>, because it corresponds to <code>"B"== 3</code>, which is the minimum for every <code>"A" == "b"</code>;</li>
+<li>For <code>"A" == "c"</code> I got <code>"C" == 60</code>, because it corresponds to <code>"B"== 5</code>, which is the minimum for every <code>"A" == "c"</code>.</li>
+</ul>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> basic_frame.groupby(<span class="st">"A"</span>)[[<span class="st">"B"</span>, <span class="st">"C"</span>]].<span class="bu">apply</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> subset: subset.loc[subset[<span class="st">"B"</span>].idxmin(), <span class="st">"C"</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Result&lt;/b&gt;"</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>result.rename(<span class="st">"C"</span>).to_frame()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <b>Result</b>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -709,17 +1195,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If you apply the <code>sum</code> function to a variable containing a <code>str</code> datatype, it will concatenate observations by groups.</p>
 <p>So in the following example, this just happened with the <code>group text</code> column of the initial dataframe.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group class"</span> : [<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>],</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group numeric"</span> : [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>],</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group text"</span> : [<span class="st">"hello"</span>, <span class="st">"test"</span>, <span class="st">"line3"</span>, <span class="st">"superline"</span>]</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Initial frame&lt;/b&gt;"</span>))</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>display(test_df)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Aggregation result&lt;/b&gt;"</span>))</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>test_df.groupby(<span class="st">"group class"</span>).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group class"</span> : [<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>],</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group numeric"</span> : [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>],</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group text"</span> : [<span class="st">"hello"</span>, <span class="st">"test"</span>, <span class="st">"line3"</span>, <span class="st">"superline"</span>]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Initial frame&lt;/b&gt;"</span>))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>display(test_df)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Aggregation result&lt;/b&gt;"</span>))</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>test_df.groupby(<span class="st">"group class"</span>).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <b>Initial frame</b>
 </div>
