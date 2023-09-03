@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -89,7 +89,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -113,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Python</li><li class="breadcrumb-item"><a href="../../python/pandas/loc.html">Pandas</a></li><li class="breadcrumb-item"><a href="../../python/pandas/datetime.html">datetime</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -338,6 +339,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../python/pandas/data_visualisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data visualisation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../python/pandas/database_interaciton.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Database interaction</span></a>
   </div>
@@ -461,8 +468,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../postgres/basic_sql_operations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Basic SQL opretations</span></a>
+  <a href="../../postgres/DISTINCT_unique.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">DISTINCT unique</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../postgres/NULL_conditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">NULL conditions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../postgres/conditions_on_agregats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Conditions on agregats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../postgres/special_cases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Special cases</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -521,7 +546,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#extracting-components" id="toc-extracting-components" class="nav-link" data-scroll-target="#extracting-components">Extracting components</a>
   <ul class="collapse">
   <li><a href="#dt.day_of_week" id="toc-dt.day_of_week" class="nav-link" data-scroll-target="#dt.day_of_week"><code>dt.day_of_week</code></a></li>
+  <li><a href="#week-of-year" id="toc-week-of-year" class="nav-link" data-scroll-target="#week-of-year">week of year</a>
+  <ul class="collapse">
+  <li><a href="#dt.isocalendar.week" id="toc-dt.isocalendar.week" class="nav-link" data-scroll-target="#dt.isocalendar.week"><code>dt.isocalendar().week</code></a></li>
   <li><a href="#weekofyear" id="toc-weekofyear" class="nav-link" data-scroll-target="#weekofyear"><code>weekofyear</code></a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -757,13 +786,15 @@ dtype: datetime64[ns]</code></pre>
 </div>
 </div>
 </section>
-<section id="weekofyear" class="level2">
-<h2 class="anchored" data-anchor-id="weekofyear"><code>weekofyear</code></h2>
-<p>There is no ready-made tool in <code>dt</code> to get the number of weeks in a year. But the single component value of the pandas datetime unit <code>timestamp</code> has a <code>weekofyear</code> parameter that you can combine with the <code>apply</code> method as in the next example.</p>
-<div class="cell" data-execution_count="82">
+<section id="week-of-year" class="level2">
+<h2 class="anchored" data-anchor-id="week-of-year">week of year</h2>
+<section id="dt.isocalendar.week" class="level3">
+<h3 class="anchored" data-anchor-id="dt.isocalendar.week"><code>dt.isocalendar().week</code></h3>
+<p>You can use the above function to find the week number for any date.</p>
+<div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>test_weeks <span class="op">=</span> pd.date_range(<span class="st">"2021-01-01"</span>, <span class="st">"2021-04-1"</span>, freq<span class="op">=</span><span class="st">"W"</span>).to_series()</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>test_weeks.<span class="bu">apply</span>(<span class="kw">lambda</span> val: val.weekofyear).rename(<span class="st">"week number"</span>).to_frame()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="82">
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>test_weeks.dt.isocalendar().week.rename(<span class="st">"week number"</span>).to_frame()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
 <div>
 
 
@@ -834,9 +865,9 @@ dtype: datetime64[ns]</code></pre>
 </div>
 </div>
 <p><strong>Note</strong> The first days of a certain year may refer to the 54th week of the previous year. Documentation about this feature not really reach. The documentation about this function is not very extensive and does not mention in detail the exact algorithm for calculating the value in question. But in the next cell, I went through the dates of the border months of different summers. It turns out that the week refers to the year in which lies more number of its days and is numbered accordingly.</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2012</span>, <span class="dv">2021</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2012</span>, <span class="dv">2017</span>):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    next_y <span class="op">=</span> y<span class="op">+</span><span class="dv">1</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -849,7 +880,7 @@ dtype: datetime64[ns]</code></pre>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    display(pd.DataFrame({</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Day"</span>:days,</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Day of week"</span>:days.dt.day_of_week,</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Week of year"</span>:days.<span class="bu">apply</span>(<span class="kw">lambda</span> d: d.weekofyear)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Week of year"</span>:days.dt.isocalendar().week</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    }))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p style="font-size:150%">======2012-2013======</p>
@@ -1171,10 +1202,15 @@ dtype: datetime64[ns]</code></pre>
 
 </div>
 </div>
-<div class="cell-output cell-output-display">
-<p style="font-size:150%">======2017-2018======</p>
 </div>
-<div class="cell-output cell-output-display">
+</section>
+<section id="weekofyear" class="level3">
+<h3 class="anchored" data-anchor-id="weekofyear"><code>weekofyear</code></h3>
+<p>Pandas datetime unit <code>timestamp</code> has a <code>weekofyear</code> parameter that you can combine with the <code>apply</code> method as in the next example.</p>
+<div class="cell" data-execution_count="82">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>test_weeks <span class="op">=</span> pd.date_range(<span class="st">"2021-01-01"</span>, <span class="st">"2021-04-1"</span>, freq<span class="op">=</span><span class="st">"W"</span>).to_series()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>test_weeks.<span class="bu">apply</span>(<span class="kw">lambda</span> val: val.weekofyear).rename(<span class="st">"week number"</span>).to_frame()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="82">
 <div>
 
 
@@ -1182,245 +1218,61 @@ dtype: datetime64[ns]</code></pre>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Day</th>
-<th data-quarto-table-cell-role="th">Day of week</th>
-<th data-quarto-table-cell-role="th">Week of year</th>
+<th data-quarto-table-cell-role="th">week number</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2017-12-28</td>
-<td>2017-12-28</td>
-<td>3</td>
-<td>52</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2017-12-29</td>
-<td>2017-12-29</td>
-<td>4</td>
-<td>52</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2017-12-30</td>
-<td>2017-12-30</td>
-<td>5</td>
-<td>52</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2017-12-31</td>
-<td>2017-12-31</td>
-<td>6</td>
-<td>52</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2018-01-01</td>
-<td>2018-01-01</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2018-01-02</td>
-<td>2018-01-02</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2018-01-03</td>
-<td>2018-01-03</td>
-<td>2</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<p style="font-size:150%">======2018-2019======</p>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Day</th>
-<th data-quarto-table-cell-role="th">Day of week</th>
-<th data-quarto-table-cell-role="th">Week of year</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2018-12-28</td>
-<td>2018-12-28</td>
-<td>4</td>
-<td>52</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2018-12-29</td>
-<td>2018-12-29</td>
-<td>5</td>
-<td>52</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2018-12-30</td>
-<td>2018-12-30</td>
-<td>6</td>
-<td>52</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2018-12-31</td>
-<td>2018-12-31</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2019-01-01</td>
-<td>2019-01-01</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2019-01-02</td>
-<td>2019-01-02</td>
-<td>2</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2019-01-03</td>
-<td>2019-01-03</td>
-<td>3</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<p style="font-size:150%">======2019-2020======</p>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Day</th>
-<th data-quarto-table-cell-role="th">Day of week</th>
-<th data-quarto-table-cell-role="th">Week of year</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2019-12-28</td>
-<td>2019-12-28</td>
-<td>5</td>
-<td>52</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2019-12-29</td>
-<td>2019-12-29</td>
-<td>6</td>
-<td>52</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2019-12-30</td>
-<td>2019-12-30</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2019-12-31</td>
-<td>2019-12-31</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2020-01-01</td>
-<td>2020-01-01</td>
-<td>2</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2020-01-02</td>
-<td>2020-01-02</td>
-<td>3</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2020-01-03</td>
-<td>2020-01-03</td>
-<td>4</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<p style="font-size:150%">======2020-2021======</p>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Day</th>
-<th data-quarto-table-cell-role="th">Day of week</th>
-<th data-quarto-table-cell-role="th">Week of year</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2020-12-28</td>
-<td>2020-12-28</td>
-<td>0</td>
-<td>53</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2020-12-29</td>
-<td>2020-12-29</td>
-<td>1</td>
-<td>53</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2020-12-30</td>
-<td>2020-12-30</td>
-<td>2</td>
-<td>53</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2020-12-31</td>
-<td>2020-12-31</td>
-<td>3</td>
-<td>53</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2021-01-01</td>
-<td>2021-01-01</td>
-<td>4</td>
-<td>53</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2021-01-02</td>
-<td>2021-01-02</td>
-<td>5</td>
-<td>53</td>
-</tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2021-01-03</td>
-<td>2021-01-03</td>
-<td>6</td>
 <td>53</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-01-10</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-01-17</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-01-24</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-01-31</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-02-07</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-02-14</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-02-21</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-02-28</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-03-07</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-03-14</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-03-21</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-03-28</td>
+<td>12</td>
 </tr>
 </tbody>
 </table>
@@ -1430,6 +1282,7 @@ dtype: datetime64[ns]</code></pre>
 </div>
 
 
+</section>
 </section>
 </section>
 
