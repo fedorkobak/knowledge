@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -89,8 +89,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
@@ -111,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../git/init.html">Git</a></li><li class="breadcrumb-item"><a href="../git/merge.html">Merge</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -638,7 +637,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>branch_commit</code> was commited to <code>example_branch</code>, first <code>git log</code> display exactly this state of the repository;</li>
 <li>Then <code>example_branch</code> was merged to <code>master</code> - on <code>git log</code> it just desplayed as <code>master</code> moved to same commit as <code>example_branch</code>.</li>
 </ul>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mkdir merge_example</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cd merge_example</span>
@@ -650,14 +649,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>echo</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====creating branch====="</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>git checkout <span class="op">-</span>b example_branch</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>git checkout <span class="op">-</span>b example_branch <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"content2"</span> <span class="op">&gt;</span> test_file</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>am <span class="st">"branch commit"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>git log <span class="op">--</span>decorate <span class="op">--</span>graph</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>echo</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====merging to master====="</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>git checkout master</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>git checkout master <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----git merge-----"</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>git merge example_branch</span>
@@ -669,46 +668,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>
 =====creating branch=====
-* commit 73fb590f3c60ce8841035c4381714dcb90cbb035 (HEAD -&gt; example_branch)
-| Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-| Date:   Sun Sep 10 12:34:53 2023 +0300
+Switched to a new branch 'example_branch'
+* commit bbd3463120a7fc513429a75ca2ebfff325571f84 (HEAD -&gt; example_branch)
+| Author: Dranikf &lt;kobfedsur@gmail.com&gt;
+| Date:   Sun Sep 10 16:20:47 2023 +0300
 | 
 |     branch commit
 | 
-* commit 1af04e597f14270202f4625baee8c10d82a24651 (master)
-  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-  Date:   Sun Sep 10 12:34:53 2023 +0300
+* commit c42d7deed4d71b0f5c9036816fe65e7295a5e227 (master)
+  Author: Dranikf &lt;kobfedsur@gmail.com&gt;
+  Date:   Sun Sep 10 16:20:47 2023 +0300
   
       basic commit
 
 =====merging to master=====
+Switched to branch 'master'
 -----git merge-----
-Updating 1af04e5..73fb590
+Updating c42d7de..bbd3463
 Fast-forward
  test_file | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 -----git log-----
-* commit 73fb590f3c60ce8841035c4381714dcb90cbb035 (HEAD -&gt; master, example_branch)
-| Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-| Date:   Sun Sep 10 12:34:53 2023 +0300
+* commit bbd3463120a7fc513429a75ca2ebfff325571f84 (HEAD -&gt; master, example_branch)
+| Author: Dranikf &lt;kobfedsur@gmail.com&gt;
+| Date:   Sun Sep 10 16:20:47 2023 +0300
 | 
 |     branch commit
 | 
-* commit 1af04e597f14270202f4625baee8c10d82a24651
-  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-  Date:   Sun Sep 10 12:34:53 2023 +0300
+* commit c42d7deed4d71b0f5c9036816fe65e7295a5e227
+  Author: Dranikf &lt;kobfedsur@gmail.com&gt;
+  Date:   Sun Sep 10 16:20:47 2023 +0300
   
       basic commit</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Switched to a new branch 'example_branch'
-Switched to branch 'master'</code></pre>
 </div>
 </div>
 </section>
 <section id="basic-case" class="level2">
 <h2 class="anchored" data-anchor-id="basic-case">Basic case</h2>
-<p>Here I’ll play with the case when you have to branches but one doesn’t refer to any ancestor of other (like it was in <a href="sec-to_ancestor">To ancestor</a>) section, so we have two separate branches.</p>
+<p>Here I’ll play with the case when you have to branches but one doesn’t refer to any ancestor of other (like it was in <a href="#sec-to_ancestor">To ancestor</a>) section, so we have two separate branches.</p>
 <p><strong>Note</strong> in this example I don’t pay any attention ot conflicts, the example is made in such a way as to avoid conflicts.</p>
 <p>In the example:</p>
 <ul>
@@ -717,42 +714,42 @@ Switched to branch 'master'</code></pre>
 <li>In the final <code>git log</code> output:
 <ul>
 <li>There is a new commit where the two branches merge;</li>
-<li>The message of the commit is <code>merge branch</code>example_branch`` - automatically generated by git, in practice you’ll be able to set the message you want.</li>
+<li>The message of the commit is <code>Merge branch 'example_branch'</code> - automatically generated by git, in practice you’ll be able to set the message you want.</li>
 </ul></li>
 </ul>
 <div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mkdir merge_example</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>cd merge_example</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>git init <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"content"</span> <span class="op">&gt;</span> <span class="bu">file</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>git add <span class="op">--</span><span class="bu">all</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">"basic commit"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>git checkout <span class="op">-</span>b example_branch <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"content"</span> <span class="op">&gt;</span> branch_file</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>git add <span class="op">--</span><span class="bu">all</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">"branch commit"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>git checkout master <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"master content"</span> <span class="op">&gt;</span> <span class="bu">file</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>am <span class="st">"master commit"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====log====="</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>git log <span class="op">--</span>decorate <span class="op">--</span>graph <span class="op">--</span><span class="bu">all</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====merge====="</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>git merge example_branch</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====log====="</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>git log <span class="op">--</span>decorate <span class="op">--</span>graph <span class="op">--</span><span class="bu">all</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>cd ..</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r merge_example</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mkdir merge_example</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cd merge_example</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>git init <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"content"</span> <span class="op">&gt;</span> <span class="bu">file</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>git add <span class="op">--</span><span class="bu">all</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">"basic commit"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>git checkout <span class="op">-</span>b example_branch <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"content"</span> <span class="op">&gt;</span> branch_file</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>git add <span class="op">--</span><span class="bu">all</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">"branch commit"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>git checkout master <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"master content"</span> <span class="op">&gt;</span> <span class="bu">file</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>am <span class="st">"master commit"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====log====="</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>git log <span class="op">--</span>decorate <span class="op">--</span>graph <span class="op">--</span><span class="bu">all</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====merge====="</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>git merge example_branch</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====log====="</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>git log <span class="op">--</span>decorate <span class="op">--</span>graph <span class="op">--</span><span class="bu">all</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>cd ..</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r merge_example</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 =====log=====
