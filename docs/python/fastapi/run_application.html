@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -89,7 +89,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -110,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Python</li><li class="breadcrumb-item"><a href="../../python/fastapi/run_application.html">fastapi</a></li><li class="breadcrumb-item"><a href="../../python/fastapi/run_application.html">Run application</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -408,6 +409,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Run application</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/fastapi/pass_arguments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pass arguments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/fastapi/return_json.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Return JSON</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -620,6 +633,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#requrements.txt" id="toc-requrements.txt" class="nav-link" data-scroll-target="#requrements.txt">requrements.txt</a></li>
   <li><a href="#sec-prog" id="toc-sec-prog" class="nav-link" data-scroll-target="#sec-prog">Programme</a></li>
   <li><a href="#run" id="toc-run" class="nav-link" data-scroll-target="#run">Run</a></li>
+  <li><a href="#update-program" id="toc-update-program" class="nav-link" data-scroll-target="#update-program">Update program</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul>
 </nav>
@@ -670,8 +684,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="sec-prog">Programme</h2>
 <p>You need to declare an object of class <code>fastapi.fastAPI</code>. Then use its decorators to add to your functions the ability to respond to certain requests.</p>
 <p>So in the following example, I create <code>fastapi.fastAPI</code> under the name <code>my_first_app</code>, and create a function that will always respond <code>hello</code> to a <code>get</code> request.</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># %load run_application_files/get_started.py</span></span>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile run_application_files<span class="op">/</span>get_started.py</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>my_first_app <span class="op">=</span> FastAPI()</span>
@@ -679,44 +693,119 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">@my_first_app.get</span>(<span class="st">"/"</span>)</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> say_hello():</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"hello"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Overwriting run_application_files/get_started.py</code></pre>
+</div>
 </div>
 </section>
 <section id="run" class="level2">
 <h2 class="anchored" data-anchor-id="run">Run</h2>
 <p>To run the <code>fastapi</code> official documentation recomend to use <code>uvicorn</code> as web-server. So you need to use command:</p>
-<p><code>uvicon --host &lt;host&gt; &lt;path to python file with program&gt;:&lt;name of fastapi.fastAPI object in your program&gt;.</code></p>
+<p><code>uvicon &lt;path to python file with program&gt;:&lt;name of fastapi.fastAPI object in your program&gt;.</code></p>
 <p>So in the following example, a docker container is run, tested and stopped:</p>
 <ul>
 <li>Created from the image named <code>fastapi_experiment</code> described in the <a href="#sec-dockerfile">docker file</a> above;</li>
 <li>With the name <code>test_container</code> for container;</li>
 <li>The default port for <code>fastapi</code> is 8000, so port 8000 on the container is connected to port 8000 on the local machine;</li>
 <li>With volume that allows to read <a href="#sec-prog">programme</a>;</li>
-<li>And with the command created from the required pattern.</li>
+<li>And with the command created from the required pattern:
+<ul>
+<li><code>--host 0.0.0.0</code> is used to make the application visible from the container, it’s not necessary if you are using <code>uvicorn</code> without docker.</li>
+</ul></li>
 </ul>
-<div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name test_container<span class="op">\</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v .<span class="op">/</span>run_application_files<span class="op">/</span>get_started.py:<span class="op">/</span>get_started.py<span class="op">\</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>p <span class="dv">8000</span>:<span class="dv">8000</span> <span class="op">\</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    fastapi_experiment <span class="op">\</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    uvicorn <span class="op">--</span>host <span class="fl">0.0.0.0</span> get_started:my_first_app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>1b2654848ee889dc3295d5aa11a0cc715fe91f00d8c4994efaafb4ac9fb21ef4</code></pre>
-</div>
+<div class="cell" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name test_container<span class="op">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v .<span class="op">/</span>run_application_files<span class="op">/</span>get_started.py:<span class="op">/</span>get_started.py<span class="op">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>p <span class="dv">8000</span>:<span class="dv">8000</span> <span class="op">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    fastapi_experiment <span class="op">\</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    uvicorn <span class="op">--</span>host <span class="fl">0.0.0.0</span> get_started:my_first_app <span class="op">&gt;/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So now you can try it in your browser, but here I use the <code>curl</code> utility - it returns “hello”, just as I declared in the programme.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>curl localhost:<span class="dv">8000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>"hello"</code></pre>
 </div>
 </div>
-<p><strong>Don’t forget</strong> to stop the image when you’ve finished playing with the container.</p>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker stop test_container</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And we can also check what is happening inside the container. <strong>Note</strong> that the last line here is the log line for the http request from the previous cell.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker logs test_container</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>test_container</code></pre>
+<pre><code>INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     172.17.0.1:45308 - "GET / HTTP/1.1" 200 OK</code></pre>
 </div>
+</div>
+<p><strong>Don’t forget</strong> to stop the image when you’ve finished playing with the container.</p>
+<div class="cell" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker stop test_container <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="update-program" class="level2">
+<h2 class="anchored" data-anchor-id="update-program">Update program</h2>
+<p>The most convenient way to experiment with a container containing <code>fastapi</code> is to swap the program on the fly, so you can run many examples through one container. That’s why I usually connect the used executing py file as a volume (so that changes on the computer get into the container at once).</p>
+<p>But to implement it, you also need to run <code>uvicorn</code> with the <code>--reload</code> flag, which will make it track changes in the programme and update with it.</p>
+<p>So, in the following cells:</p>
+<ul>
+<li>The container stats with a program that sends <code>initial line</code> as a response;</li>
+<li>Try in with <code>curl</code> - all right, got <code>initial line</code>;</li>
+<li>Then change the <code>reload.py</code> file to respond with <code>updated line</code>;</li>
+<li>Immediately try again with the same <code>curl</code> - we’ve got an <code>updated line</code> as response.</li>
+</ul>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile run_application_files<span class="op">/</span><span class="bu">reload</span>.py</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>my_first_app <span class="op">=</span> FastAPI()</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="at">@my_first_app.get</span>(<span class="st">"/"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> say_hello():</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"initial line"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Overwriting run_application_files/reload.py</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name test_container<span class="op">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v .<span class="op">/</span>run_application_files<span class="op">/</span><span class="bu">reload</span>.py:<span class="op">/</span><span class="bu">reload</span>.py<span class="op">\</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>p <span class="dv">8000</span>:<span class="dv">8000</span> <span class="op">\</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    fastapi_experiment <span class="op">\</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    uvicorn <span class="op">--</span>host <span class="fl">0.0.0.0</span> <span class="op">--</span><span class="bu">reload</span> <span class="bu">reload</span>:my_first_app</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>752d9632c61a1927a227daf2a8b3de375385e107af1213a0df98c2b7d482d2ef</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>curl localhost:<span class="dv">8000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>"initial line"</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile run_application_files<span class="op">/</span><span class="bu">reload</span>.py</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>my_first_app <span class="op">=</span> FastAPI()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="at">@my_first_app.get</span>(<span class="st">"/"</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> say_hello():</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"updated line"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Overwriting run_application_files/reload.py</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>curl localhost:<span class="dv">8000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>"updated line"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker stop test_container</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="section" class="level2">
