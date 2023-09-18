@@ -53,7 +53,7 @@
     "href": "python/fastapi/pass_arguments.html#preparing",
     "title": "Pass arguments",
     "section": "Preparing",
-    "text": "Preparing\nTo run the examples on this page, you will need:\n\nStart a docker container with fastapi;\nImport some libraries.\n\n\n# requests is cnetral library\n# to try make requests from python\nimport requests\n\n!docker run --rm -itd\\\n    --name test_container\\\n    -v ./pass_arguments_files/app.py:/app.py\\\n    -p 8000:8000 \\\n    fastapi_experiment \\\n    uvicorn --host 0.0.0.0 --reload app:app\n\n81f6e2abcf4279b8ecf47d8a8d986e725c3918e3b137b276298185b2fc925c94\n\n\nDon’t forget to stop the container when you’ve finished playing with the examples on this page.\n\n!docker stop test_container\n\ntest_container"
+    "text": "Preparing\nTo run the examples on this page, you will need:\n\nStart a docker container with fastapi;\nImport some libraries.\n\n\n# requests is cnetral library\n# to try make requests from python\nimport requests\n\n!docker run --rm -itd\\\n    --name test_container\\\n    -v ./pass_arguments_files/app.py:/app.py\\\n    -p 8000:8000 \\\n    fastapi_experiment \\\n    uvicorn --host 0.0.0.0 --reload app:app\n\nb5432e9d63f5335872a3b63b1ae765cf681d794a3e0421d279ec1c0ac2c9e6bc\n\n\nDon’t forget to stop the container when you’ve finished playing with the examples on this page.\n\n!docker stop test_container\n\ntest_container"
   },
   {
     "objectID": "python/fastapi/pass_arguments.html#query-params",
@@ -61,6 +61,13 @@
     "title": "Pass arguments",
     "section": "Query params",
     "text": "Query params\nTo define url with parameters in fastapi, you need to define method with parameters and wrap it with fastapi object decorators.\nIn order to pass an argument using ulr we need to write a construction ?param1=argument1&param2=argument2&...&paramN=argumentN at the end of url (in web development, the name for this construction is query params).\nSo in the following example I have written a program to divide two numbers and use the syntax /divide?a=10&b=2 in the url to complete the division.\n\n%%writefile pass_arguments_files/app.py\nfrom fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get(\"/divide\")\ndef divide(a:int, b:int) -&gt; int:\n    return a/b\n\nOverwriting pass_arguments_files/app.py\n\n\n\nresponse = requests.get(\"http://localhost:8000/divide?a=10&b=2\")\nresponse.text\n\n'5'"
+  },
+  {
+    "objectID": "python/fastapi/pass_arguments.html#json-input",
+    "href": "python/fastapi/pass_arguments.html#json-input",
+    "title": "Pass arguments",
+    "section": "JSON input",
+    "text": "JSON input\nTo pass json data to your endpoint, you need to declare a descendant class of pydantic.BaseModel where you describe fields and their pytes to be passed to the endpoint as json. And use an instance of that class as a parameter to your endpoint.\nSo the following fastapi program defines Item which expects json with keys param1 and param2 and just returns line describing what data we’ve got.\n\n%%writefile pass_arguments_files/app.py\nfrom fastapi import FastAPI\nfrom pydantic import BaseModel\n\nclass Item(BaseModel):\n    param1: int\n    param2: str\n\napp = FastAPI()\n\n@app.post(\"/\")\ndef read_json(item:Item):\n    return f\"\"\"I have got:\n    param1={item.param1};\n    param2={item.param2}.\"\"\"\n\nOverwriting pass_arguments_files/app.py\n\n\nAnd here is an example of how you can send a query to such an end point and process its result.\n\nimport requests\nimport json\n\ndata = {\"param1\" : 2, \"param2\": \"test line\"}\nresponse = requests.post(\n    \"http://localhost:8000/\", \n    json=data\n)\nprint(response.content.decode(\"utf-8\").replace(\"\\\\n\", \"\\n\"))\n\n\"I have got:\n    param1=2;\n    param2=test line.\""
   },
   {
     "objectID": "python/fastapi/pass_arguments.html#data-types",
@@ -404,6 +411,27 @@
     "title": "Virutal environment in python",
     "section": "Run from environment",
     "text": "Run from environment\nWhen you run jupyter ... in your system, it will run from the base system python, whether or not any environment is enabled. But jupyter is actually just a Python runnable package, and you can do python3 -m jupyter ..., in which case it will use the appropriate environment to run a jupyter ....\nI can’t show it using notebook cells. But you should use such commands:\n# create environment\npython3 -m venv some_venv\n# activate environment\nsource some_venv/bin/activate\n# install jupyter\npip install jupyter\n# run jupyter using direct call of jupyter from python\npython3 -m jupyter lab"
+  },
+  {
+    "objectID": "python/sqlalchemy/query.html",
+    "href": "python/sqlalchemy/query.html",
+    "title": "Query",
+    "section": "",
+    "text": "In this page I’ll describe how to load records from the database using sqlalchemy."
+  },
+  {
+    "objectID": "python/sqlalchemy/query.html#start-container",
+    "href": "python/sqlalchemy/query.html#start-container",
+    "title": "Query",
+    "section": "Start container",
+    "text": "Start container\nContainer with a postgres database, and creating tables that will be useful for the examples described on this page.\n\n%%bash\ndocker run -d --rm\\\n    --name read_table_example\\\n    -e POSTGRES_PASSWORD=postgres\\\n    -p 5000:5432\\\n    postgres:15.4 &&gt; /dev/null\nsleep 5\ndocker exec -i read_table_example psql -U postgres -d postgres\n\nCREATE TABLE test_table (\n    numeric_var INT PRIMARY KEY,\n    text_var VARCHAR\n);\n\nINSERT INTO test_table (numeric_var, text_var) VALUES\n(1, 'line1'),\n(2, 'line2'),\n(3, 'line3');\n\nCREATE TABLE\nINSERT 0 3\n\n\nDon’t forget to stop the container when you’ve finished playing with the examples on this page.\n\n!docker stop read_table_example\n\nsql_alchemy_session"
+  },
+  {
+    "objectID": "python/sqlalchemy/query.html#extract-all-records",
+    "href": "python/sqlalchemy/query.html#extract-all-records",
+    "title": "Query",
+    "section": "Extract all records",
+    "text": "Extract all records\nYou need:\n\nRecover a data model from a database with descendants of the Base class generated by sqlalchemy.declared_base;\nStart the session;\nUse session.query(&lt;table class&gt;) to extract values from a table related to &lt;table class&gt;;\nsession.query.all() returns a list of instances of &lt;table class&gt; corresponding to each record in the database:\n\nIn the example, the list was printed;\nAnd in the example, all fields were printed.\n\n\n\nfrom sqlalchemy import (\n    create_engine, \n    Column, \n    Integer,\n    String\n)\nfrom sqlalchemy.orm import sessionmaker, declarative_base\n\nURL = \"postgresql://postgres:postgres@localhost:5000/postgres\"\nengine = create_engine(URL)\nLocalSession = sessionmaker(\n    autocommit=False,\n    autoflush=False,\n    bind=engine\n)\nBase = declarative_base()\n\nclass TestTable(Base):\n    __tablename__ = \"test_table\"\n    numeric_var = Column(Integer, primary_key = True)\n    text_var = Column(String)\n\nsession = LocalSession()\nquery_res = session.query(TestTable)\n\n\nprint(\"list of TestTable -\", query_res.all())\n\nprint(\"\\nExtract fields:\")\nfor record in query_res.all():\n    print(record.numeric_var, record.text_var)\n\nlist of TestTable - [&lt;__main__.TestTable object at 0x7fb570d16170&gt;, &lt;__main__.TestTable object at 0x7fb570d161d0&gt;, &lt;__main__.TestTable object at 0x7fb570d160b0&gt;]\n\nExtract fields:\n1 line1\n2 line2\n3 line3"
   },
   {
     "objectID": "latex/latex.html",
@@ -1867,6 +1895,41 @@
     "title": "NBconvert",
     "section": "",
     "text": "В этом простом notebook содражться несколько latex выражений. Я намереваю сравнить два случая: - Конвернация в html используя nbconvert; - И используя voila с последующим сохраненнием в html.\nЦель - выяснить, как отличаются части html документов, полученных при использовании каждого из подходов, ответсвенные за latex.\n\\[x_2+3=3232\\]\nА это latex внутри markdown с использованием всего одного знака $ для выделения \\(\\sqrt{x_2}\\).\nКак результат в не слишком продвинух html движках (например базовый viewer jupyter lab) результат получается не очень.\n$$x_2+3=3232$$\nНу а html разметка для той ячейки где сидит latex, выглядит так.\n&lt;div class=\"jp-Cell jp-MarkdownCell jp-Notebook-cell\"&gt;\n&lt;div class=\"jp-Cell-inputWrapper\"&gt;\n&lt;div class=\"jp-Collapser jp-InputCollapser jp-Cell-inputCollapser\"&gt;\n&lt;/div&gt;\n&lt;div class=\"jp-InputArea jp-Cell-inputArea\"&gt;&lt;div class=\"jp-InputPrompt jp-InputArea-prompt\"&gt;\n&lt;/div&gt;&lt;div class=\"jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput \" data-mime-type=\"text/markdown\"&gt;\n$$x_2+3=3232$$\n&lt;/div&gt;\n&lt;/div&gt;\n&lt;/div&gt;\n&lt;/div&gt;\n\nСохранение страницы из voila\nНа любом из известных графических движков выглядит нормально… Соответсвующий html для ячейки.\n&lt;div class=\"jp-Cell jp-MarkdownCell jp-Notebook-cell\"&gt;\n&lt;div class=\"jp-Cell-inputWrapper\"&gt;\n&lt;div class=\"jp-Collapser jp-InputCollapser jp-Cell-inputCollapser\"&gt;\n&lt;/div&gt;\n&lt;div class=\"jp-InputArea jp-Cell-inputArea\"&gt;&lt;div class=\"jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput \" data-mime-type=\"text/markdown\"&gt;\n&lt;span class=\"MathJax_Preview\" style=\"color: inherit;\"&gt;&lt;/span&gt;&lt;span class=\"mjx-chtml MJXc-display\" style=\"text-align: center;\"&gt;&lt;span id=\"MathJax-Element-1-Frame\" class=\"mjx-chtml MathJax_CHTML\" tabindex=\"0\" style=\"font-size: 116%; text-align: center; position: relative;\" data-mathml=\"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;3232&lt;/mn&gt;&lt;/math&gt;\" role=\"presentation\"&gt;&lt;span id=\"MJXc-Node-1\" class=\"mjx-math\" aria-hidden=\"true\"&gt;&lt;span id=\"MJXc-Node-2\" class=\"mjx-mrow\"&gt;&lt;span id=\"MJXc-Node-3\" class=\"mjx-msubsup\"&gt;&lt;span class=\"mjx-base\"&gt;&lt;span id=\"MJXc-Node-4\" class=\"mjx-mi\"&gt;&lt;span class=\"mjx-char MJXc-TeX-math-I\" style=\"padding-top: 0.249em; padding-bottom: 0.311em;\"&gt;x&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=\"mjx-sub\" style=\"font-size: 70.7%; vertical-align: -0.212em; padding-right: 0.071em;\"&gt;&lt;span id=\"MJXc-Node-5\" class=\"mjx-mn\" style=\"\"&gt;&lt;span class=\"mjx-char MJXc-TeX-main-R\" style=\"padding-top: 0.373em; padding-bottom: 0.373em;\"&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span id=\"MJXc-Node-6\" class=\"mjx-mo MJXc-space2\"&gt;&lt;span class=\"mjx-char MJXc-TeX-main-R\" style=\"padding-top: 0.311em; padding-bottom: 0.434em;\"&gt;+&lt;/span&gt;&lt;/span&gt;&lt;span id=\"MJXc-Node-7\" class=\"mjx-mn MJXc-space2\"&gt;&lt;span class=\"mjx-char MJXc-TeX-main-R\" style=\"padding-top: 0.373em; padding-bottom: 0.373em;\"&gt;3&lt;/span&gt;&lt;/span&gt;&lt;span id=\"MJXc-Node-8\" class=\"mjx-mo MJXc-space3\"&gt;&lt;span class=\"mjx-char MJXc-TeX-main-R\" style=\"padding-top: 0.065em; padding-bottom: 0.311em;\"&gt;=&lt;/span&gt;&lt;/span&gt;&lt;span id=\"MJXc-Node-9\" class=\"mjx-mn MJXc-space3\"&gt;&lt;span class=\"mjx-char MJXc-TeX-main-R\" style=\"padding-top: 0.373em; padding-bottom: 0.373em;\"&gt;3232&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=\"MJX_Assistive_MathML MJX_Assistive_MathML_Block\" role=\"presentation\"&gt;&lt;math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;3232&lt;/mn&gt;&lt;/math&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;script type=\"math/tex; mode=display\" id=\"MathJax-Element-1\"&gt;x_2+3=3232&lt;/script&gt;\n&lt;/div&gt;\n&lt;/div&gt;\n&lt;/div&gt;\n&lt;/div&gt;\nПонятное дело html полученный из voila выглядит значительно солиднее."
+  },
+  {
+    "objectID": "python/sqlalchemy/create_table.html",
+    "href": "python/sqlalchemy/create_table.html",
+    "title": "Create table",
+    "section": "",
+    "text": "On this page I will show how to move the data model declared in sqlalchemy to a database."
+  },
+  {
+    "objectID": "python/sqlalchemy/create_table.html#create-container",
+    "href": "python/sqlalchemy/create_table.html#create-container",
+    "title": "Create table",
+    "section": "Create container",
+    "text": "Create container\nFor example, the postgres container is used. It also shows that in the initial list of tables is emtpy.\n\n%%bash\ndocker run -d --rm\\\n    --name create_table_example\\\n    -e POSTGRES_PASSWORD=postgres\\\n    -p 5000:5432\\\n    postgres:15.4 &&gt; /dev/null\nsleep 5\n\ndocker exec create_table_example \\\n    psql -U postgres -d postgres -c \"\\dt\"\n\nDid not find any relations."
+  },
+  {
+    "objectID": "python/sqlalchemy/create_table.html#python-code",
+    "href": "python/sqlalchemy/create_table.html#python-code",
+    "title": "Create table",
+    "section": "Python code",
+    "text": "Python code\nIn the following cell, the data model is defined and moved to the database. Key code is Base.metadata.create_all(...) - duplicate data model in the database.\n\nfrom sqlalchemy import (\n    create_engine, \n    Column, \n    Integer,\n    String\n)\nfrom sqlalchemy.orm import sessionmaker, declarative_base\n\nURL = \"postgresql://postgres:postgres@localhost:5000/postgres\"\nengine = create_engine(URL)\n\nSessionLocal = sessionmaker(\n    autoflush=False,\n    autocommit=False,\n    bind=engine\n)\n\n# defining data model\nBase = declarative_base()\nclass TestTable(Base):\n    __tablename__=\"test_table\"\n    id = Column(Integer, primary_key=True)\n    numeric_var = Column(Integer)\n    text_var = Column(String)\n\n# duplicate datamodel in the database\nBase.metadata.create_all(engine)"
+  },
+  {
+    "objectID": "python/sqlalchemy/create_table.html#check-result",
+    "href": "python/sqlalchemy/create_table.html#check-result",
+    "title": "Create table",
+    "section": "Check result",
+    "text": "Check result\nThe following cell from the container with database runs:\n\n\\dt to list created tables;\nSELECT * FROM test_table; - to get head of the created table.\n\nThe results in the database correspond to the declared data model.\n\n%%bash\ndocker exec -i create_table_example \\\n    psql -U postgres -d postgres\n\n\\dt\nSELECT * FROM test_table;\n\n           List of relations\n Schema |    Name    | Type  |  Owner   \n--------+------------+-------+----------\n public | test_table | table | postgres\n(1 row)\n\n id | numeric_var | text_var \n----+-------------+----------\n(0 rows)"
+  },
+  {
+    "objectID": "python/sqlalchemy/create_table.html#stop-the-container",
+    "href": "python/sqlalchemy/create_table.html#stop-the-container",
+    "title": "Create table",
+    "section": "Stop the container",
+    "text": "Stop the container\n\n!docker stop create_table_example\n\ncreate_table_example"
   },
   {
     "objectID": "python/basics/class_interface/python_class_interface.html",
