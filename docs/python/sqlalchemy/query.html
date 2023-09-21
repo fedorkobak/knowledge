@@ -444,6 +444,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Query</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/sqlalchemy/add_record.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Add record</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/sqlalchemy/relations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Relations</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -653,7 +665,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#start-container" id="toc-start-container" class="nav-link active" data-scroll-target="#start-container">Start container</a></li>
+  <li><a href="#creating-map" id="toc-creating-map" class="nav-link" data-scroll-target="#creating-map">Creating map</a></li>
   <li><a href="#extract-all-records" id="toc-extract-all-records" class="nav-link" data-scroll-target="#extract-all-records">Extract all records</a></li>
+  <li><a href="#filters" id="toc-filters" class="nav-link" data-scroll-target="#filters">Filters</a></li>
   </ul>
 </nav>
     </div>
@@ -681,7 +695,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="start-container" class="level2">
 <h2 class="anchored" data-anchor-id="start-container">Start container</h2>
 <p>Container with a postgres database, and creating tables that will be useful for the examples described on this page.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>d <span class="op">--</span>rm<span class="op">\</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name read_table_example<span class="op">\</span></span>
@@ -697,36 +711,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>INSERT INTO test_table (numeric_var, text_var) VALUES</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span>, <span class="st">'line1'</span>),</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span>, <span class="st">'line2'</span>),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>(<span class="dv">3</span>, <span class="st">'line3'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span>, <span class="st">'a'</span>),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span>, <span class="st">'a'</span>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>(<span class="dv">3</span>, <span class="st">'b'</span>),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>(<span class="dv">4</span>, <span class="st">'c'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>CREATE TABLE
-INSERT 0 3</code></pre>
+INSERT 0 4</code></pre>
 </div>
 </div>
 <p><strong>Don’t forget to stop the container</strong> when you’ve finished playing with the examples on this page.</p>
-<div class="cell" data-execution_count="21">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker stop read_table_example</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>sql_alchemy_session</code></pre>
+<pre><code>read_table_example</code></pre>
 </div>
 </div>
 </section>
-<section id="extract-all-records" class="level2">
-<h2 class="anchored" data-anchor-id="extract-all-records">Extract all records</h2>
-<p>You need:</p>
+<section id="creating-map" class="level2">
+<h2 class="anchored" data-anchor-id="creating-map">Creating map</h2>
+<p>It’s a preparatory step:</p>
 <ul>
-<li>Recover a data model from a database with descendants of the <code>Base</code> class generated by <code>sqlalchemy.declared_base</code>;</li>
-<li>Start the session;</li>
-<li>Use <code>session.query(&lt;table class&gt;)</code> to extract values from a table related to <code>&lt;table class&gt;</code>;</li>
-<li><code>session.query.all()</code> returns a list of instances of <code>&lt;table class&gt;</code> corresponding to each record in the database:
-<ul>
-<li>In the example, the list was printed;</li>
-<li>And in the example, all fields were printed.</li>
-</ul></li>
+<li>Create session;</li>
+<li>Recreate the data model corresponding to the database you are working in.</li>
 </ul>
-<div class="cell" data-execution_count="11">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sqlalchemy <span class="im">import</span> (</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    create_engine, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    Column, </span>
@@ -742,29 +751,60 @@ INSERT 0 3</code></pre>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    autoflush<span class="op">=</span><span class="va">False</span>,</span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    bind<span class="op">=</span>engine</span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>Base <span class="op">=</span> declarative_base()</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>session <span class="op">=</span> LocalSession()</span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TestTable(Base):</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    __tablename__ <span class="op">=</span> <span class="st">"test_table"</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    numeric_var <span class="op">=</span> Column(Integer, primary_key <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    text_var <span class="op">=</span> Column(String)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>session <span class="op">=</span> LocalSession()</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>query_res <span class="op">=</span> session.query(TestTable)</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"list of TestTable -"</span>, query_res.<span class="bu">all</span>())</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Extract fields:"</span>)</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> record <span class="kw">in</span> query_res.<span class="bu">all</span>():</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(record.numeric_var, record.text_var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>Base <span class="op">=</span> declarative_base()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TestTable(Base):</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    __tablename__ <span class="op">=</span> <span class="st">"test_table"</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    numeric_var <span class="op">=</span> Column(Integer, primary_key <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    text_var <span class="op">=</span> Column(String)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extract-all-records" class="level2">
+<h2 class="anchored" data-anchor-id="extract-all-records">Extract all records</h2>
+<p>You need:</p>
+<ul>
+<li>Use <code>session.query(&lt;table class&gt;)</code> to extract values from a table related to <code>&lt;table class&gt;</code>;</li>
+<li><code>session.query.all()</code> returns a list of instances of <code>&lt;table class&gt;</code> corresponding to each record in the database:
+<ul>
+<li>In the example, the list was printed;</li>
+<li>And in the example, all fields were printed.</li>
+</ul></li>
+</ul>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>query_res <span class="op">=</span> session.query(TestTable)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"list of TestTable -"</span>, query_res.<span class="bu">all</span>())</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Extract fields:"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> record <span class="kw">in</span> query_res.<span class="bu">all</span>():</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(record.numeric_var, record.text_var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>list of TestTable - [&lt;__main__.TestTable object at 0x7fb570d16170&gt;, &lt;__main__.TestTable object at 0x7fb570d161d0&gt;, &lt;__main__.TestTable object at 0x7fb570d160b0&gt;]
+<pre><code>list of TestTable - [&lt;__main__.TestTable object at 0x7f8fd0f6d720&gt;, &lt;__main__.TestTable object at 0x7f8fd0f6da50&gt;, &lt;__main__.TestTable object at 0x7f8fd0f6e530&gt;, &lt;__main__.TestTable object at 0x7f8fd0f6ee30&gt;]
 
 Extract fields:
-1 line1
-2 line2
-3 line3</code></pre>
+1 a
+2 a
+3 b
+4 c</code></pre>
+</div>
+</div>
+</section>
+<section id="filters" class="level2">
+<h2 class="anchored" data-anchor-id="filters">Filters</h2>
+<p>To add filters to the query, you need to call the <code>fiter</code> method on the result of the <code>query</code> method. As an argument you must pass conditions in syntax such as <code>&lt;table class&gt;.&lt;field name&gt; == &lt;value&gt;</code>.</p>
+<p>So in the following example all these tips are used to query all records that have <code>a</code> as the value of the <code>text_var</code>.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> record <span class="kw">in</span> (</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    session.</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    query(TestTable).</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(TestTable.text_var<span class="op">==</span><span class="st">"a"</span>).</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">all</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(record.numeric_var, record.text_var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1 a
+2 a</code></pre>
 </div>
 </div>
 

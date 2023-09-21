@@ -413,6 +413,48 @@
     "text": "Run from environment\nWhen you run jupyter ... in your system, it will run from the base system python, whether or not any environment is enabled. But jupyter is actually just a Python runnable package, and you can do python3 -m jupyter ..., in which case it will use the appropriate environment to run a jupyter ....\nI can’t show it using notebook cells. But you should use such commands:\n# create environment\npython3 -m venv some_venv\n# activate environment\nsource some_venv/bin/activate\n# install jupyter\npip install jupyter\n# run jupyter using direct call of jupyter from python\npython3 -m jupyter lab"
   },
   {
+    "objectID": "python/sqlalchemy/relations.html",
+    "href": "python/sqlalchemy/relations.html",
+    "title": "Relations",
+    "section": "",
+    "text": "In this page I want to describe the mechanism of sqlalchemy that allows to perform sql JOIN operation in a really natural for python way. For each “main” table, you can define related essentials and you’ll be able to access them only from queries on the “main” table."
+  },
+  {
+    "objectID": "python/sqlalchemy/relations.html#prepare",
+    "href": "python/sqlalchemy/relations.html#prepare",
+    "title": "Relations",
+    "section": "Prepare",
+    "text": "Prepare\nIn the following cell we have just defined basic things for sqlalchemy.\n\n!docker run -d --rm\\\n    --name relations_example\\\n    -e POSTGRES_PASSWORD=postgres\\\n    -p 5000:5432\\\n    postgres:15.4 &&gt; /dev/null\n!sleep 5\n\nfrom sqlalchemy import (\n    create_engine, \n    Column, \n    Integer,\n    String,\n    ForeignKey\n)\nfrom sqlalchemy.orm import (\n    sessionmaker, \n    declarative_base, \n    relationship\n)\nfrom random import randint\n\nURL = \"postgresql://postgres:postgres@localhost:5000/postgres\"\nengine = create_engine(URL)\n\nSessionLocal = sessionmaker(\n    autoflush=False,\n    autocommit=False,\n    bind=engine\n)\nsession = SessionLocal()\n\n# defining data model\nBase = declarative_base()"
+  },
+  {
+    "objectID": "python/sqlalchemy/relations.html#data-model",
+    "href": "python/sqlalchemy/relations.html#data-model",
+    "title": "Relations",
+    "section": "Data model",
+    "text": "Data model\nData model is a key feature of this page. There are:\n\nMainTable, which contains\n\nSome information that is unique to each record - id and text_var;\nSome information that can be mapped to the other describe table;\n\nDescribeTable - auxiliary table that describes certain states of the MainTable.\n\nSo we need a mechanism to tell sqlalcemy that it needs to join some infromation from DescribeTable into MainTable.\nWith DescribeTable it’s very simple, you just define primary key and text_var that simulate some content to be joined.\nMainTable has:\n\nid as primary key;\ntext_var that simulate some content;\ndescribe_id in its declaration contains ForeignKey which indicates which field of their third-party table this field is associated with;\ndescribe is a field where objects of DescribeTable class will be written to so that they can be accessed.\n\n\nclass DescribeTable(Base):\n    __tablename__=\"describe_table\"\n    id = Column(Integer, primary_key=True)\n    text_var=Column(String)\n\nclass MainTable(Base):\n    __tablename__=\"main_table\"\n    id = Column(Integer, primary_key=True)\n    text_var = Column(String)\n    describe_id = Column(\n        Integer, ForeignKey(\"describe_table.id\")\n    )\n    describe = relationship(\"DescribeTable\")\n\n# duplicate datamodel in the database\nBase.metadata.create_all(engine)"
+  },
+  {
+    "objectID": "python/sqlalchemy/relations.html#filling-of-the-table",
+    "href": "python/sqlalchemy/relations.html#filling-of-the-table",
+    "title": "Relations",
+    "section": "Filling of the table",
+    "text": "Filling of the table\nBelow content of the tables is created. Few records that defines mapping for the descriptions. And some random content for the MainTable.\n\nfor i in range(2):\n    session.add(DescribeTable(\n        text_var = f\"descrion {i+1}\"\n    ))\n\nfor i in range(10):\n    session.add(MainTable(\n        text_var = \"\".join([chr(randint(97,107)) for i in range(10)]),\n        describe_id = randint(1,2)\n    ))\n\nsession.commit()\n\n\n%%bash\ndocker exec -i relations_example psql -U postgres -d postgres\nSELECT * FROM describe_table;\nSELECT * FROM main_table;\n\n id |  text_var  \n----+------------\n  1 | descrion 1\n  2 | descrion 2\n(2 rows)\n\n id |  text_var  | describe_id \n----+------------+-------------\n  1 | kciihbjiii |           1\n  2 | cgdebdabhh |           1\n  3 | bichegaghb |           2\n  4 | kkaidfdiki |           1\n  5 | icicbkcihj |           1\n  6 | eijbdfjkff |           1\n  7 | dhacdkgahd |           2\n  8 | hhiebijhbc |           2\n  9 | dccdgfkiee |           2\n 10 | fhbgideidg |           2\n(10 rows)"
+  },
+  {
+    "objectID": "python/sqlalchemy/relations.html#query",
+    "href": "python/sqlalchemy/relations.html#query",
+    "title": "Relations",
+    "section": "Query",
+    "text": "Query\nAn object that describes the entity of the linked table has been declared in the main table, it is through this object that the content of the linked table can be retrieved.\nSo despite the fact that the query was made in MainTable the corresponding data from DescribeTable are automatically pulled into the results.\n\nfor main_table_instance in session.query(MainTable).all():\n    print(\"============================\")\n    print(\n        \"text_var:\", main_table_instance.text_var, \"\\n\"\n        \"describe_id:\", main_table_instance.describe_id, \"\\n\"\n        \"description content:\", main_table_instance.describe.text_var\n    )\n\n============================\ntext_var: kciihbjiii \ndescribe_id: 1 \ndescription content: descrion 1\n============================\ntext_var: cgdebdabhh \ndescribe_id: 1 \ndescription content: descrion 1\n============================\ntext_var: bichegaghb \ndescribe_id: 2 \ndescription content: descrion 2\n============================\ntext_var: kkaidfdiki \ndescribe_id: 1 \ndescription content: descrion 1\n============================\ntext_var: icicbkcihj \ndescribe_id: 1 \ndescription content: descrion 1\n============================\ntext_var: eijbdfjkff \ndescribe_id: 1 \ndescription content: descrion 1\n============================\ntext_var: dhacdkgahd \ndescribe_id: 2 \ndescription content: descrion 2\n============================\ntext_var: hhiebijhbc \ndescribe_id: 2 \ndescription content: descrion 2\n============================\ntext_var: dccdgfkiee \ndescribe_id: 2 \ndescription content: descrion 2\n============================\ntext_var: fhbgideidg \ndescribe_id: 2 \ndescription content: descrion 2"
+  },
+  {
+    "objectID": "python/sqlalchemy/relations.html#stop-container",
+    "href": "python/sqlalchemy/relations.html#stop-container",
+    "title": "Relations",
+    "section": "Stop container",
+    "text": "Stop container\n\n!docker stop relations_example\n\nrelations_example"
+  },
+  {
     "objectID": "python/sqlalchemy/query.html",
     "href": "python/sqlalchemy/query.html",
     "title": "Query",
@@ -424,14 +466,28 @@
     "href": "python/sqlalchemy/query.html#start-container",
     "title": "Query",
     "section": "Start container",
-    "text": "Start container\nContainer with a postgres database, and creating tables that will be useful for the examples described on this page.\n\n%%bash\ndocker run -d --rm\\\n    --name read_table_example\\\n    -e POSTGRES_PASSWORD=postgres\\\n    -p 5000:5432\\\n    postgres:15.4 &&gt; /dev/null\nsleep 5\ndocker exec -i read_table_example psql -U postgres -d postgres\n\nCREATE TABLE test_table (\n    numeric_var INT PRIMARY KEY,\n    text_var VARCHAR\n);\n\nINSERT INTO test_table (numeric_var, text_var) VALUES\n(1, 'line1'),\n(2, 'line2'),\n(3, 'line3');\n\nCREATE TABLE\nINSERT 0 3\n\n\nDon’t forget to stop the container when you’ve finished playing with the examples on this page.\n\n!docker stop read_table_example\n\nsql_alchemy_session"
+    "text": "Start container\nContainer with a postgres database, and creating tables that will be useful for the examples described on this page.\n\n%%bash\ndocker run -d --rm\\\n    --name read_table_example\\\n    -e POSTGRES_PASSWORD=postgres\\\n    -p 5000:5432\\\n    postgres:15.4 &&gt; /dev/null\nsleep 5\ndocker exec -i read_table_example psql -U postgres -d postgres\n\nCREATE TABLE test_table (\n    numeric_var INT PRIMARY KEY,\n    text_var VARCHAR\n);\n\nINSERT INTO test_table (numeric_var, text_var) VALUES\n(1, 'a'),\n(2, 'a'),\n(3, 'b'),\n(4, 'c');\n\nCREATE TABLE\nINSERT 0 4\n\n\nDon’t forget to stop the container when you’ve finished playing with the examples on this page.\n\n!docker stop read_table_example\n\nread_table_example"
+  },
+  {
+    "objectID": "python/sqlalchemy/query.html#creating-map",
+    "href": "python/sqlalchemy/query.html#creating-map",
+    "title": "Query",
+    "section": "Creating map",
+    "text": "Creating map\nIt’s a preparatory step:\n\nCreate session;\nRecreate the data model corresponding to the database you are working in.\n\n\nfrom sqlalchemy import (\n    create_engine, \n    Column, \n    Integer,\n    String\n)\nfrom sqlalchemy.orm import sessionmaker, declarative_base\n\nURL = \"postgresql://postgres:postgres@localhost:5000/postgres\"\nengine = create_engine(URL)\nLocalSession = sessionmaker(\n    autocommit=False,\n    autoflush=False,\n    bind=engine\n)\nsession = LocalSession()\n\nBase = declarative_base()\nclass TestTable(Base):\n    __tablename__ = \"test_table\"\n    numeric_var = Column(Integer, primary_key = True)\n    text_var = Column(String)"
   },
   {
     "objectID": "python/sqlalchemy/query.html#extract-all-records",
     "href": "python/sqlalchemy/query.html#extract-all-records",
     "title": "Query",
     "section": "Extract all records",
-    "text": "Extract all records\nYou need:\n\nRecover a data model from a database with descendants of the Base class generated by sqlalchemy.declared_base;\nStart the session;\nUse session.query(&lt;table class&gt;) to extract values from a table related to &lt;table class&gt;;\nsession.query.all() returns a list of instances of &lt;table class&gt; corresponding to each record in the database:\n\nIn the example, the list was printed;\nAnd in the example, all fields were printed.\n\n\n\nfrom sqlalchemy import (\n    create_engine, \n    Column, \n    Integer,\n    String\n)\nfrom sqlalchemy.orm import sessionmaker, declarative_base\n\nURL = \"postgresql://postgres:postgres@localhost:5000/postgres\"\nengine = create_engine(URL)\nLocalSession = sessionmaker(\n    autocommit=False,\n    autoflush=False,\n    bind=engine\n)\nBase = declarative_base()\n\nclass TestTable(Base):\n    __tablename__ = \"test_table\"\n    numeric_var = Column(Integer, primary_key = True)\n    text_var = Column(String)\n\nsession = LocalSession()\nquery_res = session.query(TestTable)\n\n\nprint(\"list of TestTable -\", query_res.all())\n\nprint(\"\\nExtract fields:\")\nfor record in query_res.all():\n    print(record.numeric_var, record.text_var)\n\nlist of TestTable - [&lt;__main__.TestTable object at 0x7fb570d16170&gt;, &lt;__main__.TestTable object at 0x7fb570d161d0&gt;, &lt;__main__.TestTable object at 0x7fb570d160b0&gt;]\n\nExtract fields:\n1 line1\n2 line2\n3 line3"
+    "text": "Extract all records\nYou need:\n\nUse session.query(&lt;table class&gt;) to extract values from a table related to &lt;table class&gt;;\nsession.query.all() returns a list of instances of &lt;table class&gt; corresponding to each record in the database:\n\nIn the example, the list was printed;\nAnd in the example, all fields were printed.\n\n\n\nquery_res = session.query(TestTable)\n\nprint(\"list of TestTable -\", query_res.all())\n\nprint(\"\\nExtract fields:\")\nfor record in query_res.all():\n    print(record.numeric_var, record.text_var)\n\nlist of TestTable - [&lt;__main__.TestTable object at 0x7f8fd0f6d720&gt;, &lt;__main__.TestTable object at 0x7f8fd0f6da50&gt;, &lt;__main__.TestTable object at 0x7f8fd0f6e530&gt;, &lt;__main__.TestTable object at 0x7f8fd0f6ee30&gt;]\n\nExtract fields:\n1 a\n2 a\n3 b\n4 c"
+  },
+  {
+    "objectID": "python/sqlalchemy/query.html#filters",
+    "href": "python/sqlalchemy/query.html#filters",
+    "title": "Query",
+    "section": "Filters",
+    "text": "Filters\nTo add filters to the query, you need to call the fiter method on the result of the query method. As an argument you must pass conditions in syntax such as &lt;table class&gt;.&lt;field name&gt; == &lt;value&gt;.\nSo in the following example all these tips are used to query all records that have a as the value of the text_var.\n\nfor record in (\n    session.\n    query(TestTable).\n    filter(TestTable.text_var==\"a\").\n    all()\n):\n    print(record.numeric_var, record.text_var)\n\n1 a\n2 a"
   },
   {
     "objectID": "latex/latex.html",
@@ -753,7 +809,14 @@
     "href": "Docker/ports.html",
     "title": "Ports",
     "section": "",
-    "text": "from IPython.display import HTML\ndisplay(HTML('''\n&lt;style&gt;\n    h1 {text-align:center}\n&lt;/style&gt;\n'''))\n\n\n\n\n\n\nSet port for container\nYou can set port using the following syntax run ... -p &lt;port on host&gt;:&lt;port on container&gt; ..."
+    "text": "You can set port using the following syntax run ... -p &lt;port on host&gt;:&lt;port on container&gt; ....\nTo show how it works, I need some specific Python libraries defined in the following cell.\n\nimport requests\nfrom requests import ConnectionError\nfrom IPython.display import HTML\n\nTwo following cells almost the same:\n\nStart the nginx container;\nTry to connect to the http://localhost:80;\nCatch ConnectionError if it occurs;\nIf connection goes fine, then display anwer as HTML.\n\nBut in the first example the -p 80:80 option was not used and in the second example it was. It is a connection error in the first cell and a welcom message from nginx in the second.\n\n!docker run --rm -d \\\n    --name test_nginx \\\n    nginx &&gt; /dev/null\n\ntry:\n    req_res = requests.get(\"http://localhost:80\")\n    display(HTML(req_res.content.decode(\"utf-8\")))\nexcept ConnectionError:\n    print(\"Connection error!!!\")\n    \n\n!docker stop test_nginx &&gt; /dev/null\n\nConnection error!!!\n\n\n\n!docker run --rm -d \\\n    --name test_nginx \\\n    -p 80:80 \\\n    nginx &&gt; /dev/null\n\ntry:\n    req_res = requests.get(\"http://localhost:80\")\n    display(HTML(req_res.content.decode(\"utf-8\")))\nexcept ConnectionError:\n    print(\"Connection error!!!\")\n    \n\n!docker stop test_nginx &&gt; /dev/null\n\n\n\n\nWelcome to nginx!\n\n\n\n\nIf you see this page, the nginx web server is successfully installed and\nworking. Further configuration is required.\n\nFor online documentation and support please refer to\nnginx.org.\nCommercial support is available at\nnginx.com.\n\nThank you for using nginx."
+  },
+  {
+    "objectID": "Docker/ports.html#set-port-for-container",
+    "href": "Docker/ports.html#set-port-for-container",
+    "title": "Ports",
+    "section": "",
+    "text": "You can set port using the following syntax run ... -p &lt;port on host&gt;:&lt;port on container&gt; ....\nTo show how it works, I need some specific Python libraries defined in the following cell.\n\nimport requests\nfrom requests import ConnectionError\nfrom IPython.display import HTML\n\nTwo following cells almost the same:\n\nStart the nginx container;\nTry to connect to the http://localhost:80;\nCatch ConnectionError if it occurs;\nIf connection goes fine, then display anwer as HTML.\n\nBut in the first example the -p 80:80 option was not used and in the second example it was. It is a connection error in the first cell and a welcom message from nginx in the second.\n\n!docker run --rm -d \\\n    --name test_nginx \\\n    nginx &&gt; /dev/null\n\ntry:\n    req_res = requests.get(\"http://localhost:80\")\n    display(HTML(req_res.content.decode(\"utf-8\")))\nexcept ConnectionError:\n    print(\"Connection error!!!\")\n    \n\n!docker stop test_nginx &&gt; /dev/null\n\nConnection error!!!\n\n\n\n!docker run --rm -d \\\n    --name test_nginx \\\n    -p 80:80 \\\n    nginx &&gt; /dev/null\n\ntry:\n    req_res = requests.get(\"http://localhost:80\")\n    display(HTML(req_res.content.decode(\"utf-8\")))\nexcept ConnectionError:\n    print(\"Connection error!!!\")\n    \n\n!docker stop test_nginx &&gt; /dev/null\n\n\n\n\nWelcome to nginx!\n\n\n\n\nIf you see this page, the nginx web server is successfully installed and\nworking. Further configuration is required.\n\nFor online documentation and support please refer to\nnginx.org.\nCommercial support is available at\nnginx.com.\n\nThank you for using nginx."
   },
   {
     "objectID": "Docker/network/network.html",
@@ -1930,6 +1993,34 @@
     "title": "Create table",
     "section": "Stop the container",
     "text": "Stop the container\n\n!docker stop create_table_example\n\ncreate_table_example"
+  },
+  {
+    "objectID": "python/sqlalchemy/add_record.html",
+    "href": "python/sqlalchemy/add_record.html",
+    "title": "Add record",
+    "section": "",
+    "text": "In this page I’ll show you how to add a record to a database using sqlachemy."
+  },
+  {
+    "objectID": "python/sqlalchemy/add_record.html#create-database",
+    "href": "python/sqlalchemy/add_record.html#create-database",
+    "title": "Add record",
+    "section": "Create database",
+    "text": "Create database\nFor this page postgres docker container is used. In the following cell I will create database schema just in sqlalchemy and push it into database.\n\n!docker run -d --rm\\\n    --name add_record_example\\\n    -e POSTGRES_PASSWORD=postgres\\\n    -p 5000:5432\\\n    postgres:15.4 &&gt; /dev/null\n!sleep 5\n\nfrom sqlalchemy import (\n    create_engine, \n    Column, \n    Integer,\n    String\n)\nfrom sqlalchemy.orm import sessionmaker, declarative_base\n\nURL = \"postgresql://postgres:postgres@localhost:5000/postgres\"\nengine = create_engine(URL)\n\nSessionLocal = sessionmaker(\n    autoflush=False,\n    autocommit=False,\n    bind=engine\n)\n\n# defining data model\nBase = declarative_base()\nclass TestTable(Base):\n    __tablename__=\"test_table\"\n    id = Column(Integer, primary_key=True)\n    numeric_var = Column(Integer)\n    text_var = Column(String)\n\n# duplicate datamodel in the database\nBase.metadata.create_all(engine)\n\nMake sure that the created table is initially empty.\n\n!docker exec add_record_example psql -U postgres -d postgres -c \"SELECT * FROM test_table;\"\n\n id | numeric_var | text_var \n----+-------------+----------\n(0 rows)"
+  },
+  {
+    "objectID": "python/sqlalchemy/add_record.html#example",
+    "href": "python/sqlalchemy/add_record.html#example",
+    "title": "Add record",
+    "section": "Example",
+    "text": "Example\nTo add a record to the database, you must use the session’s add method. As an argument you must pass an instance of the &lt;table class&gt; that describes the record.\nIn the following example, a few records with random content have been added to the database.\nNote In this example, I don’t set a value for the id field of TestTable because it is the primary key and the table will set it itself.\nNote At the end, session.commit is called - it is needed because of features of the session declaration.\n\nfrom random import randint\nsession = SessionLocal()\nfor i in range(10):\n    session.add(\n        TestTable(\n            numeric_var=randint(0,100),\n            text_var=\"\".join([chr(randint(97, 107)) for i in range(10)])\n        )\n    )\nsession.commit()\n\nLet’s check the contents of the test_table.\n\n!docker exec add_record_example psql -U postgres -d postgres -c \"SELECT * FROM test_table;\"\n\n id | numeric_var |  text_var  \n----+-------------+------------\n  1 |           6 | ejkagfkdgi\n  2 |           3 | ddfaaedjfd\n  3 |           4 | gjchfeahhi\n  4 |          54 | kcfkbfjhjj\n  5 |          56 | gbfejdaecf\n  6 |          14 | cigagdihha\n  7 |          49 | kfcfcjgkej\n  8 |          65 | ajhahgcgff\n  9 |          20 | jgchadeedj\n 10 |          89 | jdkhfdefdc\n(10 rows)"
+  },
+  {
+    "objectID": "python/sqlalchemy/add_record.html#stop-container",
+    "href": "python/sqlalchemy/add_record.html#stop-container",
+    "title": "Add record",
+    "section": "Stop container",
+    "text": "Stop container\n\n!docker stop add_record_example\n\nadd_record_example"
   },
   {
     "objectID": "python/basics/class_interface/python_class_interface.html",
