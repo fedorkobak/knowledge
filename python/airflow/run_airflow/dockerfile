@@ -1,0 +1,12 @@
+FROM python:3.10
+COPY install_ariflow.sh install_ariflow.sh
+RUN bash install_ariflow.sh
+RUN airflow db init; \
+    airflow users create \
+        --username admin \
+        --password admin \
+        --firstname Fedor \
+        --lastname Kobak \
+        --role Admin \
+        --email spiderman@superhero.org;
+CMD ["airflow", "standalone"]
