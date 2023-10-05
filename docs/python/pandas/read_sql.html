@@ -719,6 +719,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#no-sqlalchemy" id="toc-no-sqlalchemy" class="nav-link" data-scroll-target="#no-sqlalchemy">No SQLAlchemy</a></li>
   </ul></li>
+  <li><a href="#list-tables" id="toc-list-tables" class="nav-link" data-scroll-target="#list-tables">List tables</a></li>
   </ul>
 </nav>
     </div>
@@ -745,19 +746,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this section I will describe the <code>pandas.read_sql</code> function as a basic way to load data from databases into pandas.</p>
 <p>The next cell starts a database in a docker container, which will be used as an example.</p>
 <p><a href="postgres_inter_files/simple_example_db/create_table.sql">SQL script</a> for initialisation postgres datase used in this example.</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sqlalchemy <span class="im">import</span> URL, create_engine</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v .<span class="op">/</span>postgres_inter_files<span class="op">/</span>simple_example_db:<span class="op">/</span>docker<span class="op">-</span>entrypoint<span class="op">-</span>initdb.d<span class="op">\</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_PASSWORD<span class="op">=</span>docker_app<span class="op">\</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name read_postgres_to_pandas_to_pandas<span class="op">\</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>p <span class="dv">5431</span>:<span class="dv">5432</span><span class="op">\</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    postgres:<span class="fl">15.4</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sqlalchemy <span class="im">import</span> create_engine</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sqlalchemy.engine <span class="im">import</span> URL </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>v .<span class="op">/</span>postgres_inter_files<span class="op">/</span>simple_example_db:<span class="op">/</span>docker<span class="op">-</span>entrypoint<span class="op">-</span>initdb.d<span class="op">\</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_PASSWORD<span class="op">=</span>docker_app<span class="op">\</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name read_postgres_to_pandas_to_pandas<span class="op">\</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>p <span class="dv">5431</span>:<span class="dv">5432</span><span class="op">\</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    postgres:<span class="fl">15.4</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Note</strong> Don’t forget to stop the cantainer when you have finished playing with the examples.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker stop read_postgres_to_pandas <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="sqlalchemy" class="level2">
@@ -771,7 +773,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="basic">Basic</h2>
 <p>You can use <code>pandas.read_sql</code> and pass the created SQLAlchemy engine as <code>con</code> argument.</p>
 <p>So in the following example, I start the postgres database in the docker container and then read information from it directly to pandas.</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>url_object <span class="op">=</span> URL.create(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"postgresql+psycopg2"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    username<span class="op">=</span><span class="st">"postgres"</span>,</span>
@@ -823,7 +825,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="connection-as-line">Connection as line</h2>
 <p>It is possible not to create connection as strictly as shown in the previous example - you can use a string that contains all the necessary information in itself. And pass it as the connection argument. The pattern for this line will looks like <code>dialect+driver://username:password@host:port/database</code>.</p>
 <p>So in the following example I just use this feature:</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_sql(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'SELECT * FROM main_table'</span>, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    con<span class="op">=</span><span class="st">"postgresql+psycopg2://postgres:docker_app@localhost:5431/postgres"</span>, </span>
@@ -962,9 +964,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="list-tables" class="level2">
+<h2 class="anchored" data-anchor-id="list-tables">List tables</h2>
+<p>You cannot use <code>\dt</code> to list available tables for the current database. Looks like it’s a peculiarity of sqlachemy - so you have to use <code>pg_catalog.pg_tables</code>.</p>
+<p>So in the following cells I try both options, as you can see <code>dt</code> causes errors related to syntax.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    pd.read_sql(<span class="st">"\dt;"</span>, con<span class="op">=</span>engine)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(psycopg2.errors.SyntaxError) syntax error at or near "\"
+LINE 1: \dt;
+        ^
+
+[SQL: \dt;]
+(Background on this error at: https://sqlalche.me/e/14/f405)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pd.read_sql(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SELECT * FROM pg_catalog.pg_tables WHERE schemaname=</span><span class="ch">\'</span><span class="st">public</span><span class="ch">\'</span><span class="st">"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    con <span class="op">=</span> engine</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">schemaname</th>
+<th data-quarto-table-cell-role="th">tablename</th>
+<th data-quarto-table-cell-role="th">tableowner</th>
+<th data-quarto-table-cell-role="th">tablespace</th>
+<th data-quarto-table-cell-role="th">hasindexes</th>
+<th data-quarto-table-cell-role="th">hasrules</th>
+<th data-quarto-table-cell-role="th">hastriggers</th>
+<th data-quarto-table-cell-role="th">rowsecurity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>public</td>
+<td>main_table</td>
+<td>postgres</td>
+<td>None</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->

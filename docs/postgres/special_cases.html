@@ -712,6 +712,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#columns-names" id="toc-columns-names" class="nav-link active" data-scroll-target="#columns-names">Columns names</a></li>
   <li><a href="#count-raws" id="toc-count-raws" class="nav-link" data-scroll-target="#count-raws">Count raws</a></li>
+  <li><a href="#list-tables" id="toc-list-tables" class="nav-link" data-scroll-target="#list-tables">List tables</a>
+  <ul class="collapse">
+  <li><a href="#dt" id="toc-dt" class="nav-link" data-scroll-target="#dt"><code>\dt</code></a></li>
+  <li><a href="#pg_catalog.pg_tables-table" id="toc-pg_catalog.pg_tables-table" class="nav-link" data-scroll-target="#pg_catalog.pg_tables-table">pg_catalog.pg_tables table</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -737,7 +742,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>In this section, I’ll describe some common tasks associated with posgres and their solutions.</p>
 <p>The following cell creates all needed for examples in this page.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_PASSWORD<span class="op">=</span>postgres <span class="op">\</span></span>
@@ -779,8 +784,8 @@ INSERT 0 3</code></pre>
 <div class="cell" data-execution_count="61">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>docker stop special_cases <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="columns-names" class="level1">
-<h1>Columns names</h1>
+<section id="columns-names" class="level2">
+<h2 class="anchored" data-anchor-id="columns-names">Columns names</h2>
 <p>To get names of all columns you should use <code>SELECT column_name FROM information_schema.columns WHERE table_name=</code>. Just like in following example:</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash </span>
@@ -799,8 +804,8 @@ INSERT 0 3</code></pre>
 </div>
 </div>
 </section>
-<section id="count-raws" class="level1">
-<h1>Count raws</h1>
+<section id="count-raws" class="level2">
+<h2 class="anchored" data-anchor-id="count-raws">Count raws</h2>
 <p>To get counts of observations in table you can use command: <code>SELECT COUNT(*) FROM &lt;table_name&gt;</code>.</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash </span>
@@ -815,8 +820,127 @@ INSERT 0 3</code></pre>
 </code></pre>
 </div>
 </div>
+</section>
+<section id="list-tables" class="level2">
+<h2 class="anchored" data-anchor-id="list-tables">List tables</h2>
+<p>It’s a common task to list all available tables for the current database. So in this section I want to mention some options.</p>
+<section id="dt" class="level3">
+<h3 class="anchored" data-anchor-id="dt"><code>\dt</code></h3>
+<p>Very simple method, but it doesn’t always work.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> <span class="op">-</span>i special_cases psql <span class="op">-</span>U postgres <span class="op">-</span>d postgres</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>\dt<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            List of relations
+ Schema |     Name     | Type  |  Owner   
+--------+--------------+-------+----------
+ public | simple_table | table | postgres
+(1 row)
+</code></pre>
+</div>
+</div>
+</section>
+<section id="pg_catalog.pg_tables-table" class="level3">
+<h3 class="anchored" data-anchor-id="pg_catalog.pg_tables-table">pg_catalog.pg_tables table</h3>
+<p>This is a service table that contains the tables available for this base.</p>
+<p>In the following example, I have simply selected everything from it. By default it contains some service tables.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> <span class="op">-</span>i special_cases psql <span class="op">-</span>U postgres <span class="op">-</span>d postgres</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>SELECT <span class="op">*</span> FROM pg_catalog.pg_tables<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     schemaname     |        tablename         | tableowner | tablespace | hasindexes | hasrules | hastriggers | rowsecurity 
+--------------------+--------------------------+------------+------------+------------+----------+-------------+-------------
+ public             | simple_table             | postgres   |            | f          | f        | f           | f
+ pg_catalog         | pg_statistic             | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_type                  | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_foreign_table         | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_authid                | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_statistic_ext_data    | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_user_mapping          | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_subscription          | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_attribute             | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_proc                  | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_class                 | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_attrdef               | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_constraint            | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_inherits              | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_index                 | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_operator              | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_opfamily              | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_opclass               | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_am                    | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_amop                  | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_amproc                | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_language              | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_largeobject_metadata  | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_aggregate             | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_statistic_ext         | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_rewrite               | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_trigger               | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_event_trigger         | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_description           | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_cast                  | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_enum                  | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_namespace             | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_conversion            | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_depend                | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_database              | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_db_role_setting       | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_tablespace            | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_auth_members          | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_shdepend              | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_shdescription         | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_ts_config             | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_ts_config_map         | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_ts_dict               | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_ts_parser             | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_ts_template           | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_extension             | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_foreign_data_wrapper  | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_foreign_server        | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_policy                | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_replication_origin    | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_default_acl           | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_init_privs            | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_seclabel              | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_shseclabel            | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_collation             | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_parameter_acl         | postgres   | pg_global  | t          | f        | f           | f
+ pg_catalog         | pg_partitioned_table     | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_range                 | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_transform             | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_sequence              | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_publication           | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_publication_namespace | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_publication_rel       | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_subscription_rel      | postgres   |            | t          | f        | f           | f
+ pg_catalog         | pg_largeobject           | postgres   |            | t          | f        | f           | f
+ information_schema | sql_features             | postgres   |            | f          | f        | f           | f
+ information_schema | sql_implementation_info  | postgres   |            | f          | f        | f           | f
+ information_schema | sql_parts                | postgres   |            | f          | f        | f           | f
+ information_schema | sql_sizing               | postgres   |            | f          | f        | f           | f
+(69 rows)
+</code></pre>
+</div>
+</div>
+<p>But we can impose restrictions, for example, on the <code>schemaname</code> column and get only those tables we are interested in.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> <span class="op">-</span>i special_cases psql <span class="op">-</span>U postgres <span class="op">-</span>d postgres</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>SELECT <span class="op">*</span> FROM pg_catalog.pg_tables WHERE schemaname<span class="op">=</span><span class="st">'public'</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> schemaname |  tablename   | tableowner | tablespace | hasindexes | hasrules | hastriggers | rowsecurity 
+------------+--------------+------------+------------+------------+----------+-------------+-------------
+ public     | simple_table | postgres   |            | f          | f        | f           | f
+(1 row)
+</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
