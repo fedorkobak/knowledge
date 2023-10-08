@@ -238,6 +238,27 @@
     "text": "Test task\nBy using the command airflow tasks test you can execute the task and get it’s output just in terminal. Like in the example below.\nNone For some unknown reason, the first execution of this command causes a Python error. This shouldn’t affect us for now - the logs are fine, but I need to look into it more.\n\n%%bash\necho \"=====test=====\"\ndocker exec tutorial_dag airflow tasks test tutorial print_date 2015-06-01\n\n=====test=====\n[2023-09-24T13:00:55.874+0000] {dagbag.py:539} INFO - Filling up the DagBag from /root/airflow/dags\n[2023-09-24T13:00:55.986+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=&lt;TaskInstance: tutorial.print_date __airflow_temporary_run_2023-09-24T13:00:44.709050+00:00__ [None]&gt;\n[2023-09-24T13:00:55.990+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=&lt;TaskInstance: tutorial.print_date __airflow_temporary_run_2023-09-24T13:00:44.709050+00:00__ [None]&gt;\n[2023-09-24T13:00:55.990+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 2\n[2023-09-24T13:00:55.990+0000] {taskinstance.py:1428} WARNING - cannot record queued_duration for task print_date because previous state change time has not been saved\n[2023-09-24T13:00:55.991+0000] {taskinstance.py:1380} INFO - Executing &lt;Task(BashOperator): print_date&gt; on 2015-06-01 00:00:00+00:00\n[2023-09-24T13:00:56.017+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='airflow@example.com' AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='tutorial' AIRFLOW_CTX_TASK_ID='print_date' AIRFLOW_CTX_EXECUTION_DATE='2015-06-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='__airflow_temporary_run_2023-09-24T13:00:44.709050+00:00__'\n[2023-09-24T13:00:56.019+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp\n[2023-09-24T13:00:56.020+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'date']\n[2023-09-24T13:00:56.027+0000] {subprocess.py:86} INFO - Output:\n[2023-09-24T13:00:56.028+0000] {subprocess.py:93} INFO - Sun Sep 24 13:00:56 UTC 2023\n[2023-09-24T13:00:56.028+0000] {subprocess.py:97} INFO - Command exited with return code 0\n[2023-09-24T13:00:56.043+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=tutorial, task_id=print_date, execution_date=20150601T000000, start_date=, end_date=20230924T130056"
   },
   {
+    "objectID": "python/geopy/distances.html",
+    "href": "python/geopy/distances.html",
+    "title": "Distances",
+    "section": "",
+    "text": "Geopy calculate distances.\nGeopy provides a tool for calculating distances on maps.\nfrom geopy import distance\nfrom geopy.geocoders import Nominatim"
+  },
+  {
+    "objectID": "python/geopy/distances.html#compution",
+    "href": "python/geopy/distances.html#compution",
+    "title": "Distances",
+    "section": "Compution",
+    "text": "Compution\nYou need to use the geopy.distance.distance function to calculate the distance between two points. In the following example the distance between Minsk and Molodechno has been calculated - it looks quite close.\n\ngeolocator = Nominatim(user_agent = \"knowledge\")\n\nlocation1 = geolocator.geocode(\"Minsk\")\nlocation2 = geolocator.geocode(\"Molodechno\")\n\nmy_distance = distance.distance(\n    (location1.latitude, location1.longitude),\n    (location2.latitude, location2.longitude)\n)\nprint(f\"Minsk&lt;-&gt;Molodechno distance is {my_distance.kilometers} km\")\n\nMinsk&lt;-&gt;Molodechno distance is 64.89474666491046 km"
+  },
+  {
+    "objectID": "python/geopy/distances.html#distance-object",
+    "href": "python/geopy/distances.html#distance-object",
+    "title": "Distances",
+    "section": "Distance object",
+    "text": "Distance object\ngeopy.distance.distance returns an object of type geopy.distance.geodesic. The main properties of the object are displayed in the following cell.\n\nfor field in dir(my_distance):\n    if field[0] != \"_\":\n        print(field)\n\nELLIPSOID\ndestination\nellipsoid_key\nfeet\nft\ngeod\nkilometers\nkm\nm\nmeasure\nmeters\nmi\nmiles\nnautical\nnm\nset_ellipsoid"
+  },
+  {
     "objectID": "python/basics/operators.html",
     "href": "python/basics/operators.html",
     "title": "Operators",
@@ -2476,6 +2497,34 @@
     "title": "fromfunciton",
     "section": "",
     "text": "Тут я собираю сведения о функция numpy которымы должен пользоваться или постоянно забываю как\n\nimport numpy as np\n\nПозволяет создать numpy.array используя правило задаваемое через функцию.\n\nnp.fromfunction(lambda i, j: i*3 + j, (4,4))\n\narray([[ 0.,  1.,  2.,  3.],\n       [ 3.,  4.,  5.,  6.],\n       [ 6.,  7.,  8.,  9.],\n       [ 9., 10., 11., 12.]])\n\n\n\nnumpy всегда оперирует массивами\nСледует помнить, что numpy всегда оперирует массивами. Рассмотрим пример кода из следующей ячейки. Тут предполагается возвращать для четной суммы индексов строковое значение “четная” а для не четной суммы индексов “нечетная”.\n\nnp.fromfunction(\n    lambda i,j:\"Четая\" if i&gt;j else \"Не четная\",\n    (4,4)\n)\n\nValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()\n\n\nДля того, чтобы разобраться почему так происходит, выведем параметы, которые приходят в функцию-правило переданную fromfunction.\n\ndef test_func(i,j):\n    print(i)\n    print(j)\n    return 0\n\nnp.fromfunction(test_func, (4,4))\n\n[[0. 0. 0. 0.]\n [1. 1. 1. 1.]\n [2. 2. 2. 2.]\n [3. 3. 3. 3.]]\n[[0. 1. 2. 3.]\n [0. 1. 2. 3.]\n [0. 1. 2. 3.]\n [0. 1. 2. 3.]]\n\n\n0\n\n\nИтак, приходят матрицы с индексами по строчкам для аргумента i и по столбцам для аргумента j.\n\nnp.fromfunction(\n    lambda i,j: np.where((i+j)%2==0, \"четная\", \"нечетная\"),\n    (4,4)\n)\n\narray([['четная', 'нечетная', 'четная', 'нечетная'],\n       ['нечетная', 'четная', 'нечетная', 'четная'],\n       ['четная', 'нечетная', 'четная', 'нечетная'],\n       ['нечетная', 'четная', 'нечетная', 'четная']], dtype='&lt;U8')"
+  },
+  {
+    "objectID": "python/geopy/request.html",
+    "href": "python/geopy/request.html",
+    "title": "Request",
+    "section": "",
+    "text": "In this page I will describe how to make different types of requests to geopy.\nGeopy documentation.\nTo use it you need to create a Nominatim object and pass it user_agent. In my opinion you can pass whatever you want as user_agent, I don’t really understand how this option is used.\nfrom geopy.geocoders import Nominatim\ngeolocator = Nominatim(user_agent = \"knowledge\")"
+  },
+  {
+    "objectID": "python/geopy/request.html#arbitrary-request",
+    "href": "python/geopy/request.html#arbitrary-request",
+    "title": "Request",
+    "section": "Arbitrary request",
+    "text": "Arbitrary request\nUsing the geocode method, you can query the system address as text.\n\ngeolocator.geocode(\"Minsk\", language = \"en\").raw\n\n{'place_id': 184576951,\n 'licence': 'Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright',\n 'osm_type': 'relation',\n 'osm_id': 59195,\n 'lat': '53.9024716',\n 'lon': '27.5618225',\n 'class': 'boundary',\n 'type': 'administrative',\n 'place_rank': 7,\n 'importance': 0.6699404177567978,\n 'addresstype': 'city',\n 'name': 'Minsk',\n 'display_name': 'Minsk, Belarus',\n 'boundingbox': ['53.7938470', '53.9717897', '27.3740176', '28.0799469']}"
+  },
+  {
+    "objectID": "python/geopy/request.html#request-as-coordinates",
+    "href": "python/geopy/request.html#request-as-coordinates",
+    "title": "Request",
+    "section": "Request as coordinates",
+    "text": "Request as coordinates\nUsing reverse method you can pass any coordinates you like as tuple and got answer.\n\ngeolocator.reverse((43, 23), language = \"ru\").raw\n\n{'place_id': 82486720,\n 'licence': 'Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright',\n 'osm_type': 'way',\n 'osm_id': 706822395,\n 'lat': '42.999751989667615',\n 'lon': '23.000019012462104',\n 'class': 'highway',\n 'type': 'tertiary',\n 'place_rank': 26,\n 'importance': 0.10000999999999993,\n 'addresstype': 'road',\n 'name': '813',\n 'display_name': '813, Бондин хан, Туден, Годеч, Софийская область, 2240, Болгария',\n 'address': {'road': '813',\n  'neighbourhood': 'Бондин хан',\n  'village': 'Туден',\n  'municipality': 'Годеч',\n  'county': 'Софийская область',\n  'ISO3166-2-lvl6': 'BG-23',\n  'postcode': '2240',\n  'country': 'Болгария',\n  'country_code': 'bg'},\n 'boundingbox': ['42.9936767', '42.9998986', '22.9871460', '23.0008811']}"
+  },
+  {
+    "objectID": "python/geopy/request.html#location-object",
+    "href": "python/geopy/request.html#location-object",
+    "title": "Request",
+    "section": "Location object",
+    "text": "Location object\nRequests to geopy will return the geopy.location.Location object.\nThe next cell lists the interesting fields.\n\nlocation_opject = geolocator.geocode(\"Minsk\", language = \"ru\")\n\nfor field in dir(location_opject): \n    if field[0] != \"_\": print(field)\n\naddress\naltitude\nlatitude\nlongitude\npoint\nraw\n\n\nraw field is crusical it contains original answer from api.\n\nlocation_opject.raw\n\n{'place_id': 152512099,\n 'licence': 'Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright',\n 'osm_type': 'relation',\n 'osm_id': 59195,\n 'lat': '53.9024716',\n 'lon': '27.5618225',\n 'class': 'boundary',\n 'type': 'administrative',\n 'place_rank': 7,\n 'importance': 0.6699404177567978,\n 'addresstype': 'city',\n 'name': 'Минск',\n 'display_name': 'Минск, Беларусь',\n 'boundingbox': ['53.7938470', '53.9717897', '27.3740176', '28.0799469']}"
   },
   {
     "objectID": "python/airflow/bash_tasks.html",
