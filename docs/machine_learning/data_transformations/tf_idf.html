@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Knowledge - Callbacks</title>
+<title>Knowledge - TF-IDF</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,7 +93,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -108,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Python</li><li class="breadcrumb-item"><a href="../../python/dash/callbacks.html">Dash</a></li><li class="breadcrumb-item"><a href="../../python/dash/callbacks.html">Callbacks</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../machine_learning/models_selection_methods/l2_regularisation.html">Machine learning</a></li><li class="breadcrumb-item"><a href="../../machine_learning/data_transformations/tf_idf.html">TF-IDF</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -135,13 +140,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">Machine learning</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../machine_learning/models_selection_methods/l2_regularisation.html" class="sidebar-item-text sidebar-link">
@@ -150,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../machine_learning/data_transformations/tf_idf.html" class="sidebar-item-text sidebar-link">
+  <a href="../../machine_learning/data_transformations/tf_idf.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">TF-IDF</span></a>
   </div>
 </li>
@@ -158,13 +163,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
  <span class="menu-text">Python</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
@@ -366,16 +371,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="false">
  <span class="menu-text">Dash</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../python/dash/callbacks.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../python/dash/callbacks.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Callbacks</span></a>
   </div>
 </li>
@@ -779,11 +784,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#sources" id="toc-sources" class="nav-link active" data-scroll-target="#sources">Sources</a></li>
-  <li><a href="#sec-input_output_section" id="toc-sec-input_output_section" class="nav-link" data-scroll-target="#sec-input_output_section">Input/output format</a></li>
-  <li><a href="#state-callbacks" id="toc-state-callbacks" class="nav-link" data-scroll-target="#state-callbacks">State callbacks</a></li>
-  <li><a href="#chained-callbacks" id="toc-chained-callbacks" class="nav-link" data-scroll-target="#chained-callbacks">Chained callbacks</a></li>
-  <li><a href="#callback-without-output" id="toc-callback-without-output" class="nav-link" data-scroll-target="#callback-without-output">Callback without output</a></li>
+  <li><a href="#tf---term-frequency" id="toc-tf---term-frequency" class="nav-link active" data-scroll-target="#tf---term-frequency">TF - term frequency</a></li>
+  <li><a href="#idf---inverse-document-frequency" id="toc-idf---inverse-document-frequency" class="nav-link" data-scroll-target="#idf---inverse-document-frequency">IDF - inverse document frequency</a></li>
+  <li><a href="#tf-idf" id="toc-tf-idf" class="nav-link" data-scroll-target="#tf-idf">TF-IDF</a></li>
   </ul>
 </nav>
     </div>
@@ -792,7 +795,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Callbacks</h1>
+<h1 class="title">TF-IDF</h1>
 </div>
 
 
@@ -807,262 +810,713 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>It is a mechanism that allows you to create a function that will be called when you perform an action. It realised. This is implemented via the <code>dash.callback</code> decorator. More details in the <a href="https://dash.plotly.com/basic-callbacks">documentation</a>. I will focus on some practical features.</p>
-<section id="sources" class="level1">
-<h1>Sources</h1>
-<ul>
-<li><a href="https://dash.plotly.com/workspaces/using-dash-in-jupyter-and-workspaces">Using dash inside jupyter</a>;</li>
-<li><a href="https://dash.plotly.com/dash-core-components/checklist">Check list component in dash</a>;</li>
-<li><a href="https://dash.plotly.com/basic-callbacks">Dash basic callbacks;</a></li>
-<li><a href="https://github.com/plotly/dash/issues/1549">Callback without output - github discussion</a>.</li>
-</ul>
-</section>
-<section id="sec-input_output_section" class="level1">
-<h1>Input/output format</h1>
-<p>Input/Output, implemented by <code>dash.Input</code>/<code>dash.Output</code>, which should be passed as arguments to the <code>callback</code> decorator. Constructors of the classes require the following syntax <code>("&lt;object-id&gt;", "&lt;property&gt;")</code>, so you can choose which property to pass to the callback and which to change.</p>
-<p>In the following example, I simply take <code>dcc.Checklist.values</code> and link it to <code>ddc.Slider.marks</code> - the markers on the <code>dcc.slider</code> will exactly match the selected checkboxes on the <code>dcc.checklist</code>.</p>
+<p>TF-IDF is a method for extracting features for machine learning models from textual information.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> dcc, html, Input, Output, callback</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> JupyterDash(<span class="va">__name__</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">20</span>))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>value <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">5</span>]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>lst_val_to_slider_marks <span class="op">=</span> <span class="kw">lambda</span> value: {val:<span class="bu">str</span>(val) <span class="cf">for</span> val <span class="kw">in</span> value}</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span>  html.Div(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    [</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        dcc.Checklist(</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            options,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>            value <span class="op">=</span> value,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            <span class="bu">id</span> <span class="op">=</span> <span class="st">"check-lst"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            inline <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        dcc.Slider(</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="bu">min</span>(options), <span class="bu">max</span>(options),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            step <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            marks <span class="op">=</span> lst_val_to_slider_marks(value),</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            <span class="bu">id</span> <span class="op">=</span> <span class="st">"slider"</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    style<span class="op">=</span>{<span class="st">'display'</span>: <span class="st">'flex'</span>, <span class="st">'flex-direction'</span>: <span class="st">'column'</span>}</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"slider"</span>, <span class="st">"marks"</span>),</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"check-lst"</span>, <span class="st">"value"</span>)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_callback(val:<span class="bu">list</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lst_val_to_slider_marks(val)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    app.run_server(debug<span class="op">=</span><span class="va">True</span>, port<span class="op">=</span><span class="dv">8051</span>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> log</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># set of phrases that I'll be using as the example at this page</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>phrases <span class="op">=</span> [</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'a penny saved is a penny earned'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'the quick brown fox jumps over the lazy dog'</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'beauty is in the eye of the beholder'</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'early to bed and early to rise makes a man healthy wealthy and wise'</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'give credit where credit is due'</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"if at first you don't succeed try try again"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'justice delayed is justice denied'</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'keep your friends close and your enemies closer'</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'no pain no gain'</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'quickly come quickly go'</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'united we stand divided we fall'</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'when in rome do as the romans do'</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In site it will looks like:<br> <img src="callbacks_examples/callbacks_InpOut_formal.gif"><br> Any check box you click - it will add one more marker on slider.</p>
-</section>
-<section id="state-callbacks" class="level1">
-<h1>State callbacks</h1>
-<p>Any <code>dash.dcc.Input</code> will trigger the callback when the related item has changed. But sometimes it’s useful to have an element that sends its state, but only when some other element triggers the callback. Such purpose should be completed by <code>dash.dcc.State</code>.</p>
-<p>So the following example is the same as in the <a href="#sec-input_output_section">Input/Output Format</a> section, but it updates the slider not when the new checkbox is selected, but only when the button is pressed.</p>
-<div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> dcc, html, Input, Output, callback, State</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> JupyterDash(<span class="va">__name__</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">20</span>))</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>value <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">5</span>]</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>lst_val_to_slider_marks <span class="op">=</span> <span class="kw">lambda</span> value: {val:<span class="bu">str</span>(val) <span class="cf">for</span> val <span class="kw">in</span> value}</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span>  html.Div(</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    [</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        dcc.Checklist(</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            options,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            value <span class="op">=</span> value,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="bu">id</span> <span class="op">=</span> <span class="st">"check-lst"</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            inline <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        dcc.Slider(</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>            <span class="bu">min</span>(options), <span class="bu">max</span>(options),</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            step <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            marks <span class="op">=</span> lst_val_to_slider_marks(value),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>            <span class="bu">id</span> <span class="op">=</span> <span class="st">"slider"</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        html.Button(</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Update bar"</span>, <span class="bu">id</span> <span class="op">=</span> <span class="st">"button"</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    style<span class="op">=</span>{<span class="st">'display'</span>: <span class="st">'flex'</span>, <span class="st">'flex-direction'</span>: <span class="st">'column'</span>}</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"slider"</span>, <span class="st">"marks"</span>),</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    State(<span class="st">"check-lst"</span>, <span class="st">"value"</span>),</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"button"</span>, <span class="st">"n_clicks"</span>)</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_callback(val: <span class="bu">list</span>, n_clicks : <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">        Callback for button.</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">        val : (list) value passed from check list by State</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">                caontains camptions of selected boxes;</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co">        n_clicks : (int) n_clicks of button passed by Input;</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co">        (dict) which maps values and it's markers on slider.</span></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lst_val_to_slider_marks(val)</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>app.run_server(debug<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><img src="callbacks_examples/states_callbacks.gif"></p>
-</section>
-<section id="chained-callbacks" class="level1">
-<h1>Chained callbacks</h1>
-<p>This section is just a variant of <a href="https://dash.plotly.com/basic-callbacks">that material</a>. But better described.</p>
-<p>This example shows how one event can trigger a chain of different callbacks.</p>
+<section id="tf---term-frequency" class="level2">
+<h2 class="anchored" data-anchor-id="tf---term-frequency">TF - term frequency</h2>
+<p>Term frequency is a metric for words in any next. It can be calculated using a formula:</p>
+<p><span class="math display">\[tf(t,d)=\frac{n_t}{\sum_i n_i}\]</span></p>
+<p>Where:</p>
 <ul>
-<li>So we have a button that adds a new option to the checkbox list with a <code>button_click</code> callback;</li>
-<li>When something changes options in the checklist, it triggers <code>check_list_options_changed</code>, which only sets the last option selected;</li>
-<li>When something changes selected options, <code>check_list_values_changed</code> will be triggered and show selected options like line.</li>
+<li><span class="math inline">\(t\)</span> - some word;</li>
+<li><span class="math inline">\(d\)</span> - some text;</li>
+<li><span class="math inline">\(n_t\)</span> - number of occurrences of word <span class="math inline">\(t\)</span> in document <span class="math inline">\(d\)</span>;</li>
+<li><span class="math inline">\(\sum_i n_i\)</span> - number of words in text <span class="math inline">\(d\)</span>.</li>
 </ul>
-<div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> dcc, html, Input, Output, callback</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> JupyterDash(<span class="va">__name__</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span> html.Div([</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    html.Button(<span class="st">"Add new box"</span>, <span class="bu">id</span> <span class="op">=</span> <span class="st">"add-button"</span>, n_clicks <span class="op">=</span> <span class="dv">0</span>),</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    dcc.Checklist(<span class="bu">id</span><span class="op">=</span><span class="st">"check-list"</span>),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    html.P(<span class="bu">id</span><span class="op">=</span><span class="st">"disp-sel-boxes"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"check-list"</span>, <span class="st">"options"</span>),</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"add-button"</span>, <span class="st">"n_clicks"</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> button_click(n_clicks):</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">        Callback makes in listbox exactly</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">        number of boxes as the number of</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">        button is clicked.</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">        ------------</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">        n_clicks : (int) count of clicks on button;</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">        (list) captions of boxes which will </span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">        be displayed in check-list.</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="ss">f"box </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_clicks<span class="op">+</span><span class="dv">1</span>)]</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"check-list"</span>, <span class="st">"value"</span>),</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"check-list"</span>, <span class="st">"options"</span>)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_list_options_changed(options):</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">        Callback that will be called when the list of</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">        of options in the checklist is updated. It sets</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">        only the last option as a value.</span></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co">        options : (list) list of available options.</span></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="co">        (list) contains only the last option.</span></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [options[<span class="op">-</span><span class="dv">1</span>]]</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"disp-sel-boxes"</span>, <span class="st">"children"</span>),</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"check-list"</span>, <span class="st">"value"</span>)</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_list_values_changed(value):</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="co">        Called when you select/unselect a check.</span></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments</span></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="co">        value : (list) captions of selected boxes;</span></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="co">        (str) line that describes selected options</span></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="co">        as "Selected boxes: &lt;box1&gt;, ..., &lt;boxn&gt;".</span></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Selected boxes: "</span> <span class="op">+</span> <span class="st">", "</span>.join([val <span class="cf">for</span> val <span class="kw">in</span> value])</span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>app.run(debug<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So in the following cell I calculate the term frequencies of the words for some phrases. The result here is a table that contains <code>original phrase</code> and <code>Term frequency</code>, which for each word from the <code>Original phrase</code> corresponds to <span class="math inline">\(tf\)</span> in the form <code>&lt;word&gt;-&lt;tf&gt;</code>.</p>
+<p>So let’s take the logic of the first phrase - “a penny saved is a penny earned” - one step at a time:</p>
+<ul>
+<li>Total count of words - <span class="math inline">\(\sum_i n_i = 7\)</span>;</li>
+<li>You can find the word “a” twice in the phrase so - <span class="math inline">\(n_{'a'} = 2 \Rightarrow tf('a')=\frac{2}{7} \approx 0.29\)</span>;</li>
+<li>You can find the word “penny” twice in the phrase so - <span class="math inline">\(n_{'penny'}=2 \Rightarrow tf('penny')= \frac{2}{7} \approx 0.29\)</span>;</li>
+<li>All other words occur once so <span class="math inline">\(tf\)</span> for them can me computed as <span class="math inline">\(\frac{1}{7} \approx 0.14\)</span>.</li>
+</ul>
+<div class="cell" data-execution_count="171">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>html_table <span class="op">=</span> <span class="st">"&lt;tr&gt;&lt;th&gt;Original phrase&lt;/th&gt;&lt;th&gt;Terms frequency&lt;/th&gt;&lt;/tr&gt;"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tf_dict <span class="op">=</span> {}</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> phrases:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    words_in_phrase <span class="op">=</span> <span class="bu">dict</span>(Counter(p.split()))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    words_count <span class="op">=</span> <span class="bu">sum</span>(words_in_phrase.values())</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    phrase_tfs <span class="op">=</span> {word:number<span class="op">/</span>words_count <span class="cf">for</span> word, number <span class="kw">in</span> words_in_phrase.items()}</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    tf_dict[p] <span class="op">=</span> phrase_tfs</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    tf_dict</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    counts_line <span class="op">=</span> <span class="st">"&lt;br&gt;"</span>.join(</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            key <span class="op">+</span> <span class="st">" - "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(value, <span class="dv">2</span>)) </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> key, value <span class="kw">in</span> phrase_tfs.items()</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    html_table <span class="op">+=</span> <span class="ss">f"&lt;tr&gt;&lt;td&gt;</span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;td&gt;</span><span class="sc">{</span>counts_line<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;/tr&gt;"</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">"&lt;table&gt;"</span> <span class="op">+</span> html_table <span class="op">+</span> <span class="st">"&lt;/table&gt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="171">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Original phrase</td>
+<td data-quarto-table-cell-role="th">Terms frequency</td>
+</tr>
+<tr class="even">
+<td>a penny saved is a penny earned</td>
+<td>a - 0.29<br>
+penny - 0.29<br>
+saved - 0.14<br>
+is - 0.14<br>
+earned - 0.14</td>
+</tr>
+<tr class="odd">
+<td>the quick brown fox jumps over the lazy dog</td>
+<td>the - 0.22<br>
+quick - 0.11<br>
+brown - 0.11<br>
+fox - 0.11<br>
+jumps - 0.11<br>
+over - 0.11<br>
+lazy - 0.11<br>
+dog - 0.11</td>
+</tr>
+<tr class="even">
+<td>beauty is in the eye of the beholder</td>
+<td>beauty - 0.12<br>
+is - 0.12<br>
+in - 0.12<br>
+the - 0.25<br>
+eye - 0.12<br>
+of - 0.12<br>
+beholder - 0.12</td>
+</tr>
+<tr class="odd">
+<td>early to bed and early to rise makes a man healthy wealthy and wise</td>
+<td>early - 0.14<br>
+to - 0.14<br>
+bed - 0.07<br>
+and - 0.14<br>
+rise - 0.07<br>
+makes - 0.07<br>
+a - 0.07<br>
+man - 0.07<br>
+healthy - 0.07<br>
+wealthy - 0.07<br>
+wise - 0.07</td>
+</tr>
+<tr class="even">
+<td>give credit where credit is due</td>
+<td>give - 0.17<br>
+credit - 0.33<br>
+where - 0.17<br>
+is - 0.17<br>
+due - 0.17</td>
+</tr>
+<tr class="odd">
+<td>if at first you don't succeed try try again</td>
+<td>if - 0.11<br>
+at - 0.11<br>
+first - 0.11<br>
+you - 0.11<br>
+don't - 0.11<br>
+succeed - 0.11<br>
+try - 0.22<br>
+again - 0.11</td>
+</tr>
+<tr class="even">
+<td>justice delayed is justice denied</td>
+<td>justice - 0.4<br>
+delayed - 0.2<br>
+is - 0.2<br>
+denied - 0.2</td>
+</tr>
+<tr class="odd">
+<td>keep your friends close and your enemies closer</td>
+<td>keep - 0.12<br>
+your - 0.25<br>
+friends - 0.12<br>
+close - 0.12<br>
+and - 0.12<br>
+enemies - 0.12<br>
+closer - 0.12</td>
+</tr>
+<tr class="even">
+<td>no pain no gain</td>
+<td>no - 0.5<br>
+pain - 0.25<br>
+gain - 0.25</td>
+</tr>
+<tr class="odd">
+<td>quickly come quickly go</td>
+<td>quickly - 0.5<br>
+come - 0.25<br>
+go - 0.25</td>
+</tr>
+<tr class="even">
+<td>united we stand divided we fall</td>
+<td>united - 0.17<br>
+we - 0.33<br>
+stand - 0.17<br>
+divided - 0.17<br>
+fall - 0.17</td>
+</tr>
+<tr class="odd">
+<td>when in rome do as the romans do</td>
+<td>when - 0.12<br>
+in - 0.12<br>
+rome - 0.12<br>
+do - 0.25<br>
+as - 0.12<br>
+the - 0.12<br>
+romans - 0.12</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p><img src="callbacks_examples/chained_callbacks.gif"></p>
+</div>
 </section>
-<section id="callback-without-output" class="level1">
-<h1>Callback without output</h1>
-<p>It turns out that <code>dash</code> has no callback mechanism without output. So the only tricky way is to create a dummy object and set it as the output object. In the following example, I use <code>html.Div(id='dummy')</code>, or rather its <code>children</code> property. I also print out some messages with changes to <code>dcc.Checklist</code> to prove that everything is working.<br> You can find <code>py</code> file with the following example in “callbacks_examples/no_output_callback.py”.</p>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dash <span class="im">import</span> dcc, html, Input, Output, callback, Dash</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jupyter_dash <span class="im">import</span> JupyterDash</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Dash(<span class="va">__name__</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>check_values <span class="op">=</span> [<span class="st">"value1"</span>, <span class="st">"value2"</span>, <span class="st">"value3"</span>]</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>app.layout <span class="op">=</span> html.Div([</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    html.Div(<span class="bu">id</span><span class="op">=</span><span class="st">'dummy'</span>),</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    dcc.Checklist(</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        check_values,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">id</span> <span class="op">=</span> <span class="st">"check-lst"</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>clicks_counter <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="at">@callback</span>(</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    Output(<span class="st">"dummy"</span>, <span class="st">"children"</span>),</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    Input(<span class="st">"check-lst"</span>, <span class="st">"value"</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_callback(checklist_value):</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> clicks_counter</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    clicks_counter <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"=========================="</span>)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"    CLICK </span><span class="sc">{</span>clicks_counter<span class="sc">}</span><span class="ss">     "</span>)</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"=========================="</span>)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-------value-------"</span>)</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(checklist_value)</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    app.run_server(debug<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>clear_output()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="idf---inverse-document-frequency" class="level2">
+<h2 class="anchored" data-anchor-id="idf---inverse-document-frequency">IDF - inverse document frequency</h2>
+<p>For each word of a text from the given set of texts. It can be calculated using fromula:</p>
+<p><span class="math display">\[idf(t,D)=log \frac{\left| D \right|}{\left| \left\{ d_i \in D | t \in d_i \right\} \right|};\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(D\)</span> - set of texts;</li>
+<li><span class="math inline">\(\left| A \right|\)</span> - number of elements in the set A;</li>
+<li><span class="math inline">\(\left| \left\{ d_i \in D | t \in d_i \right\} \right|\)</span> - number of documents <span class="math inline">\(d_i\)</span> from set <span class="math inline">\(D\)</span> that contains word <span class="math inline">\(t\)</span>;</li>
+<li><strong>Note</strong> the denominator of the formula contains exactly the number of documents in which the word is included, not the number of occurrences of the word in any documents it’s always true <span class="math inline">\(\left| D \right| \geq \left| \left\{ d_i \in D | t \in d_i \right\} \right| \Rightarrow idf(t,D) \geq 0\)</span>.</li>
+</ul>
+<p>So in the following cell there is an example of calculating <span class="math inline">\(idf\)</span> for a set of texts. It’s displayed like a table that contains all the words from a set of texts and for each word it calculates the occurrences of the word in the set of texts and it’s <span class="math inline">\(idf\)</span>.</p>
+<p>Let’s take word “the” for example it occurs in 3 of 12 texts so it’s <span class="math inline">\(idf=log(\frac{12}{5}) \approx 1.39\)</span>.</p>
+<div class="cell" data-execution_count="196">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>phrases_number <span class="op">=</span> <span class="bu">len</span>(phrases)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>word_in_documents <span class="op">=</span> Counter([w <span class="cf">for</span> p <span class="kw">in</span> phrases <span class="cf">for</span> w <span class="kw">in</span> <span class="bu">set</span>(p.split())])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>words_idf <span class="op">=</span> {}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>html_table <span class="op">=</span> (</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;tr&gt;&lt;th&gt;Word&lt;/th&gt;"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;th&gt;$\left|\left\{d_i \in D | t \in d_i</span><span class="ch">\\</span><span class="st">right\}</span><span class="ch">\\</span><span class="st">right|$&lt;/th&gt;"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;th&gt;Inverse document frequency&lt;/th&gt;&lt;/tr&gt;"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word, number <span class="kw">in</span> word_in_documents.items():</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    idf <span class="op">=</span> log(phrases_number<span class="op">/</span>number)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    words_idf[word] <span class="op">=</span> idf</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    html_table <span class="op">+=</span> (</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"&lt;tr&gt;&lt;td&gt;</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss">&lt;/td&gt;"</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"&lt;td&gt;</span><span class="sc">{</span>number<span class="sc">}</span><span class="ss">&lt;/td&gt;"</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"&lt;td&gt;</span><span class="sc">{</span><span class="bu">round</span>(idf, <span class="dv">2</span>)<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;/tr&gt;"</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">"&lt;table&gt;"</span> <span class="op">+</span> html_table <span class="op">+</span> <span class="st">"&lt;/table&gt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="196">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Word</td>
+<td data-quarto-table-cell-role="th">$\left|\left\{d_i \in D | t \in d_i\right\}\right|$</td>
+<td data-quarto-table-cell-role="th">Inverse document frequency</td>
+</tr>
+<tr class="even">
+<td>earned</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>is</td>
+<td>4</td>
+<td>1.1</td>
+</tr>
+<tr class="even">
+<td>saved</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>penny</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>a</td>
+<td>2</td>
+<td>1.79</td>
+</tr>
+<tr class="odd">
+<td>the</td>
+<td>3</td>
+<td>1.39</td>
+</tr>
+<tr class="even">
+<td>over</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>quick</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>fox</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>lazy</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>jumps</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>dog</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>brown</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>of</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>eye</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>beauty</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>in</td>
+<td>2</td>
+<td>1.79</td>
+</tr>
+<tr class="odd">
+<td>beholder</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>bed</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>to</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>early</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>healthy</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>makes</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>wealthy</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>and</td>
+<td>2</td>
+<td>1.79</td>
+</tr>
+<tr class="odd">
+<td>wise</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>man</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>rise</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>where</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>give</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>credit</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>due</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>you</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>at</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>don't</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>succeed</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>try</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>again</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>if</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>first</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>denied</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>delayed</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>justice</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>your</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>friends</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>close</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>closer</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>enemies</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>keep</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>pain</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>no</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>gain</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>go</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>quickly</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>come</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>fall</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>united</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>we</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>stand</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>divided</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>romans</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>when</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>as</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>rome</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>do</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p><img src="callbacks_examples/no_output_callback.gif"></p>
+</div>
+<p>This metric shows how often a word occurs in general across all texts. If the word is really common, there’s a high probability that it’s just an article, pretext or something like that - it doesn’t make much sense in the sentence. For example, let’s consider the extreme value, if you find any word <span class="math inline">\(t'\)</span> in any text, it means that <span class="math inline">\(\frac{\left| D \right|}{\left| \left\{ d_i \in D | t \in d_i \right\} \right|} = 1 \Rightarrow log \frac{\left| D \right|}{\left| \left\{ d_i \in D | t \in d_i \right\} \right|} = 0\)</span> - the presence of the word <span class="math inline">\(t'\)</span> in no way makes it possible to distinguish one entry from another.</p>
+</section>
+<section id="tf-idf" class="level2">
+<h2 class="anchored" data-anchor-id="tf-idf">TF-IDF</h2>
+<p><span class="math inline">\(ft_{idf}\)</span> is a final metric of the TF-IDF analysis and can be calculated as the product of TF and IDF. So for each word in each text from the set of texts we compute it’s own value <span class="math inline">\(tf_{idf}\)</span>. So in the following cell I combine results from two previous sections to compute <span class="math inline">\(tf_{idf}\)</span>. For example, for word “a” in phrase “a penny saved is a penny earned” <span class="math inline">\(tf_{idf} = 0.29*1.79 \approx 0.51\)</span>.</p>
+<div class="cell" data-execution_count="197">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>html_table <span class="op">=</span> (</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;tr&gt;&lt;th&gt;Phrase&lt;/th&gt;&lt;th&gt;$tf_</span><span class="sc">{idf}</span><span class="st">$&lt;/th&gt;&lt;/tr&gt;"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> phrase, tfs <span class="kw">in</span> tf_dict.items():</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    phrase_tf_idf_line <span class="op">=</span> <span class="st">"&lt;br&gt;"</span>.join([</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            word <span class="op">+</span> <span class="st">" - "</span> <span class="op">+</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">str</span>(<span class="bu">round</span>(words_idf[word]<span class="op">*</span>tf,<span class="dv">2</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> word, tf <span class="kw">in</span> tfs.items()</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    html_table <span class="op">+=</span> <span class="ss">f"&lt;tr&gt;&lt;td&gt;</span><span class="sc">{</span>phrase<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;td&gt;</span><span class="sc">{</span>phrase_tf_idf_line<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;/tr&gt;"</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">"&lt;table&gt;"</span> <span class="op">+</span> html_table <span class="op">+</span> <span class="st">"&lt;/table&gt;"</span>)       </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="197">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Phrase</td>
+<td data-quarto-table-cell-role="th">$tf_{idf}$</td>
+</tr>
+<tr class="even">
+<td>a penny saved is a penny earned</td>
+<td>a - 0.51<br>
+penny - 0.71<br>
+saved - 0.35<br>
+is - 0.16<br>
+earned - 0.35</td>
+</tr>
+<tr class="odd">
+<td>the quick brown fox jumps over the lazy dog</td>
+<td>the - 0.31<br>
+quick - 0.28<br>
+brown - 0.28<br>
+fox - 0.28<br>
+jumps - 0.28<br>
+over - 0.28<br>
+lazy - 0.28<br>
+dog - 0.28</td>
+</tr>
+<tr class="even">
+<td>beauty is in the eye of the beholder</td>
+<td>beauty - 0.31<br>
+is - 0.14<br>
+in - 0.22<br>
+the - 0.35<br>
+eye - 0.31<br>
+of - 0.31<br>
+beholder - 0.31</td>
+</tr>
+<tr class="odd">
+<td>early to bed and early to rise makes a man healthy wealthy and wise</td>
+<td>early - 0.35<br>
+to - 0.35<br>
+bed - 0.18<br>
+and - 0.26<br>
+rise - 0.18<br>
+makes - 0.18<br>
+a - 0.13<br>
+man - 0.18<br>
+healthy - 0.18<br>
+wealthy - 0.18<br>
+wise - 0.18</td>
+</tr>
+<tr class="even">
+<td>give credit where credit is due</td>
+<td>give - 0.41<br>
+credit - 0.83<br>
+where - 0.41<br>
+is - 0.18<br>
+due - 0.41</td>
+</tr>
+<tr class="odd">
+<td>if at first you don't succeed try try again</td>
+<td>if - 0.28<br>
+at - 0.28<br>
+first - 0.28<br>
+you - 0.28<br>
+don't - 0.28<br>
+succeed - 0.28<br>
+try - 0.55<br>
+again - 0.28</td>
+</tr>
+<tr class="even">
+<td>justice delayed is justice denied</td>
+<td>justice - 0.99<br>
+delayed - 0.5<br>
+is - 0.22<br>
+denied - 0.5</td>
+</tr>
+<tr class="odd">
+<td>keep your friends close and your enemies closer</td>
+<td>keep - 0.31<br>
+your - 0.62<br>
+friends - 0.31<br>
+close - 0.31<br>
+and - 0.22<br>
+enemies - 0.31<br>
+closer - 0.31</td>
+</tr>
+<tr class="even">
+<td>no pain no gain</td>
+<td>no - 1.24<br>
+pain - 0.62<br>
+gain - 0.62</td>
+</tr>
+<tr class="odd">
+<td>quickly come quickly go</td>
+<td>quickly - 1.24<br>
+come - 0.62<br>
+go - 0.62</td>
+</tr>
+<tr class="even">
+<td>united we stand divided we fall</td>
+<td>united - 0.41<br>
+we - 0.83<br>
+stand - 0.41<br>
+divided - 0.41<br>
+fall - 0.41</td>
+</tr>
+<tr class="odd">
+<td>when in rome do as the romans do</td>
+<td>when - 0.31<br>
+in - 0.22<br>
+rome - 0.31<br>
+do - 0.62<br>
+as - 0.31<br>
+the - 0.17<br>
+romans - 0.31</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>For each record, you can perform some aggregations on the numbers received. Common aggregations are maximum and average.</p>
 
 
 </section>

@@ -151,6 +151,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">L2 (Ridge regularisation)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/data_transformations/tf_idf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TF-IDF</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -782,20 +788,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#as_idnex" id="toc-as_idnex" class="nav-link" data-scroll-target="#as_idnex"><code>as_idnex</code></a></li>
   <li><a href="#observed" id="toc-observed" class="nav-link" data-scroll-target="#observed"><code>observed</code></a></li>
   </ul></li>
-  <li><a href="#iterating" id="toc-iterating" class="nav-link" data-scroll-target="#iterating">Iterating</a>
-  <ul class="collapse">
+  <li><a href="#iterating" id="toc-iterating" class="nav-link" data-scroll-target="#iterating">Iterating</a></li>
   <li><a href="#external-group-array" id="toc-external-group-array" class="nav-link" data-scroll-target="#external-group-array">External group array</a></li>
-  </ul></li>
-  <li><a href="#agg---rule-by-dict" id="toc-agg---rule-by-dict" class="nav-link" data-scroll-target="#agg---rule-by-dict"><code>agg</code> - rule by dict</a></li>
-  <li><a href="#apply---combine-results" id="toc-apply---combine-results" class="nav-link" data-scroll-target="#apply---combine-results"><code>Apply</code> - combine results</a>
+  <li><a href="#agg---rule-by-dict" id="toc-agg---rule-by-dict" class="nav-link" data-scroll-target="#agg---rule-by-dict"><code>agg</code> - rule by dict</a>
+  <ul class="collapse">
+  <li><a href="#apply---combine-results" id="toc-apply---combine-results" class="nav-link" data-scroll-target="#apply---combine-results"><code>apply</code> - combine results</a>
   <ul class="collapse">
   <li><a href="#basic-idea" id="toc-basic-idea" class="nav-link" data-scroll-target="#basic-idea">Basic idea</a></li>
   <li><a href="#use-case" id="toc-use-case" class="nav-link" data-scroll-target="#use-case">Use case</a></li>
-  <li><a href="#vs-aggtransform" id="toc-vs-aggtransform" class="nav-link" data-scroll-target="#vs-aggtransform">vs <code>agg</code>/<code>transform</code></a></li>
+  <li><a href="#vs-agg" id="toc-vs-agg" class="nav-link" data-scroll-target="#vs-agg">vs <code>agg</code></a></li>
   </ul></li>
+  <li><a href="#transform" id="toc-transform" class="nav-link" data-scroll-target="#transform"><code>transform</code></a></li>
   <li><a href="#sum" id="toc-sum" class="nav-link" data-scroll-target="#sum"><code>sum</code></a>
   <ul class="collapse">
   <li><a href="#for-str-dtype" id="toc-for-str-dtype" class="nav-link" data-scroll-target="#for-str-dtype">For <code>str</code> dtype</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -822,8 +829,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><code>pd.DataFrame.groupby</code> is a very useful tool, but sometimes working with it can be a bit confusing. So in this page I want to pay more attention to some functions and cases.</p>
 <p>The most useful page for learning is <a href="https://pandas.pydata.org/docs/reference/groupby.html">GroupBy object in pandas documentation</a>.</p>
-<section id="basic-frame" class="level1">
-<h1>Basic frame</h1>
+<section id="basic-frame" class="level2">
+<h2 class="anchored" data-anchor-id="basic-frame">Basic frame</h2>
 <p>There are many examples of the same type in this section, so unless specified by default I will use the dataset declared below.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -891,11 +898,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="pd.groupby" class="level1">
-<h1><code>pd.groupby</code></h1>
+<section id="pd.groupby" class="level2">
+<h2 class="anchored" data-anchor-id="pd.groupby"><code>pd.groupby</code></h2>
 <p>Here I describe basic usage of <code>pandas.groupby</code> function. For a formal description, see the <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html">official pandas documntation for this function</a>.</p>
-<section id="as_idnex" class="level2">
-<h2 class="anchored" data-anchor-id="as_idnex"><code>as_idnex</code></h2>
+<section id="as_idnex" class="level3">
+<h3 class="anchored" data-anchor-id="as_idnex"><code>as_idnex</code></h3>
 <p>Setting this value to <code>True</code> allows you to say that the aggregation variable should not be used as an index.</p>
 <p>So in the following example I show the difference.</p>
 <p><strong>Note</strong> In the first case the return is <code>padnas.Series</code> just because I called it that way, but in the second case it’s not a dataframe that pandas has to use as a result.</p>
@@ -952,8 +959,8 @@ Name: C, dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="observed" class="level2">
-<h2 class="anchored" data-anchor-id="observed"><code>observed</code></h2>
+<section id="observed" class="level3">
+<h3 class="anchored" data-anchor-id="observed"><code>observed</code></h3>
 <p>In the categorical datatype there is a possible case where a category exists but never appears in <code>series'. This parameter describes whether unobserved catetories will be used in</code>groupby` results (False) or only observed categories will be used (True).</p>
 <p>So in the following example I changed a datatype for the <code>A</code> column to <code>category</code>, added a new category <code>l</code> but no new observation corresponding to this category, and finally tried all options for the <code>observed</code> parameter. In the first case we don’t have <code>l</code> in the groupby result index, in the second we do.</p>
 <div class="cell" data-execution_count="29">
@@ -1065,8 +1072,8 @@ Name: C, dtype: int64</code></pre>
 </div>
 </section>
 </section>
-<section id="iterating" class="level1">
-<h1>Iterating</h1>
+<section id="iterating" class="level2">
+<h2 class="anchored" data-anchor-id="iterating">Iterating</h2>
 <p>You can iterate trow <code>pandas.DataFrame.groupby</code> retults. In each eteration you will get tuple of two values:</p>
 <ul>
 <li>Value of the grouping variable for this iteration;</li>
@@ -1192,6 +1199,7 @@ Name: C, dtype: int64</code></pre>
 </div>
 </div>
 </div>
+</section>
 <section id="external-group-array" class="level2">
 <h2 class="anchored" data-anchor-id="external-group-array">External group array</h2>
 <p>You can use an arbitrary array (that is not a column of the dataframe being grouped) for grouping.</p>
@@ -1423,7 +1431,6 @@ Name: C, dtype: int64</code></pre>
 </div>
 </div>
 </section>
-</section>
 <section id="agg---rule-by-dict" class="level1">
 <h1><code>agg</code> - rule by dict</h1>
 <p>This is a way to apply aggregation functions using syntax <code>{&lt;var_name_1&gt;:&lt;aggregation_function_1&gt;, &lt;var_name_2&gt;:&lt;aggregation_function_2&gt;, ...}</code>.</p>
@@ -1473,12 +1480,11 @@ Name: C, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="apply---combine-results" class="level1">
-<h1><code>Apply</code> - combine results</h1>
+<section id="apply---combine-results" class="level2">
+<h2 class="anchored" data-anchor-id="apply---combine-results"><code>apply</code> - combine results</h2>
 <p><a href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.apply.html#pandas.core.groupby.DataFrameGroupBy.apply">Pandas documentation about apply function.</a></p>
-<section id="basic-idea" class="level2">
-<h2 class="anchored" data-anchor-id="basic-idea">Basic idea</h2>
+<section id="basic-idea" class="level3">
+<h3 class="anchored" data-anchor-id="basic-idea">Basic idea</h3>
 <p>The peculiarity of this method is that it uses <code>pandas.DataFrame</code> as the input for the aggregation function.</p>
 <p>The following example shows this: `example_funtion’ just prints the input and it always prints a DataFrame for each “A” variable option.</p>
 <div class="cell" data-execution_count="8">
@@ -1506,8 +1512,8 @@ Name: C, dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="use-case" class="level2">
-<h2 class="anchored" data-anchor-id="use-case">Use case</h2>
+<section id="use-case" class="level3">
+<h3 class="anchored" data-anchor-id="use-case">Use case</h3>
 <p>So it’s perfect for cases where you need to get, for each variant of variable A, some value of variable C conditioned on the value of variable B.</p>
 <p>In particular, the following example shows how to obtain for each option of “A” the “C” value corresponding to the minimum “B” value.</p>
 <ul>
@@ -1559,28 +1565,161 @@ Name: C, dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="vs-aggtransform" class="level2">
-<h2 class="anchored" data-anchor-id="vs-aggtransform">vs <code>agg</code>/<code>transform</code></h2>
-<p>Other common functions may seem useless because this function can do everything they can. However, according to the <a href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.apply.html#pandas.core.groupby.DataFrameGroupBy.apply">pandas documentation</a>, they may work a little faster. I have not been able to test this yet.</p>
+<section id="vs-agg" class="level3">
+<h3 class="anchored" data-anchor-id="vs-agg">vs <code>agg</code></h3>
+<p>Other common function may seem useless because this function can do everything they can. However, according to the <a href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.apply.html#pandas.core.groupby.DataFrameGroupBy.apply">pandas documentation</a>, they may work a little faster. I have not been able to test this yet.</p>
 </section>
 </section>
-<section id="sum" class="level1">
-<h1><code>sum</code></h1>
+<section id="transform" class="level2">
+<h2 class="anchored" data-anchor-id="transform"><code>transform</code></h2>
+<p>This is a function that allows you to get aggregations as <code>pandas.Series</code>/<code>pandas.DataFrame</code> indexed like the original <code>pandas.DataFrame</code>.</p>
+<p>For example, in the following cell, throw the <code>transform</code> function, for each record in the original <code>pandas.DataFrame</code> I got the mean value of <code>B</code> for each group in <code>A</code>.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>temp_frame <span class="op">=</span> basic_frame.copy()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>temp_frame[<span class="st">"mean B by A"</span>] <span class="op">=</span> (</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    temp_frame.</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    groupby(<span class="st">"A"</span>)[<span class="st">"B"</span>].</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    transform(<span class="st">"mean"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>display(temp_frame)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">mean B by A</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>a</td>
+<td>2</td>
+<td>10</td>
+<td>1.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>a</td>
+<td>1</td>
+<td>20</td>
+<td>1.5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>b</td>
+<td>3</td>
+<td>30</td>
+<td>3.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>b</td>
+<td>4</td>
+<td>40</td>
+<td>3.5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>c</td>
+<td>6</td>
+<td>50</td>
+<td>5.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>c</td>
+<td>5</td>
+<td>60</td>
+<td>5.5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Here I have a <code>pandas.DataFrame</code> that for each record from the original <code>pandas.DataFrame</code> matches the mean value of the <code>B</code> and <code>C</code> columns to the <code>A</code> column in a command.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>display(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    temp_frame.</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    groupby(<span class="st">"A"</span>)[[<span class="st">"B"</span>, <span class="st">"C"</span>]].</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    transform(<span class="st">"mean"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.5</td>
+<td>15.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1.5</td>
+<td>15.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3.5</td>
+<td>35.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3.5</td>
+<td>35.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5.5</td>
+<td>55.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>5.5</td>
+<td>55.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="sum" class="level2">
+<h2 class="anchored" data-anchor-id="sum"><code>sum</code></h2>
 <p>The basic function that allows you to get sums by groups.</p>
-<section id="for-str-dtype" class="level2">
-<h2 class="anchored" data-anchor-id="for-str-dtype">For <code>str</code> dtype</h2>
+<section id="for-str-dtype" class="level3">
+<h3 class="anchored" data-anchor-id="for-str-dtype">For <code>str</code> dtype</h3>
 <p>If you apply the <code>sum</code> function to a variable containing a <code>str</code> datatype, it will concatenate observations by groups.</p>
-<p>So in the following example, this just happened with the <code>group text</code> column of the initial dataframe.</p>
+<p>So in the following example, this just happened with the <code>group text</code> column of the test dataframe.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group class"</span> : [<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>],</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group numeric"</span> : [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>],</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group text"</span> : [<span class="st">"hello"</span>, <span class="st">"test"</span>, <span class="st">"line3"</span>, <span class="st">"superline"</span>]</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Initial frame&lt;/b&gt;"</span>))</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>display(test_df)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Aggregation result&lt;/b&gt;"</span>))</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>test_df.groupby(<span class="st">"group class"</span>).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group class"</span> : [<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>],</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group numeric"</span> : [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>],</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"group text"</span> : [<span class="st">"hello"</span>, <span class="st">"test"</span>, <span class="st">"line3"</span>, <span class="st">"superline"</span>]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Initial frame&lt;/b&gt;"</span>))</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>display(test_df)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">"&lt;b&gt;Aggregation result&lt;/b&gt;"</span>))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>test_df.groupby(<span class="st">"group class"</span>).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <b>Initial frame</b>
 </div>
@@ -1666,6 +1805,7 @@ Name: C, dtype: int64</code></pre>
 </div>
 
 
+</section>
 </section>
 </section>
 
