@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -89,7 +89,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -113,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Python</li><li class="breadcrumb-item"><a href="../../python/pandas/loc.html">Pandas</a></li><li class="breadcrumb-item"><a href="../../python/pandas/groupby.html">Groupby</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -613,6 +614,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Local network</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Docker/network/container_connection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Container connection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Docker/network/small_features.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Small features</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">Dokcer/network/default_networks.ipynb</span>
+  </li>
       </ul>
   </li>
       </ul>
@@ -751,6 +767,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Python interaction</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../postgres/first_last_value.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">First/last value</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">postgres/json_datatype.ipynb</span>
+  </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -829,8 +854,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#iterating" id="toc-iterating" class="nav-link" data-scroll-target="#iterating">Iterating</a></li>
   <li><a href="#external-group-array" id="toc-external-group-array" class="nav-link" data-scroll-target="#external-group-array">External group array</a></li>
-  <li><a href="#agg---rule-by-dict" id="toc-agg---rule-by-dict" class="nav-link" data-scroll-target="#agg---rule-by-dict"><code>agg</code> - rule by dict</a>
-  <ul class="collapse">
+  <li><a href="#agg---rule-by-dict" id="toc-agg---rule-by-dict" class="nav-link" data-scroll-target="#agg---rule-by-dict"><code>agg</code> - rule by dict</a></li>
   <li><a href="#apply---combine-results" id="toc-apply---combine-results" class="nav-link" data-scroll-target="#apply---combine-results"><code>apply</code> - combine results</a>
   <ul class="collapse">
   <li><a href="#basic-idea" id="toc-basic-idea" class="nav-link" data-scroll-target="#basic-idea">Basic idea</a></li>
@@ -841,7 +865,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sum" id="toc-sum" class="nav-link" data-scroll-target="#sum"><code>sum</code></a>
   <ul class="collapse">
   <li><a href="#for-str-dtype" id="toc-for-str-dtype" class="nav-link" data-scroll-target="#for-str-dtype">For <code>str</code> dtype</a></li>
-  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -1470,8 +1493,8 @@ Name: C, dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="agg---rule-by-dict" class="level1">
-<h1><code>agg</code> - rule by dict</h1>
+<section id="agg---rule-by-dict" class="level2">
+<h2 class="anchored" data-anchor-id="agg---rule-by-dict"><code>agg</code> - rule by dict</h2>
 <p>This is a way to apply aggregation functions using syntax <code>{&lt;var_name_1&gt;:&lt;aggregation_function_1&gt;, &lt;var_name_2&gt;:&lt;aggregation_function_2&gt;, ...}</code>.</p>
 <p>So in the following example, I use the above syntax to aggregate max <code>B</code> values and sum of <code>C</code> values by <code>A</code> subsets:</p>
 <div class="cell" data-execution_count="7">
@@ -1519,6 +1542,7 @@ Name: C, dtype: int64</code></pre>
 </div>
 </div>
 </div>
+</section>
 <section id="apply---combine-results" class="level2">
 <h2 class="anchored" data-anchor-id="apply---combine-results"><code>apply</code> - combine results</h2>
 <p><a href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.apply.html#pandas.core.groupby.DataFrameGroupBy.apply">Pandas documentation about apply function.</a></p>
@@ -1844,7 +1868,6 @@ Name: C, dtype: int64</code></pre>
 </div>
 
 
-</section>
 </section>
 </section>
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -89,7 +89,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -110,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../git/init.html">Git</a></li><li class="breadcrumb-item"><a href="../git/ignore.html">How git ignore works</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -610,6 +611,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Local network</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Docker/network/container_connection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Container connection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Docker/network/small_features.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Small features</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">Dokcer/network/default_networks.ipynb</span>
+  </li>
       </ul>
   </li>
       </ul>
@@ -748,6 +764,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Python interaction</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../postgres/first_last_value.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">First/last value</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">postgres/json_datatype.ipynb</span>
+  </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -818,7 +843,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#any-entry" id="toc-any-entry" class="nav-link active" data-scroll-target="#any-entry">Any entry</a></li>
+  <li><a href="#check-ignored-files" id="toc-check-ignored-files" class="nav-link active" data-scroll-target="#check-ignored-files">Check ignored files</a></li>
+  <li><a href="#any-entry" id="toc-any-entry" class="nav-link" data-scroll-target="#any-entry">Any entry</a></li>
   </ul>
 </nav>
     </div>
@@ -842,6 +868,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<section id="check-ignored-files" class="level2">
+<h2 class="anchored" data-anchor-id="check-ignored-files">Check ignored files</h2>
+<p>To list files that match any pattern in your <code>.gitignore</code>, use the <code>--ignored</code> option to the <code>git status</code> command. All files to be ignored will be listed in the <code>Ignored files:</code> section.</p>
+<p>In the next cell I define a <code>.gitignore' file, which tells git to ignore any file that matches</code>file_to_be_ignored*’.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile ignore_files<span class="op">/</span>check_ignored_files<span class="op">/</span>.gitignore</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>file_to_be_ignored<span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Overwriting ignore_files/check_ignored_files/.gitignore</code></pre>
+</div>
+</div>
+<p>So lets see how it looks. In the following cell I create some files, some matching <code>file_to_be_ignored</code>, some not, and then run <code>git status</code> with and without <code>--ignored</code>.</p>
+<p>With the <code>--ignored</code> option, you can see the <code>file_to_be_ignored*</code> files in the <code>Ignored files:</code> section.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cd ignore_files<span class="op">/</span>check_ignored_files</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>git init <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>touch file_to_be_ignored{<span class="fl">1..3</span>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>touch other_file{<span class="fl">1..3</span>}</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====git status====="</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>git status</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====git status --ignored====="</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>git status <span class="op">--</span>ignored</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r .git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====git status=====
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+    .gitignore
+    other_file1
+    other_file2
+    other_file3
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+=====git status --ignored=====
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+    .gitignore
+    other_file1
+    other_file2
+    other_file3
+
+Ignored files:
+  (use "git add -f &lt;file&gt;..." to include in what will be committed)
+    file_to_be_ignored1
+    file_to_be_ignored2
+    file_to_be_ignored3
+
+nothing added to commit but untracked files present (use "git add" to track)</code></pre>
+</div>
+</div>
+</section>
 <section id="any-entry" class="level2">
 <h2 class="anchored" data-anchor-id="any-entry">Any entry</h2>
 <p>Using the syntax <code>*&lt;symbol_combination&gt;*</code> you can specify a symbol combination and any file with that symbol combination in the relative filepath will be ignored by git.</p>
@@ -856,25 +948,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Git ignores files in directories started or ended with <code>symb_comb</code>.</li>
 </ul>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cd ignore_files<span class="op">/</span>any_entry</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>git init <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====FILES TREE====="</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>tree</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====.GITIGNORE FILE====="</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>cat .gitignore</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====GIT STATUS====="</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>git status</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r .git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cd ignore_files<span class="op">/</span>any_entry</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>git init <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====FILES TREE====="</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>tree</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====.GITIGNORE FILE====="</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>cat .gitignore</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====GIT STATUS====="</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>git status</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r .git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=====FILES TREE=====
 .
