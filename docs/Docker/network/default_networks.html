@@ -629,6 +629,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Default networks</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Docker/network/container_communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Containers communication</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -851,6 +857,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#from-host-to-container" id="toc-from-host-to-container" class="nav-link" data-scroll-target="#from-host-to-container">From host to container</a></li>
   <li><a href="#from-container-to-internet" id="toc-from-container-to-internet" class="nav-link" data-scroll-target="#from-container-to-internet">From container to internet</a></li>
   </ul></li>
+  <li><a href="#network-host" id="toc-network-host" class="nav-link" data-scroll-target="#network-host">Network <code>host</code></a>
+  <ul class="collapse">
+  <li><a href="#connect-to-host" id="toc-connect-to-host" class="nav-link" data-scroll-target="#connect-to-host">Connect to <code>host</code></a></li>
+  <li><a href="#ports-with-host-network" id="toc-ports-with-host-network" class="nav-link" data-scroll-target="#ports-with-host-network">Ports with <code>host</code> network</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -899,8 +910,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>p <span class="dv">80</span>:<span class="dv">80</span> <span class="op">\</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name network_example<span class="op">\</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    nginx</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">2</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    nginx <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">2</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====DEFAULT NETWORK====="</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----network name-----"</span></span>
@@ -925,8 +936,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>docker stop network_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>4a093f76ed7b8b10c4ef46873ada94a5b49fce7266b81588031693ba72dd1a42
-=====DEFAULT NETWORK=====
+<pre><code>=====DEFAULT NETWORK=====
 -----network name-----
 bridge 
 -----curl to nginx-----
@@ -953,12 +963,12 @@ none
 <h3 class="anchored" data-anchor-id="from-container-to-internet">From container to internet</h3>
 <p>Another feature of the <code>none</code> network is that it does not have access to the internet. for instance, you can use the <code>curl</code> command to fetch data from any website while the docker container is connected to the <code>bridge</code> network. however, if you switch the network to <code>none</code>, the <code>curl</code> command won’t work.</p>
 <p>The script demonstrates this scenario. initially, the container is connected to the <code>bridge</code> network, and executing the <code>curl example.com</code> command within the container successfully fetches the webpage. but after switching the container to the <code>none</code> network, the same <code>curl</code> command does not produce any output.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name network_example<span class="op">\</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    nginx</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">2</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    nginx <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">2</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====DEFAULT NETWORK====="</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----network name-----"</span></span>
@@ -983,8 +993,7 @@ none
 <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>docker stop network_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>7c305926adedbbe6064780448036ac5ff840e859cddfaec9fd0ffa4277b2090c
-=====DEFAULT NETWORK=====
+<pre><code>=====DEFAULT NETWORK=====
 -----network name-----
 bridge 
 -----curl from bridge-----
@@ -1004,6 +1013,93 @@ bridge
 -----network name-----
 none 
 -----curl from none-----</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="network-host" class="level2">
+<h2 class="anchored" data-anchor-id="network-host">Network <code>host</code></h2>
+<p>Completely removes the container’s network isolation, that is, the container shares the network completely with the host.</p>
+<section id="connect-to-host" class="level3">
+<h3 class="anchored" data-anchor-id="connect-to-host">Connect to <code>host</code></h3>
+<p><strong>Note</strong> you can’t connect or disconnect a container to the <code>host</code> network. It will cause an error. You can only create containers that are already connected to the <code>host</code> network.</p>
+<p>So the following cell shows what message you will get when you try to connect or disconnect a container to the <code>host</code> network.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name network_example<span class="op">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    nginx <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">2</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>docker network disconnect bridge network_example</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>docker network <span class="ex">connect</span> host network_example</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>docker stop network_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Error response from daemon: container cannot be disconnected from host network or connected to host network</code></pre>
+</div>
+</div>
+</section>
+<section id="ports-with-host-network" class="level3">
+<h3 class="anchored" data-anchor-id="ports-with-host-network">Ports with <code>host</code> network</h3>
+<p>If you are using the <code>host</code> network, you don’t need to worry about setting ports for the container because it will share all ports with the host (the computer the container is running on).</p>
+<p>So, the following code cell starts an nginx container twice without using any specified ports. In the first case, it doesn’t specify any network, but in the second case, the <code>--net host</code> parameter is used. When <code>curl localhost:80</code> is executed in the first case, it doesn’t return anything, but in the second case, it returns the nginx welcome page</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name network_example<span class="op">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    nginx <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">2</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====DEFAULT NETWORK====="</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----network name-----"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>docker inspect <span class="op">-</span>f <span class="op">\</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'</span><span class="sc">{{</span><span class="st">range $key, $value := .NetworkSettings.Networks</span><span class="sc">}}{{</span><span class="st">$key</span><span class="sc">}}</span><span class="st"> </span><span class="sc">{{</span><span class="st">end</span><span class="sc">}}</span><span class="st">'</span> \</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    network_example</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----curl to bridge-----"</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>curl <span class="op">-</span>s localhost:<span class="dv">80</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>docker stop network_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">2</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd<span class="op">\</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name network_example<span class="op">\</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>net host<span class="op">\</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    nginx <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">2</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====host NETWORK====="</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----network name-----"</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>docker inspect <span class="op">-</span>f <span class="op">\</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'</span><span class="sc">{{</span><span class="st">range $key, $value := .NetworkSettings.Networks</span><span class="sc">}}{{</span><span class="st">$key</span><span class="sc">}}</span><span class="st"> </span><span class="sc">{{</span><span class="st">end</span><span class="sc">}}</span><span class="st">'</span> \</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    network_example</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----curl to host-----"</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>curl <span class="op">-</span>s localhost:<span class="dv">80</span> <span class="op">|</span> head <span class="op">-</span>n <span class="dv">10</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>docker stop network_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=====DEFAULT NETWORK=====
+-----network name-----
+bridge 
+-----curl to bridge-----
+
+
+=====host NETWORK=====
+-----network name-----
+host 
+-----curl to host-----
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+&lt;style&gt;
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+&lt;/style&gt;
+&lt;/head&gt;</code></pre>
 </div>
 </div>
 

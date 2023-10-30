@@ -624,8 +624,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">Dokcer/network/default_networks.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../Docker/network/default_networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Default networks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Docker/network/container_communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Containers communication</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -845,7 +854,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#sec-to_ancestor" id="toc-sec-to_ancestor" class="nav-link active" data-scroll-target="#sec-to_ancestor">To ancestor</a></li>
   <li><a href="#sec-basic_case" id="toc-sec-basic_case" class="nav-link" data-scroll-target="#sec-basic_case">Basic case</a></li>
-  <li><a href="#solve-conflict" id="toc-solve-conflict" class="nav-link" data-scroll-target="#solve-conflict">Solve conflict</a></li>
+  <li><a href="#solve-conflict" id="toc-solve-conflict" class="nav-link" data-scroll-target="#solve-conflict">Solve conflict</a>
+  <ul class="collapse">
+  <li><a href="#manual-example" id="toc-manual-example" class="nav-link" data-scroll-target="#manual-example">Manual example</a></li>
+  <li><a href="#select-version" id="toc-select-version" class="nav-link" data-scroll-target="#select-version">Select version</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1060,6 +1073,8 @@ Merge made by the 'ort' strategy.
 ===========
 &lt;content of the branch we merge into another&gt;
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; &lt;branch ot be merged name&gt;</code></pre>
+<section id="manual-example" class="level3">
+<h3 class="anchored" data-anchor-id="manual-example">Manual example</h3>
 <p>We can put any content there: we can put content from one of the branches, or we can put completely different content.</p>
 <p>So in the following example</p>
 <ul>
@@ -1191,8 +1206,138 @@ content for example branch
       basic commit</code></pre>
 </div>
 </div>
+</section>
+<section id="select-version" class="level3">
+<h3 class="anchored" data-anchor-id="select-version">Select version</h3>
+<p>Sometimes files can differ significantly between branches, so it can be difficult to edit files in all the difference entries. You may want to consider specifying which branch file should be taken for the merge commit.</p>
+<p>You can do this with the syntax <code>git checkout --theirs/ours &lt;list of files&gt;</code>. If you use <code>ours</code> it will take the version of the file from the current branch, if you use <code>theirs</code> it will take the version from the merging branch.</p>
+<p>The following example shows the difference:</p>
+<ul>
+<li>There are two files added to the git repository;</li>
+<li>In <code>new_branch</code> the files change one way in <code>master</code> the other, so you’ll have conflicts when merging;</li>
+<li>Use <code>git checkout</code> to resolve the conflict:
+<ul>
+<li>For <code>test_file1</code> we use the <code>--ours</code> option;</li>
+<li>For <code>test_file2</code> we use the <code>--theirs</code> option;</li>
+</ul></li>
+<li>As a result we have the version from <code>master</code> for <code>test_file1</code> and the version from <code>example_branch</code> for <code>test_file2</code>;</li>
+</ul>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mkdir merge_example</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>cd merge_example</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>git init <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>echo <span class="op">-</span>e <span class="st">"version</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">"of the test_file1</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">"from initian commit"</span>\</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> test_file1</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>echo <span class="op">-</span>e <span class="st">"version</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="st">"of the test_file2</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="st">"from initian commit"</span>\</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> test_file2</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>git add <span class="op">--</span><span class="bu">all</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">"initial commit"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>git checkout <span class="op">-</span>b new_branch <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>echo <span class="op">-</span>e <span class="st">"version</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="st">"of the test_file1</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="st">"from new_branch"</span>\</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> test_file1</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>echo <span class="op">-</span>e <span class="st">"version</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="st">"of the test_file2</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="st">"from new_branch"</span>\</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> test_file2</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>am <span class="st">"commit from new_branch"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>git checkout master <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>echo <span class="op">-</span>e <span class="st">"version</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="st">"of the test_file1</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="st">"from master"</span>\</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> test_file1</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>echo <span class="op">-</span>e <span class="st">"version</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="st">"of the test_file2</span><span class="ch">\n</span><span class="st">"</span>\</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="st">"from master"</span>\</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> test_file2</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>am <span class="st">"commit from master"</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>git log <span class="op">--</span>graph <span class="op">--</span>decorate <span class="op">--</span><span class="bu">all</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>git merge new_branch <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Files before checkout====="</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----test_file1-----"</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>cat test_file1</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----test_file2-----"</span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>cat test_file2</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>echo</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====Files after checkout====="</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>git checkout <span class="op">--</span>ours test_file1 <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>git checkout <span class="op">--</span>theirs test_file2 <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----test_file1-----"</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>cat test_file1</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"-----test_file1-----"</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>cat test_file2</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>cd ..</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r merge_example</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>* commit 7d17539a009082402162cd98502bc9e3e0032aca (HEAD -&gt; master)
+| Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
+| Date:   Mon Oct 30 15:50:33 2023 +0300
+| 
+|     commit from master
+|   
+| * commit 40934888b03ac7bb5e4d2df298f6eb294a881cce (new_branch)
+|/  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
+|   Date:   Mon Oct 30 15:50:33 2023 +0300
+|   
+|       commit from new_branch
+| 
+* commit c830f9d4e47bb64137721c148926432b922365ed
+  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
+  Date:   Mon Oct 30 15:50:33 2023 +0300
+  
+      initial commit
 
 
+=====Files for merge=====
+-----test_file1-----
+version
+of the test_file1
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+from master
+=======
+from new_branch
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; new_branch
+-----test_file2-----
+version
+of the test_file2
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+from master
+=======
+from new_branch
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; new_branch
+
+=====Files before checkout=====
+-----test_file1-----
+version
+of the test_file1
+from master
+-----test_file1-----
+version
+of the test_file2
+from new_branch</code></pre>
+</div>
+</div>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->
