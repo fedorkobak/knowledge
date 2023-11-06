@@ -170,6 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">CAP curve</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/metrics/GINI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GINI coeficient</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -395,6 +401,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../../python/plotly/hovers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hovers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/plotly/dragmode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dragmode</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/plotly/color_from_scheme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Color from scheme</span></a>
   </div>
 </li>
       </ul>
@@ -928,7 +946,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="#3">Random CAP curve</a>;</li>
 <li><a href="#TPR_CAP"><span class="math inline">\(TPR\)</span> on the ordinate axis at the CAP curve</a>.</li>
 </ol>
-<p><a id="1"></a> # CAP curve definition</p>
+<p><a id="1"></a> ## CAP curve definition</p>
 <p><strong>CAP curve</strong> represents the cumulative number of positive outcomes on the ordinate axis relative to the corresponding cumulative number of the classifying parameter on the abscissa axis.</p>
 <section id="basic-understanding-of-cap-curve-by-example" class="level3">
 <h3 class="anchored" data-anchor-id="basic-understanding-of-cap-curve-by-example">Basic understanding of CAP curve by example</h3>
@@ -1367,7 +1385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="st">"red"</span>, marker <span class="op">=</span> <span class="st">"."</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Доля наблюдений"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Proportion of observations"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$TPR$"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.legend(</span>
@@ -1385,7 +1403,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="CAP_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p><a id="TPR_CAP"></a> # <span class="math inline">\(TPR\)</span> на оси ординат у CAP</p>
+<p><a id="TPR_CAP"></a> ## <span class="math inline">\(TPR\)</span> on the ordinate axis of CAP</p>
 <p><span class="math inline">\(TPR\)</span> is the proportion of correctly predicted observations of trait manifestations at the treshold <span class="math inline">\(p'\)</span>:</p>
 <p><span class="math display">\[TPR_i(p')=\sum_{i=1}^n\frac{I(\hat{p}_i \geq p')}{n};\]</span></p>
 <p><span class="math display">\[I(\hat{p}_i \geq p')=\begin{cases}
@@ -1410,24 +1428,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"y"</span> : np.random.choice([<span class="dv">0</span>,<span class="dv">1</span>], sample_size)</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># подсчет подобно тому как мы слитали для CAP</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>CAT_TPR <span class="op">=</span> np.concatenate([</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>],<span class="co"># для нулевой точки отсечния нужно добачить 0</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    np.sort(</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        ECDF(<span class="dv">1</span> <span class="op">-</span> test_df.query(<span class="st">'y == 1'</span>)[<span class="st">"p_hat"</span>])<span class="op">\</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">1</span> <span class="op">-</span> test_df[<span class="st">"p_hat"</span>])</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># вычисление используя, которвый инструмент</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>fpr, tpr, t <span class="op">=</span> roc_curve(</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    test_df[<span class="st">"y"</span>],</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    test_df[<span class="st">"p_hat"</span>],</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    drop_intermediate <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># сравнение - c точностью до 4-ех знаков после запятой</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span>(np.<span class="bu">round</span>(CAT_TPR,<span class="dv">4</span>) <span class="op">==</span> np.<span class="bu">round</span>(tpr,<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>CAT_TPR <span class="op">=</span> np.concatenate([</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>],</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    np.sort(</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        ECDF(<span class="dv">1</span> <span class="op">-</span> test_df.query(<span class="st">'y == 1'</span>)[<span class="st">"p_hat"</span>])<span class="op">\</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">1</span> <span class="op">-</span> test_df[<span class="st">"p_hat"</span>])</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>fpr, tpr, t <span class="op">=</span> roc_curve(</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    test_df[<span class="st">"y"</span>],</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    test_df[<span class="st">"p_hat"</span>],</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    drop_intermediate <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># сравнение - c точностью до 4-ех знаков после запятой</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span>(np.<span class="bu">round</span>(CAT_TPR,<span class="dv">4</span>) <span class="op">==</span> np.<span class="bu">round</span>(tpr,<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="92">
 <pre><code>True</code></pre>
 </div>

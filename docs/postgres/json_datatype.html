@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Knowledge - Logging in docker</title>
+<title>Knowledge - JSON data type</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Docker/sources.html">Docker</a></li><li class="breadcrumb-item"><a href="../Docker/logs.html">Logging in docker</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../postgres/build_container.html">Postgres</a></li><li class="breadcrumb-item"><a href="../postgres/json_datatype.html">JSON data type</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -581,13 +581,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="false">
  <span class="menu-text">Docker</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../Docker/sources.html" class="sidebar-item-text sidebar-link">
@@ -620,7 +620,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../Docker/logs.html" class="sidebar-item-text sidebar-link active">
+  <a href="../Docker/logs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logging in docker</span></a>
   </div>
 </li>
@@ -746,13 +746,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="true">
  <span class="menu-text">Postgres</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../postgres/build_container.html" class="sidebar-item-text sidebar-link">
@@ -814,8 +814,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">postgres/json_datatype.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../postgres/json_datatype.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">JSON data type</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -886,17 +889,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#sec-docker_logs_command" id="toc-sec-docker_logs_command" class="nav-link active" data-scroll-target="#sec-docker_logs_command"><code>logs</code> command</a>
-  <ul class="collapse">
-  <li><a href="#f---read-container-output-in-runtime" id="toc-f---read-container-output-in-runtime" class="nav-link" data-scroll-target="#f---read-container-output-in-runtime"><code>-f</code> - read container output in runtime</a></li>
-  <li><a href="#t---get-time-of-the-message" id="toc-t---get-time-of-the-message" class="nav-link" data-scroll-target="#t---get-time-of-the-message"><code>-t</code> - get time of the message</a></li>
-  </ul></li>
-  <li><a href="#sec-log_path_on_computer" id="toc-sec-log_path_on_computer" class="nav-link" data-scroll-target="#sec-log_path_on_computer">Get log path on the computer</a></li>
-  <li><a href="#standarterror-streams" id="toc-standarterror-streams" class="nav-link" data-scroll-target="#standarterror-streams">Standart/error streams</a>
-  <ul class="collapse">
-  <li><a href="#from-terminal" id="toc-from-terminal" class="nav-link" data-scroll-target="#from-terminal">From terminal</a></li>
-  <li><a href="#to-file" id="toc-to-file" class="nav-link" data-scroll-target="#to-file">To file</a></li>
-  </ul></li>
+  <li><a href="#defining-such-column" id="toc-defining-such-column" class="nav-link active" data-scroll-target="#defining-such-column">Defining such column</a></li>
+  <li><a href="#extracting-values" id="toc-extracting-values" class="nav-link" data-scroll-target="#extracting-values">Extracting values</a></li>
   </ul>
 </nav>
     </div>
@@ -905,7 +899,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Logging in docker</h1>
+<h1 class="title">JSON data type</h1>
 </div>
 
 
@@ -920,311 +914,95 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Logs can:</p>
-<ul>
-<li>Write them using the standard output stream;</li>
-<li>Write to a predefined file (there is nothing special here, you can just use volume or bind mount);</li>
-<li>A combination of the two previously mentioned methods.</li>
-</ul>
-<section id="sec-docker_logs_command" class="level1">
-<h1><code>logs</code> command</h1>
-<p>Allows to read, what happened in container terminal.</p>
-<p>In following example I: - I create conteiner which generates either a message in stdout or an error in stderr every second; - Wait 10 seconds; - Use <code>docker logs</code> to see what events happen in container.</p>
-<div class="cell" data-execution_count="6">
+<p>By defining a column of type <code>JSONB</code>, you can use JSON objects in your SQL tables. There are special tools that allow you to work with such columns in a dictionary-style way.</p>
+<p>In the following cell, postgres containers have been used for examples.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cd logs_examples</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t log_example . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>d <span class="op">--</span>rm <span class="op">--</span>name log_example log_example stream.py <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">10</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====generated log====="</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>docker logs log_example</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>docker stop log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>docker rmi log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_PASSWORD<span class="op">=</span>postgres <span class="op">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>name using_json_datatype <span class="op">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    postgres:<span class="fl">15.4</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Note</strong> Don’t forget to stop the container when you have finished playing with the examples.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>docker stop using_json_datatype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="defining-such-column" class="level2">
+<h2 class="anchored" data-anchor-id="defining-such-column">Defining such column</h2>
+<p>In the following cell I define the <code>data</code> column in <code>example_table</code> as a <code>JSONB</code> datatype. To populate it, just pass string literals containing json-style rows.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> <span class="op">-</span>i using_json_datatype psql <span class="op">-</span>U postgres <span class="op">-</span>d postgres</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>CREATE TABLE example_table (</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span> INT PRIMARY KEY,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    data JSONB</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>INSERT INTO example_table (</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span>, data</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>VALUES</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'{"A": 0, "B": 0}'</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'{"A": 100}'</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'{"B": -50}'</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'{"A": 50}'</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">'{"B": -30}'</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'{"B": 100}'</span>),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">7</span>, <span class="st">'{"B" : 90, "A": -50}'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>=====generated log=====
-Just message
-Just message
-Just message
-Just message
-Just message</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Some error
-Some error
-Some error
-Some error</code></pre>
+<pre><code>CREATE TABLE
+INSERT 0 7</code></pre>
 </div>
 </div>
-<p><strong>Note</strong> for some reason Jupyter puts errors in the first place in its output - so you may always get errors first when trying to reproduce the results of the following example.</p>
-<p>Actually, you can avoid this by redirecting the error stream to the normal stream, by using <code>2&gt;&amp;1</code> bash construction:</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cd logs_examples</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t log_example . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>d <span class="op">--</span>rm <span class="op">--</span>name log_example log_example stream.py <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">10</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====generated log====="</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>docker logs log_example <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>docker stop log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>docker rmi log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====generated log=====
-Just message
-Just message
-Just message
-Just message
-Some error
-Some error
-Some error
-Just message
-Just message</code></pre>
-</div>
-</div>
-<section id="f---read-container-output-in-runtime" class="level3">
-<h3 class="anchored" data-anchor-id="f---read-container-output-in-runtime"><code>-f</code> - read container output in runtime</h3>
-<p><img src="logs_examples/-f_ex.gif"></p>
-</section>
-<section id="t---get-time-of-the-message" class="level3">
-<h3 class="anchored" data-anchor-id="t---get-time-of-the-message"><code>-t</code> - get time of the message</h3>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>cd logs_examples</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t log_example . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>d <span class="op">--</span>rm <span class="op">--</span>name log_example log_example stream.py <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">10</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====generated log====="</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>docker logs <span class="op">-</span>t log_example</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>docker stop log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>docker rmi log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====generated log=====
-2023-06-12T08:42:12.063382853Z Just message
-2023-06-12T08:42:13.064541066Z Just message
-2023-06-12T08:42:14.065711848Z Just message
-2023-06-12T08:42:17.069086047Z Just message
-2023-06-12T08:42:19.071241128Z Just message
-2023-06-12T08:42:20.072419403Z Just message</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>2023-06-12T08:42:15.066916732Z Some error
-2023-06-12T08:42:16.068155506Z Some error
-2023-06-12T08:42:18.070257834Z Some error</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="sec-log_path_on_computer" class="level1">
-<h1>Get log path on the computer</h1>
-<p>If you need to get the path to the Docker container log on your computer, you should use the construction shown below.</p>
+<p>In the following cell displayed how JSON type cell will be displayed in the results of the simple query.</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cd logs_examples</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t log_example . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>d <span class="op">--</span>rm <span class="op">--</span>name log_example log_example stream.py <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====path to the log====="</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>docker inspect <span class="op">--</span><span class="bu">format</span> <span class="st">"</span><span class="sc">{{</span><span class="st">.LogPath</span><span class="sc">}}</span><span class="st">"</span> log_example</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>docker stop log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>docker rmi log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> using_json_datatype<span class="op">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    psql <span class="op">-</span>U postgres <span class="op">-</span>d postgres <span class="op">-</span>c <span class="st">"SELECT * FROM example_table;"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>=====path to the log=====
-/var/lib/docker/containers/cb2fb4f9b5d8829c1afb6b78293cf9487c0266d4152bd2f9a3f9d9d766740216/cb2fb4f9b5d8829c1afb6b78293cf9487c0266d4152bd2f9a3f9d9d766740216-json.log</code></pre>
-</div>
-</div>
-<p>I can’t get superuser access from jupyter, but the log file should look like this:</p>
-<pre><code>    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:01.788547631Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:02.788842446Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:03.788818941Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:04.789226578Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:05.789279007Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:06.789563215Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:07.7895666Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:08.789954572Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:09.790014965Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:10.790300833Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:11.790511897Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:12.790821869Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:13.790939824Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:14.791204789Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:15.791283359Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:16.791536539Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:17.791786679Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:18.791807047Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:19.792075268Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:20.792325859Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:21.792410762Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:22.792794096Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:23.792780477Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:24.793194852Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:25.793462485Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:26.793712972Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:27.793920753Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:28.794071626Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:29.794379101Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:30.794698985Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:31.794924583Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:32.795122566Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:33.795242226Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:34.795374507Z"}
-    {"log":"Some error\n","stream":"stderr","time":"2023-03-10T15:25:35.795542017Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:36.795638844Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:37.795888676Z"}
-    {"log":"Just message\n","stream":"stdout","time":"2023-03-10T15:25:38.796024537Z"}</code></pre>
-<p>The fields in this example should have the following meaning:</p>
-<ul>
-<li><code>log</code> - message that was logged;</li>
-<li><code>stream</code> - stream that was used;</li>
-<li><code>time</code> - time when it was made.</li>
-</ul>
-</section>
-<section id="standarterror-streams" class="level1">
-<h1>Standart/error streams</h1>
-<section id="from-terminal" class="level3">
-<h3 class="anchored" data-anchor-id="from-terminal">From terminal</h3>
-<p>Basic Linux utilities for processing terminal output that are specified for the standard stream and don’t care about the error stream.</p>
-<p>For example, if you use the <code>head</code> utility to handle program output:</p>
-<div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>cd logs_examples</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====head result====="</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>python3 stream.py <span class="op">-</span>n <span class="dv">10</span><span class="op">|</span> head <span class="op">-</span>n <span class="dv">5</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====grep result====="</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>python3 stream.py <span class="op">-</span>n <span class="dv">10</span><span class="op">|</span> grep message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====head result=====
-Just message
-Just message
-Just message
-Just message
-=====grep result=====
-Just message
-Just message
-Just message
-Just message
-Just message
-Just message</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Some error
-Some error
-Some error
-Some error
-Some error
-Some error
-Some error
-Some error
-Some error
-Some error</code></pre>
-</div>
-</div>
-<p>Despite the fact that I asked for <code>head -n 5</code>, which means that 5 lines should be printed in the command output, I got many more lines. This happens because utilities such as <code>head</code>, <code>tail</code>, <code>grep</code> and so on only work with the standard stream and ignore the error. But the error stream has priority over the standard stream - so it will be printed anyway.</p>
-<p>As a solution you can redirect error stream info to standart stream by using <code>2&gt;&amp;1</code> construction after the command displaying result:</p>
-<div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>cd logs_examples</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====head result====="</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>python3 stream.py <span class="op">-</span>n <span class="dv">10</span> <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span><span class="op">|</span> head <span class="op">-</span>n <span class="dv">5</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====grep result====="</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>python3 stream.py <span class="op">-</span>n <span class="dv">10</span> <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span><span class="op">|</span>grep message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====head result=====
-Some error
-Some error
-Some error
-Some error
-Some error
-=====grep result=====
-Just message
-Just message
-Just message</code></pre>
-</div>
-</div>
-<p>This way the Linux commands will see no difference between error and standard streams, but the error stream will still be displayed first - which you can see in the <code>head</code> command result.</p>
-<p>But in the context of Docker container logging, if you use <code>2&gt;&amp;1</code> with <code>docker logs</code>, it will be sufficient to print standard and error streams in apparent order. This is probably because you are not extracting messages from the runtime, but from a file somewhere.</p>
-<div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cd logs_examples</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t log_example . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">-</span>d <span class="op">--</span>rm <span class="op">--</span>name log_example log_example stream.py <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>sleep <span class="dv">10</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====generated log====="</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>docker logs log_example <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span><span class="op">|</span> head <span class="op">-</span>n <span class="dv">5</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>docker stop log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>docker rmi log_example <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====generated log=====
-Just message
-Some error
-Just message
-Some error
-Some error</code></pre>
+<pre><code> id |        data         
+----+---------------------
+  1 | {"A": 0, "B": 0}
+  2 | {"A": 100}
+  3 | {"B": -50}
+  4 | {"A": 50}
+  5 | {"B": -30}
+  6 | {"B": 100}
+  7 | {"A": -50, "B": 90}
+(7 rows)
+</code></pre>
 </div>
 </div>
 </section>
-<section id="to-file" class="level3">
-<h3 class="anchored" data-anchor-id="to-file">To file</h3>
-<p>You can save streams to files by using the following constructions:</p>
-<ul>
-<li><code>&gt;</code> - rewrite file with the results of the standart stream;</li>
-<li><code>&gt;&gt;</code> - complete file with the result of the standart stream;</li>
-<li><code>2&gt;</code> - rewrite file with the result of the error stream;</li>
-<li><code>2&gt;&gt;</code> - complete file with the result of the error stream.</li>
-</ul>
-<p>The following example shows how divide standart and error streams into two files.</p>
-<div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>cd logs_examples</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>python3 stream.py <span class="op">-</span>n <span class="dv">20</span> <span class="op">&gt;</span> standart_stream <span class="dv">2</span><span class="op">&gt;</span> error_stream</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====standart stream====="</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>cat standart_stream</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====error stream====="</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>cat error_stream</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>rm standart_stream error_stream</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="extracting-values" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-values">Extracting values</h2>
+<p>You can access values by key from a JSON type column using the syntax <code>&lt;column name&gt;-&gt;&lt;key name&gt;</code>.</p>
+<p>So in the following cell, a query has been executed that extracts values under the key ‘A’ from each record.</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> <span class="op">-</span>i using_json_datatype psql <span class="op">-</span>U postgres <span class="op">-</span>d postgres</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>SELECT <span class="bu">id</span>, data, data<span class="op">-&gt;</span><span class="st">'A'</span> FROM example_table<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>=====standart stream=====
-Just message
-Just message
-Just message
-Just message
-Just message
-Just message
-Just message
-Just message
-Just message
-Just message
-Just message
-Just message
-=====error stream=====
-Some error
-Some error
-Some error
-Some error
-Some error
-Some error
-Some error
-Some error</code></pre>
+<pre><code> id |        data         | ?column? 
+----+---------------------+----------
+  1 | {"A": 0, "B": 0}    | 0
+  2 | {"A": 100}          | 100
+  3 | {"B": -50}          | 
+  4 | {"A": 50}           | 50
+  5 | {"B": -30}          | 
+  6 | {"B": 100}          | 
+  7 | {"A": -50, "B": 90} | -50
+(7 rows)
+</code></pre>
 </div>
 </div>
+<p>You can access the values by clicking on them and then operate on them as you would any other column.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
