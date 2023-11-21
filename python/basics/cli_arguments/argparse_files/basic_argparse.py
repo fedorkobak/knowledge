@@ -5,7 +5,7 @@ my_parser = argparse.ArgumentParser(
 )
 my_parser.add_argument(
     "positional", 
-    help = "Example of the positional argument."
+    help = "Example of the positional argument.",
 )
 my_parser.add_argument(
     "--option",
@@ -13,7 +13,6 @@ my_parser.add_argument(
 )
 
 args = my_parser.parse_args()
-
 print(
     "positional : ", args.positional, "\n",
     "option : ", args.option,
