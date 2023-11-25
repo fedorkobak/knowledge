@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -89,8 +89,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -116,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../machine_learning/models_selection_methods/l2_regularisation.html">Machine learning</a></li><li class="breadcrumb-item"><a href="../../machine_learning/data_transformations/tf_idf.html">TF-IDF</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -825,8 +824,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../postgres/grouping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Grouping (ORDER BY)</span></a>
+  <a href="../../postgres/sorting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sorting (ORDER BY)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -979,6 +978,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Overflow</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../layout/css/elements_positions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Elements position (<code>display</code>)</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item">
@@ -1049,27 +1054,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>TF-IDF is a method for extracting features for machine learning models from textual information.</p>
-<div class="cell">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> log</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># set of phrases that I'll be using as the example at this page</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>phrases <span class="op">=</span> [</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'a penny saved is a penny earned'</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'the quick brown fox jumps over the lazy dog'</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'beauty is in the eye of the beholder'</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'early to bed and early to rise makes a man healthy wealthy and wise'</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'give credit where credit is due'</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"if at first you don't succeed try try again"</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'justice delayed is justice denied'</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'keep your friends close and your enemies closer'</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'no pain no gain'</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'quickly come quickly go'</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'united we stand divided we fall'</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'when in rome do as the romans do'</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> latex2mathml.converter</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># set of phrases that I'll be using as the example at this page</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>phrases <span class="op">=</span> [</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'a penny saved is a penny earned'</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'the quick brown fox jumps over the lazy dog'</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'beauty is in the eye of the beholder'</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'early to bed and early to rise makes a man healthy wealthy and wise'</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'give credit where credit is due'</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"if at first you don't succeed try try again"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'justice delayed is justice denied'</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'keep your friends close and your enemies closer'</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'no pain no gain'</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'quickly come quickly go'</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'united we stand divided we fall'</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'when in rome do as the romans do'</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="tf---term-frequency" class="level2">
 <h2 class="anchored" data-anchor-id="tf---term-frequency">TF - term frequency</h2>
@@ -1090,7 +1097,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>You can find the word “penny” twice in the phrase so - <span class="math inline">\(n_{'penny'}=2 \Rightarrow tf('penny')= \frac{2}{7} \approx 0.29\)</span>;</li>
 <li>All other words occur once so <span class="math inline">\(tf\)</span> for them can me computed as <span class="math inline">\(\frac{1}{7} \approx 0.14\)</span>.</li>
 </ul>
-<div class="cell" data-execution_count="171">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>html_table <span class="op">=</span> <span class="st">"&lt;tr&gt;&lt;th&gt;Original phrase&lt;/th&gt;&lt;th&gt;Terms frequency&lt;/th&gt;&lt;/tr&gt;"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tf_dict <span class="op">=</span> {}</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1111,7 +1118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    html_table <span class="op">+=</span> <span class="ss">f"&lt;tr&gt;&lt;td&gt;</span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;td&gt;</span><span class="sc">{</span>counts_line<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;/tr&gt;"</span></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">"&lt;table&gt;"</span> <span class="op">+</span> html_table <span class="op">+</span> <span class="st">"&lt;/table&gt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="171">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 50%">
@@ -1249,46 +1256,43 @@ romans - 0.12</td>
 </ul>
 <p>So in the following cell there is an example of calculating <span class="math inline">\(idf\)</span> for a set of texts. It’s displayed like a table that contains all the words from a set of texts and for each word it calculates the occurrences of the word in the set of texts and it’s <span class="math inline">\(idf\)</span>.</p>
 <p>Let’s take word “the” for example it occurs in 3 of 12 texts so it’s <span class="math inline">\(idf=log(\frac{12}{5}) \approx 1.39\)</span>.</p>
-<div class="cell" data-execution_count="196">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>phrases_number <span class="op">=</span> <span class="bu">len</span>(phrases)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>word_in_documents <span class="op">=</span> Counter([w <span class="cf">for</span> p <span class="kw">in</span> phrases <span class="cf">for</span> w <span class="kw">in</span> <span class="bu">set</span>(p.split())])</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>words_idf <span class="op">=</span> {}</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>html_table <span class="op">=</span> (</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;tr&gt;&lt;th&gt;Word&lt;/th&gt;"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;th&gt;$\left|\left\{d_i \in D | t \in d_i</span><span class="ch">\\</span><span class="st">right\}</span><span class="ch">\\</span><span class="st">right|$&lt;/th&gt;"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;th&gt;Inverse document frequency&lt;/th&gt;&lt;/tr&gt;"</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word, number <span class="kw">in</span> word_in_documents.items():</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    idf <span class="op">=</span> log(phrases_number<span class="op">/</span>number)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    words_idf[word] <span class="op">=</span> idf</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    html_table <span class="op">+=</span> (</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"&lt;tr&gt;&lt;td&gt;</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss">&lt;/td&gt;"</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"&lt;td&gt;</span><span class="sc">{</span>number<span class="sc">}</span><span class="ss">&lt;/td&gt;"</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"&lt;td&gt;</span><span class="sc">{</span><span class="bu">round</span>(idf, <span class="dv">2</span>)<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;/tr&gt;"</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">"&lt;table&gt;"</span> <span class="op">+</span> html_table <span class="op">+</span> <span class="st">"&lt;/table&gt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="196">
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to transform directry to MathJax here.</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># because quarto doesn't recognise $$ patterns in</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># output cells</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>math_jax_expression <span class="op">=</span> latex2mathml.converter.convert(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"\left|\left\{d_i \in D | t \in d_i</span><span class="ch">\\</span><span class="st">right\}</span><span class="ch">\\</span><span class="st">right|"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>html_table <span class="op">=</span> (</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;tr&gt;&lt;th&gt;Word&lt;/th&gt;"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"&lt;th&gt;</span><span class="sc">{</span>math_jax_expression<span class="sc">}</span><span class="ss">&lt;/th&gt;"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;th&gt;Inverse document frequency&lt;/th&gt;&lt;/tr&gt;"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word, number <span class="kw">in</span> word_in_documents.items():</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    idf <span class="op">=</span> log(phrases_number<span class="op">/</span>number)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    words_idf[word] <span class="op">=</span> idf</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    html_table <span class="op">+=</span> (</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"&lt;tr&gt;&lt;td&gt;</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss">&lt;/td&gt;"</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"&lt;td&gt;</span><span class="sc">{</span>number<span class="sc">}</span><span class="ss">&lt;/td&gt;"</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"&lt;td&gt;</span><span class="sc">{</span><span class="bu">round</span>(idf, <span class="dv">2</span>)<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;/tr&gt;"</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">"&lt;table&gt;"</span> <span class="op">+</span> html_table <span class="op">+</span> <span class="st">"&lt;/table&gt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Word</td>
-<td data-quarto-table-cell-role="th">$\left|\left\{d_i \in D | t \in d_i\right\}\right|$</td>
+<td data-quarto-table-cell-role="th"><span class="math inline">\(\left| \left\{ d_{i} \in D|t \in d_{i} \right\} \right|\)</span></td>
 <td data-quarto-table-cell-role="th">Inverse document frequency</td>
-</tr>
-<tr class="even">
-<td>earned</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>is</td>
-<td>4</td>
-<td>1.1</td>
 </tr>
 <tr class="even">
 <td>saved</td>
@@ -1296,37 +1300,27 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="odd">
-<td>penny</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
 <td>a</td>
 <td>2</td>
 <td>1.79</td>
 </tr>
+<tr class="even">
+<td>penny</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
 <tr class="odd">
-<td>the</td>
-<td>3</td>
-<td>1.39</td>
+<td>earned</td>
+<td>1</td>
+<td>2.48</td>
 </tr>
 <tr class="even">
+<td>is</td>
+<td>4</td>
+<td>1.1</td>
+</tr>
+<tr class="odd">
 <td>over</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>quick</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
-<td>fox</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>lazy</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1336,24 +1330,34 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="odd">
-<td>dog</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
 <td>brown</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
+<tr class="even">
+<td>dog</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
 <tr class="odd">
-<td>of</td>
+<td>fox</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
-<td>eye</td>
+<td>quick</td>
 <td>1</td>
 <td>2.48</td>
+</tr>
+<tr class="odd">
+<td>lazy</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>the</td>
+<td>3</td>
+<td>1.39</td>
 </tr>
 <tr class="odd">
 <td>beauty</td>
@@ -1361,12 +1365,52 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
+<td>beholder</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
 <td>in</td>
 <td>2</td>
 <td>1.79</td>
 </tr>
+<tr class="even">
+<td>of</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
 <tr class="odd">
-<td>beholder</td>
+<td>eye</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>early</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>makes</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>man</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>healthy</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>wealthy</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>rise</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1381,26 +1425,6 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
-<td>early</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>healthy</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
-<td>makes</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>wealthy</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
 <td>and</td>
 <td>2</td>
 <td>1.79</td>
@@ -1411,27 +1435,7 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
-<td>man</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>rise</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
 <td>where</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>give</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
-<td>credit</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1441,12 +1445,22 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
+<td>credit</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>give</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
 <td>you</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
 <tr class="odd">
-<td>at</td>
+<td>again</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1461,22 +1475,22 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
-<td>try</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>again</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
 <td>if</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
 <tr class="odd">
+<td>try</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
 <td>first</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>at</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1496,7 +1510,27 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="odd">
+<td>keep</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>close</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
 <td>your</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>enemies</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>closer</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1506,42 +1540,22 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="odd">
-<td>close</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
-<td>closer</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>enemies</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
-<td>keep</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
 <td>pain</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
-<td>no</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
 <td>gain</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
+<tr class="odd">
+<td>no</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
 <tr class="even">
-<td>go</td>
+<td>come</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1551,7 +1565,7 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
-<td>come</td>
+<td>go</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1571,12 +1585,12 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
-<td>stand</td>
+<td>divided</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
 <tr class="odd">
-<td>divided</td>
+<td>stand</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1586,22 +1600,22 @@ romans - 0.12</td>
 <td>2.48</td>
 </tr>
 <tr class="odd">
-<td>when</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="even">
 <td>as</td>
-<td>1</td>
-<td>2.48</td>
-</tr>
-<tr class="odd">
-<td>rome</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
 <tr class="even">
 <td>do</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<td>when</td>
+<td>1</td>
+<td>2.48</td>
+</tr>
+<tr class="even">
+<td>rome</td>
 <td>1</td>
 <td>2.48</td>
 </tr>
@@ -1614,23 +1628,26 @@ romans - 0.12</td>
 <section id="tf-idf" class="level2">
 <h2 class="anchored" data-anchor-id="tf-idf">TF-IDF</h2>
 <p><span class="math inline">\(ft_{idf}\)</span> is a final metric of the TF-IDF analysis and can be calculated as the product of TF and IDF. So for each word in each text from the set of texts we compute it’s own value <span class="math inline">\(tf_{idf}\)</span>. So in the following cell I combine results from two previous sections to compute <span class="math inline">\(tf_{idf}\)</span>. For example, for word “a” in phrase “a penny saved is a penny earned” <span class="math inline">\(tf_{idf} = 0.29*1.79 \approx 0.51\)</span>.</p>
-<div class="cell" data-execution_count="197">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>html_table <span class="op">=</span> (</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;tr&gt;&lt;th&gt;Phrase&lt;/th&gt;&lt;th&gt;$tf_</span><span class="sc">{idf}</span><span class="st">$&lt;/th&gt;&lt;/tr&gt;"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> phrase, tfs <span class="kw">in</span> tf_dict.items():</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    phrase_tf_idf_line <span class="op">=</span> <span class="st">"&lt;br&gt;"</span>.join([</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        (</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            word <span class="op">+</span> <span class="st">" - "</span> <span class="op">+</span> </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">str</span>(<span class="bu">round</span>(words_idf[word]<span class="op">*</span>tf,<span class="dv">2</span>))</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> word, tf <span class="kw">in</span> tfs.items()</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    ])</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    html_table <span class="op">+=</span> <span class="ss">f"&lt;tr&gt;&lt;td&gt;</span><span class="sc">{</span>phrase<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;td&gt;</span><span class="sc">{</span>phrase_tf_idf_line<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;/tr&gt;"</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">"&lt;table&gt;"</span> <span class="op">+</span> html_table <span class="op">+</span> <span class="st">"&lt;/table&gt;"</span>)       </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="197">
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"""&lt;tr&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ss">        &lt;th&gt;Phrase&lt;/th&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ss">        &lt;th&gt;</span><span class="sc">{</span>latex2mathml<span class="sc">.</span>converter<span class="sc">.</span>convert(<span class="st">"tf_</span><span class="sc">{idf}</span><span class="st">"</span>)<span class="sc">}</span><span class="ss">&lt;/th&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ss">    &lt;/tr&gt;"""</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> phrase, tfs <span class="kw">in</span> tf_dict.items():</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    phrase_tf_idf_line <span class="op">=</span> <span class="st">"&lt;br&gt;"</span>.join([</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            word <span class="op">+</span> <span class="st">" - "</span> <span class="op">+</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">str</span>(<span class="bu">round</span>(words_idf[word]<span class="op">*</span>tf,<span class="dv">2</span>))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> word, tf <span class="kw">in</span> tfs.items()</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    html_table <span class="op">+=</span> <span class="ss">f"&lt;tr&gt;&lt;td&gt;</span><span class="sc">{</span>phrase<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;td&gt;</span><span class="sc">{</span>phrase_tf_idf_line<span class="sc">}</span><span class="ss">&lt;/td&gt;&lt;/tr&gt;"</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">"&lt;table&gt;"</span> <span class="op">+</span> html_table <span class="op">+</span> <span class="st">"&lt;/table&gt;"</span>)       </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 50%">
@@ -1639,7 +1656,7 @@ romans - 0.12</td>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Phrase</td>
-<td data-quarto-table-cell-role="th">$tf_{idf}$</td>
+<td data-quarto-table-cell-role="th"><span class="math inline">\(tf_{idf}\)</span></td>
 </tr>
 <tr class="even">
 <td>a penny saved is a penny earned</td>
