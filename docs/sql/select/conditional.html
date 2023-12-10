@@ -454,6 +454,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Tensor</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/torch/differentiation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differentiation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/torch/layers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Layers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/torch/minimal_network.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minimal to network</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -1071,7 +1089,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#basic-example" id="toc-basic-example" class="nav-link active" data-scroll-target="#basic-example">Basic example</a></li>
+  <li><a href="#nested" id="toc-nested" class="nav-link" data-scroll-target="#nested">Nested</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -1103,7 +1128,7 @@ WHEN &lt;condition n&gt; THEN &lt;result n&gt;
 ELSE &lt;else result&gt;
 END</code></pre>
 <p><strong>Note</strong> <code>ELSE</code> block is optional.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>d<span class="op">\</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>e POSTGRES_PASSWORD<span class="op">=</span>docker_app <span class="op">\</span></span>
@@ -1121,55 +1146,89 @@ END</code></pre>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>INSERT INTO tab (var1, var2, var3) VALUES</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="st">'foo'</span>),</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="st">'bar'</span>),</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="st">'bar'</span>)<span class="op">;</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>SELECT <span class="op">*</span> FROM tab<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="st">'bar'</span>),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="st">'foo'</span>)<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>SELECT <span class="op">*</span> FROM tab<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>CREATE TABLE
-INSERT 0 3
+INSERT 0 4
  var1 | var2 | var3 
 ------+------+------
     1 |    2 | foo
     4 |    5 | bar
     2 |    3 | bar
-(3 rows)
+    4 |    3 | foo
+(4 rows)
 </code></pre>
 </div>
 </div>
-<p>In my opinion, the most popular cases for this operation are the categorisation of numerical variables and the replacement of categorical variables. So in the following cell such operations are performed.</p>
-<div class="cell" data-execution_count="20">
+<p><strong>Note</strong> Don’t forget to stop the container when you’ve finished playing with it.</p>
+<div class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> <span class="op">-</span>i conditional_postgres_exmaples psql <span class="op">-</span>U postgres <span class="op">-</span>d postgres</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>SELECT</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    CASE</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        WHEN var1<span class="op">+</span>var2 <span class="op">&gt;</span> <span class="dv">5</span> THEN <span class="st">'&gt;5'</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        ELSE <span class="st">'&lt;=5'</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    END num_to_cat,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    CASE</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        WHEN var3<span class="op">=</span><span class="st">'foo'</span> THEN <span class="st">'new foo'</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        WHEN var3<span class="op">=</span><span class="st">'bar'</span> THEN <span class="st">'new bar'</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    END replace</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>FROM tab<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>docker stop conditional_postgres_exmaples<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>conditional_postgres_exmaples</code></pre>
+</div>
+</div>
+<section id="basic-example" class="level2">
+<h2 class="anchored" data-anchor-id="basic-example">Basic example</h2>
+<p>In my opinion, the most popular cases for this operation are the categorisation of numerical variables and the replacement of categorical variables. So in the following cell such operations are performed.</p>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> <span class="op">-</span>i conditional_postgres_exmaples psql <span class="op">-</span>U postgres <span class="op">-</span>d postgres</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    CASE</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        WHEN var1<span class="op">+</span>var2 <span class="op">&gt;</span> <span class="dv">5</span> THEN <span class="st">'&gt;5'</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        ELSE <span class="st">'&lt;=5'</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    END num_to_cat,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    CASE</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        WHEN var3<span class="op">=</span><span class="st">'foo'</span> THEN <span class="st">'new foo'</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        WHEN var3<span class="op">=</span><span class="st">'bar'</span> THEN <span class="st">'new bar'</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    END replace</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>FROM tab<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> num_to_cat | replace 
 ------------+---------
  &lt;=5        | new foo
  &gt;5         | new bar
  &lt;=5        | new bar
-(3 rows)
+ &gt;5         | new foo
+(4 rows)
 </code></pre>
 </div>
 </div>
-<p><strong>Note</strong> Don’t forget to stop the container when you’ve finished playing with it.</p>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>docker stop conditional_postgres_exmaples<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="nested" class="level2">
+<h2 class="anchored" data-anchor-id="nested">Nested</h2>
+<p>You can use the <code>CASE</code> value as the result of an external <code>CASE</code> statement. So here is an example of how it can be used:</p>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> <span class="op">-</span>i conditional_postgres_exmaples psql <span class="op">-</span>U postgres <span class="op">-</span>d postgres</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>SELECT</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    CASE</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        WHEN var1<span class="op">+</span>var2 <span class="op">&gt;</span> <span class="dv">5</span> THEN</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            CASE</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                WHEN var3<span class="op">=</span><span class="st">'foo'</span> THEN <span class="st">'&gt;5 and foo'</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                ELSE <span class="st">'bar'</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            END</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        ELSE <span class="st">'&lt;=5'</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    END num_to_cat</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>FROM tab<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>conditional_postgres_exmaples</code></pre>
+<pre><code> num_to_cat 
+------------
+ &lt;=5
+ bar
+ &lt;=5
+ &gt;5 and foo
+(4 rows)
+</code></pre>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
