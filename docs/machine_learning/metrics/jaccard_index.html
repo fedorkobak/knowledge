@@ -244,6 +244,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Order</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/basics/operators/yield.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">yield</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -1288,6 +1294,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Python with apache</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../latex/latex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Latex</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -1329,7 +1341,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="definition" class="level2">
 <h2 class="anchored" data-anchor-id="definition">Definition</h2>
 <p>Let’s say we have a set of classes <span class="math inline">\(K\)</span>, a set of objects taking classes <span class="math inline">\(y = \{y_i\}, y_i \in K\)</span>, and a set of model predictions <span class="math inline">\(y' = \{y'_i\}, y'_i \in K\)</span>. So the Jaccard index that measures the similarity of <span class="math inline">\(y\)</span> and <span class="math inline">\(y'\)</span> for the class <span class="math inline">\(k\)</span> can be written as</p>
-<p><span class="math display">\[J_k(y,y')=\frac{\sum_{i=1}^{n} \left( \left[y_i=k\right]\left[y'_i=k\right]\right)}{\sum_{i=1}^n max\left(\left[y_i=k\right]\left[y'_i=k\right]\right)}.\]</span></p>
+<p><span class="math display">\[J_k(y,y')=\frac{\sum_{i=1}^{n} \left( \left[y_i=k\right]\left[y'_i=k\right]\right)}{\sum_{i=1}^n max\left(\left[y_i=k\right],\left[y'_i=k\right]\right)}.\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\([a]=\begin{cases}  1 - \text{if a statement true};\\  0 - \text{if a statement false}.  \end{cases}\)</span></li>
+</ul>
+<p>Let us then speculate about the interpretation of the components of the presented formula: - Numenator <span class="math inline">\(\sum_{i=1}^{n} \left( \left[y_i=k\right]\left[y'_i=k\right]\right)\)</span> - number of objects corresponding to class <span class="math inline">\(k\)</span> that were predicted to be members of class <span class="math inline">\(k\)</span>; - Denominator <span class="math inline">\(\sum_{i=1}^n max\left(\left[y_i=k\right],\left[y'_i=k\right]\right)\)</span> - number of object that was classified as <span class="math inline">\(k\)</span> class or actually was.</p>
+<p>So the sense of the formula is really simple - it’s part of the intersection in union.</p>
 </section>
 <section id="example" class="level2">
 <h2 class="anchored" data-anchor-id="example">Example</h2>
