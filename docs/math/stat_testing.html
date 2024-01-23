@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Knowledge - Central limit theorem</title>
+<title>Knowledge - Statistical testing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../math/basics.html">Math</a></li><li class="breadcrumb-item"><a href="../math/cent_limit_theorem.html">Central limit theorem</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../math/basics.html">Math</a></li><li class="breadcrumb-item"><a href="../math/stat_testing.html">Statistical testing</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -863,8 +863,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../math/cent_limit_theorem.html" class="sidebar-item-text sidebar-link active">
+  <a href="../math/cent_limit_theorem.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Central limit theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../math/stat_testing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Statistical testing</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1347,12 +1353,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#formulation" id="toc-formulation" class="nav-link active" data-scroll-target="#formulation">Formulation</a></li>
-  <li><a href="#numerical-proof" id="toc-numerical-proof" class="nav-link" data-scroll-target="#numerical-proof">Numerical proof</a>
-  <ul class="collapse">
-  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link" data-scroll-target="#normal-distribution">Normal distribution</a></li>
-  <li><a href="#poisson-distribution" id="toc-poisson-distribution" class="nav-link" data-scroll-target="#poisson-distribution">Poisson distribution</a></li>
-  </ul></li>
+  <li><a href="#definitions" id="toc-definitions" class="nav-link active" data-scroll-target="#definitions">Definitions</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
   </ul>
 </nav>
     </div>
@@ -1361,7 +1363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Central limit theorem</h1>
+<h1 class="title">Statistical testing</h1>
 </div>
 
 
@@ -1376,92 +1378,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="formulation" class="level2">
-<h2 class="anchored" data-anchor-id="formulation">Formulation</h2>
-<p>Let’s take <span class="math inline">\(N\)</span> <strong>independent</strong> values <span class="math inline">\(x_i\)</span> belonging to the same distribution with mathematical expectation <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>.</p>
-<p>Let’s denote their sum:</p>
-<p><span class="math display">\[S_N = \sum_{i=1}^n x_i\]</span></p>
-<p>Central limit theorem says that <span class="math inline">\(S_N \sim N(\mu N; \sigma^2 N)\)</span> (<span class="math inline">\(S_N\)</span> belongs to normal distibution with parameters <span class="math inline">\(\mu N, \sigma^2 N\)</span>).</p>
+<section id="definitions" class="level2">
+<h2 class="anchored" data-anchor-id="definitions">Definitions</h2>
+<ul>
+<li><strong>Sample</strong> <span class="math inline">\(X_N \sim P\)</span>, where <span class="math inline">\(P\)</span> is some distribution;</li>
+<li><span class="math inline">\(H_0\)</span>, <span class="math inline">\(H_1\)</span> - main and alternative <strong>hypotheses</strong>;</li>
+<li><strong>Statistic</strong> <span class="math inline">\(T(X_N)\sim D\)</span> sampling function, where <span class="math inline">\(D\)</span> is some distribution;</li>
+<li><strong>Significance level</strong> <span class="math inline">\(\alpha\)</span> - if we reproduce the entire experiment over and over again, <span class="math inline">\(\alpha\)</span> defines in what proportion of the reproductions we allow for the erroneous rejection of the null hypothesis.;</li>
+<li><strong>Realisation of the statistics</strong> for the sample under consideration <span class="math inline">\(t=T(X_N)\)</span>;</li>
+<li><strong>p_value</strong> achievable level of significance <span class="math inline">\(p(X_N)=P(T \geq t|H_0)\)</span> - is the probability with which we hit the value of the statistic <span class="math inline">\(t\)</span> and more extreme in assuption that <span class="math inline">\(H_0\)</span> is right. <strong>Note</strong> <span class="math inline">\(T \geq t\)</span> does not necessarily mean that <span class="math inline">\(T\)</span> is greater than or equal to <span class="math inline">\(t\)</span>, it simply means that it is more different from the expected value at <span class="math inline">\(H_0\)</span> fidelity. So if <span class="math inline">\(P(X_N) \leq \alpha\)</span> means that we got less possible event that we able to accept and we have to reject <span class="math inline">\(H_0\)</span>.</li>
+</ul>
 </section>
-<section id="numerical-proof" class="level2">
-<h2 class="anchored" data-anchor-id="numerical-proof">Numerical proof</h2>
-<p>Let’s create samples of means of samples from different distributions and explore their characteristics.</p>
-<p>We will plot the histogram of the sample of sums and perform the Cramér-von Mises test to understand if <span class="math inline">\(S_N\)</span> belongs to the normal distribution.</p>
-<p>The <span class="math inline">\(H_0\)</span> of the Cramér-von Mises test in our case is that <span class="math inline">\(S_N\)</span> is normally distributed, so if <span class="math inline">\(p&gt;0.05\)</span> we cannot reject this hypothesis.</p>
-<div class="cell" data-execution_count="41">
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
+<p>The coin has been flipped 100 times. 45 eagles were received. It is required to confirm that the coin is correct given the probability of error in 5 cases out of 100.</p>
+<p>Let’s <span class="math inline">\(p\)</span> - the probability of an eagle on the coin.</p>
+<p>So</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span> - we have normal coin, formally <span class="math inline">\(p=0.5\)</span>;</li>
+<li><span class="math inline">\(H_1\)</span> - we have broken coin, formally <span class="math inline">\(p \neq 0.5\)</span>.</li>
+</ul>
+<p>Our <span class="math inline">\(X_N = [x_1,x_2,x_3, ..., x_{100}]\)</span>.</p>
+<p>Where:</p>
+<p><span class="math display">\[x_i=\begin{cases}
+1,\text{if there's an eagle on the coin for i-th throw}; \\
+0,\text{if the coin is tails for i-th throw}.
+\end{cases}\]</span></p>
+<p>And each <span class="math inline">\(x_i\)</span> follows a Bernouli distribution with parameter <span class="math inline">\(p\)</span>.</p>
+<p>Our statistics is:</p>
+<p><span class="math display">\[T(X_N)=\sum_{i=1}^{100} x_i.\]</span></p>
+<p>And it distributed according binomial with parameters <span class="math inline">\(p\)</span> and <span class="math inline">\(100\)</span> (<span class="math inline">\(B(p,100)\)</span>).</p>
+<p>The particular realisation of this experiment is that <span class="math inline">\(t=45\)</span>.</p>
+<p>In fact, <span class="math inline">\(H_0\)</span> states that our statistics is distributed according to the distribution with the parameter <span class="math inline">\(p=0.5\)</span> and <span class="math inline">\(H_1\)</span> that our statistics is distributed according to distribution with some other value of the parameter. So if we assume that <span class="math inline">\(H_0\)</span> is true, then it turns out that <span class="math inline">\(t\sim B(0.5, 100)\)</span>.</p>
+<p>Density function for <span class="math inline">\(B(0.5,100)\)</span> is plotted below. So the most possible number is somewhere around 50.</p>
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> shapiro, anderson</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> cramervonmises</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> explore_is_normal(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    mu : <span class="bu">float</span>, sigma : <span class="bu">float</span>, </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    sample : np.array, orig_distr_name: <span class="bu">str</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    ):</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    Function that returns whether the given sample</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    belongs to the normal distribution. It plots the</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">    histogram of the distribution and prints the result of the</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">    of the Cramér-von Mises test in the title.</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">    mu (float) : mathematical expectation of original random value;</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma (float) : standart deviation of original random value;</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    sample (numpy.array) : sample of sums of original samples;</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">    orig_distr_name (str) : name of original distribution</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">        will be pritned on the title of the figure.</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">    ---------</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">    Plotted histogram of exploring sample.</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    s_len <span class="op">=</span> <span class="bu">len</span>(sample)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    test_p <span class="op">=</span> cramervonmises(</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        sample,</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        cdf<span class="op">=</span>scipy.stats.norm(</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            mu<span class="op">*</span>s_len,sigma<span class="op">*</span>(s_len<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>))</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        ).cdf</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    ).pvalue</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    sns.histplot(sample, kde<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    plt.title(</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"Original distr. - </span><span class="sc">{</span>orig_distr_name<span class="sc">}</span><span class="ss">;"</span> </span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f" Test result $p=</span><span class="sc">{</span><span class="bu">str</span>(<span class="bu">round</span>(test_p,<span class="dv">2</span>))<span class="sc">}</span><span class="ss">$"</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="normal-distribution" class="level3">
-<h3 class="anchored" data-anchor-id="normal-distribution">Normal distribution</h3>
-<p>This shows that the sum of the random values sampled from the normal distribution belongs to the normal distribution.</p>
-<div class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> np.random.normal(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>, <span class="dv">3</span>, (<span class="dv">10000</span>, <span class="dv">10000</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>).<span class="bu">sum</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>explore(<span class="dv">2</span>, <span class="dv">3</span>, sample, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> binom</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n_pos <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>F_H0 <span class="op">=</span> binom(p<span class="op">=</span><span class="fl">0.5</span>, n<span class="op">=</span>N)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>N_pos_available <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">101</span>, <span class="dv">1</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>probabilities <span class="op">=</span> F_H0.pmf(N_pos_available)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.bar(N_pos_available, probabilities)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">45</span>, color<span class="op">=</span><span class="st">"red"</span>)<span class="op">;</span>plt.axvline(<span class="dv">55</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of edges (t)"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Probability"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">"t=45 or t=55"</span>])</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="cent_limit_theorem_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+<p><img src="stat_testing_files/figure-html/cell-2-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-</section>
-<section id="poisson-distribution" class="level3">
-<h3 class="anchored" data-anchor-id="poisson-distribution">Poisson distribution</h3>
-<p>For this research, it is important that this distribution parameters are <span class="math inline">\(\mu=\lambda\)</span> and <span class="math inline">\(\sigma=\sqrt{\lambda}\)</span>.</p>
-<div class="cell" data-execution_count="46">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>_lambda <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> np.random.poisson(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    _lambda, (<span class="dv">10000</span>, <span class="dv">10000</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>).<span class="bu">sum</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>explore(_lambda, _lambda<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>), sample, <span class="st">"poison"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="cent_limit_theorem_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+<p>Is <span class="math inline">\(t=45\)</span> a possible value for these conditions? Actually, we didn’t really care that <span class="math inline">\(t\)</span> took a value smaller than the most expected, we only cared that it shouldn’t be too different from the most expected <span class="math inline">\(50\)</span>. So the correct question here is how likely are the values 45 and less or 55 and more?</p>
+<p>We can express these probability:</p>
+<p><span class="math display">\[P(T\leq 45|H_0) + P(T \geq 55 | H_0)=2P(T\leq 45|H_0)=2F_{B(0.5, 100)}(45)\]</span>.</p>
+<p>Where <span class="math inline">\(F_{B(0.5,100)}(x)\)</span> - cumulative distribution function of the binomial distribution corresponding to <span class="math inline">\(H_0\)</span>.</p>
+<p>So we expressed the probability that this or an even less likely event could have occurred. Question changes again: Are we happy with this probability?</p>
+<p>For this case it took value:</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">*</span>binom(p<span class="op">=</span><span class="fl">0.5</span>, n<span class="op">=</span>N).cdf(<span class="dv">45</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>0.36820161732669576</code></pre>
 </div>
 </div>
+<p>This means that in ~37 cases out of 100, it’s OK to have a deviation from the most likely value equal to or greater than 45.</p>
+<p>We can compute such range of values of <span class="math inline">\(t\)</span> that we need to understand as possiible. We need to choose significance level - the proportion of cases we are willing to accept as probable for the null hypothesis. So if the event can occur 5 times out of 100, that means we have to choose a significance level of <span class="math inline">\(5\%\)</span>.</p>
+<p>As a result, we need to construct such an interval in which the measured value of the metric in question appears in <span class="math inline">\(95\%\)</span> of the cases. For this case such interval can be written as <span class="math inline">\([F^{-1}_{B(0.5,100)}(0.025); F^{-1}_{B(0.5,100)}(0.975)]\)</span>.</p>
+<p>Where <span class="math inline">\(F^{-1}_{B(0.5,100)}(p)\)</span> - inverse cumulative distribution for distribution under consideration. So for our case it can be computed with the following code:</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"range from"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    binom(p<span class="op">=</span><span class="fl">0.5</span>, n<span class="op">=</span>N).ppf(<span class="fl">0.025</span>), <span class="st">"to"</span>, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    binom(p<span class="op">=</span><span class="fl">0.5</span>, n<span class="op">=</span>N).ppf(<span class="fl">0.975</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>range from 40.0 to 60.0</code></pre>
+</div>
+</div>
+<p>So any case where we have less than 40 and more than 60 edges in 100 throws is so unlikely that we can’t believe it’s random and have to reject <span class="math inline">\(H_0\)</span>.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
