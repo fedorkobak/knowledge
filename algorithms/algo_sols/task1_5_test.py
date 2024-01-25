@@ -1,5 +1,6 @@
 import unittest
 from task1_5 import sol
+from task1_5_official_sol import slow
 
 class Test(unittest.TestCase):
     def test(self):
@@ -22,7 +23,9 @@ class Test(unittest.TestCase):
 
             # N2>M квартира выше максимального этажа
             (11, 1, 5, 1, 2) : (-1, -1),
+            # квартира с невозможнными параметрами
+            (13, 2, 6, 2, 2) : (-1, -1)
         }
 
         for k, c in cases.items():
-            self.assertEqual(sol(*k), c)
+            self.assertEqual(slow(*k), c, msg=str(k))
