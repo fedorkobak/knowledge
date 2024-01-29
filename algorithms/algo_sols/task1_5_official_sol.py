@@ -100,6 +100,7 @@ def slow(k1, m, k2, p2, n2):
         return (-1, -1)
     
 if __name__ == "__main__":
-    print(" ".join(map(str,
-        slow(*map(int, input().split(" ")))
-    )))
+    # print(" ".join(map(str,
+    #     slow(*map(int, input().split(" ")))
+    # )))
+    print(slow(964, 486, 778, 1, 26))
