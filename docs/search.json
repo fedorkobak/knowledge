@@ -4198,5 +4198,47 @@
     "title": "About",
     "section": "",
     "text": "About this site"
+  },
+  {
+    "objectID": "python/advanced/unittest/check_error.html",
+    "href": "python/advanced/unittest/check_error.html",
+    "title": "Check error (assertRaises)",
+    "section": "",
+    "text": "Sometimes programs are designed to throw exceptions in certain cases. So we need a way to test whether an exception has been thrown in that case. In this subsection I want to pay attention to such a case."
+  },
+  {
+    "objectID": "python/advanced/unittest/check_error.html#basics",
+    "href": "python/advanced/unittest/check_error.html#basics",
+    "title": "Check error (assertRaises)",
+    "section": "Basics",
+    "text": "Basics\nFor example, we’ll use a function that implements division for two numbers, but if the denominator is zero, we have to throw an exception. Such a function is implemented in the following cell:\n\n%%writefile check_error_files/assert_raises.py\ndef my_division(a,b):\n    if b == 0:\n        raise ValueError(\"Division by zero is detected!\")\n    return a/b\n\nWriting check_error_files/assert_raises.py\n\n\nNo, we can use unittest.TestCase.assertRaises to get the result we want. But note that it normally have specific syntax assertRaises(&lt;expected exception&gt;, &lt;funtion&gt;, *&lt;arguments for funtion that leads to the raise of the error&gt;). So you don’t need to call the function you are testing directly, but you do need to pass it and the test case documents to the unittest.TestCase.assertRaises. The example is below, the first test leads to raise in my_division, but the second does not, so you can be sure that if an error doesn’t occurs you will know about it:\n\n%%writefile check_error_files/test_assert_raises.py\nimport unittest\nfrom assert_raises import my_division\n\nclass MyCase(unittest.TestCase):\n    def test_sucessfull(self):\n        '''\n        Case where division by zero occurs.\n        So testing for it will be successful.\n        '''\n        self.assertRaises(\n            ValueError,\n            my_division,\n            10, 0\n        )\n\n    def test_error(self):\n        '''\n        Case where division by zero doesn't happen.\n        So testing for it won't finish well.\n        '''\n        self.assertRaises(\n            ValueError,\n            my_division,\n            10,2\n        )\n\nWriting check_error_files/test_assert_raises.py\n\n\nNow let’s call the prepared tests - as a result we have that one test goes fine, but the second leads to the error.\n\n%%bash\ncd check_error_files\npython3 -m unittest test_assert_raises.py\n\nF.\n======================================================================\nFAIL: test_error (test_assert_raises.MyCase)\nCase where division by zero doesn't happen.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/fedor/Documents/knowledge/python/advanced/unittest/check_error_files/test_assert_raises.py\", line 21, in test_error\n    self.assertRaises(\nAssertionError: ValueError not raised by my_division\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (failures=1)\n\n\nCalledProcessError: Command 'b'cd check_error_files\\npython3 -m unittest test_assert_raises.py\\n'' returned non-zero exit status 1."
+  },
+  {
+    "objectID": "python/advanced/unittest/check_error.html#using-context-manager-with",
+    "href": "python/advanced/unittest/check_error.html#using-context-manager-with",
+    "title": "Check error (assertRaises)",
+    "section": "Using context manager (with)",
+    "text": "Using context manager (with)\nSome programs don’t really like to type function and it’s arguments separately, so they use sytax with self.assertRaises(&lt;error type&gt;) and call function under consideration inside the with block. So here is the same option as in the “Basic” section, but we are using the context manager to create such a test:\n\n%%writefile check_error_files/test_assert_raises2.py\nimport unittest\nfrom assert_raises import my_division\n\nclass MyCase(unittest.TestCase):\n    def test_case(self):\n        with self.assertRaises(ValueError):\n            my_division(10, 0)\n\nWriting check_error_files/test_assert_raises2.py\n\n\nAnd the execution of this test shows that we can achieve our goal using a specific syntax.\n\n%%bash\ncd check_error_files\npython3 -m unittest test_assert_raises2.py\n\n.\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK"
+  },
+  {
+    "objectID": "python/advanced/unittest/run_before_after.html",
+    "href": "python/advanced/unittest/run_before_after.html",
+    "title": "Run code before/after",
+    "section": "",
+    "text": "In unittest library, there is an option to execute some code before/after executing all the tests described in a class, and before/after each test in the class test separately. So this page is to discover details of how to use this feature."
+  },
+  {
+    "objectID": "python/advanced/unittest/run_before_after.html#each-test-method-setupteardown",
+    "href": "python/advanced/unittest/run_before_after.html#each-test-method-setupteardown",
+    "title": "Run code before/after",
+    "section": "Each test method (setUp/tearDown)",
+    "text": "Each test method (setUp/tearDown)\nSometimes it’s useful to run some code before or after each test. To do this, you can add setUp, tearDown methods to your inheritance of the TestCase class. setUp is executed before each test described in your program, tearDown after.\nThis subsection just shows how it works. Here is a test where each method just shows that it has been run in the console. And there are setUp' andtearDown’ which just print a message.\n\n%%writefile run_before_after_files/test_setup_teardown.py\nimport unittest\n\nclass UpDownTests(unittest.TestCase):\n\n    def setUp(self):\n        print(\"setUp run\")\n\n    def tearDown(self):\n        print(\"tearDown run\", end = \"\\n\\n\\n\")\n\n    def test_1(self):\n        print(\"test_1 run\")\n\n    def test_2(self):\n        print(\"test_2 run\")\n\nWriting run_before_after_files/test_setup_teardown.py\n\n\nHere is just running for this test.\n\n%%bash\ncd run_before_after_files\npython3 -m unittest test_setup_teardown.py\n\n..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n\n\nsetUp run\ntest_1 run\ntearDown run\n\n\nsetUp run\ntest_2 run\ntearDown run"
+  },
+  {
+    "objectID": "python/advanced/unittest/run_before_after.html#whole-test-class-setupclassteardownclass",
+    "href": "python/advanced/unittest/run_before_after.html#whole-test-class-setupclassteardownclass",
+    "title": "Run code before/after",
+    "section": "Whole test class (setUpClass/tearDownClass)",
+    "text": "Whole test class (setUpClass/tearDownClass)\nThere is an option to run some code before/after executing all test methods in the inheritage of unittest.TestCase. You need to use the setUpClass/tearDownClass methods for this. Note You need to wrap it with a classmethod decorator. The following cell only shows how it can be implemented:\n\n%%writefile run_before_after_files/test_setup_teardown_class.py\nimport unittest\n\nclass UpDownTests(unittest.TestCase):\n\n    @classmethod\n    def setUpClass(self):\n        print(\"setUpClass run\")\n\n    @classmethod\n    def tearDownClass(self):\n        print(\"tearDownClass run\", end = \"\\n\\n\\n\")\n\n    def test_1(self):\n        print(\"test_1 run\")\n\n    def test_2(self):\n        print(\"test_2 run\")\n\nOverwriting run_before_after_files/test_setup_teardown_class.py\n\n\nNow let us run the test from the previous file and see what the output looks like. There is print from setUpClass before each tests and print from tearDownClass after each test.\n\n%%bash\ncd run_before_after_files\npython3 -m unittest test_setup_teardown_class.py\n\n..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n\n\nsetUpClass run\ntest_1 run\ntest_2 run\ntearDownClass run"
   }
 ]
