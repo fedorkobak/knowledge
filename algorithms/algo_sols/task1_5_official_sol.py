@@ -103,4 +103,4 @@ if __name__ == "__main__":
     # print(" ".join(map(str,
     #     slow(*map(int, input().split(" ")))
     # )))
-    print(slow(20, 5, 3, 1, 1))
+    print(slow(89, 20, 41, 1, 11))

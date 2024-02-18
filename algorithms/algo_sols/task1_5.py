@@ -90,7 +90,9 @@ def sol(K1, M, K2, P2, N2):
         # last value.
         G_max = ceil(K2/(T2-1))
 
-        if G_min >= G_max-1:
+        # Here is greater or equal because if
+        # we didn't subtract one from G_max
+        if G_min >= G_max:
             return -1, -1
 
         for G in range(G_min, G_max):
