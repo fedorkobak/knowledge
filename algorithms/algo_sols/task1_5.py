@@ -117,7 +117,7 @@ def sol(K1, M, K2, P2, N2):
         # the first flat is on the first floor of the 
         # of the first staircase.
         N1 = 1; P1 = 1
-    elif K2 > K1: 
+    elif K1 > K2: 
         # This case is used when
         # the second flat is on the first floor
         # of the first staircase and
