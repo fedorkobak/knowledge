@@ -55,7 +55,7 @@ def potential_transformation(curr, pot):
     out : int
         new current value.
     '''
-    if not curr:
+    if curr is None:
         return pot
     elif curr!=pot:
         return 0
