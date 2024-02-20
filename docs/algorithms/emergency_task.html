@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Knowledge - How to linux backup</title>
+<title>Knowledge - Emergency task</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,6 +93,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -107,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../other/linux_backup.html">Other</a></li><li class="breadcrumb-item"><a href="../other/linux_backup.html">How to linux backup</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../algorithms/complexity.html">Algorithms</a></li><li class="breadcrumb-item"><a href="../algorithms/emergency_task.html">Emergency task</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -943,8 +945,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Algorithms</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="true">
+ <span class="menu-text">Algorithms</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../algorithms/complexity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complexity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../algorithms/emergency_task.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Emergency task</span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
@@ -1387,16 +1408,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" aria-expanded="false">
  <span class="menu-text">Other</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../other/linux_backup.html" class="sidebar-item-text sidebar-link active">
+  <a href="../other/linux_backup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">How to linux backup</span></a>
   </div>
 </li>
@@ -1418,14 +1439,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#tar" id="toc-tar" class="nav-link active" data-scroll-target="#tar"><code>tar</code></a></li>
-  <li><a href="#rsync-basics" id="toc-rsync-basics" class="nav-link" data-scroll-target="#rsync-basics"><code>rsync</code> basics</a>
+  <li><a href="#problem-condition" id="toc-problem-condition" class="nav-link active" data-scroll-target="#problem-condition">Problem condition</a></li>
+  <li><a href="#theoretical-ideas" id="toc-theoretical-ideas" class="nav-link" data-scroll-target="#theoretical-ideas">Theoretical ideas</a>
   <ul class="collapse">
-  <li><a href="#basic-syntax" id="toc-basic-syntax" class="nav-link" data-scroll-target="#basic-syntax">Basic syntax</a></li>
-  <li><a href="#r---copy-recursive" id="toc-r---copy-recursive" class="nav-link" data-scroll-target="#r---copy-recursive"><code>r</code> - copy <em>r</em>ecursive</a></li>
-  <li><a href="#a---attributes" id="toc-a---attributes" class="nav-link" data-scroll-target="#a---attributes"><code>-a</code> - attributes</a></li>
-  <li><a href="#delete---delete-extraneous" id="toc-delete---delete-extraneous" class="nav-link" data-scroll-target="#delete---delete-extraneous"><code>--delete</code> - delete extraneous</a></li>
+  <li><a href="#basic" id="toc-basic" class="nav-link" data-scroll-target="#basic">Basic</a></li>
+  <li><a href="#t_2-1" id="toc-t_2-1" class="nav-link" data-scroll-target="#t_2-1"><span class="math inline">\(T_2 = 1\)</span></a></li>
+  <li><a href="#t_2-k_2" id="toc-t_2-k_2" class="nav-link" data-scroll-target="#t_2-k_2"><span class="math inline">\(T_2 &gt; K_2\)</span></a></li>
+  <li><a href="#g_min-g_max" id="toc-g_min-g_max" class="nav-link" data-scroll-target="#g_min-g_max"><span class="math inline">\(G_{min} &lt; G_{max}\)</span></a></li>
+  <li><a href="#g_min-g_max-1" id="toc-g_min-g_max-1" class="nav-link" data-scroll-target="#g_min-g_max-1"><span class="math inline">\(G_{min} &gt; G_{max}\)</span></a></li>
+  <li><a href="#solution-description" id="toc-solution-description" class="nav-link" data-scroll-target="#solution-description">Solution description</a></li>
   </ul></li>
+  <li><a href="#python-implementation" id="toc-python-implementation" class="nav-link" data-scroll-target="#python-implementation">Python implementation</a></li>
   </ul>
 </nav>
     </div>
@@ -1434,7 +1458,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">How to linux backup</h1>
+<h1 class="title">Emergency task</h1>
 </div>
 
 
@@ -1449,328 +1473,417 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<ul>
-<li><a href="https://www.google.com/search?channel=fs&amp;client=ubuntu-sn&amp;q=how+to+linux+backup&amp;bshm=nce/1#fpstate=ive&amp;vld=cid:d262cccb,vid:GqSxR93xK6E"><code>rsync</code> usage example</a>;</li>
-<li><a href="https://download.samba.org/pub/rsync/rsync.1"><code>rsync</code> documentation</a>;</li>
-<li><a href="https://jumpcloud.com/blog/how-to-backup-linux-system-rsync"> backup with <code>rsync</code></a>;</li>
-<li><a href="https://help.ubuntu.com/community/BackupPC"> official ubuntu backup instructions</a>;</li>
-<li><a href="https://help.ubuntu.com/community/BackupYourSystem/TAR">offical ubutntu backup instructions - section about <code>tar</code></a>.</li>
-</ul>
-<section id="tar" class="level1">
-<h1><code>tar</code></h1>
-<p>In the following cell I just try to follow the instructions from <a href="https://help.ubuntu.com/community/BackupYourSystem/TAR">official ubutntu backup instructions - section about <code>tar</code></a>, to make a backup - and test how it works in different cases.</p>
-<p>I want to try:</p>
-<ul>
-<li><strong>step 1 - backup creating</strong>:
-<ul>
-<li>run docker container with ubuntu;</li>
-<li>install <code>curl</code>, <code>abache2</code>;</li>
-<li>run the <code>apache2</code> service;</li>
-<li>check <code>apache2</code> with curl;</li>
-<li>use <code>tar</code> to make a backup of the current system;</li>
-<li>stop the container;</li>
-</ul></li>
-<li><strong>step2 - recovery from back up</strong>:
-<ul>
-<li>run a new empty ubuntu container;</li>
-<li>copy the backup archive from the previous container;</li>
-<li>restore the backup in empty ubuntu system;</li>
-<li>check <code>curl</code> and <code>apache2</code>.</li>
-</ul></li>
-</ul>
-<p><strong>step 1 - backup creating</strong></p>
-<div class="cell" data-execution_count="70">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mkdir backups</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name ubun_cont <span class="op">-</span>i <span class="op">-</span>v $(pwd)<span class="op">/</span>backups:<span class="op">/</span>backups ubuntu</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====install====="</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get update <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install curl apache2 <span class="op">-</span>y <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>service apache2 start <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====check====="</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>curl <span class="op">-</span>s localhost:<span class="dv">80</span> <span class="op">|</span> head <span class="op">-</span>n <span class="dv">20</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====make backup====="</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>tar <span class="op">\</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>cvpzf <span class="op">\</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">/</span>backups<span class="op">/</span>backup.tar.gz <span class="op">\</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>exclude<span class="op">=/</span>backups<span class="op">/</span>backup.tar.gz <span class="op">\</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">--</span>one<span class="op">-</span><span class="bu">file</span><span class="op">-</span>system <span class="op">/</span> <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>exit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====install=====
-
-=====check=====
-&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
-&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
-  &lt;!--
-    Modified from the Debian original for Ubuntu
-    Last updated: 2022-03-22
-    See: https://launchpad.net/bugs/1966004
-  --&gt;
-  &lt;head&gt;
-    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
-    &lt;title&gt;Apache2 Ubuntu Default Page: It works&lt;/title&gt;
-    &lt;style type="text/css" media="screen"&gt;
-  * {
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-  }
-
-  body, html {
-    padding: 3px 3px 3px 3px;
-
-    background-color: #D8DBE2;
-
-=====make backup=====</code></pre>
-</div>
-</div>
-<p>There is not much to say - it saves the backup in the “backups” folder.</p>
-<p><strong>step2 - recovery from backup</strong></p>
-<div class="cell" data-execution_count="71">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name ubun_cont <span class="op">-</span>i <span class="op">-</span>v $(pwd)<span class="op">/</span>backups:<span class="op">/</span>backups ubuntu</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tar <span class="op">-</span>xvpzf <span class="op">/</span>backups<span class="op">/</span>backup.tar.gz <span class="op">-</span>C <span class="op">/</span> <span class="op">--</span>numeric<span class="op">-</span>owner <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====culr --help====="</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>curl <span class="op">--</span><span class="bu">help</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====curl localhost:80====="</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>culr <span class="op">-</span>s localhost:<span class="dv">80</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====curl localhost:80 after apache====="</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>service apache2 start</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>curl <span class="op">-</span>s localhost:<span class="dv">80</span> <span class="op">|</span> head <span class="op">-</span>n <span class="dv">20</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>exit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====culr --help=====
-Usage: curl [options...] &lt;url&gt;
- -d, --data &lt;data&gt;          HTTP POST data
- -f, --fail                 Fail silently (no output at all) on HTTP errors
- -h, --help &lt;category&gt;      Get help for commands
- -i, --include              Include protocol response headers in the output
- -o, --output &lt;file&gt;        Write to file instead of stdout
- -O, --remote-name          Write output to a file named as the remote file
- -s, --silent               Silent mode
- -T, --upload-file &lt;file&gt;   Transfer local FILE to destination
- -u, --user &lt;user:password&gt; Server user and password
- -A, --user-agent &lt;name&gt;    Send User-Agent &lt;name&gt; to server
- -v, --verbose              Make the operation more talkative
- -V, --version              Show version number and quit
-
-This is not the full help, this menu is stripped into categories.
-Use "--help category" to get an overview of all categories.
-For all options use the manual or "--help all".
-=====curl localhost:80=====
-
-=====curl localhost:80 after apache=====
- * Starting Apache httpd web server apache2
- * 
-&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
-&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
-  &lt;!--
-    Modified from the Debian original for Ubuntu
-    Last updated: 2022-03-22
-    See: https://launchpad.net/bugs/1966004
-  --&gt;
-  &lt;head&gt;
-    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
-    &lt;title&gt;Apache2 Ubuntu Default Page: It works&lt;/title&gt;
-    &lt;style type="text/css" media="screen"&gt;
-  * {
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-  }
-
-  body, html {
-    padding: 3px 3px 3px 3px;
-
-    background-color: #D8DBE2;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/bin/bash: line 6: culr: command not found
-AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message</code></pre>
-</div>
-</div>
-<p><strong>Note</strong> Even without downloading <code>curl</code> and <code>apache2</code> I can use it after unpacking. To use <code>apache2</code> you had to start the corresponding service - but it was still really easy.</p>
+<p>I face this task while solving the Yandex “<a href="https://yandex.ru/yaintern/algorithm-training_1">algorithms trainings part one</a>” course on home work for first lesson.</p>
+<section id="problem-condition" class="level2">
+<h2 class="anchored" data-anchor-id="problem-condition">Problem condition</h2>
+<p>An ambulance crew went on a call to a segregated neighbourhood. Unfortunately, when the dispatcher received the call, he only had time to write down the house address and the number of flat <span class="math inline">\(K_1\)</span>, and then the connection was cut off. However, he remembered that at the same house address some time ago an ambulance had travelled to flat <span class="math inline">\(K_2\)</span>, which is located in entrance <span class="math inline">\(P_2\)</span> on floor <span class="math inline">\(N_2\)</span>. It is known that there are <span class="math inline">\(M\)</span> floors in the house and the number of flats on each landing is the same. Write a programme that calculates the number of staircase <span class="math inline">\(P_1\)</span> and the number of floor <span class="math inline">\(N_1\)</span> of flat <span class="math inline">\(K_1\)</span>.</p>
+<p>Input format <span class="math inline">\(K_1\)</span>, <span class="math inline">\(M\)</span>, <span class="math inline">\(K_2\)</span>, <span class="math inline">\(P_2\)</span>, <span class="math inline">\(N_2\)</span> one after the other. All positive.</p>
+<p>The programme returns <span class="math inline">\(N_1\)</span> and <span class="math inline">\(P_1\)</span>.</p>
+<p>If there are multiple options for a result, you must return <span class="math inline">\(0\)</span>.</p>
+<p>If the numbers passed are wrong, you must return -1 -1.</p>
 </section>
-<section id="rsync-basics" class="level1">
-<h1><code>rsync</code> basics</h1>
-<p>Actually <code>rsync</code> is just a copy tool, but if you compare it with <code>cp</code> it has much more options and features.</p>
-<section id="basic-syntax" class="level3">
-<h3 class="anchored" data-anchor-id="basic-syntax">Basic syntax</h3>
-<p><code>rsync &lt;copied file&gt; &lt;destination of copying&gt;</code></p>
-<p>Example follows</p>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># creating to directories</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>mkdir dir1 dir2</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># creating file in dir1</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"hello new file"</span> <span class="op">&gt;</span> dir1<span class="op">/</span>test_file</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># rsynk file from dir1 to dir2</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>rsync dir1<span class="op">/</span>test_file dir2<span class="op">/</span>test_file</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># check the message</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>cat dir2<span class="op">/</span>test_file</span>
+<section id="theoretical-ideas" class="level2">
+<h2 class="anchored" data-anchor-id="theoretical-ideas">Theoretical ideas</h2>
+<section id="basic" class="level3">
+<h3 class="anchored" data-anchor-id="basic">Basic</h3>
+<p>The task was quite difficult (I wasn’t the only one). Therefore, I will describe some theoretical calculations that will help in solving it.</p>
+<p>Sometimes I use preudographic schemes for clarity, where each row is a staircase, <code>[n]</code> is an apartment with the number <span class="math inline">\(n\)</span>, the symbol <code>|</code> separates different staircases. So 2 stored buildings with 2 staircases and 2 flats on the floor will look like this:</p>
+<pre><code>[3][4] | [7][8]
+[1][2] | [5][6]</code></pre>
+<p><span class="math inline">\(M*(P_2-1)\)</span> - number of stairwells on all previous staircases.</p>
+<p><strong>The number of stairwells in flat 2, including all the staircases of the previous staircases</strong>, which we will call <span class="math inline">\(T_2\)</span>, can be calculated as follows:</p>
+<p><span class="math display">\[T_2 = M*(P_2-1)+N_2\]</span></p>
+<p>But there are special cases associated with this number, we have only mentioned them here, they will be discovered more precisely in the following subsections:</p>
+<ul>
+<li><span class="math inline">\(T_2 = 1\)</span> - means that flat with known parameters is located on the ground floor of the first entrance;</li>
+<li><span class="math inline">\(T_2 &gt; K_2\)</span> - means that a flat with the given parameters can’t exist.</li>
+</ul>
+<p>Let <span class="math inline">\(G\)</span> <strong>be the number of dwellings on a stairwell</strong> - actually it’s a crusical number for our task.</p>
+<p>Let’s express a pair of quantities with this number:</p>
+<ul>
+<li><span class="math inline">\(T_2*G\)</span> - number of the last flat on the same staircase as flat 2 (it could actually be flat 2);</li>
+<li><span class="math inline">\((T_2-1)*G\)</span> - number of the last flat on the previous staircase as flat 2.</li>
+</ul>
+<p>So <span class="math inline">\(G\)</span> is the integer that must satisfy the following conditions:</p>
+<p><span class="math display">\[
+\begin{cases}
+T_2*G \geq K_2; \\
+(T_2-1)*G &lt; K_2.
+\end{cases}
+\]</span></p>
+<p>Now let us solve the inequalities with respect to <span class="math inline">\(G\)</span>:</p>
+<p><span class="math display">\[
+\begin{cases}
+G\geq \frac{K_2}{T_2}; \\
+G &lt; \frac{K_2}{T_2 - 1}.
+\end{cases}
+\]</span></p>
+<p>So <span class="math inline">\(G\)</span> can take all integers between <span class="math inline">\(G_{min}=\lceil K_2/T_2 \rceil\)</span> and <span class="math inline">\(G_{max}=\lceil K_2/(T_2 - 1) \rceil - 1\)</span>, including both.</p>
+<p>But there are some cases where we need to consider the values entered:</p>
+<ul>
+<li><span class="math inline">\(G_{min}=G_{max}\)</span> - the best option - we have only one possible <span class="math inline">\(G\)</span> and as a result of only one possible and guaranteed solution;</li>
+<li><span class="math inline">\(G_{min} &lt; G_{max}\)</span> means that there are several possible numbers of flats on a stairwell. But actually that doesn’t mean we can’t unambiguously define <span class="math inline">\(P_1\)</span> or <span class="math inline">\(N_1\)</span> or even both of them. Read more in one of the next following subsections;</li>
+<li><span class="math inline">\(T_2 = 1\)</span> makes <span class="math inline">\(G_{max}\)</span> is underfined. The algebra here just follows the logic of life (as always, really). <span class="math inline">\(T_2-1=0\)</span>, which makes the denominator in <span class="math inline">\(G_{max}\)</span> equal to zero. And just think - if flat 2 is on the first staircase, you won’t understand how many flats are on the staircase, because there can be any number of flats on the same staircase behind <span class="math inline">\(K_2\)</span>. But you have to remember that if <span class="math inline">\(K_1&lt;K_2\)</span> we don’t need to find <span class="math inline">\(G_{max}\)</span> - <span class="math inline">\(K_1\)</span> is on the first staircase as well as <span class="math inline">\(K_2\)</span>;</li>
+<li><span class="math inline">\(G_{min} &gt; G_{max}\)</span> - means that apartment number <span class="math inline">\(K_2\)</span> on stariwell <span class="math inline">\(T_2\)</span> can’t exist. Read more in one of the following subsections;</li>
+</ul>
+<p>Now suppose we have chosen some value for <span class="math inline">\(G\)</span>. We can calculate solutions for this G using formulas:</p>
+<p><span class="math display">\[T_1 = \lceil K_1/G \rceil \tag{1}\]</span> <span class="math display">\[P_1=\lceil T_1/M \rceil \tag{2}\]</span> <span class="math display">\[N_1 = T_1 - (P_1-1) \tag{3}M\]</span></p>
+</section>
+<section id="t_2-1" class="level3">
+<h3 class="anchored" data-anchor-id="t_2-1"><span class="math inline">\(T_2 = 1\)</span></h3>
+<p>It means that the apartment with known parameters is on the first floor of the first staircase. The main challenge here is that we can’t determine <span class="math inline">\(G\)</span>, because it can be any number of flats behind flats with known parameters in the same staircase.</p>
+<p>Consider the example with parameters <span class="math inline">\(M=3, K_2=5, P_2=1, N_2=1\)</span> - different <span class="math inline">\(K_1\)</span> can lead to different special cases, so it’s set for each case.</p>
+<ul>
+<li><span class="math inline">\(K_1 = 3 \Rightarrow K_2 &gt; K_1\)</span> there are no way for second flat to be any where except first floor of first staircase, so the answer have to be <span class="math inline">\(P_1=1, N_1=1\)</span>;</li>
+<li><span class="math inline">\(K_1 = 6\)</span> we cannot define <span class="math inline">\(G\)</span>, but we can be sure that it is not less than <span class="math inline">\(K_2\)</span>, since there are at least <span class="math inline">\(K_2\)</span> apartments on the first floor, it guarantees that there are not more than <span class="math inline">\(K_2M\)</span> apartments in the first staircase, so if <span class="math inline">\(K_1 \leq K_2M\)</span> it guarantees that the apartment we are interested in is in the first staircase, but we still cannot define the floor of the apartment we are interested in so the answer should be <span class="math inline">\(P_1=1, N_1=0\)</span>;</li>
+<li><span class="math inline">\(K_1 = 50 \Rightarrow K_1 &gt; K_2M\)</span> we can’t define anything so the answer have to be <span class="math inline">\(P_1=0, N_1=0\)</span>.</li>
+</ul>
+</section>
+<section id="t_2-k_2" class="level3">
+<h3 class="anchored" data-anchor-id="t_2-k_2"><span class="math inline">\(T_2 &gt; K_2\)</span></h3>
+<p>Consider case <span class="math inline">\(K_1=11\)</span>, <span class="math inline">\(M=10\)</span>, <span class="math inline">\(K_2=2\)</span>, <span class="math inline">\(P_2=3\)</span>, <span class="math inline">\(N_2=3\)</span>.</p>
+<p><span class="math inline">\(T_2 = 10*2 + 3 = 23\)</span></p>
+<p>And what have we got? A 2nd flat on the 23rd stairwell? No sense! There must be at least one flat on each stairwell, which can be written formally as <span class="math inline">\(T_2 &gt; K_2\)</span>.</p>
+<p>So if the condition <span class="math inline">\(T_2 &gt; K_2\)</span> isn’t complete, we have to return -1, -1.</p>
+</section>
+<section id="g_min-g_max" class="level3">
+<h3 class="anchored" data-anchor-id="g_min-g_max"><span class="math inline">\(G_{min} &lt; G_{max}\)</span></h3>
+<p>Probably the easiest case I foud: <span class="math inline">\(M=3, K_2 = 4, P_2 = 1, N_2 = 2\)</span>.</p>
+<p>In these conditions there are two possible option for number of flats on the straiwell.</p>
+<p>If <span class="math inline">\(G=2\)</span>, apartment with number <span class="math inline">\(K_2=4\)</span> can be the second apartment on the second staircase. As in the pseudographic scheme below:</p>
+<pre><code>[5][6] | [11][12] | [17][18]
+[3][4] | [ 9][10] | [15][16]
+[1][2] | [ 7][ 8] | [13][14]</code></pre>
+<p>But even if <span class="math inline">\(G=3\)</span>, such an apartment still exists as the first apartment of the second stairwell:</p>
+<pre><code>[7][8][9] | [16][17][18] | [25][26][27]
+[4][5][6] | [13][14][15] | [22][23][24]
+[1][2][3] | [10][11][12] | [19][20][21]</code></pre>
+<p>Using different values of G, we can calculate <span class="math inline">\(P_1\)</span> in <span class="math inline">\(N_1\)</span> using formulas <span class="math inline">\((1), (2), (3)\)</span>, assuming there are <span class="math inline">\(G\)</span> apartments on the stairwell.</p>
+<p>So from this point everything depends on <span class="math inline">\(K_1\)</span> - in some cases the problem can be solved unambiguously, in others there may be some uncertainty.</p>
+<p><strong>Option1 - one solution.</strong> Suppose <span class="math inline">\(K_1=2\)</span> in case both cases <span class="math inline">\(N_1=1, P_1=1\)</span>.</p>
+<p><strong>Option2 - uncertain floor.</strong> Suppose <span class="math inline">\(K_1=6\)</span> in case <span class="math inline">\(G = 2 \rightarrow N_1 = 3\)</span>, but in case <span class="math inline">\(G=3\rightarrow N_1 = 2\)</span>, but the number of stairs in both cases take the same number <span class="math inline">\(P_1 = 1\)</span>. So the answer must be <span class="math inline">\(P_1=1\)</span>, <span class="math inline">\(N_1=0\)</span>.</p>
+<p><strong>Option3 - uncertain both.</strong> Suppose <span class="math inline">\(K_1=9\)</span> in case <span class="math inline">\(G=2 \rightarrow N_1=2, P_1=2\)</span>, but in case <span class="math inline">\(G=3 \rightarrow N_1=1, P_1=3\)</span>. So both <span class="math inline">\(N1\)</span> and <span class="math inline">\(P_1\)</span> take different values in different cases. So the answer must be <span class="math inline">\(P_1=0\)</span>, <span class="math inline">\(N_1=0\)</span>.</p>
+<p><strong>Option4 - uncertain staircase.</strong> Suppose <span class="math inline">\(K_1=15\)</span>, in case <span class="math inline">\(G=2 \rightarrow P_1=2\)</span> but in case <span class="math inline">\(G_2=3 \rightarrow P_1=3\)</span> but the floor can only be determined one way <span class="math inline">\(N_1 = 2\)</span>. So the final answer must be <span class="math inline">\(P_1=0\)</span> , <span class="math inline">\(N_1=2\)</span>.</p>
+<p>So the best solution I have found so far is to try all possible values of <span class="math inline">\(G\)</span> and see what values of <span class="math inline">\(N_1\)</span> and <span class="math inline">\(P_1\)</span> we get.</p>
+</section>
+<section id="g_min-g_max-1" class="level3">
+<h3 class="anchored" data-anchor-id="g_min-g_max-1"><span class="math inline">\(G_{min} &gt; G_{max}\)</span></h3>
+<p>Some combinations for <span class="math inline">\(K_2\)</span>, <span class="math inline">\(N_2\)</span>, <span class="math inline">\(P_2\)</span> are impossible - some flats can’t exist on some stairwells. For example flat with number <span class="math inline">\(K_2 = 6\)</span> can’t exist on stairwell with number <span class="math inline">\(T_2 = 4\)</span>. The simpliest example here is <span class="math inline">\(M=10\)</span>, <span class="math inline">\(K_2=6\)</span>, <span class="math inline">\(N_2=4\)</span>, <span class="math inline">\(P_2=1\)</span>.</p>
+<p>Suppose <span class="math inline">\(G=1\)</span> then we will have schema:</p>
+<pre><code>[6]
+[5]
+[4]
+[3]
+[2]
+[1]</code></pre>
+<p>So apartment six is on the sixth floor, which is more than the specified <span class="math inline">\(N_2=4\)</span>.</p>
+<p>Ok let’s try <span class="math inline">\(G=2\)</span>. Schema is below:</p>
+<pre><code>[5][6]
+[3][4]
+[1][2]</code></pre>
+<p>So here is a flat with known parameters on the 3rd floor, which is less than the given <span class="math inline">\(N_2=4\)</span>. And increasing <span class="math inline">\(G\)</span> will only make things worse.</p>
+<p>There are no options for <span class="math inline">\(G\)</span> that satisfy the given conditions.</p>
+</section>
+<section id="solution-description" class="level3">
+<h3 class="anchored" data-anchor-id="solution-description">Solution description</h3>
+<p>Finally let’s describe final solution.</p>
+<ul>
+<li><p><span class="math inline">\(M &lt; N_2\)</span> means that the second apartment is on a higher floor than the one in the house under consideration - so we have to return (-1, -1) in this case. I’m not sure about this point, maybe it’s always <span class="math inline">\(G_{max} &lt; G_{min}\)</span> in case <span class="math inline">\(M &lt; N_2\)</span> - it has to be proved or rejected;</p></li>
+<li><p>Compute <span class="math inline">\(T_2 = M*(P_2-1)+N_2\)</span>;</p>
+<ul>
+<li><p>If <span class="math inline">\(T_2 &gt; K_2\)</span> we have to return (-1, -1);</p></li>
+<li><p>If <span class="math inline">\(T_2=1\)</span>:</p>
+<ul>
+<li>If <span class="math inline">\(K_1 \leq K_2\)</span> return (1, 1);</li>
+<li>If <span class="math inline">\(K_1 &gt; K_2\)</span> and <span class="math inline">\(K_1 \leq K_2M\)</span> return (1, 0);</li>
+<li>If <span class="math inline">\(K_1 &gt; K_2M\)</span> return (-1, -1);</li>
+</ul></li>
+</ul></li>
+<li><p>Compute <span class="math inline">\(G_{min}=\lceil K_2/T_2 \rceil\)</span> and <span class="math inline">\(G_{max}=\lceil K_2/(T_2 - 1) \rceil - 1\)</span>;</p>
+<ul>
+<li>If <span class="math inline">\(G_{min} &lt; G_{max}\)</span>;
+<ul>
+<li>We need to try all options for <span class="math inline">\(G = \overline{G_{min}, G_{max}}\)</span> and compute follwoing numbers:</li>
+<li><span class="math inline">\(T_1 = \lceil K_1/G \rceil\)</span>;</li>
+<li><span class="math inline">\(P_1=\lceil T_1/M \rceil\)</span>;</li>
+<li><span class="math inline">\(N_1 = T_1 - (P_1-1)M\)</span>;</li>
+<li>If for each <span class="math inline">\(G\)</span> we got same values of <span class="math inline">\(P_1\)</span> and <span class="math inline">\(N_1\)</span> - return them;</li>
+<li>If for different <span class="math inline">\(G\)</span> there are different <span class="math inline">\(P_1\)</span> or <span class="math inline">\(N_1\)</span> or both, we have to retrun 0 for the corresponding value;</li>
+</ul></li>
+<li>If <span class="math inline">\(G_{min} \geq G_{max}\)</span> return (-1, -1).</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="python-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="python-implementation">Python implementation</h2>
+<p>The program from the following cell describes the python implementation of the task. The input to the program is <span class="math inline">\(K_1, M, K_2, P_2, N_2\)</span> in one line, separated by spaces. The output of the programme is <span class="math inline">\(P_1\)</span>, <span class="math inline">\(N_1\)</span> separated by a space.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile emergency_task_files<span class="op">/</span>solution.py</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> ceil</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_P_N(K, G, M):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculate the number of stairs (P) and the floor (N)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    of the flat using information about it's number (K)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">    number of flats on the stairwell (G) and number</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">    of floors in the building.</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r dir1 dir2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Paramters</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">    ---------</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">    G : int </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">        number of flats on the stairwell'</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">    flatno : int </span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">        number of the flat;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">    M : int </span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">        numver of flats in the house;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">    ---------</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">    P : int </span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">        staircase number for </span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">        the apartment in question;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">    M : int</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">        floor number of the flat.</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The number of stairwells, </span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># including all the staircases </span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># of the previous staircases</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> ceil(K<span class="op">/</span>G)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> ceil(T<span class="op">/</span>M)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> T <span class="op">-</span> (P<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>M</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> P, N</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> potential_transformation(curr, pot):</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">    Transformate potential value to real value. </span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">    If current value isn't defined we need to replace</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">    it with potential value. </span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">    If there is current value and it differs from</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">    potential value we have uncertainty that means</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co">    that we need to replace current value with 0.</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co">    curr : int</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="co">        current value;</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="co">    pot : int</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co">        potential value;</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="co">    out : int</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co">        new current value.</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> curr <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> pot</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> curr<span class="op">!=</span>pot:</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> curr</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sol(K1, M, K2, P2, N2):</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if second flat is higher</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># than possible</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> N2 <span class="op">&gt;</span> M:</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The number of stairwells in flat 2, </span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># including all the staircases of the </span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>    <span class="co"># previous staircases</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    T2 <span class="op">=</span> M<span class="op">*</span>(P2 <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> N2</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    <span class="co"># one more impossible case</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> T2 <span class="op">&gt;</span> K2:</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    P1 <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    N1 <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> T2 <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>        G_min <span class="op">=</span> ceil(K2<span class="op">/</span>T2)</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>        <span class="co"># In the description I wrote</span></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>        <span class="co"># formula G_max = ceil(K2/(T2-1))-1</span></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>        <span class="co"># but in the Python3 implementation it's</span></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>        <span class="co"># easier to use such formula - because</span></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the `range` function, which doesn't include the</span></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>        <span class="co"># last value.</span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>        G_max <span class="op">=</span> ceil(K2<span class="op">/</span>(T2<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Here is greater or equal because if</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>        <span class="co"># we didn't subtract one from G_max</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> G_min <span class="op">&gt;=</span> G_max:</span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> G <span class="kw">in</span> <span class="bu">range</span>(G_min, G_max):</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calculate such values of P and N</span></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>            <span class="co"># that satisfy K1, G and M</span></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>            <span class="co"># but are not yet potential values</span></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>            pot_P1, pot_N1 <span class="op">=</span> get_P_N(K1, G, M)</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>            <span class="co"># if P1 is not defined yet we fill it</span></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>            <span class="co"># with new value</span></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>            P1 <span class="op">=</span> potential_transformation(P1, pot_P1)</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>            N1 <span class="op">=</span> potential_transformation(N1, pot_N1)</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The following cases are checked</span></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    <span class="co"># when T2 = 1</span></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> K1 <span class="op">&lt;=</span> K2:</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This case is used when</span></span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the second flat is on the first floor</span></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>        <span class="co"># of the first staircase and</span></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>        <span class="co"># and the first flat has a lower number.</span></span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>        <span class="co"># All the above guarantees that </span></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the first flat is on the first floor of the </span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>        <span class="co"># of the first staircase.</span></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>        P1<span class="op">=</span><span class="dv">1</span><span class="op">;</span>N1<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> K1 <span class="op">&lt;</span> M<span class="op">*</span>K2:</span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This case is used when</span></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the second flat is on the first floor</span></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>        <span class="co"># of the first staircase and</span></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the first flat has a greater number.</span></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>        <span class="co"># But not great enought to be in the other</span></span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>        <span class="co"># staircase - so we can't define floor of</span></span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the flat but staircase sertainly 1.</span></span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>        P1<span class="op">=</span><span class="dv">1</span><span class="op">;</span>N1<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This case is used when</span></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the second flat is on the first floor</span></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>        <span class="co"># of the first staircase and</span></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the first flat has a greater number.</span></span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>        <span class="co"># We can't define how many flats there are</span></span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>        <span class="co"># above the second flat on the same</span></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>        <span class="co"># staircase, so the parameters of the </span></span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>        <span class="co"># first flat cannot be defined.</span></span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>        P1<span class="op">=</span><span class="dv">0</span><span class="op">;</span>N1<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> M<span class="op">==</span><span class="dv">1</span> <span class="kw">and</span> N1<span class="op">==</span><span class="dv">0</span>:</span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If we have decided in a previous step that</span></span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>        <span class="co"># that number of floor is underdefined. If there is</span></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>        <span class="co"># only one floor in the building, we can be</span></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>        <span class="co"># be sure that the first apartment is on the first floor.</span></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>        N1 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> P1, N1</span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" "</span>.join(<span class="bu">map</span>(<span class="bu">str</span>,</span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>        sol(<span class="op">*</span><span class="bu">map</span>(<span class="bu">int</span>, <span class="bu">input</span>().split(<span class="st">" "</span>)))</span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>    )))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>hello new file</code></pre>
+<pre><code>Overwriting emergency_task_files/solution.py</code></pre>
 </div>
 </div>
-</section>
-<section id="r---copy-recursive" class="level3">
-<h3 class="anchored" data-anchor-id="r---copy-recursive"><code>r</code> - copy <em>r</em>ecursive</h3>
-<p>Allow to copy a folder with all its contents.</p>
-<p>In the following example I’m trying to copy contents from dir1 to dir2, as you can see I couldn’t do it without the <code>r</code> option.</p>
-<div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mkdir dir1 dir2</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>touch dir1<span class="op">/</span><span class="bu">file</span>{<span class="fl">1..5</span>}.txt</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====content of dir1====="</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ls dir1</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====no r option====="</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>rsync dir1<span class="op">/</span> dir2</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>ls dir2</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====r option====="</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>rsync <span class="op">-</span>r dir1<span class="op">/</span> dir2</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>ls dir2</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r dir1 dir2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here is some unittests for program in the previous cell:</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile emergency_task_files<span class="op">/</span>test.py</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unittest</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solution <span class="im">import</span> sol, potential_transformation</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Test(unittest.TestCase):</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> test_sol(<span class="va">self</span>):</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">'''</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Testing main function of the solution</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">        '''</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        cases <span class="op">=</span> [</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            <span class="co"># just basic case</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">89</span>, <span class="st">'M'</span>: <span class="dv">20</span>, <span class="st">'K2'</span>: <span class="dv">41</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">11</span>}, (<span class="dv">2</span>, <span class="dv">3</span>)),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># the known flat on the first cell </span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># but there's only one floor so it's safe </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># you can go ahead and</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">11</span>, <span class="st">'M'</span>: <span class="dv">1</span>, <span class="st">'K2'</span>: <span class="dv">1</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">1</span>}, (<span class="dv">0</span>, <span class="dv">1</span>)), </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># the known flat in the second entrance</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            <span class="co"># of a one-storey building</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">11</span>, <span class="st">'M'</span>: <span class="dv">1</span>, <span class="st">'K2'</span>: <span class="dv">3</span>, <span class="st">'P2'</span>: <span class="dv">2</span>, <span class="st">'N2'</span>: <span class="dv">1</span>}, (<span class="dv">6</span>, <span class="dv">1</span>)),</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># T2 &gt; K2</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">3</span>, <span class="st">'M'</span>: <span class="dv">2</span>, <span class="st">'K2'</span>: <span class="dv">2</span>, <span class="st">'P2'</span>: <span class="dv">2</span>, <span class="st">'N2'</span>: <span class="dv">1</span>}, (<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)),</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            <span class="co"># we can't define G because there can be any</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            <span class="co"># number of flats befind any flat on the first</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># stairwell of the first staircase and K1&gt;K2</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">11</span>, <span class="st">'M'</span>: <span class="dv">2</span>, <span class="st">'K2'</span>: <span class="dv">1</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">1</span>}, (<span class="dv">0</span>, <span class="dv">0</span>)),</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>            <span class="co"># we can't define G because there can be any</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>            <span class="co"># number of flats behind any flat on the first</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>            <span class="co"># staircase, but K1&lt;K2 which guarantees that the second</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>            <span class="co"># apartment is on the first staircase</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">3</span>, <span class="st">'M'</span>: <span class="dv">3</span>, <span class="st">'K2'</span>: <span class="dv">5</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">1</span>}, (<span class="dv">1</span>, <span class="dv">1</span>)),</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>            <span class="co"># we can't define G and number of stairswells, but number</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>            <span class="co"># of the dwelling in question is not large enough</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>            <span class="co"># to be in the next staircase</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">10</span>, <span class="st">'M'</span>: <span class="dv">3</span>, <span class="st">'K2'</span>: <span class="dv">5</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">1</span>}, (<span class="dv">1</span>, <span class="dv">0</span>)),</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>            <span class="co"># G_min &lt; G_max</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">15</span>, <span class="st">'M'</span>: <span class="dv">10</span>, <span class="st">'K2'</span>: <span class="dv">31</span>, <span class="st">'P2'</span>: <span class="dv">4</span>, <span class="st">'N2'</span>: <span class="dv">20</span>}, (<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)),</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>            <span class="co"># the following group of cases checking</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>            <span class="co"># belongs to pattern when G_min &gt; G_max</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>            <span class="co"># one solution</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">2</span>, <span class="st">'M'</span>: <span class="dv">3</span>, <span class="st">'K2'</span>: <span class="dv">4</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">2</span>}, (<span class="dv">1</span>, <span class="dv">1</span>)),</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>            <span class="co"># several cases for N</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">6</span>, <span class="st">'M'</span>: <span class="dv">3</span>, <span class="st">'K2'</span>: <span class="dv">4</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">2</span>}, (<span class="dv">1</span>, <span class="dv">0</span>)),</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>            <span class="co"># this is specific subcase for several N</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>            <span class="co"># there is G_max - G_min = 3 so there are</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>            <span class="co"># several iterations of the solution-finding loop</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>            <span class="co"># and K1 selected in such way to make algo try to</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>            <span class="co"># replace 0 with potential value</span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">14</span>, <span class="st">'M'</span>: <span class="dv">3</span>, <span class="st">'K2'</span>: <span class="dv">18</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">3</span>}, (<span class="dv">1</span>, <span class="dv">0</span>)),</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>            <span class="co"># several cases for both</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">9</span>, <span class="st">'M'</span>: <span class="dv">3</span>, <span class="st">'K2'</span>: <span class="dv">4</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">2</span>}, (<span class="dv">0</span>, <span class="dv">0</span>)),</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>            <span class="co"># several cases for P</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">15</span>, <span class="st">'M'</span>: <span class="dv">3</span>, <span class="st">'K2'</span>: <span class="dv">4</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">2</span>}, (<span class="dv">0</span>, <span class="dv">2</span>)),</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># N2&gt;M flat is higher than maximum floor</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">11</span>, <span class="st">'M'</span>: <span class="dv">1</span>, <span class="st">'K2'</span>: <span class="dv">5</span>, <span class="st">'P2'</span>: <span class="dv">1</span>, <span class="st">'N2'</span>: <span class="dv">2</span>}, (<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)),</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>            <span class="co"># G_min &gt; G_max</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">'K1'</span>: <span class="dv">13</span>, <span class="st">'M'</span>: <span class="dv">2</span>, <span class="st">'K2'</span>: <span class="dv">6</span>, <span class="st">'P2'</span>: <span class="dv">2</span>, <span class="st">'N2'</span>: <span class="dv">2</span>}, (<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k, c <span class="kw">in</span> cases:</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.assertEqual(sol(<span class="op">**</span>k), c, msg<span class="op">=</span><span class="bu">str</span>(k))</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> test_potential_transformation(<span class="va">self</span>):</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>        <span class="co">'''</span></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="co">        Tests for funtion `potential_transformation`.</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="co">        I caught a bug in this function.</span></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="co">        '''</span></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>        cases <span class="op">=</span> [</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>            <span class="co"># a case where ambiguity of judgement </span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>            <span class="co"># has already been established</span></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>            <span class="co"># and funtion have to return zero again</span></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">"curr"</span>:<span class="dv">0</span>, <span class="st">"pot"</span>: <span class="dv">10</span>}, <span class="dv">0</span>),</span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>            <span class="co"># if we trying to replace curr with</span></span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>            <span class="co"># the same value we have ot leave same value</span></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">"curr"</span>:<span class="dv">10</span>, <span class="st">"pot"</span>:<span class="dv">10</span>}, <span class="dv">10</span>),</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>            <span class="co"># if curr isn't defined yet we have</span></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>            <span class="co"># to set it with potential value</span></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">"curr"</span>:<span class="va">None</span>, <span class="st">"pot"</span>:<span class="dv">10</span>}, <span class="dv">10</span>),</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>            <span class="co"># if curr was set and we found</span></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>            <span class="co"># another potential value - return</span></span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>            <span class="co"># marker of ambiguity</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>            ({<span class="st">"curr"</span>:<span class="dv">10</span>, <span class="st">"pot"</span>:<span class="dv">9</span>}, <span class="dv">0</span>)</span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> arg, ret <span class="kw">in</span> cases:</span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.assertEqual(potential_transformation(<span class="op">**</span>arg), ret, msg<span class="op">=</span><span class="bu">str</span>(arg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>=====content of dir1=====
-file1.txt
-file2.txt
-file3.txt
-file4.txt
-file5.txt
-=====no r option=====
-skipping directory .
-=====r option=====
-file1.txt
-file2.txt
-file3.txt
-file4.txt
-file5.txt</code></pre>
+<pre><code>Overwriting emergency_task_files/test.py</code></pre>
 </div>
 </div>
-</section>
-<section id="a---attributes" class="level3">
-<h3 class="anchored" data-anchor-id="a---attributes"><code>-a</code> - attributes</h3>
-<p>It works just like <code>r</code>, but also deals with file attributes (like creation time, user and so on). So in the following example:</p>
-<ul>
-<li>Few files was created in <code>dir1</code>;</li>
-<li>The user for these files has been changed from <code>root</code> to <code>user1</code>;</li>
-<li>Then I use <code>rsync</code> twice:
-<ul>
-<li>First with the <code>r</code> option, which puts the user back in <code>root</code>;</li>
-<li>Second, with the <code>a</code> option, which saves the user attribute as <code>user1</code> from source.</li>
-</ul></li>
-</ul>
-<div class="cell" data-execution_count="38">
+<p>Ok now let’s try to run gotten unitests.</p>
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># docker container for usperuser access</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name test_container <span class="op">-</span>i ubuntu</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get update <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>apt<span class="op">-</span>get install <span class="op">-</span>y rsync <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># creating file with some specific user</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>useradd user1</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>mkdir dir1 dir2</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>touch dir1<span class="op">/</span><span class="bu">file</span>{<span class="fl">1..5</span>}.txt</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>chown user1 dir1<span class="op">/</span><span class="bu">file</span><span class="op">*</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dir1====="</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l dir1</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dir2 after rsync -r====="</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>rsync <span class="op">-</span>r dir1<span class="op">/</span> dir2</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l dir2</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>echo</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dir2 after rsync -a====="</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>rsync <span class="op">-</span>a dir1<span class="op">/</span> dir2</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>ls <span class="op">-</span>l dir2</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>exit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>=====dir1=====
-total 0
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file1.txt
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file2.txt
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file3.txt
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file4.txt
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file5.txt
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cd emergency_task_files</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>python3 <span class="op">-</span>m unittest test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
 
-=====dir2 after rsync -r=====
-total 0
--rw-r--r-- 1 root root 0 Jun 17 15:31 file1.txt
--rw-r--r-- 1 root root 0 Jun 17 15:31 file2.txt
--rw-r--r-- 1 root root 0 Jun 17 15:31 file3.txt
--rw-r--r-- 1 root root 0 Jun 17 15:31 file4.txt
--rw-r--r-- 1 root root 0 Jun 17 15:31 file5.txt
-
-=====dir2 after rsync -a=====
-total 0
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file1.txt
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file2.txt
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file3.txt
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file4.txt
--rw-r--r-- 1 user1 root 0 Jun 17 15:31 file5.txt</code></pre>
-</div>
-</div>
-</section>
-<section id="delete---delete-extraneous" class="level3">
-<h3 class="anchored" data-anchor-id="delete---delete-extraneous"><code>--delete</code> - delete extraneous</h3>
-<p>If you don’t use this option <code>rsync</code> will save files wich are in destination directory. Оtherwise all files that are not in the source will be deleted in the destination folder. The following exampe show: - In <code>dir2</code> I created file <code>test.txt</code>; - First I rsync files from <code>dir1</code> to <code>dir2</code> without the <code>--delete</code> option - <code>test.txt</code> is still in <code>dir2</code>; - Second I rsync files from <code>dir1</code> to <code>dir2</code> using the <code>--delete</code> option - <code>test.txt</code> disappears from <code>dir2</code>.</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mkdir dir1 dir2</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>touch dir1<span class="op">/</span><span class="bu">file</span>{<span class="fl">1..5</span>}.txt</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>touch dir2<span class="op">/</span>test.txt</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"====initial dir2====="</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>ls dir2</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dir2 after rsync no --delete====="</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>rsync <span class="op">-</span>r dir1<span class="op">/</span> dir2</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>ls dir2</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"=====dir2 after rsync with --delete====="</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>rsync <span class="op">-</span>r <span class="op">--</span>delete dir1<span class="op">/</span> dir2</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>ls dir2</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>rm <span class="op">-</span>r dir1 dir2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>====initial dir2=====
-test.txt
-=====dir2 after rsync no --delete=====
-file1.txt
-file2.txt
-file3.txt
-file4.txt
-file5.txt
-test.txt
-=====dir2 after rsync with --delete=====
-file1.txt
-file2.txt
-file3.txt
-file4.txt
-file5.txt</code></pre>
+OK</code></pre>
 </div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
