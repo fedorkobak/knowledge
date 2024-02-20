@@ -1,5 +1,5 @@
 import unittest
-from task1_5 import sol, potential_transformation
+from solution import sol, potential_transformation
 
 class Test(unittest.TestCase):
     def test_sol(self):
@@ -27,6 +27,9 @@ class Test(unittest.TestCase):
             # staircase, but K1<K2 which guarantees that the second
             # apartment is on the first staircase
             ({'K1': 3, 'M': 3, 'K2': 5, 'P2': 1, 'N2': 1}, (1, 1)),
+            # we can't define G and number of stairswells, but number
+            # of the dwelling in question is not large enough
+            # to be in the next staircase
             ({'K1': 10, 'M': 3, 'K2': 5, 'P2': 1, 'N2': 1}, (1, 0)),
             # G_min < G_max
             ({'K1': 15, 'M': 10, 'K2': 31, 'P2': 4, 'N2': 20}, (-1, -1)),
@@ -38,6 +41,10 @@ class Test(unittest.TestCase):
             ({'K1': 2, 'M': 3, 'K2': 4, 'P2': 1, 'N2': 2}, (1, 1)),
             # several cases for N
             ({'K1': 6, 'M': 3, 'K2': 4, 'P2': 1, 'N2': 2}, (1, 0)),
+            # this is specific subcase for several N
+            # there is G_max - G_min = 3 so there are
+            # several iterations of the solution-finding loop
+            ({'K1': 14, 'M': 3, 'K2': 18, 'P2': 1, 'N2': 3}, (1, 0)),
             # several cases for both
             ({'K1': 9, 'M': 3, 'K2': 4, 'P2': 1, 'N2': 2}, (0, 0)),
             # several cases for P
