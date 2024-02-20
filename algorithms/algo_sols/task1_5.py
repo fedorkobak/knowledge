@@ -116,8 +116,17 @@ def sol(K1, M, K2, P2, N2):
         # All the above guarantees that 
         # the first flat is on the first floor of the 
         # of the first staircase.
-        N1 = 1; P1 = 1
-    elif K1 > K2: 
+        P1=1;N1=1
+    elif K1 < M*K2:
+        # This case is used when
+        # the second flat is on the first floor
+        # of the first staircase and
+        # the first flat has a greater number.
+        # But not great enought to be in the other
+        # staircase - so we can't define floor of
+        # the flat but staircase sertainly 1.
+        P1=1;N1=0
+    else: 
         # This case is used when
         # the second flat is on the first floor
         # of the first staircase and
@@ -126,7 +135,7 @@ def sol(K1, M, K2, P2, N2):
         # above the second flat on the same
         # staircase, so the parameters of the 
         # first flat cannot be defined.
-        N1=0;P1=0
+        P1=0;N1=0
     if M==1 and N1==0:
         # If we have decided in a previous step that
         # that number of floor is underdefined. If there is

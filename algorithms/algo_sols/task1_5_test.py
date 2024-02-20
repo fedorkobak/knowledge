@@ -27,6 +27,7 @@ class Test(unittest.TestCase):
             # staircase, but K1<K2 which guarantees that the second
             # apartment is on the first staircase
             ({'K1': 3, 'M': 3, 'K2': 5, 'P2': 1, 'N2': 1}, (1, 1)),
+            ({'K1': 10, 'M': 3, 'K2': 5, 'P2': 1, 'N2': 1}, (1, 0)),
             # G_min < G_max
             ({'K1': 15, 'M': 10, 'K2': 31, 'P2': 4, 'N2': 20}, (-1, -1)),
 
