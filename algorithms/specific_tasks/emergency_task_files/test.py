@@ -44,6 +44,8 @@ class Test(unittest.TestCase):
             # this is specific subcase for several N
             # there is G_max - G_min = 3 so there are
             # several iterations of the solution-finding loop
+            # and K1 selected in such way to make algo try to
+            # replace 0 with potential value
             ({'K1': 14, 'M': 3, 'K2': 18, 'P2': 1, 'N2': 3}, (1, 0)),
             # several cases for both
             ({'K1': 9, 'M': 3, 'K2': 4, 'P2': 1, 'N2': 2}, (0, 0)),
