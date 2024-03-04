@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Knowledge - Dockerfile instructions</title>
+<title>Knowledge - Quick sort</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -94,6 +94,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -108,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Docker/sources.html">Docker</a></li><li class="breadcrumb-item"><a href="../Docker/docker_file_instructions.html">Dockerfile instructions</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../algorithms/complexity.html">Algorithms</a></li><li class="breadcrumb-item"><a href="../algorithms/quick_sort.html">Quick sort</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -951,13 +953,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="true">
  <span class="menu-text">Algorithms</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../algorithms/complexity.html" class="sidebar-item-text sidebar-link">
@@ -978,7 +980,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../algorithms/quick_sort.html" class="sidebar-item-text sidebar-link">
+  <a href="../algorithms/quick_sort.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Quick sort</span></a>
   </div>
 </li>
@@ -1009,13 +1011,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" aria-expanded="false">
  <span class="menu-text">Docker</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../Docker/sources.html" class="sidebar-item-text sidebar-link">
@@ -1030,7 +1032,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../Docker/docker_file_instructions.html" class="sidebar-item-text sidebar-link active">
+  <a href="../Docker/docker_file_instructions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Dockerfile instructions</span></a>
   </div>
 </li>
@@ -1479,13 +1481,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#run-with-start-of-container" id="toc-run-with-start-of-container" class="nav-link active" data-scroll-target="#run-with-start-of-container">Run with start of container</a>
+  <li><a href="#partition" id="toc-partition" class="nav-link active" data-scroll-target="#partition">Partition</a></li>
+  <li><a href="#classic-sort" id="toc-classic-sort" class="nav-link" data-scroll-target="#classic-sort">Classic sort</a></li>
+  <li><a href="#quick-search" id="toc-quick-search" class="nav-link" data-scroll-target="#quick-search">Quick search</a>
   <ul class="collapse">
-  <li><a href="#entrypoint" id="toc-entrypoint" class="nav-link" data-scroll-target="#entrypoint"><code>ENTRYPOINT</code></a></li>
-  <li><a href="#cmd" id="toc-cmd" class="nav-link" data-scroll-target="#cmd"><code>CMD</code></a></li>
-  <li><a href="#entrypoint-cmd" id="toc-entrypoint-cmd" class="nav-link" data-scroll-target="#entrypoint-cmd"><code>ENTRYPOINT</code> + <code>CMD</code></a></li>
+  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea">Idea</a></li>
+  <li><a href="#recursive-implementation" id="toc-recursive-implementation" class="nav-link" data-scroll-target="#recursive-implementation">Recursive implementation</a></li>
+  <li><a href="#while-implementation" id="toc-while-implementation" class="nav-link" data-scroll-target="#while-implementation"><code>while</code> implementation</a></li>
   </ul></li>
-  <li><a href="#environment-variables" id="toc-environment-variables" class="nav-link" data-scroll-target="#environment-variables">Environment variables</a></li>
   </ul>
 </nav>
     </div>
@@ -1494,7 +1497,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Dockerfile instructions</h1>
+<h1 class="title">Quick sort</h1>
 </div>
 
 
@@ -1509,168 +1512,350 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Here are the most basic options for the dockerfile.</p>
+<p>Is sorting algorithm that is based on recursive procedure which divides an array into two parts - less than some pivot element and greater than some pivot element, and applies itself to each of the parts.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> warnings <span class="im">import</span> warn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="partition" class="level2">
+<h2 class="anchored" data-anchor-id="partition">Partition</h2>
+<p>The core part of the algorithm is a procedure that allows elements less than the pivot to be pre-positioned to the left of the array, and values greater than the pivot to be pre-positioned to the right of the array.</p>
+<p>For simplicity, I will use <strong>left</strong> to denote a subset of elements such that it is smaller than <code>pivot</code>, and <strong>right</strong> to denote a subset of elements such that it is larger than <code>pivot</code>.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> partition(arr, low, high, pivot):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Function shuffle elements in place array</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">    so that all elements lower than</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    pivot have less indexes than elements</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    whose value is greater than pivot.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">    arr : list</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">        array, which elements need to be shuffled;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">    low : int</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">        left border index that will be </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">        considered by funtion;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">    high : int</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">        right border index that will be</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">        consedered by funtion;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">    pivot : number</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">        such a number that all elements of the array </span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">        less will be collected in the left part of </span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">        the array, and all elements of the array </span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">        more will be collected in the right part of </span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">        the array.</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">    out : int</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">        index of the half-next element among those </span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">        that are less than pivot</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> low</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(low, high<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> arr[j] <span class="op">&lt;=</span> pivot:</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>            arr[i], arr[j] <span class="op">=</span> arr[j], arr[i]</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>            i<span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> i<span class="op">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now let’s see how this works in the most general case. So in the following cell there is an input array and <code>partition</code> is applied from the i-th to the len-i-th elements, with pivot 10. And before execution funtion under consideration is printed results:</p>
 <ul>
-<li><code>FROM</code> - sets the base image for the new image;</li>
-<li><code>WORKDIR</code> - sets the working directory;</li>
-<li><code>COPY &lt;host directory&gt; &lt;image directory&gt;</code> - copy file from host to the image;</li>
-<li><code>RUN</code> - allows to run command during container build.</li>
+<li>Elements that were in the input array before <code>low</code> don’t change their order;</li>
+<li>Elements that were in the input array after `high’ don’t change their order either;</li>
+<li>Elements between the <code>low</code> and <code>high</code> indices are split into two arrays:
+<ul>
+<li>less or equal than <code>pivot</code>;</li>
+<li>more than <code>pivot</code>.</li>
+</ul></li>
 </ul>
-<section id="run-with-start-of-container" class="level1">
-<h1>Run with start of container</h1>
-<p>The instructions provided in this section allow you to set container behaviour with the command specified when starting the container in <code>docker run</code>. So <a href="../Docker/docker_commands.html#sec-docker_run_com_on_start">here</a> you can find some useful tips.</p>
-<section id="entrypoint" class="level2">
-<h2 class="anchored" data-anchor-id="entrypoint"><code>ENTRYPOINT</code></h2>
-<p>Allow command to run when container based on image is running. The feature of this instruction is that you can add something at the end of the <code>docker run</code> command, and it will be added to command described in <code>ENTRYPOINT</code>.</p>
-<p>Such dockerfile:</p>
-<pre><code>FROM ubuntu:20.04
-ENTRYPOINT [ "echo" ]</code></pre>
-<p>Creates a container that will <code>echo</code> the line declared at the end of the docker run command. For exmaple:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">10</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>arr_size <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> [randint(<span class="dv">0</span>, <span class="dv">20</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(arr_size)]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>low <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>high <span class="op">=</span> arr_size <span class="op">-</span> <span class="dv">3</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ind <span class="op">=</span> partition(arr, low, high, <span class="dv">10</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Input array"</span>, arr, end<span class="op">=</span><span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"before left:"</span>, arr[:low], <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"left:"</span>, arr[low:ind<span class="op">+</span><span class="dv">1</span>], <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"right:"</span>, arr[ind<span class="op">+</span><span class="dv">1</span>:high], <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"after right:"</span>, arr[high:], <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    sep <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Input array [18, 1, 13, 0, 6, 8, 5, 1, 10, 2, 7, 18, 14, 16, 15, 15, 15, 20, 11, 1]
+
+before left:[18, 1, 13]
+left:[0, 6, 8, 5, 1, 10, 2, 7]
+right:[18, 14, 16, 15, 15, 15]
+after right:[20, 11, 1]
+</code></pre>
+</div>
+</div>
+<p>Also let’s check some boundary cases:</p>
+<ul>
+<li><strong>Left</strong> contains only one lement:</li>
+</ul>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">4</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Input array"</span>, arr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ind <span class="op">=</span> partition(arr, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">1</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Result:"</span>, arr, <span class="ss">f"with separation in </span><span class="sc">{</span>ind<span class="sc">}</span><span class="ss">-th position."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Input array [3, 2, 1, 5, 4]
+Result: [1, 2, 3, 5, 4] with separation in 0-th position.</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Left</strong> is empty;</li>
+</ul>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>f basic_instructions<span class="op">/</span>entrypoint_example <span class="op">\</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>t test_ubuntu <span class="op">\</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    basic_instructions <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm test_ubuntu <span class="st">"hello world"</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm test_ubuntu ls</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">4</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Input array"</span>, arr)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ind <span class="op">=</span> partition(arr, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Result:"</span>, arr, <span class="ss">f"with separation in </span><span class="sc">{</span>ind<span class="sc">}</span><span class="ss">-th position."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>hello world
-ls</code></pre>
+<pre><code>Input array [3, 2, 1, 5, 4]
+Result: [3, 2, 1, 5, 4] with separation in -1-th position.</code></pre>
 </div>
 </div>
-<p>So the lines I passed as arguments were just printed - just like <code>echo</code> does.</p>
+<ul>
+<li><strong>Right</strong> contains only one element;</li>
+</ul>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">4</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Input array"</span>, arr)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ind <span class="op">=</span> partition(arr, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">4</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Result:"</span>, arr, <span class="ss">f"with separation in </span><span class="sc">{</span>ind<span class="sc">}</span><span class="ss">-th position."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Input array [3, 2, 1, 5, 4]
+Result: [3, 2, 1, 4, 5] with separation in 3-th position.</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Right</strong> is empty;</li>
+</ul>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">4</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Input array"</span>, arr)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ind <span class="op">=</span> partition(arr, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">10</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Result:"</span>, arr, <span class="ss">f"with separation in </span><span class="sc">{</span>ind<span class="sc">}</span><span class="ss">-th position."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Input array [3, 2, 1, 5, 4]
+Result: [3, 2, 1, 5, 4] with separation in 4-th position.</code></pre>
+</div>
+</div>
 </section>
-<section id="cmd" class="level2">
-<h2 class="anchored" data-anchor-id="cmd"><code>CMD</code></h2>
-<p>Allow command to run when container based on image is running. If using this instruction you set any command for <code>docker run</code>, the command described in <code>CMD</code> will be completely removed with new commad.</p>
-<p>Consider containers based on dockerfile:</p>
-<pre><code>FROM ubuntu:20.04
-CMD [ "echo" ]</code></pre>
-<p>The same command <code>docker run --rm test_ubuntu ls</code> like it was for the dockerfile from <code>ENTRYPOINT</code> example, desn’t print “ls” but executes the <code>ls</code> command.</p>
+<section id="classic-sort" class="level2">
+<h2 class="anchored" data-anchor-id="classic-sort">Classic sort</h2>
+<p>Here is the basic realisation of this algorithm, which is a key to algorithms for different tasks based on the same idea.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">\</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>f basic_instructions<span class="op">/</span>cmd_example <span class="op">\</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>t test_ubuntu <span class="op">\</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    basic_instructions <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm test_ubuntu ls </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>bin
-boot
-dev
-etc
-home
-lib
-lib32
-lib64
-libx32
-media
-mnt
-opt
-proc
-root
-run
-sbin
-srv
-sys
-tmp
-usr
-var</code></pre>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> quick_sort(arr, low<span class="op">=</span><span class="dv">0</span>, high<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Sort in ascending order in place.</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">    This is a recursive function that only </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">    replaces elements in the elements only </span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">    in the specified range.</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">    arr : list</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">        the object will be sorted by the </span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">        passed reference;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">    low : int</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">        is the lower index of the subarray </span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">        under consideration;</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">    high : int</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">        is the highes index of the subarry</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">        under consideration.</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(arr)<span class="op">&lt;=</span><span class="dv">1</span>:</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> arr</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> high: high<span class="op">=</span><span class="bu">len</span>(arr)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    ind <span class="op">=</span> partition(arr, low, high, arr[high])</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ind<span class="op">-</span><span class="dv">1</span><span class="op">&gt;</span>low:quick_sort(arr, low<span class="op">=</span>low, high<span class="op">=</span>ind<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ind<span class="op">+</span><span class="dv">1</span><span class="op">&lt;</span>high: quick_sort(arr, low<span class="op">=</span>ind<span class="op">+</span><span class="dv">1</span>, high<span class="op">=</span>high)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</section>
-<section id="entrypoint-cmd" class="level2">
-<h2 class="anchored" data-anchor-id="entrypoint-cmd"><code>ENTRYPOINT</code> + <code>CMD</code></h2>
-<p>By combining <code>ENTRYPOINT</code> and <code>CMD</code> you can do this: - in <code>ENTRYPOIN</code> set the necessary part of the command; - in <code>CMD</code> set the part of the command that can be changed.</p>
-<p>docker file like:</p>
-<pre><code>FROM ubuntu:20.04
-ENTRYPOINT ["echo"]
-CMD ["default message"]</code></pre>
-<p>By default, “default message” is printed, but if you add a line to `docker run’ it will be printed instead. The following cell show how it works:</p>
+<p>Now let’s check how it works:</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">\</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>f basic_instructions<span class="op">/</span>entrypoint_cmd <span class="op">\</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>t test_ubuntu <span class="op">\</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    basic_instructions <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm test_ubuntu</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm test_ubuntu <span class="st">"other message"</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">20</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>arr_size <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> [randint(<span class="dv">0</span>, <span class="dv">20</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(arr_size)]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Input array:"</span>, arr)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>quick_sort(arr)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sorted array:"</span>, arr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>default message
-other message</code></pre>
+<pre><code>Input array: [4, 8, 20, 3, 10, 18, 5, 0, 13, 13, 2, 3, 4, 10, 15, 18, 14, 13, 6, 6]
+Sorted array: [0, 2, 3, 3, 4, 4, 5, 6, 6, 8, 10, 10, 13, 13, 13, 14, 15, 18, 18, 20]</code></pre>
 </div>
 </div>
-<p>Consequence of instractions doesn’t matter. So docker file:</p>
-<pre><code>FROM ubuntu:20.04
-CMD ["default message"]
-ENTRYPOINT ["echo"]</code></pre>
-<p>Will work the same way. The folowing cell show this scenario.</p>
+<p>And finally, a little “stress test” - we’ll compare the results of the function <code>quick_sort</code> and the built-in function <code>sorted</code>.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">\</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>f basic_instructions<span class="op">/</span>entrypoint_cmd2 <span class="op">\</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>t test_ubuntu <span class="op">\</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    basic_instructions <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm test_ubuntu</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm test_ubuntu <span class="st">"other message"</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>default message
-other message</code></pre>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>arr_size <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> [randint(<span class="dv">0</span>, <span class="dv">20</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(arr_size)]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    classic_res <span class="op">=</span> <span class="bu">sorted</span>(arr)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    quick_sort(arr)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> classic_res <span class="op">!=</span> arr:</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        warn(<span class="st">"there is some problems with your realisation!!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<section id="several-cmdentrypoin" class="level4">
-<h4 class="anchored" data-anchor-id="several-cmdentrypoin">Several <code>CMD</code>/<code>ENTRYPOIN</code></h4>
-<p>Looks like, docker only takes the last mention of <code>CMD</code>/<code>ENTRY POINT</code>. Which makes sense in the case of ‘inheriting’ containers. So at the following example I’m using docker file:</p>
-<pre><code>FROM ubuntu:20.04
-CMD ["echo", "default message1"]
-CMD ["echo", "default message2"]</code></pre>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">\</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>f basic_instructions<span class="op">/</span>several_cmd <span class="op">\</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span>t test_ubuntu <span class="op">\</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    basic_instructions <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm test_ubuntu</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>docker rmi test_ubuntu <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>default message2</code></pre>
-</div>
-</div>
-<p>So it looks like docker just ignored <code>CMD ["echo", "default message1"]</code></p>
 </section>
+<section id="quick-search" class="level2">
+<h2 class="anchored" data-anchor-id="quick-search">Quick search</h2>
+<p>There is another application of the same idea - quick search. This algorithm allows you to find the k-th largest (or smallest) elements in an array.</p>
+<section id="idea" class="level3">
+<h3 class="anchored" data-anchor-id="idea">Idea</h3>
+<p>For brevity, we will describe the problem of finding the k-th largest element.</p>
+<p>As with quick sort algorithm, we divide array into <strong>left</strong> and <strong>right</strong> at each step of the algorithm. Here we won’t include pivot to the <strong>left</strong>. There are few options from this point:</p>
+<ul>
+<li>Number of elements in <strong>right</strong> equal <span class="math inline">\(k-1\)</span> - it means that pivot is element we search for, we can just return it as answer;</li>
+<li>Number of elements in <strong>right</strong> greater than or equal to <span class="math inline">\(k\)</span> - it guarantees that the <span class="math inline">\(k\)</span>-th largerst element of the input array is somewhere in the <strong>right</strong>. We have to continue search of <span class="math inline">\(k\)</span>-th in the <strong>left</strong>;</li>
+<li>Number of elements in <strong>right</strong> less than <span class="math inline">\(k-1\)</span> - it means that <span class="math inline">\(k\)</span>-th largest element of input array somewhere in <strong>left</strong>. But elements in <strong>right</strong> and pivot are bigger than element under consideration, so if element in input array was k-th biggest in <strong>left</strong> it must be <span class="math inline">\((k-m-1)\)</span>-th (where <span class="math inline">\(m\)</span> number of elements in the <strong>right</strong>). We have to keep looking for the <span class="math inline">\(k-m-1\)</span>-th largest in the <strong>left</strong>.</li>
+</ul>
 </section>
-</section>
-<section id="environment-variables" class="level1">
-<h1>Environment variables</h1>
-<p>For creating environment variable you can use <code>ENV</code> dockerfile instruction.</p>
-<p>In following example I create a dockefile vich use <code>ENV</code> to create <code>TEST_VAR</code> with value <code>"test variable value"</code>. Then print it from container.</p>
-<div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cd basic_instructions</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"FROM ubuntu"</span> <span class="op">&gt;</span> envdockerfile</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>echo <span class="st">"ENV TEST_VAR=</span><span class="ch">\"</span><span class="st">test variable value</span><span class="ch">\"</span><span class="st">"</span> <span class="op">&gt;&gt;</span> envdockerfile</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t test_image <span class="op">-</span>f envdockerfile . <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">-</span>itd <span class="op">--</span>name test_container test_image <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>docker <span class="bu">exec</span> test_container bash <span class="op">-</span>c <span class="st">"echo \$TEST_VAR"</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>docker stop test_container <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>docker rmi test_image <span class="op">&amp;&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>rm envdockerfile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>test variable value</code></pre>
+<section id="recursive-implementation" class="level3">
+<h3 class="anchored" data-anchor-id="recursive-implementation">Recursive implementation</h3>
+<p>This is my original implementation of the quick search. It is based on recursion.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> quick_search_rec(arr, k, low<span class="op">=</span><span class="dv">0</span>, high<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Quick search algorithm implementation.</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Finds k-th biggest element in the arr</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">    between low and high indeces.</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">    arr : list</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">        array to be searched;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">    k : int</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">        number of biggest element to be found;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">    low : int</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co">        lower boundary of the subarray to be searched;</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">    high : int</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co">        upper boundary of the subarray to be searched.</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Subarray will include element with index high.</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co">    out : number</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="co">        k-th biggest element of the subarray of arr</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="co">        between indeces low and high.</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># boundary cases</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(arr) <span class="op">&lt;</span> <span class="dv">1</span>: <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> k<span class="op">&lt;=</span><span class="dv">0</span> : k<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> high: high<span class="op">=</span><span class="bu">len</span>(arr)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    ind <span class="op">=</span> partition(arr, low, high, arr[high])</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># number of elements in right</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    right_number <span class="op">=</span> high<span class="op">-</span>ind</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> right_number <span class="op">==</span> k<span class="op">-</span><span class="dv">1</span>: <span class="cf">return</span> arr[ind]</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> right_number<span class="op">&gt;=</span>k: <span class="cf">return</span> quick_search_rec(arr, k, ind<span class="op">+</span><span class="dv">1</span>, high)</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> right_number<span class="op">&lt;</span>k: <span class="cf">return</span> quick_search_rec(</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>        arr, k<span class="op">-</span>right_number<span class="op">-</span><span class="dv">1</span>, low, ind<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Here is a simple example to show that it works:</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">11</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> [random.randint(<span class="dv">0</span>, <span class="dv">20</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>)]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Input:"</span>, arr)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>quick_search_rec(arr, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Input: [14, 17, 14, 14, 16, 18, 6, 5, 16, 15]</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>16</code></pre>
+</div>
+</div>
+<p>Here is a simple stress test where I compare result of selecting <span class="math inline">\(-k\)</span>-th element of array sorted by python and result of the <code>quick_sarch_rec</code>.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>array_size <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> [random.randint(<span class="dv">0</span>, <span class="dv">20</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(array_size)]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> random.randint(<span class="dv">1</span>, array_size<span class="op">//</span><span class="dv">2</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    build_in <span class="op">=</span> <span class="bu">sorted</span>(arr)[<span class="op">-</span>k]</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    my <span class="op">=</span> quick_search_rec(arr, k)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> my <span class="op">!=</span> build_in:</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        warn(<span class="st">"Mistake!"</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="while-implementation" class="level3">
+<h3 class="anchored" data-anchor-id="while-implementation"><code>while</code> implementation</h3>
+<p>Sometimes recursion isn’t acceptable solution - you can get <code>RecursionError</code>. I faced in my practice case when solution showen above isn’t acceptable, so in the following cell there is code that realise fast search without recursion. Here is just a subarray moved from step to step - <code>high</code> and <code>low</code> changed to suit this case:</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> quick_search_while(arr, k):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Quick search algorithm implementation.</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Finds k-th biggest element in the arr.</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">    arr : list</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">        array to be searched;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">    k : int</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">        number of biggest element to be found.</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co">    out : number</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co">        k-th biggest element of the arr.</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># boundary cases</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(arr) <span class="op">&lt;</span> <span class="dv">1</span>: <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> k<span class="op">&lt;=</span><span class="dv">0</span> : k<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    low <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    high <span class="op">=</span> <span class="bu">len</span>(arr)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>        ind <span class="op">=</span> partition(arr, low, high, arr[high])</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># number of elements in right</span></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>        right_number <span class="op">=</span> high<span class="op">-</span>ind</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> right_number <span class="op">==</span> k<span class="op">-</span><span class="dv">1</span>: <span class="cf">return</span> arr[ind]</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> right_number<span class="op">&gt;=</span>k: low<span class="op">=</span>ind<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> right_number<span class="op">&lt;</span>k: k<span class="op">=</span>k<span class="op">-</span>right_number<span class="op">-</span><span class="dv">1</span><span class="op">;</span>high<span class="op">=</span>ind<span class="op">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here is a simple example to show that it works:</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">12</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> [random.randint(<span class="dv">0</span>, <span class="dv">20</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>)]</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Input:"</span>, arr)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>quick_search_rec(arr, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Input: [15, 8, 16, 11, 4, 12, 0, 11, 15, 8]</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>15</code></pre>
+</div>
+</div>
+<p>Here is a simple stress test where I compare result of selecting <span class="math inline">\(-k\)</span>-th element of array sorted by python and result of the <code>quick_sarch_while</code>.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>array_size <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    arr <span class="op">=</span> [random.randint(<span class="dv">0</span>, <span class="dv">20</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(array_size)]</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> random.randint(<span class="dv">1</span>, array_size<span class="op">//</span><span class="dv">2</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    build_in <span class="op">=</span> <span class="bu">sorted</span>(arr)[<span class="op">-</span>k]</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    my <span class="op">=</span> quick_search_while(arr, k)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> my <span class="op">!=</span> build_in:</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        warn(<span class="st">"Mistake!"</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
