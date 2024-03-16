@@ -1,0 +1,807 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Virutal environment in python &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'python/basics/virtual_environment';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../machine_learning/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../machine_learning/gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../machine_learning/models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../machine_learning/data_transformations/tf_idf.html">TF-IDF</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../machine_learning/metrics.html">Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../machine_learning/metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../machine_learning/metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../machine_learning/metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basics.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="operators.html">Operators</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="operators/arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators/break.html">Leave cycle (break)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators/in.html">Is in array (in)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators/indexing.html">Indexing ([])</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators/order.html">Order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators/yield.html">yield</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/python/basics/virtual_environment.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Virutal environment in python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Virutal environment in python</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sources">Sources</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create">Create</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activate-deactivate">Activate/deactivate</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#for-python-script">For python script</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instalation-without-activation">Instalation without activation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#load-from-requirements-txt">Load from <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#copying"><strong>Copying</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrong-way">Wrong way</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correct-way">Correct way</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#using-with-jupyter-notebook"><strong>Using with jupyter notebook</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-to-kernelspec">Add to <code class="docutils literal notranslate"><span class="pre">kernelspec</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-from-environment">Run from environment</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="virutal-environment-in-python">
+<h1>Virutal environment in python<a class="headerlink" href="#virutal-environment-in-python" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sources">
+<h1>Sources<a class="headerlink" href="#sources" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a href="https://docs.python.org/3/library/venv.html">Official documentation on virtual invironment in python</a>;</p></li>
+<li><p><a href="https://realpython.com/python-virtual-environments-a-primer/">Extended tutorial</a>;</p></li>
+<li><p><a href="https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove">Jupyter Notebook Kernels: How to Add, Change, Remove</a>.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="create">
+<h1>Create<a class="headerlink" href="#create" title="Link to this heading">#</a></h1>
+<p>To create a new virtual environment, use the command <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">&lt;path</span> <span class="pre">to</span> <span class="pre">venv&gt;</span></code>. This will create a virtual environment in the specified path.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+mkdir test_fold
+cd test_fold
+
+python3 -m venv env_folder
+
+ls
+cd ..
+rm -r test_fold
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>env_folder
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="activate-deactivate">
+<h1>Activate/deactivate<a class="headerlink" href="#activate-deactivate" title="Link to this heading">#</a></h1>
+<p>From bash (mac/linux) command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">venv</span><span class="o">&gt;/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+
+<span class="c1"># comands here will use python</span>
+<span class="c1"># from virtual environment</span>
+
+<span class="n">deactivate</span>
+</pre></div>
+</div>
+<p>From windows powershell:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">venv</span><span class="o">&gt;/</span><span class="n">Scripts</span><span class="o">/</span><span class="n">activate</span>
+
+<span class="c1"># comands here will use python</span>
+<span class="c1"># from virtual environment</span>
+
+<span class="n">deactivate</span>
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="for-python-script">
+<h1>For python script<a class="headerlink" href="#for-python-script" title="Link to this heading">#</a></h1>
+<p>So far no way has been found to specify the environment somehow in a python file, so to run a program in a certain environment you must first activate that environment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd venv_files
+
+# create a new env and install specific version
+# of numpy in it
+python3 -m venv env_folder
+source env_folder/bin/activate
+pip3 install numpy==1.23.0 &amp;&gt; /dev/null
+deactivate
+
+echo &quot;global numpy&quot; $(pip show numpy | grep Version)
+
+echo &quot;=====no venv activated=====&quot;
+python3 test.py
+
+echo &quot;=====venv activated=====&quot;
+source env_folder/bin/activate
+python3 test.py
+deactivate
+
+rm -r env_folder
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>global numpy Version: 1.24.2
+=====no venv activated=====
+numpy version: 1.24.2
+=====venv activated=====
+numpy version: 1.23.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="instalation-without-activation">
+<h1>Instalation without activation<a class="headerlink" href="#instalation-without-activation" title="Link to this heading">#</a></h1>
+<p>Sometimes it is extremely useful to install the Python library in the virtual environment without activating the environment. It can be useful, for example, if you need to set up the environment while building the docker image.</p>
+<p>To install python library in virtual environment without environment actication, you should use command like: <br>
+<code class="docutils literal notranslate"><span class="pre">&lt;path</span> <span class="pre">to</span> <span class="pre">venv&gt;/bin/pip</span> <span class="pre">install</span> <span class="pre">&lt;library</span> <span class="pre">name&gt;</span></code></p>
+<p>In following example:</p>
+<ul class="simple">
+<li><p>Creating a python3 program that requires the <code class="docutils literal notranslate"><span class="pre">requests</span></code> library;</p></li>
+<li><p>Create a new virtual environment;</p></li>
+<li><p>Running the program in the new virtual environment will causes an error;</p></li>
+<li><p>Instaling of the <code class="docutils literal notranslate"><span class="pre">requests</span></code> library in the virtual environment;</p></li>
+<li><p>Now running the program in the virtual environment don’t causes an error.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd venv_files
+python3 -m venv temp_venv
+echo &quot;import requests&quot; &gt; requests_loader.py
+echo &quot;print(\&quot;message from python\&quot;)&quot; &gt;&gt; requests_loader.py
+
+echo &quot;=====no library instalation=====&quot;
+source temp_venv/bin/activate
+python3 requests_loader.py
+deactivate
+
+
+temp_venv/bin/pip install requests &amp;&gt; /dev/null
+echo &quot;=====library instalation=====&quot;
+source temp_venv/bin/activate
+python3 requests_loader.py
+deactivate
+
+rm -r temp_venv requests_loader.py
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====no library instalation=====
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+  File &quot;/home/fedor/Documents/knowledge_bank/python/venv_files/requests_loader.py&quot;, line 1, in &lt;module&gt;
+    import requests
+ModuleNotFoundError: No module named &#39;requests&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====library instalation=====
+message from python
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="load-from-requirements-txt">
+<h1>Load from <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code><a class="headerlink" href="#load-from-requirements-txt" title="Link to this heading">#</a></h1>
+<p>It should be tedious to manually rewrite installations with pip. So that python libraries and versions can be stored in a file with the typical (but not necessary) name <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>, you can load it automatically using the following syntax:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code></p>
+<p>In the following example:</p>
+<ul class="simple">
+<li><p>Create virtual environment;</p></li>
+<li><p>Install the libraries mentioned in <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>;</p></li>
+<li><p>And then show the list of libraries in the virtual environment.</p></li>
+</ul>
+<p>Installed exactly the library versions I asked for in <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd venv_files
+python3.10 -m venv temp_venv
+
+echo &quot;=====requirements.txt=====&quot;
+cat requirements.txt
+
+echo
+temp_venv/bin/pip install -r requirements.txt &amp;&gt; /dev/null
+echo &quot;=====library list=====&quot;
+temp_venv/bin/pip list
+
+rm -r temp_venv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====requirements.txt=====
+numpy==1.21.0
+pandas==1.4.0
+=====library list=====
+Package         Version
+--------------- -------
+numpy           1.21.0
+pandas          1.4.0
+pip             22.0.2
+python-dateutil 2.8.2
+pytz            2023.3
+setuptools      59.6.0
+six             1.16.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="copying">
+<h1><strong>Copying</strong><a class="headerlink" href="#copying" title="Link to this heading">#</a></h1>
+<section id="wrong-way">
+<h2>Wrong way<a class="headerlink" href="#wrong-way" title="Link to this heading">#</a></h2>
+<p>The wrong way to do this is to just copy the virtual environment folder. It will lead to broken paths for the Python interpreter.</p>
+<p>In the following example, I copy the python3 environment from <code class="docutils literal notranslate"><span class="pre">venv1</span></code> to <code class="docutils literal notranslate"><span class="pre">venv2</span></code>, but when I run python from the copied environment and check <code class="docutils literal notranslate"><span class="pre">sys.path</span></code>, it’s still pointing to the path for <code class="docutils literal notranslate"><span class="pre">venv1</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd venv_files
+
+mkdir venv1 venv2
+
+python3.10 -m venv venv1/venv
+cp -r venv1/venv venv2/venv
+
+source venv2/venv/bin/activate
+echo &quot;=====sys.path[-1]=====&quot;
+python3 -c &quot;import sys; print(sys.path[-1])&quot;
+
+rm -r venv1 venv2
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====sys.path[-1]=====
+/home/fedor/Documents/knowledge_bank/python/venv_files/venv1/venv/lib/python3.10/site-packages
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="correct-way">
+<h2>Correct way<a class="headerlink" href="#correct-way" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://stackoverflow.com/questions/7438681/how-to-duplicate-virtualenv">https://stackoverflow.com/questions/7438681/how-to-duplicate-virtualenv</a></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="using-with-jupyter-notebook">
+<h1><strong>Using with jupyter notebook</strong><a class="headerlink" href="#using-with-jupyter-notebook" title="Link to this heading">#</a></h1>
+<section id="add-to-kernelspec">
+<h2>Add to <code class="docutils literal notranslate"><span class="pre">kernelspec</span></code><a class="headerlink" href="#add-to-kernelspec" title="Link to this heading">#</a></h2>
+<p>For more information, click <a href="https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove">here</a>.</p>
+<ul class="simple">
+<li><p><strong>Create</strong>:</p>
+<ul>
+<li><p>Install jupyter in environment <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">jupyter</span></code>;</p></li>
+<li><p>Run for environment <code class="docutils literal notranslate"><span class="pre">ipython</span> <span class="pre">kernel</span> <span class="pre">install</span> <span class="pre">--name</span> <span class="pre">&quot;&lt;environment</span> <span class="pre">name&gt;&quot;</span> <span class="pre">--user</span></code>;</p></li>
+</ul>
+</li>
+<li><p><strong>List all available environments</strong> <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">kernelspec</span> <span class="pre">list</span></code>;</p></li>
+<li><p><strong>Delete</strong> <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">kernelspec</span> <span class="pre">remove</span> <span class="pre">&lt;kernel-name&gt;</span></code></p></li>
+</ul>
+<p>The following example shows the use of all the above commands.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd venv_files
+python3 -m venv test_venv
+
+echo &quot;=====instalation=====&quot;
+source test_venv/bin/activate
+pip install jupyter &amp;&gt; /dev/null
+ipython kernel install --name &quot;test-env&quot; --user
+deactivate
+
+echo &quot;=====list available kernels=====&quot;
+jupyter kernelspec list
+
+echo &quot;====delete test_environment=====&quot;
+jupyter kernelspec remove -y test-env
+
+rm -r test_venv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====instalation=====
+Installed kernelspec test-env in /home/fedor/.local/share/jupyter/kernels/test-env
+=====list available kernels=====
+Available kernels:
+  python3     /home/fedor/.local/share/jupyter/kernels/python3
+  test-env    /home/fedor/.local/share/jupyter/kernels/test-env
+====delete test_environment=====
+Removed /home/fedor/.local/share/jupyter/kernels/test-env
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong> after reloading for example jupyter lab you will have refreshed list of kernels.</p>
+<p><img src="venv_files/new_kernel_in_jupyter_lab.png"></img></p>
+</section>
+<section id="run-from-environment">
+<h2>Run from environment<a class="headerlink" href="#run-from-environment" title="Link to this heading">#</a></h2>
+<p>When you run <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">...</span></code> in your system, it will run from the base system python, whether or not any environment is enabled. But <code class="docutils literal notranslate"><span class="pre">jupyter</span></code> is actually just a Python runnable package, and you can do <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">jupyter</span> <span class="pre">...</span></code>, in which case it will use the appropriate environment to run a <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">...</span></code>.</p>
+<p>I can’t show it using notebook cells. But you should use such commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create environment</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">some_venv</span>
+<span class="c1"># activate environment</span>
+<span class="n">source</span> <span class="n">some_venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="c1"># install jupyter</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span>
+<span class="c1"># run jupyter using direct call of jupyter from python</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">jupyter</span> <span class="n">lab</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./python/basics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Virutal environment in python</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sources">Sources</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create">Create</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activate-deactivate">Activate/deactivate</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#for-python-script">For python script</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instalation-without-activation">Instalation without activation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#load-from-requirements-txt">Load from <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#copying"><strong>Copying</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrong-way">Wrong way</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correct-way">Correct way</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#using-with-jupyter-notebook"><strong>Using with jupyter notebook</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-to-kernelspec">Add to <code class="docutils literal notranslate"><span class="pre">kernelspec</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-from-environment">Run from environment</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

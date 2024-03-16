@@ -1,0 +1,1016 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Image creation &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Docker/image_creation';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../machine_learning/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../machine_learning/gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../machine_learning/models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../machine_learning/data_transformations/tf_idf.html">TF-IDF</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../machine_learning/metrics.html">Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../machine_learning/metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../machine_learning/metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../machine_learning/metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../python/basics.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../python/basics/operators.html">Operators</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/break.html">Leave cycle (break)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/in.html">Is in array (in)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/indexing.html">Indexing ([])</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/order.html">Order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/yield.html">yield</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Docker/image_creation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Image creation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Image creation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#build-build-image-sec-docker-build-command"><code class="docutils literal notranslate"><span class="pre">build</span></code> - build image{#sec-docker_build_command}</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-allow-to-chose-the-dockerfile"><code class="docutils literal notranslate"><span class="pre">-f</span></code> - allow to chose the dockerfile</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dockerignore-select-files-ignored-during-image-building">.dockerignore - select files ignored during image building</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#file-in-container-forever">File in container forever</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-save-state-of-the-container-sec-docker-commit-command"><code class="docutils literal notranslate"><span class="pre">commit</span></code> - save state of the container {#sec-docker_commit_command}</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="image-creation">
+<h1>Image creation<a class="headerlink" href="#image-creation" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="build-build-image-sec-docker-build-command">
+<h1><code class="docutils literal notranslate"><span class="pre">build</span></code> - build image{#sec-docker_build_command}<a class="headerlink" href="#build-build-image-sec-docker-build-command" title="Link to this heading">#</a></h1>
+<p>This is the command used to create a new docker image.</p>
+<p>Basic arguments:</p>
+<ul class="simple">
+<li><p>the last mandatory argument sets the build directory - you should use <code class="docutils literal notranslate"><span class="pre">.</span></code> to set the current directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-t</span></code> - set the name and tag of the image.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd build_command_files
+echo &quot;=====building process=====&quot;
+docker build -t custom_ubuntu:test .
+echo &quot;=====check image=====&quot;
+docker images | grep custom_ubuntu
+docker rmi custom_ubuntu:test &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====building process=====
+Sending build context to Docker daemon  18.94kB
+Step 1/1 : FROM ubuntu
+ ---&gt; 99284ca6cea0
+Successfully built 99284ca6cea0
+Successfully tagged custom_ubuntu:test
+=====check image=====
+custom_ubuntu   test      99284ca6cea0   2 weeks ago     77.8MB
+</pre></div>
+</div>
+</div>
+</div>
+<section id="f-allow-to-chose-the-dockerfile">
+<h2><code class="docutils literal notranslate"><span class="pre">-f</span></code> - allow to chose the dockerfile<a class="headerlink" href="#f-allow-to-chose-the-dockerfile" title="Link to this heading">#</a></h2>
+<p>You should see a difference between building directory and dockerfile. The <code class="docutils literal notranslate"><span class="pre">dockerfile</span></code> is only taken from the building directory if it is not specified in the <code class="docutils literal notranslate"><span class="pre">-f</span></code> option. But the files used for the build will in any case come from the build directory.</p>
+<p>So let’s try some experiments with these details. I have prepared some folders for experiments with these options, in the following cell I show tree and file contents.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd build_command_files/f_option_examples
+tree
+
+echo
+echo
+echo
+
+for file in $(find -type f | grep -v &quot;\/\.&quot;); do
+    echo &quot;&quot;
+    echo &quot;=====File: $file=====&quot;
+    cat $file
+    echo &quot;&quot;
+done
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
+├── dockerfile
+├── script.sh
+├── specialdockerfile
+└── <span class=" -Color -Color-Bold -Color-Bold-Blue">test_folder</span>
+    ├── dockerfile
+    └── script.sh
+
+1 directory, 5 files
+
+
+
+
+=====File: ./dockerfile=====
+FROM ubuntu:latest
+COPY script.sh script.sh
+RUN echo &quot;\necho message from basic dockerfile&quot; &gt;&gt; script.sh
+
+=====File: ./script.sh=====
+echo &quot;It&#39;s a script.sh from the run folder&quot;
+
+=====File: ./specialdockerfile=====
+FROM ubuntu:latest
+COPY script.sh script.sh
+RUN echo &quot;\necho message from specialdockerfile&quot; &gt;&gt; script.sh
+
+=====File: ./test_folder/dockerfile=====
+FROM ubuntu:latest
+COPY script.sh script.sh
+RUN echo &quot;\necho message from test_folder/dockerfile&quot; &gt;&gt; script.sh
+
+=====File: ./test_folder/script.sh=====
+echo &quot;It&#39;s a script from test_folder&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have:</p>
+<ul class="simple">
+<li><p>scripts:</p>
+<ul>
+<li><p>from run folder - prints <code class="docutils literal notranslate"><span class="pre">&quot;It's</span> <span class="pre">a</span> <span class="pre">script.sh</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">run</span> <span class="pre">folder&quot;</span></code>;</p></li>
+<li><p>from test_folder - prints <code class="docutils literal notranslate"><span class="pre">&quot;It's</span> <span class="pre">a</span> <span class="pre">script</span> <span class="pre">from</span> <span class="pre">test_folder&quot;</span></code>;</p></li>
+</ul>
+</li>
+<li><p>dockerfiles:</p>
+<ul>
+<li><p>basic <code class="docutils literal notranslate"><span class="pre">dockerfile</span></code> from run directory - adds to printing script line <code class="docutils literal notranslate"><span class="pre">&quot;message</span> <span class="pre">from</span> <span class="pre">basic</span> <span class="pre">dockerfile&quot;</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">specisaldocker</span></code> file from run dicrecotry but with special name - adds to printing script line <code class="docutils literal notranslate"><span class="pre">&quot;message</span> <span class="pre">from</span> <span class="pre">specialdockerfile&quot;</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dockerfile</span></code> from <code class="docutils literal notranslate"><span class="pre">test_folder</span></code> directory - adds to printing script line <code class="docutils literal notranslate"><span class="pre">&quot;message</span> <span class="pre">from</span> <span class="pre">test_folder/dockerfile&quot;</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">specialdockerfile</span></code> from <code class="docutils literal notranslate"><span class="pre">test_folder</span></code> directory - adds to printing script line <code class="docutils literal notranslate"><span class="pre">&quot;message</span> <span class="pre">from</span> <span class="pre">test_folder/specialdockerfile&quot;</span></code>;</p></li>
+</ul>
+</li>
+</ul>
+<p>This way we can always tell from the output of <code class="docutils literal notranslate"><span class="pre">script.sh</span></code> from the container in which folder and from which dockerfile the image was built. Let’s try different options:</p>
+<ul class="simple">
+<li><p>The most basic case no <code class="docutils literal notranslate"><span class="pre">-f</span></code> option and <code class="docutils literal notranslate"><span class="pre">.</span></code> as build directory - will lead to using docker file from run directory and <code class="docutils literal notranslate"><span class="pre">script.sh</span></code> was copiet from run dicrecory as well;</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd build_command_files/f_option_examples
+docker build -t test_ubuntu . &amp;&gt; /dev/null
+docker run --rm -itd \
+    --name test_ubuntu \
+    test_ubuntu &amp;&gt; /dev/null
+echo &quot;=====message from container=====&quot;
+docker exec test_ubuntu bash script.sh
+
+docker stop test_ubuntu &amp;&gt; /dev/null
+docker rmi test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====message from container=====
+It&#39;s a script.sh from the run folder
+message from basic dockerfile
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>If you do not set the <code class="docutils literal notranslate"><span class="pre">-f</span></code> option but specify the build folder as <code class="docutils literal notranslate"><span class="pre">test_folder</span></code> everythig will be taken from <code class="docutils literal notranslate"><span class="pre">test_folder</span></code>;</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd build_command_files/f_option_examples
+docker build -t test_ubuntu test_folder &amp;&gt; /dev/null
+docker run --rm -itd \
+    --name test_ubuntu \
+    test_ubuntu &amp;&gt; /dev/null
+echo &quot;=====message from container=====&quot;
+docker exec test_ubuntu bash script.sh
+
+docker stop test_ubuntu &amp;&gt; /dev/null
+docker rmi test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====message from container=====
+It&#39;s a script from test_folder
+message from test_folder/dockerfile
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>If you set <code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">specialdockerfile</span></code> and specify the build folder as <code class="docutils literal notranslate"><span class="pre">test_folder</span></code> - everything is obvious;</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd build_command_files/f_option_examples
+docker build \
+    -t test_ubuntu \
+    -f specialdockerfile \
+    test_folder &amp;&gt; /dev/null
+docker run --rm -itd \
+    --name test_ubuntu \
+    test_ubuntu &amp;&gt; /dev/null
+echo &quot;=====message from container=====&quot;
+docker exec test_ubuntu bash script.sh
+
+docker stop test_ubuntu &amp;&gt; /dev/null
+docker rmi test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====message from container=====
+It&#39;s a script from test_folder
+message from specialdockerfile
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Bit exotic case - <code class="docutils literal notranslate"><span class="pre">dockerfile</span></code> from <code class="docutils literal notranslate"><span class="pre">test_folder</span></code>, but build directory is run directory;</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd build_command_files/f_option_examples
+docker build \
+    -t test_ubuntu \
+    -f test_folder/dockerfile \
+    . &amp;&gt; /dev/null
+docker run --rm -itd \
+    --name test_ubuntu \
+    test_ubuntu &amp;&gt; /dev/null
+echo &quot;=====message from container=====&quot;
+docker exec test_ubuntu bash script.sh
+
+docker stop test_ubuntu &amp;&gt; /dev/null
+docker rmi test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====message from container=====
+It&#39;s a script.sh from the run folder
+message from test_folder/dockerfile
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong> even if you have specified a folder as some assembly folder, you must still pass in the <code class="docutils literal notranslate"><span class="pre">-f</span></code> parameter the path relative to the run folder.</p>
+<p>The next two points show the difference:</p>
+<ul class="simple">
+<li><p>Here I set building directory as <code class="docutils literal notranslate"><span class="pre">test_folder</span></code> but <code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">specialdockerfile</span></code> - <code class="docutils literal notranslate"><span class="pre">specialdockerfile</span></code> from run folder will be used;</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd build_command_files/f_option_examples
+docker build \
+    -t test_ubuntu \
+    -f specialdockerfile \
+    test_folder &amp;&gt; /dev/null
+docker run --rm -itd \
+    --name test_ubuntu \
+    test_ubuntu &amp;&gt; /dev/null
+echo &quot;=====message from container=====&quot;
+docker exec test_ubuntu bash script.sh
+
+docker stop test_ubuntu &amp;&gt; /dev/null
+docker rmi test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====message from container=====
+It&#39;s a script from test_folder
+message from specialdockerfile
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Here I set building directory as <code class="docutils literal notranslate"><span class="pre">test_folder</span></code> but <code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">test_folder/specialdockerfile</span></code> - <code class="docutils literal notranslate"><span class="pre">specialdockerfile</span></code> from <code class="docutils literal notranslate"><span class="pre">test_folder</span></code> will be used;</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd build_command_files/f_option_examples
+docker build \
+    -t test_ubuntu \
+    -f test_folder/specialdockerfile \
+    test_folder &amp;&gt; /dev/null
+docker run --rm -itd \
+    --name test_ubuntu \
+    test_ubuntu &amp;&gt; /dev/null
+echo &quot;=====message from container=====&quot;
+docker exec test_ubuntu bash script.sh
+
+docker stop test_ubuntu &amp;&gt; /dev/null
+docker rmi test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====message from container=====
+It&#39;s a script from test_folder
+message from test_folder/specialdockerfile
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="dockerignore-select-files-ignored-during-image-building">
+<h1>.dockerignore - select files ignored during image building<a class="headerlink" href="#dockerignore-select-files-ignored-during-image-building" title="Link to this heading">#</a></h1>
+<p>In docker ignore, you should specify files to be ignored when building the image.</p>
+<p>For example lets try to build image with followig paremeters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd dockerignore
+echo &quot;=====dockerfile=====&quot;
+cat dockerfile1
+echo
+echo &quot;=====.dockerignore=====&quot;
+cat .dockerignore
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====dockerfile=====
+FROM ubuntu
+COPY test_file test_file
+=====.dockerignore=====
+test_file
+test_folder/banned_file
+</pre></div>
+</div>
+</div>
+</div>
+<p>So in dockerfile I try to copy <code class="docutils literal notranslate"><span class="pre">test_file</span></code> into image, but in docker ignore I bun this file. At the next cell, I’m trying to build such image - and getting error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd dockerignore
+docker build -t test_image -f dockerfile1 .
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>#1 [internal] load build definition from dockerfile1
+#1 transferring dockerfile: 74B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 50B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/ubuntu:latest
+#3 DONE 0.0s
+
+#4 [1/2] FROM docker.io/library/ubuntu
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [2/2] COPY test_file test_file
+#6 ERROR: failed to calculate checksum of ref 40880b12-160a-424d-a82b-d59b9594f64c::7cmhtk0ygxakortpvzlpd8pwp: &quot;/test_file&quot;: not found
+------
+ &gt; [2/2] COPY test_file test_file:
+------
+dockerfile1:2
+--------------------
+   1 |     FROM ubuntu
+   2 | &gt;&gt;&gt; COPY test_file test_file
+--------------------
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 40880b12-160a-424d-a82b-d59b9594f64c::7cmhtk0ygxakortpvzlpd8pwp: &quot;/test_file&quot;: not found
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">CalledProcessError</span><span class="g g-Whitespace">                        </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_cell_magic</span><span class="p">(</span><span class="s1">&#39;bash&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;cd dockerignore</span><span class="se">\n</span><span class="s1">docker build -t test_image -f dockerfile1 .</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nn">File ~/.local/lib/python3.10/site-packages/IPython/core/interactiveshell.py:2430,</span> in <span class="ni">InteractiveShell.run_cell_magic</span><span class="nt">(self, magic_name, line, cell)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2428</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2429</span>     <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">magic_arg_s</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">2430</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2432</span> <span class="c1"># The code below prevents the output from being displayed</span>
+<span class="g g-Whitespace">   </span><span class="mi">2433</span> <span class="c1"># when using magics with decodator @output_can_be_silenced</span>
+<span class="g g-Whitespace">   </span><span class="mi">2434</span> <span class="c1"># when the last Python token in the expression is a &#39;;&#39;.</span>
+<span class="g g-Whitespace">   </span><span class="mi">2435</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">magic</span><span class="o">.</span><span class="n">MAGIC_OUTPUT_CAN_BE_SILENCED</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+
+<span class="nn">File ~/.local/lib/python3.10/site-packages/IPython/core/magics/script.py:153,</span> in <span class="ni">ScriptMagics._make_script_magic.&lt;locals&gt;.named_script_magic</span><span class="nt">(line, cell)</span>
+<span class="g g-Whitespace">    </span><span class="mi">151</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span>     <span class="n">line</span> <span class="o">=</span> <span class="n">script</span>
+<span class="ne">--&gt; </span><span class="mi">153</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shebang</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
+
+<span class="nn">File ~/.local/lib/python3.10/site-packages/IPython/core/magics/script.py:305,</span> in <span class="ni">ScriptMagics.shebang</span><span class="nt">(self, line, cell)</span>
+<span class="g g-Whitespace">    </span><span class="mi">300</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">raise_error</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">301</span>     <span class="c1"># If we get here and p.returncode is still None, we must have</span>
+<span class="g g-Whitespace">    </span><span class="mi">302</span>     <span class="c1"># killed it but not yet seen its return code. We don&#39;t wait for it,</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span>     <span class="c1"># in case it&#39;s stuck in uninterruptible sleep. -9 = SIGKILL</span>
+<span class="g g-Whitespace">    </span><span class="mi">304</span>     <span class="n">rc</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span> <span class="ow">or</span> <span class="o">-</span><span class="mi">9</span>
+<span class="ne">--&gt; </span><span class="mi">305</span>     <span class="k">raise</span> <span class="n">CalledProcessError</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
+
+<span class="ne">CalledProcessError</span>: Command &#39;b&#39;cd dockerignore\ndocker build -t test_image -f dockerfile1 .\n&#39;&#39; returned non-zero exit status 1.
+</pre></div>
+</div>
+</div>
+</div>
+<p>On the other hand, if I copy an entire folder and only a few files are blocked in the folder, the folder will be copied without those files. The following example show such configuration:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd dockerignore
+
+echo &quot;=====dockerfile=====&quot;
+cat dockerfile2
+echo
+echo &quot;=====.dockerignore=====&quot;
+cat .dockerignore
+
+echo
+echo &quot;=====test_folder in host=====&quot;
+ls test_folder
+
+docker build -t test_image -f dockerfile2 . &amp;&gt; /dev/null
+
+docker run --rm --name test_container -itd test_image &amp;&gt; /dev/null
+echo &quot;=====test_folder in container=====&quot;
+docker exec test_container ls test_folder
+
+docker stop test_container &amp;&gt; /dev/null
+docker rmi test_image &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====dockerfile=====
+FROM ubuntu
+COPY test_folder test_folder
+=====.dockerignore=====
+test_file
+test_folder/banned_file
+
+=====test_folder in host=====
+accepted_file
+banned_file
+=====test_folder in container=====
+accepted_file
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here I copy the whole folder, but the file <code class="docutils literal notranslate"><span class="pre">banned_file</span></code> was mentioned in <code class="docutils literal notranslate"><span class="pre">.dockerignore</span></code>. So when we <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">temp_folder</span></code> from container we see only <code class="docutils literal notranslate"><span class="pre">accepted_file</span></code> in folder contents.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="file-in-container-forever">
+<h1>File in container forever<a class="headerlink" href="#file-in-container-forever" title="Link to this heading">#</a></h1>
+<p>If you copied a file into the container, but literally deleted it by the next instruciton - it will still affect the size of the container.</p>
+<p>Following exampe show that fature:</p>
+<ul class="simple">
+<li><p>First I create an image - just copy Ubuntu;</p></li>
+<li><p>Second, add the <code class="docutils literal notranslate"><span class="pre">COPY</span></code> instruction for a large file - so the size of the container will be much larger than in the first step;</p></li>
+<li><p>Last image add <code class="docutils literal notranslate"><span class="pre">RUN</span> <span class="pre">rm</span></code> for the file copied in the previous step, the point is that the image size hasn’t changed.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+
+dd if=/dev/zero of=file.txt bs=1M count=1000 &amp;&gt; /dev/null
+
+echo &quot;=====just ubuntu copy=====&quot;
+echo &quot;FROM ubuntu&quot; &gt; test_dockerfile
+docker build -f test_dockerfile -t test_image . &amp;&gt; /dev/null
+docker images | grep test_image
+docker rmi test_image &amp;&gt; /dev/null
+
+echo &quot;=====ubuntu with big copied file=====&quot;
+echo &quot;COPY file.txt file.txt&quot; &gt;&gt; test_dockerfile
+docker build -f test_dockerfile -t test_image . &amp;&gt; /dev/null
+docker images | grep test_image
+docker rmi test_image &amp;&gt; /dev/null
+
+echo &quot;=====ubuntu with deleted file=====&quot;
+echo &quot;RUN rm file.txt&quot; &gt;&gt; test_dockerfile
+docker build -f test_dockerfile -t test_image . &amp;&gt; /dev/null
+docker images | grep test_image
+docker rmi test_image &amp;&gt; /dev/null
+
+
+rm file.txt
+rm test_dockerfile
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====just ubuntu copy=====
+test_image                 latest    8173c3801863   3 months ago    77.8MB
+=====ubuntu with big copied file=====
+test_image                 latest    86892a85e309   2 minutes ago   1.13GB
+=====ubuntu with deleted file=====
+test_image                 latest    97524578efc6   52 seconds ago   1.13GB
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="commit-save-state-of-the-container-sec-docker-commit-command">
+<h1><code class="docutils literal notranslate"><span class="pre">commit</span></code> - save state of the container {#sec-docker_commit_command}<a class="headerlink" href="#commit-save-state-of-the-container-sec-docker-commit-command" title="Link to this heading">#</a></h1>
+<p>Allows you to save the current state of any container as a new image. So if you have created something new in a container, you can save it as a new image. You have to follow such sintaksis:</p>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">commit</span> <span class="pre">&lt;container</span> <span class="pre">name&gt;</span> <span class="pre">&lt;new</span> <span class="pre">image</span> <span class="pre">name&gt;</span></code></p>
+<p>So in follwing example I:</p>
+<ul class="simple">
+<li><p>Running the container in which create file with message;</p></li>
+<li><p>Create file in this container;</p></li>
+<li><p>Commit this container as a new image;</p></li>
+<li><p>Run the container based on the new image;</p></li>
+<li><p>Check the message in the container based on the new image.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --rm --name test_container -itd ubuntu &amp;&gt; /dev/null
+docker exec test_container bash -c &quot;echo \&quot;I&#39;m a new file in container\&quot; &gt; new_file&quot;
+
+docker commit test_container new_test_image &amp;&gt; /dev/null
+
+echo &quot;=====check new image=====&quot;
+docker images | grep new_test_image
+echo &quot;=====message from commited image=====&quot;
+docker run --rm --name new_test_container -itd new_test_image &amp;&gt; /dev/null
+docker exec new_test_container cat new_file
+
+docker stop new_test_container &amp;&gt; /dev/null
+docker stop test_container &amp;&gt; /dev/null
+docker rmi new_test_image &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====check new image=====
+new_test_image             latest    56c5c624ed38   Less than a second ago   77.8MB
+=====message from commited image=====
+I&#39;m a new file in container
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Docker"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Image creation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#build-build-image-sec-docker-build-command"><code class="docutils literal notranslate"><span class="pre">build</span></code> - build image{#sec-docker_build_command}</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-allow-to-chose-the-dockerfile"><code class="docutils literal notranslate"><span class="pre">-f</span></code> - allow to chose the dockerfile</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dockerignore-select-files-ignored-during-image-building">.dockerignore - select files ignored during image building</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#file-in-container-forever">File in container forever</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-save-state-of-the-container-sec-docker-commit-command"><code class="docutils literal notranslate"><span class="pre">commit</span></code> - save state of the container {#sec-docker_commit_command}</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

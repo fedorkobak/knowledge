@@ -1,0 +1,1305 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>datetime &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'python/pandas/data_types/datetime';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../machine_learning/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../machine_learning/gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../machine_learning/models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../machine_learning/data_transformations/tf_idf.html">TF-IDF</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/metrics.html">Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../machine_learning/metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../machine_learning/metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../machine_learning/metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../basics.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../basics/operators.html">Operators</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/operators/arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/operators/break.html">Leave cycle (break)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/operators/in.html">Is in array (in)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/operators/indexing.html">Indexing ([])</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/operators/order.html">Order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/operators/yield.html">yield</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/python/pandas/data_types/datetime.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>datetime</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">datetime</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#date-range"><code class="docutils literal notranslate"><span class="pre">date_range</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#basic">Basic</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#freq"><code class="docutils literal notranslate"><span class="pre">freq</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ramdom-dates">Ramdom dates</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-components">Extracting components</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dt-day-of-week"><code class="docutils literal notranslate"><span class="pre">dt.day_of_week</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-of-year">week of year</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dt-isocalendar-week"><code class="docutils literal notranslate"><span class="pre">dt.isocalendar().week</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weekofyear"><code class="docutils literal notranslate"><span class="pre">weekofyear</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="datetime">
+<h1>datetime<a class="headerlink" href="#datetime" title="Link to this heading">#</a></h1>
+<p>In this section I will pay special attention to working with dates and times in Pandas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">test_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2022-12-31&quot;</span><span class="p">),</span> 
+        <span class="n">size</span><span class="o">=</span><span class="mi">40</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="date-range">
+<h1><code class="docutils literal notranslate"><span class="pre">date_range</span></code><a class="headerlink" href="#date-range" title="Link to this heading">#</a></h1>
+<p>So, in the following example, I just put a few dates in the list day by day.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="basic">
+<h1>Basic<a class="headerlink" href="#basic" title="Link to this heading">#</a></h1>
+<p>Allows you to create an array of dates. By default it is <code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code>, but you can easily convert it to any other common array type.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2020-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-01-07&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Timestamp(&#39;2020-01-01 00:00:00&#39;),
+ Timestamp(&#39;2020-01-02 00:00:00&#39;),
+ Timestamp(&#39;2020-01-03 00:00:00&#39;),
+ Timestamp(&#39;2020-01-04 00:00:00&#39;),
+ Timestamp(&#39;2020-01-05 00:00:00&#39;),
+ Timestamp(&#39;2020-01-06 00:00:00&#39;),
+ Timestamp(&#39;2020-01-07 00:00:00&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="freq">
+<h2><code class="docutils literal notranslate"><span class="pre">freq</span></code><a class="headerlink" href="#freq" title="Link to this heading">#</a></h2>
+<p>This parameter allows you to set the step at which observations are added to the array. So in the following dataframe I have shown some options with arguments that should be passed as values of this parameter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Days &#39;d&#39;&quot;</span> <span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-01-10&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">)</span>
+    <span class="s2">&quot;Weeks &#39;W&#39;&quot;</span> <span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-3-7&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;W&quot;</span><span class="p">),</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Weeks 'W'</th>
+      <th>Days 'd'</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2021-01-03</td>
+      <td>2021-01-01</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2021-01-10</td>
+      <td>2021-01-02</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2021-01-17</td>
+      <td>2021-01-03</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2021-01-24</td>
+      <td>2021-01-04</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2021-01-31</td>
+      <td>2021-01-05</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2021-02-07</td>
+      <td>2021-01-06</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2021-02-14</td>
+      <td>2021-01-07</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2021-02-21</td>
+      <td>2021-01-08</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2021-02-28</td>
+      <td>2021-01-09</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2021-03-07</td>
+      <td>2021-01-10</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ramdom-dates">
+<h1>Ramdom dates<a class="headerlink" href="#ramdom-dates" title="Link to this heading">#</a></h1>
+<p>This is the snippet of code that allows you to generate a <code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code> of random dates within specified borders. It will be common in the other examples.  So I create <code class="docutils literal notranslate"><span class="pre">test_series</span></code> here, which will be an experimental variable for other sections by default.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">start_date</span> <span class="o">=</span> <span class="s1">&#39;2021-01-01&#39;</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="s1">&#39;2021-12-31&#39;</span>
+<span class="n">num_dates</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">test_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">),</span> 
+        <span class="n">size</span><span class="o">=</span><span class="n">num_dates</span>
+<span class="p">))</span>
+<span class="n">test_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2021-03-24
+1   2021-10-19
+2   2021-08-04
+3   2021-02-08
+4   2021-04-10
+5   2021-08-31
+6   2021-06-22
+7   2021-12-19
+8   2021-09-20
+9   2021-08-08
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="extracting-components">
+<h1>Extracting components<a class="headerlink" href="#extracting-components" title="Link to this heading">#</a></h1>
+<p>It’s a common task to get a fraction of the date from pandas series, so here I show some options. Usually you should use the <code class="docutils literal notranslate"><span class="pre">dt</span></code> property of the series to get access to it.</p>
+<section id="dt-day-of-week">
+<h2><code class="docutils literal notranslate"><span class="pre">dt.day_of_week</span></code><a class="headerlink" href="#dt-day-of-week" title="Link to this heading">#</a></h2>
+<p>You can get days of the week.</p>
+<p>By default it returns numbers representing the days of the week: 0-Monday,…,6-Sunday.</p>
+<p>So in the following example I show the case for the week this page was created.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">week_range</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2023-08-28&quot;</span><span class="p">,</span> <span class="s2">&quot;2023-09-03&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Original date&quot;</span> <span class="p">:</span> <span class="n">week_range</span><span class="p">,</span>
+    <span class="s2">&quot;Day of the week&quot;</span> <span class="p">:</span> <span class="n">week_range</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_of_week</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Original date</th>
+      <th>Day of the week</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2023-08-28</th>
+      <td>2023-08-28</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2023-08-29</th>
+      <td>2023-08-29</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2023-08-30</th>
+      <td>2023-08-30</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2023-08-31</th>
+      <td>2023-08-31</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2023-09-01</th>
+      <td>2023-09-01</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2023-09-02</th>
+      <td>2023-09-02</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2023-09-03</th>
+      <td>2023-09-03</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="week-of-year">
+<h2>week of year<a class="headerlink" href="#week-of-year" title="Link to this heading">#</a></h2>
+<section id="dt-isocalendar-week">
+<h3><code class="docutils literal notranslate"><span class="pre">dt.isocalendar().week</span></code><a class="headerlink" href="#dt-isocalendar-week" title="Link to this heading">#</a></h3>
+<p>You can use the above function to find the week number for any date.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_weeks</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-04-1&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;W&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span>
+<span class="n">test_weeks</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">isocalendar</span><span class="p">()</span><span class="o">.</span><span class="n">week</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;week number&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>week number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2021-01-03</th>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>2021-01-10</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2021-01-17</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2021-01-24</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2021-01-31</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2021-02-07</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2021-02-14</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2021-02-21</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2021-02-28</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2021-03-07</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2021-03-14</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2021-03-21</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2021-03-28</th>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Note</strong> The first days of a certain year may refer to the 54th week of the previous year. Documentation about this feature not really reach. The documentation about this function is not very extensive and does not mention in detail the exact algorithm for calculating the value in question. But in the next cell, I went through the dates of the border months of different summers. It turns out that the week refers to the year in which lies more number of its days and is numbered accordingly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">2017</span><span class="p">):</span>
+
+    <span class="n">next_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">+</span><span class="mi">1</span>
+    
+    <span class="n">days</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span>
+        <span class="n">datetime</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span> 
+        <span class="n">datetime</span><span class="p">(</span><span class="n">next_y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;d&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span>
+
+    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;p style=&#39;font-size:150%&#39;&gt;======</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">next_y</span><span class="si">}</span><span class="s2">======&lt;/p&gt;&quot;</span><span class="p">))</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">&quot;Day&quot;</span><span class="p">:</span><span class="n">days</span><span class="p">,</span>
+        <span class="s2">&quot;Day of week&quot;</span><span class="p">:</span><span class="n">days</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_of_week</span><span class="p">,</span>
+        <span class="s2">&quot;Week of year&quot;</span><span class="p">:</span><span class="n">days</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">isocalendar</span><span class="p">()</span><span class="o">.</span><span class="n">week</span>
+    <span class="p">}))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><p style='font-size:150%'>======2012-2013======</p></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Day</th>
+      <th>Day of week</th>
+      <th>Week of year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2012-12-28</th>
+      <td>2012-12-28</td>
+      <td>4</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2012-12-29</th>
+      <td>2012-12-29</td>
+      <td>5</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2012-12-30</th>
+      <td>2012-12-30</td>
+      <td>6</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2012-12-31</th>
+      <td>2012-12-31</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2013-01-01</th>
+      <td>2013-01-01</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2013-01-02</th>
+      <td>2013-01-02</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2013-01-03</th>
+      <td>2013-01-03</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><p style='font-size:150%'>======2013-2014======</p></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Day</th>
+      <th>Day of week</th>
+      <th>Week of year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-12-28</th>
+      <td>2013-12-28</td>
+      <td>5</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2013-12-29</th>
+      <td>2013-12-29</td>
+      <td>6</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2013-12-30</th>
+      <td>2013-12-30</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2013-12-31</th>
+      <td>2013-12-31</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2014-01-01</th>
+      <td>2014-01-01</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2014-01-02</th>
+      <td>2014-01-02</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2014-01-03</th>
+      <td>2014-01-03</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><p style='font-size:150%'>======2014-2015======</p></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Day</th>
+      <th>Day of week</th>
+      <th>Week of year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2014-12-28</th>
+      <td>2014-12-28</td>
+      <td>6</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2014-12-29</th>
+      <td>2014-12-29</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2014-12-30</th>
+      <td>2014-12-30</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2014-12-31</th>
+      <td>2014-12-31</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2015-01-01</th>
+      <td>2015-01-01</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2015-01-02</th>
+      <td>2015-01-02</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2015-01-03</th>
+      <td>2015-01-03</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><p style='font-size:150%'>======2015-2016======</p></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Day</th>
+      <th>Day of week</th>
+      <th>Week of year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2015-12-28</th>
+      <td>2015-12-28</td>
+      <td>0</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>2015-12-29</th>
+      <td>2015-12-29</td>
+      <td>1</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>2015-12-30</th>
+      <td>2015-12-30</td>
+      <td>2</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>2015-12-31</th>
+      <td>2015-12-31</td>
+      <td>3</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>2016-01-01</th>
+      <td>2016-01-01</td>
+      <td>4</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>2016-01-02</th>
+      <td>2016-01-02</td>
+      <td>5</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>2016-01-03</th>
+      <td>2016-01-03</td>
+      <td>6</td>
+      <td>53</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><p style='font-size:150%'>======2016-2017======</p></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Day</th>
+      <th>Day of week</th>
+      <th>Week of year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-12-28</th>
+      <td>2016-12-28</td>
+      <td>2</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2016-12-29</th>
+      <td>2016-12-29</td>
+      <td>3</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2016-12-30</th>
+      <td>2016-12-30</td>
+      <td>4</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2016-12-31</th>
+      <td>2016-12-31</td>
+      <td>5</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2017-01-01</th>
+      <td>2017-01-01</td>
+      <td>6</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2017-01-02</th>
+      <td>2017-01-02</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2017-01-03</th>
+      <td>2017-01-03</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="weekofyear">
+<h3><code class="docutils literal notranslate"><span class="pre">weekofyear</span></code><a class="headerlink" href="#weekofyear" title="Link to this heading">#</a></h3>
+<p>Pandas datetime unit <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> has a <code class="docutils literal notranslate"><span class="pre">weekofyear</span></code> parameter that you can combine with the <code class="docutils literal notranslate"><span class="pre">apply</span></code> method as in the next example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_weeks</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2021-04-1&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;W&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span>
+<span class="n">test_weeks</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="n">val</span><span class="o">.</span><span class="n">weekofyear</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;week number&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>week number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2021-01-03</th>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>2021-01-10</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2021-01-17</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2021-01-24</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2021-01-31</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2021-02-07</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2021-02-14</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2021-02-21</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2021-02-28</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2021-03-07</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2021-03-14</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2021-03-21</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>2021-03-28</th>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./python/pandas/data_types"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">datetime</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#date-range"><code class="docutils literal notranslate"><span class="pre">date_range</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#basic">Basic</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#freq"><code class="docutils literal notranslate"><span class="pre">freq</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ramdom-dates">Ramdom dates</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-components">Extracting components</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dt-day-of-week"><code class="docutils literal notranslate"><span class="pre">dt.day_of_week</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-of-year">week of year</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dt-isocalendar-week"><code class="docutils literal notranslate"><span class="pre">dt.isocalendar().week</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weekofyear"><code class="docutils literal notranslate"><span class="pre">weekofyear</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

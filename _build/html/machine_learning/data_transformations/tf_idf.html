@@ -1,0 +1,660 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TF-IDF &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/data_transformations/tf_idf';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Metrics" href="../metrics.html" />
+    <link rel="prev" title="L2 (Ridge regularisation)" href="../models_selection_methods/l2_regularisation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">TF-IDF</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../metrics.html">Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/basics.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/basics/operators.html">Operators</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/break.html">Leave cycle (break)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/in.html">Is in array (in)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/indexing.html">Indexing ([])</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/order.html">Order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/yield.html">yield</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/machine_learning/data_transformations/tf_idf.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>TF-IDF</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-term-frequency">TF - term frequency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#idf-inverse-document-frequency">IDF - inverse document frequency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">TF-IDF</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="tf-idf">
+<h1>TF-IDF<a class="headerlink" href="#tf-idf" title="Link to this heading">#</a></h1>
+<p>TF-IDF is a method for extracting features for machine learning models from textual information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">log</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="kn">import</span> <span class="nn">latex2mathml.converter</span>
+
+
+<span class="c1"># set of phrases that I&#39;ll be using as the example at this page</span>
+<span class="n">phrases</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;a penny saved is a penny earned&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;the quick brown fox jumps over the lazy dog&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;beauty is in the eye of the beholder&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;early to bed and early to rise makes a man healthy wealthy and wise&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;give credit where credit is due&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;if at first you don&#39;t succeed try try again&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;justice delayed is justice denied&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;keep your friends close and your enemies closer&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;no pain no gain&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;quickly come quickly go&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;united we stand divided we fall&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;when in rome do as the romans do&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="tf-term-frequency">
+<h2>TF - term frequency<a class="headerlink" href="#tf-term-frequency" title="Link to this heading">#</a></h2>
+<p>Term frequency is a metric for words in any next. It can be calculated using a formula:</p>
+<div class="math notranslate nohighlight">
+\[tf(t,d)=\frac{n_t}{\sum_i n_i}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(t\)</span> - some word;</p></li>
+<li><p><span class="math notranslate nohighlight">\(d\)</span> - some text;</p></li>
+<li><p><span class="math notranslate nohighlight">\(n_t\)</span> - number of occurrences of word <span class="math notranslate nohighlight">\(t\)</span> in document <span class="math notranslate nohighlight">\(d\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sum_i n_i\)</span> - number of words in text <span class="math notranslate nohighlight">\(d\)</span>.</p></li>
+</ul>
+<p>So in the following cell I calculate the term frequencies of the words for some phrases. The result here is a table that contains <code class="docutils literal notranslate"><span class="pre">original</span> <span class="pre">phrase</span></code> and <code class="docutils literal notranslate"><span class="pre">Term</span> <span class="pre">frequency</span></code>, which for each word from the <code class="docutils literal notranslate"><span class="pre">Original</span> <span class="pre">phrase</span></code> corresponds to <span class="math notranslate nohighlight">\(tf\)</span> in the form <code class="docutils literal notranslate"><span class="pre">&lt;word&gt;-&lt;tf&gt;</span></code>.</p>
+<p>So let’s take the logic of the first phrase - “a penny saved is a penny earned” - one step at a time:</p>
+<ul class="simple">
+<li><p>Total count of words - <span class="math notranslate nohighlight">\(\sum_i n_i = 7\)</span>;</p></li>
+<li><p>You can find the word “a” twice in the phrase so - <span class="math notranslate nohighlight">\(n_{'a'} = 2 \Rightarrow tf('a')=\frac{2}{7} \approx 0.29\)</span>;</p></li>
+<li><p>You can find the word “penny” twice in the phrase so - <span class="math notranslate nohighlight">\(n_{'penny'}=2 \Rightarrow tf('penny')= \frac{2}{7} \approx 0.29\)</span>;</p></li>
+<li><p>All other words occur once so <span class="math notranslate nohighlight">\(tf\)</span> for them can me computed as <span class="math notranslate nohighlight">\(\frac{1}{7} \approx 0.14\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">html_table</span> <span class="o">=</span> <span class="s2">&quot;&lt;tr&gt;&lt;th&gt;Original phrase&lt;/th&gt;&lt;th&gt;Terms frequency&lt;/th&gt;&lt;/tr&gt;&quot;</span>
+<span class="n">tf_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">phrases</span><span class="p">:</span>
+
+    <span class="n">words_in_phrase</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+    <span class="n">words_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">words_in_phrase</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">phrase_tfs</span> <span class="o">=</span> <span class="p">{</span><span class="n">word</span><span class="p">:</span><span class="n">number</span><span class="o">/</span><span class="n">words_count</span> <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">words_in_phrase</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">tf_dict</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">phrase_tfs</span>
+    
+    <span class="n">tf_dict</span>
+    <span class="n">counts_line</span> <span class="o">=</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> 
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">phrase_tfs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">html_table</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;&lt;tr&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">counts_line</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;&quot;</span>
+
+<span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;table&gt;&quot;</span> <span class="o">+</span> <span class="n">html_table</span> <span class="o">+</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><tr><th>Original phrase</th><th>Terms frequency</th></tr><tr><td>a penny saved is a penny earned</td><td>a - 0.29<br>penny - 0.29<br>saved - 0.14<br>is - 0.14<br>earned - 0.14</td></tr><tr><td>the quick brown fox jumps over the lazy dog</td><td>the - 0.22<br>quick - 0.11<br>brown - 0.11<br>fox - 0.11<br>jumps - 0.11<br>over - 0.11<br>lazy - 0.11<br>dog - 0.11</td></tr><tr><td>beauty is in the eye of the beholder</td><td>beauty - 0.12<br>is - 0.12<br>in - 0.12<br>the - 0.25<br>eye - 0.12<br>of - 0.12<br>beholder - 0.12</td></tr><tr><td>early to bed and early to rise makes a man healthy wealthy and wise</td><td>early - 0.14<br>to - 0.14<br>bed - 0.07<br>and - 0.14<br>rise - 0.07<br>makes - 0.07<br>a - 0.07<br>man - 0.07<br>healthy - 0.07<br>wealthy - 0.07<br>wise - 0.07</td></tr><tr><td>give credit where credit is due</td><td>give - 0.17<br>credit - 0.33<br>where - 0.17<br>is - 0.17<br>due - 0.17</td></tr><tr><td>if at first you don't succeed try try again</td><td>if - 0.11<br>at - 0.11<br>first - 0.11<br>you - 0.11<br>don't - 0.11<br>succeed - 0.11<br>try - 0.22<br>again - 0.11</td></tr><tr><td>justice delayed is justice denied</td><td>justice - 0.4<br>delayed - 0.2<br>is - 0.2<br>denied - 0.2</td></tr><tr><td>keep your friends close and your enemies closer</td><td>keep - 0.12<br>your - 0.25<br>friends - 0.12<br>close - 0.12<br>and - 0.12<br>enemies - 0.12<br>closer - 0.12</td></tr><tr><td>no pain no gain</td><td>no - 0.5<br>pain - 0.25<br>gain - 0.25</td></tr><tr><td>quickly come quickly go</td><td>quickly - 0.5<br>come - 0.25<br>go - 0.25</td></tr><tr><td>united we stand divided we fall</td><td>united - 0.17<br>we - 0.33<br>stand - 0.17<br>divided - 0.17<br>fall - 0.17</td></tr><tr><td>when in rome do as the romans do</td><td>when - 0.12<br>in - 0.12<br>rome - 0.12<br>do - 0.25<br>as - 0.12<br>the - 0.12<br>romans - 0.12</td></tr></table></div></div>
+</div>
+</section>
+<section id="idf-inverse-document-frequency">
+<h2>IDF - inverse document frequency<a class="headerlink" href="#idf-inverse-document-frequency" title="Link to this heading">#</a></h2>
+<p>For each word of a text from the given set of texts. It can be calculated using fromula:</p>
+<div class="math notranslate nohighlight">
+\[idf(t,D)=log \frac{\left| D \right|}{\left| \left\{ d_i \in D | t \in d_i \right\} \right|};\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(D\)</span> - set of texts;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\left| A \right|\)</span> - number of elements in the set A;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\left| \left\{ d_i \in D | t \in d_i \right\} \right|\)</span> - number of documents <span class="math notranslate nohighlight">\(d_i\)</span> from set <span class="math notranslate nohighlight">\(D\)</span> that contains word <span class="math notranslate nohighlight">\(t\)</span>;</p></li>
+<li><p><strong>Note</strong> the denominator of the formula contains exactly the number of documents in which the word is included, not the number of occurrences of the word in any documents it’s always true <span class="math notranslate nohighlight">\(\left| D \right| \geq \left| \left\{ d_i \in D | t \in d_i \right\} \right| \Rightarrow idf(t,D) \geq 0\)</span>.</p></li>
+</ul>
+<p>So in the following cell there is an example of calculating <span class="math notranslate nohighlight">\(idf\)</span> for a set of texts. It’s displayed like a table that contains all the words from a set of texts and for each word it calculates the occurrences of the word in the set of texts and it’s <span class="math notranslate nohighlight">\(idf\)</span>.</p>
+<p>Let’s take word “the” for example it occurs in 3 of 12 texts so it’s <span class="math notranslate nohighlight">\(idf=log(\frac{12}{5}) \approx 1.39\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phrases_number</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrases</span><span class="p">)</span>
+<span class="n">word_in_documents</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="n">w</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">phrases</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">split</span><span class="p">())])</span>
+<span class="n">words_idf</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># we need to transform directry to MathJax here.</span>
+<span class="c1"># because quarto doesn&#39;t recognise $$ patterns in</span>
+<span class="c1"># output cells</span>
+<span class="n">math_jax_expression</span> <span class="o">=</span> <span class="n">latex2mathml</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span>
+    <span class="s2">&quot;\left|\left\{d_i \in D | t \in d_i</span><span class="se">\\</span><span class="s2">right\}</span><span class="se">\\</span><span class="s2">right|&quot;</span>
+<span class="p">)</span>
+
+<span class="n">html_table</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;&lt;tr&gt;&lt;th&gt;Word&lt;/th&gt;&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;&lt;th&gt;</span><span class="si">{</span><span class="n">math_jax_expression</span><span class="si">}</span><span class="s2">&lt;/th&gt;&quot;</span>
+    <span class="s2">&quot;&lt;th&gt;Inverse document frequency&lt;/th&gt;&lt;/tr&gt;&quot;</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">word_in_documents</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+    <span class="n">idf</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">phrases_number</span><span class="o">/</span><span class="n">number</span><span class="p">)</span>
+    <span class="n">words_idf</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">idf</span>
+    
+    <span class="n">html_table</span> <span class="o">+=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;tr&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">idf</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;table&gt;&quot;</span> <span class="o">+</span> <span class="n">html_table</span> <span class="o">+</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><tr><th>Word</th><th><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mo stretchy="true" fence="true" form="prefix">&#x0007C;</mo><mrow><mo stretchy="true" fence="true" form="prefix">&#x0007B;</mo><msub><mi>d</mi><mi>i</mi></msub><mo>&#x02208;</mo><mi>D</mi><mo stretchy="false">&#x0007C;</mo><mi>t</mi><mo>&#x02208;</mo><msub><mi>d</mi><mi>i</mi></msub><mo stretchy="true" fence="true" form="postfix">&#x0007D;</mo></mrow><mo stretchy="true" fence="true" form="postfix">&#x0007C;</mo></mrow></mrow></math></th><th>Inverse document frequency</th></tr><tr><td>saved</td><td>1</td><td>2.48</td></tr><tr><td>a</td><td>2</td><td>1.79</td></tr><tr><td>penny</td><td>1</td><td>2.48</td></tr><tr><td>earned</td><td>1</td><td>2.48</td></tr><tr><td>is</td><td>4</td><td>1.1</td></tr><tr><td>over</td><td>1</td><td>2.48</td></tr><tr><td>jumps</td><td>1</td><td>2.48</td></tr><tr><td>brown</td><td>1</td><td>2.48</td></tr><tr><td>dog</td><td>1</td><td>2.48</td></tr><tr><td>fox</td><td>1</td><td>2.48</td></tr><tr><td>quick</td><td>1</td><td>2.48</td></tr><tr><td>lazy</td><td>1</td><td>2.48</td></tr><tr><td>the</td><td>3</td><td>1.39</td></tr><tr><td>beauty</td><td>1</td><td>2.48</td></tr><tr><td>beholder</td><td>1</td><td>2.48</td></tr><tr><td>in</td><td>2</td><td>1.79</td></tr><tr><td>of</td><td>1</td><td>2.48</td></tr><tr><td>eye</td><td>1</td><td>2.48</td></tr><tr><td>early</td><td>1</td><td>2.48</td></tr><tr><td>makes</td><td>1</td><td>2.48</td></tr><tr><td>man</td><td>1</td><td>2.48</td></tr><tr><td>healthy</td><td>1</td><td>2.48</td></tr><tr><td>wealthy</td><td>1</td><td>2.48</td></tr><tr><td>rise</td><td>1</td><td>2.48</td></tr><tr><td>bed</td><td>1</td><td>2.48</td></tr><tr><td>to</td><td>1</td><td>2.48</td></tr><tr><td>and</td><td>2</td><td>1.79</td></tr><tr><td>wise</td><td>1</td><td>2.48</td></tr><tr><td>where</td><td>1</td><td>2.48</td></tr><tr><td>due</td><td>1</td><td>2.48</td></tr><tr><td>credit</td><td>1</td><td>2.48</td></tr><tr><td>give</td><td>1</td><td>2.48</td></tr><tr><td>you</td><td>1</td><td>2.48</td></tr><tr><td>again</td><td>1</td><td>2.48</td></tr><tr><td>don't</td><td>1</td><td>2.48</td></tr><tr><td>succeed</td><td>1</td><td>2.48</td></tr><tr><td>if</td><td>1</td><td>2.48</td></tr><tr><td>try</td><td>1</td><td>2.48</td></tr><tr><td>first</td><td>1</td><td>2.48</td></tr><tr><td>at</td><td>1</td><td>2.48</td></tr><tr><td>denied</td><td>1</td><td>2.48</td></tr><tr><td>delayed</td><td>1</td><td>2.48</td></tr><tr><td>justice</td><td>1</td><td>2.48</td></tr><tr><td>keep</td><td>1</td><td>2.48</td></tr><tr><td>close</td><td>1</td><td>2.48</td></tr><tr><td>your</td><td>1</td><td>2.48</td></tr><tr><td>enemies</td><td>1</td><td>2.48</td></tr><tr><td>closer</td><td>1</td><td>2.48</td></tr><tr><td>friends</td><td>1</td><td>2.48</td></tr><tr><td>pain</td><td>1</td><td>2.48</td></tr><tr><td>gain</td><td>1</td><td>2.48</td></tr><tr><td>no</td><td>1</td><td>2.48</td></tr><tr><td>come</td><td>1</td><td>2.48</td></tr><tr><td>quickly</td><td>1</td><td>2.48</td></tr><tr><td>go</td><td>1</td><td>2.48</td></tr><tr><td>fall</td><td>1</td><td>2.48</td></tr><tr><td>united</td><td>1</td><td>2.48</td></tr><tr><td>we</td><td>1</td><td>2.48</td></tr><tr><td>divided</td><td>1</td><td>2.48</td></tr><tr><td>stand</td><td>1</td><td>2.48</td></tr><tr><td>romans</td><td>1</td><td>2.48</td></tr><tr><td>as</td><td>1</td><td>2.48</td></tr><tr><td>do</td><td>1</td><td>2.48</td></tr><tr><td>when</td><td>1</td><td>2.48</td></tr><tr><td>rome</td><td>1</td><td>2.48</td></tr></table></div></div>
+</div>
+<p>This metric shows how often a word occurs in general across all texts. If the word is really common, there’s a high probability that it’s just an article, pretext or something like that - it doesn’t make much sense in the sentence. For example, let’s consider the extreme value, if you find any word <span class="math notranslate nohighlight">\(t'\)</span> in any text, it means that <span class="math notranslate nohighlight">\(\frac{\left| D \right|}{\left| \left\{ d_i \in D | t \in d_i \right\} \right|} = 1 \Rightarrow log \frac{\left| D \right|}{\left| \left\{ d_i \in D | t \in d_i \right\} \right|} = 0\)</span> - the presence of the word <span class="math notranslate nohighlight">\(t'\)</span> in no way makes it possible to distinguish one entry from another.</p>
+</section>
+<section id="id1">
+<h2>TF-IDF<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p><span class="math notranslate nohighlight">\(ft_{idf}\)</span> is a final metric of the TF-IDF analysis and can be calculated as the product of TF and IDF. So for each word in each text from the set of texts we compute it’s own value <span class="math notranslate nohighlight">\(tf_{idf}\)</span>. So in the following cell I combine results from two previous sections to compute <span class="math notranslate nohighlight">\(tf_{idf}\)</span>. For example, for word “a” in phrase “a penny saved is a penny earned” <span class="math notranslate nohighlight">\(tf_{idf} = 0.29*1.79 \approx 0.51\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">html_table</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;tr&gt;</span>
+<span class="s2">        &lt;th&gt;Phrase&lt;/th&gt;</span>
+<span class="s2">        &lt;th&gt;</span><span class="si">{</span><span class="n">latex2mathml</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;tf_</span><span class="si">{idf}</span><span class="s2">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/th&gt;</span>
+<span class="s2">    &lt;/tr&gt;&quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">phrase</span><span class="p">,</span> <span class="n">tfs</span> <span class="ow">in</span> <span class="n">tf_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">phrase_tf_idf_line</span> <span class="o">=</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+        <span class="p">(</span>
+            <span class="n">word</span> <span class="o">+</span> <span class="s2">&quot; - &quot;</span> <span class="o">+</span> 
+            <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">words_idf</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">*</span><span class="n">tf</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">tf</span> <span class="ow">in</span> <span class="n">tfs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">])</span>
+
+    <span class="n">html_table</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;&lt;tr&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">phrase</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">phrase_tf_idf_line</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;&quot;</span>
+<span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;table&gt;&quot;</span> <span class="o">+</span> <span class="n">html_table</span> <span class="o">+</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span><span class="p">)</span>       
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><tr>
+        <th>Phrase</th>
+        <th><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>t</mi><msub><mi>f</mi><mrow><mi>i</mi><mi>d</mi><mi>f</mi></mrow></msub></mrow></math></th>
+    </tr><tr><td>a penny saved is a penny earned</td><td>a - 0.51<br>penny - 0.71<br>saved - 0.35<br>is - 0.16<br>earned - 0.35</td></tr><tr><td>the quick brown fox jumps over the lazy dog</td><td>the - 0.31<br>quick - 0.28<br>brown - 0.28<br>fox - 0.28<br>jumps - 0.28<br>over - 0.28<br>lazy - 0.28<br>dog - 0.28</td></tr><tr><td>beauty is in the eye of the beholder</td><td>beauty - 0.31<br>is - 0.14<br>in - 0.22<br>the - 0.35<br>eye - 0.31<br>of - 0.31<br>beholder - 0.31</td></tr><tr><td>early to bed and early to rise makes a man healthy wealthy and wise</td><td>early - 0.35<br>to - 0.35<br>bed - 0.18<br>and - 0.26<br>rise - 0.18<br>makes - 0.18<br>a - 0.13<br>man - 0.18<br>healthy - 0.18<br>wealthy - 0.18<br>wise - 0.18</td></tr><tr><td>give credit where credit is due</td><td>give - 0.41<br>credit - 0.83<br>where - 0.41<br>is - 0.18<br>due - 0.41</td></tr><tr><td>if at first you don't succeed try try again</td><td>if - 0.28<br>at - 0.28<br>first - 0.28<br>you - 0.28<br>don't - 0.28<br>succeed - 0.28<br>try - 0.55<br>again - 0.28</td></tr><tr><td>justice delayed is justice denied</td><td>justice - 0.99<br>delayed - 0.5<br>is - 0.22<br>denied - 0.5</td></tr><tr><td>keep your friends close and your enemies closer</td><td>keep - 0.31<br>your - 0.62<br>friends - 0.31<br>close - 0.31<br>and - 0.22<br>enemies - 0.31<br>closer - 0.31</td></tr><tr><td>no pain no gain</td><td>no - 1.24<br>pain - 0.62<br>gain - 0.62</td></tr><tr><td>quickly come quickly go</td><td>quickly - 1.24<br>come - 0.62<br>go - 0.62</td></tr><tr><td>united we stand divided we fall</td><td>united - 0.41<br>we - 0.83<br>stand - 0.41<br>divided - 0.41<br>fall - 0.41</td></tr><tr><td>when in rome do as the romans do</td><td>when - 0.31<br>in - 0.22<br>rome - 0.31<br>do - 0.62<br>as - 0.31<br>the - 0.17<br>romans - 0.31</td></tr></table></div></div>
+</div>
+<p>For each record, you can perform some aggregations on the numbers received. Common aggregations are maximum and average.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./machine_learning/data_transformations"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../models_selection_methods/l2_regularisation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">L2 (Ridge regularisation)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../metrics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Metrics</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-term-frequency">TF - term frequency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#idf-inverse-document-frequency">IDF - inverse document frequency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">TF-IDF</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

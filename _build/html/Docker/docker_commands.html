@@ -1,0 +1,1578 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Docker commands &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Docker/docker_commands';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../machine_learning/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../machine_learning/gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../machine_learning/models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../machine_learning/data_transformations/tf_idf.html">TF-IDF</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../machine_learning/metrics.html">Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../machine_learning/metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../machine_learning/metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../machine_learning/metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../python/basics.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../python/basics/operators.html">Operators</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/break.html">Leave cycle (break)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/in.html">Is in array (in)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/indexing.html">Indexing ([])</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/order.html">Order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/basics/operators/yield.html">yield</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Docker/docker_commands.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Docker commands</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Docker commands</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-containers">Working with containers</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ps-show-containers"><code class="docutils literal notranslate"><span class="pre">ps</span></code> - show containers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-show-all"><code class="docutils literal notranslate"><span class="pre">-a</span></code> - show all</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#history-show-layers-of-the-image"><code class="docutils literal notranslate"><span class="pre">history</span></code> - show layers of the image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-activate-exited-container"><code class="docutils literal notranslate"><span class="pre">start</span></code> - activate exited container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-stop-some-container"><code class="docutils literal notranslate"><span class="pre">stop</span></code> - stop some container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exec-run-in-the-container"><code class="docutils literal notranslate"><span class="pre">exec</span></code> - run in the container</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#it-take-control"><code class="docutils literal notranslate"><span class="pre">-it</span></code> - take control</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logs-get-container-console"><code class="docutils literal notranslate"><span class="pre">logs</span></code> - get container console</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#run-container-from-image"><code class="docutils literal notranslate"><span class="pre">run</span></code> - container from image</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rm-automatic-container-removal"><code class="docutils literal notranslate"><span class="pre">-rm</span></code> - automatic container removal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#name-set-name-for-the-container"><code class="docutils literal notranslate"><span class="pre">--name</span></code> - set name for the container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-make-container-not-to-lock-cli"><code class="docutils literal notranslate"><span class="pre">-d</span></code> - make container not to lock CLI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i-interactive-mode"><code class="docutils literal notranslate"><span class="pre">-i</span></code> - interactive mode</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t-turn-on-tty"><code class="docutils literal notranslate"><span class="pre">-t</span></code> - turn on TTY</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#it-combination"><code class="docutils literal notranslate"><span class="pre">-it</span></code> - combination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands-from-jupyter">Commands from jupyter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-environment-variables"><code class="docutils literal notranslate"><span class="pre">-e</span></code> - environment variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command-on-container-start-sec-docker-run-com-on-start">Command on container start{#sec-docker_run_com_on_start}</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v-map-folder-on-container-to-folder-on-host"><code class="docutils literal notranslate"><span class="pre">-v</span></code> - map folder on container to folder on host</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#u-set-user"><code class="docutils literal notranslate"><span class="pre">-u</span></code> - set user</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#p-use-port"><code class="docutils literal notranslate"><span class="pre">-p</span></code> - use port</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-images">Working with images</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-download-image-from-dockerhub-com"><code class="docutils literal notranslate"><span class="pre">pull</span></code> - download image from dockerhub.com</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#images-show-list-of-available-images"><code class="docutils literal notranslate"><span class="pre">images</span></code> - show list of available images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-all-show-all-images"><code class="docutils literal notranslate"><span class="pre">--a</span></code>,<code class="docutils literal notranslate"><span class="pre">--all</span></code> - show all images</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#digests-show-digests"><code class="docutils literal notranslate"><span class="pre">--digests</span></code> - show digests</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-format-output"><code class="docutils literal notranslate"><span class="pre">--format</span></code> - format output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-trunc-full-output"><code class="docutils literal notranslate"><span class="pre">--no-trunc</span></code> - full output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-quiet-print-only-images-ids"><code class="docutils literal notranslate"><span class="pre">-q</span></code>, <code class="docutils literal notranslate"><span class="pre">--quiet</span></code> - print only images ids</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rmi-delete-images"><code class="docutils literal notranslate"><span class="pre">rmi</span></code> - delete images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-build-image-from-dockerfile"><code class="docutils literal notranslate"><span class="pre">build</span></code> - build image from dockerfile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-save-container-state"><code class="docutils literal notranslate"><span class="pre">commit</span></code> - save container state</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cp-copy-files-from-to-container"><code class="docutils literal notranslate"><span class="pre">cp</span></code> - copy files from/to container</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#host-container">host -&gt; container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#container-host">container -&gt; host</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instpect-docker-object-info"><code class="docutils literal notranslate"><span class="pre">instpect</span></code> - docker object info</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-examples">Basic examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#special-cases"><strong>Special cases</strong></a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="docker-commands">
+<h1>Docker commands<a class="headerlink" href="#docker-commands" title="Link to this heading">#</a></h1>
+<p>Here we describe those docker commands that do not merit a separate discussion.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="working-with-containers">
+<h1>Working with containers<a class="headerlink" href="#working-with-containers" title="Link to this heading">#</a></h1>
+<section id="ps-show-containers">
+<h2><code class="docutils literal notranslate"><span class="pre">ps</span></code> - show containers<a class="headerlink" href="#ps-show-containers" title="Link to this heading">#</a></h2>
+<p>To view active containers, you should use the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run -itd --rm --name test_container python:3.10 &amp;&gt; /dev/null
+docker ps
+docker stop test_container &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID   IMAGE         COMMAND     CREATED        STATUS                  PORTS     NAMES
+b17984f2b882   python:3.10   &quot;python3&quot;   1 second ago   Up Less than a second             test_container
+</pre></div>
+</div>
+</div>
+</div>
+<section id="a-show-all">
+<h3><code class="docutils literal notranslate"><span class="pre">-a</span></code> - show all<a class="headerlink" href="#a-show-all" title="Link to this heading">#</a></h3>
+<p>By default, inactive containers are hidden.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --name temp_container ubuntu &amp;&gt; /dev/null
+echo &quot;========no option -a==============&quot;
+docker ps
+echo &quot;=========with option -a=============&quot;
+docker ps -a
+docker rm temp_container &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>========no option -a==============
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+=========with option -a=============
+CONTAINER ID   IMAGE     COMMAND       CREATED                  STATUS                              PORTS     NAMES
+ad0439c23847   ubuntu    &quot;/bin/bash&quot;   Less than a second ago   Exited (0) Less than a second ago             temp_container
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="history-show-layers-of-the-image">
+<h2><code class="docutils literal notranslate"><span class="pre">history</span></code> - show layers of the image<a class="headerlink" href="#history-show-layers-of-the-image" title="Link to this heading">#</a></h2>
+</section>
+<section id="start-activate-exited-container">
+<h2><code class="docutils literal notranslate"><span class="pre">start</span></code> - activate exited container<a class="headerlink" href="#start-activate-exited-container" title="Link to this heading">#</a></h2>
+<p>In the next cell, I build a ubuntu container that prints “hello world” when it starts. Like all standard ubuntu containers it quits, which we can see in the <code class="docutils literal notranslate"><span class="pre">STATUS</span></code> of the <code class="docutils literal notranslate"><span class="pre">ps</span></code> command. Then by <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">start</span></code> the container is reactivated.</p>
+<p>For some reason it only works when I use the <code class="docutils literal notranslate"><span class="pre">-i</span></code> option for <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">start</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd containers_files
+docker build -t test_ubuntu . &amp;&gt; /dev/null
+echo &quot;=====First start=====&quot;
+docker run --name u1 test_ubuntu
+echo &quot;=====List of all containers=====&quot;
+docker ps -a
+echo &quot;=====Restart=====&quot;
+docker start -i u1
+docker rm u1 &amp;&gt; /dev/null
+docker rmi test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====First start=====
+hello world
+=====List of all containers=====
+CONTAINER ID   IMAGE         COMMAND                CREATED        STATUS                              PORTS     NAMES
+af533b577c94   test_ubuntu   &quot;echo &#39;hello world&#39;&quot;   1 second ago   Exited (0) Less than a second ago             u1
+=====Restart=====
+hello world
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="stop-stop-some-container">
+<h2><code class="docutils literal notranslate"><span class="pre">stop</span></code> - stop some container<a class="headerlink" href="#stop-stop-some-container" title="Link to this heading">#</a></h2>
+<p>In the following example, I start a container with Ubuntu in such a way that it stays running, which was proven by using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span></code>. But after using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">stop</span></code> the same container is in the state “Exited”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run -itd --name test_ubuntu ubuntu &amp;&gt; /dev/null
+echo &quot;=====Just started container=====&quot;
+docker ps -a
+docker stop test_ubuntu &amp;&gt; /dev/null
+echo &quot;=====Stoped container (STATUS \&quot;Exited\&quot;)=====&quot;
+docker ps -a
+docker rm test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====Just started container=====
+CONTAINER ID   IMAGE     COMMAND       CREATED                  STATUS                  PORTS     NAMES
+e175ae336dcb   ubuntu    &quot;/bin/bash&quot;   Less than a second ago   Up Less than a second             test_ubuntu
+=====Stoped container (STATUS &quot;Exited&quot;)=====
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS                                PORTS     NAMES
+e175ae336dcb   ubuntu    &quot;/bin/bash&quot;   10 seconds ago   Exited (137) Less than a second ago             test_ubuntu
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exec-run-in-the-container">
+<h2><code class="docutils literal notranslate"><span class="pre">exec</span></code> - run in the container<a class="headerlink" href="#exec-run-in-the-container" title="Link to this heading">#</a></h2>
+<p>In the next command I start ubuntu conteiner. Then using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec'</span> <span class="pre">I</span> <span class="pre">run</span> <span class="pre">the</span> </code>ls’ command in the container and get a typical Linux result for that command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run -itd --rm --name test_ubuntu ubuntu &amp;&gt; /dev/null
+docker exec test_ubuntu ls
+docker stop test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bin
+boot
+dev
+etc
+home
+lib
+lib32
+lib64
+libx32
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+</pre></div>
+</div>
+</div>
+</div>
+<section id="it-take-control">
+<h3><code class="docutils literal notranslate"><span class="pre">-it</span></code> - take control<a class="headerlink" href="#it-take-control" title="Link to this heading">#</a></h3>
+<p>It looks like the options individually have the same properties as in the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> command. But the important thing is that you can take control of the detached container with this command.<br>
+The following example shows how I can get control in detached ubuntu by running the <code class="docutils literal notranslate"><span class="pre">bash</span></code> command with named options.</p>
+<p><img src="containers_files/docker exec -it.gif"></img></p>
+</section>
+</section>
+<section id="logs-get-container-console">
+<h2><code class="docutils literal notranslate"><span class="pre">logs</span></code> - get container console<a class="headerlink" href="#logs-get-container-console" title="Link to this heading">#</a></h2>
+<p>Desrtiption of the command you can find  <a class="reference internal" href="logs.html#sec-docker_logs_command"><span class="std std-ref">here</span></a>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="run-container-from-image">
+<h1><code class="docutils literal notranslate"><span class="pre">run</span></code> - container from image<a class="headerlink" href="#run-container-from-image" title="Link to this heading">#</a></h1>
+<p>This command is related to the “Working with containers” section, but it is big enough and important enough to have its own section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+echo &quot;================before start=====================&quot;
+docker ps -a
+echo &quot;===============after start======================&quot;
+docker run --name temp_container ubuntu &amp;&gt; /dev/null
+docker ps -a
+docker rm temp_container
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================before start=====================
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+===============after start======================
+CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS                              PORTS     NAMES
+cd0f144063c5   ubuntu    &quot;/bin/bash&quot;   1 second ago   Exited (0) Less than a second ago             temp_container
+temp_container
+</pre></div>
+</div>
+</div>
+</div>
+<section id="rm-automatic-container-removal">
+<h2><code class="docutils literal notranslate"><span class="pre">-rm</span></code> - automatic container removal<a class="headerlink" href="#rm-automatic-container-removal" title="Link to this heading">#</a></h2>
+<p>After stopping, the container is removed. In the following example there are two containers of ubuntu, one with the <code class="docutils literal notranslate"><span class="pre">--rm</span></code> option and the other without. Both containers stops by default - but only one stays with <code class="docutils literal notranslate"><span class="pre">STATUS</span> <span class="pre">==</span> <span class="pre">Exited</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --name no_rm_ubuntu ubuntu
+docker run --rm --name ubuntu_with_rm ubuntu
+docker ps -a
+docker rm no_rm_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS                              PORTS     NAMES
+7acc3cc0c61c   ubuntu    &quot;/bin/bash&quot;   1 second ago   Exited (0) Less than a second ago             no_rm_ubuntu
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="name-set-name-for-the-container">
+<h2><code class="docutils literal notranslate"><span class="pre">--name</span></code> - set name for the container<a class="headerlink" href="#name-set-name-for-the-container" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --rm --name unbuntu_container -d ubuntu
+docker ps
+docker stop unbuntu_container
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7116dcdaa0a131a8507f9cbe149719498456fe356a23f1ddfc48f65080cfe660
+CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS                  PORTS     NAMES
+7116dcdaa0a1   ubuntu    &quot;/bin/bash&quot;   1 second ago   Up Less than a second             unbuntu_container
+unbuntu_container
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-make-container-not-to-lock-cli">
+<h2><code class="docutils literal notranslate"><span class="pre">-d</span></code> - make container not to lock CLI<a class="headerlink" href="#d-make-container-not-to-lock-cli" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --rm -d --name temp_nginx nginx &amp;&gt; /dev/null
+docker ps
+docker stop temp_nginx &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID   IMAGE     COMMAND                  CREATED                  STATUS                  PORTS     NAMES
+09175cb8c6d9   nginx     &quot;/docker-entrypoint.…&quot;   Less than a second ago   Up Less than a second   80/tcp    temp_nginx
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="i-interactive-mode">
+<h2><code class="docutils literal notranslate"><span class="pre">-i</span></code> - interactive mode<a class="headerlink" href="#i-interactive-mode" title="Link to this heading">#</a></h2>
+<p>Mode that allows to interapt with container.</p>
+<p>Unfortunately it is not possible to show how this mode will work in jupyter. So here is a gif of me experimenting with the following command:</p>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-i</span> <span class="pre">--rm</span> <span class="pre">--name</span> <span class="pre">test_ubuntu</span> <span class="pre">ubuntu</span></code></p>
+<p><img src="containers_files/docker -i option.gif"></img></p>
+<p>In the example, the ubuntu container has been started and is stopped by default. The <code class="docutils literal notranslate"><span class="pre">-i</span></code> option causes it to lock the terminal. Extremely interesting that you will be able to send messages to the container and get results (as I showed with <code class="docutils literal notranslate"><span class="pre">ls</span></code> and <code class="docutils literal notranslate"><span class="pre">exit</span></code> commands), but you won’t get the description of the user common for Linux terminal.</p>
+</section>
+<section id="t-turn-on-tty">
+<h2><code class="docutils literal notranslate"><span class="pre">-t</span></code> - turn on TTY<a class="headerlink" href="#t-turn-on-tty" title="Link to this heading">#</a></h2>
+<p>TTY is something on backend language. The point here is that in combination with the <code class="docutils literal notranslate"><span class="pre">-i</span></code> option you can make will show you the “description” of the user which was mentioned in the previous section. And the terminal will be blocked waiting for input. But this option don’t allow you to send anything to the container.</p>
+<p>The following <code class="docutils literal notranslate"><span class="pre">.gif</span></code> show what you will get in case using command <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-t</span> <span class="pre">--rm</span> <span class="pre">--name</span> <span class="pre">temp_ubuntu</span> <span class="pre">ubuntu</span></code>.</p>
+<p><img src="containers_files/docker -t option.gif"></img></p>
+</section>
+<section id="it-combination">
+<h2><code class="docutils literal notranslate"><span class="pre">-it</span></code> - combination<a class="headerlink" href="#it-combination" title="Link to this heading">#</a></h2>
+<p>Both options were discovered above, but they are really often used in combination. So Ubuntu provides full CLI interface with this options.</p>
+<p><img src="containers_files/docker -it option.png"></img></p>
+</section>
+<section id="commands-from-jupyter">
+<h2>Commands from jupyter<a class="headerlink" href="#commands-from-jupyter" title="Link to this heading">#</a></h2>
+<p>Using only the <code class="docutils literal notranslate"><span class="pre">i</span></code> option (without <code class="docutils literal notranslate"><span class="pre">t</span></code>), you can send commands to the container from the Jupyter cell.</p>
+<p>So in the following example, I can easily run the <code class="docutils literal notranslate"><span class="pre">ls</span></code> program from the newly created ubuntu container.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --rm -i --name test_container ubuntu
+ls
+exit
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bin
+boot
+dev
+etc
+home
+lib
+lib32
+lib64
+libx32
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s a pity I didn’t understand this before I wrote most of the Docker description. So don’t be surprised if you see something like this:</p>
+<div class="sourceCode">
+<!--This class is needed to display as code on site-->
+docker exec ...<br>
+docker exec ...<br>
+docker exec ...<br>
+</div>
+In some section of docker description.</section>
+<section id="e-environment-variables">
+<h2><code class="docutils literal notranslate"><span class="pre">-e</span></code> - environment variables<a class="headerlink" href="#e-environment-variables" title="Link to this heading">#</a></h2>
+<p>You can also pass the values of the variables of the system you are calling from.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --rm -i --name e_example -e FEDOR_TEST_VAR=$HOME ubuntu
+echo $FEDOR_TEST_VAR
+exit
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/fedor
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="command-on-container-start-sec-docker-run-com-on-start">
+<h2>Command on container start{#sec-docker_run_com_on_start}<a class="headerlink" href="#command-on-container-start-sec-docker-run-com-on-start" title="Link to this heading">#</a></h2>
+<p>In the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> command, after the name of the base image, you can specify a command that will be executed when the container starts. So in the next example I will show you how to run <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">&quot;hello</span> <span class="pre">world&quot;</span></code> in a new ubuntu container.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --rm ubuntu echo &quot;hello world&quot;
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello world
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>If you want to run several commands you have to use <code class="docutils literal notranslate"><span class="pre">bash</span> <span class="pre">-c</span> <span class="pre">&quot;&lt;command&gt;&quot;</span></code>, like in following example:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --rm ubuntu bash -c &quot;
+    echo \&quot;hello world\&quot;; 
+    echo \&quot;hello world2\&quot;
+&quot;
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello world
+hello world2
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Note that when containers are in interactive mode, the command executed should take input, otherwise it will just leave container anyway, the follwing gif describe how it looks like:
+<img src="containers_files/docker command -it option.gif"></img></p></li>
+</ul>
+<p>In the example, I ran the <code class="docutils literal notranslate"><span class="pre">echo</span></code> command with container starts and showed that there were no containers created - because the container was stopped and removed just after it was started. But immediately I created a new container, but now with the command <code class="docutils literal notranslate"><span class="pre">bash</span> <span class="pre">-c</span> <span class="pre">&quot;echo</span> <span class="pre">\&quot;hello</span> <span class="pre">world\&quot;;</span> <span class="pre">bash</span></code> - in this case the last command is <code class="docutils literal notranslate"><span class="pre">bash</span></code> which waits for input, so I’m comming back into the container.</p>
+</section>
+<section id="v-map-folder-on-container-to-folder-on-host">
+<h2><code class="docutils literal notranslate"><span class="pre">-v</span></code> - map folder on container to folder on host<a class="headerlink" href="#v-map-folder-on-container-to-folder-on-host" title="Link to this heading">#</a></h2>
+<p>This is wide topic detailed in <a class="reference internal" href="docker_volumes.html"><span class="std std-doc">this</span></a> section;</p>
+</section>
+<section id="u-set-user">
+<h2><code class="docutils literal notranslate"><span class="pre">-u</span></code> - set user<a class="headerlink" href="#u-set-user" title="Link to this heading">#</a></h2>
+<p>By default, all docker containers have root privileges, but it can be useful to set user. For a more detailed description in the context of filesystem access, see <a class="reference internal" href="docker_volumes.html#sec-run_u_option"><span class="std std-ref">here</span></a>.</p>
+</section>
+<section id="p-use-port">
+<h2><code class="docutils literal notranslate"><span class="pre">-p</span></code> - use port<a class="headerlink" href="#p-use-port" title="Link to this heading">#</a></h2>
+<p>For mode details see <a class="reference internal" href="#ports.ipynb"><span class="xref myst">this</span></a>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="working-with-images">
+<h1>Working with images<a class="headerlink" href="#working-with-images" title="Link to this heading">#</a></h1>
+<section id="pull-download-image-from-dockerhub-com">
+<h2><code class="docutils literal notranslate"><span class="pre">pull</span></code> - download image from <a class="reference external" href="http://dockerhub.com">dockerhub.com</a><a class="headerlink" href="#pull-download-image-from-dockerhub-com" title="Link to this heading">#</a></h2>
+<p>It is obligatory to pass on one of the:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;image</span> <span class="pre">name&gt;:&lt;tag&gt;</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;tag&gt;</span></code> - by default is <code class="docutils literal notranslate"><span class="pre">latest</span></code>);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IMAGE</span> <span class="pre">ID</span></code> - image id.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker images | grep hello-world
+echo &quot;===============beforre pull======================&quot;
+docker pull hello-world:latest &amp;&gt; /dev/null
+echo &quot;===============after pull======================&quot;
+docker images | grep hello-world
+docker rmi hello-world &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>===============beforre pull======================
+===============after pull======================
+hello-world                latest    9c7a54a9a43c   2 weeks ago     13.3kB
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="images-show-list-of-available-images">
+<h2><code class="docutils literal notranslate"><span class="pre">images</span></code> - show list of available images<a class="headerlink" href="#images-show-list-of-available-images" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker images
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+hello-world   latest    feb5d9fea6a5   16 months ago   13.3kB
+</pre></div>
+</div>
+</div>
+</div>
+<section id="a-all-show-all-images">
+<h3><code class="docutils literal notranslate"><span class="pre">--a</span></code>,<code class="docutils literal notranslate"><span class="pre">--all</span></code> - show all images<a class="headerlink" href="#a-all-show-all-images" title="Link to this heading">#</a></h3>
+<p>By default, so called “intermediate”, images are hiden. Nowadays I don’t know what “intermediate” images are.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker images --all
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+hello-world   latest    feb5d9fea6a5   16 months ago   13.3kB
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="digests-show-digests">
+<h3><code class="docutils literal notranslate"><span class="pre">--digests</span></code> - show digests<a class="headerlink" href="#digests-show-digests" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker images --digests
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPOSITORY    TAG       DIGEST                                                                    IMAGE ID       CREATED         SIZE
+hello-world   latest    sha256:aa0cc8055b82dc2509bed2e19b275c8f463506616377219d9642221ab53cf9fe   feb5d9fea6a5   16 months ago   13.3kB
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="format-format-output">
+<h3><code class="docutils literal notranslate"><span class="pre">--format</span></code> - format output<a class="headerlink" href="#format-format-output" title="Link to this heading">#</a></h3>
+<p>Allows output to be formatted using GO templates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker images --format &#39;{{.Repository}}:{{.Tag}}&#39;
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello-world:latest
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="no-trunc-full-output">
+<h3><code class="docutils literal notranslate"><span class="pre">--no-trunc</span></code> - full output<a class="headerlink" href="#no-trunc-full-output" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker images --no-trunc
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPOSITORY    TAG       IMAGE ID                                                                  CREATED         SIZE
+hello-world   latest    sha256:feb5d9fea6a5e9606aa995e879d862b825965ba48de054caab5ef356dc6b3412   16 months ago   13.3kB
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="q-quiet-print-only-images-ids">
+<h3><code class="docutils literal notranslate"><span class="pre">-q</span></code>, <code class="docutils literal notranslate"><span class="pre">--quiet</span></code> - print only images ids<a class="headerlink" href="#q-quiet-print-only-images-ids" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker images -q
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feb5d9fea6a5
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="rmi-delete-images">
+<h2><code class="docutils literal notranslate"><span class="pre">rmi</span></code> - delete images<a class="headerlink" href="#rmi-delete-images" title="Link to this heading">#</a></h2>
+<p>It is obligatory to pass on one of the:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;image</span> <span class="pre">name&gt;:&lt;tag&gt;</span></code> (<code class="docutils literal notranslate"><span class="pre">&lt;tag&gt;</span></code> - by default is <code class="docutils literal notranslate"><span class="pre">latest</span></code>);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IMAGE</span> <span class="pre">ID</span></code> - image id.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker images
+echo &quot;===========================&quot;
+docker rmi hello-world:latest
+echo &quot;===========================&quot;
+docker images
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+hello-world   latest    feb5d9fea6a5   16 months ago   13.3kB
+===========================
+Untagged: hello-world:latest
+Untagged: hello-world@sha256:aa0cc8055b82dc2509bed2e19b275c8f463506616377219d9642221ab53cf9fe
+Deleted: sha256:feb5d9fea6a5e9606aa995e879d862b825965ba48de054caab5ef356dc6b3412
+Deleted: sha256:e07ee1baac5fae6a26f30cabfe54a36d3402f96afda318fe0a96cec4ca393359
+===========================
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="build-build-image-from-dockerfile">
+<h2><code class="docutils literal notranslate"><span class="pre">build</span></code> - build image from dockerfile<a class="headerlink" href="#build-build-image-from-dockerfile" title="Link to this heading">#</a></h2>
+<p>This command has description <a class="reference internal" href="image_creation.html#sec-docker_build_command"><span class="std std-ref">here</span></a></p>
+</section>
+<section id="commit-save-container-state">
+<h2><code class="docutils literal notranslate"><span class="pre">commit</span></code> - save container state<a class="headerlink" href="#commit-save-container-state" title="Link to this heading">#</a></h2>
+<p>This command has description <a class="reference internal" href="image_creation.html#sec-docker_commit_command"><span class="std std-ref">here</span></a>.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="cp-copy-files-from-to-container">
+<h1><code class="docutils literal notranslate"><span class="pre">cp</span></code> - copy files from/to container<a class="headerlink" href="#cp-copy-files-from-to-container" title="Link to this heading">#</a></h1>
+<p>Allows files to be swapped between the host file system and the running container.</p>
+<section id="host-container">
+<h2>host -&gt; container<a class="headerlink" href="#host-container" title="Link to this heading">#</a></h2>
+<p>There is the following syntax:</p>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">cp</span> <span class="pre">&lt;host</span> <span class="pre">path&gt;</span> <span class="pre">&lt;cantainer</span> <span class="pre">name&gt;:&lt;container</span> <span class="pre">path&gt;</span></code></p>
+<p>The following example shows how to copy a file into a container.</p>
+</section>
+<section id="container-host">
+<h2>container -&gt; host<a class="headerlink" href="#container-host" title="Link to this heading">#</a></h2>
+<p>There is syntax for m</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd filesystem_example
+docker run --rm --name test_ubuntu -itd ubuntu &amp;&gt; /dev/null
+
+docker cp copied_message.txt test_ubuntu:copied_message.txt
+
+echo &quot;=====copied to container=====&quot;
+docker exec test_ubuntu cat copied_message.txt
+echo &quot;&quot;
+
+docker cp test_ubuntu:copied_message.txt new_message.txt
+echo &quot;=====copied from container=====&quot;
+cat new_message.txt
+
+rm new_message.txt
+docker stop test_ubuntu &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====copied to container=====
+This message is for checking the copy functions.
+=====copied from container=====
+This message is for checking the copy functions.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="instpect-docker-object-info">
+<h1><code class="docutils literal notranslate"><span class="pre">instpect</span></code> - docker object info<a class="headerlink" href="#instpect-docker-object-info" title="Link to this heading">#</a></h1>
+<section id="basic-examples">
+<h2>Basic examples<a class="headerlink" href="#basic-examples" title="Link to this heading">#</a></h2>
+<p>This command provide information about docker ojects in json format such as:</p>
+<ul class="simple">
+<li><p><strong>images</strong>:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker inspect ubuntu
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[
+    {
+        &quot;Id&quot;: &quot;sha256:74f2314a03de34a0a2d552b805411fc9553a02ea71c1291b815b2f645f565683&quot;,
+        &quot;RepoTags&quot;: [
+            &quot;ubuntu:latest&quot;
+        ],
+        &quot;RepoDigests&quot;: [
+            &quot;ubuntu@sha256:2adf22367284330af9f832ffefb717c78239f6251d9d0f58de50b86229ed1427&quot;
+        ],
+        &quot;Parent&quot;: &quot;&quot;,
+        &quot;Comment&quot;: &quot;&quot;,
+        &quot;Created&quot;: &quot;2023-03-01T04:38:49.239257335Z&quot;,
+        &quot;Container&quot;: &quot;298f60554671ae2f5bf43b9892526aaa221e8093c9cee1ca68ef65fc3ac67600&quot;,
+        &quot;ContainerConfig&quot;: {
+            &quot;Hostname&quot;: &quot;298f60554671&quot;,
+            &quot;Domainname&quot;: &quot;&quot;,
+            &quot;User&quot;: &quot;&quot;,
+            &quot;AttachStdin&quot;: false,
+            &quot;AttachStdout&quot;: false,
+            &quot;AttachStderr&quot;: false,
+            &quot;Tty&quot;: false,
+            &quot;OpenStdin&quot;: false,
+            &quot;StdinOnce&quot;: false,
+            &quot;Env&quot;: [
+                &quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;
+            ],
+            &quot;Cmd&quot;: [
+                &quot;/bin/sh&quot;,
+                &quot;-c&quot;,
+                &quot;#(nop) &quot;,
+                &quot;CMD [\&quot;/bin/bash\&quot;]&quot;
+            ],
+            &quot;Image&quot;: &quot;sha256:6088cf91777e3b0190e579c7c7cab9c65626f5ff625373bcdb02ae877a9118d8&quot;,
+            &quot;Volumes&quot;: null,
+            &quot;WorkingDir&quot;: &quot;&quot;,
+            &quot;Entrypoint&quot;: null,
+            &quot;OnBuild&quot;: null,
+            &quot;Labels&quot;: {
+                &quot;org.opencontainers.image.ref.name&quot;: &quot;ubuntu&quot;,
+                &quot;org.opencontainers.image.version&quot;: &quot;22.04&quot;
+            }
+        },
+        &quot;DockerVersion&quot;: &quot;20.10.12&quot;,
+        &quot;Author&quot;: &quot;&quot;,
+        &quot;Config&quot;: {
+            &quot;Hostname&quot;: &quot;&quot;,
+            &quot;Domainname&quot;: &quot;&quot;,
+            &quot;User&quot;: &quot;&quot;,
+            &quot;AttachStdin&quot;: false,
+            &quot;AttachStdout&quot;: false,
+            &quot;AttachStderr&quot;: false,
+            &quot;Tty&quot;: false,
+            &quot;OpenStdin&quot;: false,
+            &quot;StdinOnce&quot;: false,
+            &quot;Env&quot;: [
+                &quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;
+            ],
+            &quot;Cmd&quot;: [
+                &quot;/bin/bash&quot;
+            ],
+            &quot;Image&quot;: &quot;sha256:6088cf91777e3b0190e579c7c7cab9c65626f5ff625373bcdb02ae877a9118d8&quot;,
+            &quot;Volumes&quot;: null,
+            &quot;WorkingDir&quot;: &quot;&quot;,
+            &quot;Entrypoint&quot;: null,
+            &quot;OnBuild&quot;: null,
+            &quot;Labels&quot;: {
+                &quot;org.opencontainers.image.ref.name&quot;: &quot;ubuntu&quot;,
+                &quot;org.opencontainers.image.version&quot;: &quot;22.04&quot;
+            }
+        },
+        &quot;Architecture&quot;: &quot;amd64&quot;,
+        &quot;Os&quot;: &quot;linux&quot;,
+        &quot;Size&quot;: 77810712,
+        &quot;VirtualSize&quot;: 77810712,
+        &quot;GraphDriver&quot;: {
+            &quot;Data&quot;: {
+                &quot;MergedDir&quot;: &quot;/var/lib/docker/overlay2/dfcfb531746a088aaf673a8bc04602c8c8e19b1114680ff8164a95abfef8a0e6/merged&quot;,
+                &quot;UpperDir&quot;: &quot;/var/lib/docker/overlay2/dfcfb531746a088aaf673a8bc04602c8c8e19b1114680ff8164a95abfef8a0e6/diff&quot;,
+                &quot;WorkDir&quot;: &quot;/var/lib/docker/overlay2/dfcfb531746a088aaf673a8bc04602c8c8e19b1114680ff8164a95abfef8a0e6/work&quot;
+            },
+            &quot;Name&quot;: &quot;overlay2&quot;
+        },
+        &quot;RootFS&quot;: {
+            &quot;Type&quot;: &quot;layers&quot;,
+            &quot;Layers&quot;: [
+                &quot;sha256:202fe64c3ce39b94d8beda7d7506ccdfcf7a59f02f17c915078e4c62b5c2ed11&quot;
+            ]
+        },
+        &quot;Metadata&quot;: {
+            &quot;LastTagTime&quot;: &quot;0001-01-01T00:00:00Z&quot;
+        }
+    }
+]
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>containers</strong>:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker run --rm --name test -itd ubuntu &amp;&gt; /dev/null
+docker inspect test
+docker stop test &amp;&gt; /dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[
+    {
+        &quot;Id&quot;: &quot;020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5&quot;,
+        &quot;Created&quot;: &quot;2023-06-12T13:37:52.23307605Z&quot;,
+        &quot;Path&quot;: &quot;/bin/bash&quot;,
+        &quot;Args&quot;: [],
+        &quot;State&quot;: {
+            &quot;Status&quot;: &quot;running&quot;,
+            &quot;Running&quot;: true,
+            &quot;Paused&quot;: false,
+            &quot;Restarting&quot;: false,
+            &quot;OOMKilled&quot;: false,
+            &quot;Dead&quot;: false,
+            &quot;Pid&quot;: 32562,
+            &quot;ExitCode&quot;: 0,
+            &quot;Error&quot;: &quot;&quot;,
+            &quot;StartedAt&quot;: &quot;2023-06-12T13:37:52.471660971Z&quot;,
+            &quot;FinishedAt&quot;: &quot;0001-01-01T00:00:00Z&quot;
+        },
+        &quot;Image&quot;: &quot;sha256:74f2314a03de34a0a2d552b805411fc9553a02ea71c1291b815b2f645f565683&quot;,
+        &quot;ResolvConfPath&quot;: &quot;/var/lib/docker/containers/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5/resolv.conf&quot;,
+        &quot;HostnamePath&quot;: &quot;/var/lib/docker/containers/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5/hostname&quot;,
+        &quot;HostsPath&quot;: &quot;/var/lib/docker/containers/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5/hosts&quot;,
+        &quot;LogPath&quot;: &quot;/var/lib/docker/containers/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5/020c99a8fbdca844a78956c0f7b2aba4fcd53e4f299112894dd0c0b7aca246c5-json.log&quot;,
+        &quot;Name&quot;: &quot;/test&quot;,
+        &quot;RestartCount&quot;: 0,
+        &quot;Driver&quot;: &quot;overlay2&quot;,
+        &quot;Platform&quot;: &quot;linux&quot;,
+        &quot;MountLabel&quot;: &quot;&quot;,
+        &quot;ProcessLabel&quot;: &quot;&quot;,
+        &quot;AppArmorProfile&quot;: &quot;docker-default&quot;,
+        &quot;ExecIDs&quot;: null,
+        &quot;HostConfig&quot;: {
+            &quot;Binds&quot;: null,
+            &quot;ContainerIDFile&quot;: &quot;&quot;,
+            &quot;LogConfig&quot;: {
+                &quot;Type&quot;: &quot;json-file&quot;,
+                &quot;Config&quot;: {}
+            },
+            &quot;NetworkMode&quot;: &quot;default&quot;,
+            &quot;PortBindings&quot;: {},
+            &quot;RestartPolicy&quot;: {
+                &quot;Name&quot;: &quot;no&quot;,
+                &quot;MaximumRetryCount&quot;: 0
+            },
+            &quot;AutoRemove&quot;: true,
+            &quot;VolumeDriver&quot;: &quot;&quot;,
+            &quot;VolumesFrom&quot;: null,
+            &quot;ConsoleSize&quot;: [
+                0,
+                0
+            ],
+            &quot;CapAdd&quot;: null,
+            &quot;CapDrop&quot;: null,
+            &quot;CgroupnsMode&quot;: &quot;private&quot;,
+            &quot;Dns&quot;: [],
+            &quot;DnsOptions&quot;: [],
+            &quot;DnsSearch&quot;: [],
+            &quot;ExtraHosts&quot;: null,
+            &quot;GroupAdd&quot;: null,
+            &quot;IpcMode&quot;: &quot;private&quot;,
+            &quot;Cgroup&quot;: &quot;&quot;,
+            &quot;Links&quot;: null,
+            &quot;OomScoreAdj&quot;: 0,
+            &quot;PidMode&quot;: &quot;&quot;,
+            &quot;Privileged&quot;: false,
+            &quot;PublishAllPorts&quot;: false,
+            &quot;ReadonlyRootfs&quot;: false,
+            &quot;SecurityOpt&quot;: null,
+            &quot;UTSMode&quot;: &quot;&quot;,
+            &quot;UsernsMode&quot;: &quot;&quot;,
+            &quot;ShmSize&quot;: 67108864,
+            &quot;Runtime&quot;: &quot;runc&quot;,
+            &quot;Isolation&quot;: &quot;&quot;,
+            &quot;CpuShares&quot;: 0,
+            &quot;Memory&quot;: 0,
+            &quot;NanoCpus&quot;: 0,
+            &quot;CgroupParent&quot;: &quot;&quot;,
+            &quot;BlkioWeight&quot;: 0,
+            &quot;BlkioWeightDevice&quot;: [],
+            &quot;BlkioDeviceReadBps&quot;: [],
+            &quot;BlkioDeviceWriteBps&quot;: [],
+            &quot;BlkioDeviceReadIOps&quot;: [],
+            &quot;BlkioDeviceWriteIOps&quot;: [],
+            &quot;CpuPeriod&quot;: 0,
+            &quot;CpuQuota&quot;: 0,
+            &quot;CpuRealtimePeriod&quot;: 0,
+            &quot;CpuRealtimeRuntime&quot;: 0,
+            &quot;CpusetCpus&quot;: &quot;&quot;,
+            &quot;CpusetMems&quot;: &quot;&quot;,
+            &quot;Devices&quot;: [],
+            &quot;DeviceCgroupRules&quot;: null,
+            &quot;DeviceRequests&quot;: null,
+            &quot;MemoryReservation&quot;: 0,
+            &quot;MemorySwap&quot;: 0,
+            &quot;MemorySwappiness&quot;: null,
+            &quot;OomKillDisable&quot;: null,
+            &quot;PidsLimit&quot;: null,
+            &quot;Ulimits&quot;: null,
+            &quot;CpuCount&quot;: 0,
+            &quot;CpuPercent&quot;: 0,
+            &quot;IOMaximumIOps&quot;: 0,
+            &quot;IOMaximumBandwidth&quot;: 0,
+            &quot;MaskedPaths&quot;: [
+                &quot;/proc/asound&quot;,
+                &quot;/proc/acpi&quot;,
+                &quot;/proc/kcore&quot;,
+                &quot;/proc/keys&quot;,
+                &quot;/proc/latency_stats&quot;,
+                &quot;/proc/timer_list&quot;,
+                &quot;/proc/timer_stats&quot;,
+                &quot;/proc/sched_debug&quot;,
+                &quot;/proc/scsi&quot;,
+                &quot;/sys/firmware&quot;
+            ],
+            &quot;ReadonlyPaths&quot;: [
+                &quot;/proc/bus&quot;,
+                &quot;/proc/fs&quot;,
+                &quot;/proc/irq&quot;,
+                &quot;/proc/sys&quot;,
+                &quot;/proc/sysrq-trigger&quot;
+            ]
+        },
+        &quot;GraphDriver&quot;: {
+            &quot;Data&quot;: {
+                &quot;LowerDir&quot;: &quot;/var/lib/docker/overlay2/06b3ab167c3c359841177a3bc998d8bc5c32c1c8893d7518e2df4193a1dc98ee-init/diff:/var/lib/docker/overlay2/dfcfb531746a088aaf673a8bc04602c8c8e19b1114680ff8164a95abfef8a0e6/diff&quot;,
+                &quot;MergedDir&quot;: &quot;/var/lib/docker/overlay2/06b3ab167c3c359841177a3bc998d8bc5c32c1c8893d7518e2df4193a1dc98ee/merged&quot;,
+                &quot;UpperDir&quot;: &quot;/var/lib/docker/overlay2/06b3ab167c3c359841177a3bc998d8bc5c32c1c8893d7518e2df4193a1dc98ee/diff&quot;,
+                &quot;WorkDir&quot;: &quot;/var/lib/docker/overlay2/06b3ab167c3c359841177a3bc998d8bc5c32c1c8893d7518e2df4193a1dc98ee/work&quot;
+            },
+            &quot;Name&quot;: &quot;overlay2&quot;
+        },
+        &quot;Mounts&quot;: [],
+        &quot;Config&quot;: {
+            &quot;Hostname&quot;: &quot;020c99a8fbdc&quot;,
+            &quot;Domainname&quot;: &quot;&quot;,
+            &quot;User&quot;: &quot;&quot;,
+            &quot;AttachStdin&quot;: false,
+            &quot;AttachStdout&quot;: false,
+            &quot;AttachStderr&quot;: false,
+            &quot;Tty&quot;: true,
+            &quot;OpenStdin&quot;: true,
+            &quot;StdinOnce&quot;: false,
+            &quot;Env&quot;: [
+                &quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;
+            ],
+            &quot;Cmd&quot;: [
+                &quot;/bin/bash&quot;
+            ],
+            &quot;Image&quot;: &quot;ubuntu&quot;,
+            &quot;Volumes&quot;: null,
+            &quot;WorkingDir&quot;: &quot;&quot;,
+            &quot;Entrypoint&quot;: null,
+            &quot;OnBuild&quot;: null,
+            &quot;Labels&quot;: {
+                &quot;org.opencontainers.image.ref.name&quot;: &quot;ubuntu&quot;,
+                &quot;org.opencontainers.image.version&quot;: &quot;22.04&quot;
+            }
+        },
+        &quot;NetworkSettings&quot;: {
+            &quot;Bridge&quot;: &quot;&quot;,
+            &quot;SandboxID&quot;: &quot;422100341f6b603db62a0c616fa614091b66ac5a06796fa577503fd469b4ce56&quot;,
+            &quot;HairpinMode&quot;: false,
+            &quot;LinkLocalIPv6Address&quot;: &quot;&quot;,
+            &quot;LinkLocalIPv6PrefixLen&quot;: 0,
+            &quot;Ports&quot;: {},
+            &quot;SandboxKey&quot;: &quot;/var/run/docker/netns/422100341f6b&quot;,
+            &quot;SecondaryIPAddresses&quot;: null,
+            &quot;SecondaryIPv6Addresses&quot;: null,
+            &quot;EndpointID&quot;: &quot;b2440d2f1d13674c667458fd051354ec32d2e11475db2308e20cd057e3b16037&quot;,
+            &quot;Gateway&quot;: &quot;172.17.0.1&quot;,
+            &quot;GlobalIPv6Address&quot;: &quot;&quot;,
+            &quot;GlobalIPv6PrefixLen&quot;: 0,
+            &quot;IPAddress&quot;: &quot;172.17.0.2&quot;,
+            &quot;IPPrefixLen&quot;: 16,
+            &quot;IPv6Gateway&quot;: &quot;&quot;,
+            &quot;MacAddress&quot;: &quot;02:42:ac:11:00:02&quot;,
+            &quot;Networks&quot;: {
+                &quot;bridge&quot;: {
+                    &quot;IPAMConfig&quot;: null,
+                    &quot;Links&quot;: null,
+                    &quot;Aliases&quot;: null,
+                    &quot;NetworkID&quot;: &quot;cf037e1d3aeb308ae603f8028da3343134d92e79462fdcb5390b196a9e49c87d&quot;,
+                    &quot;EndpointID&quot;: &quot;b2440d2f1d13674c667458fd051354ec32d2e11475db2308e20cd057e3b16037&quot;,
+                    &quot;Gateway&quot;: &quot;172.17.0.1&quot;,
+                    &quot;IPAddress&quot;: &quot;172.17.0.2&quot;,
+                    &quot;IPPrefixLen&quot;: 16,
+                    &quot;IPv6Gateway&quot;: &quot;&quot;,
+                    &quot;GlobalIPv6Address&quot;: &quot;&quot;,
+                    &quot;GlobalIPv6PrefixLen&quot;: 0,
+                    &quot;MacAddress&quot;: &quot;02:42:ac:11:00:02&quot;,
+                    &quot;DriverOpts&quot;: null
+                }
+            }
+        }
+    }
+]
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>networks</strong>:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+docker inspect bridge
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[
+    {
+        &quot;Name&quot;: &quot;bridge&quot;,
+        &quot;Id&quot;: &quot;cf037e1d3aeb308ae603f8028da3343134d92e79462fdcb5390b196a9e49c87d&quot;,
+        &quot;Created&quot;: &quot;2023-06-12T08:14:24.801403507+03:00&quot;,
+        &quot;Scope&quot;: &quot;local&quot;,
+        &quot;Driver&quot;: &quot;bridge&quot;,
+        &quot;EnableIPv6&quot;: false,
+        &quot;IPAM&quot;: {
+            &quot;Driver&quot;: &quot;default&quot;,
+            &quot;Options&quot;: null,
+            &quot;Config&quot;: [
+                {
+                    &quot;Subnet&quot;: &quot;172.17.0.0/16&quot;,
+                    &quot;Gateway&quot;: &quot;172.17.0.1&quot;
+                }
+            ]
+        },
+        &quot;Internal&quot;: false,
+        &quot;Attachable&quot;: false,
+        &quot;Ingress&quot;: false,
+        &quot;ConfigFrom&quot;: {
+            &quot;Network&quot;: &quot;&quot;
+        },
+        &quot;ConfigOnly&quot;: false,
+        &quot;Containers&quot;: {},
+        &quot;Options&quot;: {
+            &quot;com.docker.network.bridge.default_bridge&quot;: &quot;true&quot;,
+            &quot;com.docker.network.bridge.enable_icc&quot;: &quot;true&quot;,
+            &quot;com.docker.network.bridge.enable_ip_masquerade&quot;: &quot;true&quot;,
+            &quot;com.docker.network.bridge.host_binding_ipv4&quot;: &quot;0.0.0.0&quot;,
+            &quot;com.docker.network.bridge.name&quot;: &quot;docker0&quot;,
+            &quot;com.docker.network.driver.mtu&quot;: &quot;1500&quot;
+        },
+        &quot;Labels&quot;: {}
+    }
+]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="special-cases">
+<h2><strong>Special cases</strong><a class="headerlink" href="#special-cases" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>For more information about the <strong>path to container logs</strong>, you can look <a class="reference internal" href="logs.html#log_path_on_computer"><span class="std std-ref">here</span></a>.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Docker"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Docker commands</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-containers">Working with containers</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ps-show-containers"><code class="docutils literal notranslate"><span class="pre">ps</span></code> - show containers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-show-all"><code class="docutils literal notranslate"><span class="pre">-a</span></code> - show all</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#history-show-layers-of-the-image"><code class="docutils literal notranslate"><span class="pre">history</span></code> - show layers of the image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-activate-exited-container"><code class="docutils literal notranslate"><span class="pre">start</span></code> - activate exited container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-stop-some-container"><code class="docutils literal notranslate"><span class="pre">stop</span></code> - stop some container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exec-run-in-the-container"><code class="docutils literal notranslate"><span class="pre">exec</span></code> - run in the container</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#it-take-control"><code class="docutils literal notranslate"><span class="pre">-it</span></code> - take control</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logs-get-container-console"><code class="docutils literal notranslate"><span class="pre">logs</span></code> - get container console</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#run-container-from-image"><code class="docutils literal notranslate"><span class="pre">run</span></code> - container from image</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rm-automatic-container-removal"><code class="docutils literal notranslate"><span class="pre">-rm</span></code> - automatic container removal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#name-set-name-for-the-container"><code class="docutils literal notranslate"><span class="pre">--name</span></code> - set name for the container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-make-container-not-to-lock-cli"><code class="docutils literal notranslate"><span class="pre">-d</span></code> - make container not to lock CLI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i-interactive-mode"><code class="docutils literal notranslate"><span class="pre">-i</span></code> - interactive mode</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t-turn-on-tty"><code class="docutils literal notranslate"><span class="pre">-t</span></code> - turn on TTY</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#it-combination"><code class="docutils literal notranslate"><span class="pre">-it</span></code> - combination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands-from-jupyter">Commands from jupyter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-environment-variables"><code class="docutils literal notranslate"><span class="pre">-e</span></code> - environment variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command-on-container-start-sec-docker-run-com-on-start">Command on container start{#sec-docker_run_com_on_start}</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v-map-folder-on-container-to-folder-on-host"><code class="docutils literal notranslate"><span class="pre">-v</span></code> - map folder on container to folder on host</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#u-set-user"><code class="docutils literal notranslate"><span class="pre">-u</span></code> - set user</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#p-use-port"><code class="docutils literal notranslate"><span class="pre">-p</span></code> - use port</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-images">Working with images</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-download-image-from-dockerhub-com"><code class="docutils literal notranslate"><span class="pre">pull</span></code> - download image from dockerhub.com</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#images-show-list-of-available-images"><code class="docutils literal notranslate"><span class="pre">images</span></code> - show list of available images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-all-show-all-images"><code class="docutils literal notranslate"><span class="pre">--a</span></code>,<code class="docutils literal notranslate"><span class="pre">--all</span></code> - show all images</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#digests-show-digests"><code class="docutils literal notranslate"><span class="pre">--digests</span></code> - show digests</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#format-format-output"><code class="docutils literal notranslate"><span class="pre">--format</span></code> - format output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-trunc-full-output"><code class="docutils literal notranslate"><span class="pre">--no-trunc</span></code> - full output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-quiet-print-only-images-ids"><code class="docutils literal notranslate"><span class="pre">-q</span></code>, <code class="docutils literal notranslate"><span class="pre">--quiet</span></code> - print only images ids</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rmi-delete-images"><code class="docutils literal notranslate"><span class="pre">rmi</span></code> - delete images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-build-image-from-dockerfile"><code class="docutils literal notranslate"><span class="pre">build</span></code> - build image from dockerfile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-save-container-state"><code class="docutils literal notranslate"><span class="pre">commit</span></code> - save container state</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cp-copy-files-from-to-container"><code class="docutils literal notranslate"><span class="pre">cp</span></code> - copy files from/to container</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#host-container">host -&gt; container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#container-host">container -&gt; host</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#instpect-docker-object-info"><code class="docutils literal notranslate"><span class="pre">instpect</span></code> - docker object info</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-examples">Basic examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#special-cases"><strong>Special cases</strong></a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
