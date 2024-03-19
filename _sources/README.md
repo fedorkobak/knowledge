@@ -26,7 +26,7 @@ One of the ways to deploy a site to github pages is to have a specific branch th
 # installing package
 pip3 install ghp-import
 # running script
-ghp-import _build/html
+ghp-import -n _build/html
 ```
 
 After all you will have new commit on `gh-pages` branch - after pulling it site will be updated.
