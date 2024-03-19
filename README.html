@@ -380,7 +380,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="math/basics.html">Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math/union_probability.html">Union probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="math/conditional_probability.html">Сonditional probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="math/cent_limit_theorem.html">Central limit theorem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="math/maximum_likelihood.html">Maximum likelihood</a></li>
@@ -660,7 +660,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -676,6 +678,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-site">Build site</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploy-site">Deploy site</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -689,6 +700,27 @@ document.write(`
 <h1>knowledge<a class="headerlink" href="#knowledge" title="Link to this heading">#</a></h1>
 <p>Here is a repository where I try to describe some of the challenges I face during my professional career.</p>
 <p>For a better view of the information, please visit the githubpages for this repo - <a class="reference external" href="https://fedorkobak.github.io/knowledge/">https://fedorkobak.github.io/knowledge/</a>.</p>
+<section id="build-site">
+<h2>Build site<a class="headerlink" href="#build-site" title="Link to this heading">#</a></h2>
+<p>For building website is used <a class="reference external" href="https://jupyterbook.org/en/stable/">jupyter book</a>.</p>
+<p>To build the site, install <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">book</span></code> and use the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jb</span> <span class="n">build</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>After building, the <code class="docutils literal notranslate"><span class="pre">_build</span></code> directory is created.</p>
+<p><strong>Note</strong> <code class="docutils literal notranslate"><span class="pre">_build</span></code> directory added to <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>.</p>
+</section>
+<section id="deploy-site">
+<h2>Deploy site<a class="headerlink" href="#deploy-site" title="Link to this heading">#</a></h2>
+<p>One of the ways to deploy a site to github pages is to have a specific branch that contains all the necessary files. There is a special tool to do this <a class="reference external" href="https://github.com/c-w/ghp-import">ghp-import</a>. So you need to install this tool, which is distributed as a python package, and run it for the <code class="docutils literal notranslate"><span class="pre">_build/html</span></code> folder. This is what full commands will look like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># installing package</span>
+pip3<span class="w"> </span>install<span class="w"> </span>ghp-import
+<span class="c1"># running script</span>
+ghp-import<span class="w"> </span>_build/html
+</pre></div>
+</div>
+<p>After all you will have new commit on <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch - after pulling it site will be updated.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -728,7 +760,21 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-site">Build site</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploy-site">Deploy site</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
