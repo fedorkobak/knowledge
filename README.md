@@ -14,7 +14,9 @@ To build the site, install `jupyter book` and use the command:
 jb build .
 ```
 
-After building, the `_build` directory is updated.
+After building, the `_build` directory is created.
+
+**Note** `_build` directory added to `.gitignore`.
 
 ## Deploy site
 
