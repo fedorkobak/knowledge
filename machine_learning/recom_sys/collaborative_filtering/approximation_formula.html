@@ -63,6 +63,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Task generation" href="../task_generation.html" />
+    <link rel="prev" title="Collaborative filtering" href="../collaborative_filtering.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,8 +126,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -180,7 +180,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine learning</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../confusion_matrix.html">Confusion matrix</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gradient_descent.html">Gradient descent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
@@ -191,8 +191,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../recom_sys.html">Recommendation systems</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../collaborative_filtering.html">Collaborative filtering</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="simple">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../recom_sys.html">Recommendation systems</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../collaborative_filtering.html">Collaborative filtering</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Approximation formula</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../task_generation.html">Task generation</a></li>
@@ -694,7 +695,12 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-generation">Task generation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaboration">Collaboration</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-object-bias">Remove object bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weighing-of-objects">Weighing of objects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-bias">Add bias</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -715,6 +721,24 @@ document.write(`
 
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="c1"># this is dimentions of R</span>
+<span class="c1"># matrix that will be used</span>
+<span class="c1"># as example</span>
+<span class="n">r_width</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">r_height</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="c1"># this is a header for tables for pretty display</span>
+<span class="n">common_header</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;&lt;tr&gt;&quot;</span>
+        <span class="s2">&quot;&lt;th rowspan=</span><span class="se">\&quot;</span><span class="s2">2</span><span class="se">\&quot;</span><span class="s2">&gt;Object&lt;/th&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;th colspan=</span><span class="se">\&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">r_width</span><span class="p">)</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2"> style=&#39;text-align:center&#39;&gt;Ranks of the items&lt;/th&gt;&quot;</span>
+        <span class="s2">&quot;&lt;th rowspan=</span><span class="se">\&quot;</span><span class="s2">2</span><span class="se">\&quot;</span><span class="s2">&gt;Group&lt;/th&gt;&quot;</span>
+    <span class="s2">&quot;&lt;/tr&gt;&quot;</span>
+    <span class="s2">&quot;&lt;tr&gt;&quot;</span><span class="o">+</span>
+        <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&lt;th&gt;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/th&gt;&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r_width</span><span class="p">)])</span><span class="o">+</span>
+    <span class="s2">&quot;&lt;/tr&gt;&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -724,10 +748,7 @@ document.write(`
 <p>The following cell generates an example that I’ll use to show the sense of some transformations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_width</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">r_height</span> <span class="o">=</span> <span class="mi">20</span>
-
-<span class="n">R</span><span class="p">,</span> <span class="n">groups</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R</span><span class="p">,</span> <span class="n">groups</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
     <span class="n">n_samples</span><span class="o">=</span><span class="n">r_height</span><span class="p">,</span>
     <span class="n">n_features</span><span class="o">=</span><span class="n">r_width</span><span class="p">,</span>
     <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
@@ -744,30 +765,22 @@ document.write(`
 
 
 <span class="c1"># some code to display result as HTML table</span>
-<span class="n">header</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;&lt;tr&gt;&quot;</span>
-        <span class="s2">&quot;&lt;th rowspan=</span><span class="se">\&quot;</span><span class="s2">2</span><span class="se">\&quot;</span><span class="s2">&gt;object&lt;/th&gt;&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;&lt;th colspan=</span><span class="se">\&quot;</span><span class="si">{</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2"> style=&#39;text-align:center&#39;&gt;Ranks of the items&lt;/th&gt;&quot;</span>
-    <span class="s2">&quot;&lt;/tr&gt;&quot;</span>
-    <span class="s2">&quot;&lt;tr&gt;&quot;</span><span class="o">+</span>
-        <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&lt;th&gt;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/th&gt;&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span><span class="o">+</span>
-    <span class="s2">&quot;&lt;/tr&gt;&quot;</span>
-<span class="p">)</span>
 <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="s2">&quot;&lt;tr&gt;&quot;</span> <span class="o">+</span> 
-        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">ind</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="o">+</span> 
-        <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">])</span> <span class="o">+</span> 
+            <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">ind</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="o">+</span> 
+            <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">])</span> <span class="o">+</span> 
+            <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">groups</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span>
         <span class="s2">&quot;&lt;/tr&gt;&quot;</span>
     <span class="p">)</span>
     <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
 <span class="p">])</span>
-<span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;table&gt;&quot;</span> <span class="o">+</span> <span class="n">header</span> <span class="o">+</span> <span class="n">content</span> <span class="o">+</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span><span class="p">)</span>
+<span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;table&gt;&quot;</span> <span class="o">+</span> <span class="n">common_header</span> <span class="o">+</span> <span class="n">content</span> <span class="o">+</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><table><tr><th rowspan="2">object</th><th colspan="10" style='text-align:center'>Ranks of the items</th></tr><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr><tr><td>0</td><td>5</td><td>8</td><td>0</td><td>2</td><td>6</td><td>3</td><td>5</td><td>1</td><td>7</td><td>5</td></tr><tr><td>1</td><td>10</td><td>2</td><td>8</td><td>10</td><td>7</td><td>5</td><td>4</td><td>10</td><td>4</td><td>5</td></tr><tr><td>2</td><td>6</td><td>9</td><td>0</td><td>3</td><td>8</td><td>5</td><td>7</td><td>3</td><td>7</td><td>6</td></tr><tr><td>3</td><td>5</td><td>0</td><td>3</td><td>6</td><td>3</td><td>4</td><td>6</td><td>5</td><td>5</td><td>5</td></tr><tr><td>4</td><td>5</td><td>8</td><td>0</td><td>5</td><td>7</td><td>6</td><td>7</td><td>3</td><td>8</td><td>6</td></tr><tr><td>5</td><td>5</td><td>1</td><td>3</td><td>5</td><td>4</td><td>4</td><td>6</td><td>4</td><td>5</td><td>5</td></tr><tr><td>6</td><td>8</td><td>10</td><td>1</td><td>6</td><td>8</td><td>6</td><td>7</td><td>3</td><td>9</td><td>8</td></tr><tr><td>7</td><td>10</td><td>10</td><td>3</td><td>8</td><td>10</td><td>8</td><td>9</td><td>5</td><td>10</td><td>9</td></tr><tr><td>8</td><td>4</td><td>1</td><td>3</td><td>6</td><td>3</td><td>4</td><td>6</td><td>4</td><td>6</td><td>5</td></tr><tr><td>9</td><td>7</td><td>10</td><td>1</td><td>5</td><td>8</td><td>6</td><td>8</td><td>4</td><td>10</td><td>7</td></tr><tr><td>10</td><td>10</td><td>3</td><td>8</td><td>9</td><td>7</td><td>4</td><td>5</td><td>9</td><td>4</td><td>3</td></tr><tr><td>11</td><td>8</td><td>1</td><td>6</td><td>8</td><td>5</td><td>2</td><td>2</td><td>8</td><td>3</td><td>1</td></tr><tr><td>12</td><td>5</td><td>8</td><td>0</td><td>3</td><td>6</td><td>4</td><td>7</td><td>1</td><td>7</td><td>5</td></tr><tr><td>13</td><td>9</td><td>3</td><td>8</td><td>9</td><td>8</td><td>5</td><td>3</td><td>10</td><td>4</td><td>2</td></tr><tr><td>14</td><td>8</td><td>1</td><td>7</td><td>7</td><td>6</td><td>2</td><td>2</td><td>8</td><td>2</td><td>1</td></tr><tr><td>15</td><td>8</td><td>3</td><td>7</td><td>9</td><td>7</td><td>7</td><td>8</td><td>7</td><td>8</td><td>7</td></tr><tr><td>16</td><td>6</td><td>0</td><td>5</td><td>6</td><td>3</td><td>1</td><td>0</td><td>6</td><td>0</td><td>0</td></tr><tr><td>17</td><td>7</td><td>0</td><td>6</td><td>6</td><td>5</td><td>2</td><td>1</td><td>6</td><td>1</td><td>1</td></tr><tr><td>18</td><td>5</td><td>1</td><td>3</td><td>6</td><td>4</td><td>4</td><td>5</td><td>4</td><td>6</td><td>6</td></tr><tr><td>19</td><td>4</td><td>0</td><td>3</td><td>5</td><td>2</td><td>2</td><td>5</td><td>4</td><td>6</td><td>4</td></tr></table></div></div>
+<div class="output text_html"><table><tr><th rowspan="2">Object</th><th colspan="10" style='text-align:center'>Ranks of the items</th><th rowspan="2">Group</th></tr><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr><tr><td>0</td><td>7</td><td>10</td><td>1</td><td>4</td><td>8</td><td>5</td><td>7</td><td>3</td><td>9</td><td>7</td><td>1</td></tr><tr><td>1</td><td>9</td><td>1</td><td>7</td><td>9</td><td>6</td><td>4</td><td>3</td><td>9</td><td>3</td><td>4</td><td>0</td></tr><tr><td>2</td><td>7</td><td>10</td><td>1</td><td>4</td><td>9</td><td>6</td><td>8</td><td>4</td><td>8</td><td>7</td><td>1</td></tr><tr><td>3</td><td>4</td><td>0</td><td>2</td><td>5</td><td>2</td><td>3</td><td>5</td><td>4</td><td>4</td><td>4</td><td>2</td></tr><tr><td>4</td><td>8</td><td>10</td><td>3</td><td>8</td><td>10</td><td>9</td><td>10</td><td>6</td><td>10</td><td>9</td><td>1</td></tr><tr><td>5</td><td>7</td><td>3</td><td>5</td><td>7</td><td>6</td><td>6</td><td>8</td><td>6</td><td>7</td><td>7</td><td>2</td></tr><tr><td>6</td><td>8</td><td>10</td><td>1</td><td>6</td><td>8</td><td>6</td><td>7</td><td>3</td><td>9</td><td>8</td><td>1</td></tr><tr><td>7</td><td>8</td><td>10</td><td>1</td><td>6</td><td>8</td><td>6</td><td>7</td><td>3</td><td>9</td><td>7</td><td>1</td></tr><tr><td>8</td><td>3</td><td>0</td><td>2</td><td>5</td><td>2</td><td>3</td><td>5</td><td>3</td><td>5</td><td>4</td><td>2</td></tr><tr><td>9</td><td>6</td><td>9</td><td>0</td><td>4</td><td>7</td><td>5</td><td>7</td><td>3</td><td>9</td><td>6</td><td>1</td></tr><tr><td>10</td><td>8</td><td>0</td><td>5</td><td>6</td><td>4</td><td>1</td><td>2</td><td>6</td><td>1</td><td>0</td><td>0</td></tr><tr><td>11</td><td>8</td><td>1</td><td>6</td><td>8</td><td>5</td><td>2</td><td>2</td><td>8</td><td>3</td><td>1</td><td>0</td></tr><tr><td>12</td><td>5</td><td>8</td><td>0</td><td>3</td><td>6</td><td>4</td><td>7</td><td>1</td><td>7</td><td>5</td><td>1</td></tr><tr><td>13</td><td>5</td><td>0</td><td>4</td><td>5</td><td>4</td><td>1</td><td>0</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td>14</td><td>6</td><td>0</td><td>5</td><td>5</td><td>4</td><td>0</td><td>0</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td>15</td><td>6</td><td>1</td><td>5</td><td>7</td><td>5</td><td>5</td><td>6</td><td>5</td><td>6</td><td>5</td><td>2</td></tr><tr><td>16</td><td>6</td><td>0</td><td>5</td><td>6</td><td>3</td><td>1</td><td>0</td><td>6</td><td>0</td><td>0</td><td>0</td></tr><tr><td>17</td><td>10</td><td>3</td><td>9</td><td>9</td><td>8</td><td>5</td><td>4</td><td>9</td><td>4</td><td>4</td><td>0</td></tr><tr><td>18</td><td>8</td><td>4</td><td>6</td><td>9</td><td>7</td><td>7</td><td>8</td><td>7</td><td>9</td><td>9</td><td>2</td></tr><tr><td>19</td><td>7</td><td>3</td><td>6</td><td>8</td><td>5</td><td>5</td><td>8</td><td>7</td><td>9</td><td>7</td><td>2</td></tr></table></div></div>
 </div>
 <p>So let <span class="math notranslate nohighlight">\(k'\)</span> - is object to which we need to recoomend something.</p>
 <p>So for the example under consideration we’ll use <span class="math notranslate nohighlight">\(k' = 5\)</span>.</p>
@@ -867,7 +880,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div style='display: flex;justify-content: space-around;'><div><p style='font-size:17px;text-align:center'>Input correlations</p><table><tr><th rowspan="2">object</th><th colspan="10" style='text-align:center'>Ranks of the items</th><th rowspan="2">corr. coef</th></tr><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr><tr><td>0</td><td>5</td><td>8</td><td>0</td><td>2</td><td>6</td><td>3</td><td>5</td><td>1</td><td>7</td><td>5</td><td>-0.6655264799818821</td></tr><tr><td>1</td><td>7</td><td>0</td><td>5</td><td>7</td><td>4</td><td>2</td><td>1</td><td>7</td><td>1</td><td>2</td><td>0.9433748638354392</td></tr><tr><td>2</td><td>8</td><td>10</td><td>2</td><td>5</td><td>10</td><td>7</td><td>9</td><td>5</td><td>9</td><td>8</td><td>-0.3372300605285859</td></tr><tr><td>3</td><td>6</td><td>1</td><td>4</td><td>7</td><td>4</td><td>5</td><td>7</td><td>6</td><td>6</td><td>6</td><td>0.8974592464346675</td></tr><tr><td>4</td><td>7</td><td>10</td><td>2</td><td>7</td><td>9</td><td>8</td><td>9</td><td>5</td><td>10</td><td>8</td><td>0.9347546382694413</td></tr><tr><td>6</td><td>9</td><td>10</td><td>2</td><td>7</td><td>9</td><td>7</td><td>8</td><td>4</td><td>10</td><td>9</td><td>0.9636480072147563</td></tr><tr><td>7</td><td>6</td><td>8</td><td>0</td><td>4</td><td>6</td><td>4</td><td>5</td><td>1</td><td>7</td><td>5</td><td>-0.14162743907523523</td></tr><tr><td>8</td><td>5</td><td>2</td><td>4</td><td>7</td><td>4</td><td>5</td><td>7</td><td>5</td><td>7</td><td>6</td><td>0.9534686268568541</td></tr><tr><td>9</td><td>8</td><td>10</td><td>2</td><td>6</td><td>9</td><td>7</td><td>9</td><td>5</td><td>10</td><td>8</td><td>-0.5157266969762434</td></tr><tr><td>10</td><td>7</td><td>0</td><td>4</td><td>5</td><td>3</td><td>0</td><td>1</td><td>5</td><td>0</td><td>0</td><td>-0.5870995880756342</td></tr><tr><td>11</td><td>7</td><td>0</td><td>5</td><td>7</td><td>4</td><td>1</td><td>1</td><td>7</td><td>2</td><td>0</td><td>0.9249446195769584</td></tr><tr><td>12</td><td>9</td><td>10</td><td>3</td><td>7</td><td>10</td><td>8</td><td>10</td><td>5</td><td>10</td><td>9</td><td>-0.6119544960755207</td></tr><tr><td>13</td><td>9</td><td>3</td><td>8</td><td>9</td><td>8</td><td>5</td><td>3</td><td>10</td><td>4</td><td>2</td><td>-0.614780591668336</td></tr><tr><td>14</td><td>7</td><td>0</td><td>6</td><td>6</td><td>5</td><td>1</td><td>1</td><td>7</td><td>1</td><td>0</td><td>-0.4047021305093861</td></tr><tr><td>15</td><td>8</td><td>3</td><td>7</td><td>9</td><td>7</td><td>7</td><td>8</td><td>7</td><td>8</td><td>7</td><td>-0.687351286194773</td></tr><tr><td>16</td><td>9</td><td>2</td><td>8</td><td>9</td><td>6</td><td>4</td><td>3</td><td>9</td><td>3</td><td>2</td><td>-0.6405937217732891</td></tr><tr><td>17</td><td>7</td><td>0</td><td>6</td><td>6</td><td>5</td><td>2</td><td>1</td><td>6</td><td>1</td><td>1</td><td>-0.07537783614444088</td></tr><tr><td>18</td><td>8</td><td>4</td><td>6</td><td>9</td><td>7</td><td>7</td><td>8</td><td>7</td><td>9</td><td>9</td><td>-0.1909313313651758</td></tr><tr><td>19</td><td>4</td><td>0</td><td>3</td><td>5</td><td>2</td><td>2</td><td>5</td><td>4</td><td>6</td><td>4</td><td>-0.10326002528434575</td></tr></table></div><div style='font-size:100px'>→</div><div><p style='font-size:17px;text-align:center'>Collaboration</p><table><tr><th rowspan="2">object</th><th colspan="10" style='text-align:center'>Ranks of the items</th></tr><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr><tr><td>1</td><td>7</td><td>0</td><td>5</td><td>7</td><td>4</td><td>2</td><td>1</td><td>7</td><td>1</td><td>2</td></tr><tr><td>3</td><td>6</td><td>1</td><td>4</td><td>7</td><td>4</td><td>5</td><td>7</td><td>6</td><td>6</td><td>6</td></tr><tr><td>4</td><td>7</td><td>10</td><td>2</td><td>7</td><td>9</td><td>8</td><td>9</td><td>5</td><td>10</td><td>8</td></tr><tr><td>6</td><td>9</td><td>10</td><td>2</td><td>7</td><td>9</td><td>7</td><td>8</td><td>4</td><td>10</td><td>9</td></tr><tr><td>8</td><td>5</td><td>2</td><td>4</td><td>7</td><td>4</td><td>5</td><td>7</td><td>5</td><td>7</td><td>6</td></tr><tr><td>11</td><td>7</td><td>0</td><td>5</td><td>7</td><td>4</td><td>1</td><td>1</td><td>7</td><td>2</td><td>0</td></tr></table></div></div></div></div>
+<div class="output text_html"><div style='display: flex;justify-content: space-around;'><div><p style='font-size:17px;text-align:center'>Input correlations</p><table><tr><th rowspan="2">object</th><th colspan="10" style='text-align:center'>Ranks of the items</th><th rowspan="2">corr. coef</th></tr><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr><tr><td>0</td><td>7</td><td>10</td><td>1</td><td>4</td><td>8</td><td>5</td><td>7</td><td>3</td><td>9</td><td>7</td><td>-0.6585487100962388</td></tr><tr><td>1</td><td>9</td><td>1</td><td>7</td><td>9</td><td>6</td><td>4</td><td>3</td><td>9</td><td>3</td><td>4</td><td>0.9706598631614414</td></tr><tr><td>2</td><td>7</td><td>10</td><td>1</td><td>4</td><td>9</td><td>6</td><td>8</td><td>4</td><td>8</td><td>7</td><td>-0.23494364059142128</td></tr><tr><td>3</td><td>4</td><td>0</td><td>2</td><td>5</td><td>2</td><td>3</td><td>5</td><td>4</td><td>4</td><td>4</td><td>0.8868177539729338</td></tr><tr><td>4</td><td>8</td><td>10</td><td>3</td><td>8</td><td>10</td><td>9</td><td>10</td><td>6</td><td>10</td><td>9</td><td>0.9678515013548133</td></tr><tr><td>6</td><td>8</td><td>10</td><td>1</td><td>6</td><td>8</td><td>6</td><td>7</td><td>3</td><td>9</td><td>8</td><td>0.9684734181360412</td></tr><tr><td>7</td><td>8</td><td>10</td><td>1</td><td>6</td><td>8</td><td>6</td><td>7</td><td>3</td><td>9</td><td>7</td><td>-0.10267629080166289</td></tr><tr><td>8</td><td>3</td><td>0</td><td>2</td><td>5</td><td>2</td><td>3</td><td>5</td><td>3</td><td>5</td><td>4</td><td>0.9822113159149736</td></tr><tr><td>9</td><td>6</td><td>9</td><td>0</td><td>4</td><td>7</td><td>5</td><td>7</td><td>3</td><td>9</td><td>6</td><td>-0.5284045546165366</td></tr><tr><td>10</td><td>8</td><td>0</td><td>5</td><td>6</td><td>4</td><td>1</td><td>2</td><td>6</td><td>1</td><td>0</td><td>-0.5687019372571431</td></tr><tr><td>11</td><td>8</td><td>1</td><td>6</td><td>8</td><td>5</td><td>2</td><td>2</td><td>8</td><td>3</td><td>1</td><td>0.9682119865161783</td></tr><tr><td>12</td><td>5</td><td>8</td><td>0</td><td>3</td><td>6</td><td>4</td><td>7</td><td>1</td><td>7</td><td>5</td><td>-0.6082937972597738</td></tr><tr><td>13</td><td>5</td><td>0</td><td>4</td><td>5</td><td>4</td><td>1</td><td>0</td><td>6</td><td>0</td><td>0</td><td>-0.5888218039524754</td></tr><tr><td>14</td><td>6</td><td>0</td><td>5</td><td>5</td><td>4</td><td>0</td><td>0</td><td>6</td><td>0</td><td>0</td><td>-0.3747452083913793</td></tr><tr><td>15</td><td>6</td><td>1</td><td>5</td><td>7</td><td>5</td><td>5</td><td>6</td><td>5</td><td>6</td><td>5</td><td>-0.6624220097957402</td></tr><tr><td>16</td><td>6</td><td>0</td><td>5</td><td>6</td><td>3</td><td>1</td><td>0</td><td>6</td><td>0</td><td>0</td><td>-0.6335126870513954</td></tr><tr><td>17</td><td>10</td><td>3</td><td>9</td><td>9</td><td>8</td><td>5</td><td>4</td><td>9</td><td>4</td><td>4</td><td>-0.03513022318602803</td></tr><tr><td>18</td><td>8</td><td>4</td><td>6</td><td>9</td><td>7</td><td>7</td><td>8</td><td>7</td><td>9</td><td>9</td><td>-0.16684596793838452</td></tr><tr><td>19</td><td>7</td><td>3</td><td>6</td><td>8</td><td>5</td><td>5</td><td>8</td><td>7</td><td>9</td><td>7</td><td>-0.0622792292642041</td></tr></table></div><div style='font-size:100px'>→</div><div><p style='font-size:17px;text-align:center'>Collaboration</p><table><tr><th rowspan="2">object</th><th colspan="10" style='text-align:center'>Ranks of the items</th></tr><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr><tr><td>1</td><td>9</td><td>1</td><td>7</td><td>9</td><td>6</td><td>4</td><td>3</td><td>9</td><td>3</td><td>4</td></tr><tr><td>3</td><td>4</td><td>0</td><td>2</td><td>5</td><td>2</td><td>3</td><td>5</td><td>4</td><td>4</td><td>4</td></tr><tr><td>4</td><td>8</td><td>10</td><td>3</td><td>8</td><td>10</td><td>9</td><td>10</td><td>6</td><td>10</td><td>9</td></tr><tr><td>6</td><td>8</td><td>10</td><td>1</td><td>6</td><td>8</td><td>6</td><td>7</td><td>3</td><td>9</td><td>8</td></tr><tr><td>8</td><td>3</td><td>0</td><td>2</td><td>5</td><td>2</td><td>3</td><td>5</td><td>3</td><td>5</td><td>4</td></tr><tr><td>11</td><td>8</td><td>1</td><td>6</td><td>8</td><td>5</td><td>2</td><td>2</td><td>8</td><td>3</td><td>1</td></tr></table></div></div></div></div>
 </div>
 <p>So the collaboration in this case will be <span class="math notranslate nohighlight">\(U_5=\{1,3,4,6,8,11\}\)</span>. Set of indices of objects belonging to the collaboration of the 5th element.</p>
 </section>
@@ -876,7 +889,105 @@ document.write(`
 <p>Now when we have collaboration we can predict expected preferences for the items for 5-th element.</p>
 <p>Estimation of the preference of <span class="math notranslate nohighlight">\(j\)</span>-th item for user <span class="math notranslate nohighlight">\(k'\)</span> can be computed using:</p>
 <div class="math notranslate nohighlight">
-\[a_{k', j}=\overline{r}_{k'} + \frac{\sum_{j\in U_{k'}}(r_{lj}-\overline{r}_l)c_{k'l}}{\sum_{l \in U_{k'}}|c_{k'l}|}\]</div>
+\[a_{k', j}=\overline{r}_{k'} + \frac{\sum_{l\in U_{k'}}(r_{lj}-\overline{r}_l)c_{k'l}}{\sum_{l \in U_{k'}}|c_{k'l}|}\]</div>
+<p>Suppose we want to make predict for some <span class="math notranslate nohighlight">\(j\)</span>-s item. <span class="math notranslate nohighlight">\(j\)</span> is defined in the cell before:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interest_j</span> <span class="o">=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So lets research this formula step by step.</p>
+<section id="remove-object-bias">
+<h3>Remove object bias<a class="headerlink" href="#remove-object-bias" title="Link to this heading">#</a></h3>
+<p>Some objects may have some specificity, which is expressed in the fact that the average valuation of this or that object differs from others. For example, let’s say we are talking about the clients of a certain cinema service - some clients are simply more rigorous themselves, so they have any score lower.</p>
+<p>To understand what I’m talking about, consider objects of the same group but with completely different average <span class="math notranslate nohighlight">\(r\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">considered_group</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">group_indeces</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">groups</span><span class="o">==</span><span class="n">considered_group</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ind_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">group_indeces</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">max_sum_index</span> <span class="o">=</span> <span class="n">group_indeces</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">ind_sum</span><span class="p">)]</span>
+<span class="n">min_sum_index</span> <span class="o">=</span> <span class="n">group_indeces</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">ind_sum</span><span class="p">)]</span>
+
+<span class="n">content</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;&lt;tr&gt;&quot;</span> <span class="o">+</span> 
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;Maximum (original index </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">max_sum_index</span><span class="p">)</span><span class="si">}</span><span class="s2">)&lt;/td&gt;&quot;</span> <span class="o">+</span> 
+        <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">R</span><span class="p">[</span><span class="n">max_sum_index</span><span class="p">]])</span> <span class="o">+</span> 
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">considered_group</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="o">+</span>
+    <span class="s2">&quot;&lt;/tr&gt;&lt;tr&gt;&quot;</span> <span class="o">+</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;Minimum (original index </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">min_sum_index</span><span class="p">)</span><span class="si">}</span><span class="s2">)&lt;/td&gt;&quot;</span> <span class="o">+</span>
+        <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">R</span><span class="p">[</span><span class="n">min_sum_index</span><span class="p">]])</span> <span class="o">+</span> 
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">considered_group</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="o">+</span>
+    <span class="s2">&quot;&lt;/tr&gt;&quot;</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;table&gt;</span><span class="si">{</span><span class="n">common_header</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">content</span><span class="si">}</span><span class="s2">&lt;/table&gt;&quot;</span><span class="p">))</span>
+<span class="n">corelation_coefficient</span> <span class="o">=</span> \
+    <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">max_sum_index</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="n">min_sum_index</span><span class="p">])[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">message_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Correlation coefficient - </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">corelation_coefficient</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;p style=&#39;font-size:15px&#39;&gt;</span><span class="si">{</span><span class="n">message_text</span><span class="si">}</span><span class="s2">&lt;/p&gt;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><tr><th rowspan="2">Object</th><th colspan="10" style='text-align:center'>Ranks of the items</th><th rowspan="2">Group</th></tr><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr><tr><td>Maximum (original index 17)</td><td>10</td><td>3</td><td>9</td><td>9</td><td>8</td><td>5</td><td>4</td><td>9</td><td>4</td><td>4</td><td>0</td></tr><tr><td>Minimum (original index 13)</td><td>5</td><td>0</td><td>4</td><td>5</td><td>4</td><td>1</td><td>0</td><td>6</td><td>0</td><td>0</td><td>0</td></tr></table></div><div class="output text_html"><p style='font-size:15px'>Correlation coefficient - 0.971</p></div></div>
+</div>
+<p>They have completely different numbers, but the correlation is very strong - they both prefer the same items, but one is generally less “generous” with the grade.</p>
+<p>So by operation <span class="math notranslate nohighlight">\((r_{lj}-\overline{r}_l)\)</span> in the numerator we are trying to remove bias <span class="math notranslate nohighlight">\(l\)</span>-th object from the ratings for <span class="math notranslate nohighlight">\(j\)</span>-th item. Or more spcificly for example under consideration:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="n">collaboration</span><span class="p">[:,</span> <span class="p">[</span><span class="n">interest_j</span><span class="p">]]</span>
+<span class="n">biases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">collaboration</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">corrected_items</span> <span class="o">=</span> <span class="n">values</span><span class="o">-</span><span class="n">biases</span>
+
+<span class="n">header</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;tr&gt;</span>
+<span class="s2">    &lt;th&gt;$l$&lt;/th&gt;</span>
+<span class="s2">    &lt;th&gt;$r_</span><span class="se">{{</span><span class="s2">l,</span><span class="si">{</span><span class="n">interest_j</span><span class="si">}</span><span class="se">}}</span><span class="s2">$&lt;/th&gt;</span>
+<span class="s2">    &lt;th&gt;$\overline</span><span class="se">{{</span><span class="s2">r_l</span><span class="se">}}</span><span class="s2">$&lt;/th&gt;</span>
+<span class="s2">    &lt;th&gt;$r_</span><span class="se">{{</span><span class="s2">l,</span><span class="si">{</span><span class="n">interest_j</span><span class="si">}</span><span class="se">}}</span><span class="s2"> - \overline</span><span class="se">{{</span><span class="s2">r_l</span><span class="se">}}</span><span class="s2">$&lt;/th&gt;</span>
+<span class="s2">&lt;/tr&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+    <span class="s2">&quot;&lt;tr&gt;&quot;</span> <span class="o">+</span> 
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">collatoratoin_indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">i</span><span class="p">])</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="o">+</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="n">biases</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="o">+</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;td&gt;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">corrected_items</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">i</span><span class="p">],</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span> <span class="o">+</span>
+    <span class="s2">&quot;&lt;/tr&gt;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">collaboration</span><span class="p">))</span>
+<span class="p">])</span>
+<span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;table&gt;</span><span class="si">{</span><span class="n">header</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">content</span><span class="si">}</span><span class="s2">&lt;/table&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<tr>
+    <th>$l$</th>
+    <th>$r_{l,4}$</th>
+    <th>$\overline{r_l}$</th>
+    <th>$r_{l,4} - \overline{r_l}$</th>
+</tr>
+<tr><td>1</td><td>6</td><td>5.5</td><td>0.5</td></tr><tr><td>3</td><td>2</td><td>3.3</td><td>-1.3</td></tr><tr><td>4</td><td>10</td><td>8.3</td><td>1.7</td></tr><tr><td>6</td><td>8</td><td>6.6</td><td>1.4</td></tr><tr><td>8</td><td>2</td><td>3.2</td><td>-1.2</td></tr><tr><td>11</td><td>5</td><td>4.4</td><td>0.6</td></tr></table></div></div>
+</div>
+<p>Thus, using natural language <span class="math notranslate nohighlight">\((r_{lj}-\overline{r}_l)\)</span>, the preferences of the objects from the collaboration are corrected for the item <span class="math notranslate nohighlight">\(j\)</span>.  Obviosly some aggregation of these should characterise the preferences of the object we are considering to element <span class="math notranslate nohighlight">\(j\)</span>.</p>
+</section>
+<section id="weighing-of-objects">
+<h3>Weighing of objects<a class="headerlink" href="#weighing-of-objects" title="Link to this heading">#</a></h3>
+<p>Obviously, objects within a collaboration that are more similar to the object in question than others should affect the result more than less similar objects from the collaboration. Therefore, it is rational to weight the contributions of objects <span class="math notranslate nohighlight">\((r_{lj}-\overline{r}_l)\)</span> from the colaboration by their similarity measure to the object in question. In our case, the similarity measure is the Pearson correlation coefficient <span class="math notranslate nohighlight">\((c_{k',l})\)</span>.</p>
+<p>We can interpret the components of the formula:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\sum_{l\in U_{k'}}(r_{lj}-\overline{r}_l)c_{k'l}}{\sum_{l \in U_{k'}}|c_{k'l}|}\]</div>
+<p>As weighted on correlations contributions of the objects from collaboration.</p>
+<p><strong>Note</strong> there is sum of the absolute values of the correlation coefficients - <span class="math notranslate nohighlight">\(|c_{k'l}|\)</span>. If the definition of collaboration allows for objects with a negative relationship - i.e. like anti-collaboration, e.g. people with diametrically opposed views. Accordingly, we have to take into account their high scores as something bad for the client in question. But we have to weight them by absolute value, so in the denominator is the correlation module.</p>
+</section>
+<section id="add-bias">
+<h3>Add bias<a class="headerlink" href="#add-bias" title="Link to this heading">#</a></h3>
+<p>The last compoment of the formula is <span class="math notranslate nohighlight">\(\overline{r}_{k'}\)</span>. In remove bias step we removed biases of the objects. But object under consideration have it’s own bias - by adding it to the result we bring the prediction to the mean values of the object in question.</p>
+</section>
 </section>
 </section>
 
@@ -910,6 +1021,24 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="../collaborative_filtering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Collaborative filtering</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../task_generation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Task generation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -928,7 +1057,12 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-generation">Task generation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaboration">Collaboration</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-object-bias">Remove object bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weighing-of-objects">Weighing of objects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-bias">Add bias</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

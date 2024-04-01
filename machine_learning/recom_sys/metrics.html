@@ -192,7 +192,8 @@
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../recom_sys.html">Recommendation systems</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="collaborative_filtering.html">Collaborative filtering</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="simple">
+<li class="toctree-l2 has-children"><a class="reference internal" href="collaborative_filtering.html">Collaborative filtering</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="collaborative_filtering/approximation_formula.html">Approximation formula</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="task_generation.html">Task generation</a></li>
@@ -697,8 +698,16 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#models">Models</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recall-k">recall@k</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-k">precision@k</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recall-k">recall@k</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#consider-specific">Consider specific</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code">Python code</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-k">precision@k</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Consider specific</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Python code</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -717,6 +726,8 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
 
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
@@ -926,7 +937,200 @@ document.write(`
 <p><code class="docutils literal notranslate"><span class="pre">recall&#64;k</span></code> gives a measure of how many of the relevant items are present in top K out of all the relevant items, where <span class="math notranslate nohighlight">\(k\)</span> is the number of recommendations generated for a user. Or more formally:</p>
 <div class="math notranslate nohighlight">
 \[recall&#64;k = \frac{\text{number of relevant in first k items}}{\text{total number of relevant}}\]</div>
-<p>The following cell shows the code to calculate the recall for our example. We calculated it for each object, but then took the average.</p>
+<section id="consider-specific">
+<h3>Consider specific<a class="headerlink" href="#consider-specific" title="Link to this heading">#</a></h3>
+<p>Let’s examine a specific object to gain a clear understanding of the situation and calculate the recall at 3 (<span class="math notranslate nohighlight">\(recall&#64;3\)</span>) for it. We will compare model 1 and model 2 to discern any differences. In the following cell, we have extracted a subframe for the specific object and sorted it based on the results from the models. The example has been selected to highlight the disparity in <span class="math notranslate nohighlight">\(recall&#64;3\)</span> between the models:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">model1_tab</span> <span class="o">=</span> <span class="n">R_test</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="n">R_frame</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">obj</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;item&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;relevant&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model1_results&quot;</span>
+    <span class="p">]</span>
+<span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s2">&quot;model1_results&quot;</span><span class="p">,</span> 
+    <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">)</span>
+
+<span class="n">model2_tab</span> <span class="o">=</span> <span class="n">R_test</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="n">R_frame</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">obj</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;item&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;relevant&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model2_results&quot;</span>
+    <span class="p">]</span>
+<span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s2">&quot;model2_results&quot;</span><span class="p">,</span> 
+    <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">)</span>
+
+<span class="n">model1_recall</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">model1_tab</span><span class="p">[</span><span class="s2">&quot;relevant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span>
+    <span class="n">model1_tab</span><span class="p">[</span><span class="s2">&quot;relevant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">model2_recall</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">model2_tab</span><span class="p">[</span><span class="s2">&quot;relevant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span>
+    <span class="n">model2_tab</span><span class="p">[</span><span class="s2">&quot;relevant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div style=&#39;display: flex;justify-content: space-around;&#39;&gt;</span>
+<span class="s2">        &lt;div&gt;</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">model1_tab</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">            &lt;p style=&#39;font-size:20px&#39;&gt;</span>
+<span class="s2">                recall@</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">model1_recall</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%</span>
+<span class="s2">            &lt;/p&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">        &lt;div&gt;</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">model2_tab</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">            &lt;p style=&#39;font-size:20px&#39;&gt;</span>
+<span class="s2">                recall@</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">model2_recall</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%</span>
+<span class="s2">            &lt;/p&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+    <div style='display: flex;justify-content: space-around;'>
+        <div>
+            <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>relevant</th>
+      <th>model1_results</th>
+    </tr>
+    <tr>
+      <th>item</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0</td>
+      <td>0.763529</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>0.604313</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>1</td>
+      <td>0.595839</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0.452637</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0.424210</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1</td>
+      <td>0.380536</td>
+    </tr>
+  </tbody>
+</table>
+            <p style='font-size:20px'>
+                recall@3 - 40.0%
+            </p>
+        </div>
+        <div>
+            <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>relevant</th>
+      <th>model2_results</th>
+    </tr>
+    <tr>
+      <th>item</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>1</td>
+      <td>0.805351</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0</td>
+      <td>0.763529</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0.613521</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>0.576874</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0.568975</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1</td>
+      <td>0.443676</td>
+    </tr>
+  </tbody>
+</table>
+            <p style='font-size:20px'>
+                recall@3 - 60.0%
+            </p>
+        </div>
+    </div>
+    </div></div>
+</div>
+</section>
+<section id="python-code">
+<h3>Python code<a class="headerlink" href="#python-code" title="Link to this heading">#</a></h3>
+<p>There is a function that represents the realisation of <span class="math notranslate nohighlight">\(recall&#64;k\)</span> in python.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">recall_k</span><span class="p">(</span><span class="n">relevance_array</span><span class="p">,</span> <span class="n">pred_score</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
@@ -950,14 +1154,89 @@ document.write(`
 <span class="sd">    out : float</span>
 <span class="sd">        realisation of the metric.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">relevance_array</span><span class="p">)</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="n">pred_score</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;`relevance_array` and `pred_score` must be the same size&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">relevance_array</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;k is greater than the number of observations&quot;</span>
+        <span class="p">)</span>
+    
     <span class="n">relevant_in_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
         <span class="n">relevance_array</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">pred_score</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]][:</span><span class="n">k</span><span class="p">]</span>
     <span class="p">)</span>
     <span class="n">relevant_total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">relevance_array</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">relevant_in_k</span><span class="o">/</span><span class="n">relevant_total</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is some unitests for function below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestRecall</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_different_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        We must check that if the sizes of arrays with </span>
+<span class="sd">        relevance and prediction differ, an error must </span>
+<span class="sd">        be rased.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">recall_k</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]),</span>
+                <span class="mi">1</span>
+            <span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">test_k_more_obs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        K cannot be more than the number of observations </span>
+<span class="sd">        we are considering.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">recall_k</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]),</span>
+                <span class="mi">10</span>
+            <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">test_computions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Just basic test with known result</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">real_ans</span> <span class="o">=</span> <span class="n">recall_k</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]),</span>
+            <span class="mi">3</span>
+        <span class="p">)</span>
+        <span class="n">exp_ans</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">real_ans</span><span class="p">,</span> <span class="n">exp_ans</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">0.000001</span><span class="p">)</span>
+<span class="n">ans</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">TestRecall</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test_computions (__main__.TestRecall)
+Just basic test with known result ... ok
+test_different_sizes (__main__.TestRecall)
+We must check that if the sizes of arrays with ... ok
+test_k_more_obs (__main__.TestRecall)
+K cannot be more than the number of observations ... ok
 
-<span class="n">show</span> <span class="o">=</span> <span class="n">R_test</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell shows the code to calculate the recall for our example. We calculated it for each object, but then took the average.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="o">=</span> <span class="n">R_test</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
     <span class="k">lambda</span> <span class="nb">object</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span>
         <span class="s2">&quot;recall for model 1&quot;</span> <span class="p">:</span> <span class="n">recall_k</span><span class="p">(</span>
             <span class="n">relevance_array</span><span class="o">=</span><span class="nb">object</span><span class="p">[</span><span class="s2">&quot;relevant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span>
@@ -1091,12 +1370,204 @@ document.write(`
 </div></div></div>
 </div>
 </section>
+</section>
 <section id="precision-k">
 <h2>precision&#64;k<a class="headerlink" href="#precision-k" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">precision&#64;k</span></code> is a fraction of relevant elements in the first k recommendations. Or more formally:</p>
 <div class="math notranslate nohighlight">
-\[recall&#64;k = \frac{\text{number of relevant in first k items}}{k}\]</div>
-<p>The following cell shows the code to calculate the precision for our example. We calculated it for each object, but then took the average.</p>
+\[precision&#64;k = \frac{\text{number of relevant in first k items}}{k}\]</div>
+<section id="id1">
+<h3>Consider specific<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Let’s examine a specific object to gain a clear understanding of the situation and calculate the recall at 3 (<span class="math notranslate nohighlight">\(precision&#64;3\)</span>) for it. We will compare model 1 and model 2 to discern any differences. In the following cell, we have extracted a subframe for the specific object and sorted it based on the results from the models. The example has been selected to highlight the disparity in <span class="math notranslate nohighlight">\(precision&#64;3\)</span> between the models:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">model1_tab</span> <span class="o">=</span> <span class="n">R_test</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="n">R_frame</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">obj</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;item&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;relevant&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model1_results&quot;</span>
+    <span class="p">]</span>
+<span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s2">&quot;model1_results&quot;</span><span class="p">,</span> 
+    <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">)</span>
+
+<span class="n">model2_tab</span> <span class="o">=</span> <span class="n">R_test</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="n">R_frame</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">obj</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;item&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;relevant&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model2_results&quot;</span>
+    <span class="p">]</span>
+<span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s2">&quot;model2_results&quot;</span><span class="p">,</span> 
+    <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">)</span>
+
+<span class="n">model1_recall</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">model1_tab</span><span class="p">[</span><span class="s2">&quot;relevant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">model2_recall</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">model2_tab</span><span class="p">[</span><span class="s2">&quot;relevant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div style=&#39;display: flex;justify-content: space-around;&#39;&gt;</span>
+<span class="s2">        &lt;div&gt;</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">model1_tab</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">            &lt;p style=&#39;font-size:20px&#39;&gt;</span>
+<span class="s2">                recall@</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">model1_recall</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%</span>
+<span class="s2">            &lt;/p&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">        &lt;div&gt;</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">model2_tab</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">            &lt;p style=&#39;font-size:20px&#39;&gt;</span>
+<span class="s2">                recall@</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">model2_recall</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%</span>
+<span class="s2">            &lt;/p&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+    <div style='display: flex;justify-content: space-around;'>
+        <div>
+            <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>relevant</th>
+      <th>model1_results</th>
+    </tr>
+    <tr>
+      <th>item</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0</td>
+      <td>0.763529</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>0.604313</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>1</td>
+      <td>0.595839</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0.452637</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0.424210</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1</td>
+      <td>0.380536</td>
+    </tr>
+  </tbody>
+</table>
+            <p style='font-size:20px'>
+                recall@3 - 66.67%
+            </p>
+        </div>
+        <div>
+            <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>relevant</th>
+      <th>model2_results</th>
+    </tr>
+    <tr>
+      <th>item</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>1</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>1</td>
+      <td>0.805351</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0</td>
+      <td>0.763529</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0.613521</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>0.576874</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0.568975</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1</td>
+      <td>0.443676</td>
+    </tr>
+  </tbody>
+</table>
+            <p style='font-size:20px'>
+                recall@3 - 100.0%
+            </p>
+        </div>
+    </div>
+    </div></div>
+</div>
+</section>
+<section id="id2">
+<h3>Python code<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>There is a function that represents the realisation of <span class="math notranslate nohighlight">\(precision&#64;k\)</span> in python.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">precision_k</span><span class="p">(</span><span class="n">relevance_array</span><span class="p">,</span> <span class="n">pred_score</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
@@ -1122,12 +1593,87 @@ document.write(`
 <span class="sd">    out : float</span>
 <span class="sd">        realisation of the metric.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">relevant_in_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">relevance_array</span><span class="p">)</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="n">pred_score</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;`relevance_array` and `pred_score` must be the same size&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">relevance_array</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;k is greater than the number of observations&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
         <span class="n">relevance_array</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">pred_score</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]][:</span><span class="n">k</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">relevant_in_k</span><span class="o">/</span><span class="n">k</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is some unitests for function below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestPrecision</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_different_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        We must check that if the sizes of arrays with </span>
+<span class="sd">        relevance and prediction differ, an error must </span>
+<span class="sd">        be rased.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">precision_k</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]),</span>
+                <span class="mi">1</span>
+            <span class="p">)</span>
 
-<span class="n">show</span> <span class="o">=</span> <span class="n">R_test</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">test_k_more_obs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        K cannot be more than the number of observations </span>
+<span class="sd">        we are considering.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">precision_k</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]),</span>
+                <span class="mi">10</span>
+            <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">test_computions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Just basic test with known result</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">real_ans</span> <span class="o">=</span> <span class="n">precision_k</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]),</span>
+            <span class="mi">3</span>
+        <span class="p">)</span>
+        <span class="n">exp_ans</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">real_ans</span><span class="p">,</span> <span class="n">exp_ans</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">0.000001</span><span class="p">)</span>
+
+<span class="n">ans</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">TestPrecision</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test_computions (__main__.TestPrecision)
+Just basic test with known result ... ok
+test_different_sizes (__main__.TestPrecision)
+We must check that if the sizes of arrays with ... ok
+test_k_more_obs (__main__.TestPrecision)
+K cannot be more than the number of observations ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell shows the code to calculate the precision for our example. We calculated it for each object, but then took the average.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="o">=</span> <span class="n">R_test</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
     <span class="k">lambda</span> <span class="nb">object</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span>
         <span class="s2">&quot;precision for model 1&quot;</span> <span class="p">:</span> <span class="n">precision_k</span><span class="p">(</span>
             <span class="n">relevance_array</span><span class="o">=</span><span class="nb">object</span><span class="p">[</span><span class="s2">&quot;relevant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span>
@@ -1262,6 +1808,7 @@ document.write(`
 </div>
 </section>
 </section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1332,8 +1879,16 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#models">Models</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recall-k">recall@k</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-k">precision@k</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recall-k">recall@k</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#consider-specific">Consider specific</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code">Python code</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-k">precision@k</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Consider specific</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Python code</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
