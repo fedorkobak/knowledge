@@ -701,14 +701,25 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defined-names">Defined names</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functiontransformer">FunctionTransformer</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defined-names">Defined names</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standartscaler"><code class="docutils literal notranslate"><span class="pre">StandartScaler</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomialfeatures"><code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functiontransformer"><code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-one"><code class="docutils literal notranslate"><span class="pre">"one-to-one"</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#callable">Callable</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-inputs">Expected inputs</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-example">Real world example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-output">Pandas output</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#whole-pipeline">Whole pipeline</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-generation">Task generation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline">Pipeline</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importances">Feature importances</a></li>
 </ul>
 </li>
 </ul>
@@ -728,7 +739,9 @@ document.write(`
 <p>Fortunately, a solution to this problem has been introduced in <code class="docutils literal notranslate"><span class="pre">sklearn==1.1</span></code>. This solution involves the utilization of the <code class="docutils literal notranslate"><span class="pre">get_feature_names_out</span></code> method, which returns the feature names as values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
@@ -736,8 +749,16 @@ document.write(`
 
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">FunctionTransformer</span><span class="p">,</span>
-    <span class="n">StandardScaler</span>
+    <span class="n">StandardScaler</span><span class="p">,</span>
+    <span class="n">PolynomialFeatures</span><span class="p">,</span>
+    <span class="n">OneHotEncoder</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_regression</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># this is frame with few numeric columns that</span>
 <span class="c1"># is typically used for examples</span>
@@ -760,6 +781,8 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code>;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code>.</p></li>
 </ul>
+<section id="standartscaler">
+<h3><code class="docutils literal notranslate"><span class="pre">StandartScaler</span></code><a class="headerlink" href="#standartscaler" title="Link to this heading">#</a></h3>
 <p>So in the following example cell is for <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> - it just keeps names of the input array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -802,41 +825,41 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>-8.131828</td>
-      <td>10.296724</td>
-      <td>-2.805912</td>
+      <td>12.275864</td>
+      <td>17.148990</td>
+      <td>19.155278</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>-13.554104</td>
-      <td>-2.266557</td>
-      <td>12.232729</td>
+      <td>-2.397202</td>
+      <td>-4.128908</td>
+      <td>-3.452111</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-4.692978</td>
-      <td>12.634279</td>
-      <td>-6.491538</td>
+      <td>3.700098</td>
+      <td>-18.291530</td>
+      <td>-0.753198</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3.321755</td>
-      <td>-2.777103</td>
-      <td>16.842161</td>
+      <td>10.804480</td>
+      <td>0.037542</td>
+      <td>6.937158</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-1.941243</td>
-      <td>1.882488</td>
-      <td>1.414934</td>
+      <td>-5.167947</td>
+      <td>-3.457051</td>
+      <td>3.006671</td>
     </tr>
   </tbody>
 </table>
-</div></div><div class="output text_html"><p style='font-size:17px'>transform result</p></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.55080177,  0.99330982, -0.79206436],
-       [-1.50433217, -0.9741672 ,  0.89886661],
-       [ 0.05393485,  1.35938348, -1.20647272],
-       [ 1.46335989, -1.05412147,  1.41714685],
-       [ 0.53783921, -0.32440464, -0.31747638]])
+</div></div><div class="output text_html"><p style='font-size:17px'>transform result</p></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.21784794,  1.6660755 ,  1.79282189],
+       [-0.90120523, -0.21088982, -1.06620321],
+       [-0.02064609, -1.46020262, -0.72488734],
+       [ 1.00535382,  0.15664092,  0.24766724],
+       [-1.30135044, -0.15162398, -0.24939858]])
 </pre></div>
 </div>
 <div class="output text_html"><p style='font-size:17px'>.get_features_names_out result</p></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;feature0&#39;, &#39;feature1&#39;, &#39;feature2&#39;], dtype=object)
@@ -845,8 +868,92 @@ document.write(`
 </div>
 </div>
 </section>
+<section id="polynomialfeatures">
+<h3><code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code><a class="headerlink" href="#polynomialfeatures" title="Link to this heading">#</a></h3>
+<p>The example we considered before was for <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> - it returns the same amount of features as it was in the input. But what if we consider transformers that output more columns than there were in the input?</p>
+<p>Obviously <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> belongs to such transformers in that it returns products and powers of the original features. So the next cell prints out <code class="docutils literal notranslate"><span class="pre">get_feature_names</span></code> from <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poly_transformer</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">()</span>
+<span class="n">poly_transformer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">input_frame</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">header_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Input frame&quot;</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">input_frame</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">header_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Output feature names&quot;</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">poly_transformer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><p style='font-size:17px'>Input frame</p></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature0</th>
+      <th>feature1</th>
+      <th>feature2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>12.275864</td>
+      <td>17.148990</td>
+      <td>19.155278</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-2.397202</td>
+      <td>-4.128908</td>
+      <td>-3.452111</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.700098</td>
+      <td>-18.291530</td>
+      <td>-0.753198</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10.804480</td>
+      <td>0.037542</td>
+      <td>6.937158</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-5.167947</td>
+      <td>-3.457051</td>
+      <td>3.006671</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><p style='font-size:17px'>Output feature names</p></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;1&#39;, &#39;feature0&#39;, &#39;feature1&#39;, &#39;feature2&#39;, &#39;feature0^2&#39;,
+       &#39;feature0 feature1&#39;, &#39;feature0 feature2&#39;, &#39;feature1^2&#39;,
+       &#39;feature1 feature2&#39;, &#39;feature2^2&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Everything is pretty simple - it writes the names of the inputs used in the product one by one and uses the <code class="docutils literal notranslate"><span class="pre">^</span></code> symbol to declare the power.</p>
+<p>It seems that other transformers with such features will have something similar - quite simple, but not really customisable.</p>
+</section>
+</section>
 <section id="functiontransformer">
-<h2>FunctionTransformer<a class="headerlink" href="#functiontransformer" title="Link to this heading">#</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code><a class="headerlink" href="#functiontransformer" title="Link to this heading">#</a></h2>
 <p>This transformer have a bit tricky behaviour of <code class="docutils literal notranslate"><span class="pre">get_feature_names_out</span></code> method.</p>
 <p>You have to specify <code class="docutils literal notranslate"><span class="pre">feature_names_out</span></code>. It can be <code class="docutils literal notranslate"><span class="pre">&quot;one-to-one&quot;</span></code> or something callable. For both options I have examples below.</p>
 <section id="one-to-one">
@@ -896,33 +1003,33 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>-8.131828</td>
-      <td>10.296724</td>
-      <td>-2.805912</td>
+      <td>12.275864</td>
+      <td>17.148990</td>
+      <td>19.155278</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>-13.554104</td>
-      <td>-2.266557</td>
-      <td>12.232729</td>
+      <td>-2.397202</td>
+      <td>-4.128908</td>
+      <td>-3.452111</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-4.692978</td>
-      <td>12.634279</td>
-      <td>-6.491538</td>
+      <td>3.700098</td>
+      <td>-18.291530</td>
+      <td>-0.753198</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3.321755</td>
-      <td>-2.777103</td>
-      <td>16.842161</td>
+      <td>10.804480</td>
+      <td>0.037542</td>
+      <td>6.937158</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-1.941243</td>
-      <td>1.882488</td>
-      <td>1.414934</td>
+      <td>-5.167947</td>
+      <td>-3.457051</td>
+      <td>3.006671</td>
     </tr>
   </tbody>
 </table>
@@ -952,33 +1059,33 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>-8.131828</td>
-      <td>10.296724</td>
-      <td>-2.805912</td>
+      <td>12.275864</td>
+      <td>17.148990</td>
+      <td>19.155278</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>-13.554104</td>
-      <td>-2.266557</td>
-      <td>12.232729</td>
+      <td>-2.397202</td>
+      <td>-4.128908</td>
+      <td>-3.452111</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-4.692978</td>
-      <td>12.634279</td>
-      <td>-6.491538</td>
+      <td>3.700098</td>
+      <td>-18.291530</td>
+      <td>-0.753198</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3.321755</td>
-      <td>-2.777103</td>
-      <td>16.842161</td>
+      <td>10.804480</td>
+      <td>0.037542</td>
+      <td>6.937158</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-1.941243</td>
-      <td>1.882488</td>
-      <td>1.414934</td>
+      <td>-5.167947</td>
+      <td>-3.457051</td>
+      <td>3.006671</td>
     </tr>
   </tbody>
 </table>
@@ -1014,7 +1121,7 @@ document.write(`
 <span class="n">display</span><span class="p">(</span><span class="n">features_output</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span>
     <span class="s2">&quot;Check if first input of the feature_names_out&quot;</span>
-    <span class="s2">&quot;really initial transformer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;really initial transformer - &quot;</span><span class="p">,</span>
     <span class="n">features_output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="n">my_transformer</span>
 <span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">header_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Second argument - input feature names&quot;</span><span class="p">)))</span>
@@ -1427,9 +1534,9 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>FunctionTransformer(feature_names_out=&lt;function &lt;lambda&gt; at 0x7fbb024ddcf0&gt;,
-                    func=&lt;function &lt;lambda&gt; at 0x7fbb024dd510&gt;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;FunctionTransformer<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.preprocessing.FunctionTransformer.html">?<span>Documentation for FunctionTransformer</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>FunctionTransformer(feature_names_out=&lt;function &lt;lambda&gt; at 0x7fbb024ddcf0&gt;,
-                    func=&lt;function &lt;lambda&gt; at 0x7fbb024dd510&gt;)</pre></div> </div></div></div></div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Check if first input of the feature_names_outreally initial transformer True
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>FunctionTransformer(feature_names_out=&lt;function &lt;lambda&gt; at 0x7f973c2500d0&gt;,
+                    func=&lt;function &lt;lambda&gt; at 0x7f973c250040&gt;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;FunctionTransformer<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.preprocessing.FunctionTransformer.html">?<span>Documentation for FunctionTransformer</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>FunctionTransformer(feature_names_out=&lt;function &lt;lambda&gt; at 0x7f973c2500d0&gt;,
+                    func=&lt;function &lt;lambda&gt; at 0x7f973c250040&gt;)</pre></div> </div></div></div></div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Check if first input of the feature_names_outreally initial transformer -  True
 </pre></div>
 </div>
 <div class="output text_html"><p style='font-size:17px'>Second argument - input feature names</p></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;feature0&#39;, &#39;feature1&#39;, &#39;feature2&#39;], dtype=object)
@@ -1506,46 +1613,46 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   <tbody>
     <tr>
       <th>0</th>
-      <td>-8.131828</td>
-      <td>10.296724</td>
-      <td>-2.805912</td>
+      <td>12.275864</td>
+      <td>17.148990</td>
+      <td>19.155278</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>-13.554104</td>
-      <td>-2.266557</td>
-      <td>12.232729</td>
+      <td>-2.397202</td>
+      <td>-4.128908</td>
+      <td>-3.452111</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-4.692978</td>
-      <td>12.634279</td>
-      <td>-6.491538</td>
+      <td>3.700098</td>
+      <td>-18.291530</td>
+      <td>-0.753198</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3.321755</td>
-      <td>-2.777103</td>
-      <td>16.842161</td>
+      <td>10.804480</td>
+      <td>0.037542</td>
+      <td>6.937158</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-1.941243</td>
-      <td>1.882488</td>
-      <td>1.414934</td>
+      <td>-5.167947</td>
+      <td>-3.457051</td>
+      <td>3.006671</td>
     </tr>
   </tbody>
 </table>
-</div></div><div class="output text_html"><p style='font-size:17px'>transform output</p></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 6.61266342e+01, -5.37730446e+02,  1.06022516e+02,
-         1.09168453e+03,  7.87314246e+00, -2.20913453e+01],
-       [ 1.83713739e+02, -2.49007514e+03,  5.13727852e+00,
-        -1.16439322e+01,  1.49639670e+02,  1.83050161e+03],
-       [ 2.20240404e+01, -1.03358332e+02,  1.59624996e+02,
-         2.01674668e+03,  4.21400634e+01, -2.73553815e+02],
-       [ 1.10340544e+01,  3.66524225e+01,  7.71229954e+00,
-        -2.14178480e+01,  2.83658392e+02,  4.77742034e+03],
-       [ 3.76842415e+00, -7.31542676e+00,  3.54375958e+00,
-         6.67108348e+00,  2.00203702e+00,  2.83274939e+00]])
+</div></div><div class="output text_html"><p style='font-size:17px'>transform output</p></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.50696832e+02,  1.84993378e+03,  2.94087866e+02,
+         5.04330995e+03,  3.66924660e+02,  7.02854372e+03],
+       [ 5.74657600e+00, -1.37757018e+01,  1.70478801e+01,
+        -7.03891258e+01,  1.19170686e+01, -4.11390407e+01],
+       [ 1.36907239e+01,  5.06570178e+01,  3.34580072e+02,
+        -6.11998145e+03,  5.67306712e-01, -4.27294087e-01],
+       [ 1.16736791e+02,  1.26128034e+03,  1.40939023e-03,
+         5.29111116e-05,  4.81241575e+01,  3.33844872e+02],
+       [ 2.67076782e+01, -1.38023870e+02,  1.19512002e+01,
+        -4.13159064e+01,  9.04007098e+00,  2.71805200e+01]])
 </pre></div>
 </div>
 <div class="output text_html"><p style='font-size:17px'>.get_feature_names_out</p></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;feature0 square&#39;, &#39;feature0 cubic&#39;, &#39;feature1 square&#39;,
@@ -1556,6 +1663,411 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 </section>
+<section id="pandas-output">
+<h4>Pandas output<a class="headerlink" href="#pandas-output" title="Link to this heading">#</a></h4>
+<p>Ideally, if the function specified in FunctionTransfomer returns pandas.DataFrame, then the columns that <code class="docutils literal notranslate"><span class="pre">get_feature_names_out</span></code> returns should be automatically applied to the result. But if you try to adapt the previous example, the result is an error. Just like in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_transformer</span> <span class="o">=</span> <span class="n">FunctionTransformer</span><span class="p">(</span>
+    <span class="c1"># iterates over all input features</span>
+    <span class="c1"># and returns square and cube of them</span>
+    <span class="k">lambda</span> <span class="n">X</span> <span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">X</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">**</span><span class="n">power</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X</span>
+            <span class="k">for</span> <span class="n">power</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+        <span class="p">],</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">),</span>
+    <span class="c1"># iterates over input features anmes</span>
+    <span class="c1"># and for each creates pair of square</span>
+    <span class="c1"># and cube name</span>
+    <span class="n">feature_names_out</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">transformer</span><span class="p">,</span> <span class="n">input_features</span><span class="p">:</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">power_str</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">input_features</span>
+            <span class="k">for</span> <span class="n">power_str</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;square&quot;</span><span class="p">,</span> <span class="s2">&quot;cubic&quot;</span><span class="p">]</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">my_transformer</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s1">&#39;pandas&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">my_transformer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">input_frame</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The output generated by `func` have different column names than the ones provided by `get_feature_names_out`. Got output with columns names: [&#39;feature0&#39;, &#39;feature0&#39;, &#39;feature1&#39;, &#39;feature1&#39;, &#39;feature2&#39;, &#39;feature2&#39;] and `get_feature_names_out` returned: [&#39;feature0 square&#39;, &#39;feature0 cubic&#39;, &#39;feature1 square&#39;, &#39;feature1 cubic&#39;, &#39;feature2 square&#39;, &#39;feature2 cubic&#39;]. The column names can be overridden by setting `set_output(transform=&#39;pandas&#39;)` or `set_output(transform=&#39;polars&#39;)` such that the column names are set to the names provided by `get_feature_names_out`.
+</pre></div>
+</div>
+</div>
+</div>
+<p>I think it’s a <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> bug, so I’ve created a corresponding <a class="reference external" href="https://github.com/scikit-learn/scikit-learn/issues/28780">issue</a>. Check it out, there might be a solution already.</p>
+</section>
+</section>
+</section>
+<section id="whole-pipeline">
+<h2>Whole pipeline<a class="headerlink" href="#whole-pipeline" title="Link to this heading">#</a></h2>
+<p>All the tools described above are useful only if we use them in a full pipeline of data transformations. It’s easy to just define column names for output if you’re using a single transformer. It’s harder if you use a series of transformers connected by <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> or <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code>.</p>
+<p>In this section we would try to build a whole pipeline with the model and check how easy it would be to explore properties of the model having feature names.</p>
+<section id="task-generation">
+<h3>Task generation<a class="headerlink" href="#task-generation" title="Link to this heading">#</a></h3>
+<p>Let’s take a synthetic regression task as an example. It would have some informative features mixed with useless ones. It would have some categorical features and some numerical features to have reason to apply <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> and <code class="docutils literal notranslate"><span class="pre">OneHotEncoding</span></code> to data. Also it would have a <code class="docutils literal notranslate"><span class="pre">datetime</span></code> function that stores some useful information in it’s months to try <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> for extracting different components of the date.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">n_features</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_regression</span><span class="p">(</span>
+    <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span>
+    <span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span> 
+    <span class="n">n_informative</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">categorise_feature</span><span class="p">(</span><span class="n">X</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that allows to convert numerical</span>
+<span class="sd">    characteristics into categorical characteristics </span>
+<span class="sd">    with Latin alphabet. It uses a random number </span>
+<span class="sd">    of bins.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : np.array</span>
+<span class="sd">        input feature;</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    ----------</span>
+<span class="sd">    out : np.array</span>
+<span class="sd">        same size feature with values</span>
+<span class="sd">        encoded as symbols of Latin alphabet.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">quantiles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">))[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">quantiles</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> 
+        <span class="nb">range</span><span class="p">(</span>
+            <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">),</span> 
+            <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">quantiles</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">for</span> <span class="nb">bin</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">labels</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">X</span><span class="o">&gt;</span><span class="nb">bin</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="sa">f</span><span class="s2">&quot;feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:(</span>
+        <span class="n">X</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span> 
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="k">else</span> 
+        <span class="n">categorise_feature</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span>
+    <span class="p">)</span> 
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="p">})</span>
+
+<span class="c1"># constructing month number which</span>
+<span class="c1"># correlate with target</span>
+<span class="c1"># but it have to have some noise</span>
+<span class="n">months</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
+<span class="n">months</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span>
+    <span class="p">(</span><span class="n">months</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">months</span><span class="p">))</span><span class="o">/</span>
+    <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">months</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">months</span><span class="p">))</span>
+<span class="p">)</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">months</span><span class="p">[</span><span class="n">months</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># constructing date feature that using</span>
+<span class="c1"># where only month can be useful in</span>
+<span class="c1"># the prediction task</span>
+<span class="n">date_feature</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">&quot;day&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">29</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">),</span>
+        <span class="s2">&quot;month&quot;</span> <span class="p">:</span> <span class="n">months</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;year&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1980</span><span class="p">,</span> <span class="mi">2024</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
+    <span class="p">})</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span>
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">],</span> 
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">],</span> 
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;day&quot;</span><span class="p">]</span>
+        <span class="p">),</span> 
+        <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">X</span><span class="p">[</span><span class="s2">&quot;date feature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_feature</span>
+<span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature 0</th>
+      <th>feature 1</th>
+      <th>feature 2</th>
+      <th>feature 3</th>
+      <th>feature 4</th>
+      <th>feature 5</th>
+      <th>feature 6</th>
+      <th>feature 7</th>
+      <th>feature 8</th>
+      <th>feature 9</th>
+      <th>...</th>
+      <th>feature 11</th>
+      <th>feature 12</th>
+      <th>feature 13</th>
+      <th>feature 14</th>
+      <th>feature 15</th>
+      <th>feature 16</th>
+      <th>feature 17</th>
+      <th>feature 18</th>
+      <th>feature 19</th>
+      <th>date feature</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.617891</td>
+      <td>c</td>
+      <td>d</td>
+      <td>b</td>
+      <td>c</td>
+      <td>a</td>
+      <td>a</td>
+      <td>b</td>
+      <td>-196.739681</td>
+      <td>e</td>
+      <td>...</td>
+      <td>-47.603852</td>
+      <td>d</td>
+      <td>33.356150</td>
+      <td>a</td>
+      <td>a</td>
+      <td>-122.367117</td>
+      <td>-6.721474</td>
+      <td>c</td>
+      <td>e</td>
+      <td>1986-09-04</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-70.125115</td>
+      <td>a</td>
+      <td>a</td>
+      <td>c</td>
+      <td>a</td>
+      <td>a</td>
+      <td>b</td>
+      <td>b</td>
+      <td>-10.601175</td>
+      <td>f</td>
+      <td>...</td>
+      <td>-71.627628</td>
+      <td>a</td>
+      <td>-101.127295</td>
+      <td>e</td>
+      <td>b</td>
+      <td>-91.372820</td>
+      <td>4.377953</td>
+      <td>c</td>
+      <td>d</td>
+      <td>1993-08-14</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-20.582671</td>
+      <td>c</td>
+      <td>a</td>
+      <td>c</td>
+      <td>d</td>
+      <td>c</td>
+      <td>b</td>
+      <td>b</td>
+      <td>200.739023</td>
+      <td>d</td>
+      <td>...</td>
+      <td>-16.353255</td>
+      <td>a</td>
+      <td>40.661435</td>
+      <td>a</td>
+      <td>a</td>
+      <td>-96.068509</td>
+      <td>0.313386</td>
+      <td>b</td>
+      <td>g</td>
+      <td>1991-08-07</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-15.356126</td>
+      <td>c</td>
+      <td>a</td>
+      <td>d</td>
+      <td>c</td>
+      <td>c</td>
+      <td>d</td>
+      <td>b</td>
+      <td>-153.459105</td>
+      <td>b</td>
+      <td>...</td>
+      <td>26.679386</td>
+      <td>e</td>
+      <td>120.183909</td>
+      <td>f</td>
+      <td>b</td>
+      <td>16.846444</td>
+      <td>-2.223026</td>
+      <td>a</td>
+      <td>f</td>
+      <td>2013-09-02</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-63.181240</td>
+      <td>a</td>
+      <td>g</td>
+      <td>a</td>
+      <td>b</td>
+      <td>b</td>
+      <td>d</td>
+      <td>b</td>
+      <td>-108.291832</td>
+      <td>b</td>
+      <td>...</td>
+      <td>-17.332633</td>
+      <td>f</td>
+      <td>21.126076</td>
+      <td>b</td>
+      <td>b</td>
+      <td>-147.533723</td>
+      <td>-2.960036</td>
+      <td>b</td>
+      <td>h</td>
+      <td>2019-09-16</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="pipeline">
+<h3>Pipeline<a class="headerlink" href="#pipeline" title="Link to this heading">#</a></h3>
+<p>As planned:</p>
+<ul class="simple">
+<li><p>Numeric features go throgh the <code class="docutils literal notranslate"><span class="pre">StandartScaler</span></code> with the name <code class="docutils literal notranslate"><span class="pre">numeric_transformer</span></code>;</p></li>
+<li><p>Categorial features go throgh the <code class="docutils literal notranslate"><span class="pre">OneHotEncoding</span></code> with the name <code class="docutils literal notranslate"><span class="pre">object_transformer</span></code>;</p></li>
+<li><p>And there is <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> for <code class="docutils literal notranslate"><span class="pre">date</span> <span class="pre">feature</span></code> which extracts <code class="docutils literal notranslate"><span class="pre">day</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code> and <code class="docutils literal notranslate"><span class="pre">year</span></code>, and gives corresponding names to the output.</p></li>
+</ul>
+<p>And there is a gradient boosting as model of the pipeline.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numeric_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+<span class="n">object_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s2">&quot;O&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+<span class="n">date_time_transformer</span> <span class="o">=</span> <span class="n">FunctionTransformer</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">&quot;day&quot;</span> <span class="p">:</span> <span class="n">X</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day</span><span class="p">,</span>
+        <span class="s2">&quot;month&quot;</span> <span class="p">:</span> <span class="n">X</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span><span class="p">,</span>
+        <span class="s2">&quot;year&quot;</span> <span class="p">:</span> <span class="n">X</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+    <span class="p">}),</span>
+    <span class="n">feature_names_out</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">tr</span><span class="p">,</span> <span class="n">inp</span><span class="p">:</span> 
+        <span class="p">[</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="s2">&quot;month&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">my_transformer</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;numeric_transformer&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">numeric_features</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;object_transformer&quot;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(),</span> <span class="n">object_features</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;datetime_transformer&quot;</span><span class="p">,</span> <span class="n">date_time_transformer</span><span class="p">,</span> <span class="s2">&quot;date feature&quot;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="n">pl</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;transformer&quot;</span><span class="p">,</span> <span class="n">my_transformer</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+<span class="p">])</span>
+<span class="n">pl</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="feature-importances">
+<h3>Feature importances<a class="headerlink" href="#feature-importances" title="Link to this heading">#</a></h3>
+<p>Now this is what we’re all about. Now, let’s say that for reasons of optimising the algorithm we need to get variables that are not important for decision making. Gradient Boosting has <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code> for such purposes. But as you can see in the following cell, it is completely useless in the raw view.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pl</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.47289298e-01, 2.38966681e-03, 6.15139879e-03, 3.53447551e-03,
+       2.19951240e-03, 2.66402624e-01, 2.55979225e-02, 3.09790962e-04,
+       0.00000000e+00, 0.00000000e+00, 3.75741598e-04, 0.00000000e+00,
+       3.18557550e-04, 3.17112646e-04, 1.10644546e-04, 0.00000000e+00,
+       1.78952666e-05, 6.46668227e-05, 1.86142792e-04, 0.00000000e+00,
+       0.00000000e+00, 6.72328698e-05, 3.92795818e-02, 6.38885869e-03,
+       0.00000000e+00, 2.91394844e-03, 3.50356952e-02, 0.00000000e+00,
+       2.84008478e-04, 7.04788804e-05, 0.00000000e+00, 2.07779652e-04,
+       3.93672142e-06, 1.13211846e-04, 3.99649454e-04, 3.79798469e-04,
+       7.83053217e-02, 0.00000000e+00, 5.75348690e-02, 1.12977377e-03,
+       9.39223697e-05, 0.00000000e+00, 0.00000000e+00, 2.15973947e-05,
+       6.86836029e-04, 9.17177949e-04, 1.04394168e-03, 7.12935589e-05,
+       0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+       4.43880249e-02, 8.11633707e-03, 2.73218256e-04, 0.00000000e+00,
+       7.81992544e-03, 4.35630916e-02, 2.05404571e-04, 4.53438250e-04,
+       6.85197453e-04, 0.00000000e+00, 2.29351672e-02, 0.00000000e+00,
+       1.39065136e-02, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+       0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
+       0.00000000e+00, 9.06998067e-04, 7.62847932e-02, 2.47526727e-04])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The only conclusion I can draw from this bunch of numbers is that months is just an infomative feature extracted from <code class="docutils literal notranslate"><span class="pre">date</span> <span class="pre">feature</span></code> - its just because I remember that it should be a prelast feature.</p>
+<p>This is where <code class="docutils literal notranslate"><span class="pre">get_feature_names_out</span></code> really helps. If we call it for <code class="docutils literal notranslate"><span class="pre">ColumnsTransformer</span></code> it’ll call it for each of its transformers and return in the format <code class="docutils literal notranslate"><span class="pre">&lt;transformer_name&gt;__&lt;outputs</span> <span class="pre">of</span> <span class="pre">get_feature_names_out</span> <span class="pre">for</span> <span class="pre">transformers&gt;</span></code>. So now we can map feature to any number and preform any visualisation you like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d7b168331d373503f50d1ddeb451b65bad9f2ae4bc0e05f538d50318bc955e8d.png" src="../../_images/d7b168331d373503f50d1ddeb451b65bad9f2ae4bc0e05f538d50318bc955e8d.png" />
+</div>
+</div>
+<p>So now it’s much easier to conclude that useful features here are: 0,16,17,4,7,14,18 and months from <code class="docutils literal notranslate"><span class="pre">date</span> <span class="pre">feature</span></code>. So it’s namy features to exclude and as a result optimise the model.</p>
 </section>
 </section>
 </section>
@@ -1624,14 +2136,25 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defined-names">Defined names</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functiontransformer">FunctionTransformer</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defined-names">Defined names</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standartscaler"><code class="docutils literal notranslate"><span class="pre">StandartScaler</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomialfeatures"><code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functiontransformer"><code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-one"><code class="docutils literal notranslate"><span class="pre">"one-to-one"</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#callable">Callable</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-inputs">Expected inputs</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-example">Real world example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-output">Pandas output</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#whole-pipeline">Whole pipeline</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-generation">Task generation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline">Pipeline</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importances">Feature importances</a></li>
 </ul>
 </li>
 </ul>
