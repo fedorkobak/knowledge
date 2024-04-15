@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Task generation &#8212; Knowledge base</title>
+    <title>Collaborative filtering &#8212; Knowledge base</title>
   
   
   
@@ -59,12 +59,12 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/recom_sys/task_generation';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/ranking_task/collaborative_filtering';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Metrics" href="metrics.html" />
-    <link rel="prev" title="Approximation formula" href="collaborative_filtering/approximation_formula.html" />
+    <link rel="next" title="Approximation formula" href="collaborative_filtering/approximation_formula.html" />
+    <link rel="prev" title="Ranking task" href="../ranking_task.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -191,12 +191,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../recom_sys.html">Recommendation systems</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="collaborative_filtering.html">Collaborative filtering</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ranking_task.html">Ranking task</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Collaborative filtering</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="collaborative_filtering/approximation_formula.html">Approximation formula</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Task generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="task_generation.html">Task generation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metrics.html">Metrics</a></li>
 </ul>
 </li>
@@ -340,6 +340,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../python/mlflow.html">MLflow</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../python/unittest.html">unittest</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../python/unittest/check_error.html">Check error (assertRaises)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../python/unittest/run_before_after.html">Run code before/after</a></li>
@@ -617,7 +618,7 @@
       
       
       
-      <li><a href="../../_sources/machine_learning/recom_sys/task_generation.ipynb" target="_blank"
+      <li><a href="../../_sources/machine_learning/ranking_task/collaborative_filtering.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -701,7 +702,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Task generation</h1>
+    <h1>Collaborative filtering</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -711,9 +712,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-blobs"><code class="docutils literal notranslate"><span class="pre">make_blobs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#object-bias">Object bias</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hide-some-elements">Hide some elements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-based">User based</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#item-based">Item based</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-algorithm">Final algorithm</a></li>
 </ul>
             </nav>
         </div>
@@ -725,339 +726,225 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="task-generation">
-<h1>Task generation<a class="headerlink" href="#task-generation" title="Link to this heading">#</a></h1>
-<p>This page focuses on generating experimenting task to play with recomendation systems.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="collaborative-filtering">
+<h1>Collaborative filtering<a class="headerlink" href="#collaborative-filtering" title="Link to this heading">#</a></h1>
+<p>It’s type of models that requires only matrix <span class="math notranslate nohighlight">\(R\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="make-blobs">
-<h2><code class="docutils literal notranslate"><span class="pre">make_blobs</span></code><a class="headerlink" href="#make-blobs" title="Link to this heading">#</a></h2>
-<p>You can use <a class="reference internal" href="#https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html#sklearn.datasets.make_blobs"><span class="xref myst">sklearn.datasets.make_blobs</span></a>. Each blob is a group of objects by preference. So suppose we have groups of objects that somehow rate two items. There are only two items to make the visualisation easier. The viasulasation of application such case is in the cell before:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_width</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">r_height</span> <span class="o">=</span> <span class="mi">30</span>
-<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">100</span>
+<section id="user-based">
+<h2>User based<a class="headerlink" href="#user-based" title="Link to this heading">#</a></h2>
+<p>This method is based on approach, that if users ranked their common items close it means that it have sence to recommend them same items in future:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(i_1\)</span></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(i_2\)</span></p></th>
+<th class="head text-left"><p>…</p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(i_n\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(u_1\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{11}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{12}\)</span></p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{1n}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(u_2\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{21}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{22}\)</span></p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{2n}\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(u_m\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{m1}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{m2}\)</span></p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{mn}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<!--
+# GENERATE arr
+np.random.seed(10)
+sample_size = 10
 
-<span class="n">R</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
-    <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span>
-    <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">centers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-    <span class="n">random_state</span><span class="o">=</span><span class="mi">23</span>
-<span class="p">)</span>
-<span class="c1"># Normalise the observations to 0,10 </span>
-<span class="c1"># it&#39;s just for convenience.</span>
-<span class="n">R</span> <span class="o">=</span> <span class="p">(</span><span class="n">R</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">*</span><span class="mi">10</span><span class="o">/</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-    <span class="n">R</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">R</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> 
-    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> 
-    <span class="n">s</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;k&quot;</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+arr = np.random.randint(low=1, high=11, size=[1, sample_size])
+arr = np.concatenate(
+    [
+        arr,
+        arr + np.random.randint(-1, 2, size=sample_size),
+        np.abs(arr - 10) + np.random.randint(-1, 2, size=sample_size)
+    ],
+    axis = 0
+)
+arr = np.where((arr>10), 10 , arr)
+arr = np.where((arr<1), 1, arr)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Item1 ratings&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Item2 ratings&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Preferences&quot;</span><span class="p">)</span>
+# Display display it as markdown
 
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/93c85d65cab877f72c4873c72326cbe1ea5426034ec66bdee3918bae30347e64.png" src="../../_images/93c85d65cab877f72c4873c72326cbe1ea5426034ec66bdee3918bae30347e64.png" />
-</div>
-</div>
-<p>Here are some groups of users. Some of them prefer item1 more. So if we find an object that really prefers item1 (rates it 7 and more), we can assume that it won’t like item2.</p>
-<p>Now let’s check how it looks on case that is closer to real live. So here we juts have more items that somehow matches to objects. So we came to matrix like that.</p>
+print(pd.DataFrame(
+    arr,
+    index=[f"$u_{{{i+1}}}$" for i in range(arr.shape[0])], 
+    columns=[f"$i_{{{j+1}}}$" for j in range(arr.shape[1])]
+).to_markdown())
+-->
+<p>Consider a simple example:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{1}\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{2}\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{3}\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{4}\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{5}\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{6}\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{7}\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{8}\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{9}\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(i_{10}\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(u_{1}\)</span></p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>5</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>2</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>2</p></td>
+<td class="text-right"><p>9</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>1</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(u_{2}\)</span></p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>4</p></td>
+<td class="text-right"><p>2</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>9</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>3</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>2</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(u_{3}\)</span></p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>4</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>9</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>10</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>9</p></td>
+</tr>
+</tbody>
+</table>
+<p>Without any special techniques, you can see that user 1 and user 2 have very similar preferences. But user 3 has completely different preferences.</p>
+<p>In the following cell, the <span class="math notranslate nohighlight">\(R\)</span> matrix under consideration is defined as a numpy array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_width</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">r_height</span> <span class="o">=</span> <span class="mi">30</span>
-
-<span class="n">R</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
-    <span class="n">n_samples</span><span class="o">=</span><span class="n">r_height</span><span class="p">,</span>
-    <span class="n">n_features</span><span class="o">=</span><span class="n">r_width</span><span class="p">,</span>
-    <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">R</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">*</span><span class="mi">10</span><span class="o">/</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">R</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 7,  9,  0,  6,  8,  6,  7,  3,  9,  8],
-       [ 6, 10,  1,  4,  9,  6,  7,  3,  8,  7],
-       [ 5,  2,  4,  6,  5,  4,  6,  5,  6,  6],
-       [ 6,  9,  1,  6,  8,  6,  8,  3,  9,  7],
-       [ 5,  2,  4,  7,  4,  5,  6,  5,  7,  6],
-       [ 6,  1,  4,  7,  4,  5,  7,  5,  8,  6],
-       [ 7,  9,  1,  6,  8,  6,  7,  3,  9,  8],
-       [ 5,  2,  4,  6,  5,  5,  6,  5,  6,  6],
-       [ 6,  2,  4,  6,  4,  4,  6,  5,  7,  6],
-       [ 6,  1,  5,  7,  4,  4,  6,  5,  7,  7],
-       [ 7,  9,  1,  5,  8,  7,  7,  3,  8,  6],
-       [ 7,  9,  1,  5,  7,  6,  8,  3,  9,  7],
-       [ 9,  1,  6,  7,  5,  2,  3,  7,  2,  1],
-       [ 6,  2,  4,  6,  6,  4,  7,  5,  7,  6],
-       [ 8,  1,  6,  8,  5,  2,  2,  7,  3,  1],
-       [ 8,  1,  6,  6,  6,  3,  2,  7,  2,  2],
-       [ 7,  1,  7,  7,  5,  2,  3,  7,  2,  1],
-       [ 5,  1,  4,  7,  4,  5,  6,  4,  6,  6],
-       [ 6,  2,  4,  7,  5,  5,  6,  5,  6,  6],
-       [ 7,  1,  6,  7,  6,  3,  1,  7,  2,  0],
-       [ 6, 10,  1,  6,  8,  7,  7,  2,  9,  7],
-       [ 7,  9,  1,  6,  8,  6,  7,  3,  8,  7],
-       [ 8,  1,  7,  7,  5,  2,  2,  7,  2,  1],
-       [ 7,  1,  7,  6,  5,  2,  2,  8,  2,  1],
-       [ 7,  1,  6,  7,  5,  2,  3,  9,  3,  1],
-       [ 7, 10,  1,  5,  7,  6,  7,  4, 10,  7],
-       [ 7,  1,  7,  7,  5,  3,  2,  8,  2,  1],
-       [ 8,  0,  6,  7,  5,  3,  2,  8,  2,  2],
-       [ 7,  9,  0,  4,  8,  7,  7,  3,  9,  7],
-       [ 6,  2,  3,  7,  5,  5,  6,  6,  6,  6]])
-</pre></div>
-</div>
-</div>
-</div>
-<p>Here the settings are rounded to make it easier to see with your eyes. It’s already possible to find some patterns. But let’s have a look at the submatrices, which are divided by blobs:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;hr&gt;Blob</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">c</span><span class="o">==</span><span class="n">v</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><hr>Blob0</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[9 1 6 7 5 2 3 7 2 1]
- [8 1 6 8 5 2 2 7 3 1]
- [8 1 6 6 6 3 2 7 2 2]
- [7 1 7 7 5 2 3 7 2 1]
- [7 1 6 7 6 3 1 7 2 0]
- [8 1 7 7 5 2 2 7 2 1]
- [7 1 7 6 5 2 2 8 2 1]
- [7 1 6 7 5 2 3 9 3 1]
- [7 1 7 7 5 3 2 8 2 1]
- [8 0 6 7 5 3 2 8 2 2]]
-</pre></div>
-</div>
-<div class="output text_html"><hr>Blob1</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 7  9  0  6  8  6  7  3  9  8]
- [ 6 10  1  4  9  6  7  3  8  7]
- [ 6  9  1  6  8  6  8  3  9  7]
- [ 7  9  1  6  8  6  7  3  9  8]
- [ 7  9  1  5  8  7  7  3  8  6]
- [ 7  9  1  5  7  6  8  3  9  7]
- [ 6 10  1  6  8  7  7  2  9  7]
- [ 7  9  1  6  8  6  7  3  8  7]
- [ 7 10  1  5  7  6  7  4 10  7]
- [ 7  9  0  4  8  7  7  3  9  7]]
-</pre></div>
-</div>
-<div class="output text_html"><hr>Blob2</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[5 2 4 6 5 4 6 5 6 6]
- [5 2 4 7 4 5 6 5 7 6]
- [6 1 4 7 4 5 7 5 8 6]
- [5 2 4 6 5 5 6 5 6 6]
- [6 2 4 6 4 4 6 5 7 6]
- [6 1 5 7 4 4 6 5 7 7]
- [6 2 4 6 6 4 7 5 7 6]
- [5 1 4 7 4 5 6 4 6 6]
- [6 2 4 7 5 5 6 5 6 6]
- [6 2 3 7 5 5 6 6 6 6]]
-</pre></div>
-</div>
-</div>
-</div>
-<p>Finally, let’s check the correlation matrix. All cells should be grouped by blobs. The following cell shows the correlation matrix for <span class="math notranslate nohighlight">\(R\)</span> under consideration.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">R</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/61336ba65495b7994183085df678a7d71b84325f34656410caeba74adf0e080c.png" src="../../_images/61336ba65495b7994183085df678a7d71b84325f34656410caeba74adf0e080c.png" />
-</div>
-</div>
-<p>The previous diagram isn’t really easy to understand. So we can sort the objects in the <span class="math notranslate nohighlight">\(R\)</span> matrix by their blobs. In the following cell, observations are sorted and their correlation matrix is visualised.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
-<span class="n">clustered_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span>
-    <span class="n">R</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">c</span><span class="o">==</span><span class="n">v</span><span class="p">)]</span>
-    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">10</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">10</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">9</span><span class="p">]</span>
 <span class="p">])</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">clustered_R</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../_images/bb02f42d2e2d49818d09085ff6dc15f785074500f090a88bb6b4a10cebdebeae.png" src="../../_images/bb02f42d2e2d49818d09085ff6dc15f785074500f090a88bb6b4a10cebdebeae.png" />
 </div>
-</div>
-<p>Now objects from the same clusters are visualised in the correlation matrix.</p>
-</section>
-<section id="object-bias">
-<h2>Object bias<a class="headerlink" href="#object-bias" title="Link to this heading">#</a></h2>
-<p>There are some objects that have systematically biased rates. So you can add some random values to each object:</p>
+<p>So let’s try to formalise their similarity somehow - in this case we’ll use Pirson’s correlation coefficient:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_width</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">r_height</span> <span class="o">=</span> <span class="mi">20</span>
-
-<span class="n">R</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
-    <span class="n">n_samples</span><span class="o">=</span><span class="n">r_height</span><span class="p">,</span>
-    <span class="n">n_features</span><span class="o">=</span><span class="n">r_width</span><span class="p">,</span>
-    <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">R</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">*</span><span class="mi">10</span><span class="o">/</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;hr&gt;&quot;</span><span class="p">))</span>
-<span class="n">display</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
-
-<span class="c1"># add bias for each object</span>
-<span class="n">bias</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">R</span> <span class="o">+</span> <span class="n">bias</span>
-
-<span class="c1"># sometimes bias can lead to ratings</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">R</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">R</span><span class="o">&gt;</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;hr&gt;&quot;</span><span class="p">))</span>
-<span class="n">R</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corrmatrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Similarity between first and second user:&quot;</span><span class="p">,</span> <span class="n">corrmatrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Similarity between second and third user:&quot;</span><span class="p">,</span> <span class="n">corrmatrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><hr></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 7, 10,  1,  4,  8,  5,  7,  3,  9,  7],
-       [ 8,  0,  6,  8,  5,  3,  2,  8,  2,  3],
-       [ 7, 10,  1,  4,  9,  6,  8,  4,  8,  7],
-       [ 6,  1,  4,  7,  4,  5,  7,  6,  6,  6],
-       [ 6,  9,  1,  6,  8,  7,  8,  4,  9,  7],
-       [ 6,  2,  4,  6,  5,  5,  7,  5,  6,  6],
-       [ 8, 10,  1,  6,  8,  6,  7,  3,  9,  8],
-       [ 8, 10,  1,  6,  8,  6,  7,  3,  9,  7],
-       [ 5,  2,  4,  7,  4,  5,  7,  5,  7,  6],
-       [ 7, 10,  1,  5,  8,  6,  8,  4, 10,  7],
-       [ 9,  1,  6,  7,  5,  2,  3,  7,  2,  1],
-       [ 8,  1,  6,  8,  5,  2,  2,  8,  3,  1],
-       [ 7, 10,  1,  5,  8,  6,  9,  3,  9,  7],
-       [ 7,  1,  6,  7,  6,  3,  1,  8,  2,  0],
-       [ 8,  1,  7,  7,  6,  2,  2,  8,  2,  1],
-       [ 6,  1,  5,  7,  5,  5,  6,  5,  6,  5],
-       [ 8,  1,  7,  8,  5,  3,  2,  8,  2,  1],
-       [ 8,  1,  7,  7,  6,  3,  2,  7,  2,  2],
-       [ 6,  2,  4,  7,  5,  5,  6,  5,  7,  7],
-       [ 6,  2,  5,  7,  4,  4,  7,  6,  8,  6]])
-</pre></div>
-</div>
-<div class="output text_html"><hr></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 9, 10,  3,  6, 10,  7,  9,  5, 10,  9],
-       [ 9,  1,  7,  9,  6,  4,  3,  9,  3,  4],
-       [ 6,  9,  0,  3,  8,  5,  7,  3,  7,  6],
-       [ 8,  3,  6,  9,  6,  7,  9,  8,  8,  8],
-       [ 8, 10,  3,  8, 10,  9, 10,  6, 10,  9],
-       [ 4,  0,  2,  4,  3,  3,  5,  3,  4,  4],
-       [10, 10,  3,  8, 10,  8,  9,  5, 10, 10],
-       [ 6,  8,  0,  4,  6,  4,  5,  1,  7,  5],
-       [ 5,  2,  4,  7,  4,  5,  7,  5,  7,  6],
-       [ 8, 10,  2,  6,  9,  7,  9,  5, 10,  8],
-       [10,  3,  8,  9,  7,  4,  5,  9,  4,  3],
-       [ 7,  0,  5,  7,  4,  1,  1,  7,  2,  0],
-       [ 8, 10,  2,  6,  9,  7, 10,  4, 10,  8],
-       [ 9,  3,  8,  9,  8,  5,  3, 10,  4,  2],
-       [ 6,  0,  5,  5,  4,  0,  0,  6,  0,  0],
-       [ 8,  3,  7,  9,  7,  7,  8,  7,  8,  7],
-       [10,  3,  9, 10,  7,  5,  4, 10,  4,  3],
-       [ 6,  0,  5,  5,  4,  1,  0,  5,  0,  0],
-       [ 6,  2,  4,  7,  5,  5,  6,  5,  7,  7],
-       [ 5,  1,  4,  6,  3,  3,  6,  5,  7,  5]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Similarity between first and second user: 0.9802681400094546
+Similarity between second and third user: -0.9650036744440637
 </pre></div>
 </div>
 </div>
 </div>
+<p>So we proved that the first client is close to the second, but the third is very different. So according to our approach, we are more likely to recommend to the second user the games that the first one liked and vice versa.</p>
 </section>
-<section id="hide-some-elements">
-<h2>Hide some elements<a class="headerlink" href="#hide-some-elements" title="Link to this heading">#</a></h2>
-<p>There are some elements of the <span class="math notranslate nohighlight">\(R\)</span> matrix that didn’t appear in the observations, so we need to replace some object/item combinations with empty values.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_width</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">r_height</span> <span class="o">=</span> <span class="mi">30</span>
-
-<span class="n">R</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
-    <span class="n">n_samples</span><span class="o">=</span><span class="n">r_height</span><span class="p">,</span>
-    <span class="n">n_features</span><span class="o">=</span><span class="n">r_width</span><span class="p">,</span>
-    <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">R</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">*</span><span class="mi">10</span><span class="o">/</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-<span class="c1"># genrating combinations of object/item to be empty</span>
-<span class="n">combination_counts</span> <span class="o">=</span> <span class="mi">20</span>
-<span class="n">nan_combinations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-    <span class="p">[</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">combination_counts</span><span class="p">,</span><span class="mi">1</span><span class="p">]),</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">combination_counts</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-    <span class="p">],</span>
-    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span>
-
-<span class="c1"># replacing some combinations with emptys</span>
-<span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">comb</span> <span class="ow">in</span> <span class="n">nan_combinations</span><span class="p">:</span>
-    <span class="n">R</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">comb</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
-<span class="n">R</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 7.,  9.,  0.,  6.,  8.,  6.,  7.,  3.,  9.,  8.],
-       [ 6., 10.,  1.,  4.,  9.,  6.,  7.,  3.,  8.,  7.],
-       [ 5.,  2.,  4.,  6.,  5.,  4., nan,  5.,  6.,  6.],
-       [ 6.,  9.,  1.,  6., nan,  6.,  8., nan,  9.,  7.],
-       [nan,  2.,  4.,  7.,  4.,  5.,  6.,  5.,  7.,  6.],
-       [ 6.,  1.,  4.,  7., nan, nan,  7.,  5.,  8.,  6.],
-       [nan,  9.,  1.,  6.,  8., nan,  7.,  3.,  9.,  8.],
-       [ 5.,  2.,  4.,  6.,  5.,  5., nan,  5.,  6.,  6.],
-       [ 6.,  2.,  4.,  6.,  4.,  4.,  6.,  5.,  7.,  6.],
-       [ 6.,  1.,  5.,  7.,  4.,  4.,  6.,  5.,  7.,  7.],
-       [ 7.,  9.,  1.,  5.,  8.,  7.,  7.,  3.,  8.,  6.],
-       [ 7., nan,  1.,  5.,  7.,  6.,  8.,  3.,  9.,  7.],
-       [ 9.,  1.,  6.,  7.,  5.,  2.,  3.,  7.,  2.,  1.],
-       [ 6.,  2., nan,  6.,  6.,  4.,  7.,  5.,  7.,  6.],
-       [ 8.,  1.,  6.,  8.,  5.,  2.,  2.,  7.,  3.,  1.],
-       [ 8.,  1.,  6.,  6.,  6.,  3.,  2.,  7.,  2., nan],
-       [ 7.,  1.,  7.,  7.,  5.,  2.,  3.,  7.,  2., nan],
-       [nan,  1.,  4.,  7.,  4.,  5.,  6.,  4.,  6.,  6.],
-       [ 6.,  2.,  4.,  7.,  5.,  5.,  6.,  5.,  6.,  6.],
-       [nan,  1., nan,  7.,  6.,  3.,  1.,  7.,  2.,  0.],
-       [ 6., 10.,  1.,  6.,  8.,  7.,  7.,  2.,  9.,  7.],
-       [nan,  9., nan,  6.,  8.,  6.,  7.,  3., nan,  7.],
-       [ 8.,  1.,  7.,  7.,  5.,  2.,  2.,  7., nan,  1.],
-       [ 7.,  1.,  7.,  6.,  5.,  2.,  2.,  8.,  2.,  1.],
-       [ 7.,  1.,  6.,  7.,  5.,  2.,  3.,  9.,  3.,  1.],
-       [ 7., 10.,  1.,  5.,  7.,  6.,  7.,  4., 10.,  7.],
-       [ 7.,  1.,  7.,  7.,  5.,  3.,  2.,  8.,  2.,  1.],
-       [ 8.,  0.,  6.,  7.,  5.,  3.,  2.,  8.,  2.,  2.],
-       [ 7.,  9.,  0.,  4.,  8.,  7.,  7.,  3.,  9.,  7.],
-       [ 6.,  2.,  3.,  7.,  5.,  5.,  6.,  6.,  6.,  6.]], dtype=float32)
-</pre></div>
-</div>
-</div>
-</div>
+<section id="item-based">
+<h2>Item based<a class="headerlink" href="#item-based" title="Link to this heading">#</a></h2>
+<p>Item based approach technically same as user based. Here we are looking for items that are similar in <span class="math notranslate nohighlight">\(r_{ij}, i=\overline{1,n}\)</span> by the same users.</p>
+<p>So the <span class="math notranslate nohighlight">\(R\)</span> matrix is just transposed compared to the user based approach:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(u_1\)</span></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(u_2\)</span></p></th>
+<th class="head text-left"><p>…</p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(u_m\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(i_1\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{11}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{12}\)</span></p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{1m}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(i_2\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{21}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{22}\)</span></p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{2m}\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(i_n\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{m1}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{m2}\)</span></p></td>
+<td class="text-left"><p>…</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(r_{mn}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong> here, in contrast to the definition given above, the order of indexing of the elements of the matrix <span class="math notranslate nohighlight">\(R\)</span> is changed (<span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> are swapped). That is, here <span class="math notranslate nohighlight">\(r_{ji}\)</span>.</p>
 </section>
+<section id="final-algorithm">
+<h2>Final algorithm<a class="headerlink" href="#final-algorithm" title="Link to this heading">#</a></h2>
+<p>Here we take a general look at how collaborative filtering works. It will have identical operations in the user and item based cases, so we will only consider the abstract matrix <span class="math notranslate nohighlight">\(R\)</span>. So we have target value <span class="math notranslate nohighlight">\(r_{ij}\)</span> for abstract combination of row <span class="math notranslate nohighlight">\(i\)</span> and column <span class="math notranslate nohighlight">\(j\)</span>. For the sake of simplicity, I’ll sometimes refer to lines as objects.</p>
+<p><strong>Estimate similarities</strong> For each pair of rows, let’s say rows <span class="math notranslate nohighlight">\(k,t,t\neq k\)</span>, we compute some metric that estimates their similarities <span class="math notranslate nohighlight">\(c_{kt}\)</span>, for example the Pearson correlation coefficient.</p>
+<p>An important nuance is that for some <span class="math notranslate nohighlight">\(i,j:\nexists r_{ij}\)</span>, which means that the combination <span class="math notranslate nohighlight">\(i,j\)</span> did not occur. So during estimating similarity <span class="math notranslate nohighlight">\(c_{kt}\)</span> we only can use those <span class="math notranslate nohighlight">\(j:\exists r_{kj} \&amp; \exists r_{tj}\)</span>. For convenience, such a set of <span class="math notranslate nohighlight">\(j\)</span> will be denoted by <span class="math notranslate nohighlight">\(J\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(c_{kt},t\neq k\)</span> - similarity measure of the <span class="math notranslate nohighlight">\(k\)</span>-th and <span class="math notranslate nohighlight">\(t\)</span>-th elements. For this example will use just pirson correlation coefficient:</p>
+<div class="math notranslate nohighlight">
+\[c_{kt} = 
+\frac{\sum_{j\in J}(r_{kj}-\overline{r_{k}})(r_{tj}-\overline{r_{t}})}
+{\sqrt{\sum_{j\in J}(r_{kj}-\overline{r_{k}})^2}\sqrt{\sum_{j \in J}(r_{tj}-\overline{r_{t}})^2}}
+\]</div>
+<p><strong>Estimate</strong> Say we are considering row <span class="math notranslate nohighlight">\(k'\)</span>, and we need to suggest for this row those columns <span class="math notranslate nohighlight">\(j\)</span> that best match this row. So <span class="math notranslate nohighlight">\(\forall j=\overline{1,m}\)</span> we got estimation <span class="math notranslate nohighlight">\(a_{k'j}(\overline{c_{k'}})\)</span> - how well the <span class="math notranslate nohighlight">\(j\)</span>-th element fits the <span class="math notranslate nohighlight">\(k\)</span>-th row. Where <span class="math notranslate nohighlight">\(\overline{c_{k'}}=(c_{k'1}, c_{k'2}, ..., c_{k'm})\)</span> - estimates of similarity of other objects to object <span class="math notranslate nohighlight">\(k'\)</span>.</p>
+<p><strong>Finally</strong> for <span class="math notranslate nohighlight">\(k'\)</span>-row we select those <span class="math notranslate nohighlight">\(j\)</span> that have the best <span class="math notranslate nohighlight">\(a_{k'j}(\overline{c_{k'}})\)</span>, so final answer is <span class="math notranslate nohighlight">\(j' = argmax_{j}\left[a_{k'j}(\overline{c_{k'}})\right]\)</span></p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1073,7 +960,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning/recom_sys"
+            path: "./machine_learning/ranking_task"
         },
         predefinedOutput: true
     }
@@ -1091,20 +978,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="collaborative_filtering/approximation_formula.html"
+       href="../ranking_task.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Approximation formula</p>
+        <p class="prev-next-title">Ranking task</p>
       </div>
     </a>
     <a class="right-next"
-       href="metrics.html"
+       href="collaborative_filtering/approximation_formula.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Metrics</p>
+        <p class="prev-next-title">Approximation formula</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1124,9 +1011,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-blobs"><code class="docutils literal notranslate"><span class="pre">make_blobs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#object-bias">Object bias</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hide-some-elements">Hide some elements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-based">User based</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#item-based">Item based</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-algorithm">Final algorithm</a></li>
 </ul>
   </nav></div>
 
