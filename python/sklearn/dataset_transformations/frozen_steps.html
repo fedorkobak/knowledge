@@ -62,7 +62,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Estimator to transformer" href="estimator_to_transformer.html" />
-    <link rel="prev" title="Features names out" href="features_names_out.html" />
+    <link rel="prev" title="Developing transformer" href="developing_transformer.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -234,6 +234,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/exceptions.html">Exceptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/packages.html">Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/virtual_environment.html">Virutal environment in python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/file_system_operations.html">File system operations</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../basics/logging.html">Logging</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/logging/exception_information.html">Exceptions information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/logging/logging_to_file.html">Logging to file</a></li>
@@ -296,14 +297,16 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../sklearn.html">sklearn</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../dataset_transformations.html">Dataset transformations</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="pipeline.html">Pipeline</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="pipeline/features_names.html">Features names</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pipeline/memory_parameter.html"><code class="docutils literal notranslate"><span class="pre">memory</span></code> parameter(chacing)</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="columns_transformer.html">Specific processing for column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features_names_out.html">Features names out</a></li>
+<li class="toctree-l3"><a class="reference internal" href="one_hot_encoder.html">One hot encoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developing_transformer.html">Developing transformer</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Frozen steps</a></li>
 <li class="toctree-l3"><a class="reference internal" href="estimator_to_transformer.html">Estimator to transformer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="one_hot_encoder.html">One hot encoder</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../grid_search_cv.html">Grid search CV</a></li>
@@ -708,6 +711,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-with-an-example">Problem with an example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer-wrapper">Transformer-wrapper</a></li>
 </ul>
             </nav>
         </div>
@@ -946,6 +950,230 @@ document.write(`
 </div></div></div>
 </div>
 </section>
+<section id="transformer-wrapper">
+<h2>Transformer-wrapper<a class="headerlink" href="#transformer-wrapper" title="Link to this heading">#</a></h2>
+<p>The option offered in this section is to create a class inherited from <code class="docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code>. Which takes an already fitted transformer in <code class="docutils literal notranslate"><span class="pre">__init__</span></code> and does nothing during <code class="docutils literal notranslate"><span class="pre">fit</span></code>. But in <code class="docutils literal notranslate"><span class="pre">transform</span></code> it just calls <code class="docutils literal notranslate"><span class="pre">transform</span></code> on the passed object.</p>
+<p>This solution may seem a bit sketchy, but in fact the same option is shown as an example in the official sklearn guide <a class="reference external" href="https://scikit-learn.org/stable/developers/develop.html#cloning">“Developing scikit-learn estimators”</a>.</p>
+<p>The following cell defines such a wrapper:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span>
+<span class="k">class</span> <span class="nc">FrozenTransformer</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fitted_transformer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitted_transformer</span><span class="o">=</span><span class="n">fitted_transformer</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitted_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is creating, fitting and showing components of the <code class="docutils literal notranslate"><span class="pre">PCA</span></code> transformation. Finally, <code class="docutils literal notranslate"><span class="pre">FrozenTransformer</span></code> was created based on this <code class="docutils literal notranslate"><span class="pre">PCA</span></code> transformation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca_transformer</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca_transformer</span><span class="o">.</span><span class="n">components_</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">frozen_tranformer</span> <span class="o">=</span> <span class="n">FrozenTransformer</span><span class="p">(</span><span class="n">pca_transformer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.029002</td>
+      <td>-0.472792</td>
+      <td>0.677339</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.447752</td>
+      <td>0.023186</td>
+      <td>-0.103205</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.024158</td>
+      <td>0.413848</td>
+      <td>0.094252</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.152105</td>
+      <td>0.180614</td>
+      <td>0.032731</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.699786</td>
+      <td>-0.278504</td>
+      <td>-0.148883</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-0.168125</td>
+      <td>-0.012485</td>
+      <td>0.002570</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.007655</td>
+      <td>0.492975</td>
+      <td>0.469945</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.302708</td>
+      <td>0.375889</td>
+      <td>-0.305682</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.389330</td>
+      <td>0.313503</td>
+      <td>0.416662</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>-0.117147</td>
+      <td>0.108241</td>
+      <td>-0.102644</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now let’s try to use instance of the <code class="docutils literal notranslate"><span class="pre">FrozenTransformer</span></code> as a step in the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>. So during <code class="docutils literal notranslate"><span class="pre">fit</span></code> of the pipeline components wasn’t changed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;pca_transformer&quot;</span><span class="p">,</span> <span class="n">frozen_tranformer</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">LinearRegression</span><span class="p">())</span>
+<span class="p">])</span>
+<span class="n">my_pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">my_pipe</span><span class="p">[</span><span class="s2">&quot;pca_transformer&quot;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">fitted_transformer</span><span class="o">.</span><span class="n">components_</span>
+<span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.029002</td>
+      <td>-0.472792</td>
+      <td>0.677339</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.447752</td>
+      <td>0.023186</td>
+      <td>-0.103205</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.024158</td>
+      <td>0.413848</td>
+      <td>0.094252</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.152105</td>
+      <td>0.180614</td>
+      <td>0.032731</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.699786</td>
+      <td>-0.278504</td>
+      <td>-0.148883</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-0.168125</td>
+      <td>-0.012485</td>
+      <td>0.002570</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.007655</td>
+      <td>0.492975</td>
+      <td>0.469945</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.302708</td>
+      <td>0.375889</td>
+      <td>-0.305682</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.389330</td>
+      <td>0.313503</td>
+      <td>0.416662</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>-0.117147</td>
+      <td>0.108241</td>
+      <td>-0.102644</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -979,12 +1207,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="features_names_out.html"
+       href="developing_transformer.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Features names out</p>
+        <p class="prev-next-title">Developing transformer</p>
       </div>
     </a>
     <a class="right-next"
@@ -1013,6 +1241,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-with-an-example">Problem with an example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer-wrapper">Transformer-wrapper</a></li>
 </ul>
   </nav></div>
 
