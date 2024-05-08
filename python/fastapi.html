@@ -236,6 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="basics/virtual_environment.html">Virutal environment in python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/file_system_operations.html">File system operations</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="basics/logging.html">Logging</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics/logging/configuration.html">Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/logging/exception_information.html">Exceptions information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/logging/logging_to_file.html">Logging to file</a></li>
 </ul>
@@ -400,6 +401,7 @@
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Fastapi</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-31"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="fastapi/pass_arguments.html">Pass arguments</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fastapi/return_json.html">Return JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastapi/logging.html">Logging</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="fastapi/documentation.html">Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="fastapi/documentation/parameters.html">Parameters</a></li>
 </ul>
@@ -733,6 +735,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#programme-update">Programme update</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-as-main">Run as <code class="docutils literal notranslate"><span class="pre">__main__</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -1011,6 +1014,78 @@ document.write(`
 </div>
 </section>
 </section>
+<section id="run-as-main">
+<h2>Run as <code class="docutils literal notranslate"><span class="pre">__main__</span></code><a class="headerlink" href="#run-as-main" title="Link to this heading">#</a></h2>
+<p>Sometimes it’s useful to be able to start a program by simply running it as a Python script, i.e. without bothering to call <code class="docutils literal notranslate"><span class="pre">uvicorn</span></code>.</p>
+<p>All you have to do is run <code class="docutils literal notranslate"><span class="pre">uvicorn.run(&lt;fast_api</span> <span class="pre">object&gt;,</span> <span class="pre">...)</span></code>.</p>
+<p>The next cell shows a program using such an approach.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> ./fastapi/run_application_files/reload.py
+<span class="kn">import</span> <span class="nn">uvicorn</span>
+<span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;I&#39;m started from __main__&quot;</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overwriting ./fastapi/run_application_files/reload.py
+</pre></div>
+</div>
+</div>
+</div>
+<p>To run it now we just use the command <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">&lt;script_name&gt;.py</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-itd<span class="err">\</span>
+    <span class="o">--</span><span class="n">name</span> <span class="n">test_container</span>\
+    <span class="o">-</span><span class="n">v</span> <span class="o">./</span><span class="n">fastapi</span><span class="o">/</span><span class="n">run_application_files</span><span class="o">/</span><span class="n">reload</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="o">/</span><span class="n">reload</span><span class="o">.</span><span class="n">py</span>\
+    <span class="o">-</span><span class="n">p</span> <span class="mi">8000</span><span class="p">:</span><span class="mi">8000</span> \
+    <span class="n">fastapi_experiment</span> \
+    <span class="n">python3</span> <span class="n">reload</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1d7f1a02873d866745eff864ba8b2c3dec84fe539dc3e9ca69d26929607f2ea4
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s ask api to make sure everything is working.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>curl<span class="w"> </span>localhost:8000
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;I&#39;m started from __main__&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>docker<span class="w"> </span>stop<span class="w"> </span>test_container
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test_container
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1093,6 +1168,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#programme-update">Programme update</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-as-main">Run as <code class="docutils literal notranslate"><span class="pre">__main__</span></code></a></li>
 </ul>
   </nav></div>
 
