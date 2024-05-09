@@ -1,10 +1,10 @@
+import logging
+import logging.config
 from fastapi import FastAPI, HTTPException
 
 app = FastAPI()
+logging.config.fileConfig("./app/uvicorn_logging.ini")
 
-@app.get("/{is_ok}")
-def say_hello(is_ok : bool):
-    if is_ok:
-        return "im fine"
-    else:
-        raise HTTPException(status_code=404, detail="Item not found")
+@app.get("/")
+def handle():
+    return "hello"
