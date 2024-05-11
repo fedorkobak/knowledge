@@ -10,7 +10,7 @@ Let's denote:
 
 For specific object $o_i$ we need to define order of items $I'$ such where the most relenant elements is on the top.
 
-It is common to introduce a relevance matrix $R=\left[ r_{ij} \right]_{n \times m}$. $r_{ij}$ reflects the relevance of $j$-th item to $i$-th object. Or more convenient ot think about it as about the table:
+It is common to introduce a relevance (rating, untility) matrix $R=\left[ r_{ij} \right]_{n \times m}$. $r_{ij}$ reflects the relevance of $j$-th item to $i$-th object. Or more convenient ot think about it as about the table:
 
 |   | $i_1$ | $i_2$ | ... | $i_n$|
 |:--|:------|:------|:----|:-----|
