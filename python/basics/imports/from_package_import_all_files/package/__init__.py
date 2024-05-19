@@ -1,2 +1,4 @@
-__all__=["square"]
-from .triangle import draw_triangle
+__all__=[
+    "square",
+    "triangle.draw_triangle"
+]
