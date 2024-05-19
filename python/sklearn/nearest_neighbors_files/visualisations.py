@@ -10,7 +10,8 @@ import matplotlib.pyplot as plt
 def get_picture(
     coordinates : list[float],
     nn : NearestNeighbors,
-    X : np.array
+    X : np.array,
+    title : str
 ) -> PIL.PngImagePlugin.PngImageFile:
     '''
     Get picture that show neighbours
@@ -26,7 +27,9 @@ def get_picture(
     X : np.array of shape (n_samples, 2)
         this is two dimentional objects
         that will be represented at the
-        scatter plot.
+        scatter plot;
+    title : str
+        title that will be used for plot.
 
     Returns
     -------
@@ -47,7 +50,8 @@ def get_picture(
     )
     ax.scatter(X[:,0], X[:,1])
     ax.scatter(X[indices, 0], X[indices, 1], color="red")
-
+    plt.title(title)
+    
     # saving to buffer
     buf = io.BytesIO()
     plt.savefig(buf, format='png')
@@ -59,7 +63,8 @@ def get_picture(
 def get_gif(
     coordinates : list[list[float]], 
     nn : NearestNeighbors, 
-    X : np.array
+    X : np.array,
+    pictures_args : dict = {}
 )->io.BytesIO:
     '''
     Get buffer containing gif
@@ -78,7 +83,10 @@ def get_gif(
     X : np.array of shape (n_samples, 2)
         this is two dimentional objects
         that will be represented at the
-        scatter plot. 
+        scatter plot;
+    pictures_args : dict
+        this funciton is wrapper under get_picture
+        so you can specify arguemnst to it.
     '''
     # generate frames on which the 
     # coordinate to which neighbours 
@@ -87,7 +95,8 @@ def get_gif(
         get_picture(
             coordinates=cord,
             nn=nn,
-            X=X
+            X=X,
+            **pictures_args
         )
         for cord in coordinates
     ]
@@ -111,7 +120,8 @@ def get_circle_gif(
     X : np.array,
     radius : float = 5, 
     frames : int = 100,
-    center : list = [0,0]
+    center : list = [0,0],
+    pictures_args : dict = {}
 )->io.BytesIO:
     '''
     Visualises the nearest neighbours to a 
@@ -131,7 +141,10 @@ def get_circle_gif(
         number of frames that will
         be used to build the gif;
     center : list[float] of len 2, default=[0,0]
-        center of the circle.
+        center of the circle;
+    pictures_args : dict
+        this funciton is wrapper under get_picture
+        so you can specify arguemnst to it.
     '''
     return get_gif(
         coordinates=[
@@ -141,5 +154,6 @@ def get_circle_gif(
             ]
             for angle in np.linspace(0, 2*np.pi, frames)
         ],
-        nn=nn, X=X
+        nn=nn, X=X,
+        pictures_args=pictures_args,
     )
