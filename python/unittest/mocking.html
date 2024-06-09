@@ -359,6 +359,7 @@
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../mlflow.html">MLflow</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-26"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mlflow/example_of_use.html">Example of usе</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mlflow/deploy.html">Deploy</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../unittest.html">unittest</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-27"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
@@ -592,6 +593,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../other/kubernetes.html">Kubernetes</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../other/redis.html">Redis</a><input class="toctree-checkbox" id="toctree-checkbox-47" name="toctree-checkbox-47" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-47"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../other/redis/zset.html">Zset</a></li>
 </ul>
@@ -744,7 +746,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mock-function">Mock function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mock-object">Mock object</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#patch-name">Patch name</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mock-class-method">Mock class method</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#known-type">Known type</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unknown-type">Unknown type</a></li>
@@ -765,8 +768,98 @@ document.write(`
 <h1>Mocking<a class="headerlink" href="#mocking" title="Link to this heading">#</a></h1>
 <p>Sometimes our programmes depend on external circumstances, but during unit testing we shouldn’t worry about whether they work. And only test our code. So there are ways to change the behaviour of functions called in the programs being tested, to make it convenient for us to do the testing.</p>
 <p>It’s a bit of an advanced concept, so for better understanding the content of this page starts with the user case. This will help you understand why this slightly tricky option can be so useful.</p>
-<section id="mock-function">
-<h2>Mock function<a class="headerlink" href="#mock-function" title="Link to this heading">#</a></h2>
+<section id="mock-object">
+<h2>Mock object<a class="headerlink" href="#mock-object" title="Link to this heading">#</a></h2>
+<p>You can define the behaviour of any object you like. Just pass a <code class="docutils literal notranslate"><span class="pre">Mock()</span></code> instance instead.</p>
+<p>The following cell defines a class that can perform optional operations on the list using the <code class="docutils literal notranslate"><span class="pre">list_operation</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Example</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_operation</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_operation</span> <span class="o">=</span> <span class="n">list_operation</span>
+    <span class="k">def</span> <span class="nf">call_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_operation</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now suppose you want to write test to this class and check that <code class="docutils literal notranslate"><span class="pre">list_operation</span></code> has been called in the correct way.</p>
+<p>Just create <code class="docutils literal notranslate"><span class="pre">Mock()</span></code> instance and pass it insead of the function that have to be specified for <code class="docutils literal notranslate"><span class="pre">Example</span></code> in constructor.</p>
+<p>The following cell shows an example that checks the output of <code class="docutils literal notranslate"><span class="pre">Example.call_fun</span></code> and that everything passed correctly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">Mock</span>
+
+<span class="k">class</span> <span class="nc">TestExample</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_ok</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Create a mock object for list_operation</span>
+        <span class="n">mock_list_operation</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        
+        <span class="c1"># Define the behavior of the mock</span>
+        <span class="n">mock_list_operation</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s2">&quot;mocked result&quot;</span>
+        
+        <span class="c1"># Instantiate the Example class with the mock</span>
+        <span class="n">example</span> <span class="o">=</span> <span class="n">Example</span><span class="p">(</span><span class="n">mock_list_operation</span><span class="p">)</span>
+        
+        <span class="c1"># Create a sample list</span>
+        <span class="n">sample_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+        
+        <span class="c1"># Call the call_fun method</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">call_fun</span><span class="p">(</span><span class="n">sample_list</span><span class="p">)</span>
+        
+        <span class="c1"># Assert that the result is as expected</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;mocked result&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Assert that the mock was called with the correct arguments</span>
+        <span class="n">mock_list_operation</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">sample_list</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        And to be sure that evertything</span>
+<span class="sd">        works lets try example that fails</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">mock_list_operation</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">mock_list_operation</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s2">&quot;mocked result&quot;</span>
+        <span class="n">example</span> <span class="o">=</span> <span class="n">Example</span><span class="p">(</span><span class="n">mock_list_operation</span><span class="p">)</span>
+        <span class="n">example</span><span class="o">.</span><span class="n">call_fun</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">])</span>
+        <span class="n">mock_list_operation</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">ans</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">TestExample</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test_fail (__main__.TestExample)
+And to be sure that evertything ... FAIL
+test_ok (__main__.TestExample) ... ok
+
+======================================================================
+FAIL: test_fail (__main__.TestExample)
+And to be sure that evertything
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/tmp/ipykernel_19891/3966153051.py&quot;, line 36, in test_fail
+    mock_list_operation.assert_called_with([3,2,1])
+  File &quot;/usr/lib/python3.10/unittest/mock.py&quot;, line 929, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: expected call not found.
+Expected: mock([3, 2, 1])
+Actual: mock([10, 20, 30])
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected, <code class="docutils literal notranslate"><span class="pre">test_ok</span></code> ran fine and <code class="docutils literal notranslate"><span class="pre">test_fail</span></code> failed.</p>
+</section>
+<section id="patch-name">
+<h2>Patch name<a class="headerlink" href="#patch-name" title="Link to this heading">#</a></h2>
 <p>Suppose you have service that answers some information about user. Just like the function in the next cell:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1123,7 +1216,8 @@ OK
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mock-function">Mock function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mock-object">Mock object</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#patch-name">Patch name</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mock-class-method">Mock class method</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#known-type">Known type</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unknown-type">Unknown type</a></li>

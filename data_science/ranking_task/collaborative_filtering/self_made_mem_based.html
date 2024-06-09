@@ -361,6 +361,7 @@
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../python/mlflow.html">MLflow</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-26"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../python/mlflow/example_of_use.html">Example of usе</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../python/mlflow/deploy.html">Deploy</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../python/unittest.html">unittest</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-27"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -594,6 +595,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../other/kubernetes.html">Kubernetes</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../other/redis.html">Redis</a><input class="toctree-checkbox" id="toctree-checkbox-47" name="toctree-checkbox-47" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-47"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/redis/zset.html">Zset</a></li>
 </ul>
@@ -748,14 +750,12 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-generation">Task generation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surprise">surprise</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selfmade">Selfmade</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-measure">Similarity measure</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-function">Prediction function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filter">Collaborative filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#get-similarities">Get similarities</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-measure">Similarity measure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-function">Prediction function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filter">Collaborative filter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-similarities">Get similarities</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-collaboration">Get collaboration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predict">Predict</a></li>
 </ul>
 </li>
 </ul>
@@ -1133,10 +1133,8 @@ Done computing similarity matrix.
 </div>
 </div>
 </section>
-<section id="selfmade">
-<h2>Selfmade<a class="headerlink" href="#selfmade" title="Link to this heading">#</a></h2>
 <section id="similarity-measure">
-<h3>Similarity measure<a class="headerlink" href="#similarity-measure" title="Link to this heading">#</a></h3>
+<h2>Similarity measure<a class="headerlink" href="#similarity-measure" title="Link to this heading">#</a></h2>
 <p><strong>Note</strong> Many sources use difference instead of similarity, but similarity is the inverse of difference, so you can search not for items that have the smallest difference, but for items that have the strongest similarity.</p>
 <p>We need a method to estimate how close the objects are to each other. The following cell defines such a function - it implements Pearson’s correlation coefficient, which can solve some problems related to the RecSys domain.</p>
 <div class="cell docutils container">
@@ -1230,7 +1228,7 @@ Not enough common elements - 0.0
 </div>
 </section>
 <section id="prediction-function">
-<h3>Prediction function<a class="headerlink" href="#prediction-function" title="Link to this heading">#</a></h3>
+<h2>Prediction function<a class="headerlink" href="#prediction-function" title="Link to this heading">#</a></h2>
 <p>We need methods to create predictions based on results of the previous steps. The following cell realises the classical formula for generating predicsts based on collaboration:</p>
 <div class="math notranslate nohighlight">
 \[\frac{(\sum_{i}r_{ij}-\overline{r_i})sim_i}{\sum_i{|sim_i|}}\]</div>
@@ -1348,7 +1346,7 @@ Not enough common elements - 0.0
 </div>
 </section>
 <section id="collaborative-filter">
-<h3>Collaborative filter<a class="headerlink" href="#collaborative-filter" title="Link to this heading">#</a></h3>
+<h2>Collaborative filter<a class="headerlink" href="#collaborative-filter" title="Link to this heading">#</a></h2>
 <p>Finally, consider a class that implements such an algorithm:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1448,63 +1446,82 @@ Not enough common elements - 0.0
         <span class="p">)</span>
     
 
-    <span class="k">def</span> <span class="nf">get_collaborations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_collaborations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">similarities</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Get collaboration for given set predict </span>
 <span class="sd">        relevancies.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : np.array (&lt;users number&gt;, &lt;items number&gt;)</span>
-<span class="sd">            Predict relevancies.</span>
+<span class="sd">        X : np.ndarray (&lt;users number&gt;, &lt;items number&gt;)</span>
+<span class="sd">            Observed relevance of users for </span>
+<span class="sd">            whom we are searching collaborations.</span>
+<span class="sd">        similarities : np.ndarray (</span>
+<span class="sd">            &lt;fit users number&gt;,</span>
+<span class="sd">            &lt;users number&gt;</span>
+<span class="sd">        )</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        ----------</span>
-<span class="sd">        out : np.array</span>
+<span class="sd">        out : list</span>
+<span class="sd">            each element of the list indicates </span>
+<span class="sd">            the collation indices in the training </span>
+<span class="sd">            array for the corresponding row of X.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">similarities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_similarities</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
-        <span class="c1"># перебираем столбики с похожестями пользователей</span>
-        <span class="c1"># для которых ведется предсказание и достаем нужные </span>
-        <span class="c1"># коллаборации</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span>
-            <span class="n">func1d</span><span class="o">=</span><span class="k">lambda</span> <span class="n">user_sim</span><span class="p">:</span> <span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">user_sim</span><span class="o">&gt;</span><span class="bp">self</span><span class="o">.</span><span class="n">sim_threshold</span><span class="p">,:][:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_nearest</span><span class="p">,:]</span>
-            <span class="p">),</span>
-            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">similarities</span>
-        <span class="p">)</span>
-
+        <span class="c1"># search vectors of similarities for </span>
+        <span class="c1"># different users and form collaborations </span>
+        <span class="c1"># for them</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">similarities</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">threshold_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">similarities</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_threshold</span><span class="p">)</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">threshold_mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">similarities</span><span class="p">[</span><span class="n">threshold_mask</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">indices</span><span class="p">[</span><span class="n">order</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_nearest</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Получить предсказания для </span>
-<span class="sd">        пользователей с заданными предпочтениями</span>
+<span class="sd">        Get predictions for user with set</span>
+<span class="sd">        relevances</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        X : np.ndarray (&lt;количетсво пользователей&gt;, &lt;количество игр&gt;)</span>
-<span class="sd">            матрица, которая описывает предпочтения</span>
-<span class="sd">            пользователей для которых надо сформировать</span>
-<span class="sd">            предсказание;</span>
+<span class="sd">        X : np.ndarray (</span>
+<span class="sd">            &lt;unsers count&gt;, </span>
+<span class="sd">            &lt;items count&gt;</span>
+<span class="sd">        )</span>
+<span class="sd">            Observed relevance of users for </span>
+<span class="sd">            whom we are searching collaborations.</span>
 <span class="sd">        </span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        out : np.ndarray</span>
-<span class="sd">            np.ndarray (&lt;количество полльзователей&gt;, &lt;количество игр&gt;)</span>
-<span class="sd">            предсказания для заданных пользователей.</span>
+<span class="sd">            np.ndarray (&lt;unsers count&gt;, &lt;items count&gt;)</span>
+<span class="sd">            predictoins for given users.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Количества игр в обучающем наборе данных &quot;</span>
-                <span class="s2">&quot;и наборе для предсказания не совпадают.&quot;</span>
+                <span class="s2">&quot;Number of items in fit frame and &quot;</span>
+                <span class="s2">&quot;predict frame are different.&quot;</span>
                 <span class="p">)</span>
-        
+
         <span class="n">similarities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_similarities</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">collaborations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_collaborations</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">similarities</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prediction</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">collab</span><span class="p">],</span> 
+                <span class="n">similarities</span><span class="p">[</span><span class="n">collab</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">collab</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">collaborations</span><span class="p">)</span>
+        <span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <section id="get-similarities">
-<h4>Get similarities<a class="headerlink" href="#get-similarities" title="Link to this heading">#</a></h4>
+<h3>Get similarities<a class="headerlink" href="#get-similarities" title="Link to this heading">#</a></h3>
 <p>Each row from the training must be compared with all prediction row via similarity fuinction passed to the constructor.</p>
 <p>Here’s an example that does only element-wise concatenation instead of similarity - so we can see that we’ll have all combinations of raws in the result.</p>
 <div class="cell docutils container">
@@ -1563,29 +1580,188 @@ history 3, predictions 2
 </div>
 <p>So as a result we’ll have the matrix <span class="math notranslate nohighlight">\([sim_{ij}]\)</span> similarity of the <span class="math notranslate nohighlight">\(i\)</span>-th fit user to the <span class="math notranslate nohighlight">\(j\)</span>-th prediction user.</p>
 </section>
-</section>
 <section id="get-collaboration">
 <h3>Get collaboration<a class="headerlink" href="#get-collaboration" title="Link to this heading">#</a></h3>
+<p>This method returns a subset of the fit array for each row in the array that requires prediction. For testing consider really specific example.</p>
+<p>We will use the similarity function:</p>
+<div class="math notranslate nohighlight">
+\[Sim(\overline{a},\overline{b})=\left(\sum_{i=1}^m a_i\right)\left(\sum_{i=1}^m b_i\right)\]</div>
+<p>If a row from the fit dataset and a row from the predict dataset have a different sign for their sum, they will be assigned a negative “similarity” value. Conversely, if they have the same sign, they will be assigned a positive “similarity” value. So we can have two different collaborations.</p>
+<p>Let’s take a concrete example with the relevance matrix <span class="math notranslate nohighlight">\(R_{train}\)</span> and the vector of sums of its rows <span class="math notranslate nohighlight">\(S_{train}\)</span>:
+$<span class="math notranslate nohighlight">\(R_{train}=
+\left(
+\begin{array}\\
+-1&amp;0&amp;0&amp;-\\
+1&amp;-&amp;2&amp;1\\
+-&amp;3&amp;2&amp;2\\
+1&amp;1&amp;0&amp;-
+\end{array}
+\right);
+S_{train}=\left(
+\begin{array}\\
+-1\\4\\7\\2
+\end{array}
+\right)
+\)</span>$</p>
+<p>Let’s define the relevance of the users for whom we need to make predictions as <span class="math notranslate nohighlight">\(R_{predict}\)</span>, and their corresponding sums as <span class="math notranslate nohighlight">\(S_{predict}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}R_{predict} =\left(
+\begin{array}\\
+0&amp;0&amp;-&amp;1\\
+0&amp;0&amp;-2&amp;-
+\end{array}
+\right);
+S_{predict}=\left(
+\begin{array}
+\\1 \\ -2
+\end{array}
+\right)
+\end{split}\]</div>
+<p><strong>Note</strong> some elements in arrays take <span class="math notranslate nohighlight">\(-\)</span> value. It means they are missing or in numpy terms takes <code class="docutils literal notranslate"><span class="pre">np.NaN</span></code>. For this example, they are just recognised as zeros - but the behaviour depends mainly on the <code class="docutils literal notranslate"><span class="pre">similarity</span></code> and <code class="docutils literal notranslate"><span class="pre">prediction</span></code> functions specified by the user.</p>
+<p>Finally we have similarities array like:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Sim=\left(
+\begin{array}\\
+-1&amp;2\\
+4&amp;-8\\
+7&amp;-14\\
+2&amp;-4
+\end{array}
+\right)\end{split}\]</div>
+<p>For the first user in the predictions array, the best collaborators will be placed at the top of the array, while for the second user, it will be the opposite.</p>
+<p>Now, assuming we have chosen a similarity threshold of <span class="math notranslate nohighlight">\(Sim' = 0\)</span> and decided to consider no more than 2 of the most similar objects, the resulting collaborations <span class="math notranslate nohighlight">\(P_i\)</span> for <span class="math notranslate nohighlight">\(i\)</span>-th user will be as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P_1=\left(
+\begin{array}\\
+-&amp;3&amp;2&amp;2\\
+1&amp;-&amp;2&amp;1
+\end{array}
+\right).\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_2=\left(
+\begin{array}\\
+-1&amp;0&amp;0&amp;-
+\end{array}
+\right).
+\end{split}\]</div>
+<p><strong>Note</strong> for convenience, I always sort collaborations by decreasing similarity, but it’s not necessary.</p>
+<p><strong>Note</strong> that for design purposes, the method does not return collaborations directly, but rather indices of collaboration in the fit matrix.</p>
+<p>And finally, lets display it on the code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">similarities</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collaborative_filter</span> <span class="o">=</span> <span class="n">CollaborativeFilter</span><span class="p">(</span>
+    <span class="n">similarity</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>
+    <span class="n">sim_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">n_nearest</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="n">fit_relevances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">predict_relevances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">collaborative_filter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">fit_relevances</span><span class="p">)</span>
+<span class="n">similarities</span> <span class="o">=</span> <span class="n">collaborative_filter</span><span class="o">.</span><span class="n">get_similarities</span><span class="p">(</span><span class="n">predict_relevances</span><span class="p">)</span>
+<span class="n">raw_output</span> <span class="o">=</span> <span class="n">collaborative_filter</span><span class="o">.</span><span class="n">get_collaborations</span><span class="p">(</span>
+    <span class="n">predict_relevances</span><span class="p">,</span> 
+    <span class="n">similarities</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span>
+    <span class="n">header_pattern</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="s2">&quot;Raw output&quot;</span>
+    <span class="p">)</span>
+<span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw_output</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span>
+    <span class="n">header_pattern</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="s2">&quot;Collaborations&quot;</span>
+    <span class="p">)</span>
+<span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">mask</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">raw_output</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fit_relevances</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.58829171,  0.08276059, -0.4258411 , ...,  0.53354002,
-        -0.45328433, -0.91364277],
-       [-0.21633961, -0.13245324, -0.72969394, ...,  0.97336648,
-        -0.43185521, -0.77991383],
-       [-0.66560255, -0.01863067, -0.2192645 , ...,  0.23918729,
-        -0.48696592, -0.38150302],
-       ...,
-       [-0.3899503 , -0.36707203, -0.44233627, ...,  0.97574887,
-        -0.11202768, -0.64677417],
-       [ 0.00776151, -0.74330462,  0.92450033, ...,  0.40421051,
-         0.95807103,  0.93155164],
-       [ 0.04428005, -0.97302555,  0.91855865, ...,  0.27027781,
-         0.9647146 ,  0.91132238]])
+<div class="output text_html"><text style='font-size:20px'>Raw output</text></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[array([2, 1]), array([0])]
+</pre></div>
+</div>
+<div class="output text_html"><text style='font-size:20px'>Collaborations</text></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>User 1
+[[nan  3.  2.  2.]
+ [ 1. nan  2.  1.]]
+User 2
+[[-1.  0.  0. nan]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="predict">
+<h3>Predict<a class="headerlink" href="#predict" title="Link to this heading">#</a></h3>
+<p>Method that allows to get estimations from</p>
+<p>Continue the example from the ‘Get collaboration’ section so that we have collaborations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P_1=\left(
+\begin{array}\\
+-&amp;3&amp;2&amp;2\\
+1&amp;-&amp;2&amp;1
+\end{array}
+\right).\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_2=\left(
+\begin{array}\\
+-1&amp;0&amp;0&amp;-
+\end{array}
+\right).
+\end{split}\]</div>
+<p>For simplicity, we will use the sum of the collaboration columns as the prediction function. We should get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{R} =
+\left(
+\begin{array}\\
+1&amp;3&amp;4&amp;3\\
+-1&amp;0&amp;0&amp;0
+\end{array}
+\right)
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collaborative_filter</span> <span class="o">=</span> <span class="n">CollaborativeFilter</span><span class="p">(</span>
+    <span class="n">similarity</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>
+    <span class="n">prediction</span><span class="o">=</span><span class="k">lambda</span> <span class="n">X</span><span class="p">,</span> <span class="n">similarities</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">sim_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">n_nearest</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="n">fit_relevances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">predict_relevances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">collaborative_filter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">fit_relevances</span><span class="p">)</span>
+<span class="n">collaborative_filter</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">predict_relevances</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.,  3.,  4.,  3.],
+       [-1.,  0.,  0.,  0.]])
 </pre></div>
 </div>
 </div>
@@ -1642,14 +1818,12 @@ history 3, predictions 2
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-generation">Task generation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surprise">surprise</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selfmade">Selfmade</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-measure">Similarity measure</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-function">Prediction function</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filter">Collaborative filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#get-similarities">Get similarities</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-measure">Similarity measure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-function">Prediction function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filter">Collaborative filter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-similarities">Get similarities</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-collaboration">Get collaboration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predict">Predict</a></li>
 </ul>
 </li>
 </ul>
