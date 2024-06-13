@@ -263,6 +263,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../python/advanced/tqdm.html">TQDM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../python/advanced/redis.html">Redis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../python/advanced/surprise.html">Surprise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../python/advanced/tkinter.html">Tkinter</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../python/advanced/airflow.html">Airflow</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../python/advanced/airflow/run_airflow.html">Run airflow</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../python/advanced/airflow/tutorial_dag.html">Tutorial DAG</a></li>
@@ -749,6 +750,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-generation">Task generation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-predict">Random predict</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surprise">surprise</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-measure">Similarity measure</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-function">Prediction function</a></li>
@@ -758,6 +760,13 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predict">Predict</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-to-experimental-data">Application to experimental data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-performance">Evaluation performance</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Surprise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#self-made">Self made</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-data">Real world data</a></li>
 </ul>
             </nav>
         </div>
@@ -776,10 +785,11 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
-<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestNeighbors</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_openml</span>
 
 <span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">correlation</span> <span class="k">as</span> <span class="n">orig_correlation</span><span class="p">,</span>
@@ -801,13 +811,13 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">r_width</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">r_width</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">r_height</span> <span class="o">=</span> <span class="mi">500</span>
 
 <span class="n">R</span><span class="p">,</span> <span class="n">group</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
     <span class="n">n_samples</span><span class="o">=</span><span class="n">r_height</span><span class="p">,</span>
     <span class="n">n_features</span><span class="o">=</span><span class="n">r_width</span><span class="p">,</span>
-    <span class="n">centers</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">centers</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
     <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span>
 <span class="p">)</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">R</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">*</span><span class="mi">10</span><span class="o">/</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -823,46 +833,76 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 4,  7,  0,  3,  7,  5,  5,  0,  3,  4,  3,  4,  5,  2,  0,  2,
-         1,  1,  8,  3,  2,  6,  1,  6,  4,  6,  1,  1,  5,  1,  1,  4,
-         2,  2,  8,  8,  4,  4,  0,  8,  4,  6,  4,  7,  5,  5,  1,  4,
-         5,  1],
-       [ 9, 10,  6, 10,  7,  5, 10,  9,  7,  8,  5, 10, 10,  6, 10,  5,
-         3,  3,  4,  4,  5, 10,  7,  4, 10,  6,  4,  9,  5,  9,  6,  9,
-        10,  7,  7,  3,  6,  6,  7, 10,  6,  6,  9,  6,  5,  9,  7,  4,
-        10,  5],
-       [ 4,  6,  0,  3,  5,  5,  4,  0,  1,  3,  1,  3,  4,  0,  0,  2,
-         0,  1,  7,  1,  0,  5,  0,  5,  3,  4,  0,  0,  4,  0,  1,  3,
-         0,  3,  6,  7,  4,  3,  0,  7,  3,  5,  3,  6,  4,  5,  1,  2,
-         4,  0],
-       [ 5,  6,  1,  3,  6,  7,  5,  1,  3,  4,  3,  4,  5,  1,  0,  2,
-         1,  1,  7,  3,  2,  6,  1,  6,  4,  5,  1,  1,  5,  1,  1,  5,
-         2,  3,  7,  7,  5,  4,  1,  7,  4,  5,  4,  7,  5,  5,  0,  4,
-         6,  1],
-       [ 8,  8,  5, 10,  5,  4,  8,  7,  6,  7,  4,  9, 10,  5,  9,  4,
-         3,  2,  3,  2,  4, 10,  6,  4,  8,  4,  3,  8,  4,  8,  5,  8,
-         9,  6,  6,  2,  5,  5,  6, 10,  5,  5,  8,  5,  4,  9,  7,  2,
-        10,  3],
-       [ 7,  4,  7, 10,  4,  9,  7,  8,  5,  6,  5,  3,  4,  7,  9,  8,
-         6,  5, 10,  8,  9, 10,  7,  9,  7,  3,  9,  5,  6,  7,  6, 10,
-         4,  3,  9,  9,  6,  7,  3,  6,  4,  9,  3,  5,  7,  6,  8, 10,
-         6,  3],
-       [ 4,  2,  4,  6,  1,  7,  4,  5,  1,  4,  2,  0,  0,  3,  5,  4,
-         3,  1,  6,  4,  6,  7,  5,  6,  5,  1,  6,  1,  4,  4,  3,  6,
-         2,  0,  6,  6,  4,  3,  0,  2,  1,  6,  1,  1,  5,  3,  6,  6,
-         3,  1],
-       [ 2,  0,  6,  0,  2,  7,  7,  3,  6,  1,  3,  7,  3,  4,  0,  2,
-         0,  1,  2,  6,  0,  2,  2,  4,  1,  0,  6,  5,  6,  2,  4,  3,
-         3,  1,  1,  0,  1,  1,  4,  4,  3,  1,  0,  6,  1,  2,  7,  3,
-         1,  3],
-       [ 7,  6,  3,  6,  3,  2,  6,  6,  4,  5,  2,  7,  8,  3,  7,  2,
-         0,  0,  2,  1,  2,  8,  3,  0,  7,  3,  0,  7,  2,  6,  3,  6,
-         6,  5,  5,  1,  3,  3,  4,  7,  3,  3,  6,  4,  1,  7,  5,  1,
-         9,  2],
-       [ 6,  8,  2,  5,  8,  7,  4,  2,  4,  6,  4,  5,  6,  3,  1,  5,
-         2,  2,  8,  4,  3,  7,  2,  7,  4,  5,  2,  3,  7,  1,  4,  6,
-         3,  4,  7,  8,  5,  5,  1,  9,  6,  7,  6,  8,  5,  7,  2,  4,
-         6,  2]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 7,  6,  3,  8,  1,  6,  2,  1,  1,  7,  4,  3,  0,  7,  5,  2,
+         2,  0,  0,  5,  1,  4,  5,  2,  6,  3,  5,  7,  5,  6,  4,  5,
+         6,  7,  1,  5,  2,  1,  7,  6,  1,  0,  4,  1,  2,  2,  3,  1,
+         0,  4,  5,  1,  6,  7,  5,  0,  5,  6,  1,  4,  2,  1,  7,  3,
+         1,  3,  1,  6,  2,  3,  4,  6,  4,  7,  7,  2,  7,  2,  5,  2,
+         7,  7,  7,  4,  1,  4,  6,  4,  3,  6,  7,  2,  8,  5,  8,  5,
+         7,  6,  5,  4],
+       [ 4,  8,  6,  7,  7,  7,  6,  7,  7,  7,  9,  9,  6,  4,  5,  6,
+         5,  9,  7,  9,  7,  8,  3,  6,  8,  8,  6, 10, 10,  4,  4,  7,
+         4,  5, 10,  9,  6,  4,  8,  9,  5,  7,  4,  8,  3,  6,  6, 10,
+         6,  5,  3,  6,  8,  4,  6,  7,  6,  7,  3,  6,  9,  9,  3,  9,
+         6,  7,  6,  4,  4,  7,  4,  3, 10,  7, 10,  8,  5,  6, 10,  7,
+         9,  4,  9,  8,  6,  5,  5,  3, 10,  9,  6,  4, 10, 10,  5, 10,
+         4,  9,  9,  9],
+       [ 0,  6,  4,  0,  4,  0,  6,  0,  6,  4,  1,  1,  4,  4,  1,  6,
+         2,  5,  1,  6,  6,  3,  2,  0,  7,  4,  1,  0,  0,  4,  0,  1,
+         1,  1,  6,  6,  6,  5,  0,  4,  3,  0,  4,  0,  4,  6,  0,  1,
+         6,  0,  0,  5,  1,  1,  0,  2,  3,  1,  2,  2,  2,  1,  1,  1,
+         6,  6,  6,  1,  4,  2,  5,  4,  5,  0,  4,  5,  6,  2,  0,  0,
+         4,  5,  0,  6,  6,  6,  7,  4,  4,  0,  6,  5,  2,  7,  2,  0,
+         0,  3,  3,  0],
+       [ 7,  0,  2,  6,  5,  5,  0,  3,  6,  3,  8,  4,  0,  2,  3,  2,
+         3,  6,  5,  5,  3,  7,  4,  5,  2,  1,  0,  7,  2,  7,  2,  6,
+         5,  4,  1,  7,  7,  1,  2,  4,  0,  0,  1,  2,  0,  1,  5,  4,
+         3,  6,  2,  4,  1,  5,  6,  7,  1,  1,  7,  1,  8,  5,  2,  7,
+         1,  4,  4,  2,  6,  3,  6,  0,  4,  5,  3,  6,  6,  1,  2,  1,
+         4,  7,  8,  4,  1,  6,  4,  1,  1,  5,  1,  3,  6,  5,  4,  7,
+         3,  3,  7,  1],
+       [ 5,  5,  9,  7,  3,  2,  7, 10,  5,  9,  7,  4,  3,  4,  6,  8,
+         3,  7,  2,  9,  4,  9,  7,  5,  4,  8,  3,  5,  4,  7,  8,  7,
+         9,  3,  8,  6,  8,  4,  7,  3,  4,  9,  6,  2,  7,  4,  7,  7,
+         7,  9,  3,  7,  4,  4,  7, 10,  5,  5,  6,  9,  4,  4,  3,  8,
+         5,  6,  8,  8,  4,  9,  3,  4,  2,  8,  6,  9,  4,  6,  7,  7,
+         9,  6,  6,  3,  4,  8,  9,  6,  9,  7,  3,  5,  6,  5,  8,  6,
+         8,  7,  7,  2],
+       [ 5,  8,  5,  8,  5, 10,  3,  3,  3, 10,  6,  9,  5,  4, 10,  6,
+         7, 10,  6,  4, 10,  7,  6,  9,  7,  6,  7, 10,  4,  3,  9,  5,
+         7,  4, 10,  8, 10,  4,  4,  6,  4, 10,  5,  7,  4, 10,  7,  8,
+         4,  9,  8,  9,  8,  8, 10,  4,  7,  3,  4,  9,  8,  8,  6, 10,
+         7,  9, 10,  8,  8,  9,  4,  3,  4,  4,  5,  3,  7,  8, 10,  4,
+         4, 10, 10,  4,  5,  9,  5,  6,  6,  6,  5,  8,  6,  8,  8,  6,
+         5,  8,  3,  8],
+       [ 0,  0,  5,  5,  0,  5,  0,  3,  2,  6,  1,  6,  7,  4,  5,  6,
+         3,  6,  6,  5,  1,  5,  8,  3,  1,  2,  6,  1,  0,  2,  3,  1,
+         1,  5,  2,  3,  5,  5,  4,  2,  4,  2,  5,  7,  5,  4,  2,  1,
+         8,  6,  6,  5,  1,  6,  7,  2,  3,  2,  6,  3,  7,  2,  6,  2,
+         2,  1,  1,  6,  5,  2,  3,  5,  1,  2,  7,  7,  0,  2,  2,  4,
+         1,  8,  1,  3,  2,  5,  2,  2,  5,  4,  6,  4,  3,  1,  2,  8,
+         1,  2,  1,  5],
+       [ 0,  0,  3,  0,  4,  6,  2,  0,  0,  0,  6,  5,  0,  6,  6,  2,
+         2,  5,  3,  0,  0,  5,  6,  1,  6,  3,  3,  2,  3,  0,  0,  5,
+         0,  5,  2,  0,  4,  2,  1,  7,  1,  2,  0,  2,  0,  3,  5,  0,
+         0,  0,  6,  7,  3,  1,  6,  4,  5,  3,  5,  2,  0,  6,  0,  0,
+         0,  6,  1,  0,  1,  0,  2,  5,  4,  1,  1,  3,  6,  4,  5,  3,
+         1,  5,  1,  3,  0,  4,  1,  5,  1,  5,  1,  0,  0,  2,  1,  3,
+         1,  4,  3,  4],
+       [ 6,  0,  4,  5,  4,  2,  1,  6,  2,  1,  5,  7,  0,  4,  6,  5,
+         6,  2,  7,  6,  4,  1,  3,  5,  3,  4,  5,  4,  5,  4,  6,  4,
+         7,  3,  1,  2,  2,  6,  0,  5,  4,  6,  1,  7,  3,  6,  2,  7,
+         3,  2,  3,  1,  6,  1,  3,  7,  8,  4,  6,  1,  5,  7,  4,  5,
+         1,  3,  1,  2,  2,  7,  0,  3,  3,  5,  3,  1,  7,  6,  7,  3,
+         5,  4,  4,  2,  2,  1,  3,  2,  4,  4,  4,  2,  0,  7,  3,  4,
+         8,  3,  3,  4],
+       [ 3,  7,  5,  8,  6,  4,  2,  6,  4,  3,  2,  7,  2,  3,  8,  6,
+         4,  4,  4,  5,  5,  7,  3,  7,  2,  6,  5,  2,  6,  7,  7,  1,
+         7,  6,  6,  3,  5,  9,  5,  7,  2,  2,  8,  7,  5,  6,  6,  7,
+         7,  2,  5,  6,  7,  8,  4,  8,  4,  4,  6,  4,  6,  3,  3,  4,
+         6,  2,  3,  8,  2,  7,  8,  1,  4,  2,  5,  8,  6,  7,  2,  1,
+         4,  6,  6,  3,  7,  4,  5,  2,  2,  2,  3,  6,  5,  4,  2,  2,
+         1,  2,  5,  8]])
 </pre></div>
 </div>
 </div>
@@ -882,9 +922,6 @@ document.write(`
     <span class="p">),</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;rank&quot;</span>
 <span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
-
-<span class="n">R_frame</span><span class="p">[</span><span class="s2">&quot;relevant&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">R_frame</span><span class="p">[</span><span class="s2">&quot;rank&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-<span class="n">R_frame</span><span class="p">[</span><span class="s2">&quot;random_predict&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">R_frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">R_frame</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -910,87 +947,63 @@ document.write(`
       <th></th>
       <th></th>
       <th>rank</th>
-      <th>relevant</th>
-      <th>random_predict</th>
     </tr>
     <tr>
       <th>object</th>
       <th>item</th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>440</th>
+      <th>276</th>
+      <th>32</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>361</th>
+      <th>19</th>
+      <td>2</td>
+    </tr>
+    <tr>
       <th>47</th>
-      <td>2</td>
-      <td>0</td>
-      <td>0.975159</td>
-    </tr>
-    <tr>
-      <th>283</th>
-      <th>2</th>
-      <td>3</td>
-      <td>0</td>
-      <td>0.229527</td>
-    </tr>
-    <tr>
-      <th>396</th>
-      <th>33</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0.397484</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <th>6</th>
-      <td>5</td>
-      <td>0</td>
-      <td>0.270233</td>
-    </tr>
-    <tr>
-      <th>198</th>
-      <th>15</th>
-      <td>5</td>
-      <td>0</td>
-      <td>0.598170</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <th>33</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0.709187</td>
-    </tr>
-    <tr>
-      <th>422</th>
-      <th>24</th>
+      <th>96</th>
       <td>9</td>
-      <td>1</td>
-      <td>0.814357</td>
     </tr>
     <tr>
-      <th>267</th>
-      <th>4</th>
+      <th>36</th>
+      <th>48</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>245</th>
+      <th>1</th>
       <td>2</td>
-      <td>0</td>
-      <td>0.505066</td>
     </tr>
     <tr>
-      <th>408</th>
+      <th>378</th>
+      <th>85</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <th>55</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>203</th>
       <th>25</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0.244018</td>
+      <td>5</td>
     </tr>
     <tr>
-      <th>99</th>
-      <th>44</th>
-      <td>3</td>
-      <td>0</td>
-      <td>0.754604</td>
+      <th>143</th>
+      <th>24</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>191</th>
+      <th>86</th>
+      <td>6</td>
     </tr>
   </tbody>
 </table>
@@ -1014,16 +1027,11 @@ document.write(`
     <span class="n">R_fr_test</span><span class="p">[</span><span class="s2">&quot;rank&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unstack</span><span class="p">(),</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="n">R_frame</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;precision@3&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;recall@3&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;ndcg@3&quot;</span>
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;ndcg@3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ndcg@5&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ndcg@10&quot;</span>
 <span class="p">]</span>
 <span class="n">R_fr_test</span><span class="p">[[</span><span class="s2">&quot;object_str&quot;</span><span class="p">,</span> <span class="s2">&quot;item_str&quot;</span><span class="p">]]</span> <span class="o">=</span> \
     <span class="n">R_fr_test</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()[[</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;item&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)</span>
@@ -1032,28 +1040,163 @@ document.write(`
     <span class="n">df</span><span class="o">=</span><span class="n">R_fr_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span>
     <span class="n">q_id_col</span><span class="o">=</span><span class="s2">&quot;object_str&quot;</span><span class="p">,</span> 
     <span class="n">doc_id_col</span><span class="o">=</span><span class="s2">&quot;item_str&quot;</span><span class="p">,</span>
-    <span class="n">score_col</span><span class="o">=</span><span class="s2">&quot;relevant&quot;</span>
+    <span class="n">score_col</span><span class="o">=</span><span class="s2">&quot;rank&quot;</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="random-predict">
+<h2>Random predict<a class="headerlink" href="#random-predict" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R_fr_test</span><span class="p">[</span><span class="s2">&quot;random_predict&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">R_fr_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">R_fr_test</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="n">random_run</span> <span class="o">=</span> <span class="n">Run</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>rank</th>
+      <th>object_str</th>
+      <th>item_str</th>
+      <th>random_predict</th>
+    </tr>
+    <tr>
+      <th>object</th>
+      <th>item</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>148</th>
+      <th>29</th>
+      <td>2</td>
+      <td>148</td>
+      <td>29</td>
+      <td>0.437084</td>
+    </tr>
+    <tr>
+      <th>469</th>
+      <th>68</th>
+      <td>8</td>
+      <td>469</td>
+      <td>68</td>
+      <td>0.256724</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <th>43</th>
+      <td>5</td>
+      <td>116</td>
+      <td>43</td>
+      <td>0.244048</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <th>83</th>
+      <td>2</td>
+      <td>70</td>
+      <td>83</td>
+      <td>0.688916</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <th>38</th>
+      <td>1</td>
+      <td>71</td>
+      <td>38</td>
+      <td>0.858272</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <th>29</th>
+      <td>0</td>
+      <td>59</td>
+      <td>29</td>
+      <td>0.662598</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <th>20</th>
+      <td>7</td>
+      <td>120</td>
+      <td>20</td>
+      <td>0.405964</td>
+    </tr>
+    <tr>
+      <th>481</th>
+      <th>59</th>
+      <td>1</td>
+      <td>481</td>
+      <td>59</td>
+      <td>0.014950</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <th>94</th>
+      <td>3</td>
+      <td>116</td>
+      <td>94</td>
+      <td>0.616384</td>
+    </tr>
+    <tr>
+      <th>273</th>
+      <th>98</th>
+      <td>4</td>
+      <td>273</td>
+      <td>98</td>
+      <td>0.461056</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random_run</span> <span class="o">=</span> <span class="n">Run</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span>
     <span class="n">df</span><span class="o">=</span><span class="n">R_fr_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span>
     <span class="n">q_id_col</span><span class="o">=</span><span class="s2">&quot;object_str&quot;</span><span class="p">,</span>
     <span class="n">doc_id_col</span><span class="o">=</span><span class="s2">&quot;item_str&quot;</span><span class="p">,</span>
     <span class="n">score_col</span><span class="o">=</span><span class="s2">&quot;random_predict&quot;</span>
 <span class="p">)</span>
 
-<span class="n">evaluate</span><span class="p">(</span>
+<span class="n">random_eval</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span>
     <span class="n">qrels</span><span class="p">,</span> 
     <span class="n">random_run</span><span class="p">,</span> 
     <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span>
 <span class="p">)</span>
+<span class="n">random_eval</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;precision@3&#39;: 0.3713333333333333,
- &#39;recall@3&#39;: 0.3102086885336885,
- &#39;ndcg@3&#39;: 0.4036283432588485}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;ndcg@3&#39;: 0.5912792255135155,
+ &#39;ndcg@5&#39;: 0.6062122843515301,
+ &#39;ndcg@10&#39;: 0.6699952241686727}
 </pre></div>
 </div>
 </div>
@@ -1095,39 +1238,17 @@ Done computing similarity matrix.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_absolute_error</span><span class="p">(</span>
-    <span class="n">R_fr_test</span><span class="p">[</span><span class="s2">&quot;rank&quot;</span><span class="p">],</span>
-    <span class="n">R_fr_test</span><span class="p">[</span><span class="s2">&quot;surpr_predict&quot;</span><span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.414035940075337
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">surprise_run</span> <span class="o">=</span> <span class="n">Run</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span>
     <span class="n">df</span><span class="o">=</span><span class="n">R_fr_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span>
     <span class="n">q_id_col</span><span class="o">=</span><span class="s2">&quot;object_str&quot;</span><span class="p">,</span>
     <span class="n">doc_id_col</span><span class="o">=</span><span class="s2">&quot;item_str&quot;</span><span class="p">,</span>
     <span class="n">score_col</span><span class="o">=</span><span class="s2">&quot;surpr_predict&quot;</span>
 <span class="p">)</span>
-<span class="n">evaluate</span><span class="p">(</span>
+<span class="n">surpr_evaluate</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span>
     <span class="n">qrels</span><span class="p">,</span> 
     <span class="n">surprise_run</span><span class="p">,</span> 
     <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;precision@3&#39;: 0.7666666666666667,
- &#39;recall@3&#39;: 0.7254612137862139,
- &#39;ndcg@3&#39;: 0.9273804112635808}
 </pre></div>
 </div>
 </div>
@@ -1250,7 +1371,7 @@ Not enough common elements - 0.0
 <span class="sd">    \frac{(\sum_{i}x_{ij}-\overline{x_i})sim_i}{\sum_i{|sim_i|}}.</span>
 <span class="sd">    </span>
 <span class="sd">    items that have no observable preferences </span>
-<span class="sd">    for any user in the collation will simply </span>
+<span class="sd">    for any user in the collation will simply</span>
 <span class="sd">    be omitted from the result;.</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
@@ -1768,6 +1889,421 @@ P_2=\left(
 </div>
 </section>
 </section>
+<section id="application-to-experimental-data">
+<h2>Application to experimental data<a class="headerlink" href="#application-to-experimental-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collaborative_filter</span> <span class="o">=</span> <span class="n">CollaborativeFilter</span><span class="p">(</span><span class="n">n_nearest</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">collaborative_filter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">R_mat_train</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+
+<span class="n">predict</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">collaborative_filter</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">R_mat_train</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()),</span> 
+    <span class="n">columns</span><span class="o">=</span><span class="n">R_mat_train</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">R_mat_train</span><span class="o">.</span><span class="n">index</span>
+<span class="p">)</span>
+
+<span class="n">R_fr_test</span><span class="p">[</span><span class="s2">&quot;self_predict&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">predict</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">uid</span><span class="p">,</span> <span class="n">iid</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">uid</span><span class="p">,</span> <span class="n">iid</span> <span class="ow">in</span> <span class="n">R_fr_test</span><span class="o">.</span><span class="n">index</span>
+<span class="p">]</span>
+
+<span class="n">self_run</span> <span class="o">=</span> <span class="n">Run</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span>
+    <span class="n">df</span><span class="o">=</span><span class="n">R_fr_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span>
+    <span class="n">q_id_col</span><span class="o">=</span><span class="s2">&quot;object_str&quot;</span><span class="p">,</span>
+    <span class="n">doc_id_col</span><span class="o">=</span><span class="s2">&quot;item_str&quot;</span><span class="p">,</span>
+    <span class="n">score_col</span><span class="o">=</span><span class="s2">&quot;self_predict&quot;</span>
+<span class="p">)</span>
+
+<span class="n">self_evaluate</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span>
+    <span class="n">qrels</span><span class="p">,</span> 
+    <span class="n">self_run</span><span class="p">,</span> 
+    <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">random_eval</span><span class="p">,</span>
+        <span class="n">surpr_evaluate</span><span class="p">,</span>
+        <span class="n">self_evaluate</span>
+    <span class="p">],</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;random&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;suprise&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;selfmade&quot;</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">show_df</span><span class="p">)</span>
+<span class="n">show_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ndcg@3</th>
+      <th>ndcg@5</th>
+      <th>ndcg@10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>random</th>
+      <td>0.591279</td>
+      <td>0.606212</td>
+      <td>0.669995</td>
+    </tr>
+    <tr>
+      <th>suprise</th>
+      <td>0.879396</td>
+      <td>0.883068</td>
+      <td>0.897049</td>
+    </tr>
+    <tr>
+      <th>selfmade</th>
+      <td>0.913238</td>
+      <td>0.919341</td>
+      <td>0.932890</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../../../_images/35411264a2ef2d76ff741860f5b974b8094962c848a4433993cd33bbddb5c3fa.png" src="../../../_images/35411264a2ef2d76ff741860f5b974b8094962c848a4433993cd33bbddb5c3fa.png" />
+</div>
+</div>
+</section>
+<section id="evaluation-performance">
+<h2>Evaluation performance<a class="headerlink" href="#evaluation-performance" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Surprise<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reader</span> <span class="o">=</span> <span class="n">Reader</span><span class="p">(</span>
+    <span class="n">rating_scale</span><span class="o">=</span><span class="p">(</span>
+        <span class="n">R</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">R</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">items_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">R_frame</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>it
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_from_df</span><span class="p">(</span>
+    <span class="n">df</span><span class="o">=</span><span class="n">R_fr_train</span><span class="p">[</span><span class="s2">&quot;rank&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> 
+    <span class="n">reader</span><span class="o">=</span><span class="n">reader</span>
+<span class="p">)</span><span class="o">.</span><span class="n">build_full_trainset</span><span class="p">()</span>
+<span class="n">algo</span> <span class="o">=</span> <span class="n">KNNWithMeans</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">)</span>
+
+<span class="p">[</span>
+    <span class="n">algo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">iid</span><span class="o">=</span><span class="n">item_ids</span><span class="p">)</span><span class="o">.</span><span class="n">est</span> 
+    <span class="k">for</span> <span class="n">item_ids</span> <span class="ow">in</span> <span class="n">items_list</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>253 ms ± 3.73 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="self-made">
+<h3>Self made<a class="headerlink" href="#self-made" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>it
+<span class="n">collaborative_filter</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">R_mat_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">20</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>37.6 ms ± 657 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="real-world-data">
+<h2>Real world data<a class="headerlink" href="#real-world-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">io</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://files.grouplens.org/datasets/movielens/ml-100k.zip&quot;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">))</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">z</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ml-100k/u.data&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="s1">&#39;item_id&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">]</span>
+        <span class="n">movies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_movies</span> <span class="o">=</span> <span class="n">movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">movies</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">movies</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)]</span>
+<span class="n">train_movies</span> <span class="o">=</span> <span class="n">movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">movies</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">test_movies</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_movies</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>item_id</th>
+      <th>rating</th>
+      <th>timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>186</td>
+      <td>302</td>
+      <td>3</td>
+      <td>891717742</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>253</td>
+      <td>465</td>
+      <td>5</td>
+      <td>891628467</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>210</td>
+      <td>40</td>
+      <td>3</td>
+      <td>891035994</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>234</td>
+      <td>1184</td>
+      <td>2</td>
+      <td>892079237</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>167</td>
+      <td>486</td>
+      <td>4</td>
+      <td>892738452</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>99965</th>
+      <td>934</td>
+      <td>216</td>
+      <td>1</td>
+      <td>891191511</td>
+    </tr>
+    <tr>
+      <th>99976</th>
+      <td>618</td>
+      <td>628</td>
+      <td>2</td>
+      <td>891308019</td>
+    </tr>
+    <tr>
+      <th>99987</th>
+      <td>660</td>
+      <td>229</td>
+      <td>2</td>
+      <td>891406212</td>
+    </tr>
+    <tr>
+      <th>99988</th>
+      <td>421</td>
+      <td>498</td>
+      <td>4</td>
+      <td>892241344</td>
+    </tr>
+    <tr>
+      <th>99991</th>
+      <td>676</td>
+      <td>538</td>
+      <td>4</td>
+      <td>892685437</td>
+    </tr>
+  </tbody>
+</table>
+<p>19997 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_movies</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>item_id</th>
+      <th>rating</th>
+      <th>timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>196</td>
+      <td>242</td>
+      <td>3</td>
+      <td>881250949</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>22</td>
+      <td>377</td>
+      <td>1</td>
+      <td>878887116</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>244</td>
+      <td>51</td>
+      <td>2</td>
+      <td>880606923</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>166</td>
+      <td>346</td>
+      <td>1</td>
+      <td>886397596</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>298</td>
+      <td>474</td>
+      <td>4</td>
+      <td>884182806</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>99995</th>
+      <td>880</td>
+      <td>476</td>
+      <td>3</td>
+      <td>880175444</td>
+    </tr>
+    <tr>
+      <th>99996</th>
+      <td>716</td>
+      <td>204</td>
+      <td>5</td>
+      <td>879795543</td>
+    </tr>
+    <tr>
+      <th>99997</th>
+      <td>276</td>
+      <td>1090</td>
+      <td>1</td>
+      <td>874795795</td>
+    </tr>
+    <tr>
+      <th>99998</th>
+      <td>13</td>
+      <td>225</td>
+      <td>2</td>
+      <td>882399156</td>
+    </tr>
+    <tr>
+      <th>99999</th>
+      <td>12</td>
+      <td>203</td>
+      <td>3</td>
+      <td>879959583</td>
+    </tr>
+  </tbody>
+</table>
+<p>80003 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1817,6 +2353,7 @@ P_2=\left(
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-generation">Task generation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-predict">Random predict</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surprise">surprise</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-measure">Similarity measure</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-function">Prediction function</a></li>
@@ -1826,6 +2363,13 @@ P_2=\left(
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predict">Predict</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-to-experimental-data">Application to experimental data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-performance">Evaluation performance</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Surprise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#self-made">Self made</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-data">Real world data</a></li>
 </ul>
   </nav></div>
 

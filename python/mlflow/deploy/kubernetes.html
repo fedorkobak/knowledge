@@ -261,6 +261,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../advanced/tqdm.html">TQDM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../advanced/redis.html">Redis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../advanced/surprise.html">Surprise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../advanced/tkinter.html">Tkinter</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../advanced/airflow.html">Airflow</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../advanced/airflow/run_airflow.html">Run airflow</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../advanced/airflow/tutorial_dag.html">Tutorial DAG</a></li>
@@ -752,7 +753,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check">Check</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Kubernetes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Kubernetes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#service-config">Service config</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -780,7 +784,7 @@ docker run -p 5000:5000 -dt --name mlflow_deploy --rm \
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>43656fb3ee54e5e1a7508d9c58f9e88f396e9a2bdd0ed47dc3edd684817ee8dd
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>d9812c0785e9cdde0d64e510a88bb7a379200333f504c160a837742fd132b69e
 </pre></div>
 </div>
 </div>
@@ -793,7 +797,15 @@ docker run -p 5000:5000 -dt --name mlflow_deploy --rm \
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2475d11f455e79561d53fc736d58189ff89d6a3ae0a6cda336d6edfd282bea03
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>079df3f509bf02b6496cbbc23fa3828209ce769b62017d9ccd60c7c263a02fcd
+</pre></div>
+</div>
+</div>
+</div>
+<p>Obviously we will need kubernetes cluster to try this example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>minikube<span class="w"> </span>start<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 </pre></div>
 </div>
 </div>
@@ -818,15 +830,29 @@ docker run -p 5000:5000 -dt --name mlflow_deploy --rm \
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
 docker stop mlflow_deploy local-registry
+minikube delete
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mlflow_deploy
 local-registry
+* Deleting &quot;minikube&quot; in docker ...
+* Deleting container &quot;minikube&quot; ...
+* Removing /home/f.kobak@maxbit.local/.minikube/machines/minikube ...
+* Removed all traces of the &quot;minikube&quot; cluster.
 </pre></div>
 </div>
 </div>
+</div>
+<p>It turns out that in order to run examples in minikube, you need to coimplete the installation tone associated with KServe, see <a class="reference external" href="https://kserve.github.io/website/latest/admin/serverless/serverless/">serverless Installation Guide</a>. You’ll need to <a class="reference external" href="https://istio.io/latest/docs/setup/getting-started/">install Istio</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/knative/serving/releases/download/knative-v1.14.1/serving-crds.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/knative/serving/releases/download/knative-v1.14.1/serving-core.yaml
+istioctl<span class="w"> </span>install<span class="w"> </span>-y
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/knative/net-istio/releases/download/knative-v1.14.1/net-istio.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.13.0/kserve.yaml
+</pre></div>
 </div>
 </section>
 <section id="model">
@@ -869,11 +895,10 @@ local-registry
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024/06/08 18:11:52 INFO mlflow.tracking.fluent: Experiment with name &#39;wine-quality&#39; does not exist. Creating a new experiment.
-2024/06/08 18:11:52 WARNING mlflow.utils.autologging_utils: You are using an unsupported version of sklearn. If you encounter errors during autologging, try upgrading / downgrading sklearn to a supported version, or try upgrading MLflow.
-2024/06/08 18:11:58 WARNING mlflow.utils.autologging_utils: MLflow autologging encountered a warning: &quot;/home/f-kobak-distance-desctop/Documents/knowledge/venv/lib/python3.10/site-packages/_distutils_hack/__init__.py:33: UserWarning: Setuptools is replacing distutils.&quot;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024/06/10 15:34:18 INFO mlflow.tracking.fluent: Experiment with name &#39;wine-quality&#39; does not exist. Creating a new experiment.
+2024/06/10 15:34:19 WARNING mlflow.utils.autologging_utils: MLflow autologging encountered a warning: &quot;/home/f.kobak@maxbit.local/.local/lib/python3.10/site-packages/_distutils_hack/__init__.py:26: UserWarning: Setuptools is replacing distutils.&quot;
 Successfully registered model &#39;wine-quality&#39;.
-2024/06/08 18:11:59 INFO mlflow.store.model_registry.abstract_store: Waiting up to 300 seconds for model version to finish creation. Model name: wine-quality, version 1
+2024/06/10 15:34:19 INFO mlflow.store.model_registry.abstract_store: Waiting up to 300 seconds for model version to finish creation. Model name: wine-quality, version 1
 Created version &#39;1&#39; of model &#39;wine-quality&#39;.
 </pre></div>
 </div>
@@ -908,7 +933,7 @@ Created version &#39;1&#39; of model &#39;wine-quality&#39;.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&quot;predictions&quot;: [0.39371689840943747]}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&quot;predictions&quot;: [0.4211626972839291]}
 </pre></div>
 </div>
 </div>
@@ -925,7 +950,7 @@ Created version &#39;1&#39; of model &#39;wine-quality&#39;.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error from server (AlreadyExists): namespaces &quot;mlflow-kserve-test&quot; already exists
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>namespace/mlflow-kserve-test created
 </pre></div>
 </div>
 </div>
@@ -940,9 +965,11 @@ Created version &#39;1&#39; of model &#39;wine-quality&#39;.
 docker<span class="w"> </span>push<span class="w"> </span>localhost:5001/wine_image:latest
 </pre></div>
 </div>
+<section id="service-config">
+<h3>Service config<a class="headerlink" href="#service-config" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> kubernetes/config.yaml
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> kubernetes_files/config.yaml
 <span class="n">apiVersion</span><span class="p">:</span> <span class="s2">&quot;serving.kserve.io/v1beta1&quot;</span>
 <span class="n">kind</span><span class="p">:</span> <span class="s2">&quot;InferenceService&quot;</span>
 <span class="n">metadata</span><span class="p">:</span>
@@ -963,7 +990,7 @@ docker<span class="w"> </span>push<span class="w"> </span>localhost:5001/wine_im
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing kubernetes/config.yaml
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overwriting kubernetes_files/config.yaml
 </pre></div>
 </div>
 </div>
@@ -974,7 +1001,26 @@ docker<span class="w"> </span>push<span class="w"> </span>localhost:5001/wine_im
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>inferenceservice.serving.kserve.io/mlflow-wine-classifier created
+</pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>-n<span class="w"> </span>mlflow-kserve-test
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME                     URL   READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION   AGE
+mlflow-wine-classifier         False                                                                 4s
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -1030,7 +1076,10 @@ docker<span class="w"> </span>push<span class="w"> </span>localhost:5001/wine_im
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check">Check</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Kubernetes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Kubernetes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#service-config">Service config</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
