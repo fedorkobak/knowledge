@@ -10,7 +10,7 @@ conn = psycopg2.connect(
     # interesting that host name match
     # with the container name
     # where database deployed
-    host = "pg_example_posgres_cont"
+    host = "pg_example_postgres_cont"
 )
 
 # add 20 random values to the database
