@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend</title>
+</head>
+<body>
+    <h1>Frontend</h1>
+    <button id="fetchData">Fetch Data from Backend</button>
+    <pre id="response"></pre>
+
+    <script>
+        document.getElementById('fetchData').addEventListener('click', () => {
+            fetch('http://localhost:8000')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
