@@ -1,0 +1,8 @@
+
+FROM python:3.10-alpine
+RUN apk add openssh-client && \
+    ssh-keygen -t rsa -N "" -f /root/.ssh/id_rsa && \
+    pip3 install ansible && \
+    # Add to the config statement that we don't need to enter if we want to save the new host.
+    echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
