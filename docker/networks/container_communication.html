@@ -1,0 +1,1036 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Containers communication &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docker/networks/container_communication';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Local network" href="local_network.html" />
+    <link rel="prev" title="Networks" href="../networks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../data_science/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_science/gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_science/models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_science/data_transformations/tf_idf.html">TF-IDF</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/metrics.html">Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/ranking_task.html">Ranking task</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../data_science/ranking_task/collaborative_filtering.html">Collaborative filtering</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/collaborative_filtering/self_made_mem_based.html">Selfmade memory based</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/ranking_task/task_generation.html">Task generation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../data_science/ranking_task/metrics.html">Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/metrics/precision_k.html">precision@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/metrics/recall_k.html">recall@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/metrics/average_precision.html">AP@k (average precision)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/basics.html">Basics</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/basics/operators.html">Operators</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/arithmetic.html">Arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/break.html">Leave cycle (break)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/in.html">Is in array (in)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/indexing.html">Indexing ([])</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/order.html">Order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/operators/yield.html">yield</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/basics/datatypes.html">Data types</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../python/basics/datatypes/basic.html">Basic</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../python/basics/datatypes/basic/list.html">list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../python/basics/datatypes/basic/dict.html">dict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../python/basics/datatypes/basic/set.html">set</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/basics/path_settings.html">Path settings</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/path_settings/pathlib.html">Pathlib</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/basics/functions.html">Functions</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/basics/imports.html">Imports</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/imports/from_package_import_all.html"><code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">&lt;package&gt;</span> <span class="pre">import</span> <span class="pre">*</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/basics/exceptions.html">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/basics/packages.html">Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/basics/virtual_environment.html">Virutal environment in python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/basics/file_system_operations.html">File system operations</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/basics/cli_arguments.html">CLI arguments</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/cli_arguments/argparse.html">Library <code class="docutils literal notranslate"><span class="pre">argparse</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/basics/cli_arguments/manually.html">Manually</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/advanced.html">Advanced</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/collections.html"><code class="docutils literal notranslate"><span class="pre">collections</span></code> library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/excel_export.html">To excel import</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/ipython_magics.html">IPython magics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/jinja.html">Jinja</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/advanced/docker_sdk.html">Docker SDK</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/docker_sdk/containers.html">Containers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/multi_threads.html">Multithreads in python</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/advanced/multiprocessing.html">Multiprocessing</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/multiprocessing/pool.html">Pool</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/transformers.html">Transformers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/hashlib.html">Hashlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/selenium.html">Selenium</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/advanced/ranx.html">Ranx</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/ranx/entry_queries_documents.html">Queries documents entry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/tqdm.html">TQDM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/redis.html">Redis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/surprise.html">Surprise</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/advanced/matplotlib.html">Matplotlib</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/matplotlib/table_in_matplotlib.html">matplotlib tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/matplotlib/gif_creation.html">Gif creation</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/advanced/airflow.html">Airflow</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/airflow/run_airflow.html">Run airflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/airflow/tutorial_dag.html">Tutorial DAG</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/advanced/geopy.html">Geopy</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/geopy/distances.html">Distances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/geopy/request.html">Request</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/advanced/type_annotations.html">Type annotations</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/type_annotations/complex_types.html">Complex types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/advanced/type_annotations/function_annotations.html">Function annotations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/socket.html">Socket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/advanced/requests.html">Requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/oop.html">Object oriented programming</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-20"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/oop/interface.html">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/pandas.html">Pandas</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-21"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/pandas/data_types.html">Data types</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-22"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/pandas/data_types/datetime.html">datetime</a></li>
+
+
+
+
+<li class="toctree-l3"><a class="reference internal" href="../../python/pandas/data_types/columns_by_types.html">Columns by types</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/pandas/data_transformations.html">Data transformations</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-23"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/pandas/data_transformations/groupby.html">Groupby</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/pandas/loc.html">&lt;DataFrame/Series&gt;.loc</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../python/pandas/data_visualisation.html">Data visualisation</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../python/pandas/tables_styles.html">Tables styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/pandas/display_options.html">Display options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/pandas/inline_columns_add.html">Inline column add (assign)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/pandas/read_sql.html">pandas.read_sql</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/numpy.html">Numpy</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-24"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/numpy/norm.html">Norm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/numpy/array_splitting.html">Array splitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/numpy/apply_along_axis.html">Apply along axis</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/sklearn.html">sklearn</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-25"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/sklearn/dataset_transformations.html">Dataset transformations</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-26"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../python/sklearn/dataset_transformations/pipeline.html">Pipeline</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-27"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../python/sklearn/dataset_transformations/pipeline/features_names.html">Features names</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/sklearn/dataset_transformations/pipeline/memory_parameter.html"><code class="docutils literal notranslate"><span class="pre">memory</span></code> parameter(chacing)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/sklearn/dataset_transformations/columns_transformer.html">Specific processing for column</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/sklearn/dataset_transformations/features_names_out.html">Features names out</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/sklearn/dataset_transformations/one_hot_encoder.html">One hot encoder</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../python/sklearn/dataset_transformations/developing_transformer.html">Developing transformer</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-28"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../python/sklearn/dataset_transformations/developing_transformer/features_names_out.html">Feature names out</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/sklearn/dataset_transformations/frozen_steps.html">Frozen steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/sklearn/dataset_transformations/estimator_to_transformer.html">Estimator to transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/sklearn/grid_search_cv.html">Grid search CV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/sklearn/saving_models.html">Saving models</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/sklearn/nearest_neighbors.html">Nearest neighbors</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-29"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/sklearn/nearest_neighbors/metric.html">Metric</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/torch.html">Torch</a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-30"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/torch/tensor.html">Tensor</a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-31"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/tensor/basic.html">Tensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/tensor/element_wise.html">Element-wise operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/torch/differentiation.html">Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/torch/layers.html">Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/torch/nn_module.html">nn.Module class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/torch/regression_network.html">Regression in torch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/torch/logistic_regression.html">Logistic regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/torch/multiclass_task.html">Multiclass task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/torch/texts_classification.html">Text classification</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/torch/vision.html">Vision</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/vision/basic.html">Basic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/vision/augmentations.html">Augmentations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/vision/mnist.html">MNIST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/vision/pretrains.html">Pretrains</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/vision/cnn_classification.html">CNN classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/vision/unet.html">Unet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/vision/datasets.html">Datasets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/mlflow.html">MLflow</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/mlflow/example_of_use.html">Example of usе</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/mlflow/deploy.html">Deploy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/mlflow/custom_model.html">Custom model</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/unittest.html">unittest</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/unittest/check_error.html">Check error (assertRaises)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/unittest/run_before_after.html">Run code before/after</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/unittest/mocking.html">Mocking</a><input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-35"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/unittest/mocking/syntax_options.html">Syntax options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/unittest/mocking/check_arguments.html">Check arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/unittest/mocking/raising_errors.html">Raising errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/logging.html">Logging</a><input class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-36"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/logging/handler.html">Handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/logging/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/logging/exception_information.html">Exceptions information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/logging/logging_to_file.html">Logging to file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/logging/logger_handler_level.html">Logger/Handler level</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/build_package.html">Build package</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-37"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/build_package/uploading_to_pypi.html">Upload package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/build_package/environment_vs_files.html">Environment vs files</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/build_package/pyproject_toml.html">pyproject.toml</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-38"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/build_package/pyproject_toml/dependencies.html">Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/build_package/pyproject_toml/data_files.html">Data files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/plotly.html">Plotly</a><input class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-39"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/plotly/hovers.html">Hovers</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../python/plotly/dragmode.html">Dragmode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/plotly/color_from_scheme.html">Color from scheme</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/dash.html">Dash</a><input class="toctree-checkbox" id="toctree-checkbox-40" name="toctree-checkbox-40" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-40"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/dash/callbacks.html">Callbacks</a></li>
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../python/dash/components.html">Components</a></li>
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../python/dash/select_clear_all.html">Select/Clear All</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../python/dash/multipage_applications.html">Multipage applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/dash/empty_figure.html">Empty figure</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/fastapi.html">Fastapi</a><input class="toctree-checkbox" id="toctree-checkbox-41" name="toctree-checkbox-41" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-41"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/fastapi/pass_arguments.html">Pass arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/fastapi/return_values.html">Return values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/fastapi/logging.html">Logging</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/fastapi/documentation.html">Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-42"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/fastapi/documentation/parameters.html">Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/fastapi/cors.html">CORS</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/sqlalchemy.html">SQL alchemy</a><input class="toctree-checkbox" id="toctree-checkbox-43" name="toctree-checkbox-43" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-43"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../python/sqlalchemy/create_table.html">Create table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/sqlalchemy/query.html">Query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/sqlalchemy/add_record.html">Add record</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/sqlalchemy/relations.html">Relations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../python/tkinter.html">Tkinter</a><input class="toctree-checkbox" id="toctree-checkbox-44" name="toctree-checkbox-44" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-44"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../python/tkinter/widgets_overview.html">Widgets overview</a><input class="toctree-checkbox" id="toctree-checkbox-45" name="toctree-checkbox-45" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-45"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../python/tkinter/widgets_overview/scrolling.html">Scrolling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/tkinter/widgets_overview/treeview.html">Treeview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/tkinter/pack.html">Pack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/tkinter/change_elements_position.html">Change elements position</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../math/union_probability.html">Union probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math/conditional_probability.html">Сonditional probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math/cent_limit_theorem.html">Central limit theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math/maximum_likelihood.html">Maximum likelihood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math/latex.html">Latex</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/stat_testing.html">Statistical testing</a><input class="toctree-checkbox" id="toctree-checkbox-46" name="toctree-checkbox-46" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-46"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math/stat_testing/binomial_test.html">Binomial test</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/complexity.html">Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/trees.html">Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/dynamic_prog.html">Dynamic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/quick_sort.html">Quick sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../algorithms/specific_tasks.html">Specific tasks</a><input class="toctree-checkbox" id="toctree-checkbox-47" name="toctree-checkbox-47" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-47"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Docker</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../containers.html">Containers</a><input class="toctree-checkbox" id="toctree-checkbox-48" name="toctree-checkbox-48" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-48"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../containers/check_logs.html">Check logs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../images.html">Images</a><input class="toctree-checkbox" id="toctree-checkbox-49" name="toctree-checkbox-49" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-49"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../images/build_image.html">Build image</a><input class="toctree-checkbox" id="toctree-checkbox-50" name="toctree-checkbox-50" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-50"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../images/build_image/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../images/build_image/ignore_files.html">Ignore files</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../images/docker_file_directives.html">Dockerfile directives</a><input class="toctree-checkbox" id="toctree-checkbox-51" name="toctree-checkbox-51" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-51"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../volumes.html">Volumes</a></li>
+
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../networks.html">Networks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-52" name="toctree-checkbox-52" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-52"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Containers communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="local_network.html">Local network</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../access.html">Acesss to containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker_compose.html">Docker compose</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../git/init.html">Init repository</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/file_stages.html">File statuses</a><input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/diff.html">Difference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/checkout.html">Checkout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/branches.html">Branches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/log.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/merge.html">Merge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/stash.html">Stash</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../sql/build_container.html">Build container</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/select.html">Select</a><input class="toctree-checkbox" id="toctree-checkbox-54" name="toctree-checkbox-54" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-54"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/join.html">JOIN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/sorting.html">Sorting (ORDER BY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/unique_values.html">Unique values (DISTINCT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/fill_empty.html">Fill empty (COALESCE/IFNULL)</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/aggregations.html">Aggregations (GROUP BY)</a><input class="toctree-checkbox" id="toctree-checkbox-55" name="toctree-checkbox-55" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-55"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/aggregation/functions.html">Aggregation functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/aggregation/conditions_on_aggregats.html">Conditions on aggregats (HAVING)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/aggregation/conditions_in_aggregats.html">Conditions in aggregats (FILTER)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/window_functions.html">Window functions (OVER)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/expand_array.html">Expand array (UNNEST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/NULL_conditions.html">NULL conditions (IS (NOT) NULL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/first_last_value.html">FIRST/LAST_VALUE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/datetime.html">Date and time</a><input class="toctree-checkbox" id="toctree-checkbox-56" name="toctree-checkbox-56" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-56"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/datetime/date_components.html">Date components (DATE_PART)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/datetime/add_period.html">Add period</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/load_tables.html">Load tables</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../sql/json_datatype.html">JSON data type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/special_cases.html">Special cases</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/python_interaction.html">Python interaction</a><input class="toctree-checkbox" id="toctree-checkbox-57" name="toctree-checkbox-57" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-57"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/python_from_container.html">Python from container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/python_on_host.html">Python on host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/create_database.html">Create database</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../layout/sources.html">Sources</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../layout/html.html">HTML</a><input class="toctree-checkbox" id="toctree-checkbox-58" name="toctree-checkbox-58" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-58"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/other.html">Other</a></li>
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/tables.html">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/lists.html">List tags</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../layout/css.html">CSS</a><input class="toctree-checkbox" id="toctree-checkbox-59" name="toctree-checkbox-59" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-59"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/other.html">Other</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/style_application.html">Style application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/margin.html">Margin (out space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/padding.html">Padding (in space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/overflow.html">Overflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/elements_positions.html">Elements position (<code class="docutils literal notranslate"><span class="pre">display</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../layout/forms.html">Forms</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/linux.html">Linux</a><input class="toctree-checkbox" id="toctree-checkbox-60" name="toctree-checkbox-60" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-60"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/linux/backup.html">Backup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/linux/ssh.html">SSH</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../other/kubernetes.html">Kubernetes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/redis.html">Redis</a><input class="toctree-checkbox" id="toctree-checkbox-61" name="toctree-checkbox-61" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-61"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/redis/zset.html">Zset</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/nginx.html">Nginx</a><input class="toctree-checkbox" id="toctree-checkbox-62" name="toctree-checkbox-62" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-62"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/location.html">Location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/basics_of_configuration.html">Configuration files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/running_gitlab.html">Running gitlab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ansible.html">Ansible</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/fedorkobak/knowledge" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docker/networks/container_communication.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Containers communication</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#communicating-by-ip">Communicating by IP</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="containers-communication">
+<h1>Containers communication<a class="headerlink" href="#containers-communication" title="Link to this heading">#</a></h1>
+<p>In this page I want to focus on ways of organising container communication.</p>
+<section id="communicating-by-ip">
+<h2>Communicating by IP<a class="headerlink" href="#communicating-by-ip" title="Link to this heading">#</a></h2>
+<p>To access one container from another by container name, you need to add them to the same custom Docker network. However, if you’re using the containers’ IP addresses, the containers can communicate with each other on the default <code class="docutils literal notranslate"><span class="pre">bridge</span></code> network.</p>
+<hr class="docutils" />
+<p>Consider the example where we are trying to send a request from <code class="docutils literal notranslate"><span class="pre">example_client</span></code> to the <code class="docutils literal notranslate"><span class="pre">example_server</span></code> container. The following cell creates everything we needed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-itd<span class="w"> </span>--name<span class="w"> </span>example_client<span class="w"> </span>--rm<span class="w"> </span>alpine
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>example_client<span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>curl<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+
+docker<span class="w"> </span>run<span class="w"> </span>-itd<span class="w"> </span>--name<span class="w"> </span>example_server<span class="w"> </span>--rm<span class="w"> </span>kennethreitz/httpbin
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ea3dc18555a4c4f8458da8333802a60484e9ef92df9ca8fd2998d7f8f6d6d5f9
+e5da80689cabd318d696d8640cd2ba0ad55935ccfabd379c8bf0f34e7cc5efa5
+</pre></div>
+</div>
+</div>
+</div>
+<p>Obviously we can’t do this just by container name. This is because the containers are in the default <code class="docutils literal notranslate"><span class="pre">bridge</span></code> network, which doesn’t support such interactions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>example_client<span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>example_server/anything
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s try to extract the ip address of <code class="docutils literal notranslate"><span class="pre">server_example</span></code> on the docker network.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">server_ip</span><span class="o">=</span><span class="k">$(</span>docker<span class="w"> </span>inspect<span class="se">\</span>
+<span class="w">    </span>--format<span class="w"> </span><span class="s1">&#39;{{ .NetworkSettings.IPAddress }}&#39;</span><span class="se">\</span>
+<span class="w">    </span>example_server<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$server_ip</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>172.17.0.3
+</pre></div>
+</div>
+</div>
+</div>
+<p>By using it in the <code class="docutils literal notranslate"><span class="pre">curl</span></code> that tries to access <code class="docutils literal notranslate"><span class="pre">server_example</span></code> from <code class="docutils literal notranslate"><span class="pre">client_example</span></code> we’ll have result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>example_client<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;curl -s </span><span class="nv">$server_ip</span><span class="s2">/anything&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{
+  &quot;args&quot;: {}, 
+  &quot;data&quot;: &quot;&quot;, 
+  &quot;files&quot;: {}, 
+  &quot;form&quot;: {}, 
+  &quot;headers&quot;: {
+    &quot;Accept&quot;: &quot;*/*&quot;, 
+    &quot;Host&quot;: &quot;172.17.0.3&quot;, 
+    &quot;User-Agent&quot;: &quot;curl/8.9.0&quot;
+  }, 
+  &quot;json&quot;: null, 
+  &quot;method&quot;: &quot;GET&quot;, 
+  &quot;origin&quot;: &quot;172.17.0.2&quot;, 
+  &quot;url&quot;: &quot;http://172.17.0.3/anything&quot;
+}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Keep environment clean after all.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>example_client<span class="w"> </span>example_server
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>example_client
+example_server
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "bash"
+        },
+        kernelOptions: {
+            name: "bash",
+            path: "./docker/networks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'bash'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../networks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Networks</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="local_network.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Local network</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#communicating-by-ip">Communicating by IP</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
