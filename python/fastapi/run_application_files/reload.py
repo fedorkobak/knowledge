@@ -1,7 +1,11 @@
+import uvicorn
 from fastapi import FastAPI
 
-my_first_app = FastAPI()
+app = FastAPI()
 
-@my_first_app.get("/")
+@app.get("/")
 def say_hello():
-    return "updated line"
+    return "I'm started from __main__"
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
