@@ -1,0 +1,17 @@
+services:
+  fast_api:
+    image: fastapi_experiment
+    container_name: cache_example_api
+    volumes:
+      - ./app.py:/app.py
+    command: /bin/sh -c "\
+      pip3 install redis fastapi-cache2[redis] && \
+      uvicorn --host 0.0.0.0 --reload app:app"
+    network_mode: host
+    stdin_open: true
+    tty: true
+  redis:
+    image: redis:7.4.0
+    container_name: cache_example_redis
+    network_mode: host
+    command: redis-server --port 6380
