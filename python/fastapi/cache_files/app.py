@@ -2,6 +2,7 @@ from random import random
 from collections.abc import AsyncIterator
 
 from fastapi import FastAPI
+from fastapi.exceptions import HTTPException
 
 from fastapi_cache import FastAPICache
 from fastapi_cache.decorator import cache
@@ -18,5 +19,5 @@ app = FastAPI(lifespan=lifespan)
 
 @app.get("/")
 @cache(expire=600)
-def index(id: int):
-    return random()
+def index():
+    raise HTTPException(500, str(random()))
