@@ -2,7 +2,7 @@ from random import random
 from collections.abc import AsyncIterator
 
 from fastapi import FastAPI
-from fastapi.exceptions import HTTPException
+from fastapi.responses import JSONResponse
 
 from fastapi_cache import FastAPICache
 from fastapi_cache.decorator import cache
@@ -20,4 +20,5 @@ app = FastAPI(lifespan=lifespan)
 @app.get("/")
 @cache(expire=600)
 def index():
-    raise HTTPException(500, str(random()))
+    data = {"detail": str(random())}
+    return JSONResponse(content=data, status_code=500)
