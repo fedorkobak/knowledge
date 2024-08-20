@@ -16,7 +16,7 @@ def lifespan(_: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(lifespan=lifespan)
 
-@app.get("/{id}")
+@app.get("/")
 @cache(expire=600)
 def index(id: int):
     return random()
