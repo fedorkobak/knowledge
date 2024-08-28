@@ -1,7 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 app = FastAPI()
 
-@app.get("/divide")
-def divide(a : int, b : int):
-    return a/b
+@app.get("/")
+def index(request: Request):
+    return request.client.host
