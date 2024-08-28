@@ -3,5 +3,5 @@ from fastapi import FastAPI
 my_first_app = FastAPI()
 
 @my_first_app.get("/")
-def say_hello():
-    return "hello"
+def index(a: int, b: str):
+    return f"a = {a}, b = {b}"
