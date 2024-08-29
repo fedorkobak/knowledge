@@ -1,5 +1,5 @@
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s %(message)s')
 
 logging.debug("A DEBUG Message")
 logging.info("An INFO")
