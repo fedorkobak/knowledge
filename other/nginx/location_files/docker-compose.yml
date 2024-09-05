@@ -1,0 +1,13 @@
+services:
+  proxied:
+    image: kennethreitz/httpbin
+    container_name: client_container
+    ports: 
+      - 81:80
+  nginx:
+    image: nginx
+    container_name: experiment_nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports: 
+      - 80:80
