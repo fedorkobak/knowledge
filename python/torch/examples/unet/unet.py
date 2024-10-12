@@ -1,5 +1,9 @@
 import torch
 from torch import nn
+from torch.utils.data import DataLoader
+
+from tqdm import tqdm
+from typing import Callable
 
 class DoubleConv(nn.Module):
     '''
@@ -116,3 +120,43 @@ class Up(nn.Module):
         x = torch.cat([x_left, x], dim=1)
 
         return self.conv(x)
+    
+
+@torch.inference_mode
+def evaluate(
+    model: nn.Module,
+    loader: DataLoader,
+    loss_fun: Callable,
+    tqdm_desc: str = None
+) -> tuple[float, float]:
+
+    model.eval()
+
+    total_pixels = 0
+    correct_pixels = 0
+    loss_cumulative = 0
+
+    for X, y in tqdm(loader, desc=tqdm_desc):
+
+        predict = model(X)
+
+        loss_cumulative += loss_fun(input=predict, target=y).item()
+
+        correct_pixels += (predict.argmax(dim=1) == y).sum()
+        total_pixels += y.numel()
+
+    return correct_pixels/total_pixels, loss_cumulative/len(loader)
+
+
+def run_epoch(
+    model: nn.Module,
+    loader: DataLoader,
+    loss_fun: Callable,
+    optimizer: torch.optim.Optimizer
+):
+    model.train()
+    for X, y in tqdm(loader, desc="Fitting"):
+        predict = model(X)
+        loss_value = loss_fun(input=predict, target=y)
+        loss_value.backward()
+        optimizer.step()
