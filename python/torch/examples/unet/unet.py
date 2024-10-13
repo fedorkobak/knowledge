@@ -3,7 +3,10 @@ from torch import nn
 from torch.utils.data import DataLoader
 
 from tqdm import tqdm
+import huggingface_hub
+from pathlib import Path
 from typing import Callable
+from tempfile import TemporaryDirectory
 
 class DoubleConv(nn.Module):
     '''
@@ -156,7 +159,29 @@ def run_epoch(
 ):
     model.train()
     for X, y in tqdm(loader, desc="Fitting"):
+        optimizer.zero_grad()
         predict = model(X)
         loss_value = loss_fun(input=predict, target=y)
         loss_value.backward()
         optimizer.step()
+
+
+hf_api = huggingface_hub.HfApi()
+def save_model(model: torch.nn.Module, name: str):
+    with TemporaryDirectory() as tmpdir:
+        torch.save(model.state_dict(), Path(tmpdir)/name)
+        hf_api.upload_folder(
+            repo_id="fedorkobak/knowledge",
+            folder_path=tmpdir
+        )
+
+
+def  load_model(model: torch.nn.Module, name: str):
+    cached_model = huggingface_hub.hf_hub_download(
+        repo_id="fedorkobak/knowledge",
+        filename=name
+    )
+    model.load_state_dict(
+        torch.load(cached_model, map_location=torch.device('cpu')),
+    )
+    return model
