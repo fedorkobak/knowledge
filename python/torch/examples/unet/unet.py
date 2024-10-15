@@ -1,3 +1,7 @@
+'''
+Tools that is used for fitting evaluating and saving UNet models.
+'''
+
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
@@ -133,6 +137,27 @@ def evaluate(
     tqdm_desc: str = None
 ) -> tuple[float, float]:
 
+    """
+    Evaluate the model on the given data loader.
+
+    Parameters
+    ----------
+    model: nn.Module  
+        The model to be evaluated.  
+    loader: DataLoader  
+        The DataLoader used for model evaluation.  
+    loss_fun: Callable  
+        The loss function used for evaluation.  
+    tqdm_desc: str  
+        The description displayed in the tqdm progress bar for batches.
+
+    Returns
+    -------
+    out: tuple[float, float]
+        - Pixel accuracy of the evaludated model.
+        - Average loss over the batches of the estimated model.
+    """
+
     model.eval()
 
     total_pixels = 0
@@ -148,7 +173,7 @@ def evaluate(
         correct_pixels += (predict.argmax(dim=1) == y).sum()
         total_pixels += y.numel()
 
-    return correct_pixels/total_pixels, loss_cumulative/len(loader)
+    return (correct_pixels/total_pixels).item(), loss_cumulative/len(loader)
 
 
 def run_epoch(
