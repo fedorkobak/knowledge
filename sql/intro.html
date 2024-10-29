@@ -500,6 +500,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../python/torch/examples/unet/voc_segmentation.html">Voc segmentation</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../python/torch/examples/gan.html">GAN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/torch/examples/conditional_gan.html">Conditional GAN</a></li>
 </ul>
 </li>
 </ul>
@@ -608,7 +610,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="select/sorting.html">Sorting (ORDER BY)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="select/unique_values.html">Unique values (DISTINCT)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="select/fill_empty.html">Fill empty (COALESCE/IFNULL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="select/empty_values.html">Empty values</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="select/aggregation_functions.html">Aggregation functions</a><input class="toctree-checkbox" id="toctree-checkbox-68" name="toctree-checkbox-68" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-68"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="select/aggregation_functions/collect_array.html">Collect array</a></li>
 </ul>
@@ -887,17 +889,22 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-servers">Running servers</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres">Postgres</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clickhouse">Clickhouse</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres">Postgres</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#server">Server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">Commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialisation-scripts">Initialisation scripts</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-commands">Running commands</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Postgres</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Clickhouse</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clickhouse">Clickhouse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Commands</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialisation-scripts">Initialisation scripts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sqlite">Sqlite</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-command">Run command</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -912,11 +919,10 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="intro">
 <h1>Intro<a class="headerlink" href="#intro" title="Link to this heading">#</a></h1>
 <p>In this section, there are many examples, most of which are run in Docker. This page shows typical tricks used to run and manipulate SQL servers from a Docker container.</p>
-<section id="running-servers">
-<h2>Running servers<a class="headerlink" href="#running-servers" title="Link to this heading">#</a></h2>
-<p>First, you have to run a container with the SQL server.</p>
 <section id="postgres">
-<h3>Postgres<a class="headerlink" href="#postgres" title="Link to this heading">#</a></h3>
+<h2>Postgres<a class="headerlink" href="#postgres" title="Link to this heading">#</a></h2>
+<section id="server">
+<h3>Server<a class="headerlink" href="#server" title="Link to this heading">#</a></h3>
 <p>A key feature of running a PostgreSQL container is that you must pass the <code class="docutils literal notranslate"><span class="pre">POSTGRES_PASSWORD</span></code> environment variable. Find out more on the <a class="reference external" href="https://hub.docker.com/_/postgres">PostgreSQL page on Docker Hub</a>.</p>
 <hr class="docutils" />
 <p>After running the following cell, you’ll have a Docker container named <code class="docutils literal notranslate"><span class="pre">intro_example_pg</span></code>.</p>
@@ -944,45 +950,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="clickhouse">
-<h3>Clickhouse<a class="headerlink" href="#clickhouse" title="Link to this heading">#</a></h3>
-<p>Creating a ClickHouse server is really straightforward.</p>
-<hr class="docutils" />
-<p>The following cell creates a new Docker container named <code class="docutils literal notranslate"><span class="pre">intro_example_click</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>intro_example_click<span class="se">\</span>
-<span class="w">    </span>clickhouse/clickhouse-server:24
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60c105781eeb22399d5446ef8e7114ee86d0da60008f6b2dc37b676287737874
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong>: Don’t forget to stop the container afterward.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>intro_example_click
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>intro_example_click
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="running-commands">
-<h2>Running commands<a class="headerlink" href="#running-commands" title="Link to this heading">#</a></h2>
-<p>Passing commands to the servers is done by running <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span> <span class="pre">&lt;client</span> <span class="pre">interface&gt;</span></code>.</p>
-<section id="id1">
-<h3>Postgres<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="commands">
+<h3>Commands<a class="headerlink" href="#commands" title="Link to this heading">#</a></h3>
 <p>In the case of PostgreSQL, to communicate with the container, you have to use the <code class="docutils literal notranslate"><span class="pre">psql</span></code> tool. It requires specifying the user with the <code class="docutils literal notranslate"><span class="pre">-U</span></code> option. The <code class="docutils literal notranslate"><span class="pre">exec</span></code> command must be called in interactive mode (using the <code class="docutils literal notranslate"><span class="pre">-i</span></code> option). To run scripts with multiple commands, you can use heredoc syntax.</p>
 <hr class="docutils" />
 <p>The following cell demonstrates how to execute SELECT statements in the newly created containers.</p>
@@ -1010,39 +979,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="id2">
-<h3>Clickhouse<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
-<p>In the case of ClickHouse, access to the database is achieved through the <code class="docutils literal notranslate"><span class="pre">clickhouse-client</span></code> tool. To pass a command to it, you need to use the <code class="docutils literal notranslate"><span class="pre">-q</span></code> option, followed by a string literal that defines the script to be executed.</p>
-<hr class="docutils" />
-<p>The following cell shows how to execute commands in ClickHouse through Docker.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>intro_example_click<span class="w"> </span>clickhouse-client<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
-<span class="s2">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
-<span class="s2">&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┏━━━━━┳━━━━━┳━━━━━┳━━━━━┓
-   ┃ v10 ┃ v20 ┃ v30 ┃ v40 ┃
-   ┡━━━━━╇━━━━━╇━━━━━╇━━━━━┩
-1. │  10 │  20 │  30 │  40 │
-   └─────┴─────┴─────┴─────┘
-   ┏━━━━━┳━━━━━┳━━━━━┳━━━━━┓
-   ┃ v10 ┃ v20 ┃ v30 ┃ v40 ┃
-   ┡━━━━━╇━━━━━╇━━━━━╇━━━━━┩
-1. │  10 │  20 │  30 │  40 │
-   └─────┴─────┴─────┴─────┘
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
 <section id="initialisation-scripts">
-<h2>Initialisation scripts<a class="headerlink" href="#initialisation-scripts" title="Link to this heading">#</a></h2>
+<h3>Initialisation scripts<a class="headerlink" href="#initialisation-scripts" title="Link to this heading">#</a></h3>
 <p>If you need to organise the initialisation at container startup, you can mount a folder containing <code class="docutils literal notranslate"><span class="pre">*.sql</span></code> and <code class="docutils literal notranslate"><span class="pre">*.sh</span></code> initialisation scripts on <code class="docutils literal notranslate"><span class="pre">/docker-entrypoint-initdb.d</span></code>. This will execute the files in <code class="docutils literal notranslate"><span class="pre">/docker-entrypoint-initdb.d</span></code>.</p>
 <hr class="docutils" />
 <p>In the following example, I start the docker container with the folder mounted as <code class="docutils literal notranslate"><span class="pre">/docker-entrypoint-initdb.d</span></code>. This folder only contains a <a class="reference download internal" download="" href="../_downloads/c6ea9b011d77d6aab27ad725d0edaee9/create_table.sql"><span class="xref download myst">create_table.sql</span></a> which creates an empty <code class="docutils literal notranslate"><span class="pre">main_table</span></code>. Then I check the existence of the table that should be created by
@@ -1074,6 +1012,156 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="clickhouse">
+<h2>Clickhouse<a class="headerlink" href="#clickhouse" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Server<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Creating a ClickHouse server is really straightforward.</p>
+<hr class="docutils" />
+<p>The following cell creates a new Docker container named <code class="docutils literal notranslate"><span class="pre">intro_example_click</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>intro_example_click<span class="se">\</span>
+<span class="w">    </span>clickhouse/clickhouse-server:24
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60c105781eeb22399d5446ef8e7114ee86d0da60008f6b2dc37b676287737874
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong>: Don’t forget to stop the container afterward.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>intro_example_click
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>intro_example_click
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>Commands<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>In the case of ClickHouse, access to the database is achieved through the <code class="docutils literal notranslate"><span class="pre">clickhouse-client</span></code> tool. To pass a command to it, you need to use the <code class="docutils literal notranslate"><span class="pre">-q</span></code> option, followed by a string literal that defines the script to be executed.</p>
+<hr class="docutils" />
+<p>The following cell shows how to execute commands in ClickHouse through Docker.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>intro_example_click<span class="w"> </span>clickhouse-client<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
+<span class="s2">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
+<span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┏━━━━━┳━━━━━┳━━━━━┳━━━━━┓
+   ┃ v10 ┃ v20 ┃ v30 ┃ v40 ┃
+   ┡━━━━━╇━━━━━╇━━━━━╇━━━━━┩
+1. │  10 │  20 │  30 │  40 │
+   └─────┴─────┴─────┴─────┘
+   ┏━━━━━┳━━━━━┳━━━━━┳━━━━━┓
+   ┃ v10 ┃ v20 ┃ v30 ┃ v40 ┃
+   ┡━━━━━╇━━━━━╇━━━━━╇━━━━━┩
+1. │  10 │  20 │  30 │  40 │
+   └─────┴─────┴─────┴─────┘
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sqlite">
+<h2>Sqlite<a class="headerlink" href="#sqlite" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>Server<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>To run <code class="docutils literal notranslate"><span class="pre">sqlite</span></code> container we are using <code class="docutils literal notranslate"><span class="pre">keinos/sqlite</span></code> image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-itd<span class="w"> </span>--name<span class="w"> </span>intro_example_sqlite<span class="w"> </span>keinos/sqlite3
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0b43efc7499e85dad2b4814d94a78b815651a14129d042929fead95c3d3af7ce
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong>: Don’t forget to stop the container afterward.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>intro_example_sqlite
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>intro_example_sqlite
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-command">
+<h3>Run command<a class="headerlink" href="#run-command" title="Link to this heading">#</a></h3>
+<p>To run a command from the terminal in SQLite, use the <code class="docutils literal notranslate"><span class="pre">-cmd</span></code> parameter and pass the query to it.</p>
+<hr class="docutils" />
+<p>The following cell shows the execution of the <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">'Hello</span> <span class="pre">world'</span></code> query.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>intro_example_sqlite<span class="w"> </span>sqlite3<span class="w"> </span>-cmd<span class="w"> </span><span class="s2">&quot;SELECT &#39;Hello world&#39;;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hello world
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s convenient to specify the <code class="docutils literal notranslate"><span class="pre">-box</span></code> option with the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> command — the results of the queries will be printed in a more readable format.</p>
+<hr class="docutils" />
+<p>The following cell shows creating and querying a table in SQLite:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>intro_example_sqlite<span class="w"> </span>sqlite3<span class="w"> </span>-box<span class="w"> </span>-cmd<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">CREATE TABLE IF NOT EXISTS tab (</span>
+<span class="s2">    var1 TEXT,</span>
+<span class="s2">    var2 TEXT</span>
+<span class="s2">);</span>
+
+<span class="s2">INSERT INTO tab (var1, var2) VALUES</span>
+<span class="s2">(NULL, &#39;world&#39;),</span>
+<span class="s2">(&#39;hello&#39;, NULL),</span>
+<span class="s2">(NULL, &#39;test line&#39;);</span>
+
+<span class="s2">SELECT * FROM tab;</span>
+<span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌───────┬───────────┐
+│ var1  │   var2    │
+├───────┼───────────┤
+│       │ world     │
+│ hello │           │
+│       │ test line │
+└───────┴───────────┘
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -1141,17 +1229,22 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-servers">Running servers</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres">Postgres</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clickhouse">Clickhouse</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres">Postgres</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#server">Server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">Commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialisation-scripts">Initialisation scripts</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-commands">Running commands</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Postgres</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Clickhouse</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clickhouse">Clickhouse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Commands</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialisation-scripts">Initialisation scripts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sqlite">Sqlite</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-command">Run command</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

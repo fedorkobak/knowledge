@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Fill empty (COALESCE/IFNULL) &#8212; Knowledge base</title>
+    <title>Empty values &#8212; Knowledge base</title>
   
   
   
@@ -57,7 +57,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/fill_empty';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/empty_values';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -500,6 +500,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../python/torch/examples/unet/voc_segmentation.html">Voc segmentation</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/examples/gan.html">GAN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../python/torch/examples/conditional_gan.html">Conditional GAN</a></li>
 </ul>
 </li>
 </ul>
@@ -608,7 +610,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sorting.html">Sorting (ORDER BY)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unique_values.html">Unique values (DISTINCT)</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Fill empty (COALESCE/IFNULL)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Empty values</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="aggregation_functions.html">Aggregation functions</a><input class="toctree-checkbox" id="toctree-checkbox-68" name="toctree-checkbox-68" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-68"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="aggregation_functions/collect_array.html">Collect array</a></li>
 </ul>
@@ -793,7 +795,7 @@
       
       
       
-      <li><a href="../../_sources/sql/select/fill_empty.ipynb" target="_blank"
+      <li><a href="../../_sources/sql/select/empty_values.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -877,7 +879,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Fill empty (COALESCE/IFNULL)</h1>
+    <h1>Empty values</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -887,9 +889,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-query">In query</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres-coalesce">Postgres (COALESCE)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-ifnull">Alternative (IFNULL)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#replace-in-query">Replace in query</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coalesce">COALESCE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ifnull">IFNULL</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#change-base">Change base</a></li>
@@ -904,54 +906,24 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="fill-empty-coalesce-ifnull">
-<h1>Fill empty (COALESCE/IFNULL)<a class="headerlink" href="#fill-empty-coalesce-ifnull" title="Link to this heading">#</a></h1>
-<p>Sometimes tables contain empty values. But in some cases it’s convenient to replace such values with a specific value. So in this section I’ll show you some features of databases that can help you to do this.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="empty-values">
+<h1>Empty values<a class="headerlink" href="#empty-values" title="Link to this heading">#</a></h1>
+<p>This page focuses on handling empty values in SQL.</p>
 <p>The next cell creates a docker container with postgres, which will be used for the experiments on this page.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker run --rm -d\
-    -e POSTGRES_PASSWORD=postgres \
-    --name fill_empty \
-    postgres:15.4 &amp;&gt; /dev/null
-sleep 5
-docker exec -i fill_empty psql -U postgres -d postgres
-
-CREATE TABLE tab(
-    var1 TEXT,
-    var2 TEXT
-);
-INSERT INTO tab (var1, var2) VALUES
-(NULL, &#39;world&#39;),
-(&#39;hello&#39;, NULL),
-(NULL, &#39;test line&#39;);
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-d<span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>postgres<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>empty_value_pg<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>postgres:15.4
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-itd<span class="w"> </span>--name<span class="w"> </span>empty_value_sqlite<span class="w"> </span>keinos/sqlite3
+sleep<span class="w"> </span><span class="m">5</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CREATE TABLE
-INSERT 0 3
-</pre></div>
-</div>
-</div>
-</div>
-<p>Initial state of the table used for the experiment.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i fill_empty psql -U postgres -d postgres
-SELECT * FROM tab;
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> var1  |   var2    
--------+-----------
-       | world
- hello | 
-       | test line
-(3 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ef85f7a08100cf940e2a31347c850b76069768a95a5fa6862389c4b65ad696eb
+ca34503d969f02d1f30328309d72828f226745d80f588b3d67cf926c44c93698
 </pre></div>
 </div>
 </div>
@@ -959,125 +931,142 @@ SELECT * FROM tab;
 <p><strong>Note</strong> Don’t forget to close the container when you have finished playing with the examples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>docker<span class="w"> </span>stop<span class="w"> </span>fill_empty
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fill_empty
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>empty_value_pg<span class="w"> </span>empty_value_sqlite
 </pre></div>
 </div>
 </div>
 </div>
-<section id="in-query">
-<h2>In query<a class="headerlink" href="#in-query" title="Link to this heading">#</a></h2>
+<section id="replace-in-query">
+<h2>Replace in query<a class="headerlink" href="#replace-in-query" title="Link to this heading">#</a></h2>
 <p>It’s a very common case when empty values have business sense, but in query results you need to replace them. So you can write <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> to replace <code class="docutils literal notranslate"><span class="pre">NULL</span></code> in query results, this section is focused on it.</p>
-<section id="postgres-coalesce">
-<h3>Postgres (COALESCE)<a class="headerlink" href="#postgres-coalesce" title="Link to this heading">#</a></h3>
-<p>In postgres you have to use the <code class="docutils literal notranslate"><span class="pre">COALENCE</span></code> function. Use the syntax <code class="docutils literal notranslate"><span class="pre">COALESCE(&lt;column</span> <span class="pre">name&gt;,</span> <span class="pre">&lt;value</span> <span class="pre">to</span> <span class="pre">replace&gt;)</span></code>. So in the following cell such syntax is used to replace empty values.</p>
+<section id="coalesce">
+<h3>COALESCE<a class="headerlink" href="#coalesce" title="Link to this heading">#</a></h3>
+<p>In PostgreSQL, there is the <code class="docutils literal notranslate"><span class="pre">COALESCE</span></code> function. Use the syntax <code class="docutils literal notranslate"><span class="pre">COALESCE(&lt;column_name&gt;</span> <span class="pre">|</span> <span class="pre">&lt;value&gt;,</span> <span class="pre">...)</span></code>. This function will return the first value that is not <code class="docutils literal notranslate"><span class="pre">NULL</span></code>. You can use columns or just values as arguments—values will be broadcast to the column size.</p>
+<p>Check the <a class="reference external" href="https://www.postgresql.org/docs/current/functions-conditional.html#FUNCTIONS-COALESCE-NVL-IFNULL">description of the <code class="docutils literal notranslate"><span class="pre">COALESCE</span></code></a> function in the official PostgreSQL documentation.</p>
+<hr class="docutils" />
+<p>The following cell shows applying <code class="docutils literal notranslate"><span class="pre">COALENCE</span></code> to the columns <code class="docutils literal notranslate"><span class="pre">col1</span></code>, <code class="docutils literal notranslate"><span class="pre">col2</span></code> and <code class="docutils literal notranslate"><span class="pre">col3</span></code> that contains many empty values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i fill_empty psql -U postgres -d postgres
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>empty_value_example<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">SELECT </span>
+<span class="s">    *,</span>
+<span class="s">    COALESCE(col1, col2, col3) no_default,</span>
+<span class="s">    COALESCE(col1, col2, col3) IS NULL no_default_is_null,</span>
+<span class="s">    COALESCE(col1, col2, col3, &#39;default&#39;) with_default</span>
+<span class="s">FROM (</span>
+<span class="s">    VALUES</span>
+<span class="s">    (NULL, &#39;a&#39;, NULL),</span>
+<span class="s">    (&#39;b&#39;, NULL, NULL),</span>
+<span class="s">    (NULL, NULL, &#39;c&#39;),</span>
+<span class="s">    (NULL, NULL, NULL)</span>
 
-SELECT 
-    COALESCE(var1, &#39;NAN text&#39;) var1,
-    COALESCE(var2, &#39;NAN text&#39;) var2
-FROM tab;
+<span class="s">) AS temp(col1, col2, col3);</span>
+<span class="s">EOF</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   var1   |   var2    
-----------+-----------
- NAN text | world
- hello    | NAN text
- NAN text | test line
-(3 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | col2 | col3 | no_default | no_default_is_null | with_default 
+------+------+------+------------+--------------------+--------------
+      | a    |      | a          | f                  | a
+ b    |      |      | b          | f                  | b
+      |      | c    | c          | f                  | c
+      |      |      |            | t                  | default
+(4 rows)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The same example in <code class="docutils literal notranslate"><span class="pre">sqlite</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>empty_value_sqlite<span class="w"> </span>sqlite3<span class="w"> </span>-box<span class="w"> </span>-cmd<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">CREATE TABLE IF NOT EXISTS tab (</span>
+<span class="s2">    col1 TEXT, col2 TEXT, col3 TEXT</span>
+<span class="s2">);</span>
+
+
+<span class="s2">INSERT INTO tab (col1, col2, col3) VALUES</span>
+<span class="s2">(NULL, &#39;a&#39;, NULL),</span>
+<span class="s2">(&#39;b&#39;, NULL, NULL),</span>
+<span class="s2">(NULL, NULL, &#39;c&#39;),</span>
+<span class="s2">(NULL, NULL, NULL);</span>
+
+
+<span class="s2">SELECT </span>
+<span class="s2">    *,</span>
+<span class="s2">    COALESCE(col1, col2, col3) no_default,</span>
+<span class="s2">    COALESCE(col1, col2, col3) IS NULL no_default_is_null,</span>
+<span class="s2">    COALESCE(col1, col2, col3, &#39;default&#39;) with_default</span>
+<span class="s2">FROM tab;</span>
+<span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌──────┬──────┬──────┬────────────┬────────────────────┬──────────────┐
+│ col1 │ col2 │ col3 │ no_default │ no_default_is_null │ with_default │
+├──────┼──────┼──────┼────────────┼────────────────────┼──────────────┤
+│      │ a    │      │ a          │ 0                  │ a            │
+│ b    │      │      │ b          │ 0                  │ b            │
+│      │      │ c    │ c          │ 0                  │ c            │
+│      │      │      │            │ 1                  │ default      │
+└──────┴──────┴──────┴────────────┴────────────────────┴──────────────┘
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="alternative-ifnull">
-<h3>Alternative (IFNULL)<a class="headerlink" href="#alternative-ifnull" title="Link to this heading">#</a></h3>
-<p>IFNULL is an alternative function that can be used to replace empty values in query statements.</p>
-<p>It’s not supported by postgres. So to make sure, I’ll show you in the following cell that there will be an error if you try to use it in postgres.</p>
+<section id="ifnull">
+<h3>IFNULL<a class="headerlink" href="#ifnull" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">IFNULL</span></code> is an alternative function that can be used to replace empty values in query statements. It returns the first non-null value passed to its arguments and is supported by SQLite.</p>
+<hr class="docutils" />
+<p>The following shows some cases for <code class="docutils literal notranslate"><span class="pre">IFNULL</span></code> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i fill_empty psql -U postgres -d postgres
-SELECT 
-    IFNULL(var1, &#39;NAN text&#39;) var1,
-    IFNULL(var2, &#39;NAN text&#39;) var2
-FROM tab;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>empty_value_sqlite<span class="w"> </span>sqlite3<span class="w"> </span>-box<span class="w"> </span>-cmd<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">CREATE TABLE IF NOT EXISTS tab (</span>
+<span class="s2">    var1 TEXT,</span>
+<span class="s2">    var2 TEXT</span>
+<span class="s2">);</span>
+
+
+<span class="s2">INSERT INTO tab (var1, var2) VALUES</span>
+<span class="s2">(&#39;a&#39;, &#39;b&#39;),</span>
+<span class="s2">(NULL, &#39;a&#39;),</span>
+<span class="s2">(&#39;b&#39;, NULL),</span>
+<span class="s2">(NULL, NULL);</span>
+
+
+<span class="s2">SELECT IFNULL(var1, var2) FROM tab;</span>
+<span class="s2">&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR:  function ifnull(text, unknown) does not exist
-LINE 2:     IFNULL(var1, &#39;NAN text&#39;) var1,
-            ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌────────────────────┐
+│ IFNULL(var1, var2) │
+├────────────────────┤
+│ a                  │
+│ a                  │
+│ b                  │
+│                    │
+└────────────────────┘
 </pre></div>
 </div>
 </div>
 </div>
-<p>So I will use sqlite base to demonstrate how IFNULL works. In the following example is the process of creating sample database.</p>
+<p><strong>Note:</strong> The main difference from <code class="docutils literal notranslate"><span class="pre">COALESCE</span></code> is that <code class="docutils literal notranslate"><span class="pre">IFNULL</span></code> can operate with only two operands.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-sqlite3 fill_empty_files/dump.sql
-
-CREATE TABLE IF NOT EXISTS tab (
-    var1 TEXT,
-    var2 TEXT
-);
-DELETE FROM tab;
-INSERT INTO tab (var1, var2) VALUES
-(NULL, &#39;world&#39;),
-(&#39;hello&#39;, NULL),
-(NULL, &#39;test line&#39;);
-</pre></div>
-</div>
-</div>
-</div>
-<p>Here is what the query to the example database looks like, without any of the tricks involved in replacing values.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-sqlite3 fill_empty_files/dump.sql
-
-SELECT * FROM tab;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>empty_value_sqlite<span class="w"> </span>sqlite3<span class="w"> </span>-box<span class="w"> </span>-cmd<span class="w"> </span><span class="s2">&quot;SELECT IFNULL(10, 20, &#39;hello&#39;);&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>|world
-hello|
-|test line
-</pre></div>
-</div>
-</div>
-</div>
-<p>The syntax is exactly the same as for <code class="docutils literal notranslate"><span class="pre">COALESCE</span></code>: <code class="docutils literal notranslate"><span class="pre">IFNULL(&lt;column</span> <span class="pre">name&gt;,</span> <span class="pre">&lt;value</span> <span class="pre">to</span> <span class="pre">replace&gt;)</span></code>.</p>
-<p>Actually, sqlite supports both <code class="docutils literal notranslate"><span class="pre">COALESCE</span></code> and <code class="docutils literal notranslate"><span class="pre">IFNULL</span></code>, so in the following example both have been used to replace empty values in different columns.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-sqlite3 fill_empty_files/dump.sql
-
-SELECT 
-    IFNULL(var1, &#39;replaced by IFNULL&#39;) var1,
-    COALESCE(var2, &#39;relaced by COALESCE&#39;) var2
-FROM tab;
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>replaced by IFNULL|world
-hello|relaced by COALESCE
-replaced by IFNULL|test line
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error: in prepare, wrong number of arguments to function IFNULL()
+  SELECT IFNULL(10, 20, &#39;hello&#39;);
+         ^--- error here
 </pre></div>
 </div>
 </div>
@@ -1093,40 +1082,50 @@ replaced by IFNULL|test line
 <span class="n">WHERE</span> <span class="o">&lt;</span><span class="n">column</span> <span class="n">name</span><span class="o">&gt;</span> <span class="n">IS</span> <span class="n">NULL</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The following cell uses such syntax to replace some empty values.</p>
+<hr class="docutils" />
+<p>The following cell creates a table with some <code class="docutils literal notranslate"><span class="pre">NULL</span></code> values, then replaces them directly in the table and shows the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i fill_empty psql -U postgres -d postgres
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>empty_value_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
 
-UPDATE tab
-SET var1 = &#39;replaced&#39;
-WHERE var1 IS NULL;
+<span class="s">DROP TABLE IF EXISTS change_null_table;</span>
+<span class="s">CREATE TABLE change_null_table(col1 TEXT, col2 TEXT, col3 TEXT);</span>
+
+<span class="s">INSERT INTO change_null_table(col1, col2, col3)</span>
+<span class="s">VALUES</span>
+<span class="s">    (&#39;val1&#39;, NULL, &#39;val2&#39;),</span>
+<span class="s">    (NULL, &#39;val2&#39;, NULL);</span>
+
+
+<span class="s">SELECT * FROM change_null_table;</span>
+
+<span class="s">UPDATE change_null_table</span>
+<span class="s">SET col1 = &#39;replaced&#39;</span>
+<span class="s">WHERE col1 IS NULL;</span>
+
+
+<span class="s">SELECT * FROM change_null_table;</span>
+
+<span class="s">EOF</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>UPDATE 2
-</pre></div>
-</div>
-</div>
-</div>
-<p>Let’s see the result of the transformation.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i fill_empty psql -U postgres -d postgres
-SELECT * FROM tab;
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   var1   |   var2    
-----------+-----------
- hello    | 
- replaced | world
- replaced | test line
-(3 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DROP TABLE
+CREATE TABLE
+INSERT 0 2
+ col1 | col2 | col3 
+------+------+------
+ val1 |      | val2
+      | val2 | 
+(2 rows)
+
+UPDATE 1
+   col1   | col2 | col3 
+----------+------+------
+ val1     |      | val2
+ replaced | val2 | 
+(2 rows)
 </pre></div>
 </div>
 </div>
@@ -1143,16 +1142,16 @@ SELECT * FROM tab;
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./sql/select"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -1198,9 +1197,9 @@ SELECT * FROM tab;
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-query">In query</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres-coalesce">Postgres (COALESCE)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-ifnull">Alternative (IFNULL)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#replace-in-query">Replace in query</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coalesce">COALESCE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ifnull">IFNULL</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#change-base">Change base</a></li>
