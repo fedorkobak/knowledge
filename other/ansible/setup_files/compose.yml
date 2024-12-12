@@ -1,0 +1,29 @@
+services:
+  managed_node:
+    image: ansible_managed_node
+    container_name: managed_node
+    volumes:
+      - ssh_keys:/root/control_ssh
+    command: |
+      sh -c "
+      while ! [ -e /root/control_ssh/id_rsa.pub ]; do sleep 1; done &&       cat /root/control_ssh/id_rsa.pub >> /root/.ssh/authorized_keys &&       while true; do sleep 1; done
+      "
+    stdin_open: true
+    tty: true
+    depends_on:
+      - control_node
+
+  control_node:
+    image: ansible_control_node
+    container_name: control_node
+    volumes:
+      - ssh_keys:/root/control_ssh
+    command: 
+      sh -c "
+      cp /root/.ssh/id_rsa.pub /root/control_ssh/id_rsa.pub &&       while true; do sleep 1; done
+      "
+    stdin_open: true
+    tty: true
+
+volumes:
+  ssh_keys:
