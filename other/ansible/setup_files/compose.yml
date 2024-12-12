@@ -6,7 +6,7 @@ services:
       - ssh_keys:/root/control_ssh
     command: |
       sh -c "
-      while ! [ -e /root/control_ssh/id_rsa.pub ]; do sleep 1; done &&       cat /root/control_ssh/id_rsa.pub >> /root/.ssh/authorized_keys &&       while true; do sleep 1; done
+      while ! [ -e /root/control_ssh/id_rsa.pub ]; do sleep 1; done &&       cat /root/control_ssh/id_rsa.pub >> /root/.ssh/authorized_keys;       /usr/sbin/sshd -D
       "
     stdin_open: true
     tty: true
