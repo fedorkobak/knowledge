@@ -6,3 +6,6 @@ RUN apk add openssh-client && \
     # Add to the config statement that we don't need to enter if we want to save the new host.
     echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
+RUN echo \[myhosts\] >> inventory.ini && \
+    echo managed_node ansible_python_interpreter=/usr/local/bin/python3.10 >> inventory.ini
+
