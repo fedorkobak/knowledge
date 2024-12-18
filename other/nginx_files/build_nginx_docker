@@ -1,0 +1,29 @@
+FROM debian:bookworm-slim
+
+RUN apt update && \
+    apt install --no-install-recommends --no-install-suggests -y \
+        gnupg1 \
+        ca-certificates \
+        curl \
+        devscripts \
+        equivs \
+        git \
+        libxml2-utils \
+        lsb-release \
+        xsltproc \
+        libpcre3 \
+        libpcre3-dev \
+        zlib1g \
+        zlib1g-dev
+
+ARG NGINX_VERSION="1.27.3"
+
+RUN curl -f -L -O http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && \
+    tar -zxvf nginx-${NGINX_VERSION}.tar.gz && \
+    cd nginx-${NGINX_VERSION} && \
+    ./configure --conf-path=/etc/nginx/nginx.conf && \
+    make && make install
+    
+ENV PATH=$PATH:/usr/local/nginx/sbin
+
+CMD ["nginx", "-g", "daemon off;"]
