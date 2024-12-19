@@ -1,0 +1,16 @@
+FROM debian:bullseye-slim
+
+# Install git (including git-daemon)
+RUN apt-get update && apt-get install -y git && apt-get clean
+
+# Create a directory for repositories and initialize a bare repository
+RUN mkdir -p /git/project.git && git init --bare /git/project.git
+
+# Add a file to allow git-daemon to serve the repository
+RUN touch /git/project.git/git-daemon-export-ok
+
+# Expose the Git protocol port
+EXPOSE 9418
+
+# Start git-daemon to serve repositories
+CMD ["git", "daemon", "--verbose", "--export-all", "--base-path=/git", "/git"]
