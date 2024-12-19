@@ -17,11 +17,12 @@ RUN apt update && \
         zlib1g-dev
 
 ARG NGINX_VERSION="1.27.3"
+ARG CONFIG_ARGUMENTS="--conf-path=/etc/nginx/nginx.conf --with-http_stub_status_module"
 
 RUN curl -f -L -O http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && \
     tar -zxvf nginx-${NGINX_VERSION}.tar.gz && \
     cd nginx-${NGINX_VERSION} && \
-    ./configure --conf-path=/etc/nginx/nginx.conf && \
+    ./configure ${CONFIG_ARGUMENTS} && \
     make && make install
     
 ENV PATH=$PATH:/usr/local/nginx/sbin
