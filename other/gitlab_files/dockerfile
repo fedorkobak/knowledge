@@ -1,0 +1,17 @@
+FROM gitlab/gitlab-ce
+
+ENV GITLAB_OMNIBUS_CONFIG="gitlab_rails['initial_root_password'] = \"wow_wow_wow\";" 
+
+RUN apt-get update && apt-get install git;
+
+# gitlab runners installation
+RUN \
+    curl -L --output /usr/local/bin/gitlab-runner \
+        https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 \
+    && chmod +x /usr/local/bin/gitlab-runner \
+    && useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash \
+    && gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+
+# Starting runner and executing script that is responsible for gitlab
+# deployment
+CMD gitlab-runner start && assets/wrapper
