@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>SQL alchemy &#8212; Knowledge base</title>
+    <title>SQLAlchemy &#8212; Knowledge base</title>
   
   
   
@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Create table" href="sqlalchemy/create_table.html" />
+    <link rel="next" title="Metadata" href="sqlalchemy/metadata.html" />
     <link rel="prev" title="Empty figure" href="dash/empty_figure.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -264,7 +264,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../basics/files_folders/pathlib.html">Pathlib</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/virtual_environment.html">Virutal environment in python</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../basics/unittest.html">Unittest</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/unittest/run_tests.html">Run tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/unittest/run_before_after.html">Run code before/after</a></li>
@@ -300,6 +299,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../basics/packages/pyproject_toml.html">Pyproject.toml</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/interpreter.html">Interpreter</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../packages.html">Packages</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-22"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
@@ -398,7 +398,8 @@
 <li class="toctree-l3"><a class="reference internal" href="dash/empty_figure.html">Empty figure</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">SQL alchemy</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-37"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">SQLAlchemy</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-37"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="sqlalchemy/metadata.html">Metadata</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sqlalchemy/create_table.html">Create table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sqlalchemy/query.html">Query</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sqlalchemy/add_record.html">Add record</a></li>
@@ -779,6 +780,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../other/gitlab.html">Gitlab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/ansible.html">Ansible</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
 </ul>
 
     </div>
@@ -848,7 +850,7 @@
       
       
       
-      <li><a href="../../_sources/python/packages/sqlalchemy.md" target="_blank"
+      <li><a href="../../_sources/python/packages/sqlalchemy.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -858,7 +860,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -919,7 +921,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -930,11 +934,23 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>SQL alchemy</h1>
+    <h1>SQLAlchemy</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#engine">Engine</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-db-commands">Log DB commands</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -944,10 +960,151 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="sql-alchemy">
-<h1>SQL alchemy<a class="headerlink" href="#sql-alchemy" title="Link to this heading">#</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code> is ORM - Object-Relational Mapping. It is a technique used in software development to convert data between the object and relational models.</p>
-<p>So it’s library that provided methods to сonvert database entities to python entities.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="sqlalchemy">
+<h1>SQLAlchemy<a class="headerlink" href="#sqlalchemy" title="Link to this heading">#</a></h1>
+<p>This section overviews popular library that provides a tools to operate with database <code class="docutils literal notranslate"><span class="pre">SQLAlchemy</span></code> python library. Check <a class="reference external" href="https://www.sqlalchemy.org/">main page</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sqlalchemy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="engine">
+<h2>Engine<a class="headerlink" href="#engine" title="Link to this heading">#</a></h2>
+<p>An engine is a Python object that implements interaction with the database.</p>
+<p>For details check:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.sqlalchemy.org/en/20/tutorial/engine.html#tutorial-engine">Establishing Connectivity - the Engine</a> tutorial.</p></li>
+<li><p><a class="reference external" href="https://docs.sqlalchemy.org/en/20/core/connections.html#sqlalchemy.engine.Engine">Engine object</a> reference.</p></li>
+<li><p><a class="reference external" href="https://docs.sqlalchemy.org/en/20/core/engines.html#sqlalchemy.create_engine"><code class="docutils literal notranslate"><span class="pre">create_engine</span></code></a> function reference.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell creates inmemory <code class="docutils literal notranslate"><span class="pre">sqlite</span></code> engine:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite+pysqlite:///:memory:&quot;</span><span class="p">)</span>
+<span class="n">engine</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Engine(sqlite+pysqlite:///:memory:)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, to prove that it works as a regular <code class="docutils literal notranslate"><span class="pre">sqlite</span></code> query, retrieve the version of the database.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT sqlite_version();&quot;</span><span class="p">))</span>
+<span class="n">ans</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;3.37.2&#39;,)]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="log-db-commands">
+<h3>Log DB commands<a class="headerlink" href="#log-db-commands" title="Link to this heading">#</a></h3>
+<p>To check what exact commands where executed by the <code class="docutils literal notranslate"><span class="pre">SQLAlchemy</span></code> you can set <code class="docutils literal notranslate"><span class="pre">echo=True</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">Engine</span></code>. After that every command executed by SQLAlchmy will be displayed in the corresponding logger.</p>
+<hr class="docutils" />
+<p>The following cell executes some SQL and extracts its result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite+pysqlite:///:memory:&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT &#39;hello world&#39;&quot;</span><span class="p">))</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2025-01-13 18:34:07,420 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-01-13 18:34:07,421 INFO sqlalchemy.engine.Engine SELECT &#39;hello world&#39;
+2025-01-13 18:34:07,422 INFO sqlalchemy.engine.Engine [generated in 0.00154s] ()
+2025-01-13 18:34:07,422 INFO sqlalchemy.engine.Engine ROLLBACK
+</pre></div>
+</div>
+</div>
+</div>
+<p>The corresponding records are shown in the standard output.</p>
+</section>
+</section>
+<section id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Link to this heading">#</a></h2>
+<p>Metadata contains information that defines the structure of the database: tables, relationships between tables, and table schemas. Check the more in:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.sqlalchemy.org/en/20/tutorial/metadata.html#tutorial-working-with-metadata">Corresponding page of the official documentation</a>.</p></li>
+<li><p><a class="reference internal" href="sqlalchemy/metadata.html"><span class="std std-doc">Special page</span></a>.</p></li>
+</ul>
+<hr class="docutils" />
+<p>Following code creates <code class="docutils literal notranslate"><span class="pre">MetaData</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+<span class="n">metadata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MetaData()
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since it should be a representation of a database in Python code, you can easily create tables using it. The folowing cell adds <code class="docutils literal notranslate"><span class="pre">test_table</span></code> and displays awaible tables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span>
+    <span class="s2">&quot;test_table&quot;</span><span class="p">,</span>
+    <span class="n">metadata</span><span class="p">,</span>
+    <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">Integer</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">metadata</span><span class="o">.</span><span class="n">tables</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FacadeDict({&#39;test_table&#39;: Table(&#39;test_table&#39;, MetaData(), Column(&#39;id&#39;, Integer(), table=&lt;test_table&gt;), schema=None)})
+</pre></div>
+</div>
+</div>
+</div>
+<p>Apply all changes to the specified database by using <code class="docutils literal notranslate"><span class="pre">metadata.create_all(&lt;engine</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">database&gt;)</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite+pysqlite:///:memory:&quot;</span><span class="p">)</span>
+<span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After that, the schema of the database should match the schema created in SQLAlchemy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+            <span class="s2">&quot;SELECT name FROM sqlite_master WHERE type=&#39;table&#39;&quot;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;test_table&#39;,)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -992,11 +1149,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="sqlalchemy/create_table.html"
+       href="sqlalchemy/metadata.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Create table</p>
+        <p class="prev-next-title">Metadata</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1007,7 +1164,24 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#engine">Engine</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-db-commands">Log DB commands</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
