@@ -12,3 +12,12 @@ For pages that use a lot of bash you should use the bash kernel. To install it u
 pip install bash_kernel
 python -m bash_kernel.install
 ```
+
+For deployment in docker use:
+
+```bash
+docker build -t knowledge_dev .
+docker run -itd -v ./:/knowledge --name knowledge_dev knowledge_dev
+```
+
+Some pages require running specifically in a Docker environment, as they are associated with discovering system-level features.
