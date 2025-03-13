@@ -21,3 +21,5 @@ docker run -itd -v ./:/knowledge --name knowledge_dev knowledge_dev
 ```
 
 Some pages require running specifically in a Docker environment, as they are associated with discovering system-level features.
+
+Large part of this base related to python programming language is moved to special site - [python](https://fedorkobak.github.io/python/intro.html).
