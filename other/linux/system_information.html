@@ -265,6 +265,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/compose.html">Compose</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../docker/compose/up_down.html">Up/down</a></li>
 
+<li class="toctree-l2"><a class="reference internal" href="../../docker/compose/service_configuration.html">Service configuration</a></li>
 </ul>
 </details></li>
 </ul>
@@ -656,16 +657,19 @@ LOGO=ubuntu-logo
 <li><p><code class="docutils literal notranslate"><span class="pre">TIME</span></code> the cumulative CPU time used by the process.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CMD</span></code> the command that initiated the process.</p></li>
 </ul>
+<p>Install <code class="docutils literal notranslate"><span class="pre">ps</span></code> on ubuntu with package <code class="docutils literal notranslate"><span class="pre">procps</span></code> (<code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">install</span> <span class="pre">procps</span></code>).</p>
+<hr class="docutils" />
 <p>The following example shows the output of the ps command.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!ps
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ps
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    PID TTY          TIME CMD
- 213863 pts/2    00:00:00 ps
+    791 pts/3    00:00:00 bash
+    811 pts/3    00:00:00 ps
 </pre></div>
 </div>
 </div>
@@ -674,21 +678,21 @@ LOGO=ubuntu-logo
 <p>The following cell shows the result of <code class="docutils literal notranslate"><span class="pre">ps</span> <span class="pre">-e</span></code>. Only the first 10 rows have been printed, because it could take a long time for the computer to process them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!ps<span class="w"> </span>-e<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ps<span class="w"> </span>-e<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    PID TTY          TIME CMD
-      1 ?        00:00:05 systemd
-      2 ?        00:00:00 kthreadd
-      3 ?        00:00:00 rcu_gp
-      4 ?        00:00:00 rcu_par_gp
-      5 ?        00:00:00 slub_flushwq
-      6 ?        00:00:00 netns
-     11 ?        00:00:00 mm_percpu_wq
-     12 ?        00:00:00 rcu_tasks_kthread
-     13 ?        00:00:00 rcu_tasks_rude_kthread
+      1 pts/0    00:00:00 python3
+     20 ?        00:00:00 sh
+    145 ?        00:00:00 sh
+    164 ?        00:00:00 sh
+    171 ?        00:00:00 node
+    181 ?        00:00:03 node
+    211 ?        00:00:00 sh
+    229 ?        00:00:00 node
+    251 ?        00:00:00 node
 </pre></div>
 </div>
 </div>
@@ -699,18 +703,18 @@ LOGO=ubuntu-logo
 <p>The <code class="docutils literal notranslate"><span class="pre">ulimit</span></code> Linux utility allows you to view and set user-level resource limits. It provides options for each type of limit, enabling you to control various aspects of system resource usage. To display all available limits, use the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!ulimit<span class="w"> </span>-a
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">ulimit</span><span class="w"> </span>-a
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>real-time non-blocking time  (microseconds, -R) unlimited
-core file size              (blocks, -c) 0
+core file size              (blocks, -c) unlimited
 data seg size               (kbytes, -d) unlimited
 scheduling priority                 (-e) 0
 file size                   (blocks, -f) unlimited
-pending signals                     (-i) 126734
-max locked memory           (kbytes, -l) 4065160
+pending signals                     (-i) 126472
+max locked memory           (kbytes, -l) 8192
 max memory size             (kbytes, -m) unlimited
 open files                          (-n) 1048576
 pipe size                (512 bytes, -p) 8
@@ -718,7 +722,7 @@ POSIX message queues         (bytes, -q) 819200
 real-time priority                  (-r) 0
 stack size                  (kbytes, -s) 8192
 cpu time                   (seconds, -t) unlimited
-max user processes                  (-u) 126734
+max user processes                  (-u) unlimited
 virtual memory              (kbytes, -v) unlimited
 file locks                          (-x) unlimited
 </pre></div>

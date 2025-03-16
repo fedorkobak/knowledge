@@ -265,6 +265,7 @@
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Compose</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="compose/up_down.html">Up/down</a></li>
 
+<li class="toctree-l2"><a class="reference internal" href="compose/service_configuration.html">Service configuration</a></li>
 </ul>
 </details></li>
 </ul>
@@ -603,9 +604,7 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#up-down">Up/down</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-name">Project name</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network">Network</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#service-configuration">Service configuration</a></li>
 </ul>
             </nav>
         </div>
@@ -735,148 +734,119 @@ rm<span class="w"> </span>compose.yml
 </div>
 </div>
 </section>
-<section id="project-name">
-<h2>Project name<a class="headerlink" href="#project-name" title="Link to this heading">#</a></h2>
-<p>Containers run with Compose have special properties, such as the <strong>project name</strong>. Compose uses a project name to isolate environments from each other. For more information, see the <a class="reference external" href="https://docs.docker.com/compose/how-tos/project-name/">“Specifying a project name”</a> page in the official documentation. By default, Compose uses the folder of the Compose file as the project name, but you can specify the <code class="docutils literal notranslate"><span class="pre">--project-folder</span></code> or <code class="docutils literal notranslate"><span class="pre">--project-name</span></code> parameters to change the container’s project.</p>
-<p>To check which project a container belongs to, look for the path <code class="docutils literal notranslate"><span class="pre">.[0].Config.Labels[&quot;com.docker.compose.project&quot;]</span></code> in the container’s inspect result.</p>
-<hr class="docutils" />
-<p>The following cell defines the docker compose file in the <code class="docutils literal notranslate"><span class="pre">temp_direcotry</span></code> and executes it.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>temp_folder
-cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; temp_folder/temp_compose.yml</span>
-<span class="s">services:</span>
-<span class="s">  linux1:</span>
-<span class="s">    image: alpine</span>
-<span class="s">    container_name: project_example</span>
-<span class="s">EOF</span>
-docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>temp_folder/temp_compose.yml<span class="w"> </span>up<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
+<section id="service-configuration">
+<h2>Service configuration<a class="headerlink" href="#service-configuration" title="Link to this heading">#</a></h2>
+<p>The following cell shows directives that you can use to configure your service in docker compose:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Directive</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">image</span></code></p></td>
+<td><p>Specifies the Docker image to use for the service.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">build</span></code></p></td>
+<td><p>Defines build configurations for creating an image.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">command</span></code></p></td>
+<td><p>Overrides the default command for the container.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">entrypoint</span></code></p></td>
+<td><p>Overrides the default entrypoint of the container.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">environment</span></code></p></td>
+<td><p>Defines environment variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">env_file</span></code></p></td>
+<td><p>Specifies an external file containing environment variables.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ports</span></code></p></td>
+<td><p>Maps container ports to the host.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">volumes</span></code></p></td>
+<td><p>Mounts host directories or named volumes into the container.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">networks</span></code></p></td>
+<td><p>Connects the service to specific networks.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">depends_on</span></code></p></td>
+<td><p>Specifies dependencies on other services.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">restart</span></code></p></td>
+<td><p>Defines the restart policy for the container.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">deploy</span></code></p></td>
+<td><p>Specifies deployment settings (mainly for Swarm).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">healthcheck</span></code></p></td>
+<td><p>Defines a health check command for the container.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">logging</span></code></p></td>
+<td><p>Configures logging options for the service.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ulimits</span></code></p></td>
+<td><p>Sets resource limits for the container.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">extra_hosts</span></code></p></td>
+<td><p>Adds custom host-to-IP mappings.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dns</span></code></p></td>
+<td><p>Specifies DNS servers for the container.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dns_search</span></code></p></td>
+<td><p>Defines DNS search domains.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sysctls</span></code></p></td>
+<td><p>Configures kernel parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">security_opt</span></code></p></td>
+<td><p>Sets security options for the container.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cap_add</span></code></p></td>
+<td><p>Grants additional Linux capabilities.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cap_drop</span></code></p></td>
+<td><p>Removes Linux capabilities.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">devices</span></code></p></td>
+<td><p>Allows access to host devices inside the container.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">secrets</span></code></p></td>
+<td><p>Defines secrets to be used in the container.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">configs</span></code></p></td>
+<td><p>Specifies configuration files from Docker Swarm.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tmpfs</span></code></p></td>
+<td><p>Mounts a temporary filesystem inside the container.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shm_size</span></code></p></td>
+<td><p>Sets the size of the <code class="docutils literal notranslate"><span class="pre">/dev/shm</span></code> shared memory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">privileged</span></code></p></td>
+<td><p>Grants extended privileges to the container.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">read_only</span></code></p></td>
+<td><p>Runs the container filesystem in read-only mode.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stop_signal</span></code></p></td>
+<td><p>Defines the system signal used to stop the container.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stop_grace_period</span></code></p></td>
+<td><p>Specifies a timeout before forcibly stopping a container.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">init</span></code></p></td>
+<td><p>Uses an init process inside the container.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">container_name</span></code></p></td>
+<td><p>Allows to specify a name for the result container.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-</div>
-<p>Now let’s check the <code class="docutils literal notranslate"><span class="pre">{{index</span> <span class="pre">.Config.Labels</span> <span class="pre">&quot;com.docker.compose.project&quot;}}</span></code> of the deployed container’s configuration.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;{{index .Config.Labels &quot;com.docker.compose.project&quot;}}&#39;</span><span class="w"> </span>project_example
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>temp_folder
-</pre></div>
-</div>
-</div>
-</div>
-<p>The project name is <code class="docutils literal notranslate"><span class="pre">temp_folder</span></code>, which is the folder where <code class="docutils literal notranslate"><span class="pre">compose.yml</span></code> is located.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>temp_folder/temp_compose.yml<span class="w"> </span>down<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-rm<span class="w"> </span>-r<span class="w"> </span>temp_folder
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="environment-variables">
-<h2>Environment variables<a class="headerlink" href="#environment-variables" title="Link to this heading">#</a></h2>
-<p>You can set environment variables for a service under the <code class="docutils literal notranslate"><span class="pre">environment</span></code> key.</p>
-<hr class="docutils" />
-<p>This example defines an interactive, detached service in a Docker Compose file and sets an environment variable <code class="docutils literal notranslate"><span class="pre">ENV_VARIABLE</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; docker-compose.yml</span>
-<span class="s">services:</span>
-<span class="s">  linux1:</span>
-<span class="s">    image: alpine</span>
-<span class="s">    container_name: compose_example</span>
-<span class="s">    environment:</span>
-<span class="s">      - ENV_VARIABLE=message from container</span>
-<span class="s">    stdin_open: true</span>
-<span class="s">    tty: true</span>
-<span class="s">EOF</span>
-
-docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
-</div>
-</div>
-</div>
-<p>Let’s check if it contains variables just like we specified.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>compose_example<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo \$ENV_VARIABLE&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>message from container
-</pre></div>
-</div>
-</div>
-</div>
-<p>Stop compose after all.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-rm<span class="w"> </span>docker-compose.yml
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="network">
-<h2>Network<a class="headerlink" href="#network" title="Link to this heading">#</a></h2>
-<p>For each coimpose project by default is created special default network, all containers that belongs to this project will automaticly connected to this network.</p>
-<hr class="docutils" />
-<p>The following cell starts a simple compose project.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/compose.yml</span>
-<span class="s">services:</span>
-<span class="s">  linux1:</span>
-<span class="s">    image: alpine</span>
-<span class="s">    container_name: network_example</span>
-<span class="s">EOF</span>
-
-docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>/tmp/compose.yml<span class="w"> </span>up<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now there is a docker network that corresponds to this project: compose is run in the <code class="docutils literal notranslate"><span class="pre">tmp</span></code> directory, so it inherits it’s name, as the result network created for this project will have the name <code class="docutils literal notranslate"><span class="pre">temp_deafult</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>network<span class="w"> </span>ls<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>tmp
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>708aec9a9313   <span class=" -Color -Color-Bold -Color-Bold-Red">tmp</span>_default   bridge    local
-</pre></div>
-</div>
-</div>
-</div>
-<p>The following cell prints the network to which the <code class="docutils literal notranslate"><span class="pre">network_example</span></code> container belongs.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;{{range $key, $value := .NetworkSettings.Networks}}{{$key}} {{end}}&#39;</span><span class="w"> </span>network_example
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tmp_default 
-</pre></div>
-</div>
-</div>
-</div>
-<p>It’s a network created for the compose project.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>/tmp/compose.yml<span class="w"> </span>down<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
-</div>
-</div>
-</div>
+<p>For more detailed explation of some of the parameters, see the <a class="reference internal" href="compose/service_configuration.html"><span class="std std-doc">corresponding page</span></a>.</p>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -948,9 +918,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> 
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#up-down">Up/down</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-name">Project name</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network">Network</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#service-configuration">Service configuration</a></li>
 </ul>
   </nav></div>
 
