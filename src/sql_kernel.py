@@ -49,7 +49,7 @@ class PostgresRunner(DatabaseRunner):
             environment={"POSTGRES_PASSWORD": "example"},
             ports={"5432/tcp": self.port},
             detach=True,
-            remove=True
+            remove=True,
         )
         sleep(5)
         self.connection = psycopg2.connect(
@@ -87,6 +87,7 @@ class ClickHouseRunner(DatabaseRunner):
     def start(self):
         self.container = self.client.containers.run(
             "clickhouse/clickhouse-server",
+            environment={"CLICKHOUSE_PASSWORD": "example"},
             name=self.container_name,
             ports={"8123/tcp": self.port},
             detach=True,
@@ -95,7 +96,8 @@ class ClickHouseRunner(DatabaseRunner):
         sleep(5)
         self.connection = clickhouse_connect.get_client(
             host="localhost",
-            port=self.port
+            port=self.port,
+            password="example"
         )
 
     def execute(self, query: str):
