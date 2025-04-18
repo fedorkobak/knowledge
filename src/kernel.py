@@ -55,7 +55,7 @@ class SQLKernel(Kernel):
         ans = runner.execute(code)
         stream_content = {
             'name': 'stdout',
-            'text': ans
+            'text': str(ans)
         }
         self.send_response(self.iopub_socket, 'stream', stream_content)
 
