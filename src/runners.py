@@ -1,8 +1,8 @@
+import socket
 import docker
 import sqlite3
 import psycopg2
 import clickhouse_connect
-import socket
 from abc import ABC, abstractmethod
 from time import sleep
 
