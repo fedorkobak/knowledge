@@ -14,11 +14,17 @@ def find_free_port():
 
 
 class DatabaseRunner(ABC):
+    '''
+    Describes database runner interface.
+    '''
     def __init__(self):
         self.start()
 
     @abstractmethod
     def start(self):
+        '''
+        Define things to start the database and implement the connection to it.
+        '''
         pass
 
     @abstractmethod
@@ -27,6 +33,9 @@ class DatabaseRunner(ABC):
 
     @abstractmethod
     def stop(self):
+        '''
+        Define here everything to stop the database.
+        '''
         pass
 
     def __del__(self):
@@ -34,6 +43,32 @@ class DatabaseRunner(ABC):
 
 
 class DatabaseInDockerRunner(DatabaseRunner):
+    '''
+    Abstract class for database runners that run in Docker containers.
+    It defines `cliet`, `container_name`, and `port` attributes. You have
+    to implement `_default_container_name` method to define the default
+    container name, and everything required by `DatabaseRunner` class.
+
+    Parameters
+    ----------
+    container_name: str | None
+        The name of the container. By default it will
+        choose a name that starts with the string defined in
+        `_default_container_name` and ends with a number suffix that is free
+        in the docker.
+
+    Attributes
+    -----------
+    client: docker.client
+        Docker client.
+    container_name: str
+        The name of the container. By default it will
+        choose a name that starts with the string defined in
+        `_default_container_name` and ends with a number suffix that is free
+        in the docker.
+    port: int
+        Port to connect to the database.
+    '''
     def __init__(self, container_name: str | None = None):
         self.client = docker.from_env()
         self.container_name = (
@@ -44,12 +79,15 @@ class DatabaseInDockerRunner(DatabaseRunner):
         self.port = find_free_port()
         super().__init__()
 
+    def _get_containers_names(self) -> list[str]:
+        return [
+            container.name for container in self.client.containers.list()
+        ]
+
     def _get_container_name(self) -> None:
         suffix = 1
         self._default_container_name
-        containres_names = [
-            container.name for container in self.client.containers.list()
-        ]
+        containres_names = self._get_containers_names()
         while True:
             container_name = self._default_container_name + "_" + str(suffix)
             if container_name in containres_names:
