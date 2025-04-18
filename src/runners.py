@@ -33,14 +33,43 @@ class DatabaseRunner(ABC):
         self.stop()
 
 
-class PostgresRunner(DatabaseRunner):
-    def __init__(self, container_name="postgres_db"):
-        self.container_name = container_name
+class DatabaseInDockerRunner(DatabaseRunner):
+    def __init__(self, container_name: str | None = None):
         self.client = docker.from_env()
-        self.container = None
-        self.connection = None
+        self.container_name = (
+            self._get_container_name()
+            if container_name is None
+            else container_name
+        )
         self.port = find_free_port()
         super().__init__()
+
+    def _get_container_name(self) -> None:
+        suffix = 1
+        self._default_container_name
+        containres_names = [
+            container.name for container in self.client.containers.list()
+        ]
+        while True:
+            container_name = self._default_container_name + "_" + str(suffix)
+            if container_name in containres_names:
+                suffix += 1
+            else:
+                return container_name
+
+    @property
+    @abstractmethod
+    def _default_container_name(self) -> str:
+        pass
+
+
+class PostgresRunner(DatabaseInDockerRunner):
+    def __init__(self, container_name="postgres_db"):
+        super().__init__()
+
+    @property
+    def _default_container_name(self) -> str:
+        return "postgres_db"
 
     def start(self):
         self.container = self.client.containers.run(
@@ -69,20 +98,19 @@ class PostgresRunner(DatabaseRunner):
                 return None
 
     def stop(self):
-        if self.connection:
+        if hasattr(self, "connection"):
             self.connection.close()
-        if self.container:
+        if hasattr(self, "container"):
             self.container.stop()
 
 
-class ClickHouseRunner(DatabaseRunner):
+class ClickHouseRunner(DatabaseInDockerRunner):
     def __init__(self, container_name="clickhouse_db"):
-        self.container_name = container_name
-        self.client = docker.from_env()
-        self.container = None
-        self.connection = None
-        self.port = find_free_port()
         super().__init__()
+
+    @property
+    def _default_container_name(self) -> str:
+        return "clickhouse_db"
 
     def start(self):
         self.container = self.client.containers.run(
@@ -104,9 +132,9 @@ class ClickHouseRunner(DatabaseRunner):
         return self.connection.query(query).result_rows
 
     def stop(self):
-        if self.connection:
+        if hasattr(self, "connection"):
             self.connection.close()
-        if self.container:
+        if hasattr(self, "container"):
             self.container.stop()
 
 
