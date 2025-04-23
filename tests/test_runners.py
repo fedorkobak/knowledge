@@ -38,7 +38,7 @@ class TestDockerRunner(TestCase):
         self.assertEqual(res, exp)
 
 
-# To avoid creating each time a new database each time runners created globally 
+# To avoid creating each time a new database each time runners created globally
 postgres_runner = PostgresRunner()
 clikchouse_runner = ClickHouseRunner()
 sqlite_runner = SQLiteRunner()
