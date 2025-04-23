@@ -603,8 +603,11 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#help">Help</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modes">Modes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#infinite-sender">Infinite sender</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#packages">Packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adress-and-port">Adress and port</a></li>
 </ul>
             </nav>
         </div>
@@ -619,6 +622,64 @@
   <section class="tex2jax_ignore mathjax_ignore" id="netcat-nc">
 <h1>Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)<a class="headerlink" href="#netcat-nc" title="Link to this heading">#</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">nc</span></code> command is a linux utility that allows you to write to and listen to the network. See the official documentation of the canonical GNU net cat realization <a class="reference external" href="https://netcat.sourceforge.net/">here</a>.</p>
+<section id="help">
+<h2>Help<a class="headerlink" href="#help" title="Link to this heading">#</a></h2>
+<p>The classic <code class="docutils literal notranslate"><span class="pre">--help</span></code> option doesn’t work for the <code class="docutils literal notranslate"><span class="pre">nc</span></code> command - use <code class="docutils literal notranslate"><span class="pre">-h</span></code> instead. Or just check it in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc<span class="w"> </span>-h
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OpenBSD netcat (Debian patchlevel 1.226-1ubuntu2)
+usage: nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]
+	  [-m minttl] [-O length] [-P proxy_username] [-p source_port]
+	  [-q seconds] [-s sourceaddr] [-T keyword] [-V rtable] [-W recvlimit]
+	  [-w timeout] [-X proxy_protocol] [-x proxy_address[:port]]
+	  [destination] [port]
+	Command Summary:
+		-4		Use IPv4
+		-6		Use IPv6
+		-b		Allow broadcast
+		-C		Send CRLF as line-ending
+		-D		Enable the debug socket option
+		-d		Detach from stdin
+		-F		Pass socket fd
+		-h		This help text
+		-I length	TCP receive buffer length
+		-i interval	Delay interval for lines sent, ports scanned
+		-k		Keep inbound sockets open for multiple connects
+		-l		Listen mode, for inbound connects
+		-M ttl		Outgoing TTL / Hop Limit
+		-m minttl	Minimum incoming TTL / Hop Limit
+		-N		Shutdown the network socket after EOF on stdin
+		-n		Suppress name/port resolutions
+		-O length	TCP send buffer length
+		-P proxyuser	Username for proxy authentication
+		-p port		Specify local port for remote connects
+		-q secs		quit after EOF on stdin and delay of secs
+		-r		Randomize remote ports
+		-S		Enable the TCP MD5 signature option
+		-s sourceaddr	Local source address
+		-T keyword	TOS value
+		-t		Answer TELNET negotiation
+		-U		Use UNIX domain socket
+		-u		UDP mode
+		-V rtable	Specify alternate routing table
+		-v		Verbose
+		-W recvlimit	Terminate after receiving a number of packets
+		-w timeout	Timeout for connects and final net reads
+		-X proto	Proxy protocol: &quot;4&quot;, &quot;5&quot; (SOCKS) or &quot;connect&quot;
+		-x addr[:port]	Specify proxy address and port
+		-Z		DCCP mode
+		-z		Zero-I/O mode [used for scanning]
+	Port numbers can be individual or ranges: lo-hi [inclusive]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="modes">
 <h2>Modes<a class="headerlink" href="#modes" title="Link to this heading">#</a></h2>
 <p>There is two modes of the <code class="docutils literal notranslate"><span class="pre">nc</span></code> process:</p>
@@ -679,6 +740,138 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc<span class="w"> </span>-w<span class="w"> </span><span class="m">1</span><span class="w"> </span>-l<span class="w"> </span>localhost<span class="w"> </span><span class="m">12345</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello world
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="packages">
+<h2>Packages<a class="headerlink" href="#packages" title="Link to this heading">#</a></h2>
+<p>There are two versions of the <code class="docutils literal notranslate"><span class="pre">nc</span></code> command, they are used for the same purposes but have some peculiarities associated with working with them.</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">install</span> <span class="pre">netcat-openbsd</span></code> for the Ubuntu installation. We’ll using this version in the general examples.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">apt</span>&#160; <span class="pre">install</span> <span class="pre">netcat-traditional</span></code> for a different version.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell installs both the traditional and OpenBSD versions of the program - it’s no problem to have both.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt<span class="w"> </span>install<span class="w"> </span>netcat-openbsd<span class="w"> </span>netcat-traditional<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can identify what exactly version you’re using by by looking at first line of the help.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc<span class="w"> </span>-h<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OpenBSD netcat (Debian patchlevel 1.219-1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The default <code class="docutils literal notranslate"><span class="pre">nc</span></code> command refers to the OpenBSD version. However, you can access a specific version by using <code class="docutils literal notranslate"><span class="pre">nc.traditional</span></code> for traditional version and <code class="docutils literal notranslate"><span class="pre">nc.openbsd</span></code> for the OpenBSD version.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc.traditional<span class="w"> </span>-h<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[v1.10-47]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc.openbsd<span class="w"> </span>-h<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OpenBSD netcat (Debian patchlevel 1.219-1)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="adress-and-port">
+<h2>Adress and port<a class="headerlink" href="#adress-and-port" title="Link to this heading">#</a></h2>
+<p>For the <code class="docutils literal notranslate"><span class="pre">nc</span></code> command, you must specify the address and port. There are few options to specify them. Use the syntax:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nc</span> <span class="pre">-l</span> <span class="pre">-p</span> <span class="pre">&lt;port&gt;</span></code> to listen on the specified port on localhost.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nc</span> <span class="pre">-l</span> <span class="pre">&lt;address&gt;</span> <span class="pre">&lt;port&gt;</span></code> to listen on the specified port of the specified address.</p></li>
+<li><p><strong>Note:</strong> if you are using <code class="docutils literal notranslate"><span class="pre">nc.traditional</span></code> you can’t use <code class="docutils literal notranslate"><span class="pre">nc</span> <span class="pre">-l</span> <span class="pre">&lt;address&gt;</span> <span class="pre">&lt;port&gt;</span></code> - you have to specify port with <code class="docutils literal notranslate"><span class="pre">-p</span></code> parameter and address with <code class="docutils literal notranslate"><span class="pre">-s</span></code></p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell starts an infinite sender that we’ll use to test different listening options.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span>true<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello world&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>nc<span class="w"> </span>localhost<span class="w"> </span><span class="m">12345</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="w"> </span><span class="p">&amp;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[4] 3605158
+</pre></div>
+</div>
+</div>
+</div>
+<p>Listening on the port <code class="docutils literal notranslate"><span class="pre">12345</span></code>, the <code class="docutils literal notranslate"><span class="pre">localhost</span></code> as address is not explicitly specified.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc<span class="w"> </span>-w<span class="w"> </span><span class="m">1</span><span class="w"> </span>-l<span class="w"> </span>-p<span class="w"> </span><span class="m">12345</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello world
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">&lt;address&gt;</span> <span class="pre">&lt;port&gt;</span></code> syntax as a positional argument allows you to specify address and port explicitly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc<span class="w"> </span>-w<span class="w"> </span><span class="m">1</span><span class="w"> </span>-l<span class="w"> </span>localhost<span class="w"> </span><span class="m">12345</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello world
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can spend some time trying to get <code class="docutils literal notranslate"><span class="pre">nc.traditional</span></code> to work with this syntax, but it’s not possible, the following cell shows that it doesn’t work.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>timeout<span class="w"> </span>1s<span class="w"> </span>nc.traditional<span class="w"> </span>-l<span class="w"> </span>localhost<span class="w"> </span><span class="m">12345</span>
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>But by specifying the address through the <code class="docutils literal notranslate"><span class="pre">s</span></code> parameter and the port through <code class="docutils literal notranslate"><span class="pre">p</span></code> parameter, it will work with <code class="docutils literal notranslate"><span class="pre">nc.traditional</span></code> as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>timeout<span class="w"> </span>1s<span class="w"> </span>nc.traditional<span class="w"> </span>-l<span class="w"> </span>-s<span class="w"> </span>localhost<span class="w"> </span>-p<span class="w"> </span><span class="m">12345</span>
+<span class="nb">true</span>
 </pre></div>
 </div>
 </div>
@@ -756,8 +949,11 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#help">Help</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modes">Modes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#infinite-sender">Infinite sender</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#packages">Packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adress-and-port">Adress and port</a></li>
 </ul>
   </nav></div>
 

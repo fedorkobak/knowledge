@@ -60,6 +60,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/conditional';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -632,89 +634,78 @@ END
 <p><strong>Note</strong> <code class="docutils literal notranslate"><span class="pre">ELSE</span></code> block is optional.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker run --rm -d\
-    -e POSTGRES_PASSWORD=docker_app \
-    --name conditional_postgres_exmaples \
-    postgres:15.4 &amp;&gt; /dev/null
-sleep 5
-docker exec -i conditional_postgres_exmaples psql -U postgres -d postgres
-
-CREATE TABLE tab (
-    var1 INT,
-    var2 INT,
-    var3 TEXT
-);
-
-INSERT INTO tab (var1, var2, var3) VALUES
-(1, 2, &#39;foo&#39;),
-(4, 5, &#39;bar&#39;),
-(2, 3, &#39;bar&#39;),
-(4, 3, &#39;foo&#39;);
-
-SELECT * FROM tab;
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CREATE TABLE
-INSERT 0 4
- var1 | var2 | var3 
-------+------+------
-    1 |    2 | foo
-    4 |    5 | bar
-    2 |    3 | bar
-    4 |    3 | foo
-(4 rows)
+<div class="highlight-PostgreSQL notranslate"><div class="highlight"><pre><span></span><span class="c1">-- connection: postgres://postgres:postgres@localhost:5432</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Note</strong> Don’t forget to stop the container when you’ve finished playing with it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker stop conditional_postgres_exmaples;
+<div class="highlight-PostgreSQL notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">var1</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">var2</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">var3</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="p">(</span><span class="n">var1</span><span class="p">,</span><span class="w"> </span><span class="n">var2</span><span class="p">,</span><span class="w"> </span><span class="n">var3</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;foo&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bar&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bar&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mf">4</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>conditional_postgres_exmaples
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 row(s) returned.
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  var1</th><th style="text-align: right;">  var2</th><th>var3  </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td style="text-align: right;">     2</td><td>foo   </td></tr>
+<tr><td style="text-align: right;">     4</td><td style="text-align: right;">     5</td><td>bar   </td></tr>
+<tr><td style="text-align: right;">     2</td><td style="text-align: right;">     3</td><td>bar   </td></tr>
+<tr><td style="text-align: right;">     4</td><td style="text-align: right;">     3</td><td>foo   </td></tr>
+</tbody>
+</table></div></div>
 </div>
 <section id="basic-example">
 <h2>Basic example<a class="headerlink" href="#basic-example" title="Link to this heading">#</a></h2>
 <p>In my opinion, the most popular cases for this operation are the categorisation of numerical variables and the replacement of categorical variables. So in the following cell such operations are performed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i conditional_postgres_exmaples psql -U postgres -d postgres
-SELECT
-    CASE
-        WHEN var1+var2 &gt; 5 THEN &#39;&gt;5&#39;
-        ELSE &#39;&lt;=5&#39;
-    END num_to_cat,
-    CASE
-        WHEN var3=&#39;foo&#39; THEN &#39;new foo&#39;
-        WHEN var3=&#39;bar&#39; THEN &#39;new bar&#39;
-    END replace
-FROM tab;
+<div class="highlight-PostgreSQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">CASE</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="n">var1</span><span class="o">+</span><span class="n">var2</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">5</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;&gt;5&#39;</span>
+<span class="w">        </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;&lt;=5&#39;</span>
+<span class="w">    </span><span class="k">END</span><span class="w"> </span><span class="n">num_to_cat</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CASE</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="n">var3</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;new foo&#39;</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="n">var3</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;new bar&#39;</span>
+<span class="w">    </span><span class="k">END</span><span class="w"> </span><span class="k">replace</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">tab</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> num_to_cat | replace 
-------------+---------
- &lt;=5        | new foo
- &gt;5         | new bar
- &lt;=5        | new bar
- &gt;5         | new foo
-(4 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 row(s) returned.
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>num_to_cat  </th><th>replace  </th></tr>
+</thead>
+<tbody>
+<tr><td>&lt;=5         </td><td>new foo  </td></tr>
+<tr><td>&gt;5          </td><td>new bar  </td></tr>
+<tr><td>&lt;=5         </td><td>new bar  </td></tr>
+<tr><td>&gt;5          </td><td>new foo  </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="nested">
@@ -722,32 +713,34 @@ FROM tab;
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">CASE</span></code> value as the result of an external <code class="docutils literal notranslate"><span class="pre">CASE</span></code> statement. So here is an example of how it can be used:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i conditional_postgres_exmaples psql -U postgres -d postgres
-SELECT
-    CASE
-        WHEN var1+var2 &gt; 5 THEN
-            CASE
-                WHEN var3=&#39;foo&#39; THEN &#39;&gt;5 and foo&#39;
-                ELSE &#39;bar&#39;
-            END
-        ELSE &#39;&lt;=5&#39;
-    END num_to_cat
-FROM tab;
+<div class="highlight-PostgreSQL notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">CASE</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="n">var1</span><span class="o">+</span><span class="n">var2</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">5</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">            </span><span class="k">CASE</span>
+<span class="w">                </span><span class="k">WHEN</span><span class="w"> </span><span class="n">var3</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;&gt;5 and foo&#39;</span>
+<span class="w">                </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;bar&#39;</span>
+<span class="w">            </span><span class="k">END</span>
+<span class="w">        </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;&lt;=5&#39;</span>
+<span class="w">    </span><span class="k">END</span><span class="w"> </span><span class="n">num_to_cat</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">tab</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> num_to_cat 
-------------
- &lt;=5
- bar
- &lt;=5
- &gt;5 and foo
-(4 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 row(s) returned.
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>num_to_cat  </th></tr>
+</thead>
+<tbody>
+<tr><td>&lt;=5         </td></tr>
+<tr><td>bar         </td></tr>
+<tr><td>&lt;=5         </td></tr>
+<tr><td>&gt;5 and foo  </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 </section>
@@ -761,16 +754,16 @@ FROM tab;
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "postgres_kernel"
         },
         kernelOptions: {
-            name: "python3",
+            name: "postgres_kernel",
             path: "./sql/select"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'postgres_kernel'</script>
 
                 </article>
               

@@ -611,6 +611,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#negation">Negation</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symbolic-links">Symbolic links</a></li>
 </ul>
             </nav>
         </div>
@@ -994,6 +995,80 @@ rm<span class="w"> </span>/tmp/wow
 </div>
 </section>
 </section>
+<section id="symbolic-links">
+<h2>Symbolic links<a class="headerlink" href="#symbolic-links" title="Link to this heading">#</a></h2>
+<p>Symbolic link is a file that points to the other file or directory, in fact, it is just another name for some file. You can manipulate with symbolic links with the <code class="docutils literal notranslate"><span class="pre">ln</span></code> command.</p>
+<hr class="docutils" />
+<p>As an example, consider the process of creating a symbolik link. The following cell creates an experimental folder and file to which symbolic link will point.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>/tmp/symb_links
+<span class="nb">cd</span><span class="w"> </span>/tmp/symb_links
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; original_file</span>
+<span class="s">hello from</span>
+<span class="s">original file</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can create the link with <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">&lt;target&gt;</span> <span class="pre">&lt;link</span> <span class="pre">name&gt;</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln<span class="w"> </span>-s<span class="w"> </span>original_file<span class="w"> </span>symb_link
+</pre></div>
+</div>
+</div>
+</div>
+<p>Make sure that the link was really created by displaying the result of the <code class="docutils literal notranslate"><span class="pre">ls</span></code> in long format.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-l
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 4
+-rw-rw-r-- 1 fedor fedor 34 Mar 30 12:20 original_file
+lrwxrwxrwx 1 fedor fedor 13 Mar 30 12:19 <span class=" -Color -Color-Bold -Color-Bold-Cyan">symb_link</span> -&gt; original_file
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a result the created <code class="docutils literal notranslate"><span class="pre">symb_link</span></code> file have a special color and it points (<code class="docutils literal notranslate"><span class="pre">-&gt;</span></code>) to the original file.</p>
+<p>The following cell shows the contents of the <code class="docutils literal notranslate"><span class="pre">symb_link</span></code> file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>symb_link
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello from
+original file
+</pre></div>
+</div>
+</div>
+</div>
+<p>It corresponds to the contents of the <code class="docutils literal notranslate"><span class="pre">original_file</span></code>.</p>
+<p>But this applies to any kind of manipulation—the following cell adds a “new line” to <code class="docutils literal notranslate"><span class="pre">symb_link</span></code>, and as a result, that line appears in <code class="docutils literal notranslate"><span class="pre">original_file</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;new line&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>symb_link
+cat<span class="w"> </span>original_file
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello from
+original file
+new line
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1071,6 +1146,7 @@ rm<span class="w"> </span>/tmp/wow
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#negation">Negation</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symbolic-links">Symbolic links</a></li>
 </ul>
   </nav></div>
 

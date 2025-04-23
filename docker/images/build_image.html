@@ -607,6 +607,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-name-t">Image name (-t)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#select-dockerfile-f">Select dockerfile (<code class="docutils literal notranslate"><span class="pre">-f</span></code>)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-files">Ignore files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#echo-information">Echo information</a></li>
 </ul>
             </nav>
         </div>
@@ -914,6 +915,65 @@ Deleted: sha256:fb4226cb869208fa9047929c626b707e3835e4b4693d00ca36c3898202351dd4
 </div>
 </div>
 </section>
+<section id="echo-information">
+<h2>Echo information<a class="headerlink" href="#echo-information" title="Link to this heading">#</a></h2>
+<p>Sometimes it can be useful to see some information on the standard output for debugging/research purposes. You can add the  <code class="docutils literal notranslate"><span class="pre">RUN</span> <span class="pre">&lt;command&gt;</span></code> directive to your <code class="docutils literal notranslate"><span class="pre">dockerfile</span></code>, but in general it wouldn’t print the output, you need to use the <code class="docutils literal notranslate"><span class="pre">--no-cache</span></code> options to guarantee that the output of the command will be available in the standard output.</p>
+<hr class="docutils" />
+<p>The following cell defines <code class="docutils literal notranslate"><span class="pre">dockerfile</span></code> which uses <code class="docutils literal notranslate"><span class="pre">RUN</span> <span class="pre">whoami</span></code> so that the some stage of the build it has to show the output of the <code class="docutils literal notranslate"><span class="pre">whoami</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/echo_info</span>
+<span class="s">FROM alpine</span>
+<span class="s">RUN whoami</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now the build the image based on this <code class="docutils literal notranslate"><span class="pre">dockerfile</span></code>, right after cleaning the build cache.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>builder<span class="w"> </span>prune<span class="w"> </span>-af<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>echo_info<span class="w"> </span>-f<span class="w"> </span>/tmp/echo_info<span class="w"> </span>.<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="s2">&quot;whoami&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>#5 [2/2] RUN whoami
+#5 0.109 root
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a result, there is an output for the command, but it only for the first time, all other times it simply won’t show the output of the command because it wasn’t executed due to it being cached.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>echo_info<span class="w"> </span>-f<span class="w"> </span>/tmp/echo_info<span class="w"> </span>.<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="s2">&quot;whoami&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>#5 [2/2] RUN whoami
+#5 CACHED
+</pre></div>
+</div>
+</div>
+</div>
+<p>But with <code class="docutils literal notranslate"><span class="pre">--no-cache</span></code> option you easily can return the output of the command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>echo_info<span class="w"> </span>--no-cache<span class="w"> </span>-f<span class="w"> </span>/tmp/echo_info<span class="w"> </span>.<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="s2">&quot;whoami&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>#5 [2/2] RUN whoami
+#5 0.121 root
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -987,6 +1047,7 @@ Deleted: sha256:fb4226cb869208fa9047929c626b707e3835e4b4693d00ca36c3898202351dd4
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-name-t">Image name (-t)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#select-dockerfile-f">Select dockerfile (<code class="docutils literal notranslate"><span class="pre">-f</span></code>)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-files">Ignore files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#echo-information">Echo information</a></li>
 </ul>
   </nav></div>
 
