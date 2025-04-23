@@ -2,15 +2,20 @@ import socket
 import docker
 import sqlite3
 import psycopg2
-import clickhouse_connect
-from abc import ABC, abstractmethod
+import typeguard
 from time import sleep
+import clickhouse_connect
+from typing import Any, Sequence
+from abc import ABC, abstractmethod
 
 
 def find_free_port():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(("localhost", 0))
         return s.getsockname()[1]
+
+
+execute_output = tuple[Sequence[str], Sequence[Sequence[Any]]]
 
 
 class DatabaseRunner(ABC):
@@ -28,7 +33,13 @@ class DatabaseRunner(ABC):
         pass
 
     @abstractmethod
-    def execute(self, query: str):
+    def execute(self, query: str) -> execute_output:
+        '''
+        Execute a query in the database and return the results.
+        Resutls are suppoesd to be:
+        - Sequence of column names.
+        - Sequence of rows, where each row is a sequence of values.
+        '''
         pass
 
     @abstractmethod
@@ -127,11 +138,14 @@ class PostgresRunner(DatabaseInDockerRunner):
             port=self.port
         )
 
-    def execute(self, query: str):
+    @typeguard.typechecked
+    def execute(self, query: str) -> execute_output:
         with self.connection.cursor() as cursor:
             cursor.execute(query)
             try:
-                return cursor.fetchall()
+                columns = [desc.name for desc in cursor.description]
+                data = cursor.fetchall()
+                return columns, data
             except psycopg2.ProgrammingError:
                 return None
 
