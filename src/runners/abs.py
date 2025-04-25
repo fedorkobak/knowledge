@@ -1,0 +1,143 @@
+'''
+Abstrations that is used to create runners.
+'''
+import socket
+import docker
+from typing import Sequence, Any
+from abc import ABC, abstractmethod
+
+
+def find_free_port():
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(("localhost", 0))
+        return s.getsockname()[1]
+
+
+# Annotation of the `execute` method
+execute_output = tuple[Sequence[str], Sequence[Sequence[Any]]]
+
+
+class DatabaseRunner(ABC):
+    '''
+    Describes database runner interface.
+    '''
+
+    @abstractmethod
+    def execute(self, query: str) -> execute_output:
+        '''
+        Execute a query in the database and return the results.
+        Resutls are suppoesd to be:
+        - Sequence of column names.
+        - Sequence of rows, where each row is a sequence of values.
+        '''
+        pass
+
+
+class DatabaseInDockerRunner(DatabaseRunner):
+    '''
+    Abstract class for database runners that run in Docker containers.
+    Determines:
+    - Name of the container.
+    - Port to connect to the database.
+    You have to implement:
+    - `_deafult_container_name` returns default name of the container to
+    which will be added prefix.
+    - `_image` returns the image name to run.
+
+    Note: run `stop` method to remove the container. It's not correct to stop
+    it automatically with the `__del__` method, because `container.stop()`
+    requires some python features that can be destroyed by the moment `__del__`
+    is callled.
+
+    Parameters
+    ----------
+    Parameters that are used by the `DockerClient.containers.run` method.
+    But note:
+    - You can not to specify `name` parameter, because it will be generated
+    automatically.
+    - You can not to specify `detach` parameter, because it will be set to
+    `True` automatically.
+    - You can not to specify `remove` parameter, because it will be set to
+    `True` automatically.
+
+    Attributes
+    -----------
+    client: docker.client
+        Docker client.
+    name: str
+        The name of the container. By default it will
+        choose a name that starts with the string defined in
+        `_default_container_name` and ends with a number suffix that is free
+        in the docker.
+    port: int
+        Port to connect to the database.
+    '''
+    client = docker.from_env()
+
+    def __init__(self, **kwargs):
+        params = self._proc_params(**kwargs)
+        self._get_container(**params)
+        # self.client = docker.from_env()
+        # self.name = (
+        #     self._get_container_name()
+        #     if kwargs["name"] is None
+        #     else kwargs["name"]
+        # )
+        # self.port = find_free_port()
+        # self.container = self._get_container()
+
+    @classmethod
+    def _proc_params(cls, **kwargs) -> dict[str, Any]:
+        '''
+        Process parameters for the container. Throw warnings if some
+        parameters are redundant.
+        '''
+        pass
+
+    @classmethod
+    def _get_containers_names(cls) -> list[str]:
+        '''
+        List all conatainers names.
+
+        Returns
+        -------
+        list[str]
+            List of all containers names.
+        '''
+        return [
+            container.name for container in cls.client.containers.list()
+        ]
+
+    @classmethod
+    def _get_container_name(cls) -> None:
+        '''
+        Create a name for the container. This is ususally a value returned by
+        `_default_container_name` with a number suffix.
+        '''
+        suffix = 1
+        containres_names = cls._get_containers_names()
+        while True:
+            container_name = cls._default_container_name + "_" + str(suffix)
+            if container_name in containres_names:
+                suffix += 1
+            else:
+                return container_name
+
+    def _get_container(self, **kwargs) -> docker.models.containers.Container:
+        '''
+        Get the container object.
+        '''
+        return self.client.containers.run(**kwargs)
+
+    @property
+    @abstractmethod
+    def _default_container_name(self) -> str:
+        pass
+
+    @property
+    @abstractmethod
+    def _image(self) -> str:
+        pass
+
+    def stop(self):
+        self.container.stop()

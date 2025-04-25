@@ -1,5 +1,5 @@
 from ipykernel.kernelbase import Kernel
-from .runners import (
+from .runners.runners import (
     DatabaseRunner,
     PostgresRunner,
     ClickHouseRunner,
