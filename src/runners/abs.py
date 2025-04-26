@@ -40,9 +40,9 @@ class DatabaseInDockerRunner(DatabaseRunner):
     - Name of the container.
     - Port to connect to the database.
     You have to implement:
-    - `_deafult_container_name` returns default name of the container to
+    - `_deafult_container_name` default name of the container to
     which will be added prefix.
-    - `_image` returns the image name to run.
+    - `_image` the image name to run.
 
     Note: run `stop` method to remove the container. It's not correct to stop
     it automatically with the `__del__` method, because `container.stop()`
@@ -74,6 +74,15 @@ class DatabaseInDockerRunner(DatabaseRunner):
     '''
     client = docker.from_env()
 
+    def __init_subclass__(cls):
+        attributes = ["_default_container_name", "_image"]
+        for attr in attributes:
+            if not hasattr(cls, attr):
+                raise NotImplementedError(
+                    f"Class {cls.__name__} must implement {attr} attribute"
+                )
+        return super().__init_subclass__()
+
     def __init__(self, **kwargs):
         params = self._proc_params(**kwargs)
         self._get_container(**params)
@@ -86,8 +95,8 @@ class DatabaseInDockerRunner(DatabaseRunner):
         # self.port = find_free_port()
         # self.container = self._get_container()
 
-    @classmethod
-    def _proc_params(cls, **kwargs) -> dict[str, Any]:
+    @staticmethod
+    def _proc_params(**kwargs) -> dict[str, Any]:
         '''
         Process parameters for the container. Throw warnings if some
         parameters are redundant.
@@ -130,6 +139,7 @@ class DatabaseInDockerRunner(DatabaseRunner):
         return self.client.containers.run(**kwargs)
 
     @property
+    @classmethod
     @abstractmethod
     def _default_container_name(self) -> str:
         pass
