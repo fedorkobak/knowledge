@@ -113,12 +113,14 @@ class DatabaseInDockerRunner(DatabaseRunner):
                 )
         kwargs.update(redundant_params)
 
+        name = kwargs.get("name", None)
         kwargs["name"] = (
-            cls._get_container_name()
-            if kwargs["name"] is None
-            else kwargs["name"]
+            cls._get_container_name() if name is None else name
         )
-        kwargs["ports"]
+
+        if hasattr(cls, "_other_params"):
+            kwargs = cls._other_params | kwargs
+
         return kwargs
 
     @classmethod

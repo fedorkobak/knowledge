@@ -60,3 +60,20 @@ class TestDockerRunner(TestCase):
         self.assertEqual(ans["detach"], True)
         self.assertEqual(ans["remove"], True)
         self.assertEqual(ans["ports"], {self.TestRunner._port: free_port_out})
+
+    @patch.object(
+        target=TestRunner,
+        attribute="_other_params",
+        create=True,
+        new={"param1": "value1", "remove": False}
+    )
+    def test_other_params(self):
+        '''
+        Test if other parameters passed correctly. Parameters that doesn't
+        have special meaning must ignore values specified in the
+        `other_params`.
+        '''
+        res = self.TestRunner._proc_params()
+        self.assertEqual(res["param1"], "value1")
+        # remove key any way takes `True` - other_params doesn't influence
+        self.assertEqual(res["remove"], True)
