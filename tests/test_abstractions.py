@@ -9,6 +9,7 @@ class TestDockerRunner(TestCase):
     class TestRunner(DatabaseInDockerRunner):
         _default_container_name = "test_container"
         _image = "alpine:latest"
+        _port = 1234
 
         def execute(self, query):
             pass
@@ -52,10 +53,10 @@ class TestDockerRunner(TestCase):
             name="some_name",
             detach=False,
             remove=False,
-            port=10
+            ports=10
         )
         self.assertEqual(ans["image"], self.TestRunner._image)
         self.assertEqual(ans["name"], "some_name")
         self.assertEqual(ans["detach"], True)
         self.assertEqual(ans["remove"], True)
-        self.assertEqual(ans["ports"], free_port_out)
+        self.assertEqual(ans["ports"], {self.TestRunner._port: free_port_out})

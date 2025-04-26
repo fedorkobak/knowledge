@@ -3,6 +3,7 @@ Abstrations that is used to create runners.
 '''
 import socket
 import docker
+import warnings
 from typing import Sequence, Any
 from abc import ABC, abstractmethod
 
@@ -39,10 +40,15 @@ class DatabaseInDockerRunner(DatabaseRunner):
     Determines:
     - Name of the container.
     - Port to connect to the database.
-    You have to implement:
-    - `_deafult_container_name` default name of the container to
-    which will be added prefix.
-    - `_image` the image name to run.
+
+    Implement
+    ---------
+    _deafult_container_name: str
+        Default name of the container to which will be added prefix.
+    _image: str
+        The image name to run.
+    _port: int
+        Port in the container to which will be mapped the port on the host.
 
     Note: run `stop` method to remove the container. It's not correct to stop
     it automatically with the `__del__` method, because `container.stop()`
@@ -75,7 +81,7 @@ class DatabaseInDockerRunner(DatabaseRunner):
     client = docker.from_env()
 
     def __init_subclass__(cls):
-        attributes = ["_default_container_name", "_image"]
+        attributes = ["_default_container_name", "_image", "_port"]
         for attr in attributes:
             if not hasattr(cls, attr):
                 raise NotImplementedError(
@@ -86,22 +92,34 @@ class DatabaseInDockerRunner(DatabaseRunner):
     def __init__(self, **kwargs):
         params = self._proc_params(**kwargs)
         self._get_container(**params)
-        # self.client = docker.from_env()
-        # self.name = (
-        #     self._get_container_name()
-        #     if kwargs["name"] is None
-        #     else kwargs["name"]
-        # )
-        # self.port = find_free_port()
-        # self.container = self._get_container()
 
-    @staticmethod
-    def _proc_params(**kwargs) -> dict[str, Any]:
+    @classmethod
+    def _proc_params(cls, **kwargs) -> dict[str, Any]:
         '''
         Process parameters for the container. Throw warnings if some
         parameters are redundant.
         '''
-        pass
+        redundant_params = {
+            "image": cls._image,
+            "detach": True,
+            "remove": True,
+            "ports": {cls._port: find_free_port()}
+        }
+        for param in redundant_params:
+            if param in kwargs:
+                warnings.warn(
+                    f"Parameter {param} is redundant. It will be set "
+                    "automatically."
+                )
+        kwargs.update(redundant_params)
+
+        kwargs["name"] = (
+            cls._get_container_name()
+            if kwargs["name"] is None
+            else kwargs["name"]
+        )
+        kwargs["ports"]
+        return kwargs
 
     @classmethod
     def _get_containers_names(cls) -> list[str]:
@@ -137,17 +155,6 @@ class DatabaseInDockerRunner(DatabaseRunner):
         Get the container object.
         '''
         return self.client.containers.run(**kwargs)
-
-    @property
-    @classmethod
-    @abstractmethod
-    def _default_container_name(self) -> str:
-        pass
-
-    @property
-    @abstractmethod
-    def _image(self) -> str:
-        pass
 
     def stop(self):
         self.container.stop()
