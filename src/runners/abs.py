@@ -22,6 +22,8 @@ class DatabaseRunner(ABC):
     '''
     Describes database runner interface.
     '''
+    def __init__(self):
+        self.start()
 
     @abstractmethod
     def execute(self, query: str) -> execute_output:
@@ -73,13 +75,6 @@ class DatabaseInDockerRunner(DatabaseRunner):
     -----------
     client: docker.client
         Docker client.
-    name: str
-        The name of the container. By default it will
-        choose a name that starts with the string defined in
-        `_default_container_name` and ends with a number suffix that is free
-        in the docker.
-    port: int
-        Port to connect to the database.
     '''
     client = docker.from_env()
 
@@ -95,6 +90,7 @@ class DatabaseInDockerRunner(DatabaseRunner):
     def __init__(self, **kwargs):
         params = self._proc_params(**kwargs)
         self.container = self._get_container(**params)
+        super().__init__()
 
     @classmethod
     def _proc_params(cls, **kwargs) -> dict[str, Any]:
