@@ -26,6 +26,13 @@ class DatabaseRunner(ABC):
         self.start()
 
     @abstractmethod
+    def start(self):
+        '''
+        Initialization procedures. Called in the constructor.
+        '''
+        pass
+
+    @abstractmethod
     def execute(self, query: str) -> execute_output:
         '''
         Execute a query in the database and return the results.
@@ -75,6 +82,10 @@ class DatabaseInDockerRunner(DatabaseRunner):
     -----------
     client: docker.client
         Docker client.
+    _connection_port: int
+        Port to connect to the database.
+    container: docker.models.containers.Container
+        Container object.
     '''
     client = docker.from_env()
 
@@ -89,6 +100,7 @@ class DatabaseInDockerRunner(DatabaseRunner):
 
     def __init__(self, **kwargs):
         params = self._proc_params(**kwargs)
+        self._connection_port = params["ports"][self._port]
         self.container = self._get_container(**params)
         super().__init__()
 

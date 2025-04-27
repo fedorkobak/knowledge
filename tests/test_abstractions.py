@@ -14,6 +14,10 @@ class TestDockerRunner(TestCase):
         def execute(self, query):
             pass
 
+        def start(self):
+            pass
+
+    @patch.object(target=TestRunner, attribute="_port", new=1234)
     @patch.object(target=TestRunner, attribute="_proc_params")
     @patch.object(target=TestRunner, attribute="_get_container")
     def test_init_pipe(self, get_container, proc_params):
@@ -21,11 +25,17 @@ class TestDockerRunner(TestCase):
         Check if init calls everything in the right order.
         '''
         input = {"param1": "value1", "param2": "value2"}
-        proc_params.return_value = {"param3": "value3", "param4": "value4"}
+        proc_params.return_value = {
+            "param3": "value3",
+            "param4": "value4",
+            "ports": {self.TestRunner._port: 1234}
+        }
         get_container.return_value = "container"
         my_runner = self.TestRunner(**input)
         proc_params.assert_called_once_with(**input)
         get_container.assert_called_once_with(**proc_params.return_value)
+
+        self.assertEqual(my_runner._connection_port, 1234)
         self.assertEqual(my_runner.container, "container")
 
     @patch.object(target=TestRunner, attribute="_get_containers_names")

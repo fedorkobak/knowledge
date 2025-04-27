@@ -1,16 +1,14 @@
 from unittest import TestCase
 
-from runners.runners import (
-    PostgresRunner,
-    ClickHouseRunner,
-    SQLiteRunner
+from src.runners.runners import (
+    PostgresRunner
 )
 
 
 # To avoid creating each time a new database each time runners created globally
 postgres_runner = PostgresRunner()
-clikchouse_runner = ClickHouseRunner()
-sqlite_runner = SQLiteRunner()
+# clikchouse_runner = ClickHouseRunner()
+# sqlite_runner = SQLiteRunner()
 
 
 class TestExecuteOutput(TestCase):
