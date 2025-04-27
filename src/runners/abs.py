@@ -49,6 +49,9 @@ class DatabaseInDockerRunner(DatabaseRunner):
         The image name to run.
     _port: int
         Port in the container to which will be mapped the port on the host.
+    _other_params: dict[str, Any]
+        Other parameters that are used by the `DockerClient.containers.run`
+        method. For example, `environment` parameter for Postgres.
 
     Note: run `stop` method to remove the container. It's not correct to stop
     it automatically with the `__del__` method, because `container.stop()`
@@ -91,7 +94,7 @@ class DatabaseInDockerRunner(DatabaseRunner):
 
     def __init__(self, **kwargs):
         params = self._proc_params(**kwargs)
-        self._get_container(**params)
+        self.container = self._get_container(**params)
 
     @classmethod
     def _proc_params(cls, **kwargs) -> dict[str, Any]:

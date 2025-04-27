@@ -22,9 +22,11 @@ class TestDockerRunner(TestCase):
         '''
         input = {"param1": "value1", "param2": "value2"}
         proc_params.return_value = {"param3": "value3", "param4": "value4"}
-        self.TestRunner(**input)
+        get_container.return_value = "container"
+        my_runner = self.TestRunner(**input)
         proc_params.assert_called_once_with(**input)
         get_container.assert_called_once_with(**proc_params.return_value)
+        self.assertEqual(my_runner.container, "container")
 
     @patch.object(target=TestRunner, attribute="_get_containers_names")
     def test_name(self, get_containers_names):
