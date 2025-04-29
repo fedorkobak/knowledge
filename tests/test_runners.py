@@ -11,48 +11,20 @@ class TestExecuteOutput(TestCase):
     """
     Test the execute output of the database runners.
     """
-
-    def test_postgres(self):
-        """
-        Test the execute output of the Postgres runner.
-        """
-        postgres_runner = PostgresRunner()
-
+    def test_simple_query(self):
+        runners = [
+            PostgresRunner,
+            ClickHouseRunner,
+            SQLiteRunner
+        ]
         query = "SELECT 1 AS value, 2 AS value2;"
-        ans_cols, ans_data = postgres_runner.execute(query)
-        exp_cols = ["value", "value2"]
-        exp_data = [(1, 2)]
-        self.assertEqual(ans_cols, exp_cols)
-        self.assertEqual(ans_data, exp_data)
-
-        postgres_runner.stop()
-
-    def test_clickhouse(self):
-        """
-        Test the execute output of the ClickHouse runner.
-        """
-        clickhouse_runner = ClickHouseRunner()
-
-        query = "SELECT 1 AS value, 2 AS value2;"
-        ans_cols, ans_data = clickhouse_runner.execute(query)
         exp_cols = ("value", "value2")
-        exp_data = [(1, 2)]
-        self.assertEqual(ans_cols, exp_cols)
-        self.assertEqual(ans_data, exp_data)
+        exp_data = ((1, 2),)
 
-        clickhouse_runner.stop()
-
-    def test_sqlite(self):
-        """
-        Test the execute output of the SQLite runner.
-        """
-        sqlite_runner = SQLiteRunner()
-
-        query = "SELECT 1 AS value, 2 AS value2;"
-        ans_cols, ans_data = sqlite_runner.execute(query)
-        exp_cols = ["value", "value2"]
-        exp_data = [(1, 2)]
-        self.assertEqual(ans_cols, exp_cols)
-        self.assertEqual(ans_data, exp_data)
-
-        sqlite_runner.stop()
+        for runner_class in runners:
+            r = runner_class()
+            ans_cols, ans_data = r.execute(query)
+            fail_msg = f"Failed for {r.__class__.__name__}"
+            self.assertEqual(ans_cols, exp_cols, msg=fail_msg)
+            self.assertEqual(ans_data, exp_data, msg=fail_msg)
+            r.stop()

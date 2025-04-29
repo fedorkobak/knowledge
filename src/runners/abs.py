@@ -4,7 +4,7 @@ Abstrations that is used to create runners.
 import socket
 import docker
 import warnings
-from typing import Sequence, Any
+from typing import Any
 from abc import ABC, abstractmethod
 
 
@@ -15,7 +15,7 @@ def find_free_port():
 
 
 # Annotation of the `execute` method
-execute_output = tuple[Sequence[str], Sequence[Sequence[Any]]]
+execute_output = tuple[tuple[str, ...], tuple[tuple[Any, ...], ...]]
 
 
 class DatabaseRunner(ABC):

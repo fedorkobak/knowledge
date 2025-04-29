@@ -37,7 +37,7 @@ class PostgresRunner(DatabaseInDockerRunner):
             try:
                 columns = [desc.name for desc in cursor.description]
                 data = cursor.fetchall()
-                return columns, data
+                return tuple(columns), tuple(data)
             except psycopg.ProgrammingError:
                 return None
 
@@ -67,7 +67,7 @@ class ClickHouseRunner(DatabaseInDockerRunner):
     @typeguard.typechecked
     def execute(self, query: str) -> execute_output:
         result = self.connection.query(query)
-        return result.column_names, result.result_rows
+        return result.column_names, tuple(result.result_rows)
 
     def stop(self):
         if hasattr(self, "connection"):
@@ -90,7 +90,7 @@ class SQLiteRunner(DatabaseRunner):
         data = cursor.fetchall()
         self.connection.commit()
         columns = [d[0] for d in cursor.description]
-        return columns, data
+        return tuple(columns), tuple(data)
 
     def stop(self):
         if self.connection:
