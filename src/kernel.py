@@ -1,4 +1,7 @@
+import logging
+from tabulate import tabulate
 from ipykernel.kernelbase import Kernel
+
 from .runners.runners import (
     DatabaseRunner,
     PostgresRunner,
@@ -18,7 +21,7 @@ class SQLKernel(Kernel):
     banner = "Special implementation of sql"
 
     # Mapping to which header corresponds which runner
-    runners = {
+    runners: dict[str, DatabaseRunner] = {
         "postgreSQL": PostgresRunner(),
         "ClickHouse": ClickHouseRunner(),
         "sqlite": SQLiteRunner()
@@ -51,8 +54,9 @@ class SQLKernel(Kernel):
         user_expressions=None,
         allow_stdin=False
     ):
+        logging.critical(f"Got code for execution: {code}")
         runner = self._parse_runner(code=code)
-        ans = runner.execute(code)
+        ans = tabulate(runner.execute(code))
         stream_content = {
             'name': 'stdout',
             'text': str(ans)
@@ -65,6 +69,10 @@ class SQLKernel(Kernel):
             'payload': [],
             'user_expressions': {},
         }
+
+    def do_shutdown(self, restart: bool):
+        for runner in self.runners.values():
+            runner.stop()
 
 
 if __name__ == '__main__':
