@@ -47,56 +47,51 @@ class PostgresRunner(DatabaseInDockerRunner):
         super().stop()
 
 
-# class ClickHouseRunner(DatabaseInDockerRunner):
-#     def __init__(self, container_name="clickhouse_db"):
-#         super().__init__()
+class ClickHouseRunner(DatabaseInDockerRunner):
+    _default_container_name = "clickhouse_db"
+    _image = "clickhouse/clickhouse-server"
+    _port = 8123
+    _password = "example"
+    _other_params = {
+        "environment": {"CLICKHOUSE_PASSWORD": _password}
+    }
 
-#     @property
-#     def _default_container_name(self) -> str:
-#         return "clickhouse_db"
+    def start(self):
+        sleep(5)
+        self.connection = clickhouse_connect.get_client(
+            host="localhost",
+            port=self._connection_port,
+            password=self._password
+        )
 
-#     def start(self):
-#         self.container = self.client.containers.run(
-#             "clickhouse/clickhouse-server",
-#             environment={"CLICKHOUSE_PASSWORD": "example"},
-#             name=self.container_name,
-#             ports={"8123/tcp": self.port},
-#             detach=True,
-#             remove=True
-#         )
-#         sleep(5)
-#         self.connection = clickhouse_connect.get_client(
-#             host="localhost",
-#             port=self.port,
-#             password="example"
-#         )
+    @typeguard.typechecked
+    def execute(self, query: str) -> execute_output:
+        result = self.connection.query(query)
+        return result.column_names, result.result_rows
 
-#     def execute(self, query: str):
-#         return self.connection.query(query).result_rows
-
-#     def stop(self):
-#         if hasattr(self, "connection"):
-#             self.connection.close()
-#         if hasattr(self, "container"):
-#             self.container.stop()
+    def stop(self):
+        if hasattr(self, "connection"):
+            self.connection.close()
+        super().stop()
 
 
-# class SQLiteRunner(DatabaseRunner):
-#     def __init__(self, db_path=":memory:"):
-#         self.db_path = db_path
-#         self.connection = None
-#         super().__init__()
+class SQLiteRunner(DatabaseRunner):
+    def __init__(self, db_path=":memory:"):
+        self.db_path = db_path
+        self.connection = None
+        super().__init__()
 
-#     def start(self):
-#         self.connection = sqlite3.connect(self.db_path)
+    def start(self):
+        self.connection = sqlite3.connect(self.db_path)
 
-#     def execute(self, query: str):
-#         cursor = self.connection.cursor()
-#         cursor.execute(query)
-#         results = cursor.fetchall()
-#         self.connection.commit()
-#         return results
+    def execute(self, query: str):
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        data = cursor.fetchall()
+        self.connection.commit()
+        columns = [d[0] for d in cursor.description]
+        return columns, data
 
-#     def stop(self):
-#         if self.connection:
-#             self.connection.close()
+    def stop(self):
+        if self.connection:
+            self.connection.close()
