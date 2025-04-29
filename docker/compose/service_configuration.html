@@ -16,33 +16,30 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
-  <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
@@ -68,7 +65,6 @@
     <link rel="prev" title="Up/down" href="up_down.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -84,8 +80,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -93,6 +100,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -100,8 +108,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -117,8 +125,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -148,17 +155,21 @@
     
     
     <img src="../../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
-    <img src="../../_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -383,36 +394,37 @@
 
 
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linux</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../linux/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/bash.html">Bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/manage_input_output.html">Manage input/output</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/archiving.html">Archiving</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/system_information.html">System information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/backup.html">Backup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/curl.html">Curl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/ssh.html">SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/vpn.html">VPN</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/users_groups/users_manipulations.html">Users manipulations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/package_management.html">Package management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/path.html">Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/cron.html">Cron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/gnupg.html">GnuPG</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/linux.html">Linux</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../other/linux/bash.html">Bash</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../other/linux/manage_input_output.html">Manage input/output</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../other/linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../other/linux/filesystem/files_directories.html">Files and directories</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../other/linux/filesystem/archiving.html">Archiving</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2"><a class="reference internal" href="../../other/linux/variables.html">Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../other/linux/system_information.html">System information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../other/linux/backup.html">Backup</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../other/linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../other/linux/network/curl.html">Curl</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../other/linux/network/ssh.html">SSH</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../other/linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../other/linux/network/vpn.html">VPN</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../other/linux/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../other/linux/users_groups/users_manipulations.html">Users manipulations</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2"><a class="reference internal" href="../../other/linux/package_management.html">Package management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../other/linux/path.html">Path</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../other/linux/cron.html">Cron</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../other/linux/gnupg.html">GnuPG</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
 
 
@@ -451,14 +463,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -570,16 +577,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -607,6 +622,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network">Network</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command">Command</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#service-from-dockerfile">Service from dockerfile</a></li>
 </ul>
             </nav>
         </div>
@@ -630,14 +646,14 @@
 <p>The following cell defines the docker compose file in the <code class="docutils literal notranslate"><span class="pre">temp_direcotry</span></code> and executes it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">temp_folder</span>
-<span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">temp_folder</span><span class="o">/</span><span class="n">temp_compose</span><span class="o">.</span><span class="n">yml</span>
-<span class="n">services</span><span class="p">:</span>
-  <span class="n">linux1</span><span class="p">:</span>
-    <span class="n">image</span><span class="p">:</span> <span class="n">alpine</span>
-    <span class="n">container_name</span><span class="p">:</span> <span class="n">project_example</span>
-<span class="n">EOF</span>
-<span class="n">docker</span> <span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">temp_folder</span><span class="o">/</span><span class="n">temp_compose</span><span class="o">.</span><span class="n">yml</span> <span class="n">up</span> <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>temp_folder
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; temp_folder/temp_compose.yml</span>
+<span class="s">services:</span>
+<span class="s">  linux1:</span>
+<span class="s">    image: alpine</span>
+<span class="s">    container_name: project_example</span>
+<span class="s">EOF</span>
+docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>temp_folder/temp_compose.yml<span class="w"> </span>up<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 </pre></div>
 </div>
 </div>
@@ -645,7 +661,7 @@
 <p>Now let’s check the <code class="docutils literal notranslate"><span class="pre">{{index</span> <span class="pre">.Config.Labels</span> <span class="pre">&quot;com.docker.compose.project&quot;}}</span></code> of the deployed container’s configuration.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">inspect</span> <span class="o">-</span><span class="n">f</span> <span class="s1">&#39;{{index .Config.Labels &quot;com.docker.compose.project&quot;}}&#39;</span> <span class="n">project_example</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;{{index .Config.Labels &quot;com.docker.compose.project&quot;}}&#39;</span><span class="w"> </span>project_example
 </pre></div>
 </div>
 </div>
@@ -658,8 +674,8 @@
 <p>The project name is <code class="docutils literal notranslate"><span class="pre">temp_folder</span></code>, which is the folder where <code class="docutils literal notranslate"><span class="pre">compose.yml</span></code> is located.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">temp_folder</span><span class="o">/</span><span class="n">temp_compose</span><span class="o">.</span><span class="n">yml</span> <span class="n">down</span> <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
-<span class="n">rm</span> <span class="o">-</span><span class="n">r</span> <span class="n">temp_folder</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>temp_folder/temp_compose.yml<span class="w"> </span>down<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+rm<span class="w"> </span>-r<span class="w"> </span>temp_folder
 </pre></div>
 </div>
 </div>
@@ -672,18 +688,18 @@
 <p>This example defines an interactive, detached service in a Docker Compose file and sets an environment variable <code class="docutils literal notranslate"><span class="pre">ENV_VARIABLE</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span>
-<span class="n">services</span><span class="p">:</span>
-  <span class="n">linux1</span><span class="p">:</span>
-    <span class="n">image</span><span class="p">:</span> <span class="n">alpine</span>
-    <span class="n">container_name</span><span class="p">:</span> <span class="n">compose_example</span>
-    <span class="n">environment</span><span class="p">:</span>
-      <span class="o">-</span> <span class="n">ENV_VARIABLE</span><span class="o">=</span><span class="n">message</span> <span class="kn">from</span><span class="w"> </span><span class="nn">container</span>
-    <span class="n">stdin_open</span><span class="p">:</span> <span class="n">true</span>
-    <span class="n">tty</span><span class="p">:</span> <span class="n">true</span>
-<span class="n">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; docker-compose.yml</span>
+<span class="s">services:</span>
+<span class="s">  linux1:</span>
+<span class="s">    image: alpine</span>
+<span class="s">    container_name: compose_example</span>
+<span class="s">    environment:</span>
+<span class="s">      - ENV_VARIABLE=message from container</span>
+<span class="s">    stdin_open: true</span>
+<span class="s">    tty: true</span>
+<span class="s">EOF</span>
 
-<span class="n">docker</span> <span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span> <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 </pre></div>
 </div>
 </div>
@@ -691,7 +707,7 @@
 <p>Let’s check if it contains variables just like we specified.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="n">compose_example</span> <span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;echo \$ENV_VARIABLE&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>compose_example<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo \$ENV_VARIABLE&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -704,8 +720,8 @@
 <p>Stop compose after all.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">compose</span> <span class="n">down</span> <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
-<span class="n">rm</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+rm<span class="w"> </span>docker-compose.yml
 </pre></div>
 </div>
 </div>
@@ -718,14 +734,14 @@
 <p>The following cell starts a simple compose project.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span>
-<span class="n">services</span><span class="p">:</span>
-  <span class="n">linux1</span><span class="p">:</span>
-    <span class="n">image</span><span class="p">:</span> <span class="n">alpine</span>
-    <span class="n">container_name</span><span class="p">:</span> <span class="n">network_example</span>
-<span class="n">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/compose.yml</span>
+<span class="s">services:</span>
+<span class="s">  linux1:</span>
+<span class="s">    image: alpine</span>
+<span class="s">    container_name: network_example</span>
+<span class="s">EOF</span>
 
-<span class="n">docker</span> <span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span> <span class="n">up</span> <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>/tmp/compose.yml<span class="w"> </span>up<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 </pre></div>
 </div>
 </div>
@@ -733,7 +749,7 @@
 <p>Now there is a docker network that corresponds to this project: compose is run in the <code class="docutils literal notranslate"><span class="pre">tmp</span></code> directory, so it inherits it’s name, as the result network created for this project will have the name <code class="docutils literal notranslate"><span class="pre">temp_deafult</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">network</span> <span class="n">ls</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">tmp</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>network<span class="w"> </span>ls<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>tmp
 </pre></div>
 </div>
 </div>
@@ -746,7 +762,7 @@
 <p>The following cell prints the network to which the <code class="docutils literal notranslate"><span class="pre">network_example</span></code> container belongs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">inspect</span> <span class="o">-</span><span class="n">f</span> <span class="s1">&#39;{{range $key, $value := .NetworkSettings.Networks}}{{$key}} {{end}}&#39;</span> <span class="n">network_example</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;{{range $key, $value := .NetworkSettings.Networks}}{{$key}} {{end}}&#39;</span><span class="w"> </span>network_example
 </pre></div>
 </div>
 </div>
@@ -759,7 +775,7 @@
 <p>It’s a network created for the compose project.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span> <span class="n">down</span> <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>/tmp/compose.yml<span class="w"> </span>down<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 </pre></div>
 </div>
 </div>
@@ -772,14 +788,14 @@
 <p>The following cell shows <code class="docutils literal notranslate"><span class="pre">compose.yml</span></code> that uses <code class="docutils literal notranslate"><span class="pre">command</span></code> directive, runs corresponding container and shows the result.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span>
-<span class="n">services</span><span class="p">:</span>
-  <span class="n">service</span><span class="p">:</span>
-    <span class="n">image</span><span class="p">:</span> <span class="n">alpine</span>
-    <span class="n">command</span><span class="p">:</span> <span class="n">echo</span> <span class="s2">&quot;hello world&quot;</span>
-<span class="n">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/compose.yml</span>
+<span class="s">services:</span>
+<span class="s">  service:</span>
+<span class="s">    image: alpine</span>
+<span class="s">    command: echo &quot;hello world&quot;</span>
+<span class="s">EOF</span>
 
-<span class="n">docker</span> <span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="n">service</span>
+docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>/tmp/compose.yml<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>service
 </pre></div>
 </div>
 </div>
@@ -789,6 +805,56 @@
 </div>
 </div>
 </div>
+</section>
+<section id="service-from-dockerfile">
+<h2>Service from dockerfile<a class="headerlink" href="#service-from-dockerfile" title="Link to this heading">#</a></h2>
+<p>Sometimes it’s useful to configure a service to start from an image that hasn’t been built yet—just by specifying its dockerfile. Such a configuration can be defined using the <code class="docutils literal notranslate"><span class="pre">build</span></code> key inside the service definition.</p>
+<hr class="docutils" />
+<p>The following cell creates a “toy project” consisting of a “dockerfile” and a “compose.yml” that represents how the corresponding service should be deployed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>/tmp/serv_dockerfile<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<span class="nb">cd</span><span class="w"> </span>/tmp/serv_dockerfile
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; dockerfile</span>
+<span class="s">FROM python:3.12</span>
+<span class="s">CMD [&quot;python3&quot;, &quot;-c&quot;, &quot;print(\&quot;I&#39;m a custom container\&quot;)&quot;]</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The simpliest configuration of the <code class="docutils literal notranslate"><span class="pre">build</span></code> key is used here. Just <code class="docutils literal notranslate"><span class="pre">build</span> <span class="pre">.</span></code> means that the service will be started from the docker file located in the same directory as <code class="docutils literal notranslate"><span class="pre">compose.yml</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; compose.yml</span>
+<span class="s">services:</span>
+<span class="s">  service:</span>
+<span class="s">    build: .</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell executes this configuration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker-compose<span class="w"> </span>up<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^service-1\s*|&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>service-1  | I&#39;m a custom container
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a result, there is a message in the logs of the <code class="docutils literal notranslate"><span class="pre">service-1</span></code> that is specified in the dockerfile.</p>
 </section>
 </section>
 
@@ -801,16 +867,16 @@
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./docker/compose"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -847,8 +913,7 @@
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -861,6 +926,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network">Network</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command">Command</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#service-from-dockerfile">Service from dockerfile</a></li>
 </ul>
   </nav></div>
 
@@ -909,8 +975,8 @@ By Fedor Kobak
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
