@@ -17,7 +17,7 @@ class PostgresRunner(DatabaseInDockerRunner):
         "environment": {"POSTGRES_PASSWORD": "example"}
     }
 
-    def __init__(self, container_name="postgres_db"):
+    def __init__(self):
         super().__init__()
 
     def start(self):
@@ -84,6 +84,7 @@ class SQLiteRunner(DatabaseRunner):
     def start(self):
         self.connection = sqlite3.connect(self.db_path)
 
+    @typeguard.typechecked
     def execute(self, query: str):
         cursor = self.connection.cursor()
         cursor.execute(query)
