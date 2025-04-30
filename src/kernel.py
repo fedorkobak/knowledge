@@ -58,20 +58,20 @@ class SQLKernel(Kernel):
             runner = self._parse_runner(code=code)
             ans = tabulate(runner.execute(code))
         except Exception as e:
-            trace = traceback.format_exception(type(e), e, e.__traceback__)
+            tb_list = traceback.format_exception(type(e), e, e.__traceback__)
             self.send_response(
                 self.iopub_socket,
                 "stream",
                 {
                     'name': 'stderr',
-                    'text': ''.join(trace)
+                    'text': "".join(tb_list)
                 }
             )
             return {
                 'status': 'error',
                 'ename': str(type(e).__name__),
                 'evalue': str(e),
-                'traceback': trace
+                'traceback': tb_list
             }
 
         stream_content = {
