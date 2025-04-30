@@ -1,4 +1,5 @@
 import traceback
+from typing import Any
 from tabulate import tabulate
 from ipykernel.kernelbase import Kernel
 
@@ -8,6 +9,21 @@ from .runners.runners import (
     ClickHouseRunner,
     SQLiteRunner
 )
+
+
+def display_data(
+    header: tuple[str],
+    rows: tuple[tuple[Any]]
+) -> dict[str, Any]:
+    d = {
+        'data': {
+            'text/latex': tabulate(rows, header, tablefmt='latex_booktabs'),
+            'text/plain': tabulate(rows, header, tablefmt='simple'),
+            'text/html': tabulate(rows, header, tablefmt='html'),
+        },
+        'metadata': {}
+    }
+    return d
 
 
 class SQLKernel(Kernel):
@@ -56,7 +72,7 @@ class SQLKernel(Kernel):
     ):
         try:
             runner = self._parse_runner(code=code)
-            ans = tabulate(runner.execute(code))
+            header, rows = runner.execute(code)
         except Exception as e:
             tb_list = traceback.format_exception(type(e), e, e.__traceback__)
             self.send_response(
@@ -74,11 +90,11 @@ class SQLKernel(Kernel):
                 'traceback': tb_list
             }
 
-        stream_content = {
-            'name': 'stdout',
-            'text': str(ans)
-        }
-        self.send_response(self.iopub_socket, 'stream', stream_content)
+        self.send_response(
+            self.iopub_socket,
+            'display_data',
+            display_data(header=header, rows=rows)
+        )
 
         return {
             'status': 'ok',
