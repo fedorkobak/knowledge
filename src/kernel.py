@@ -1,4 +1,4 @@
-import logging
+import traceback
 from tabulate import tabulate
 from ipykernel.kernelbase import Kernel
 
@@ -54,9 +54,26 @@ class SQLKernel(Kernel):
         user_expressions=None,
         allow_stdin=False
     ):
-        logging.critical(f"Got code for execution: {code}")
-        runner = self._parse_runner(code=code)
-        ans = tabulate(runner.execute(code))
+        try:
+            runner = self._parse_runner(code=code)
+            ans = tabulate(runner.execute(code))
+        except Exception as e:
+            trace = traceback.format_exception(type(e), e, e.__traceback__)
+            self.send_response(
+                self.iopub_socket,
+                "stream",
+                {
+                    'name': 'stderr',
+                    'text': ''.join(trace)
+                }
+            )
+            return {
+                'status': 'error',
+                'ename': str(type(e).__name__),
+                'evalue': str(e),
+                'traceback': trace
+            }
+
         stream_content = {
             'name': 'stdout',
             'text': str(ans)
