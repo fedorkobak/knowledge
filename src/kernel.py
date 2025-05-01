@@ -1,3 +1,11 @@
+"""
+This is a jupyter kernel that executes SQL for different databases.
+Each run of the kernel executes a new database. So it is designed for
+experiments with SQL databases.
+
+It requires docker to be available in the system, as some databases are started
+in Docker.
+"""
 import traceback
 from typing import Any
 from tabulate import tabulate

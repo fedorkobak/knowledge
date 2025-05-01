@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "ipykernel"]
 build-backend = "hatchling.build"
 
 [project]
@@ -15,3 +15,9 @@ dependencies = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["src"]
+
+# Runs hatch_build.py during build
+[tool.hatch.build.hooks.custom]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"data_kernelspec" = "share/jupyter/kernels/universal_sql"
