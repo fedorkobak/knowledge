@@ -85,7 +85,7 @@ class SQLiteRunner(DatabaseRunner):
         self.connection = sqlite3.connect(self.db_path)
 
     @typeguard.typechecked
-    def execute(self, query: str):
+    def execute(self, query: str) -> execute_output:
         cursor = self.connection.cursor()
         cursor.execute(query)
         data = cursor.fetchall()
