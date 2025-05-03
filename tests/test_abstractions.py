@@ -1,7 +1,18 @@
+import typeguard
+
+import unittest
 from unittest import TestCase
 from unittest.mock import patch
 
-from src.runners.abs import DatabaseInDockerRunner
+from src.runners.abs import DatabaseResponse, DatabaseInDockerRunner
+
+
+class TestDataResponse(TestCase):
+    """src.runners.abs.DatabaseResponse"""
+    def test_type_mistake(self):
+        """If a particular `type` is passed with content that doesn't match."""
+        with self.assertRaises(typeguard.TypeCheckError):
+            DatabaseResponse(type="table", content="This is wrong")
 
 
 class TestDockerRunner(TestCase):

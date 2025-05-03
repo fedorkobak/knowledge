@@ -4,8 +4,10 @@ Abstrations that is used to create runners.
 import socket
 import docker
 import warnings
-from typing import Any
 from abc import ABC, abstractmethod
+
+from typeguard import typechecked
+from typing import Any, Literal, Union
 
 
 def find_free_port():
@@ -14,7 +16,40 @@ def find_free_port():
         return s.getsockname()[1]
 
 
-# Annotation of the `execute` method
+table_output = tuple[tuple[str, ...], tuple[tuple[Any, ...], ...]]
+
+type_mapping = {
+    "table": table_output,
+    "text": str
+}
+
+
+class DatabaseResponse:
+    """
+    Keeps single unit of the db output. It can be:
+    - table: result of sql query.
+    - text: Supporting messages or logs sent from the db.
+
+    Attributes
+    ----------
+    type: Literal["table", "text"]
+        Type of the message.
+    content: str | table_output
+        Content of the message.
+    table_output: types.GenericAlias
+        Annotation for the expected format of tables.
+    type_mapping: dict[str, types.GenericAlias]
+        Type to content annotation mapping.
+    """
+    @typechecked
+    def __init__(
+        self,
+        type: Literal[*type_mapping.keys()],
+        content: Union[*type_mapping.values()]
+    ) -> None:
+        pass
+
+
 execute_output = tuple[tuple[str, ...], tuple[tuple[Any, ...], ...]]
 
 
@@ -36,9 +71,7 @@ class DatabaseRunner(ABC):
     def execute(self, query: str) -> execute_output:
         '''
         Execute a query in the database and return the results.
-        Resutls are suppoesd to be:
-        - Sequence of column names.
-        - Sequence of rows, where each row is a sequence of values.
+        Resutls are suppoesd to be
         '''
         pass
 
