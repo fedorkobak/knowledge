@@ -6,7 +6,12 @@ import psycopg
 import typeguard
 from time import sleep
 import clickhouse_connect
-from .abs import DatabaseRunner, DatabaseInDockerRunner, execute_output
+from .abs import (
+    DatabaseRunner,
+    DatabaseInDockerRunner,
+    execute_output,
+    DatabaseResponse
+)
 
 
 class PostgresRunner(DatabaseInDockerRunner):
@@ -19,6 +24,13 @@ class PostgresRunner(DatabaseInDockerRunner):
 
     def __init__(self):
         super().__init__()
+        self._logs = []
+
+    def _logs_saver(self, diag):
+        """
+        Handler for the cursor that saves logs line by line in `self._logs`.
+        """
+        self._logs.append(f"{diag.severity}: {diag.message_primary}")
 
     def start(self):
         sleep(5)
@@ -29,6 +41,34 @@ class PostgresRunner(DatabaseInDockerRunner):
             host="localhost",
             port=self._connection_port
         )
+        self.connection.add_notice_handler(self._logs_saver)
+
+    def _read_result_set(
+        self,
+        cursor: psycopg.Cursor
+    ) -> list[DatabaseResponse]:
+        """
+        Read messages from the current result set of the specified cursor.
+        """
+        ans = [
+            DatabaseResponse(type="text", content=log)
+            for log in self._logs
+        ]
+        self._logs.clear()
+
+        if not (cursor.statusmessage is None):
+            ans.append(
+                DatabaseResponse(type='text', content=cursor.statusmessage)
+            )
+
+        if cursor.rowcount != -1:
+            columns = [desc.name for desc in cursor.description]
+            data = cursor.fetchall()
+            ans.append(
+                DatabaseResponse(type="table", content=(columns, data))
+            )
+
+        return ans
 
     @typeguard.typechecked
     def execute(self, query: str) -> execute_output:

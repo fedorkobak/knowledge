@@ -50,6 +50,20 @@ class TestExecuteOutput(TestCase):
         self.assertEqual(ans[0].content, "CREATE TABLE")
         self.assertEqual(ans[1].content, "DROP TABLE")
 
+    def test_logs_savers(self):
+        """
+        Each call to `connection.execute` should add log messages to the
+        `_logs` attribute.
+        """
+        self.postgres_runner.connection.execute(
+            "DROP TABLE IF EXISTS log_message;"
+        )
+        self.assertEqual(
+            self.postgres_runner._logs[-1],
+            'NOTICE: table "log_message" does not exist, skipping'
+        )
+        self.postgres_runner._logs.clear()
+
     def test_log_messages_pg(self):
         """
         In some cases, pg will throw special messages - log messages.
