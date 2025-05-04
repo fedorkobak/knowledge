@@ -31,7 +31,13 @@ class TestExecuteOutput(TestCase):
         exp_data = ((1, 2),)
 
         for r in self.runners:
-            ans_cols, ans_data = r.execute(query)[0].content
+
+            # Looking for a first response that have "table" type
+            for response in r.execute(query):
+                if response.type == "table":
+                    break
+
+            ans_cols, ans_data = response.content
             fail_msg = f"Failed for {r.__class__.__name__}"
             self.assertEqual(ans_cols, exp_cols, msg=fail_msg)
             self.assertEqual(ans_data, exp_data, msg=fail_msg)
@@ -43,7 +49,8 @@ class TestExecuteOutput(TestCase):
         """
 
         query = """
-        CREATE TABLE test_system_messages; DROP TABLE test_system_messages;
+        CREATE TABLE test_system_messages (val INT);
+        DROP TABLE test_system_messages;
         """
 
         ans = self.postgres_runner.execute(query)

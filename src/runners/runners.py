@@ -65,7 +65,10 @@ class PostgresRunner(DatabaseInDockerRunner):
             columns = [desc.name for desc in cursor.description]
             data = cursor.fetchall()
             ans.append(
-                DatabaseResponse(type="table", content=(columns, data))
+                DatabaseResponse(
+                    type="table",
+                    content=(tuple(columns), tuple(data))
+                )
             )
 
         return ans
@@ -74,12 +77,11 @@ class PostgresRunner(DatabaseInDockerRunner):
     def execute(self, query: str) -> execute_output:
         with self.connection.cursor() as cursor:
             cursor.execute(query)
-            try:
-                columns = [desc.name for desc in cursor.description]
-                data = cursor.fetchall()
-                return tuple(columns), tuple(data)
-            except psycopg.ProgrammingError:
-                return None
+
+            res = self._read_result_set(cursor=cursor)
+            while cursor.nextset():
+                res += self._read_result_set(cursor=cursor)
+            return res
 
     def stop(self):
         if hasattr(self, "connection"):
@@ -107,7 +109,8 @@ class ClickHouseRunner(DatabaseInDockerRunner):
     @typeguard.typechecked
     def execute(self, query: str) -> execute_output:
         result = self.connection.query(query)
-        return result.column_names, tuple(result.result_rows)
+        result = (result.column_names, tuple(result.result_rows))
+        return [DatabaseResponse(type="table", content=result)]
 
     def stop(self):
         if hasattr(self, "connection"):
@@ -131,7 +134,10 @@ class SQLiteRunner(DatabaseRunner):
         data = cursor.fetchall()
         self.connection.commit()
         columns = [d[0] for d in cursor.description]
-        return tuple(columns), tuple(data)
+        result = DatabaseResponse(
+            type="table", content=(tuple(columns), tuple(data))
+        )
+        return [result]
 
     def stop(self):
         if self.connection:
