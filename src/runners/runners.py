@@ -6,7 +6,12 @@ import psycopg
 import typeguard
 from time import sleep
 import clickhouse_connect
-from .abs import DatabaseRunner, DatabaseInDockerRunner, execute_output
+from .abs import (
+    DatabaseRunner,
+    DatabaseInDockerRunner,
+    execute_output,
+    DatabaseResponse
+)
 
 
 class PostgresRunner(DatabaseInDockerRunner):
@@ -19,6 +24,13 @@ class PostgresRunner(DatabaseInDockerRunner):
 
     def __init__(self):
         super().__init__()
+        self._logs = []
+
+    def _logs_saver(self, diag):
+        """
+        Handler for the cursor that saves logs line by line in `self._logs`.
+        """
+        self._logs.append(f"{diag.severity}: {diag.message_primary}")
 
     def start(self):
         sleep(5)
@@ -29,17 +41,47 @@ class PostgresRunner(DatabaseInDockerRunner):
             host="localhost",
             port=self._connection_port
         )
+        self.connection.add_notice_handler(self._logs_saver)
+
+    def _read_result_set(
+        self,
+        cursor: psycopg.Cursor
+    ) -> list[DatabaseResponse]:
+        """
+        Read messages from the current result set of the specified cursor.
+        """
+        ans = [
+            DatabaseResponse(type="text", content=log)
+            for log in self._logs
+        ]
+        self._logs.clear()
+
+        if not (cursor.statusmessage is None):
+            ans.append(
+                DatabaseResponse(type='text', content=cursor.statusmessage)
+            )
+
+        if cursor.rowcount != -1:
+            columns = [desc.name for desc in cursor.description]
+            data = cursor.fetchall()
+            ans.append(
+                DatabaseResponse(
+                    type="table",
+                    content=(tuple(columns), tuple(data))
+                )
+            )
+
+        return ans
 
     @typeguard.typechecked
     def execute(self, query: str) -> execute_output:
         with self.connection.cursor() as cursor:
             cursor.execute(query)
-            try:
-                columns = [desc.name for desc in cursor.description]
-                data = cursor.fetchall()
-                return tuple(columns), tuple(data)
-            except psycopg.ProgrammingError:
-                return None
+
+            res = self._read_result_set(cursor=cursor)
+            while cursor.nextset():
+                res += self._read_result_set(cursor=cursor)
+            return res
 
     def stop(self):
         if hasattr(self, "connection"):
@@ -67,7 +109,8 @@ class ClickHouseRunner(DatabaseInDockerRunner):
     @typeguard.typechecked
     def execute(self, query: str) -> execute_output:
         result = self.connection.query(query)
-        return result.column_names, tuple(result.result_rows)
+        result = (result.column_names, tuple(result.result_rows))
+        return [DatabaseResponse(type="table", content=result)]
 
     def stop(self):
         if hasattr(self, "connection"):
@@ -91,7 +134,10 @@ class SQLiteRunner(DatabaseRunner):
         data = cursor.fetchall()
         self.connection.commit()
         columns = [d[0] for d in cursor.description]
-        return tuple(columns), tuple(data)
+        result = DatabaseResponse(
+            type="table", content=(tuple(columns), tuple(data))
+        )
+        return [result]
 
     def stop(self):
         if self.connection:

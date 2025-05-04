@@ -11,20 +11,77 @@ class TestExecuteOutput(TestCase):
     """
     Test the execute output of the database runners.
     """
-    def test_simple_query(self):
-        runners = [
-            PostgresRunner,
-            ClickHouseRunner,
-            SQLiteRunner
+    @classmethod
+    def setUpClass(cls):
+        cls.postgres_runner = PostgresRunner()
+        cls.runners = [
+            cls.postgres_runner,
+            ClickHouseRunner(),
+            SQLiteRunner()
         ]
+
+    @classmethod
+    def tearDownClass(cls):
+        for runner in cls.runners:
+            runner.stop()
+
+    def test_simple_query(self):
         query = "SELECT 1 AS value, 2 AS value2;"
         exp_cols = ("value", "value2")
         exp_data = ((1, 2),)
 
-        for runner_class in runners:
-            r = runner_class()
-            ans_cols, ans_data = r.execute(query)
+        for r in self.runners:
+
+            # Looking for a first response that have "table" type
+            for response in r.execute(query):
+                if response.type == "table":
+                    break
+
+            ans_cols, ans_data = response.content
             fail_msg = f"Failed for {r.__class__.__name__}"
             self.assertEqual(ans_cols, exp_cols, msg=fail_msg)
             self.assertEqual(ans_data, exp_data, msg=fail_msg)
-            r.stop()
+
+    def test_system_messages_pg(self):
+        """
+        For some command postgres sends system messages. They have to be
+        correct processed by PostgresRunner.
+        """
+
+        query = """
+        CREATE TABLE test_system_messages (val INT);
+        DROP TABLE test_system_messages;
+        """
+
+        ans = self.postgres_runner.execute(query)
+        self.assertEqual(ans[0].content, "CREATE TABLE")
+        self.assertEqual(ans[1].content, "DROP TABLE")
+
+    def test_logs_savers(self):
+        """
+        Each call to `connection.execute` should add log messages to the
+        `_logs` attribute.
+        """
+        self.postgres_runner.connection.execute(
+            "DROP TABLE IF EXISTS log_message;"
+        )
+        self.assertEqual(
+            self.postgres_runner._logs[-1],
+            'NOTICE: table "log_message" does not exist, skipping'
+        )
+        self.postgres_runner._logs.clear()
+
+    def test_log_messages_pg(self):
+        """
+        In some cases, pg will throw special messages - log messages.
+        They must be the first in the list of DatabaseResponses.
+        """
+
+        ans = self.postgres_runner.execute(
+            "DROP TABLE IF EXISTS log_message;"
+        )
+
+        self.assertEqual(
+            ans[0].content,
+            'NOTICE: table "log_message" does not exist, skipping'
+        )
