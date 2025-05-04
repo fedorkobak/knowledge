@@ -16,6 +16,9 @@ def find_free_port():
         return s.getsockname()[1]
 
 
+# Format of the table output:
+# The first element of the tuple is a tuple of column names.
+# The second element is a tuple of rows, where each row is a separate tuple.
 table_output = tuple[tuple[str, ...], tuple[tuple[Any, ...], ...]]
 
 type_mapping = {
@@ -27,7 +30,7 @@ type_mapping = {
 class DatabaseResponse:
     """
     Keeps single unit of the db output. It can be:
-    - table: result of sql query.
+    - table: result of sql query. It have to follow `table_ouput` format.
     - text: Supporting messages or logs sent from the db.
 
     Parameters
