@@ -6,8 +6,8 @@ import docker
 import warnings
 from abc import ABC, abstractmethod
 
-from typeguard import typechecked
 from typing import Any, Literal, Union
+from typeguard import typechecked, check_type, TypeCheckError
 
 
 def find_free_port():
@@ -30,16 +30,12 @@ class DatabaseResponse:
     - table: result of sql query.
     - text: Supporting messages or logs sent from the db.
 
-    Attributes
+    Parameters
     ----------
     type: Literal["table", "text"]
         Type of the message.
     content: str | table_output
         Content of the message.
-    table_output: types.GenericAlias
-        Annotation for the expected format of tables.
-    type_mapping: dict[str, types.GenericAlias]
-        Type to content annotation mapping.
     """
     @typechecked
     def __init__(
@@ -47,7 +43,12 @@ class DatabaseResponse:
         type: Literal[*type_mapping.keys()],
         content: Union[*type_mapping.values()]
     ) -> None:
-        pass
+
+        if not check_type(content, type_mapping[type]):
+            raise TypeCheckError
+
+        self.type = type
+        self.content = content
 
 
 execute_output = tuple[tuple[str, ...], tuple[tuple[Any, ...], ...]]
