@@ -54,7 +54,7 @@ class DatabaseResponse:
         self.content = content
 
 
-execute_output = tuple[tuple[str, ...], tuple[tuple[Any, ...], ...]]
+execute_output = list[DatabaseResponse]
 
 
 class DatabaseRunner(ABC):
