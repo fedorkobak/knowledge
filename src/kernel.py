@@ -70,6 +70,42 @@ class SQLKernel(Kernel):
 
         return runner
 
+    def _execute_sql(self, code: str) -> None:
+        """
+        Execute given sql code in the appropriate runner and send results to
+        front.
+
+        Parameters
+        ----------
+        code: str
+            Code to be executed.
+        """
+        runner = self._parse_runner(code=code)
+        responses = runner.execute(code)
+
+        for response in responses:
+            if response.type == "table":
+                table = response.content
+                self.send_response(
+                    self.iopub_socket,
+                    'display_data',
+                    display_data(header=table[0], rows=table[1])
+                )
+            elif response.type == "text":
+                text = response.content
+                self.send_response(
+                    self.iopub_socket,
+                    'stream',
+                    {
+                        'name': 'strout',
+                        'text': text
+                    }
+                )
+            else:
+                raise ValueError(
+                    f"Unknown type of the response {response.type}"
+                )
+
     def do_execute(
         self,
         code: str,
@@ -79,8 +115,7 @@ class SQLKernel(Kernel):
         allow_stdin=False
     ):
         try:
-            runner = self._parse_runner(code=code)
-            header, rows = runner.execute(code)
+            self._execute_sql(code=code)
         except Exception as e:
             tb_list = traceback.format_exception(type(e), e, e.__traceback__)
             self.send_response(
@@ -97,12 +132,6 @@ class SQLKernel(Kernel):
                 'evalue': str(e),
                 'traceback': tb_list
             }
-
-        self.send_response(
-            self.iopub_socket,
-            'display_data',
-            display_data(header=header, rows=rows)
-        )
 
         return {
             'status': 'ok',
