@@ -92,7 +92,11 @@ class SQLKernel(Kernel):
                     display_data(header=table[0], rows=table[1])
                 )
             elif response.type == "text":
-                text = response.content
+                text: str = response.content
+
+                if not text.endswith("\n"):
+                    text += "\n"
+
                 self.send_response(
                     self.iopub_socket,
                     'stream',
