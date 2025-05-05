@@ -61,7 +61,7 @@ class PostgresRunner(DatabaseInDockerRunner):
                 DatabaseResponse(type='text', content=cursor.statusmessage)
             )
 
-        if cursor.rowcount != -1:
+        if not (cursor.description is None):
             columns = [desc.name for desc in cursor.description]
             data = cursor.fetchall()
             ans.append(
