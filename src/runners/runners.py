@@ -131,12 +131,15 @@ class SQLiteRunner(DatabaseRunner):
     def execute(self, query: str) -> execute_output:
         cursor = self.connection.cursor()
         cursor.execute(query)
+
         data = cursor.fetchall()
         self.connection.commit()
         columns = [d[0] for d in cursor.description]
         result = DatabaseResponse(
             type="table", content=(tuple(columns), tuple(data))
         )
+
+        cursor.close()
         return [result]
 
     def stop(self):

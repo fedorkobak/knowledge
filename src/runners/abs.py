@@ -72,7 +72,7 @@ class DatabaseRunner(ABC):
         pass
 
     @abstractmethod
-    def execute(self, query: str) -> execute_output:
+    def execute(self, code: str) -> execute_output:
         '''
         Execute a query in the database and return the results.
         Resutls are suppoesd to be
