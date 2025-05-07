@@ -74,9 +74,9 @@ class PostgresRunner(DatabaseInDockerRunner):
         return ans
 
     @typeguard.typechecked
-    def execute(self, query: str) -> execute_output:
+    def execute(self, code: str) -> execute_output:
         with self.connection.cursor() as cursor:
-            cursor.execute(query)
+            cursor.execute(code)
 
             res = self._read_result_set(cursor=cursor)
             while cursor.nextset():
@@ -107,8 +107,8 @@ class ClickHouseRunner(DatabaseInDockerRunner):
         )
 
     @typeguard.typechecked
-    def execute(self, query: str) -> execute_output:
-        result = self.connection.query(query)
+    def execute(self, code: str) -> execute_output:
+        result = self.connection.query(code)
         result = (result.column_names, tuple(result.result_rows))
         return [DatabaseResponse(type="table", content=result)]
 
