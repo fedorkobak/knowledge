@@ -133,7 +133,6 @@ class SQLiteRunner(DatabaseRunner):
         cursor.execute(query)
 
         data = cursor.fetchall()
-        self.connection.commit()
         columns = [d[0] for d in cursor.description]
         result = DatabaseResponse(
             type="table", content=(tuple(columns), tuple(data))
