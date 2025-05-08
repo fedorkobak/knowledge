@@ -222,7 +222,14 @@ class SeparateQueryRunner(DatabaseRunner):
         """
         Splits a multi-statement SQL query into separate queries.
         """
-        pass
+        res: list[str] = code.split(";")
+        res = [command.strip() for command in res]
+
+        # If there is no any text after the last ';', remove everything.
+        if res[-1].strip() == "":
+            del res[-1]
+
+        return res
 
     @abstractmethod
     def _execute_one(self, code: str) -> DatabaseResponse:
@@ -230,4 +237,5 @@ class SeparateQueryRunner(DatabaseRunner):
 
     @typechecked
     def execute(self, code: str) -> list[DatabaseResponse]:
-        pass
+        commands = SeparateQueryRunner._separate_code(code)
+        return [self._execute_one(code=command) for command in commands]

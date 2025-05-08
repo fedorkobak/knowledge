@@ -1,5 +1,6 @@
 import typeguard
 
+import unittest
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
@@ -108,8 +109,11 @@ class TestDockerRunner(TestCase):
 class TestSeparateQueryRunner(TestCase):
 
     class TestRunner(SeparateQueryRunner):
+        def start(self):
+            pass
+
         def _execute_one(self, code: str) -> DatabaseResponse:
-            return DatabaseResponse(type="text", content="Response")
+            pass
 
     def test_separate_code(self):
         inp_out = [
@@ -120,26 +124,37 @@ class TestSeparateQueryRunner(TestCase):
                 """,
                 ["SELECT 10", "SELECT 20", "INSERT SOME HELLO"]
             ),
-            ("SELECT 10", "SELECT 10"),
-            ("SELECT 10;", "SELECT 10")
+            ("SELECT 10", ["SELECT 10"]),
+            ("SELECT 10;", ["SELECT 10"])
         ]
         for inp, out in inp_out:
             res = SeparateQueryRunner._separate_code(inp)
             self.assertEqual(out, res, msg=f"Wrong result for {inp}.")
 
-    @patch.object(target=TestRunner, attribute="_execute_one")
-    @patch.object(target=TestRunner, attribute="_separate_code")
-    def test_execute(self, separate_code: MagicMock, execute_one: MagicMock):
+    @patch.object(
+        target=TestRunner,
+        attribute="_execute_one",
+        return_value=DatabaseResponse(type="text", content="Response")
+    )
+    def test_execute(self, execute_one: MagicMock):
 
         code = "Here are some; code"
         commands = self.TestRunner._separate_code(code)
 
-        runner = self.TestRunner()
-        result = runner.execute(code=code)
+        with patch.object(
+            target=SeparateQueryRunner,
+            attribute="_separate_code",
+            return_value=commands
+        ) as separate_code:
+            runner = self.TestRunner()
+            result = runner.execute(code=code)
+            separate_code.assert_called_once_with(code)
 
         self.assertEqual(len(result), len(commands))
 
-        separate_code.assert_called_once_with(code)
-
         for call, command in zip(execute_one.mock_calls, commands):
             self.assertEqual(call.kwargs, {"code": command})
+
+
+if __name__ == "__main__":
+    unittest.main()
