@@ -1,9 +1,13 @@
 import typeguard
 
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
-from src.runners.abs import DatabaseResponse, DatabaseInDockerRunner
+from src.runners.abs import (
+    DatabaseResponse,
+    DatabaseInDockerRunner,
+    SeparateQueryRunner
+)
 
 
 class TestDataResponse(TestCase):
@@ -99,3 +103,43 @@ class TestDockerRunner(TestCase):
         self.assertEqual(res["param1"], "value1")
         # remove key any way takes `True` - other_params doesn't influence
         self.assertEqual(res["remove"], True)
+
+
+class TestSeparateQueryRunner(TestCase):
+
+    class TestRunner(SeparateQueryRunner):
+        def _execute_one(self, code: str) -> DatabaseResponse:
+            return DatabaseResponse(type="text", content="Response")
+
+    def test_separate_code(self):
+        inp_out = [
+            (
+                """
+                    SELECT 10; SELECT 20;
+                    INSERT SOME HELLO;
+                """,
+                ["SELECT 10", "SELECT 20", "INSERT SOME HELLO"]
+            ),
+            ("SELECT 10", "SELECT 10"),
+            ("SELECT 10;", "SELECT 10")
+        ]
+        for inp, out in inp_out:
+            res = SeparateQueryRunner._separate_code(inp)
+            self.assertEqual(out, res, msg=f"Wrong result for {inp}.")
+
+    @patch.object(target=TestRunner, attribute="_execute_one")
+    @patch.object(target=TestRunner, attribute="_separate_code")
+    def test_execute(self, separate_code: MagicMock, execute_one: MagicMock):
+
+        code = "Here are some; code"
+        commands = self.TestRunner._separate_code(code)
+
+        runner = self.TestRunner()
+        result = runner.execute(code=code)
+
+        self.assertEqual(len(result), len(commands))
+
+        separate_code.assert_called_once_with(code)
+
+        for call, command in zip(execute_one.mock_calls, commands):
+            self.assertEqual(call.kwargs, {"code": command})

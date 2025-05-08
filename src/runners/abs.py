@@ -208,3 +208,26 @@ class DatabaseInDockerRunner(DatabaseRunner):
 
     def stop(self):
         self.container.stop()
+
+
+class SeparateQueryRunner(DatabaseRunner):
+    """
+    Some database drivers don't allow to run SQL code that contains multiple
+    statemnts. This class implements an `execute` method that splits code into
+    into unit statements and send them to the `_execute_one` method, which
+    should be reloaded by the ancestros.
+    """
+    @staticmethod
+    def _separate_code(code: str) -> list[str]:
+        """
+        Splits a multi-statement SQL query into separate queries.
+        """
+        pass
+
+    @abstractmethod
+    def _execute_one(self, code: str) -> DatabaseResponse:
+        pass
+
+    @typechecked
+    def execute(self, code: str) -> list[DatabaseResponse]:
+        pass
