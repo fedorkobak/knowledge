@@ -16,30 +16,33 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -67,6 +70,7 @@
     <link rel="prev" title="Maximum likelihood" href="maximum_likelihood.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -82,19 +86,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -102,7 +95,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -110,8 +102,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -127,7 +119,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -157,21 +150,17 @@
     
     
     <img src="../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
-    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+    <img src="../_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="Knowledge base - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -223,6 +212,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
 <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Intorduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="geometry.html">Geometry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="union_probability.html">Union probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conditional_probability.html">Сonditional probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cent_limit_theorem.html">Central limit theorem</a></li>
@@ -465,9 +456,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -579,24 +575,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -672,8 +660,164 @@ document.write(`
 <section id="greek-alphabet">
 <h2>Greek alphabet<a class="headerlink" href="#greek-alphabet" title="Link to this heading">#</a></h2>
 <p>Here is a list of the Greek alphabet and the corresponding LaTeX for each letter:</p>
-<p><code class="docutils literal notranslate"><span class="pre">\Alpha</span></code>: <span class="math notranslate nohighlight">\(\Alpha\)</span>;<code class="docutils literal notranslate"><span class="pre">\Beta</span></code>: <span class="math notranslate nohighlight">\(\Beta\)</span>;<code class="docutils literal notranslate"><span class="pre">\Eta</span></code>: <span class="math notranslate nohighlight">\(\Eta\)</span>;<code class="docutils literal notranslate"><span class="pre">\Gamma</span></code>: <span class="math notranslate nohighlight">\(\Gamma\)</span>;<code class="docutils literal notranslate"><span class="pre">\Delta</span></code>: <span class="math notranslate nohighlight">\(\Delta\)</span>;<code class="docutils literal notranslate"><span class="pre">\Epsilon</span></code>: <span class="math notranslate nohighlight">\(\Epsilon\)</span>;<code class="docutils literal notranslate"><span class="pre">\Zeta</span></code>: <span class="math notranslate nohighlight">\(\Zeta\)</span>;<code class="docutils literal notranslate"><span class="pre">\Eta</span></code>: <span class="math notranslate nohighlight">\(\Eta\)</span>;<code class="docutils literal notranslate"><span class="pre">\Theta</span></code>: <span class="math notranslate nohighlight">\(\Theta\)</span>;<code class="docutils literal notranslate"><span class="pre">\Iota</span></code>: <span class="math notranslate nohighlight">\(\Iota\)</span>;<code class="docutils literal notranslate"><span class="pre">\Kappa</span></code>: <span class="math notranslate nohighlight">\(\Kappa\)</span>;<code class="docutils literal notranslate"><span class="pre">\Lambda</span></code>: <span class="math notranslate nohighlight">\(\Lambda\)</span>;<code class="docutils literal notranslate"><span class="pre">\Mu</span></code>: <span class="math notranslate nohighlight">\(\Mu\)</span>;<code class="docutils literal notranslate"><span class="pre">\Nu</span></code>: <span class="math notranslate nohighlight">\(\Nu\)</span>;<code class="docutils literal notranslate"><span class="pre">\Xi</span></code>: <span class="math notranslate nohighlight">\(\Xi\)</span>;<code class="docutils literal notranslate"><span class="pre">o</span></code>: <span class="math notranslate nohighlight">\(o\)</span>;<code class="docutils literal notranslate"><span class="pre">\Pi</span></code>: <span class="math notranslate nohighlight">\(\Pi\)</span>;<code class="docutils literal notranslate"><span class="pre">\Rho</span></code>: <span class="math notranslate nohighlight">\(\Rho\)</span>;<code class="docutils literal notranslate"><span class="pre">\Sigma</span></code>: <span class="math notranslate nohighlight">\(\Sigma\)</span>;<code class="docutils literal notranslate"><span class="pre">\Tau</span></code>: <span class="math notranslate nohighlight">\(\Tau\)</span>;<code class="docutils literal notranslate"><span class="pre">\Upsilon</span></code>: <span class="math notranslate nohighlight">\(\Upsilon\)</span>;<code class="docutils literal notranslate"><span class="pre">\Phi</span></code>: <span class="math notranslate nohighlight">\(\Phi\)</span>;<code class="docutils literal notranslate"><span class="pre">\Chi</span></code>: <span class="math notranslate nohighlight">\(\Chi\)</span>;<code class="docutils literal notranslate"><span class="pre">\Psi</span></code>: <span class="math notranslate nohighlight">\(\Psi\)</span>;<code class="docutils literal notranslate"><span class="pre">\Omega</span></code>: <span class="math notranslate nohighlight">\(\Omega\)</span></p>
-<p><code class="docutils literal notranslate"><span class="pre">\alpha</span></code>: <span class="math notranslate nohighlight">\(\alpha\)</span>;<code class="docutils literal notranslate"><span class="pre">\beta</span></code>: <span class="math notranslate nohighlight">\(\beta\)</span>;<code class="docutils literal notranslate"><span class="pre">\eta</span></code>: <span class="math notranslate nohighlight">\(\eta\)</span>;<code class="docutils literal notranslate"><span class="pre">\gamma</span></code>: <span class="math notranslate nohighlight">\(\gamma\)</span>;<code class="docutils literal notranslate"><span class="pre">\delta</span></code>: <span class="math notranslate nohighlight">\(\delta\)</span>;<code class="docutils literal notranslate"><span class="pre">\epsilon</span></code>: <span class="math notranslate nohighlight">\(\epsilon\)</span>;<code class="docutils literal notranslate"><span class="pre">\zeta</span></code>: <span class="math notranslate nohighlight">\(\zeta\)</span>;<code class="docutils literal notranslate"><span class="pre">\eta</span></code>: <span class="math notranslate nohighlight">\(\eta\)</span>;<code class="docutils literal notranslate"><span class="pre">\theta</span></code>: <span class="math notranslate nohighlight">\(\theta\)</span>;<code class="docutils literal notranslate"><span class="pre">\iota</span></code>: <span class="math notranslate nohighlight">\(\iota\)</span>;<code class="docutils literal notranslate"><span class="pre">\kappa</span></code>: <span class="math notranslate nohighlight">\(\kappa\)</span>;<code class="docutils literal notranslate"><span class="pre">\lambda</span></code>: <span class="math notranslate nohighlight">\(\lambda\)</span>;<code class="docutils literal notranslate"><span class="pre">\mu</span></code>: <span class="math notranslate nohighlight">\(\mu\)</span>;<code class="docutils literal notranslate"><span class="pre">\nu</span></code>: <span class="math notranslate nohighlight">\(\nu\)</span>;<code class="docutils literal notranslate"><span class="pre">\xi</span></code>: <span class="math notranslate nohighlight">\(\xi\)</span>;<code class="docutils literal notranslate"><span class="pre">o</span></code>: <span class="math notranslate nohighlight">\(o\)</span>;<code class="docutils literal notranslate"><span class="pre">\pi</span></code>: <span class="math notranslate nohighlight">\(\pi\)</span>;<code class="docutils literal notranslate"><span class="pre">\rho</span></code>: <span class="math notranslate nohighlight">\(\rho\)</span>;<code class="docutils literal notranslate"><span class="pre">\sigma</span></code>: <span class="math notranslate nohighlight">\(\sigma\)</span>;<code class="docutils literal notranslate"><span class="pre">\tau</span></code>: <span class="math notranslate nohighlight">\(\tau\)</span>;<code class="docutils literal notranslate"><span class="pre">\upsilon</span></code>: <span class="math notranslate nohighlight">\(\upsilon\)</span>;<code class="docutils literal notranslate"><span class="pre">\phi</span></code>: <span class="math notranslate nohighlight">\(\phi\)</span>;<code class="docutils literal notranslate"><span class="pre">\chi</span></code>: <span class="math notranslate nohighlight">\(\chi\)</span>;<code class="docutils literal notranslate"><span class="pre">\psi</span></code>: <span class="math notranslate nohighlight">\(\psi\)</span>;<code class="docutils literal notranslate"><span class="pre">\omega</span></code>: <span class="math notranslate nohighlight">\(\omega\)</span>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>LaTeX</p></th>
+<th class="head"><p>Rendered</p></th>
+<th class="head"><p>LaTeX</p></th>
+<th class="head"><p>Rendered</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Alpha</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\alpha</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">A</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(A\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Beta</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\beta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\beta\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(B\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Gamma</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\gamma</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Gamma</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Gamma\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Delta</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\delta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\delta\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Delta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Delta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Epsilon</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\epsilon</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\epsilon\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">E</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(E\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Zeta</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\zeta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\zeta\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Z</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(Z\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Eta</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\eta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\eta\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Theta</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\theta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Theta</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Iota</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\iota</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\iota\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">I</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(I\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Kappa</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\kappa</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\kappa\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Kappa</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(K\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Lambda</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\lambda</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\lambda\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Lambda</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Lambda\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Mu</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\mu</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">M</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(M\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Nu</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\nu</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">N</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(N\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Xi</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\xi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\xi\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Xi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Xi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Omicron</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">o</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(o\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">O</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(O\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Pi</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\pi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\pi\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Pi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Pi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Rho</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\rho</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">P</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(P\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Sigma</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\sigma</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Sigma</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Sigma\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Tau</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\tau</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\tau\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">T</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(T\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Upsilon</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\upsilon</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\upsilon\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Upsilon</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Upsilon\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Phi</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\phi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\phi\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Phi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Phi\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Chi</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\chi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\chi\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">X</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(X\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Psi</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\psi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\psi\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Psi</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Omega</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\omega</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\omega\)</span></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\Omega</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Omega\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Note:</strong> Some rendering engines interpret special commands for symbols that are identical to modern English letters — e.g., <code class="docutils literal notranslate"><span class="pre">\Alpha</span></code> for the symbol $A$. However, some interpreters (including browsers) do not recognize these commands, so it is recommended to use regular characters instead.</p>
 <p>There are some special forms for classical letters:</p>
 <p><code class="docutils literal notranslate"><span class="pre">\varphi</span></code>: <span class="math notranslate nohighlight">\(\varphi\)</span>;<code class="docutils literal notranslate"><span class="pre">\varepsilon</span></code>: <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p>
 </section>
@@ -810,22 +954,26 @@ document.write(`
 </li>
 </ul>
 <p>Thus an entry of the form:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$$\left(\begin{array} \\
-    a_{11}&amp;a_{12}&amp;\cdots&amp;a_{1n} \\ 
-    a_{21}&amp;a_{22}&amp;\cdots&amp;a_{2n} \\ 
-    \vdots&amp;\vdots&amp;\ddots&amp;\vdots \\
-    a_{n1}&amp;a_{n2}&amp;\cdots&amp;a_{nn} 
-\end{array}\right)$$
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$$
+\left(\begin{array}{cccc}
+    a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\ 
+    a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\ 
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nn} 
+\end{array}\right)
+$$
 </pre></div>
 </div>
 <p>Will allow you to form an expression of the form:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\left(\begin{array} \\
-    a_{11}&amp;a_{12}&amp;\cdots&amp;a_{1n} \\ 
-    a_{21}&amp;a_{22}&amp;\cdots&amp;a_{2n} \\ 
-    \vdots&amp;\vdots&amp;\ddots&amp;\vdots \\
-    a_{n1}&amp;a_{n2}&amp;\cdots&amp;a_{nn} 
-\end{array}\right)\end{split}\]</div>
+\[\begin{split}
+\left(\begin{array}{cccc}
+    a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\ 
+    a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\ 
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nn} 
+\end{array}\right)
+\end{split}\]</div>
 </section>
 <section id="letters-with-empty-space">
 <h2>Letters with empty space<a class="headerlink" href="#letters-with-empty-space" title="Link to this heading">#</a></h2>
@@ -889,7 +1037,8 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -964,8 +1113,8 @@ By Fedor Kobak
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

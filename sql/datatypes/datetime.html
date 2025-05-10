@@ -16,30 +16,33 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
@@ -57,6 +60,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sql/datatypes/datetime';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -65,6 +70,7 @@
     <link rel="prev" title="Data types" href="../datatypes.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -80,19 +86,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -100,7 +95,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -108,8 +102,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -125,7 +119,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -155,21 +150,17 @@
     
     
     <img src="../../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
-    <script>document.write(`<img src="../../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+    <img src="../../_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="Knowledge base - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -221,6 +212,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../math/introduction.html">Intorduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math/geometry.html">Geometry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../math/union_probability.html">Union probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../math/conditional_probability.html">Сonditional probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../math/cent_limit_theorem.html">Central limit theorem</a></li>
@@ -463,9 +456,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -577,24 +575,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -634,29 +624,6 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="date-and-time">
 <h1>Date and time<a class="headerlink" href="#date-and-time" title="Link to this heading">#</a></h1>
 <p>Working with dates and times is quite common when using SQL. Since date columns have many specific features, there is a dedicated section for handling them.</p>
-<p>In this notebook, we will work with multiple database systems: Postgres and ClickHouse. The following cell creates all the necessary Docker containers.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-d<span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>docker_app<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>datetime_postgres_examples<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>postgres:15.4<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>datetime_click_examples<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>clickhouse/clickhouse-server<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-sleep<span class="w"> </span><span class="m">5</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong>: Don’t forget to stop the containers after all.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>datetime_postgres_examples<span class="w"> </span>datetime_click_examples
-</pre></div>
-</div>
-</div>
-</div>
 <section id="date">
 <h2>Date<a class="headerlink" href="#date" title="Link to this heading">#</a></h2>
 <p>All database systems have some types that describe jsut a date - it’s a date without time.</p>
@@ -664,47 +631,48 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>As an example, consider how the <code class="docutils literal notranslate"><span class="pre">DATE</span></code> data type can be defined in Postgres. In the following cell, the types of the results from different ways of creating a date are printed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>datetime_postgres_examples<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT </span>
-<span class="s">    pg_typeof(&#39;2999-08-12&#39;) one,</span>
-<span class="s">    pg_typeof(CAST(&#39;2999-08-12&#39; AS DATE)) two,</span>
-<span class="s">    pg_typeof(&#39;2999-08-12&#39;::DATE) three,</span>
-<span class="s">    pg_typeof(to_date(&#39;2999-08-12&#39;, &#39;YYYY-MM-DD&#39;)) four</span>
-<span class="s">;</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">pg_typeof</span><span class="p">(</span><span class="s1">&#39;2999-08-12&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">one</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pg_typeof</span><span class="p">(</span><span class="k">CAST</span><span class="p">(</span><span class="s1">&#39;2999-08-12&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">DATE</span><span class="p">))</span><span class="w"> </span><span class="n">two</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pg_typeof</span><span class="p">(</span><span class="s1">&#39;2999-08-12&#39;</span><span class="p">::</span><span class="nb">DATE</span><span class="p">)</span><span class="w"> </span><span class="n">three</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pg_typeof</span><span class="p">(</span><span class="n">to_date</span><span class="p">(</span><span class="s1">&#39;2999-08-12&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;YYYY-MM-DD&#39;</span><span class="p">))</span><span class="w"> </span><span class="n">four</span>
+<span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   one   | two  | three | four 
----------+------+-------+------
- unknown | date | date  | date
-(1 row)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SELECT 1
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>one    </th><th>two  </th><th>three  </th><th>four  </th></tr>
+</thead>
+<tbody>
+<tr><td>unknown</td><td>date </td><td>date   </td><td>date  </td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>In ClickHouse, dates are stored as strings. By using the <code class="docutils literal notranslate"><span class="pre">toDate</span></code> function, you can make ClickHouse interpret them as datetime columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>datetime_click_examples<span class="w"> </span>clickhouse-client<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">SELECT </span>
-<span class="s2">    toTypeName(&#39;2999-12-23&#39;),</span>
-<span class="s2">    toTypeName(toDate(&#39;2999-12-23&#39;)) </span>
-<span class="s2">FORMAT Pretty;</span>
-<span class="s2">&quot;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">toTypeName</span><span class="p">(</span><span class="s1">&#39;2999-12-23&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">toTypeName</span><span class="p">(</span><span class="n">toDate</span><span class="p">(</span><span class="s1">&#39;2999-12-23&#39;</span><span class="p">));</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-   ┃ <span class=" -Color -Color-Bold">toTypeName(&#39;2999-12-23&#39;)</span> ┃ <span class=" -Color -Color-Bold">toTypeName(toDate(&#39;2999-12-23&#39;))</span> ┃
-   ┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-1. │ String                   │ Date                             │
-   └──────────────────────────┴──────────────────────────────────┘
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>toTypeName(&#x27;2999-12-23&#x27;)  </th><th>toTypeName(toDate(&#x27;2999-12-23&#x27;))  </th></tr>
+</thead>
+<tbody>
+<tr><td>String                    </td><td>Date                              </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="datetime-timestamp">
@@ -714,45 +682,46 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>The following cell demonstrates a comparison of typecasting to <code class="docutils literal notranslate"><span class="pre">DATE</span></code> and <code class="docutils literal notranslate"><span class="pre">TIMESTAMP</span></code> in postgres.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>datetime_postgres_examples<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT </span>
-<span class="s">    &#39;2024-07-03 14:30:57.902629&#39;::DATE,</span>
-<span class="s">    &#39;2024-07-03 14:30:57.902629&#39;::TIMESTAMP;</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="s1">&#39;2024-07-03 14:30:57.902629&#39;</span><span class="p">::</span><span class="nb">DATE</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">&#39;2024-07-03 14:30:57.902629&#39;</span><span class="p">::</span><span class="k">TIMESTAMP</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    date    |         timestamp          
-------------+----------------------------
- 2024-07-03 | 2024-07-03 14:30:57.902629
-(1 row)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SELECT 1
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>date      </th><th>timestamp                 </th></tr>
+</thead>
+<tbody>
+<tr><td>2024-07-03</td><td>2024-07-03 14:30:57.902629</td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>So in case <code class="docutils literal notranslate"><span class="pre">DATE</span></code> there is only infomation about day but in <code class="docutils literal notranslate"><span class="pre">TMESTAMP</span></code> case we’re getting accuracy up to microsecond.</p>
 <p>The same example applies to ClickHouse.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>datetime_click_examples<span class="w"> </span>clickhouse-client<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">SELECT </span>
-<span class="s2">    toDate(&#39;2024-07-03 14:30:57&#39;),</span>
-<span class="s2">    toDateTime64(&#39;2024-07-03 14:30:57.902629&#39;, 6)</span>
-<span class="s2">FORMAT Pretty;</span>
-<span class="s2">&quot;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">toDate</span><span class="p">(</span><span class="s1">&#39;2024-07-03 14:30:57&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">toDateTime64</span><span class="p">(</span><span class="s1">&#39;2024-07-03 14:30:57.902629&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-   ┃ <span class=" -Color -Color-Bold">toDate(&#39;2024-07-03 14:30:57&#39;)</span> ┃ <span class=" -Color -Color-Bold">toDateTime64(&#39;2024-07-03 14:30:57.902629&#39;, 6)</span> ┃
-   ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-1. │                    2024-07-03 │                    2024-07-03 14:30:57.902629 │
-   └───────────────────────────────┴───────────────────────────────────────────────┘
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>toDate(&#x27;2024-07-03 14:30:57&#x27;)  </th><th>toDateTime64(&#x27;2024-07-03 14:30:57.902629&#x27;, 6)  </th></tr>
+</thead>
+<tbody>
+<tr><td>2024-07-03                     </td><td>2024-07-03 14:30:57.902629                     </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <div class="toctree-wrapper compound">
@@ -768,16 +737,16 @@ sleep<span class="w"> </span><span class="m">5</span>
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "universal_sql"
         },
         kernelOptions: {
-            name: "bash",
+            name: "universal_sql",
             path: "./sql/datatypes"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'universal_sql'</script>
 
                 </article>
               
@@ -814,7 +783,8 @@ sleep<span class="w"> </span><span class="m">5</span>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -873,8 +843,8 @@ By Fedor Kobak
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
