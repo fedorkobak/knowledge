@@ -9,7 +9,6 @@ import clickhouse_connect
 from .abs import (
     execute_output,
     DatabaseResponse,
-    DatabaseRunner,
     DatabaseInDockerRunner,
     SeparateQueryRunner
 )
