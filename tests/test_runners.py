@@ -52,6 +52,16 @@ class RunnerBaseCase:
         self.assertEqual(ans_cols, exp_cols, msg=fail_msg)
         self.assertEqual(ans_data, exp_data, msg=fail_msg)
 
+    def test_create_insert_command(self):
+        """
+        If runners ok with CREATE/INSERT commands.
+        """
+        code = """
+        CREATE TABLE create_table_test (col INT);
+        INSERT INTO create_table_test (col) VALUES (45), (87);
+        """
+        self.runner.execute(code)
+
 
 class TestPostgres(RunnerBaseCase, TestCase):
     """
@@ -106,6 +116,17 @@ class TestPostgres(RunnerBaseCase, TestCase):
 
 class TestClickhouse(RunnerBaseCase, TestCase):
     runner_class = ClickHouseRunner
+
+    def test_create_insert_command(self):
+        '''
+        Redefine this method for clickhouse as it has different syntax for
+        CREATE operation.
+        '''
+        code = """
+        CREATE TABLE test_table (col Int) ENGINE=MergeTree ORDER BY col;
+        INSERT INTO test_table (col) VALUES (10), (20);
+        """
+        self.runner.execute(code=code)
 
 
 class TestSQLite(RunnerBaseCase, TestCase):

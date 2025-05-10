@@ -153,7 +153,7 @@ class TestSeparateQueryRunner(TestCase):
         self.assertEqual(len(result), len(commands))
 
         for call, command in zip(execute_one.mock_calls, commands):
-            self.assertEqual(call.kwargs, {"code": command})
+            self.assertEqual(call.kwargs, {"command": command})
 
 
 if __name__ == "__main__":

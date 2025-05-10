@@ -7,10 +7,11 @@ import typeguard
 from time import sleep
 import clickhouse_connect
 from .abs import (
+    execute_output,
+    DatabaseResponse,
     DatabaseRunner,
     DatabaseInDockerRunner,
-    execute_output,
-    DatabaseResponse
+    SeparateQueryRunner
 )
 
 
@@ -89,7 +90,7 @@ class PostgresRunner(DatabaseInDockerRunner):
         super().stop()
 
 
-class ClickHouseRunner(DatabaseInDockerRunner):
+class ClickHouseRunner(DatabaseInDockerRunner, SeparateQueryRunner):
     _default_container_name = "clickhouse_db"
     _image = "clickhouse/clickhouse-server"
     _port = 8123
@@ -107,10 +108,11 @@ class ClickHouseRunner(DatabaseInDockerRunner):
         )
 
     @typeguard.typechecked
-    def execute(self, code: str) -> execute_output:
-        result = self.connection.query(code)
-        result = (result.column_names, tuple(result.result_rows))
-        return [DatabaseResponse(type="table", content=result)]
+    def _execute_one(self, command: str) -> DatabaseResponse:
+        result = self.connection.query(command)
+        data = [tuple(row) for row in result.result_rows]
+        result = (result.column_names, tuple(data))
+        return DatabaseResponse(type="table", content=result)
 
     def stop(self):
         if hasattr(self, "connection"):
@@ -118,7 +120,7 @@ class ClickHouseRunner(DatabaseInDockerRunner):
         super().stop()
 
 
-class SQLiteRunner(DatabaseRunner):
+class SQLiteRunner(SeparateQueryRunner):
     def __init__(self, db_path=":memory:"):
         self.db_path = db_path
         self.connection = None
@@ -128,18 +130,22 @@ class SQLiteRunner(DatabaseRunner):
         self.connection = sqlite3.connect(self.db_path)
 
     @typeguard.typechecked
-    def execute(self, query: str) -> execute_output:
+    def _execute_one(self, command: str) -> DatabaseResponse:
         cursor = self.connection.cursor()
-        cursor.execute(query)
+        cursor.execute(command)
 
         data = cursor.fetchall()
-        columns = [d[0] for d in cursor.description]
+        columns = (
+            [d[0] for d in cursor.description]
+            if cursor.description
+            else []
+        )
         result = DatabaseResponse(
             type="table", content=(tuple(columns), tuple(data))
         )
 
         cursor.close()
-        return [result]
+        return result
 
     def stop(self):
         if self.connection:

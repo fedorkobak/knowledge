@@ -232,10 +232,10 @@ class SeparateQueryRunner(DatabaseRunner):
         return res
 
     @abstractmethod
-    def _execute_one(self, code: str) -> DatabaseResponse:
+    def _execute_one(self, command: str) -> DatabaseResponse:
         pass
 
     @typechecked
     def execute(self, code: str) -> list[DatabaseResponse]:
         commands = SeparateQueryRunner._separate_code(code)
-        return [self._execute_one(code=command) for command in commands]
+        return [self._execute_one(command=command) for command in commands]
