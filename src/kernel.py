@@ -11,8 +11,8 @@ from typing import Any
 from tabulate import tabulate
 from ipykernel.kernelbase import Kernel
 
+from .runners.abs import DatabaseRunner
 from .runners.runners import (
-    DatabaseRunner,
     PostgresRunner,
     ClickHouseRunner,
     SQLiteRunner
