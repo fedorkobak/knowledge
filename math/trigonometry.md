@@ -28,3 +28,15 @@ The following picture is a unit circle in the Cartesian coordinate system.
 </svg>
 
 Let a line through the origin intersect the unit circle, making an angle $\theta$ with the positive half of the $x$-axis. The $x$- and $y$-coordinates of this point of intersection are equal to $cos(\theta)$ ans $sin(\theta)$, repsectively.
+
+## Angle sum and difference identities
+
+There are identities for trigonometric functions when a function is applied to the sum or difference of the angles. The following list show some of the formulas:
+
+- $sin(\alpha \pm \beta) = sin(\alpha)cos(\beta) \pm cos(\alpha)sin(\beta)$.
+- $cos(\alpha \pm \beta) = cos(\alpha)cos(\beta) \mp sin(\alpha)sin(\beta)$.
+- $tan(\alpha \pm \beta) = \frac{tan(\alpha \pm \beta)}{1 \mp \tan(\alpha)\tan{\beta}}$.
+
+For more check:
+
+- [Corresponding wikipedia page](https://en.wikipedia.org/wiki/List_of_trigonometric_identities).
