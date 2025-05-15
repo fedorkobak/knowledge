@@ -15,6 +15,37 @@ This section deals with ideas from mathematics that I found useful.
 | Imaginary numbers   | —      | Multiples of $i4 (where $i^2 = -1$)               | $i, 2i, −3i$                              |
 | Complex numbers     | $\mathbb{Q}$      | Numbers of form a + bi (a, b ∈ ℝ)            | $2 + 3i, −1 − i, 4$                       |
 
+## Trigonometry
+
+Trigonometry is a branch of mathematics that studies the relationships between the angles and sides of triangles, especially right-angled triangles.
+
+There are three main functions in trigonometry: 
+
+- sine: $sin(\theta)$.
+- cosine: $cos(\theta)$.
+- tangent: $tan(\theta)$. 
+
+The following cell shows the most common values of the trigonometric functions.
+
+| Angle (°) | Angle (rad)         | $\sin(\theta)$        | $\cos(\theta)$        | $\tan(\theta)$        |
+| --------- | ------------------- | ----------------------- | ----------------------- | ----------------------- |
+| 0°        | $0$               | $0$                   | $1$                   | $0$                   |
+| 30°       | $\frac{\pi}{6}$   | $\frac{1}{2}$         | $\frac{\sqrt{3}}{2}$  | $\frac{1}{\sqrt{3}}$  |
+| 45°       | $\frac{\pi}{4}$   | $\frac{\sqrt{2}}{2}$  | $\frac{\sqrt{2}}{2}$  | $1$                   |
+| 60°       | $\frac{\pi}{3}$   | $\frac{\sqrt{3}}{2}$  | $\frac{1}{2}$         | $\sqrt{3}$            |
+| 90°       | $\frac{\pi}{2}$   | $1$                   | $0$                   | undefined               |
+| 120°      | $\frac{2\pi}{3}$  | $\frac{\sqrt{3}}{2}$  | $-\frac{1}{2}$        | $-\sqrt{3}$           |
+| 135°      | $\frac{3\pi}{4}$  | $\frac{\sqrt{2}}{2}$  | $-\frac{\sqrt{2}}{2}$ | $-1$                  |
+| 150°      | $\frac{5\pi}{6}$  | $\frac{1}{2}$         | $-\frac{\sqrt{3}}{2}$ | $-\frac{1}{\sqrt{3}}$ |
+| 180°      | $\pi$             | $0$                   | $-1$                  | $0$                   |
+| 210°      | $\frac{7\pi}{6}$  | $-\frac{1}{2}$        | $-\frac{\sqrt{3}}{2}$ | $\frac{1}{\sqrt{3}}$  |
+| 225°      | $\frac{5\pi}{4}$  | $-\frac{\sqrt{2}}{2}$ | $-\frac{\sqrt{2}}{2}$ | $1$                   |
+| 240°      | $\frac{4\pi}{3}$  | $-\frac{\sqrt{3}}{2}$ | $-\frac{1}{2}$        | $\sqrt{3}$            |
+| 270°      | $\frac{3\pi}{2}$  | $-1$                  | $0$                   | undefined               |
+| 300°      | $\frac{5\pi}{3}$  | $-\frac{\sqrt{3}}{2}$ | $\frac{1}{2}$         | $-\sqrt{3}$           |
+| 315°      | $\frac{7\pi}{4}$  | $-\frac{\sqrt{2}}{2}$ | $\frac{\sqrt{2}}{2}$  | $-1$                  |
+| 330°      | $\frac{11\pi}{6}$ | $-\frac{1}{2}$        | $\frac{\sqrt{3}}{2}$  | $-\frac{1}{\sqrt{3}}$ |
+| 360°      | $2\pi$            | $0$                   | $1$                   | $0$                   |
 
 ## Statistical testing
 
