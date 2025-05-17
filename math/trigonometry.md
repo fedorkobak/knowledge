@@ -33,7 +33,14 @@ The following picture shows a typical unit circle.
   <path d="M 0.14,-0.14 A 0.2,0.2 0 0,1 0.2,0" fill="none" stroke="black" stroke-width="0.005"/>
 </svg>
 
-In the right-angle method, trigonometric functions are defined as ratios between the sides of a right-angled triangle.
+In the right-angle method, trigonometric functions are defined as the ratios between the sides of a right-angled triangle. For non-right angle of a right-angled triangle:
+
+- Sine is the ratio of the opposite side to the hypotenuse.
+- Cosine is the ratio of the adjacent side to the hypotenuse.
+- Tangent is the ratio of the opposite and adjacent sides.
+
+The following picture shows $\Delta ABC$ with some notations.
+
 
 <svg width="400" height="400" viewBox="-0.2 -1 1 1.2"  xmlns="http://www.w3.org/2000/svg" 
 stroke="black" style="font-family: 'LatinModern'" font-style="italic" font-size="0.08">
@@ -54,6 +61,11 @@ stroke="black" style="font-family: 'LatinModern'" font-style="italic" font-size=
   </g>
 </svg>
 
+The following statements will be correct according to notations:
+
+- $sin(\theta) = \frac{\textcolor{green}{AC}}{\textcolor{red}{BC}}$.
+- $cos(\theta) = \frac{\textcolor{blue}{AB}}{\textcolor{red}{BC}}$.
+- $tan(\theta) = \frac{\textcolor{green}{AC}}{\textcolor{blue}{AB}}$.
 
 ## Angle sum and difference identities
 
