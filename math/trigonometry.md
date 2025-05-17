@@ -2,9 +2,15 @@
 
 Trigonometry is a branch of mathematics that studies the relationships between the angles and sides of triangles, especially right-angled triangles.
 
-## Sine and cosine
+## Definition
 
-The following picture is a unit circle in the Cartesian coordinate system.
+There are two main ways to define trigonometric functions: the unit sircle method and the right-angled triangle method.
+
+Here’s a corrected and clearer version of your description:
+
+The **unit circle** method uses a circle with a radius of 1 centered at $(0, 0)$. A ray at an angle $\theta$ from the positive $x$-axis extends from the origin. The coordinates of the point where the ray intersects the circle define the trigonometric functions of $\theta$: the $x$-coordinate gives $\cos(\theta)$, and the $y$-coordinate gives $\sin(\theta)$.
+
+The following picture shows a typical unit circle.
 
 <svg width="600" height="600" viewBox="-2 -2 4 4" xmlns="http://www.w3.org/2000/svg">
   <g font-size="0.15" text-anchor="middle" stroke-width="0.02" style="font-family: 'LatinModern'" font-style="italic">
@@ -27,7 +33,27 @@ The following picture is a unit circle in the Cartesian coordinate system.
   <path d="M 0.14,-0.14 A 0.2,0.2 0 0,1 0.2,0" fill="none" stroke="black" stroke-width="0.005"/>
 </svg>
 
-Let a line through the origin intersect the unit circle, making an angle $\theta$ with the positive half of the $x$-axis. The $x$- and $y$-coordinates of this point of intersection are equal to $cos(\theta)$ ans $sin(\theta)$, repsectively.
+In the right-angle method, trigonometric functions are defined as ratios between the sides of a right-angled triangle.
+
+<svg width="400" height="400" viewBox="-0.2 -1 1 1.2"  xmlns="http://www.w3.org/2000/svg" 
+stroke="black" style="font-family: 'LatinModern'" font-style="italic" font-size="0.08">
+  <g stroke-width="0.01">
+    <line x1="0" y1="0" x2="0.5" y2="0" stroke="blue"/>
+    <line x1="0" y1="0" x2="0" y2="-0.86" stroke="green"/>
+    <line x1="0.5" y1="0" x2="0" y2="-0.86" stroke="red"/>
+  </g>
+  <g stroke-width="0.001">
+    <text x="-0.05" y="0.07">A</text>
+    <text x="0.5" y="0.07">B</text>
+    <text x="-0.05" y="-0.88">C</text>
+    <text x="0.37" y="-0.04">θ</text>
+  </g>
+  <g stroke-width="0.003" fill="none">
+    <path d="M 0,-0.07 L 0.07,-0.07 L 0.07,0"/>
+    <path d="M 0.46,-0.07 A 0.07,0.07 0 0,0 0.42,0"/>
+  </g>
+</svg>
+
 
 ## Angle sum and difference identities
 
