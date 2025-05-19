@@ -53,12 +53,12 @@ $$S_n = (a_1 + [n-1]d) + (a_1 + [n-2]d) + \ldots + a_1.$$
 
 Now, add those two sums together and group the :
 
-$$2S_n = (2a_1 + [n-1]d) + (2a_1 + d + [n-2]d) + \ldots + (2a_1 + d + [n-2]d) + (2a_1 +[n-1]d) =$$
+$$2S_n = (2a_1 + [n-1]d) + (2a_1 + d + [n-2]d) + \ldots + (2a_1 + d + [n-2]d) + (2a_1 +[n-1]d).$$
 $$S_n = \frac{n(a_1 + a_1 + [n-1]d)}{2}.$$
 
 Finally as $a_n = a_1 + [n-1]d$:
 
-$$S_n = \frac{n(a_1 + a_n)}{2}$$
+$$S_n = \frac{n(a_1 + a_n)}{2}.$$
 
 
 ## Trigonometry
