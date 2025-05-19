@@ -15,6 +15,52 @@ This section deals with ideas from mathematics that I found useful.
 | Imaginary numbers   | —      | Multiples of $i4 (where $i^2 = -1$)               | $i, 2i, −3i$                              |
 | Complex numbers     | $\mathbb{Q}$      | Numbers of form a + bi (a, b ∈ ℝ)            | $2 + 3i, −1 − i, 4$                       |
 
+## Arithmetic progression
+
+An arithmetic progression is a sequence of numbers in which each element differs from the previous one by a constant amount. 
+
+Let's denote:
+
+- $a_1$: the fist element of an arithmetic progression.
+- $d$: difference of an arithmetic progression.
+
+By definition, each element of the progression can be counted as:
+
+$$a_i = a_{i-1} + d, i=\overline{2,n}$$
+
+The sequence also can be written using only $a_1$ and $d$.
+
+$$a_1, a_1 + d, a_1 + 2d, ...$$
+
+This leads to a more useful formula:
+
+$$a_n = a_1 + (n-1)d$$
+
+
+### Sum
+
+Finding a sum of the first $n$ members of an arithmetic progression is a very typical task. There is no issues to compute it by hands but there is a better approach - formula for $S_n$:
+
+$$S_n = \frac{n(a_1 + a_n)}{2}$$
+
+To prove this formula, write the sum in the expanded form:
+
+$$S_n = a_1 + (a_1 + d) + (a_1 + 2d) + \ldots + (a_1 + [n-1]d).$$
+
+And the same sum in the reverse order:
+
+$$S_n = (a_1 + [n-1]d) + (a_1 + [n-2]d) + \ldots + a_1.$$
+
+Now, add those two sums together and group the :
+
+$$2S_n = (2a_1 + [n-1]d) + (2a_1 + d + [n-2]d) + \ldots + (2a_1 + d + [n-2]d) + (2a_1 +[n-1]d) =$$
+$$S_n = \frac{n(a_1 + a_1 + [n-1]d)}{2}.$$
+
+Finally as $a_n = a_1 + [n-1]d$:
+
+$$S_n = \frac{n(a_1 + a_n)}{2}$$
+
+
 ## Trigonometry
 
 Trigonometry is a branch of mathematics that studies the relationships between the angles and sides of triangles, especially right-angled triangles.
