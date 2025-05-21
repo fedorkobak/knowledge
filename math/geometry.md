@@ -73,5 +73,10 @@ The following picture illustrates the median $AO$ of the $\angle BAC$.
   <text x="45" y="165">A</text>
   <text x="65" y="95">B</text>
   <text x="115" y="165">C</text>
-  <text x="95" y="122">O</text>
+  <text x="90" y="138">O</text>
+  <g fill="green">
+    <text x="85" y="160">a</text>
+    <text x="55" y="120">b</text>
+    <text x="97" y="123">c</text>
+  </g>
 </svg>
