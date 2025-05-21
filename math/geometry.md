@@ -57,29 +57,36 @@ Median is a line segment that connects a vertex to the midpoint of the opposite 
 
 The following picture illustrates the median $AO$ of the $\angle BAC$.
 
-<svg width="400" height="400" viewBox="40 80 120 150" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
+<svg width="400" height="400" viewBox="-5 80 120 150" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
   <!-- Triangle ABC -->
-  <polygon points="50,150 70,100 120,150" 
+  <polygon points="5,150 25,100 75,150" 
            fill="none" stroke="green" stroke-width="2"/>
-  <line x1="50" y1="150" x2="95" y2="125" stroke-width="1" stroke="red"/>
+  <line x1="5" y1="150" x2="50" y2="125" stroke-width="1" stroke="red"/>
   <g stroke-width="0.5" stroke="black">
-    <line x1="105" y1="140" x2="110" y2="135"/>
-    <line x1="80"  y1="115" x2="85" y2="110"/>
+    <line x1="60" y1="140" x2="65" y2="135"/>
+    <line x1="35"  y1="115" x2="40" y2="110"/>
   </g>
-  <circle cx="50" cy="150" r="2"/>
-  <circle cx="70" cy="100" r="2"/>
-  <circle cx="120" cy="150" r="2"/>
-  <circle cx="95" cy="125" r="2"/>
-  <text x="47" y="160">A</text>
-  <text x="70" y="95">B</text>
-  <text x="120" y="160">C</text>
-  <text x="90" y="138">O</text>
-  <text x="72" y="134" fill="red">M</text>
+  <circle cx="5" cy="150" r="2"/>
+  <circle cx="25" cy="100" r="2"/>
+  <circle cx="75" cy="150" r="2"/>
+  <circle cx="50" cy="125" r="2"/>
+  <text x="2" y="160">A</text>
+  <text x="25" y="95">B</text>
+  <text x="75" y="160">C</text>
+  <text x="45" y="138">O</text>
+  <text x="27" y="134" fill="red">M</text>
   <g fill="green">
-    <text x="85" y="157">a</text>
-    <text x="55" y="125">b</text>
-    <text x="98" y="123">c</text>
+    <text x="40" y="157">a</text>
+    <text x="10" y="125">b</text>
+    <text x="53" y="123">c</text>
   </g>
+  <path d="M 10 140 A 10,10 0,0 1 15,149" fill="none" stroke-width="0.5" stroke="blue"/>
+  <text x="15" y="140" fill="blue">γ</text>
 </svg>
 
 In the picture, $AC$ is denoted as $M$ for the convenience of the following mathematical descriptions. 
+
+To calculate the distance of the median use formulas:
+
+- $M=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}$.
+- $M=\frac{1}{2}\sqrt{2a^2+2b^2+2ab\,cos(\gamma)}.$
