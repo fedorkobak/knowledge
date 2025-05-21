@@ -57,7 +57,7 @@ Median is a line segment that connects a vertex to the midpoint of the opposite 
 
 The following picture illustrates the median $AO$ of the $\angle BAC$.
 
-<svg width="400" height="400" viewBox="40 80 120 150" fill="black" font-size="12" style="font-family: 'LatinModern'" font-style="italic" xmlns="http://www.w3.org/2000/svg">
+<svg width="400" height="400" viewBox="40 80 120 150" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
   <!-- Triangle ABC -->
   <polygon points="50,150 70,100 120,150" 
            fill="none" stroke="green" stroke-width="2"/>
@@ -70,13 +70,16 @@ The following picture illustrates the median $AO$ of the $\angle BAC$.
   <circle cx="70" cy="100" r="2"/>
   <circle cx="120" cy="150" r="2"/>
   <circle cx="95" cy="125" r="2"/>
-  <text x="45" y="165">A</text>
-  <text x="65" y="95">B</text>
-  <text x="115" y="165">C</text>
+  <text x="47" y="160">A</text>
+  <text x="70" y="95">B</text>
+  <text x="120" y="160">C</text>
   <text x="90" y="138">O</text>
+  <text x="72" y="134" fill="red">M</text>
   <g fill="green">
-    <text x="85" y="160">a</text>
-    <text x="55" y="120">b</text>
-    <text x="97" y="123">c</text>
+    <text x="85" y="157">a</text>
+    <text x="55" y="125">b</text>
+    <text x="98" y="123">c</text>
   </g>
 </svg>
+
+In the picture, $AC$ is denoted as $M$ for the convenience of the following mathematical descriptions. 
