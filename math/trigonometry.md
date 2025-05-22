@@ -67,14 +67,42 @@ The following statements will be correct according to notations:
 - $cos(\theta) = \frac{\textcolor{blue}{AB}}{\textcolor{red}{BC}}$.
 - $tan(\theta) = \frac{\textcolor{green}{AC}}{\textcolor{blue}{AB}}$.
 
-## Angle sum and difference identities
+## Identities
 
-There are identities for trigonometric functions when a function is applied to the sum or difference of the angles. The following list show some of the formulas:
+In trigonometry, trigonometric identities are equalities that involve trigonometric functions and are true for every value of the occurring variables for which both sides of the equality are defined.
 
-- $sin(\alpha \pm \beta) = sin(\alpha)cos(\beta) \pm cos(\alpha)sin(\beta)$.
-- $cos(\alpha \pm \beta) = cos(\alpha)cos(\beta) \mp sin(\alpha)sin(\beta)$.
-- $tan(\alpha \pm \beta) = \frac{tan(\alpha \pm \beta)}{1 \mp \tan(\alpha)\tan{\beta}}$.
+The table below lists some of the identities.
 
-For more check:
+| **Group**            | **Name**           | **Identity**                                                          |
+| -------------------- | ------------------ | --------------------------------------------------------------------- |
+| **Fundamental**      | Pythagorean        | $\sin^2 x + \cos^2 x = 1$                                             |
+|                      | Secant-Tangent     | $1 + \tan^2 x = \sec^2 x$                                             |
+|                      | Cosecant-Cotangent | $1 + \cot^2 x = \csc^2 x$                                             |
+| **Reciprocal**       | Sine               | $\sin x = \frac{1}{\csc x}$                                           |
+|                      | Cosine             | $\cos x = \frac{1}{\sec x}$                                           |
+|                      | Tangent            | $\tan x = \frac{1}{\cot x}$                                           |
+|                      | Cotangent          | $\cot x = \frac{1}{\tan x}$                                           |
+| **Quotient**         | Tangent            | $\tan x = \frac{\sin x}{\cos x}$                                      |
+|                      | Cotangent          | $\cot x = \frac{\cos x}{\sin x}$                                      |
+| **Co-Function**      | Sine/Cosine        | $\sin(\frac{\pi}{2} - x) = \cos x$                                    |
+|                      | Tangent/Cotangent  | $\tan(\frac{\pi}{2} - x) = \cot x$                                    |
+|                      | Secant/Cosecant    | $\sec(\frac{\pi}{2} - x) = \csc x$                                    |
+| **Even-Odd**         | Even Cosine        | $\cos(-x) = \cos x$                                                   |
+|                      | Odd Sine           | $\sin(-x) = -\sin x$                                                  |
+|                      | Odd Tangent        | $\tan(-x) = -\tan x$                                                  |
+| **Sum & Difference** | Sine               | $\sin(a \pm b) = \sin a \cos b \pm \cos a \sin b$                     |
+|                      | Cosine             | $\cos(a \pm b) = \cos a \cos b \mp \sin a \sin b$                     |
+|                      | Tangent            | $\tan(a \pm b) = \frac{\tan a \pm \tan b}{1 \mp \tan a \tan b}$       |
+| **Double Angle**     | Sine               | $\sin 2x = 2 \sin x \cos x$                                           |
+|                      | Cosine             | $\cos 2x = \cos^2 x - \sin^2 x = 2 \cos^2 x - 1 = 1 - 2 \sin^2 x$     |
+|                      | Tangent            | $\tan 2x = \frac{2 \tan x}{1 - \tan^2 x}$                             |
+| **Half Angle**       | Sine               | $\sin^2 x = \frac{1 - \cos 2x}{2}$                                    |
+|                      | Cosine             | $\cos^2 x = \frac{1 + \cos 2x}{2}$                                    |
+| **Product-to-Sum**   | $\sin a \sin b$    | $\frac{1}{2}[\cos(a - b) - \cos(a + b)]$                              |
+|                      | $\cos a \cos b$    | $\frac{1}{2}[\cos(a - b) + \cos(a + b)]$                              |
+|                      | $\sin a \cos b$    | $\frac{1}{2}[\sin(a + b) + \sin(a - b)]$                              |
+| **Sum-to-Product**   | $\sin a + \sin b$  | $2 \sin\left(\frac{a + b}{2}\right)\cos\left(\frac{a - b}{2}\right)$  |
+|                      | $\sin a - \sin b$  | $2 \cos\left(\frac{a + b}{2}\right)\sin\left(\frac{a - b}{2}\right)$  |
+|                      | $\cos a + \cos b$  | $2 \cos\left(\frac{a + b}{2}\right)\cos\left(\frac{a - b}{2}\right)$  |
+|                      | $\cos a - \cos b$  | $-2 \sin\left(\frac{a + b}{2}\right)\sin\left(\frac{a - b}{2}\right)$ |
 
-- [Corresponding wikipedia page](https://en.wikipedia.org/wiki/List_of_trigonometric_identities).
