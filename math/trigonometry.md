@@ -84,6 +84,12 @@ The table below lists some of the identities.
 |                      | $\cot x = \frac{1}{\tan x}$                                                               |
 | **Quotient**         | $\tan x = \frac{\sin x}{\cos x}$                                                          |
 |                      | $\cot x = \frac{\cos x}{\sin x}$                                                          |
+| **Shift Identities** | $\cos(\frac{\pi}{2} + x) = -\sin(x)$                                                      |
+|                      | $\sin(\frac{\pi}{2} + x) = \cos(x)$                                                       |
+|                      | $\cos(\pi + x) = -\cos(\pi)$                                                              |
+|                      | $\sin(\pi + x) = -\sin(\pi)$                                                              |
+|                      | $\cos(\frac{3 \pi}{2} + x) = \sin(x)$                                                     |
+|                      | $\sin(\frac{3 \pi}{2} + x) = -\cos(x)$                                                    |
 | **Co-Function**      | $\sin(\frac{\pi}{2} - x) = \cos x$                                                        |
 |                      | $\tan(\frac{\pi}{2} - x) = \cot x$                                                        |
 |                      | $\sec(\frac{\pi}{2} - x) = \csc x$                                                        |
