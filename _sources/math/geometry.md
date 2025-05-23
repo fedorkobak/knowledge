@@ -1,51 +1,42 @@
 # Geometry
 
-## Similar triangles
+**Geometry is the art of understanding space.**
+It’s the branch of mathematics that explores the shapes, sizes, patterns, and positions of objects—from the perfectly round orbit of a planet to the sharp angles of a city skyline. Whether it’s mapping the universe or designing a garden, geometry helps us decode the structure of the world and imagine new ones.
 
-Given two triangles $ABC$ and $DEF$.
+## Triangle
 
-<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
-  <!-- Triangle ABC -->
-  <polygon points="50,150 70,100 120,150" 
+Triangle is a geometric figure with three sides.
+
+The following picture shows example triangle.
+
+<svg width="360" height="300" viewBox="-5 0 120 100" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="5,70 25,20 75,70" 
            fill="none" stroke="green" stroke-width="2"/>
-  <circle cx="50" cy="150" r="2" fill="black" />
-  <circle cx="70" cy="100" r="2" fill="black" />
-  <circle cx="120" cy="150" r="2" fill="black" />
-  <text x="45" y="165" font-size="12" fill="green">A</text>
-  <text x="65" y="95" font-size="12" fill="green">B</text>
-  <text x="115" y="165" font-size="12" fill="green">C</text>
-  <!-- Triangle DEF -->
-  <polygon points="150,150 180,70 250,150" 
-           fill="none" stroke="green" stroke-width="2"/>
-  <circle cx="150" cy="150" r="2" fill="black" />
-  <circle cx="180" cy="70" r="2" fill="black" />
-  <circle cx="250" cy="150" r="2" fill="black" />
-  <text x="145" y="165" font-size="12" fill="green">D</text>
-  <text x="175" y="65" font-size="12" fill="green">E</text>
-  <text x="245" y="165" font-size="12" fill="green">F</text>
+  <circle cx="5" cy="70" r="2"/>
+  <circle cx="25" cy="20" r="2"/>
+  <circle cx="75" cy="70" r="2"/>
+  <text x="2" y="80">A</text>
+  <text x="25" y="15">B</text>
+  <text x="75" y="80">C</text>
 </svg>
 
-Triangles are called similar ($\Delta ABC \sim \Delta EDF$) if the following holds:
+Check the [specific page](geometry/trianle.md) for more information.
 
-$$\frac{AB}{DE} = \frac{AC}{DF} = \frac{BC}{EF}$$
+## Parallelogram
 
-and
+A parallelogram is a geometric figure with four sides, where both pairs of opposite sides are parallel.
 
-$$\angle A = \angle D, \quad \angle B = \angle E, \quad \angle C = \angle F.$$
+In the next picture $ABCD$ is a parallelogram, where $AB \parallel CD, AD \parallel CD$.
 
-The value
-
-$$k = \frac{P_{ABC}}{P_{DEF}}$$
-
-is called the **coefficient of similarity**, where:
-- $P_{ABC}$ is the perimeter of triangle $ABC$.
-- $P_{DEF}$ is the perimeter of triangle $DEF$.
-
-For coefficient of similarity is a fair expression:
-
-$$k^2=\frac{S_{ABC}}{S_{DEF}}$$
-
-Where:
-
-- $S_{ABC}$ is the area of triangle $ABC$.
-- $S_{DEF}$ is the area of triangle $DEF$.
+<svg width="750" height="240" viewBox="-5 -20 250 80" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="5,50 35,0 135,0 105,50" 
+           fill="none" stroke="green" stroke-width="2"/>
+  <circle cx="5" cy="50" r="2"/>
+  <circle cx="35" cy="0" r="2"/>
+  <circle cx="135" cy="0" r="2"/>
+  <circle cx="105" cy="50" r="2"/>
+  <text x="2" y="60">A</text>
+  <text x="35" y="-5">B</text>
+  <text x="135" y="-5">C</text>
+  <text x="105" y="60">D</text>
+</svg>
