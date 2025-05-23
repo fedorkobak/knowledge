@@ -50,6 +50,25 @@ Where:
 - $S_{ABC}$ is the area of triangle $ABC$.
 - $S_{DEF}$ is the area of triangle $DEF$.
 
+## Parallelogram
+
+A parallelogram is a geometric figure with four sides, two of which are parallel to each other.
+
+In the next picture $ABCD$ is a parallelogram, where $AB \parallel CD, AD \parallel CD$.
+
+<svg width="400" height="300" viewBox="-5 100 170 50" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
+  <!-- Triangle ABC -->
+  <polygon points="5,150 35,100 135,100 105,150" 
+           fill="none" stroke="green" stroke-width="2"/>
+  <circle cx="5" cy="150" r="2"/>
+  <circle cx="35" cy="100" r="2"/>
+  <circle cx="135" cy="100" r="2"/>
+  <circle cx="105" cy="150" r="2"/>
+  <text x="2" y="160">A</text>
+  <text x="35" y="95">B</text>
+  <text x="135" y="95">C</text>
+  <text x="105" y="160">D</text>
+</svg>
 
 ## Median
 
