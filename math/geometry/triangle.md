@@ -6,25 +6,23 @@ A triangle is a geometric figure with three sides. This page explores the variou
 
 Given two triangles $ABC$ and $DEF$.
 
-<svg width="300" height="200" style="font-family: 'LatinModern'" font-style="italic" xmlns="http://www.w3.org/2000/svg">
-  <!-- Triangle ABC -->
-  <polygon points="50,150 70,100 120,150" 
-           fill="none" stroke="green" stroke-width="2"/>
-  <circle cx="50" cy="150" r="2" fill="black" />
-  <circle cx="70" cy="100" r="2" fill="black" />
-  <circle cx="120" cy="150" r="2" fill="black" />
-  <text x="45" y="165" font-size="12" fill="green">A</text>
-  <text x="65" y="95" font-size="12" fill="green">B</text>
-  <text x="115" y="165" font-size="12" fill="green">C</text>
-  <!-- Triangle DEF -->
-  <polygon points="150,150 180,70 250,150" 
-           fill="none" stroke="green" stroke-width="2"/>
-  <circle cx="150" cy="150" r="2" fill="black" />
-  <circle cx="180" cy="70" r="2" fill="black" />
-  <circle cx="250" cy="150" r="2" fill="black" />
-  <text x="145" y="165" font-size="12" fill="green">D</text>
-  <text x="175" y="65" font-size="12" fill="green">E</text>
-  <text x="245" y="165" font-size="12" fill="green">F</text>
+<svg width="300" height="120" style="font-family: 'LatinModern'" font-style="italic" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="50,100 70,50 120,100" 
+             fill="none" stroke="green" stroke-width="2"/>
+    <circle cx="50" cy="100" r="2" fill="black" />
+    <circle cx="70" cy="50" r="2" fill="black" />
+    <circle cx="120" cy="100" r="2" fill="black" />
+    <text x="45" y="115" font-size="12" fill="green">A</text>
+    <text x="65" y="45" font-size="12" fill="green">B</text>
+    <text x="115" y="115" font-size="12" fill="green">C</text>
+    <polygon points="150,100 180,20 250,100" 
+             fill="none" stroke="green" stroke-width="2"/>
+    <circle cx="150" cy="100" r="2" fill="black" />
+    <circle cx="180" cy="20" r="2" fill="black" />
+    <circle cx="250" cy="100" r="2" fill="black" />
+    <text x="145" y="115" font-size="12" fill="green">D</text>
+    <text x="175" y="15" font-size="12" fill="green">E</text>
+    <text x="245" y="115" font-size="12" fill="green">F</text>
 </svg>
 
 Triangles are called similar ($\Delta ABC \sim \Delta EDF$) if the following holds:
@@ -58,7 +56,7 @@ Median is a line segment that connects a vertex to the midpoint of the opposite 
 
 The following picture illustrates the median $AO$ of the $\angle BAC$.
 
-<svg width="400" height="400" viewBox="-5 0 120 60" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
+<svg width="360" height="320" viewBox="-5 -15 90 80" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
   <!-- Triangle ABC -->
     <polygon points="5,50 25,0 75,50" 
              fill="none" stroke="green" stroke-width="2"/>
