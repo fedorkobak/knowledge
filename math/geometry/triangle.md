@@ -58,31 +58,31 @@ Median is a line segment that connects a vertex to the midpoint of the opposite 
 
 The following picture illustrates the median $AO$ of the $\angle BAC$.
 
-<svg width="400" height="400" viewBox="-5 80 120 150" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
+<svg width="400" height="400" viewBox="-5 0 120 60" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
   <!-- Triangle ABC -->
-  <polygon points="5,150 25,100 75,150" 
-           fill="none" stroke="green" stroke-width="2"/>
-  <line x1="5" y1="150" x2="50" y2="125" stroke-width="1" stroke="red"/>
-  <g stroke-width="0.5" stroke="black">
-    <line x1="60" y1="140" x2="65" y2="135"/>
-    <line x1="35"  y1="115" x2="40" y2="110"/>
-  </g>
-  <circle cx="5" cy="150" r="2"/>
-  <circle cx="25" cy="100" r="2"/>
-  <circle cx="75" cy="150" r="2"/>
-  <circle cx="50" cy="125" r="2"/>
-  <text x="2" y="160">A</text>
-  <text x="25" y="95">B</text>
-  <text x="75" y="160">C</text>
-  <text x="45" y="138">O</text>
-  <text x="27" y="134" fill="red">M</text>
-  <g fill="green">
-    <text x="40" y="157">a</text>
-    <text x="10" y="125">b</text>
-    <text x="53" y="123">c</text>
-  </g>
-  <path d="M 10 140 A 10,10 0,0 1 15,149" fill="none" stroke-width="0.5" stroke="blue"/>
-  <text x="15" y="140" fill="blue">γ</text>
+    <polygon points="5,50 25,0 75,50" 
+             fill="none" stroke="green" stroke-width="2"/>
+    <line x1="5" y1="50" x2="50" y2="25" stroke-width="1" stroke="red"/>
+    <g stroke-width="0.5" stroke="black">
+      <line x1="60" y1="40" x2="65" y2="35"/>
+      <line x1="35"  y1="15" x2="40" y2="10"/>
+    </g>
+    <circle cx="5" cy="50" r="2"/>
+    <circle cx="25" cy="0" r="2"/>
+    <circle cx="75" cy="50" r="2"/>
+    <circle cx="50" cy="25" r="2"/>
+    <text x="2" y="60">A</text>
+    <text x="25" y="-5">B</text>
+    <text x="75" y="60">C</text>
+    <text x="45" y="38">O</text>
+    <text x="27" y="34" fill="red">M</text>
+    <g fill="green">
+      <text x="40" y="57">a</text>
+      <text x="10" y="25">b</text>
+      <text x="53" y="23">c</text>
+    </g>
+    <path d="M 10 40 A 10,10 0,0 1 15,49" fill="none" stroke-width="0.5" stroke="blue"/>
+    <text x="15" y="40" fill="blue">γ</text>
 </svg>
 
 In the picture, $AC$ is denoted as $M$ for the convenience of the following mathematical descriptions. 
