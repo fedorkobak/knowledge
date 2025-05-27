@@ -12,8 +12,24 @@ This section deals with ideas from mathematics that I found useful.
 | Rational numbers    | $\mathbb{Q}$      | Fractions of integers                        | $1/2, −4/3, 7$               |
 | Irrational numbers  | —      | Cannot be expressed as a fraction            | $\sqrt{2}, \pi$                              |
 | Real numbers        | $\mathbb{R}$      | All rational and irrational numbers          | Any point on the number line             |
-| Imaginary numbers   | —      | Multiples of $i4 (where $i^2 = -1$)               | $i, 2i, −3i$                              |
+| Imaginary numbers   | —      | Multiples of $i$ (where $i^2 = -1$)               | $i, 2i, −3i$                              |
 | Complex numbers     | $\mathbb{Q}$      | Numbers of form a + bi (a, b ∈ ℝ)            | $2 + 3i, −1 − i, 4$                       |
+
+## Quadratic function
+
+Consider a function of the form:
+
+$$
+f(x) = ax^2 + bx + c \quad \text{where } a, b, c \in \mathbb{Q}
+$$
+
+This function is called a "quadratic function".
+
+A common practical task is to find the values of $x$ for which $f(x) = 0$. The corresponding equation is called quadratic and is displayed explicitly below:
+
+$$
+ax^2 + bx + c = 0 \quad \text{where } a, b, c \in \mathbb{Q}
+$$
 
 ## Arithmetic progression
 
