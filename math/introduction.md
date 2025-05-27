@@ -20,7 +20,7 @@ This section deals with ideas from mathematics that I found useful.
 Consider a function of the form:
 
 $$
-f(x) = ax^2 + bx + c \quad \text{where } a, b, c \in \mathbb{Q}
+f(x) = ax^2 + bx + c \quad \text{where } a, b, c \in \mathbb{Q}, a \neq 0
 $$
 
 This function is called a "quadratic function".
@@ -28,8 +28,38 @@ This function is called a "quadratic function".
 A common practical task is to find the values of $x$ for which $f(x) = 0$. The corresponding equation is called quadratic and is displayed explicitly below:
 
 $$
-ax^2 + bx + c = 0 \quad \text{where } a, b, c \in \mathbb{Q}
+ax^2 + bx + c = 0 \quad \text{where } a, b, c \in \mathbb{Q}, a \neq 0
 $$
+
+### Equation solution
+
+Multiply the equation to $1/a$:
+
+$$
+x^2 + \frac{b}{a}x + \frac{c}{a} = 0
+$$
+
+Perform the following sequence of transformations to apply the sum-of-squares formula:
+
+$$x^2 + 2\frac{b}{2a}x + \left( \frac{b}{2a} \right)^2 - \left( \frac{b}{2a}\right)^2 + \frac{c}{a} = 0$$
+
+$$\left(x + \frac{b}{2a}\right)^2 = \frac{b^2}{4a^2} - \frac{c}{a}$$
+
+$$x + \frac{b}{2a} = \pm\sqrt{\frac{b^2 - 4ac}{4a^2}}$$
+
+Take a closer look at the expression on the right side of the equation:
+
+$$\pm\frac{\sqrt{b^2 - 4ac}}{2 |a|}$$
+
+Expression $\pm|a| = \pm a$ is correct as a concise way to represent that $|a|$ and $a$ differ only in sign, and both $\pm|a|$ and $\pm a$ denote the set of two numbers: $a$ and $-a$. So:
+
+$$x + \frac{b}{2a} = \pm \frac{\sqrt{b^2 -4ac}}{2a}$$
+
+Finally, both solutions to the equation can be expressed as follows:
+
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+The expression $b^2 - 4ac$ is called the descrimimnant of a quadratic equation and is denoted by $D$. Obviously, $D\geq0$ for there to be solutions in the rational numbers.
 
 ## Arithmetic progression
 
