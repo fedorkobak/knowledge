@@ -15,6 +15,32 @@ This section deals with ideas from mathematics that I found useful.
 | Imaginary numbers   | —      | Multiples of $i$ (where $i^2 = -1$)               | $i, 2i, −3i$                              |
 | Complex numbers     | $\mathbb{Q}$      | Numbers of form a + bi (a, b ∈ ℝ)            | $2 + 3i, −1 − i, 4$                       |
 
+## Square root
+
+The square root of a number $x$ is the number $y$ such that $x=y^2$.
+
+By definition of the square root, it always have to have two solutions. Since any pair of opposite numbers (i.e., $a = -b$) satisfy $a^2 = b^2$, squaring each yields the same result. 
+
+### Principal square root ($\sqrt{}$)
+
+**The principal square root** (rus. арифметический корень) is the **nonnegative** square root of a number.
+
+Principal suqre root usually denoted as:
+
+$$y = \sqrt{x}$$
+
+**Note:** The symbol $\sqrt{}$ is called a **radical**.
+
+**Note:** It's common to use the term "square root" when refferting to the principal square root. Remember that the notation $\sqrt{x}$ refers to the principal square root.
+
+It follows that when you are solving equation like:
+
+$$y = x^2$$
+
+Remeber that the expression $\sqrt{y}$ will correspond to $x$ value in both signs:
+
+$$x = \pm \sqrt{x}$$
+
 ## Quadratic function
 
 Consider a function of the form:
