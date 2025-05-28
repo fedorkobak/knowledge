@@ -27,7 +27,7 @@ By definition of the square root, it always have to have two solutions. Since an
 
 Principal suqre root usually denoted as:
 
-$$y = \sqrt{x}$$
+$$y = \sqrt{x}.$$
 
 **Note:** The symbol $\sqrt{}$ is called a **radical**.
 
@@ -35,11 +35,11 @@ $$y = \sqrt{x}$$
 
 It follows that when you are solving equation like:
 
-$$y = x^2$$
+$$y = x^2.$$
 
 Remeber that the expression $\sqrt{y}$ will correspond to $x$ value in both signs:
 
-$$x = \pm \sqrt{x}$$
+$$x = \pm \sqrt{x}.$$
 
 ## Quadratic function
 
