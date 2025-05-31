@@ -25,7 +25,7 @@ Could be illustrated using following drawing:
         <rect x="0" y="0" width="0.871" height="0.966"   />
     </g>
     <g 
-        font-size="0.07"
+        font-size="0.06"
         text-anchor="middle"
         style="font-family: 'LatinModern'"
         font-style="italic"
