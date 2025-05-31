@@ -12,8 +12,80 @@ This section deals with ideas from mathematics that I found useful.
 | Rational numbers    | $\mathbb{Q}$      | Fractions of integers                        | $1/2, −4/3, 7$               |
 | Irrational numbers  | —      | Cannot be expressed as a fraction            | $\sqrt{2}, \pi$                              |
 | Real numbers        | $\mathbb{R}$      | All rational and irrational numbers          | Any point on the number line             |
-| Imaginary numbers   | —      | Multiples of $i4 (where $i^2 = -1$)               | $i, 2i, −3i$                              |
+| Imaginary numbers   | —      | Multiples of $i$ (where $i^2 = -1$)               | $i, 2i, −3i$                              |
 | Complex numbers     | $\mathbb{Q}$      | Numbers of form a + bi (a, b ∈ ℝ)            | $2 + 3i, −1 − i, 4$                       |
+
+## Square root
+
+The square root of a number $x$ is the number $y$ such that $x=y^2$.
+
+By definition of the square root, it always have to have two solutions. Since any pair of opposite numbers (i.e., $a = -b$) satisfy $a^2 = b^2$, squaring each yields the same result. 
+
+### Principal square root ($\sqrt{}$)
+
+**The principal square root** (rus. арифметический корень) is the **nonnegative** square root of a number.
+
+Principal suqre root usually denoted as:
+
+$$y = \sqrt{x}.$$
+
+**Note:** The symbol $\sqrt{}$ is called a **radical**.
+
+**Note:** It's common to use the term "square root" when refferting to the principal square root. Remember that the notation $\sqrt{x}$ refers to the principal square root.
+
+It follows that when you are solving equation like:
+
+$$y = x^2.$$
+
+Remeber that the expression $\sqrt{y}$ will correspond to $x$ value in both signs:
+
+$$x = \pm \sqrt{x}.$$
+
+## Quadratic function
+
+Consider a function of the form:
+
+$$
+f(x) = ax^2 + bx + c \quad \text{where } a, b, c \in \mathbb{Q}, a \neq 0
+$$
+
+This function is called a "quadratic function".
+
+A common practical task is to find the values of $x$ for which $f(x) = 0$. The corresponding equation is called quadratic and is displayed explicitly below:
+
+$$
+ax^2 + bx + c = 0 \quad \text{where } a, b, c \in \mathbb{Q}, a \neq 0
+$$
+
+### Equation solution
+
+Multiply the equation to $1/a$:
+
+$$
+x^2 + \frac{b}{a}x + \frac{c}{a} = 0
+$$
+
+Perform the following sequence of transformations to apply the sum-of-squares formula:
+
+$$x^2 + 2\frac{b}{2a}x + \left( \frac{b}{2a} \right)^2 - \left( \frac{b}{2a}\right)^2 + \frac{c}{a} = 0$$
+
+$$\left(x + \frac{b}{2a}\right)^2 = \frac{b^2}{4a^2} - \frac{c}{a}$$
+
+$$x + \frac{b}{2a} = \pm\sqrt{\frac{b^2 - 4ac}{4a^2}}$$
+
+Take a closer look at the expression on the right side of the equation:
+
+$$\pm\frac{\sqrt{b^2 - 4ac}}{2 |a|}$$
+
+Expression $\pm|a| = \pm a$ is correct as a concise way to represent that $|a|$ and $a$ differ only in sign, and both $\pm|a|$ and $\pm a$ denote the set of two numbers: $a$ and $-a$. So:
+
+$$x + \frac{b}{2a} = \pm \frac{\sqrt{b^2 -4ac}}{2a}$$
+
+Finally, both solutions to the equation can be expressed as follows:
+
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+The expression $b^2 - 4ac$ is called the descrimimnant of a quadratic equation and is denoted by $D$. Obviously, $D\geq0$ for there to be solutions in the rational numbers.
 
 ## Arithmetic progression
 
