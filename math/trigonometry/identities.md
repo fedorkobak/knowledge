@@ -48,6 +48,7 @@ Could be illustrated using following drawing:
         <text x="0.7" y="-0.03">cos α sin β</text>
         <text x="0.93" y="0.2" transform="rotate(-90 0.93 0.2)">sin α sin β</text>
         <text x="0.93" y="0.7" transform="rotate(-90 0.93 0.7)">sin α cos β</text>
+        <text x="0.45" y="1.03">cos α cos β</text>
     </g>
     <g fill="none" stroke="black" stroke-width="0.005">
         <path d="M 0.065 0.85 A 0.1 0.1 0 0 1 0.12 0.97" />
