@@ -45,8 +45,8 @@ Could be illustrated using following drawing:
         <text x="0.65" y="0.28" transform="rotate(48 0.65 0.28)">sin β</text>
         <text x="-0.04" y="0.5" transform="rotate(-90 -0.04 0.5)">sin(α+β)</text>
         <text x="0.2" y="-0.03">cos(α+β)</text>
-        <text x="0.7" y="-0.03">cos α sin β</text>
-        <text x="0.93" y="0.2" transform="rotate(-90 0.93 0.2)">sin α sin β</text>
+        <text x="0.7" y="-0.03">sin α sin β</text>
+        <text x="0.93" y="0.2" transform="rotate(-90 0.93 0.2)">cos α sin β</text>
         <text x="0.93" y="0.7" transform="rotate(-90 0.93 0.7)">sin α cos β</text>
         <text x="0.45" y="1.03">cos α cos β</text>
     </g>
@@ -61,5 +61,28 @@ Could be illustrated using following drawing:
         <path d="M 0.82 0.38 L 0.77 0.42 0.81 0.47" />
     </g>
 </svg>
+
+Step-by-step breakdown of this drawing:
+
+1. Draw a right triangle $\Delta ABC$ with an angle of $\angle BAC = \beta$ and a hypotenuse of length 1. The cathetes of this triangle are equal to $\sin(\beta)$ and $\cos(\alpha)$.
+2. Draw rectangle $AFED$ around a triangle $ABC$ so that $\angle CAD = \alpha$.
+3. Using the properties of parallel lines: 
+    - $\angle FBA = \angle BAC + \angle CAD = \beta + \alpha$.
+    - $\angle CAD = \angle BCE = \alpha$.
+4. Consider the triangle $\Delta AFB$. Using the definitions of sine and cosine:
+    - $AF=\sin{(\alpha + \beta)}$.
+    - $FB=\cos{(\alpha + \beta)}$.
+5. Consider the triangle $\Delta BEC$. Using the definitions of sine and cosine:
+    - $BE = \sin{\alpha} \sin{\beta}$.
+    - $CE = \cos{\alpha} \sin{\beta}$.
+6. Consider the triangle $\Delta ACD$. Using the definitions of sine and cosine:
+    - $CD = \sin{\alpha} \cos{\beta}$.
+    - $AD = \cos{\alpha} \cos{\beta}$.
+
+
+Finally, using the properties of rectangle:
+
+- $AF = ED \Rightarrow \sin{\alpha + \beta} = \cos{\alpha} \sin{\beta} + \sin{\alpha} \cos{\beta}$.
+- $FE = AD \Rightarrow \cos{(\alpha + \beta)} + \sin{\alpha}\cos{\beta} = \cos{\alpha}\cos{\beta} \Rightarrow \cos{(\alpha + \beta)} = \cos{\alpha}\sin{\beta} - \sin{\alpha}\cos{\beta}$.
 
 Technically, speaking this figure does not prove identities - it works only for $\alpha, \beta$ that $\alpha + \beta < \pi/2, \alpha < pi/2, \beta < \pi/2$. However, it can be a useful way to remember the identities.
