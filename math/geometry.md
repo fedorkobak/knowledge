@@ -40,3 +40,29 @@ In the next picture $ABCD$ is a parallelogram, where $AB \parallel CD, AD \paral
   <text x="135" y="-5">C</text>
   <text x="105" y="60">D</text>
 </svg>
+
+## Cone
+
+A cone is a geometric figure formed by a circular base. Each point on the base is connected by a straight line to a single point called the **apex** or **vertex**. These lines are called **generating lines**.
+
+The following cell illustrates cone.
+
+<svg width="190" height="290" viewBox="-10 -10 190 290" fill="black" font-size="30" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="black" stroke-width="4">
+    <path d="M 10 220 L 95 20 180 220 A 85 40 0 0 1 10 220" />
+    <path d="M 180 220 A 85 40 0 0 0 10 220" stroke-dasharray="7"/>
+  </g>
+  <line x1="95" y1="20" x2="40" y2="250" stroke="red" stroke-width="2" />
+  <text x="35" y="275">M</text>
+  <text x="95" y=15>S</text>
+  <circle cx="95" cy="220" r=3 />
+  <line x1="95" y1="220" x2="130" y2="255" stroke="blue" stroke-width="2"/>
+  <text x="95" y="210">O</text>
+  <text x="120" y="235" fill="blue">r</text>
+<svg>
+
+Here:
+
+- The base has the center at the point $O$ and radius $r$.
+- The apex is $S$.
+- The $SM$ is a one of the generating lines.
