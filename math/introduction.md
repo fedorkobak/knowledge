@@ -113,7 +113,7 @@ If $a < 0$, $a^y$ changes the sign for even and odd values of $y$. Therefore, fo
 As $a > 0$ it powerd to any number will return positive number - $a^y > 0 \Rightarrow x>0$.
 
 
-**Note:** You can find such $x < 0, a < 0$ that the logarithm is correct by definition, e.g. $\log_{-2} -8 = 3$$. However, it is difficult to use such logarithms in applications, se there is an argeement that $x > 0$ and $a > 0$.
+**Note:** You can find such $x < 0, a < 0$ that the logarithm is correct by definition, e.g. $\log_{-2} -8 = 3$. However, it is difficult to use such logarithms in applications, se there is an argeement that $x > 0$ and $a > 0$.
 
 ## Arithmetic progression
 
