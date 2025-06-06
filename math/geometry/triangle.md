@@ -63,7 +63,13 @@ Median is a line segment that connects a vertex to the midpoint of the opposite 
 
 The following picture illustrates the median $AO$ of the $\angle BAC$.
 
-<svg width="360" height="320" viewBox="-5 -15 90 80" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
+<svg
+  width="360" height="320"
+  viewBox="-5 -15 90 80"
+  fill="black" font-size="10"
+  style="font-family: 'LatinModern'" font-style="italic"
+  text-anchor="middle"
+  xmlns="http://www.w3.org/2000/svg">
     <polygon
       points="5,50 25,0 75,50"
       fill="none"
