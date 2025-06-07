@@ -117,7 +117,7 @@ The following picture illustrates the median $AO$ of the $\angle BAC$.
     <text x="14" y="42" fill="blue">γ</text>
 </svg>
 
-In the picture, $AC$ is denoted as $M$ for the convenience of the following mathematical descriptions. 
+In the picture, $AC$ is denoted as $M$ for the convenience of the following mathematical descriptions.
 
 ### Distance
 
