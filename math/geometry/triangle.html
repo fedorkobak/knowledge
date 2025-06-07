@@ -66,7 +66,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Trigonometry" href="../trigonometry.html" />
+    <link rel="next" title="Cone" href="cone.html" />
     <link rel="prev" title="Geometry" href="../geometry.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -215,6 +215,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Intorduction</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../geometry.html">Geometry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Triangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cone.html">Cone</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../trigonometry.html">Trigonometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -233,6 +234,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/intro.html">Intro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../algorithms/complexity.html">Complexity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../algorithms/trees.html">Trees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../algorithms/dynamic_prog.html">Dynamic programming</a></li>
@@ -620,7 +622,11 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similar-triangles">Similar triangles</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-area">Triangle area</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance">Distance</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -638,24 +644,30 @@
 <section id="similar-triangles">
 <h2>Similar triangles<a class="headerlink" href="#similar-triangles" title="Link to this heading">#</a></h2>
 <p>Given two triangles <span class="math notranslate nohighlight">\(ABC\)</span> and <span class="math notranslate nohighlight">\(DEF\)</span>.</p>
-<svg width="300" height="120" style="font-family: 'LatinModern'" font-style="italic" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="50,100 70,50 120,100" 
-             fill="none" stroke="green" stroke-width="2"/>
-    <circle cx="50" cy="100" r="2" fill="black" />
-    <circle cx="70" cy="50" r="2" fill="black" />
-    <circle cx="120" cy="100" r="2" fill="black" />
-    <text x="45" y="115" font-size="12" fill="green">A</text>
-    <text x="65" y="45" font-size="12" fill="green">B</text>
-    <text x="115" y="115" font-size="12" fill="green">C</text>
-    <polygon points="150,100 180,20 250,100" 
-             fill="none" stroke="green" stroke-width="2"/>
-    <circle cx="150" cy="100" r="2" fill="black" />
-    <circle cx="180" cy="20" r="2" fill="black" />
-    <circle cx="250" cy="100" r="2" fill="black" />
-    <text x="145" y="115" font-size="12" fill="green">D</text>
-    <text x="175" y="15" font-size="12" fill="green">E</text>
-    <text x="245" y="115" font-size="12" fill="green">F</text>
-</svg>
+<p><svg
+width="500" height="200"
+style="font-family: 'LatinModern'" font-style="italic"
+fill="black" stroke="black"
+xmlns="http://www.w3.org/2000/svg">
+<g fill="none" stroke-width="2">
+<polygon points="20,170 60,70 150,170" />
+<polygon points="200,170 260,30 380,170" />
+</g>
+<g font-size="22" stroke="none">
+<text x="10" y="190" >A</text>
+<text x="55" y="60" >B</text>
+<text x="145" y="190" >C</text>
+<text x="190" y="190" >D</text>
+<text x="255" y="20" >E</text>
+<text x="375" y="190" >F</text>
+</g>
+<circle cx="20" cy="170" r="3" />
+<circle cx="60" cy="70" r="3" />
+<circle cx="150" cy="170" r="3" />
+<circle cx="200" cy="170" r="3" />
+<circle cx="260" cy="30" r="3" />
+<circle cx="380" cy="170" r="3" />
+</svg></p>
 <p>Triangles are called similar (<span class="math notranslate nohighlight">\(\Delta ABC \sim \Delta EDF\)</span>) if the following holds:</p>
 <div class="math notranslate nohighlight">
 \[\frac{AB}{DE} = \frac{AC}{DF} = \frac{BC}{EF}\]</div>
@@ -679,42 +691,122 @@
 <li><p><span class="math notranslate nohighlight">\(S_{DEF}\)</span> is the area of triangle <span class="math notranslate nohighlight">\(DEF\)</span>.</p></li>
 </ul>
 </section>
+<section id="triangle-area">
+<h2>Triangle area<a class="headerlink" href="#triangle-area" title="Link to this heading">#</a></h2>
+<p>There are a few methods for calculating the area of the triangle (<span class="math notranslate nohighlight">\(S\)</span>).</p>
+<div class="math notranslate nohighlight">
+\[S = \frac{1}{2}ah_a\]</div>
+<p>Where <span class="math notranslate nohighlight">\(a\)</span> is the length of the triangle and <span class="math notranslate nohighlight">\(h_a\)</span> is a heights its heights.</p>
+<div class="math notranslate nohighlight">
+\[S = \frac{1}{2} bc \sin{\alpha}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span> are sides of a triangle, and <span class="math notranslate nohighlight">\(\alpha\)</span> is the angle between them.</p>
+<p><strong>Heron’s formula</strong>:</p>
+<div class="math notranslate nohighlight">
+\[S = \sqrt{p(p-a)(p-b)(p-c)}\]</div>
+<p>If <span class="math notranslate nohighlight">\(a, b, c\)</span> are the sides of traingle and <span class="math notranslate nohighlight">\(p\)</span> is half of the perimeter.</p>
+</section>
 <section id="median">
 <h2>Median<a class="headerlink" href="#median" title="Link to this heading">#</a></h2>
 <p>Median is a line segment that connects a vertex to the midpoint of the opposite side.</p>
 <p>The following picture illustrates the median <span class="math notranslate nohighlight">\(AO\)</span> of the <span class="math notranslate nohighlight">\(\angle BAC\)</span>.</p>
-<svg width="360" height="320" viewBox="-5 -15 90 80" fill="black" font-size="10" style="font-family: 'LatinModern'" font-style="italic" text-anchor="middle" xmlns="http://www.w3.org/2000/svg">
-  <!-- Triangle ABC -->
-    <polygon points="5,50 25,0 75,50" 
-             fill="none" stroke="green" stroke-width="2"/>
-    <line x1="5" y1="50" x2="50" y2="25" stroke-width="1" stroke="red"/>
-    <g stroke-width="0.5" stroke="black">
-      <line x1="60" y1="40" x2="65" y2="35"/>
-      <line x1="35"  y1="15" x2="40" y2="10"/>
-    </g>
-    <circle cx="5" cy="50" r="2"/>
-    <circle cx="25" cy="0" r="2"/>
-    <circle cx="75" cy="50" r="2"/>
-    <circle cx="50" cy="25" r="2"/>
-    <text x="2" y="60">A</text>
-    <text x="25" y="-5">B</text>
-    <text x="75" y="60">C</text>
-    <text x="45" y="38">O</text>
-    <text x="27" y="34" fill="red">M</text>
-    <g fill="green">
-      <text x="40" y="57">a</text>
-      <text x="10" y="25">b</text>
-      <text x="53" y="23">c</text>
-    </g>
-    <path d="M 10 40 A 10,10 0,0 1 15,49" fill="none" stroke-width="0.5" stroke="blue"/>
-    <text x="15" y="40" fill="blue">γ</text>
-</svg>
+<p><svg
+  width="360" height="320"
+  viewBox="-5 -15 90 80"
+  fill="black" font-size="10"
+  style="font-family: 'LatinModern'" font-style="italic"
+  text-anchor="middle"
+  xmlns="http://www.w3.org/2000/svg">
+<polygon
+      points="5,50 25,0 75,50"
+      fill="none"
+      stroke="black"
+      stroke-width="1"
+    />
+<line x1="5" y1="50" x2="50" y2="25" stroke-width="1" stroke="red"/>
+<g stroke-width="0.5" stroke="black">
+<line x1="60" y1="40" x2="65" y2="35"/>
+<line x1="35"  y1="15" x2="40" y2="10"/>
+</g>
+<circle cx="5" cy="50" r="1"/>
+<circle cx="25" cy="0" r="1"/>
+<circle cx="75" cy="50" r="1"/>
+<circle cx="50" cy="25" r="1"/>
+<text x="2" y="60">A</text>
+<text x="25" y="-5">B</text>
+<text x="75" y="60">C</text>
+<text x="50" y="35">O</text>
+<text x="27" y="34" fill="red">m</text>
+<g fill="black">
+<text x="40" y="57">a</text>
+<text x="10" y="25">b</text>
+<text x="53" y="23">c</text>
+</g>
+<path d="M 8 43 A 7,7 0,0 1 13,50" fill="none" stroke-width="0.5" stroke="blue"/>
+<text x="14" y="42" fill="blue">γ</text>
+</svg></p>
 <p>In the picture, <span class="math notranslate nohighlight">\(AC\)</span> is denoted as <span class="math notranslate nohighlight">\(M\)</span> for the convenience of the following mathematical descriptions.</p>
+<section id="distance">
+<h3>Distance<a class="headerlink" href="#distance" title="Link to this heading">#</a></h3>
 <p>To calculate the distance of the median use formulas:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(M=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(M=\frac{1}{2}\sqrt{2a^2+2b^2+2ab\,cos(\gamma)}.\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(m=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(m=\frac{1}{2}\sqrt{2a^2+2b^2+2ab\,\cos(\gamma)}.\)</span></p></li>
 </ul>
+<p>To prove the identity <span class="math notranslate nohighlight">\(M=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}\)</span>, extend the <span class="math notranslate nohighlight">\(AO\)</span> line with the <span class="math notranslate nohighlight">\(OD\)</span> line, which length equals to <span class="math notranslate nohighlight">\(m\)</span>, and draw the <span class="math notranslate nohighlight">\(BD\)</span> and <span class="math notranslate nohighlight">\(CD\)</span> lines. As shown in the following picture:</p>
+<p><svg
+  width="440" height="320"
+  viewBox="-5 -15 110 80"
+  fill="black" font-size="10"
+  style="font-family: 'LatinModern'" font-style="italic"
+  text-anchor="middle"
+  xmlns="http://www.w3.org/2000/svg">
+<polygon
+      points="5,50 25,0 75,50"
+      fill="none"
+      stroke="black"
+      stroke-width="1"
+    />
+<line x1="5" y1="50" x2="50" y2="25" stroke-width="1" stroke="red"/>
+<g stroke-width="0.5" stroke="black">
+<line x1="60" y1="40" x2="65" y2="35"/>
+<line x1="35"  y1="15" x2="40" y2="10"/>
+</g>
+<circle cx="5" cy="50" r="1"/>
+<circle cx="25" cy="0" r="1"/>
+<circle cx="75" cy="50" r="1"/>
+<circle cx="50" cy="25" r="1"/>
+<text x="2" y="60">A</text>
+<text x="25" y="-5">B</text>
+<text x="75" y="60">C</text>
+<text x="50" y="35">O</text>
+<text x="27" y="34" fill="red">m</text>
+<g fill="black">
+<text x="40" y="57">a</text>
+<text x="10" y="25">b</text>
+<text x="53" y="23">c</text>
+</g>
+<g stroke-width="0.7" stroke="black" stroke-dasharray="3">
+<line x1="25" y1="0" x2="95" y2="0"/>
+<line x1="95" y1="0" x2="75" y2="50"/>
+<line x1="95" y1="0" x2="50" y2="25" stroke="red" />
+</g>
+<g stroke-width="0.5" stroke="red">
+<line x1="70.3" y1="10.75" x2="72.85" y2="15.25"/>
+<line x1="74.65" y1="14.25" x2="72.15" y2="9.75"/>
+<line x1="29.65" y1="39.25" x2="27.15" y2="34.75"/>
+<line x1="27.85" y1="40.25" x2="25.35" y2="35.75"/>
+</g>
+<text x="97" y="-5">D</text>
+<circle cx="95" cy="0" r="1"/>
+</svg></p>
+<p>The shape <span class="math notranslate nohighlight">\(ABDC\)</span> is a parallelogram because it is a four-cornered figure whose diagonals are divided into equal segments at their intersection.</p>
+<p>Using properties of the diagonals of the parallelogramm:</p>
+<div class="math notranslate nohighlight">
+\[c^2 + (2m)^2 = 2a^2 + 2b^2\]</div>
+<p>We can obtain the following by using simple transformations of the formula:</p>
+<div class="math notranslate nohighlight">
+\[m = \frac{1}{2}\sqrt{2a^2 + 2b^2 - c^2}\]</div>
+</section>
 </section>
 </section>
 
@@ -758,11 +850,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="../trigonometry.html"
+       href="cone.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Trigonometry</p>
+        <p class="prev-next-title">Cone</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -784,7 +876,11 @@
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#similar-triangles">Similar triangles</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-area">Triangle area</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance">Distance</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

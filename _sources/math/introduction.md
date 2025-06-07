@@ -87,6 +87,34 @@ $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
 The expression $b^2 - 4ac$ is called the descrimimnant of a quadratic equation and is denoted by $D$. Obviously, $D\geq0$ for there to be solutions in the rational numbers.
 
+## Logarithm
+
+Logarithm of a number $x$ with base $a$ is the number $y$ such that $a^y = x$.
+The logarithm of $x$ with base $a$ is denoted as $\log_a(x)$.
+
+### Restrictions
+
+The logarithm is defined only in the following cases:
+
+$$
+\begin{cases}
+   x > 0; \\
+   a \neq 1; \\
+   a > 0.
+\end{cases}
+$$
+
+$a \neq 1$, since $1^y = 1$ for all real numbers $y$. So for this case the function cannot be defined uniquely.
+
+$0^y = 0$ for all $y \geq 0$ and not defined for $y < 0$. So for this case the function cannot be defined uniquely.
+
+If $a < 0$, $a^y$ changes the sign for even and odd values of $y$. Therefore, for sertain values of $x$, it is impossible to find such $y$ that corresponds to the $\log_a x$.
+
+As $a > 0$ it powerd to any number will return positive number - $a^y > 0 \Rightarrow x>0$.
+
+
+**Note:** You can find such $x < 0, a < 0$ that the logarithm is correct by definition, e.g. $\log_{-2} -8 = 3$. However, it is difficult to use such logarithms in applications, se there is an argeement that $x > 0$ and $a > 0$.
+
 ## Arithmetic progression
 
 An arithmetic progression is a sequence of numbers in which each element differs from the previous one by a constant amount. 
