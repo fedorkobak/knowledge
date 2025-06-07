@@ -108,7 +108,7 @@ To calculate the distance of the median use formulas:
 - $m=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}$.
 - $m=\frac{1}{2}\sqrt{2a^2+2b^2+2ab\,\cos(\gamma)}.$
 
-To prove identity $M=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}$ extend the paralellogramm, as showen at the following picutre:
+To prove the identity $M=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}$, extend the $AO$ line with the $OD$ line, which length equals to $m$, and draw the $BD$ and $CD$ lines. As shown in the following picture:
 
 <svg
   width="440" height="320"
@@ -153,5 +153,16 @@ To prove identity $M=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}$ extend the paralellogramm,
       <line x1="29.65" y1="39.25" x2="27.15" y2="34.75"/>
       <line x1="27.85" y1="40.25" x2="25.35" y2="35.75"/>
     </g>
+    <text x="97" y="-5">D</text>
     <circle cx="95" cy="0" r="1"/>
 </svg>
+
+The shape $ABDC$ is a parallelogram because it is a four-cornered figure whose diagonals are divided into equal segments at their intersection.
+
+Using properties of the diagonals of the parallelogramm:
+
+$$c^2 + (2m)^2 = 2a^2 + 2b^2$$
+
+We can obtain the following by using simple transformations of the formula:
+
+$$m = \frac{1}{2}\sqrt{2a^2 + 2b^2 - c^2}$$
