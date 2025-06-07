@@ -57,6 +57,24 @@ Where:
 - $S_{ABC}$ is the area of triangle $ABC$.
 - $S_{DEF}$ is the area of triangle $DEF$.
 
+## Triangle area
+
+There are a few methods for calculating the area of the triangle ($S$).
+
+$$S = \frac{1}{2}ah_a$$
+
+Where $a$ is the length of the triangle and $h_a$ is a heights its heights.
+
+$$S = \frac{1}{2} bc \sin{\alpha}$$
+
+Here, $b$ and $c$ are sides of a triangle, and $\alpha$ is the angle between them.
+
+**Heron's formula**:
+
+$$S = \sqrt{p(p-a)(p-b)(p-c)}$$
+
+If $a, b, c$ are the sides of traingle and $p$ is half of the perimeter.
+
 ## Median
 
 Median is a line segment that connects a vertex to the midpoint of the opposite side.
