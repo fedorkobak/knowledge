@@ -88,8 +88,8 @@ The following picture illustrates the median $AO$ of the $\angle BAC$.
     <text x="2" y="60">A</text>
     <text x="25" y="-5">B</text>
     <text x="75" y="60">C</text>
-    <text x="45" y="38">O</text>
-    <text x="27" y="34" fill="red">M</text>
+    <text x="50" y="35">O</text>
+    <text x="27" y="34" fill="red">m</text>
     <g fill="black">
       <text x="40" y="57">a</text>
       <text x="10" y="25">b</text>
@@ -105,5 +105,53 @@ In the picture, $AC$ is denoted as $M$ for the convenience of the following math
 
 To calculate the distance of the median use formulas:
 
-- $M=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}$.
-- $M=\frac{1}{2}\sqrt{2a^2+2b^2+2ab\,cos(\gamma)}.$
+- $m=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}$.
+- $m=\frac{1}{2}\sqrt{2a^2+2b^2+2ab\,\cos(\gamma)}.$
+
+To prove identity $M=\frac{1}{2}\sqrt{2a^2+2b^2-c^2}$ extend the paralellogramm, as showen at the following picutre:
+
+<svg
+  width="440" height="320"
+  viewBox="-5 -15 110 80"
+  fill="black" font-size="10"
+  style="font-family: 'LatinModern'" font-style="italic"
+  text-anchor="middle"
+  xmlns="http://www.w3.org/2000/svg">
+    <polygon
+      points="5,50 25,0 75,50"
+      fill="none"
+      stroke="black"
+      stroke-width="1"
+    />
+    <line x1="5" y1="50" x2="50" y2="25" stroke-width="1" stroke="red"/>
+    <g stroke-width="0.5" stroke="black">
+      <line x1="60" y1="40" x2="65" y2="35"/>
+      <line x1="35"  y1="15" x2="40" y2="10"/>
+    </g>
+    <circle cx="5" cy="50" r="1"/>
+    <circle cx="25" cy="0" r="1"/>
+    <circle cx="75" cy="50" r="1"/>
+    <circle cx="50" cy="25" r="1"/>
+    <text x="2" y="60">A</text>
+    <text x="25" y="-5">B</text>
+    <text x="75" y="60">C</text>
+    <text x="50" y="35">O</text>
+    <text x="27" y="34" fill="red">m</text>
+    <g fill="black">
+      <text x="40" y="57">a</text>
+      <text x="10" y="25">b</text>
+      <text x="53" y="23">c</text>
+    </g>
+    <g stroke-width="0.7" stroke="black" stroke-dasharray="3">
+      <line x1="25" y1="0" x2="95" y2="0"/>
+      <line x1="95" y1="0" x2="75" y2="50"/>
+      <line x1="95" y1="0" x2="50" y2="25" stroke="red" />
+    </g>
+    <g stroke-width="0.5" stroke="red">
+      <line x1="70.3" y1="10.75" x2="72.85" y2="15.25"/>
+      <line x1="74.65" y1="14.25" x2="72.15" y2="9.75"/>
+      <line x1="29.65" y1="39.25" x2="27.15" y2="34.75"/>
+      <line x1="27.85" y1="40.25" x2="25.35" y2="35.75"/>
+    </g>
+    <circle cx="95" cy="0" r="1"/>
+</svg>
