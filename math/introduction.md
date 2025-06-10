@@ -117,7 +117,7 @@ As $a > 0$ it powerd to any number will return positive number - $a^y > 0 \Right
 
 ## Arithmetic progression
 
-An arithmetic progression is a sequence of numbers in which each element differs from the previous one by a constant amount. 
+An arithmetic progression is a sequence of numbers in which each element differs from the previous one by a constant amount.
 
 Let's denote:
 
@@ -135,7 +135,6 @@ $$a_1, a_1 + d, a_1 + 2d, ...$$
 This leads to a more useful formula:
 
 $$a_n = a_1 + (n-1)d$$
-
 
 ### Sum
 
@@ -160,12 +159,11 @@ Finally as $a_n = a_1 + [n-1]d$:
 
 $$S_n = \frac{n(a_1 + a_n)}{2}.$$
 
-
 ## Trigonometry
 
 Trigonometry is a branch of mathematics that studies the relationships between the angles and sides of triangles, especially right-angled triangles.
 
-There are three main functions in trigonometry: 
+There are three main functions in trigonometry:
 
 - sine: $sin(\theta)$.
 - cosine: $cos(\theta)$.
