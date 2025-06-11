@@ -4,10 +4,12 @@ There is a set of trigonometry identities. This page discusses proofs for some o
 
 ## Sum & Difference
 
+### Sum
+
 Validity of the identieties:
 
 - $\sin(\alpha + \beta) = \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)$.
-- $\sin(\alpha - \beta) = \sin(\alpha)\cos(\beta) - \cos(\alpha)\sin(\beta)$.
+- $\cos(\alpha + \beta) = \cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta)$.
 
 Could be illustrated using following drawing:
 
@@ -79,10 +81,9 @@ Step-by-step breakdown of this drawing:
     - $CD = \sin{\alpha} \cos{\beta}$.
     - $AD = \cos{\alpha} \cos{\beta}$.
 
-
 Finally, using the properties of rectangle:
 
-- $AF = ED \Rightarrow \sin{\alpha + \beta} = \cos{\alpha} \sin{\beta} + \sin{\alpha} \cos{\beta}$.
+- $AF = ED \Rightarrow \sin{(\alpha + \beta)} = \cos{\alpha} \sin{\beta} + \sin{\alpha} \cos{\beta}$.
 - $FE = AD \Rightarrow \cos{(\alpha + \beta)} + \sin{\alpha}\cos{\beta} = \cos{\alpha}\cos{\beta} \Rightarrow \cos{(\alpha + \beta)} = \cos{\alpha}\sin{\beta} - \sin{\alpha}\cos{\beta}$.
 
 Technically, speaking this figure does not prove identities - it works only for $\alpha, \beta$ that $\alpha + \beta < \pi/2, \alpha < pi/2, \beta < \pi/2$. However, it can be a useful way to remember the identities.
