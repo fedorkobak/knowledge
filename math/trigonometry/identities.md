@@ -26,7 +26,7 @@ Could be illustrated using following drawing:
         <path d="M 0.5 0 L 0.866 0.433 0 0.966 Z" stroke-width="0.008" />
         <rect x="0" y="0" width="0.871" height="0.966"   />
     </g>
-    <g 
+    <g
         font-size="0.06"
         text-anchor="middle"
         style="font-family: 'LatinModern'"
@@ -87,3 +87,27 @@ Finally, using the properties of rectangle:
 - $FE = AD \Rightarrow \cos{(\alpha + \beta)} + \sin{\alpha}\cos{\beta} = \cos{\alpha}\cos{\beta} \Rightarrow \cos{(\alpha + \beta)} = \cos{\alpha}\sin{\beta} - \sin{\alpha}\cos{\beta}$.
 
 Technically, speaking this figure does not prove identities - it works only for $\alpha, \beta$ that $\alpha + \beta < \pi/2, \alpha < pi/2, \beta < \pi/2$. However, it can be a useful way to remember the identities.
+
+### Difference
+
+Validity of identities:
+
+- $\sin(\alpha - \beta) = \sin(\alpha)\cos(\beta) - \cos(\alpha)\cos(\beta)$.
+- $\cos(\alpha - \beta) = \cos(\alpha)\cos(\beta) + \sin(\alpha)\cos(\beta)$.
+
+Could be illustrated using following drawing:
+
+<svg width="485.4101966249685" height="267.3019572565104" viewbox="-0.1 -0.1 1.2135254915624212 0.668254893141276">
+    <g>
+        <circle cx="0" cy="0" r="0.015" />
+        <circle cx="0" cy="0.44550326209418395" r="0.015" />
+        <circle cx="0.8090169943749475" cy="0" r="0.015" />
+        <circle cx="0.8090169943749475" cy="0.44550326209418395" r="0.015" />
+        <circle cx="0.4827257297075892" cy="0" r="0.015" />
+        <circle cx="0.8090169943749475" cy="0.19995154415133232" r="0.015" />
+    </g>
+    <path
+        d="M 0 0 L 0 0 0 0.44550326209418395 0.8090169943749475 0.44550326209418395 0.8090169943749475 0 Z"
+        fill="none" stroke-width="0.01" stroke="black"
+    />
+</svg>
