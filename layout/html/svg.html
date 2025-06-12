@@ -66,7 +66,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Path" href="svg/path.html" />
+    <link rel="next" title="Text" href="svg/text.html" />
     <link rel="prev" title="List tags" href="lists.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -378,6 +378,7 @@
 <li class="toctree-l2"><a class="reference internal" href="tables.html">Tables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lists.html">List tags</a></li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">SVG</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="svg/text.html">Text</a></li>
 <li class="toctree-l3"><a class="reference internal" href="svg/path.html">Path</a></li>
 </ul>
 </details></li>
@@ -628,10 +629,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#view-box">View box</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path">Path</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform">Transform</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tex">TeX</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
 </ul>
             </nav>
         </div>
@@ -936,7 +934,7 @@ stroke="black" fill="none"
 <td><p>Alignment of the text relative to <code class="docutils literal notranslate"><span class="pre">x</span></code>: <code class="docutils literal notranslate"><span class="pre">start</span></code>, <code class="docutils literal notranslate"><span class="pre">middle</span></code>, or <code class="docutils literal notranslate"><span class="pre">end</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dominant-baseline</span></code></p></td>
-<td><p>Controls vertical alignment of the text.</p></td>
+<td><p>Controls vertical alignment of the text. Check <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/dominant-baseline">dominant-baseline</a> page of the MDN docs.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">font-family</span></code></p></td>
 <td><p>Font family for the text.</p></td>
@@ -1024,31 +1022,6 @@ stroke="black" fill="none"
 </svg>
 </div></div>
 </div>
-<section id="tex">
-<h3>TeX<a class="headerlink" href="#tex" title="Link to this heading">#</a></h3>
-<p>SVG does not support TeX. If you have graphics containing TeX, you have to manipulate text to make symbols to look like TeX. The only approach I know of yet is to use the <code class="docutils literal notranslate"><span class="pre">style=&quot;font-family:</span> <span class="pre">'LatinModern'</span></code> and <code class="docutils literal notranslate"><span class="pre">font-style=&quot;italic&quot;</span></code> attributes for the <code class="docutils literal notranslate"><span class="pre">text</span></code> tag. This approach doesn’t produce ideal results:</p>
-<ul class="simple">
-<li><p>You can’t use complex fomulas in your SVG.</p></li>
-<li><p>Some symbosl dysplayed not exactly as they supposed to be dsiplayed by TeX.</p></li>
-</ul>
-<hr class="docutils" />
-<p>The following cell illustrates how the TeX expression <span class="math notranslate nohighlight">\(ABC \alpha \beta \gamma\)</span> will be displayed using the described approach.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%HTML</span>
-<span class="p">&lt;</span><span class="nt">svg</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;100&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;30&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;background-color: #f9f9f9;&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">text</span> <span class="na">x</span><span class="o">=</span><span class="s">0</span> <span class="na">y</span><span class="o">=</span><span class="s">20</span> <span class="na">font-size</span><span class="o">=</span><span class="s">&quot;24&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;font-family: &#39;LatinModern&#39;&quot;</span> <span class="na">font-style</span><span class="o">=</span><span class="s">&quot;italic&quot;</span><span class="p">&gt;</span>ABCαβγ<span class="p">&lt;/</span><span class="nt">text</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">svg</span><span class="p">&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><svg width="100" height="30" style="background-color: #f9f9f9;">
-<text x=0 y=20 font-size="24" style="font-family: 'LatinModern'" font-style="italic">ABCαβγ</text>
-</svg>
-</div></div>
-</div>
-</section>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -1094,11 +1067,11 @@ stroke="black" fill="none"
       </div>
     </a>
     <a class="right-next"
-       href="svg/path.html"
+       href="svg/text.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Path</p>
+        <p class="prev-next-title">Text</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1123,10 +1096,7 @@ stroke="black" fill="none"
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#view-box">View box</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path">Path</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform">Transform</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tex">TeX</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
 </ul>
   </nav></div>
 

@@ -4,10 +4,12 @@ There is a set of trigonometry identities. This page discusses proofs for some o
 
 ## Sum & Difference
 
+### Sum
+
 Validity of the identieties:
 
 - $\sin(\alpha + \beta) = \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)$.
-- $\sin(\alpha - \beta) = \sin(\alpha)\cos(\beta) - \cos(\alpha)\sin(\beta)$.
+- $\cos(\alpha + \beta) = \cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta)$.
 
 Could be illustrated using following drawing:
 
@@ -24,7 +26,7 @@ Could be illustrated using following drawing:
         <path d="M 0.5 0 L 0.866 0.433 0 0.966 Z" stroke-width="0.008" />
         <rect x="0" y="0" width="0.871" height="0.966"   />
     </g>
-    <g 
+    <g
         font-size="0.06"
         text-anchor="middle"
         style="font-family: 'LatinModern'"
@@ -66,7 +68,7 @@ Step-by-step breakdown of this drawing:
 
 1. Draw a right triangle $\Delta ABC$ with an angle of $\angle BAC = \beta$ and a hypotenuse of length 1. The cathetes of this triangle are equal to $\sin(\beta)$ and $\cos(\alpha)$.
 2. Draw rectangle $AFED$ around a triangle $ABC$ so that $\angle CAD = \alpha$.
-3. Using the properties of parallel lines: 
+3. Using the properties of parallel lines:
     - $\angle FBA = \angle BAC + \angle CAD = \beta + \alpha$.
     - $\angle CAD = \angle BCE = \alpha$.
 4. Consider the triangle $\Delta AFB$. Using the definitions of sine and cosine:
@@ -79,10 +81,63 @@ Step-by-step breakdown of this drawing:
     - $CD = \sin{\alpha} \cos{\beta}$.
     - $AD = \cos{\alpha} \cos{\beta}$.
 
-
 Finally, using the properties of rectangle:
 
-- $AF = ED \Rightarrow \sin{\alpha + \beta} = \cos{\alpha} \sin{\beta} + \sin{\alpha} \cos{\beta}$.
+- $AF = ED \Rightarrow \sin{(\alpha + \beta)} = \cos{\alpha} \sin{\beta} + \sin{\alpha} \cos{\beta}$.
 - $FE = AD \Rightarrow \cos{(\alpha + \beta)} + \sin{\alpha}\cos{\beta} = \cos{\alpha}\cos{\beta} \Rightarrow \cos{(\alpha + \beta)} = \cos{\alpha}\sin{\beta} - \sin{\alpha}\cos{\beta}$.
 
 Technically, speaking this figure does not prove identities - it works only for $\alpha, \beta$ that $\alpha + \beta < \pi/2, \alpha < pi/2, \beta < \pi/2$. However, it can be a useful way to remember the identities.
+
+### Difference
+
+Validity of identities:
+
+- $\sin(\alpha - \beta) = \sin(\alpha)\cos(\beta) - \cos(\alpha)\cos(\beta)$.
+- $\cos(\alpha - \beta) = \cos(\alpha)\cos(\beta) + \sin(\alpha)\cos(\beta)$.
+
+Could be illustrated using following drawing:
+
+<svg
+    width="554.327719506772" height="412.2384881216701"
+    viewbox="-0.1 -0.1 1.38581929876693 1.0305962203041752">
+    <g>
+        <circle cx="0" cy="0" r="0.012" />
+        <circle cx="0" cy="0.6870641468694502" r="0.012" />
+        <circle cx="0.9238795325112867" cy="0" r="0.012" />
+        <circle cx="0.9238795325112867" cy="0.6870641468694502" r="0.012" />
+        <circle cx="0.5272028623656693" cy="0" r="0.012" />
+        <circle cx="0.9238795325112867" cy="0.3043807145043603" r="0.012" />
+    </g>
+    <path
+        d="M 0 0 L 0 0 0 0.6870641468694502 0.9238795325112867 0.6870641468694502 0.9238795325112867 0 Z"
+        fill="none" stroke-width="0.01" stroke="black"
+    />
+    <g stroke="black" stroke-width="0.007">
+        <line x1="0" y1="0.6870641468694502" x2="0.9238795325112867" y2="0.3043807145043603" />
+        <line x1="0.5272028623656693" y1="0" x2="0.9238795325112867" y2="0.3043807145043603" />
+        <line x1="0" y1="0.6870641468694502" x2="0.5272028623656693" y2="0" />
+    </g>
+    <g
+        font-size="0.06"
+        text-anchor="middle"
+        style="font-family: 'LatinModern'"
+        font-style="italic"
+    >
+        <text x="0" y="0.7570641468694501">A</text>
+        <text x="0.9238795325112867" y="0.7570641468694501">B</text>
+        <text x="0.9638795325112868" y="0.3243807145043603">C</text>
+        <text x="0.5272028623656693" y="-0.03">E</text>
+        <text x="0.9238795325112867" y="-0.03">D</text>
+        <text x="0" y="-0.03">F</text>
+        <text x="0.09699001626848186" y="0.6252746919095654">α</text>
+        <text x="0.15591808890797093" y="0.5784844547015034">β</text>
+    </g>
+    <g fill="none" stroke="black" stroke-width="0.005">
+        <path
+            d="M 0.060876142900872066 0.6077288128403266
+            A 0.1 0.1 0 0 1 0.1 0.6870641468694502"
+        />
+        <path d="M 0.0943580214963517 0.5640943791243087 A 0.155 0.155 0 0 1 0.14320132753924944 0.6277482148528613" />
+        <path d="M 0.10044563578643892 0.5561608457213963 A 0.165 0.165 0 0 1 0.15244012286436232 0.6239213805292103" />
+    </g>
+</svg>
