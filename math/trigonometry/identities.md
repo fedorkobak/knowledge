@@ -120,17 +120,18 @@ Could be illustrated using following drawing:
     <g
         font-size="0.06"
         text-anchor="middle"
+        dominant-baseline="middle"
         style="font-family: 'LatinModern'"
         font-style="italic"
     >
-        <text x="0" y="0.7570641468694501">A</text>
-        <text x="0.9238795325112867" y="0.7570641468694501">B</text>
-        <text x="0.9638795325112868" y="0.3243807145043603">C</text>
-        <text x="0.5272028623656693" y="-0.03">E</text>
-        <text x="0.9238795325112867" y="-0.03">D</text>
-        <text x="0" y="-0.03">F</text>
-        <text x="0.09699001626848186" y="0.6252746919095654">α</text>
-        <text x="0.15591808890797093" y="0.5784844547015034">β</text>
+        <text x="0" y="0.6990641468694502" dominant-baseline="Hanging">A</text>
+        <text x="0.9238795325112867" y="0.6990641468694502" dominant-baseline="Hanging">B</text>
+        <text x="0.9358795325112867" y="0.3043807145043603" text-anchor="start">C</text>
+        <text x="0.5272028623656693" y="-0.024" dominant-baseline="Auto">E</text>
+        <text x="0.9238795325112867" y="-0.024" dominant-baseline="Auto">D</text>
+        <text x="0" y="-0.024" dominant-baseline="Auto">F</text>
+        <text x="0.09916916753640441" y="0.6109689682433601">α</text>
+        <text x="0.15867066805824706" y="0.565311861067706">β</text>
     </g>
     <g fill="none" stroke="black" stroke-width="0.005">
         <path

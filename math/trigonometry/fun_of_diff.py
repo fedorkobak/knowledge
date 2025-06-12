@@ -24,25 +24,27 @@ def get_beta_arc(r: float):
 
 
 alfa_symbol = (
-    f'<text x="{m.cos(a - (b / 1.5)) * 0.115}" ' +
-    f'y="{h - m.sin(a - (b / 1.5)) * 0.115}">α</text>'
+    f'<text x="{m.cos(a - (b / 2)) * 0.125}" ' +
+    f'y="{h - m.sin(a - (b / 2)) * 0.125}">α</text>'
 )
 beta_symbol = (
-    f'<text x="{m.cos(a - (b / 1.7)) * 0.19}" ' +
-    f'y="{h - m.sin(a - (b / 1.7)) * 0.19}">β</text>'
+    f'<text x="{m.cos(a - (b / 2)) * 0.2}" ' +
+    f'y="{h - m.sin(a - (b / 2)) * 0.2}">β</text>'
 )
+
+pr = 0.012
 
 template = f"""
 <svg
     width="{w * 600}" height="{h * 600}"
     viewbox="{viewbox}">
     <g>
-        <circle cx="0" cy="0" r="0.012" />
-        <circle cx="0" cy="{h}" r="0.012" />
-        <circle cx="{w}" cy="0" r="0.012" />
-        <circle cx="{w}" cy="{h}" r="0.012" />
-        <circle cx="{m.cos(a)*m.cos(b)}" cy="0" r="0.012" />
-        <circle cx="{w}" cy="{C_y}" r="0.012" />
+        <circle cx="0" cy="0" r="{pr}" />
+        <circle cx="0" cy="{h}" r="{pr}" />
+        <circle cx="{w}" cy="0" r="{pr}" />
+        <circle cx="{w}" cy="{h}" r="{pr}" />
+        <circle cx="{m.cos(a)*m.cos(b)}" cy="0" r="{pr}" />
+        <circle cx="{w}" cy="{C_y}" r="{pr}" />
     </g>
     <path
         d="M 0 0 L 0 0 0 {h} {w} {h} {w} 0 Z"
@@ -56,15 +58,16 @@ template = f"""
     <g
         font-size="0.06"
         text-anchor="middle"
+        dominant-baseline="middle"
         style="font-family: 'LatinModern'"
         font-style="italic"
     >
-        <text x="0" y="{h + 0.07}">A</text>
-        <text x="{w}" y="{h + 0.07}">B</text>
-        <text x="{w + 0.04}" y="{C_y + 0.02}">C</text>
-        <text x="{E_x}" y="-0.03">E</text>
-        <text x="{w}" y="-0.03">D</text>
-        <text x="0" y="-0.03">F</text>
+        <text x="0" y="{h + pr}" dominant-baseline="Hanging">A</text>
+        <text x="{w}" y="{h + pr}" dominant-baseline="Hanging">B</text>
+        <text x="{w + pr}" y="{C_y}" text-anchor="start">C</text>
+        <text x="{E_x}" y="{-pr * 2}" dominant-baseline="Auto">E</text>
+        <text x="{w}" y="{-pr * 2}" dominant-baseline="Auto">D</text>
+        <text x="0" y="{-pr * 2}" dominant-baseline="Auto">F</text>
         {alfa_symbol}
         {beta_symbol}
     </g>
