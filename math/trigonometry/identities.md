@@ -68,7 +68,7 @@ Step-by-step breakdown of this drawing:
 
 1. Draw a right triangle $\Delta ABC$ with an angle of $\angle BAC = \beta$ and a hypotenuse of length 1. The cathetes of this triangle are equal to $\sin(\beta)$ and $\cos(\alpha)$.
 2. Draw rectangle $AFED$ around a triangle $ABC$ so that $\angle CAD = \alpha$.
-3. Using the properties of parallel lines: 
+3. Using the properties of parallel lines:
     - $\angle FBA = \angle BAC + \angle CAD = \beta + \alpha$.
     - $\angle CAD = \angle BCE = \alpha$.
 4. Consider the triangle $\Delta AFB$. Using the definitions of sine and cosine:
@@ -129,13 +129,15 @@ Could be illustrated using following drawing:
         <text x="0.5272028623656693" y="-0.03">E</text>
         <text x="0.9238795325112867" y="-0.03">D</text>
         <text x="0" y="-0.03">F</text>
-        <text
-            x="0.09968727415326883"
-            y="0.63283527784755">α</text>
+        <text x="0.09699001626848186" y="0.6252746919095654">α</text>
+        <text x="0.15591808890797093" y="0.5784844547015034">β</text>
     </g>
     <g fill="none" stroke="black" stroke-width="0.005">
         <path
             d="M 0.060876142900872066 0.6077288128403266
-            A 0.1 0.1 0 0 1 0.1 0.6870641468694502" />
+            A 0.1 0.1 0 0 1 0.1 0.6870641468694502"
+        />
+        <path d="M 0.0943580214963517 0.5640943791243087 A 0.155 0.155 0 0 1 0.14320132753924944 0.6277482148528613" />
+        <path d="M 0.10044563578643892 0.5561608457213963 A 0.165 0.165 0 0 1 0.15244012286436232 0.6239213805292103" />
     </g>
 </svg>

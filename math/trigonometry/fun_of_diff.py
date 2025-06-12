@@ -1,3 +1,6 @@
+'''
+Generate a picture that illustrates the sin/cos of difference identity
+'''
 import pyperclip
 import math as m
 
@@ -11,6 +14,23 @@ E_x = m.cos(a)*m.cos(b)
 
 mul = 0.5
 viewbox = f"-0.1 -0.1 {w + mul * w} {h + mul * h}"
+
+
+def get_beta_arc(r: float):
+    return (
+        f'<path d="M {m.cos(a) * r} {h - m.sin(a)*r} ' +
+        f'A {r} {r} 0 0 1 {m.cos(a - b) * r} {h - m.sin(a - b) * r}" />'
+    )
+
+
+alfa_symbol = (
+    f'<text x="{m.cos(a - (b / 1.5)) * 0.115}" ' +
+    f'y="{h - m.sin(a - (b / 1.5)) * 0.115}">α</text>'
+)
+beta_symbol = (
+    f'<text x="{m.cos(a - (b / 1.7)) * 0.19}" ' +
+    f'y="{h - m.sin(a - (b / 1.7)) * 0.19}">β</text>'
+)
 
 template = f"""
 <svg
@@ -45,14 +65,16 @@ template = f"""
         <text x="{E_x}" y="-0.03">E</text>
         <text x="{w}" y="-0.03">D</text>
         <text x="0" y="-0.03">F</text>
-        <text
-            x="{m.cos(a / 2) * 0.1 + 0.01}"
-            y="{h - m.sin(a / 2) * 0.1 - 0.01}">α</text>
+        {alfa_symbol}
+        {beta_symbol}
     </g>
     <g fill="none" stroke="black" stroke-width="0.005">
         <path
-            d="M {m.cos(a)*0.1} {h - m.sin(a)*0.1}
-            A 0.1 0.1 0 0 1 0.1 {h}" />
+            d="M {m.cos(a) * 0.1} {h - m.sin(a) * 0.1}
+            A 0.1 0.1 0 0 1 0.1 {h}"
+        />
+        {get_beta_arc(0.155)}
+        {get_beta_arc(0.165)}
     </g>
 </svg>
 """.strip()
