@@ -1,5 +1,5 @@
 '''
-Generate a picture that illustrates the sin/cos of difference identity
+Generate a SVG code that illustrates the sin/cos of difference identity
 '''
 import pyperclip
 import math as m
@@ -9,8 +9,8 @@ b = m.pi/6
 
 h = m.sin(a)*m.cos(b)
 w = m.cos(a - b)
-C_y = m.cos(a)*m.sin(b)
-E_x = m.cos(a)*m.cos(b)
+C_y = m.cos(a) * m.sin(b)
+E_x = m.cos(a) * m.cos(b)
 
 mul = 0.5
 viewbox = f"-0.1 -0.1 {w + mul * w} {h + mul * h}"
@@ -23,6 +23,17 @@ alpha_arc = (
 alpha_m_beta_arc = (
     f'<path d="M {m.cos(a - b) * 0.2} {h - m.sin(a - b) * 0.2} ' +
     f'A 0.2 0.2 0 0 1 0.2 {h}" ' +
+    '/>'
+)
+AEF_angle = (
+    f'<path d="M {E_x - m.cos(a) * 0.1} {m.sin(a) * 0.1} ' +
+    f'A 0.1 0.1 0 0 1 {E_x - 0.1} 0" ' +
+    '/>'
+)
+DCE_angle = (
+    f'<path d="M {w} {C_y - 0.1} ' +
+    'A 0.1 0.1 1 0 0 ' +
+    f'{w + m.cos(m.pi/2 + a) * 0.1} {C_y - m.sin(m.pi/2 + a) * 0.1}" ' +
     '/>'
 )
 
@@ -48,13 +59,23 @@ alpha_m_beta_symbol = (
     f'y="{h - m.sin((a - b) / 2) * 0.21}">α - β' +
     '</text>'
 )
+AEF_symbol = (
+    '<text ' +
+    f'x="{E_x - m.cos(a/2) * 0.13}" ' +
+    f'y="{m.sin(a/2) * 0.13}" >α' +
+    '</text>'
+)
+ECD_symbol = (
+    '<text ' +
+    f'x="{w + m.cos(m.pi/2 + a/2) * 0.13}" ' +
+    f'y="{C_y - m.sin(m.pi/2 + a/2) * 0.13}" >α' +
+    '</text>'
+)
 
 pr = 0.012
 
 template = f"""
-<svg
-    width="{w * 600}" height="{h * 600}"
-    viewbox="{viewbox}">
+<svg width="{w * 600}" height="{h * 600}" viewbox="{viewbox}">
     <g>
         <circle cx="0" cy="0" r="{pr}" />
         <circle cx="0" cy="{h}" r="{pr}" />
@@ -88,12 +109,16 @@ template = f"""
         {alfa_symbol}
         {beta_symbol}
         {alpha_m_beta_symbol}
+        {AEF_symbol}
+        {ECD_symbol}
     </g>
     <g fill="none" stroke="black" stroke-width="0.005">
         {alpha_arc}
         {get_beta_arc(0.155)}
         {get_beta_arc(0.165)}
         {alpha_m_beta_arc}
+        {AEF_angle}
+        {DCE_angle}
     </g>
 </svg>
 """.strip()
