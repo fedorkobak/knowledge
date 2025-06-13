@@ -15,6 +15,17 @@ E_x = m.cos(a)*m.cos(b)
 mul = 0.5
 viewbox = f"-0.1 -0.1 {w + mul * w} {h + mul * h}"
 
+alpha_arc = (
+    f'<path d="M {m.cos(a) * 0.1} {h - m.sin(a) * 0.1}' +
+    f'A 0.1 0.1 0 0 1 0.1 {h}"' +
+    '/>'
+)
+alpha_m_beta_arc = (
+    f'<path d="M {m.cos(a - b) * 0.2} {h - m.sin(a - b) * 0.2} ' +
+    f'A 0.2 0.2 0 0 1 0.2 {h}" ' +
+    '/>'
+)
+
 
 def get_beta_arc(r: float):
     return (
@@ -30,6 +41,12 @@ alfa_symbol = (
 beta_symbol = (
     f'<text x="{m.cos(a - (b / 2)) * 0.2}" ' +
     f'y="{h - m.sin(a - (b / 2)) * 0.2}">β</text>'
+)
+alpha_m_beta_symbol = (
+    '<text text-anchor="start" ' +
+    f'x="{m.cos((a - b) / 2) * 0.21}" ' +
+    f'y="{h - m.sin((a - b) / 2) * 0.21}">α - β' +
+    '</text>'
 )
 
 pr = 0.012
@@ -70,14 +87,13 @@ template = f"""
         <text x="0" y="{-pr * 2}" dominant-baseline="Auto">F</text>
         {alfa_symbol}
         {beta_symbol}
+        {alpha_m_beta_symbol}
     </g>
     <g fill="none" stroke="black" stroke-width="0.005">
-        <path
-            d="M {m.cos(a) * 0.1} {h - m.sin(a) * 0.1}
-            A 0.1 0.1 0 0 1 0.1 {h}"
-        />
+        {alpha_arc}
         {get_beta_arc(0.155)}
         {get_beta_arc(0.165)}
+        {alpha_m_beta_arc}
     </g>
 </svg>
 """.strip()
