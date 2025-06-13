@@ -4,10 +4,10 @@ Generate a SVG code that illustrates the sin/cos of difference identity
 import pyperclip
 import math as m
 
-a = m.pi/6 + m.pi/8
-b = m.pi/6
+a = m.pi / 6 + m.pi / 8
+b = m.pi / 6
 
-h = m.sin(a)*m.cos(b)
+h = m.sin(a) * m.cos(b)
 w = m.cos(a - b)
 C_y = m.cos(a) * m.sin(b)
 E_x = m.cos(a) * m.cos(b)
@@ -37,14 +37,6 @@ DCE_angle = (
     '/>'
 )
 
-
-def get_beta_arc(r: float):
-    return (
-        f'<path d="M {m.cos(a) * r} {h - m.sin(a)*r} ' +
-        f'A {r} {r} 0 0 1 {m.cos(a - b) * r} {h - m.sin(a - b) * r}" />'
-    )
-
-
 alfa_symbol = (
     f'<text x="{m.cos(a - (b / 2)) * 0.125}" ' +
     f'y="{h - m.sin(a - (b / 2)) * 0.125}">α</text>'
@@ -71,6 +63,31 @@ ECD_symbol = (
     f'y="{C_y - m.sin(m.pi/2 + a/2) * 0.13}" >α' +
     '</text>'
 )
+
+
+def get_beta_arc(r: float):
+    return (
+        f'<path d="M {m.cos(a) * r} {h - m.sin(a)*r} ' +
+        f'A {r} {r} 0 0 1 {m.cos(a - b) * r} {h - m.sin(a - b) * r}" />'
+    )
+
+
+def get_right_angle(x: float, y: float, d: float, angle: float) -> str:
+    p1 = (
+        x + m.cos(angle - m.pi / 4) * d,
+        y - m.sin(angle - m.pi / 4) * d
+    )
+    p2 = (
+        x + m.cos(angle) * (2**(1/2)) * d,
+        y - m.sin(angle) * (2**(1/2)) * d
+    )
+    p3 = (
+        x + m.cos(angle + m.pi / 4) * d,
+        y - m.sin(angle + m.pi / 4) * d
+    )
+
+    return f'<path d="M {p1[0]} {p1[1]} L {p2[0]} {p2[1]} {p3[0]} {p3[1]}"/>'
+
 
 pr = 0.012
 
@@ -119,6 +136,10 @@ template = f"""
         {alpha_m_beta_arc}
         {AEF_angle}
         {DCE_angle}
+        {get_right_angle(x=0, y=0, d=0.05, angle=-(m.pi / 4))}
+        {get_right_angle(x=w, y=0, d=0.05, angle=(m.pi + m.pi / 4))}
+        {get_right_angle(x=w, y=h, d=0.05, angle=(m.pi - m.pi / 4))}
+        {get_right_angle(x=E_x, y=0, d=0.05, angle=(m.pi + a + m.pi/4))}
     </g>
 </svg>
 """.strip()
