@@ -139,7 +139,7 @@ Could be illustrated using following drawing:
         <text x=0.765270309925805 y=-0.02 dominant-baseline="Auto">sin α sin β</text>
         <text x=0.780270309925805 y=0.15228265158971455 transform="rotate(42.0, 0.780270309925805, 0.15228265158971455)" dominant-baseline="Auto">sin β</text>
         <text x=-0.02 y=0.32179114877718823 transform="rotate(-90, -0.02, 0.32179114877718823)" dominant-baseline="Auto">sin α cos β</text>
-        <text x=1.0010565162951535 y=0.16728265158971453 transform="rotate(-90, 1.0010565162951535, 0.16728265158971453)" dominant-baseline="Auto">sin α cos β</text>
+        <text x=1.0010565162951535 y=0.16728265158971453 transform="rotate(-90, 1.0010565162951535, 0.16728265158971453)" dominant-baseline="Auto">cos α sin β</text>
         <text x=1.0010565162951535 y=0.48907380036690273 transform="rotate(-90, 1.0010565162951535, 0.48907380036690273)" dominant-baseline="Auto">sin (α - β)</text>
         <text x=0.47552825814757677 y=0.6535822975543765 dominant-baseline="hanging">cos (α - β)</text>
     </g>
@@ -156,3 +156,20 @@ Could be illustrated using following drawing:
         <path d="M 0.5460275732385136 0.03715724127386972 L 0.5831848145123834 0.07061377159181263 0.6166413448303263 0.033456530317942906"/>
     </g>
 </svg>
+
+There is a right triangle $AEC$ with $\angle AEC = \frac{\pi}{2}$ and hypotenuse $AC=1$, inscribed in the triangle $AFDB$ such that $E$ lies on $FD$, $C$ lies on $BD$ and $\angle EAC = \alpha$.
+
+To see correctness of sin/cos difference formulas follow the logic:
+
+- Due to the definitions of sine and cosine: $AE = \sin{\beta}$ and $EC = \cos{\beta}$.
+- Using the properties of parallel lines $AB$ and $FD$: $\angle AEF = \angle BEA \Rightarrow \angle AEF = \alpha$.
+- Due to the properties of the right angle triangles and the definition of trigonometric functions:
+  - For triangle $AFE$: $AF = \sin{\alpha}\cos{\beta}$, $EF = \cos{\alpha}\cos{\beta}$.
+  - For triangle $EDC$: $ED = \sin{\alpha}\sin{\beta}$, $CD = \sin{\alpha}cos{\beta}$.
+- Since $\angle ABC = \angle EAB - \angle EAC$: $\angle EAC = \alpha - \beta$. Finally:
+  - For triangle $ABC$: $BC=\sin{(\alpha - \beta)}$, $AB=\cos{(\alpha - \beta)}$.
+
+Finally, using properties of the rectangle:
+
+- $AB = FE + ED \Rightarrow \cos{(\alpha - \beta)} = \cos{\alpha} \cos{\beta} + \sin{\alpha} \sin{\beta}$
+- $AF = BC + CD \Rightarrow \sin{\alpha}\cos{\beta} = \sin{(\alpha - \beta)} + \cos{\alpha} \sin{\beta} \Rightarrow \sin{(\alpha - \beta)} = \sin{\alpha}\cos{\beta} - \cos{\alpha}\sin{\beta}$.

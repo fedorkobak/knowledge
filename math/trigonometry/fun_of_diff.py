@@ -103,7 +103,7 @@ CD_distance = (
     f'<text x={w + 0.05} y={C_y / 2} ' +
     f'transform="rotate(-90, {w + 0.05}, {C_y / 2})" ' +
     'dominant-baseline="Auto"' +
-    '>sin α cos β</text>'
+    '>cos α sin β</text>'
 )
 BC_distance = (
     f'<text x={w + 0.05} y={(h + C_y) / 2} ' +
