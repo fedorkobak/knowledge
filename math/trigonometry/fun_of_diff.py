@@ -169,8 +169,8 @@ template = f"""
         style="font-family: 'LatinModern'"
         font-style="italic"
     >
-        <text x="0" y="{h + pr}" dominant-baseline="Hanging">A</text>
-        <text x="{w}" y="{h + pr}" dominant-baseline="Hanging">B</text>
+        <text x="0" y="{h + pr * 1.5}" dominant-baseline="Hanging">A</text>
+        <text x="{w}" y="{h + pr * 1.5}" dominant-baseline="Hanging">B</text>
         <text x="{w + pr}" y="{C_y}" text-anchor="start">C</text>
         <text x="{E_x}" y="{-pr * 2}" dominant-baseline="Auto">E</text>
         <text x="{w}" y="{-pr * 2}" dominant-baseline="Auto">D</text>

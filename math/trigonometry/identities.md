@@ -122,8 +122,8 @@ Could be illustrated using following drawing:
         style="font-family: 'LatinModern'"
         font-style="italic"
     >
-        <text x="0" y="0.6555822975543765" dominant-baseline="Hanging">A</text>
-        <text x="0.9510565162951535" y="0.6555822975543765" dominant-baseline="Hanging">B</text>
+        <text x="0" y="0.6615822975543765" dominant-baseline="Hanging">A</text>
+        <text x="0.9510565162951535" y="0.6615822975543765" dominant-baseline="Hanging">B</text>
         <text x="0.9630565162951535" y="0.33456530317942906" text-anchor="start">C</text>
         <text x="0.5794841035564565" y="-0.024" dominant-baseline="Auto">E</text>
         <text x="0.9510565162951535" y="-0.024" dominant-baseline="Auto">D</text>
@@ -134,7 +134,7 @@ Could be illustrated using following drawing:
         <text x="0.4607231940629184" y="0.05287576359985402" >α</text>
         <text x="0.8981807526952995" y="0.21580439368589094" >α</text>
         <text x=0.47552825814757677 y=0.4790738003669027 transform="rotate(-18.0, 0.47552825814757677, 0.48907380036690273)" dominant-baseline="Auto">1</text>
-        <text x=0.2967911487771882 y=0.26474205177822824 transform="rotate(-48.0, 0.2967911487771882, 0.26474205177822824)" dominant-baseline="Auto">cos β</text>
+        <text x=0.3017911487771882 y=0.26974205177822824 transform="rotate(-48.0, 0.3017911487771882, 0.26974205177822824)" dominant-baseline="Auto">cos β</text>
         <text x=0.28974205177822826 y=-0.02 dominant-baseline="Auto">cos α cos β</text>
         <text x=0.765270309925805 y=-0.02 dominant-baseline="Auto">sin α sin β</text>
         <text x=0.780270309925805 y=0.15228265158971455 transform="rotate(42.0, 0.780270309925805, 0.15228265158971455)" dominant-baseline="Auto">sin β</text>
