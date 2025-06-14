@@ -4,7 +4,7 @@ Generate a SVG code that illustrates the sin/cos of difference identity
 import pyperclip
 import math as m
 
-a = m.pi / 6 + m.pi / 8
+a = m.pi / 6 + m.pi / 10
 b = m.pi / 6
 
 h = m.sin(a) * m.cos(b)
@@ -63,6 +63,58 @@ ECD_symbol = (
     f'y="{C_y - m.sin(m.pi/2 + a/2) * 0.13}" >α' +
     '</text>'
 )
+hypotenuse_one = (
+    f'<text x={w / 2} y={(C_y + h) / 2 - 0.01} ' +
+    f'transform="rotate({(-(a - b) * 180 / m.pi)}, {w/2}, {(C_y + h) / 2})" ' +
+    'dominant-baseline="Auto">1</text>'
+)
+AE_distance = (
+    f'<text x={h / 2 - 0.02} y={E_x / 2 - 0.02} ' +
+    'transform="rotate(' +
+    f'{-a * 180 / m.pi}, {h / 2 - 0.02}, {E_x / 2 - 0.02}' +
+    ')" ' +
+    'dominant-baseline="Auto"' +
+    '>cos β</text>'
+)
+EC_distance = (
+    '<text ' +
+    f'x={(E_x + w) / 2 + 0.015} y={C_y / 2 - 0.015} ' +
+    'transform="rotate(' +
+    f'{(m.pi/2 - a) * 180 / m.pi}, '
+    f'{(E_x + w) / 2 + 0.015}, {C_y / 2 - 0.015}' +
+    ')" ' +
+    'dominant-baseline="Auto"' +
+    '>sin β</text>'
+)
+FE_distance = (
+    f'<text x={E_x / 2} y=-0.02 dominant-baseline="Auto">cos α cos β</text>'
+)
+ED_distance = (
+    f'<text x={(w + E_x) / 2} y=-0.02 '
+    + 'dominant-baseline="Auto">sin α sin β</text>'
+)
+AF_distance = (
+    f'<text x=-0.02 y={h / 2} ' +
+    f'transform="rotate(-90, -0.02, {h / 2})" ' +
+    'dominant-baseline="Auto"' +
+    '>sin α cos β</text>'
+)
+CD_distance = (
+    f'<text x={w + 0.05} y={C_y / 2} ' +
+    f'transform="rotate(-90, {w + 0.05}, {C_y / 2})" ' +
+    'dominant-baseline="Auto"' +
+    '>sin α cos β</text>'
+)
+BC_distance = (
+    f'<text x={w + 0.05} y={(h + C_y) / 2} ' +
+    f'transform="rotate(-90, {w + 0.05}, {(h + C_y) / 2})" ' +
+    'dominant-baseline="Auto"' +
+    '>sin (α - β)</text>'
+)
+AB_distance = (
+    f'<text x={w / 2} y={h + 0.01} dominant-baseline="hanging">' +
+    'cos (α - β)</text>'
+)
 
 
 def get_beta_arc(r: float):
@@ -92,7 +144,7 @@ def get_right_angle(x: float, y: float, d: float, angle: float) -> str:
 pr = 0.012
 
 template = f"""
-<svg width="{w * 600}" height="{h * 600}" viewbox="{viewbox}">
+<svg width="{w * 500}" height="{h * 500}" viewbox="{viewbox}">
     <g>
         <circle cx="0" cy="0" r="{pr}" />
         <circle cx="0" cy="{h}" r="{pr}" />
@@ -128,6 +180,15 @@ template = f"""
         {alpha_m_beta_symbol}
         {AEF_symbol}
         {ECD_symbol}
+        {hypotenuse_one}
+        {AE_distance}
+        {FE_distance}
+        {ED_distance}
+        {EC_distance}
+        {AF_distance}
+        {CD_distance}
+        {BC_distance}
+        {AB_distance}
     </g>
     <g fill="none" stroke="black" stroke-width="0.005">
         {alpha_arc}
