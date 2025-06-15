@@ -178,7 +178,7 @@ This is not general proof - this picture only applies for $0 \leq \alpha \leq \f
 
 ## Product to sum
 
-All comes from formulas of trigonometrica functions of sum&difference.
+It all comse from the formulas of the trigonometric functions of sums and differences.
 
 ### Product of sines
 
