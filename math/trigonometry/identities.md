@@ -173,3 +173,5 @@ Finally, using properties of the rectangle:
 
 - $AB = FE + ED \Rightarrow \cos{(\alpha - \beta)} = \cos{\alpha} \cos{\beta} + \sin{\alpha} \sin{\beta}$
 - $AF = BC + CD \Rightarrow \sin{\alpha}\cos{\beta} = \sin{(\alpha - \beta)} + \cos{\alpha} \sin{\beta} \Rightarrow \sin{(\alpha - \beta)} = \sin{\alpha}\cos{\beta} - \cos{\alpha}\sin{\beta}$.
+
+This is not general proof - this picture only applies for $0 \leq \alpha \leq \frac{\pi}{2}$ and $\beta < \alpha$. How ever it's a good way to remember the idea.
