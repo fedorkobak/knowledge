@@ -8,8 +8,8 @@ There is a set of trigonometry identities. This page discusses proofs for some o
 
 Validity of the identieties:
 
-- $\sin(\alpha + \beta) = \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)$.
-- $\cos(\alpha + \beta) = \cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta)$.
+- $\sin(\alpha + \beta) = \sin{\alpha} \cos {\beta} + \cos{\alpha} \sin{\beta}$.
+- $\cos(\alpha + \beta) = \cos{\alpha}\cos{\beta} - \sin{\alpha}\sin{\beta}$.
 
 Could be illustrated using following drawing:
 
@@ -97,47 +97,81 @@ Validity of identities:
 
 Could be illustrated using following drawing:
 
-<svg
-    width="554.327719506772" height="412.2384881216701"
-    viewbox="-0.1 -0.1 1.38581929876693 1.0305962203041752">
+<svg width="475.52825814757676" height="321.79114877718825" viewbox="-0.1 -0.1 1.4265847744427302 0.9653734463315646">
     <g>
         <circle cx="0" cy="0" r="0.012" />
-        <circle cx="0" cy="0.6870641468694502" r="0.012" />
-        <circle cx="0.9238795325112867" cy="0" r="0.012" />
-        <circle cx="0.9238795325112867" cy="0.6870641468694502" r="0.012" />
-        <circle cx="0.5272028623656693" cy="0" r="0.012" />
-        <circle cx="0.9238795325112867" cy="0.3043807145043603" r="0.012" />
+        <circle cx="0" cy="0.6435822975543765" r="0.012" />
+        <circle cx="0.9510565162951535" cy="0" r="0.012" />
+        <circle cx="0.9510565162951535" cy="0.6435822975543765" r="0.012" />
+        <circle cx="0.5794841035564565" cy="0" r="0.012" />
+        <circle cx="0.9510565162951535" cy="0.33456530317942906" r="0.012" />
     </g>
     <path
-        d="M 0 0 L 0 0 0 0.6870641468694502 0.9238795325112867 0.6870641468694502 0.9238795325112867 0 Z"
+        d="M 0 0 L 0 0 0 0.6435822975543765 0.9510565162951535 0.6435822975543765 0.9510565162951535 0 Z"
         fill="none" stroke-width="0.01" stroke="black"
     />
     <g stroke="black" stroke-width="0.007">
-        <line x1="0" y1="0.6870641468694502" x2="0.9238795325112867" y2="0.3043807145043603" />
-        <line x1="0.5272028623656693" y1="0" x2="0.9238795325112867" y2="0.3043807145043603" />
-        <line x1="0" y1="0.6870641468694502" x2="0.5272028623656693" y2="0" />
+        <line x1="0" y1="0.6435822975543765" x2="0.9510565162951535" y2="0.33456530317942906" />
+        <line x1="0.5794841035564565" y1="0" x2="0.9510565162951535" y2="0.33456530317942906" />
+        <line x1="0" y1="0.6435822975543765" x2="0.5794841035564565" y2="0" />
     </g>
     <g
         font-size="0.06"
         text-anchor="middle"
+        dominant-baseline="middle"
         style="font-family: 'LatinModern'"
         font-style="italic"
     >
-        <text x="0" y="0.7570641468694501">A</text>
-        <text x="0.9238795325112867" y="0.7570641468694501">B</text>
-        <text x="0.9638795325112868" y="0.3243807145043603">C</text>
-        <text x="0.5272028623656693" y="-0.03">E</text>
-        <text x="0.9238795325112867" y="-0.03">D</text>
-        <text x="0" y="-0.03">F</text>
-        <text x="0.09699001626848186" y="0.6252746919095654">α</text>
-        <text x="0.15591808890797093" y="0.5784844547015034">β</text>
+        <text x="0" y="0.6615822975543765" dominant-baseline="Hanging">A</text>
+        <text x="0.9510565162951535" y="0.6615822975543765" dominant-baseline="Hanging">B</text>
+        <text x="0.9630565162951535" y="0.33456530317942906" text-anchor="start">C</text>
+        <text x="0.5794841035564565" y="-0.024" dominant-baseline="Auto">E</text>
+        <text x="0.9510565162951535" y="-0.024" dominant-baseline="Auto">D</text>
+        <text x="0" y="-0.024" dominant-baseline="Auto">F</text>
+        <text x="0.104833820993178" y="0.5755024181774981">α</text>
+        <text x="0.16773411358908483" y="0.534654490551371">β</text>
+        <text text-anchor="start" x="0.20741455152497892" y="0.610731059895928">α - β</text>
+        <text x="0.4607231940629184" y="0.05287576359985402" >α</text>
+        <text x="0.8981807526952995" y="0.21580439368589094" >α</text>
+        <text x=0.47552825814757677 y=0.4790738003669027 transform="rotate(-18.0, 0.47552825814757677, 0.48907380036690273)" dominant-baseline="Auto">1</text>
+        <text x=0.3017911487771882 y=0.26974205177822824 transform="rotate(-48.0, 0.3017911487771882, 0.26974205177822824)" dominant-baseline="Auto">cos β</text>
+        <text x=0.28974205177822826 y=-0.02 dominant-baseline="Auto">cos α cos β</text>
+        <text x=0.765270309925805 y=-0.02 dominant-baseline="Auto">sin α sin β</text>
+        <text x=0.780270309925805 y=0.15228265158971455 transform="rotate(42.0, 0.780270309925805, 0.15228265158971455)" dominant-baseline="Auto">sin β</text>
+        <text x=-0.02 y=0.32179114877718823 transform="rotate(-90, -0.02, 0.32179114877718823)" dominant-baseline="Auto">sin α cos β</text>
+        <text x=1.0010565162951535 y=0.16728265158971453 transform="rotate(-90, 1.0010565162951535, 0.16728265158971453)" dominant-baseline="Auto">cos α sin β</text>
+        <text x=1.0010565162951535 y=0.48907380036690273 transform="rotate(-90, 1.0010565162951535, 0.48907380036690273)" dominant-baseline="Auto">sin (α - β)</text>
+        <text x=0.47552825814757677 y=0.6535822975543765 dominant-baseline="hanging">cos (α - β)</text>
     </g>
     <g fill="none" stroke="black" stroke-width="0.005">
-        <path
-            d="M 0.060876142900872066 0.6077288128403266
-            A 0.1 0.1 0 0 1 0.1 0.6870641468694502"
-        />
-        <path d="M 0.0943580214963517 0.5640943791243087 A 0.155 0.155 0 0 1 0.14320132753924944 0.6277482148528613" />
-        <path d="M 0.10044563578643892 0.5561608457213963 A 0.165 0.165 0 0 1 0.15244012286436232 0.6239213805292103" />
+        <path d="M 0.06691306063588583 0.569267815006637A 0.1 0.1 0 0 1 0.1 0.6435822975543765"/>
+        <path d="M 0.10371524398562303 0.5283948496053804 A 0.155 0.155 0 0 1 0.1474137600257488 0.5956846634262596" />
+        <path d="M 0.11040655004921161 0.5209634013506064 A 0.165 0.165 0 0 1 0.15692432518870034 0.5925944934825101" />
+        <path d="M 0.1902113032590307 0.581778898679387 A 0.2 0.2 0 0 1 0.2 0.6435822975543765" />
+        <path d="M 0.5125710429205707 0.07431448254773941 A 0.1 0.1 0 0 1 0.47948410355645654 0" />
+        <path d="M 0.9510565162951535 0.23456530317942906 A 0.1 0.1 1 0 0 0.8767420337474141 0.26765224254354325" />
+        <path d="M 3.061616997868383e-18 0.05 L 0.05000000000000002 0.05 0.05 0.0"/>
+        <path d="M 0.9010565162951535 -6.123233995736766e-18 L 0.9010565162951535 0.05 0.9510565162951535 0.05"/>
+        <path d="M 0.9510565162951535 0.5935822975543764 L 0.9010565162951535 0.5935822975543764 0.9010565162951535 0.6435822975543765"/>
+        <path d="M 0.5460275732385136 0.03715724127386972 L 0.5831848145123834 0.07061377159181263 0.6166413448303263 0.033456530317942906"/>
     </g>
 </svg>
+
+There is a right triangle $AEC$ with $\angle AEC = \frac{\pi}{2}$ and hypotenuse $AC=1$, inscribed in the triangle $AFDB$ such that $E$ lies on $FD$, $C$ lies on $BD$ and $\angle EAC = \alpha$.
+
+To see correctness of sin/cos difference formulas follow the logic:
+
+- Due to the definitions of sine and cosine: $AE = \sin{\beta}$ and $EC = \cos{\beta}$.
+- Using the properties of parallel lines $AB$ and $FD$: $\angle AEF = \angle BEA \Rightarrow \angle AEF = \alpha$.
+- Due to the properties of the right angle triangles and the definition of trigonometric functions:
+  - For triangle $AFE$: $AF = \sin{\alpha}\cos{\beta}$, $EF = \cos{\alpha}\cos{\beta}$.
+  - For triangle $EDC$: $ED = \sin{\alpha}\sin{\beta}$, $CD = \sin{\alpha}cos{\beta}$.
+- Since $\angle ABC = \angle EAB - \angle EAC$: $\angle EAC = \alpha - \beta$. Finally:
+  - For triangle $ABC$: $BC=\sin{(\alpha - \beta)}$, $AB=\cos{(\alpha - \beta)}$.
+
+Finally, using properties of the rectangle:
+
+- $AB = FE + ED \Rightarrow \cos{(\alpha - \beta)} = \cos{\alpha} \cos{\beta} + \sin{\alpha} \sin{\beta}$
+- $AF = BC + CD \Rightarrow \sin{\alpha}\cos{\beta} = \sin{(\alpha - \beta)} + \cos{\alpha} \sin{\beta} \Rightarrow \sin{(\alpha - \beta)} = \sin{\alpha}\cos{\beta} - \cos{\alpha}\sin{\beta}$.
+
+This is not general proof - this picture only applies for $0 \leq \alpha \leq \frac{\pi}{2}$ and $\beta < \alpha$. How ever it's a good way to remember the idea.
