@@ -175,3 +175,46 @@ Finally, using properties of the rectangle:
 - $AF = BC + CD \Rightarrow \sin{\alpha}\cos{\beta} = \sin{(\alpha - \beta)} + \cos{\alpha} \sin{\beta} \Rightarrow \sin{(\alpha - \beta)} = \sin{\alpha}\cos{\beta} - \cos{\alpha}\sin{\beta}$.
 
 This is not general proof - this picture only applies for $0 \leq \alpha \leq \frac{\pi}{2}$ and $\beta < \alpha$. How ever it's a good way to remember the idea.
+
+## Product to sum
+
+All comes from formulas of trigonometrica functions of sum&difference.
+
+### Product of sines
+
+You must substract cosine of difference and cosine of sum:
+
+$$
+\cos{(\alpha - \beta)} - \cos{(\alpha + \beta)} =
+(\cos \alpha \cos \beta + \sin \alpha \sin \beta) - (\cos \alpha \cos \beta - \sin \alpha \sin \beta) \\
+
+\cos{(\alpha - \beta)} - \cos{(\alpha + \beta)} = 2 \sin \alpha \cos \beta \\
+
+\sin{\alpha}\cos{\beta} = \frac{1}{2}[\cos{(\alpha - \beta)} - \cos{(\alpha + \beta)}]
+$$
+
+### Product of cosines
+
+You must add cosine of sum and cosine of sum:
+
+$$
+\cos{(\alpha + \beta)} + \cos{(\alpha - \beta)} =
+(\cos \alpha \cos \beta - \sin \alpha \sin \beta) - (\cos \alpha \cos \beta + \sin \alpha \sin \beta)\\
+
+\cos{(\alpha + \beta)} + \cos{(\alpha - \beta)} = 2 \cos \alpha \cos \beta\\
+
+\cos \alpha \sin \beta = \frac{1}{2}[\cos{(\alpha + \beta)} + \cos{(\alpha - \beta)}]
+$$
+
+### Product of sine and cosine
+
+You must add the sine of sum to the sine of difference.
+
+$$
+\sin{(\alpha + \beta)} + \sin{(\alpha - \beta)} =
+(\sin \alpha \cos \beta + \cos \alpha \sin \beta) + (\sin \alpha \cos \beta - \cos \alpha \sin \beta) \\
+
+\sin{(\alpha + \beta)} + \sin{(\alpha - \beta)} = 2 \sin \alpha \cos \beta \\
+
+\sin \alpha \cos \beta =\frac{1}{2} \left[ \sin (\alpha + \beta) + \sin (\alpha - \beta) \right]
+$$
