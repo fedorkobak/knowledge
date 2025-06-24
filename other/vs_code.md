@@ -2,6 +2,28 @@
 
 Visual studio code is a highly customizable tool. This page covers the most common settings.
 
+## Settings
+
+You can configure your VSCode with editing the `settings.json` file. There are separate `settings.json` for user and for workspace.
+
+Look for `settings.json` in `./.vscode` folder for workspace.
+
+Check information on the `settiongs.json` for the user [here](https://code.visualstudio.com/docs/configure/settings#_user-settingsjson-location). For linux, it's typically in `~/.config/Code/User/settings.json`.
+
+My typical config is:
+
+```json
+{
+    "workbench.colorTheme": "Default Light Modern",
+    "window.zoomLevel": -2.5,
+    "editor.lineNumbers": "relative",
+    "python.analysis.typeCheckingMode": "strict",
+}
+```
+
+Check [Default VSCode settings](https://code.visualstudio.com/docs/reference/default-settings). VSCode extensions usually have their own settings.
+
+
 ## Debug
 
 Check:
