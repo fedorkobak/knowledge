@@ -40,3 +40,22 @@ The most basic debug configuration for python is:
   "console": "integratedTerminal"
 }
 ```
+
+### Module
+
+Use the "module" option to debug a program that starts as as a module.
+
+---
+
+For me, a typical case is checking the logic of code specified in a unit test. If the `unittest` framework is used, you should run the tests with the command `python3 -m unittest`. The following configuration is suppose to use the debuger for the current file run with the `unittest` framework.
+
+```json
+{
+  "name": "Unittest: Current File",
+  "type": "debugpy",
+  "request": "launch",
+  "module": "unittest",
+  "args": "${file}",
+  "console": "integratedTerminal"
+}
+```
