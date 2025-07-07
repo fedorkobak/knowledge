@@ -14,6 +14,43 @@ coord_denote: Callable[[int, int, str], str] = lambda x, i, text: (
 )
 
 
+def generate_t_denote(intervals: list[tuple[int, int]]) -> list[str]:
+    '''
+    Generate SVG code to denote the boundaries of the intervals as t_i and
+    t'_i.
+
+    Parameters
+    ----------
+    intervals: list[tuple[int, int]]
+        Pairs of numbers that denote top and low boundaries of intervals.
+
+    Returns
+    -------
+    List of svg codes for each point.
+    '''
+    ans: list[str] = []
+    for i, (begin, end) in enumerate(intervals):
+        ans.append(coord_denote(begin - 5, (i + 1), "t"))
+        ans.append(coord_denote(end - 5, (i + 1), "t'"))
+    return ans
+
+
+def generate_num_denotes(points: set[int]) -> list[str]:
+    """
+    Generate SVG code to represent points as numbers on the axis.
+
+    Parameters
+    ----------
+    points: list[int]
+        Points to be represented.
+
+    Returns
+    -------
+    List that contains SVG for each number.
+    """
+    return [f"<text x={p} y=180>{p}</text>" for p in points]
+
+
 def generate_coordinate_system(end: int) -> str:
     """
     Generate an SVG for the coordinate system. The X-axis extends to the
@@ -35,7 +72,10 @@ def generate_coordinate_system(end: int) -> str:
     """.strip()
 
 
-def get_visualisation(coordinates: list[tuple[int, int]]) -> str:
+def get_visualisation(
+    coordinates: list[tuple[int, int]],
+    show_numbers: bool = False
+) -> str:
     """
     For given set of intervals get SVG visualisation.
 
@@ -43,16 +83,18 @@ def get_visualisation(coordinates: list[tuple[int, int]]) -> str:
     ----------
     coordinates: list[tuple[int, int]]
         Pairs of numbers representing the start and the end of intervals.
+    show_numbers: bool = False
+        If the coordinates of the points must be denoted as numbers or as the
+        abstract t_i.
 
     Returns
     -------
     str SVG code.
     """
-    coord_denotes: list[str] = []
     y_postions = [(130, 0),]
     coordinates.sort()
 
-    for i, (begin, end) in enumerate(coordinates):
+    for begin, end in coordinates:
         # Mechanism that assigns y positions
         y_coord = None
         for j, (y, border) in enumerate(y_postions):
@@ -69,10 +111,13 @@ def get_visualisation(coordinates: list[tuple[int, int]]) -> str:
         circles.append(circle_template.format(x=end, y=y_coord))
         projections.append(projection_template.format(x=begin, y=y_coord))
         projections.append(projection_template.format(x=end, y=y_coord))
-        coord_denotes.append(coord_denote(begin - 5, (i + 1), "t"))
-        coord_denotes.append(coord_denote(end - 5, (i + 1), "t'"))
 
     axis = generate_coordinate_system(int(coordinates[-1][1] * 1.1))
+    coord_denotes = (
+        generate_num_denotes(set([val for c in coordinates for val in c]))
+        if show_numbers
+        else generate_t_denote(coordinates)
+    )
 
     return template.format(
         lines="\n    ".join(lines),
