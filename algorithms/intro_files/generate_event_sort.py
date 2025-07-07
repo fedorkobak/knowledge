@@ -1,12 +1,10 @@
+import pyperclip
 from pathlib import Path
 from typing import Callable
 template = (Path("intro_files")/"event_sort_template").read_text()
 
-lines: list[str] = []
 line_template = "<line x1={x1} y1={y} x2={x2} y2={y} />"
-circles: list[str] = []
 circle_template = "<circle cx={x} cy={y} r=2 />"
-projections: list[str] = []
 projection_template = "<line x1={x} y1={y} x2={x} y2=150 />"
 coord_denote: Callable[[int, int, str], str] = lambda x, i, text: (
     f"<text x={x} y=175>{text}</text>"
@@ -74,7 +72,8 @@ def generate_coordinate_system(end: int) -> str:
 
 def get_visualisation(
     coordinates: list[tuple[int, int]],
-    show_numbers: bool = False
+    show_numbers: bool = False,
+    clip: bool = True
 ) -> str:
     """
     For given set of intervals get SVG visualisation.
@@ -86,6 +85,8 @@ def get_visualisation(
     show_numbers: bool = False
         If the coordinates of the points must be denoted as numbers or as the
         abstract t_i.
+    clip: bool
+        Wheather to save SVG code of the output to the clipboard.
 
     Returns
     -------
@@ -93,6 +94,9 @@ def get_visualisation(
     """
     y_postions = [(130, 0),]
     coordinates.sort()
+    lines: list[str] = []
+    circles: list[str] = []
+    projections: list[str] = []
 
     for begin, end in coordinates:
         # Mechanism that assigns y positions
@@ -119,10 +123,14 @@ def get_visualisation(
         else generate_t_denote(coordinates)
     )
 
-    return template.format(
+    ans = template.format(
         lines="\n    ".join(lines),
         projections="\n      ".join(projections),
         circles="\n  ".join(circles),
         coord_denotes="\n    ".join(coord_denotes),
         axis=axis
     )
+    if clip:
+        pyperclip.copy(ans)
+
+    return ans
