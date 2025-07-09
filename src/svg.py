@@ -1,12 +1,12 @@
 """
 Tools that extend drawsvg to add really typical shapes and symbols.
 """
-import drawsvg as draw
+import drawsvg as draw  # type: ignore
 
 
 def draw_arrow(
-    sx: int, sy: int,
-    ex: int, ey: int,
+    sx: float, sy: float,
+    ex: float, ey: float,
     width: int = 3,
     arrow_head_width: int = 10,
     color: str = 'black'
@@ -51,9 +51,9 @@ def draw_arrow(
     p2y = ey - dy * arrow_head_width - perp_dy
 
     path = draw.Path(fill=color, stroke=color, stroke_width=width)
-    path.M(sx, sy)
-    path.L(ex, ey)
-    path.M(ex, ey)
-    path.L(p1x, p1y)
-    path.L(p2x, p2y)
+    path.M(sx, sy)  # type: ignore
+    path.L(ex, ey)  # type: ignore
+    path.M(ex, ey)  # type: ignore
+    path.L(p1x, p1y)  # type: ignore
+    path.L(p2x, p2y)  # type: ignore
     return path

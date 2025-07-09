@@ -2,13 +2,13 @@
 Visualize binary search trees as SVG.
 """
 import drawsvg as draw  # type: ignore
-# from src.svg import draw_arrow
+from src.svg import draw_arrow
 from typing import TypeAlias, Any
 
 
 BST: TypeAlias = tuple[Any, 'BST | None', 'BST | None'] | None
 
-NODE_RADIUS = 30 
+NODE_RADIUS = 30
 SIBLINGS_DISTANCE = 2 * NODE_RADIUS
 COUSINS_DISTANCE = 2 * NODE_RADIUS
 NODE_FONT_SIZE = 20
@@ -73,6 +73,46 @@ def get_node_svg(
     return group
 
 
+def get_arrow(
+    x1: float, y1: float,
+    x2: float, y2: float,
+    radius: float = NODE_RADIUS
+) -> draw.Path:
+    """
+    Draw an arrow from one node to another. You only need to specify the
+    centers of the nodes.
+
+    Parameters
+    ----------
+    x1: float
+        The x-coordinate of the start node.
+    y1: float
+        The y-coordinate of the start node.
+    x2: float
+        The x-coordinate of the end node.
+    y2: float
+        The y-coordinate of the end node.
+    """
+    dx = (x2 - x1)
+    dy = (y2 - y1)
+
+    length = (dx**2 + dy**2)**0.5
+
+    dx /= length
+    dy /= length
+
+    x1 = x1 + dx * radius
+    y1 = y1 + dy * radius
+    x2 = x2 - dx * radius
+    y2 = y2 - dy * radius
+
+    return draw_arrow(
+        sx=x1, sy=y1,
+        ex=x2, ey=y2,
+        color='black'
+    )
+
+
 def tree_to_svg(
     tree: BST,
     shift_x: float = 0,
@@ -118,27 +158,41 @@ def tree_to_svg(
         max_leaf_nubmer * NODE_RADIUS * 2
     )
 
+    cx = width / 2 + shift_x
+    cy = shift_y + NODE_RADIUS
+
     accumulated_elements.append(get_node_svg(
         content=str(tree[0]),
-        cx=width / 2 + shift_x,
-        cy=shift_y + NODE_RADIUS,
+        cx=cx, cy=cy,
         r=NODE_RADIUS,
     ))
 
-    tree_to_svg(
-        tree=tree[1],
-        shift_x=shift_x,
-        shift_y=shift_y + LAYERS_DISTANCE,
-        depth=depth - 1,
-        accumulated_elements=accumulated_elements
-    )
-    tree_to_svg(
-        tree=tree[2],
-        shift_x=shift_x + width / 2,
-        shift_y=shift_y + LAYERS_DISTANCE,
-        depth=depth - 1,
-        accumulated_elements=accumulated_elements
-    )
+    if tree[1] is not None:
+        tree_to_svg(
+            tree=tree[1],
+            shift_x=shift_x,
+            shift_y=shift_y + LAYERS_DISTANCE,
+            depth=depth - 1,
+            accumulated_elements=accumulated_elements
+        )
+        accumulated_elements.append(get_arrow(
+            x1=cx, y1=cy,
+            x2=shift_x + width / 4,
+            y2=shift_y + LAYERS_DISTANCE + NODE_RADIUS
+        ))
+    if tree[2] is not None:
+        tree_to_svg(
+            tree=tree[2],
+            shift_x=shift_x + width / 2,
+            shift_y=shift_y + LAYERS_DISTANCE,
+            depth=depth - 1,
+            accumulated_elements=accumulated_elements
+        )
+        accumulated_elements.append(get_arrow(
+            x1=cx, y1=cy,
+            x2=shift_x + width * 3 / 4,
+            y2=shift_y + LAYERS_DISTANCE + NODE_RADIUS
+        ))
     return accumulated_elements
 
 
