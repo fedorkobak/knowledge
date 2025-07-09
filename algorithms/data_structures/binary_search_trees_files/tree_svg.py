@@ -8,9 +8,11 @@ from typing import TypeAlias, Any
 
 BST: TypeAlias = tuple[Any, 'BST | None', 'BST | None'] | None
 
-NODE_RADIUS = 20
-SIBLINGS_DISTANCE = 4 * NODE_RADIUS
+NODE_RADIUS = 30 
+SIBLINGS_DISTANCE = 2 * NODE_RADIUS
 COUSINS_DISTANCE = 2 * NODE_RADIUS
+NODE_FONT_SIZE = 20
+LAYERS_DISTANCE = 3 * NODE_RADIUS
 
 
 def get_max_depth(tree: BST) -> int:
@@ -32,6 +34,43 @@ def get_max_depth(tree: BST) -> int:
     left_depth = (get_max_depth(tree[1]) if tree[1] is not None else 0)
     right_depth = (get_max_depth(tree[2]) if tree[2] is not None else 0)
     return 1 + max(left_depth, right_depth)
+
+
+def get_node_svg(
+    content: str, cx: float, cy: float, r: float = NODE_RADIUS
+) -> draw.Group:
+    """
+    Create an SVG representation of a node.
+
+    Parameters
+    ----------
+    content : str
+        The content to display in the node.
+    cx : float
+        The x-coordinate of the center of the node.
+    cy : float
+        The y-coordinate of the center of the node.
+    r : float, optional
+        The radius of the node, by default NODE_RADIUS.
+
+    Returns
+    -------
+    list[draw.Group]
+        Group containing the SVG elements for the node.
+    """
+    node = draw.Circle(
+        cx=cx, cy=cy, r=r, stroke='black', stroke_width=2, fill='white'
+    )
+    text = draw.Text(
+        content,
+        x=cx, y=cy,
+        font_size=NODE_FONT_SIZE,
+        text_anchor='middle',
+        dominant_baseline='middle',
+        fill='black'
+    )
+    group = draw.Group([node, text])
+    return group
 
 
 def tree_to_svg(
@@ -79,25 +118,24 @@ def tree_to_svg(
         max_leaf_nubmer * NODE_RADIUS * 2
     )
 
-    accumulated_elements.append(draw.Circle(
+    accumulated_elements.append(get_node_svg(
+        content=str(tree[0]),
         cx=width / 2 + shift_x,
         cy=shift_y + NODE_RADIUS,
         r=NODE_RADIUS,
-        stroke='black',
-        stroke_width=2
     ))
 
     tree_to_svg(
         tree=tree[1],
         shift_x=shift_x,
-        shift_y=shift_y + NODE_RADIUS * 4,
+        shift_y=shift_y + LAYERS_DISTANCE,
         depth=depth - 1,
         accumulated_elements=accumulated_elements
     )
     tree_to_svg(
         tree=tree[2],
         shift_x=shift_x + width / 2,
-        shift_y=shift_y + NODE_RADIUS * 4,
+        shift_y=shift_y + LAYERS_DISTANCE,
         depth=depth - 1,
         accumulated_elements=accumulated_elements
     )
