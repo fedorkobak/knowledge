@@ -39,7 +39,7 @@ def tree_to_svg(
     shift_x: float = 0,
     shift_y: float = 0,
     depth: int | None = None,
-    accumulated_elements: list[draw.DrawingElement] = []
+    accumulated_elements: list[draw.DrawingElement] | None = None
 ) -> list[draw.DrawingElement]:
     """
     Recurrently convert a binary search tree to an svgdraw components.
@@ -64,6 +64,8 @@ def tree_to_svg(
     list[draw.DrawingElement]
         A list of SVG drawing elements representing the tree.
     """
+    if accumulated_elements is None:
+        accumulated_elements = []
     if depth is None:
         depth = get_max_depth(tree)
     max_leaf_nubmer = 2 ** (depth - 1)
