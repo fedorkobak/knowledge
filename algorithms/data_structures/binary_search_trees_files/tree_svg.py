@@ -59,7 +59,7 @@ def get_node_svg(
         Group containing the SVG elements for the node.
     """
     node = draw.Circle(
-        cx=cx, cy=cy, r=r, stroke='black', stroke_width=2, fill='white'
+        cx=cx, cy=cy, r=r, stroke='black', stroke_width=2, fill='none'
     )
     text = draw.Text(
         content,
@@ -130,7 +130,7 @@ def count_width(depth: int) -> float:
     max_leaf_nubmer = 2 ** (depth - 1)
     return (
         (max_leaf_nubmer / 2) * SIBLINGS_DISTANCE +
-        (max_leaf_nubmer / 2) * COUSINS_DISTANCE +
+        ((max_leaf_nubmer / 2) - 1) * COUSINS_DISTANCE +
         max_leaf_nubmer * NODE_RADIUS * 2
     )
 
@@ -183,6 +183,8 @@ def tree_to_svg(
         r=NODE_RADIUS,
     ))
 
+    # Note: nested trees doesn't count distances between cousins during width
+    # count as they belongs to the other tree.
     if tree[1] is not None:
         tree_to_svg(
             tree=tree[1],
@@ -193,20 +195,20 @@ def tree_to_svg(
         )
         accumulated_elements.append(get_arrow(
             x1=cx, y1=cy,
-            x2=shift_x + width / 4,
+            x2=shift_x + (width - COUSINS_DISTANCE) / 4,
             y2=shift_y + LAYERS_DISTANCE + NODE_RADIUS
         ))
     if tree[2] is not None:
         tree_to_svg(
             tree=tree[2],
-            shift_x=shift_x + width / 2,
+            shift_x=shift_x + width / 2 + COUSINS_DISTANCE / 2,
             shift_y=shift_y + LAYERS_DISTANCE,
             depth=depth - 1,
             accumulated_elements=accumulated_elements
         )
         accumulated_elements.append(get_arrow(
             x1=cx, y1=cy,
-            x2=shift_x + width * 3 / 4,
+            x2=shift_x + (width / 2 + COUSINS_DISTANCE / 2) / 2 + width / 2,
             y2=shift_y + LAYERS_DISTANCE + NODE_RADIUS
         ))
     return accumulated_elements
