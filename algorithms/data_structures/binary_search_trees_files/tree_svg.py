@@ -113,6 +113,28 @@ def get_arrow(
     )
 
 
+def count_width(depth: int) -> float:
+    """
+    Calculate the width of the tree at a given depth.
+
+    Parameters
+    ----------
+    depth : int
+        The depth of the tree.
+
+    Returns
+    -------
+    float
+        The width of the tree at the specified depth.
+    """
+    max_leaf_nubmer = 2 ** (depth - 1)
+    return (
+        (max_leaf_nubmer / 2) * SIBLINGS_DISTANCE +
+        (max_leaf_nubmer / 2) * COUSINS_DISTANCE +
+        max_leaf_nubmer * NODE_RADIUS * 2
+    )
+
+
 def tree_to_svg(
     tree: BST,
     shift_x: float = 0,
@@ -147,17 +169,11 @@ def tree_to_svg(
         accumulated_elements = []
     if depth is None:
         depth = get_max_depth(tree)
-    max_leaf_nubmer = 2 ** (depth - 1)
 
     if tree is None:
         return accumulated_elements
 
-    width = (
-        (max_leaf_nubmer / 2) * SIBLINGS_DISTANCE +
-        (max_leaf_nubmer / 2) * COUSINS_DISTANCE +
-        max_leaf_nubmer * NODE_RADIUS * 2
-    )
-
+    width = count_width(depth)
     cx = width / 2 + shift_x
     cy = shift_y + NODE_RADIUS
 
@@ -197,38 +213,25 @@ def tree_to_svg(
 
 
 def visualize_tree(tree: BST) -> draw.Drawing:
+    """
+    Get svgdraw object representing the binary search tree.
+
+    Parameters
+    ----------
+    tree : BST
+        The binary search tree represented as a tuple.
+
+    Returns
+    -------
+    draw.Drawing
+        An SVG drawing object containing the tree visualization.
+    """
     depth = get_max_depth(tree)
-    max_leaf_nubmer = 2 ** (depth - 1)
-    distances_between_siblings = 4 * NODE_RADIUS
-    distances_between_cousins = 2 * NODE_RADIUS
-    width = (
-        (max_leaf_nubmer / 2) * distances_between_siblings +
-        (max_leaf_nubmer / 2) * distances_between_cousins
+    d = draw.Drawing(
+        width=count_width(depth=depth),
+        height=(depth - 1) * LAYERS_DISTANCE + 2 * NODE_RADIUS
     )
-    height = depth * (NODE_RADIUS * 4)
-
-    d = draw.Drawing(width=width, height=height)
-    current_level = [tree]
-    for i in range(depth):
-
-        new_level: list[BST] = []
-        for j, node in enumerate(current_level):
-
-            x = width * (j + 1) / (i + 2)
-            d.append(  # type: ignore
-                draw.Circle(
-                    cx=x, cy=(i * NODE_RADIUS * 4) + NODE_RADIUS,
-                    r=NODE_RADIUS, stroke='black'
-                )
-            )
-
-            if node is not None:
-                new_level.append(node[1])
-                new_level.append(node[2])
-            else:
-                new_level.append(None)
-                new_level.append(None)
-
-        current_level = new_level
-
+    elements = tree_to_svg(tree=tree)
+    for element in elements:
+        d.append(element)  # type: ignore
     return d
