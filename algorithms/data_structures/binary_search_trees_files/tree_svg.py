@@ -229,9 +229,12 @@ def visualize_tree(tree: BST) -> draw.Drawing:
         An SVG drawing object containing the tree visualization.
     """
     depth = get_max_depth(tree)
+    width = count_width(depth=depth)
+    height = (depth - 1) * LAYERS_DISTANCE + 2 * NODE_RADIUS
     d = draw.Drawing(
-        width=count_width(depth=depth),
-        height=(depth - 1) * LAYERS_DISTANCE + 2 * NODE_RADIUS
+        width=width,
+        height=height,
+        viewBox=f"-10 -10 {width + 20} {height + 20}"
     )
     elements = tree_to_svg(tree=tree)
     for element in elements:
