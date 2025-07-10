@@ -63,7 +63,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Trees" href="trees.html" />
+    <link rel="next" title="Event sort" href="event_sort.html" />
     <link rel="prev" title="Complexity" href="complexity.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -254,7 +254,11 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="complexity.html">Complexity</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Binary search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="trees.html">Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="dynamic_prog.html">Dynamic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_sort.html">Quick sort</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -646,6 +650,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-description">Formal description</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#last-entry">Last entry</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#search-by-answer">Search by answer</a></li>
 </ul>
             </nav>
         </div>
@@ -716,7 +721,7 @@ f(x_{k - 1}) = 0 \quad \Longrightarrow \quad r_{j + 1} = r_j,
 <p>The following cell defines a generalised implemention of the binary search:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">first_entry</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">first_entry</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Implementation of the first entry binary search.</span>
 
@@ -803,7 +808,7 @@ l_{j - 1}, f(x_{p_j}) = 0.
 <p>The next code defines universal implementation of the last entry approach:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">last_entry</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">last_entry</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Implementation of the last entry binary search.</span>
 
@@ -849,6 +854,100 @@ l_{j - 1}, f(x_{p_j}) = 0.
 </div>
 <p>It returns 4, which is the second entry of the value we are looking for.</p>
 </section>
+<section id="search-by-answer">
+<h2>Search by answer<a class="headerlink" href="#search-by-answer" title="Link to this heading">#</a></h2>
+<p>The binary search by answer is an important method for solving a set of tasks.</p>
+<p>It is used for tasks that require finding the minimum or maximum value under certain conditions. The conditions must be able to be represented as a binary function that changes value once at a certain point.</p>
+<p>More formally, for the binary function <span class="math notranslate nohighlight">\(f(x)\)</span> is required to find <span class="math notranslate nohighlight">\(\min_{f(x)=True}{(x)}\)</span>.</p>
+<hr class="docutils" />
+<p>The best way to demonstrate this approach is to show the tasks that can be solved using this approach.</p>
+<p>Given a sequence of numbers ordered in ascending order: <span class="math notranslate nohighlight">\(a_1, a_2, \ldots, a_n\)</span>. Required to find <span class="math notranslate nohighlight">\(L\)</span> non-overlapping <span class="math notranslate nohighlight">\(c\)</span>-elements subsets of numbers such that the maximum difference is minimal:</p>
+<div class="math notranslate nohighlight">
+\[\Delta = \min_{\{i_1, i_2, \ldots, i_L\}}\left[\max_j \left( a_{i_j + c} - a_{i_j} \right)\right]\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(i_j, j=\overline{1,n}\)</span> is the first index of the <span class="math notranslate nohighlight">\(j\)</span>-th group.</p>
+<p>The  binary search solution involves searching for smallest <span class="math notranslate nohighlight">\(\Delta\)</span> that allows the formation of <span class="math notranslate nohighlight">\(L\)</span> non-overlapping <span class="math notranslate nohighlight">\(c\)</span>-element subsets.</p>
+<p>The following cell realizes the function that checks whether it is possible to find such subsets for given <span class="math notranslate nohighlight">\(\Delta\)</span> (<code class="docutils literal notranslate"><span class="pre">D</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">check_groups</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">L</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">D</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if it possible to form L groups of c elements</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">lst_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst_len</span> <span class="o">-</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">D</span><span class="p">:</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">counter</span> <span class="o">&gt;=</span> <span class="n">L</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Consider set of numbers <span class="math notranslate nohighlight">\(\left\{1, 5, 15, 20, 20\right\}\)</span> and parameters <span class="math notranslate nohighlight">\(L=2\)</span>, <span class="math notranslate nohighlight">\(c=2\)</span>. For <span class="math notranslate nohighlight">\(\Delta=4\)</span> it still possible to find subsets <span class="math notranslate nohighlight">\(\left\{1, 5\right\}, \left\{20, 20\right\}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">check_groups</span><span class="p">(</span>
+    <span class="n">lst</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, for <span class="math notranslate nohighlight">\(\Delta = 1\)</span>, the subset <span class="math notranslate nohighlight">\(\left\{1, 5\right\}\)</span> is incorrect - it’s impossible to find the corresponding subsets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">check_groups</span><span class="p">(</span>
+    <span class="n">lst</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, just binserach for the first <span class="math notranslate nohighlight">\(\Delta\)</span> that corresponds to the requirements:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">solution</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">L</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">check_groups</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="n">lst</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">D</span><span class="p">):</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="n">D</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">D</span>
+    <span class="k">return</span> <span class="n">right</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">solution</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -891,11 +990,11 @@ l_{j - 1}, f(x_{p_j}) = 0.
       </div>
     </a>
     <a class="right-next"
-       href="trees.html"
+       href="event_sort.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Trees</p>
+        <p class="prev-next-title">Event sort</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -917,6 +1016,7 @@ l_{j - 1}, f(x_{p_j}) = 0.
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-description">Formal description</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#last-entry">Last entry</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#search-by-answer">Search by answer</a></li>
 </ul>
   </nav></div>
 

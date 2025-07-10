@@ -252,7 +252,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../algorithms/intro.html">Intro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../algorithms/complexity.html">Complexity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../algorithms/binary_search.html">Binary search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../algorithms/trees.html">Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algorithms/event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../algorithms/data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../algorithms/dynamic_prog.html">Dynamic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../algorithms/quick_sort.html">Quick sort</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -642,7 +646,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debug">Debug</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#settings">Settings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debug">Debug</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module">Module</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -657,6 +665,22 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="vs-code">
 <h1>VS Code<a class="headerlink" href="#vs-code" title="Link to this heading">#</a></h1>
 <p>Visual studio code is a highly customizable tool. This page covers the most common settings.</p>
+<section id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Link to this heading">#</a></h2>
+<p>You can configure your VSCode with editing the <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> file. There are separate <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> for user and for workspace.</p>
+<p>Look for <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> in <code class="docutils literal notranslate"><span class="pre">./.vscode</span></code> folder for workspace.</p>
+<p>Check information on the <code class="docutils literal notranslate"><span class="pre">settiongs.json</span></code> for the user <a class="reference external" href="https://code.visualstudio.com/docs/configure/settings#_user-settingsjson-location">here</a>. For linux, it’s typically in <code class="docutils literal notranslate"><span class="pre">~/.config/Code/User/settings.json</span></code>.</p>
+<p>My typical config is:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;workbench.colorTheme&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Default Light Modern&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;window.zoomLevel&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-2.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;editor.lineNumbers&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;relative&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;python.analysis.typeCheckingMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;strict&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Check <a class="reference external" href="https://code.visualstudio.com/docs/reference/default-settings">Default VSCode settings</a>. VSCode extensions usually have their own settings.</p>
+</section>
 <section id="debug">
 <h2>Debug<a class="headerlink" href="#debug" title="Link to this heading">#</a></h2>
 <p>Check:</p>
@@ -690,6 +714,22 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
+<section id="module">
+<h3>Module<a class="headerlink" href="#module" title="Link to this heading">#</a></h3>
+<p>Use the “module” option to debug a program that starts as as a module.</p>
+<hr class="docutils" />
+<p>For me, a typical case is checking the logic of code specified in a unit test. If the <code class="docutils literal notranslate"><span class="pre">unittest</span></code> framework is used, you should run the tests with the command <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">unittest</span></code>. The following configuration is suppose to use the debuger for the current file run with the <code class="docutils literal notranslate"><span class="pre">unittest</span></code> framework.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Unittest: Current File&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debugpy&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unittest&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${file}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integratedTerminal&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -757,7 +797,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debug">Debug</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#settings">Settings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debug">Debug</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module">Module</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Trees &#8212; Knowledge base</title>
+    <title>Event sort &#8212; Knowledge base</title>
   
   
   
@@ -57,11 +57,13 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'algorithms/trees';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'algorithms/event_sort';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Dynamic programming" href="dynamic_prog.html" />
+    <link rel="next" title="Data structures" href="data_structures.html" />
     <link rel="prev" title="Binary search" href="binary_search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -252,7 +254,11 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="complexity.html">Complexity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="binary_search.html">Binary search</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Trees</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="dynamic_prog.html">Dynamic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_sort.html">Quick sort</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -548,7 +554,7 @@
       
       
       
-      <li><a href="../_sources/algorithms/trees.ipynb" target="_blank"
+      <li><a href="../_sources/algorithms/event_sort.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -632,7 +638,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Trees</h1>
+    <h1>Event sort</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -642,11 +648,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inorder">Inorder</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-element">Extracting element</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-trees">Comparison of trees</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-passes">Two passes</a></li>
 </ul>
             </nav>
         </div>
@@ -658,305 +661,309 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="trees">
-<h1>Trees<a class="headerlink" href="#trees" title="Link to this heading">#</a></h1>
-<p>Trees are a data structure in which each element can have a descendant that represents an element of the same form.</p>
-<p>In python tree can be defined as following class:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="event-sort">
+<h1>Event sort<a class="headerlink" href="#event-sort" title="Link to this heading">#</a></h1>
+<p>This page discusses the details of the using and implementing the event sorting approach.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTML</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>Consider series of periods visualised on the following picture.</p>
+<p><svg width=700 height=200 stroke="black" stroke-width="3"
+    style="font-family: 'LatinModern'" font-style="italic" font-size=30>
+<line x1=0 y1=150 x2=605 y2=150 />
+<line x1=605 y1=150 x2=574.75 y2=160 />
+<line x1=605 y1=150 x2=574.75 y2=140 />
+<g stroke-width="2">
+<line x1=30 y1=130 x2=300 y2=130 />
+<line x1=100 y1=110 x2=240 y2=110 />
+<line x1=180 y1=90 x2=360 y2=90 />
+<line x1=360 y1=130 x2=550 y2=130 />
+<g stroke-dasharray="4">
+<line x1=30 y1=130 x2=30 y2=150 />
+<line x1=300 y1=130 x2=300 y2=150 />
+<line x1=100 y1=110 x2=100 y2=150 />
+<line x1=240 y1=110 x2=240 y2=150 />
+<line x1=180 y1=90 x2=180 y2=150 />
+<line x1=360 y1=90 x2=360 y2=150 />
+<line x1=360 y1=130 x2=360 y2=150 />
+<line x1=550 y1=130 x2=550 y2=150 />
+</g>
+</g>
+<circle cx=30 cy=130 r=2 />
+<circle cx=300 cy=130 r=2 />
+<circle cx=100 cy=110 r=2 />
+<circle cx=240 cy=110 r=2 />
+<circle cx=180 cy=90 r=2 />
+<circle cx=360 cy=90 r=2 />
+<circle cx=360 cy=130 r=2 />
+<circle cx=550 cy=130 r=2 />
+<g stroke-width=0 text-anchor="middle">
+<text x=580 y=180>t</text>
+<text x=100 y=180>100</text>
+<text x=550 y=180>550</text>
+<text x=360 y=180>360</text>
+<text x=300 y=180>300</text>
+<text x=240 y=180>240</text>
+<text x=180 y=180>180</text>
+<text x=30 y=180>30</text>
+</g>
+</svg></p>
+<p>Suppose you need to identify the time interval with the most simultaneous processes. The event-sort approach is a special solution this type of tasks.</p>
+<hr class="docutils" />
+<p>The following cell shows the program’s implementation and prints its output.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">START</span><span class="p">,</span> <span class="n">END</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">intervals</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">240</span><span class="p">),</span> <span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">360</span><span class="p">),</span> <span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">550</span><span class="p">)]</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">Node</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Particular realisatoin of the tree example in the cell below:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#    [1]</span>
-<span class="c1">#  [2] [3]</span>
-<span class="n">head</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
-    <span class="mi">1</span><span class="p">,</span>
-    <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
-    <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Simple tree visualisation function. Interpretation of the result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Head</span> <span class="n">node</span><span class="p">]</span>
-    <span class="p">[</span><span class="n">Left_1</span><span class="p">]</span>
-        <span class="p">[</span><span class="n">Left_l2</span><span class="p">]</span>
-        <span class="p">[</span><span class="n">Right_l2</span><span class="p">]</span>
-    <span class="p">[</span><span class="n">Right_1</span><span class="p">]</span>
-        <span class="p">[</span><span class="n">Left_r2</span><span class="p">]</span>
-        <span class="p">[</span><span class="n">Right_r2</span><span class="p">]</span>
-</pre></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">print_tree</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">indent</span><span class="o">*</span><span class="s1">&#39; &#39;</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">val</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
-        <span class="n">print_tree</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">indent</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">print_tree</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">indent</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">indent</span><span class="o">*</span><span class="s1">&#39; &#39;</span><span class="si">}</span><span class="s2">[ ]&quot;</span><span class="p">)</span>
+<span class="n">events</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">:</span>
+    <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">START</span><span class="p">))</span>
+    <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">end</span><span class="p">,</span> <span class="n">END</span><span class="p">))</span>
 
-<span class="n">head</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
-    <span class="mi">1</span><span class="p">,</span>
-    <span class="n">Node</span><span class="p">(</span>
-        <span class="mi">2</span><span class="p">,</span>
-        <span class="n">Node</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
-        <span class="n">Node</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-    <span class="p">),</span>
-    <span class="n">Node</span><span class="p">(</span>
-        <span class="mi">5</span><span class="p">,</span>
-        <span class="n">Node</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
-        <span class="n">Node</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-<span class="n">print_tree</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+<span class="n">events</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">max_count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">best_interval</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">active_intervals</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">e_moment</span><span class="p">,</span> <span class="n">e_type</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">events</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">active_intervals</span> <span class="o">&gt;</span> <span class="n">max_count</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">max_count</span> <span class="o">=</span> <span class="n">active_intervals</span>
+        <span class="n">best_interval</span> <span class="o">=</span> <span class="p">(</span><span class="n">events</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">e_moment</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">e_type</span> <span class="o">==</span> <span class="n">START</span><span class="p">:</span>
+        <span class="n">active_intervals</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># e_type == END</span>
+        <span class="n">active_intervals</span> <span class="o">-=</span> <span class="mi">1</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">best_interval</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1]
-  [2]
-    [3]
-      [ ]
-      [ ]
-    [4]
-      [ ]
-      [ ]
-  [5]
-    [6]
-      [ ]
-      [ ]
-    [7]
-      [ ]
-      [ ]
-</pre></div>
-</div>
-</div>
-</div>
-<p>Here is funciton that generates random tree:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">gen_tree</span><span class="p">(</span><span class="n">p_left</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">p_right</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Generate tree:</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    p_left : (float)</span>
-<span class="sd">        probability to the node under consideration </span>
-<span class="sd">        is added node from the left;</span>
-<span class="sd">    p_right : (flaot)</span>
-<span class="sd">        probability to the node udner consideration</span>
-<span class="sd">        is added node from the right side.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">return</span> <span class="n">Node</span><span class="p">(</span>
-        <span class="n">val</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-        <span class="n">left</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">gen_tree</span><span class="p">(</span><span class="n">p_left</span><span class="p">,</span> <span class="n">p_right</span><span class="p">)</span> 
-            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p_left</span> <span class="k">else</span>
-            <span class="kc">None</span>
-        <span class="p">),</span>
-        <span class="n">right</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">gen_tree</span><span class="p">(</span><span class="n">p_left</span><span class="p">,</span> <span class="n">p_right</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p_right</span> <span class="k">else</span>
-            <span class="kc">None</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-
-<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">head</span> <span class="o">=</span> <span class="n">gen_tree</span><span class="p">(</span><span class="n">p_left</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">p_right</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span>
-<span class="n">print_tree</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[74]
-  [62]
-    [ ]
-    [63]
-      [ ]
-      [ ]
-  [67]
-    [ ]
-    [96]
-      [ ]
-      [18]
-        [ ]
-        [ ]
-</pre></div>
-</div>
-</div>
-</div>
-<section id="inorder">
-<h2>Inorder<a class="headerlink" href="#inorder" title="Link to this heading">#</a></h2>
-<p>Traversal of the tree in order showed in the fllowing cell. “In order” means that the leftmost elements of the tree will always be processed first.</p>
-<section id="extracting-element">
-<h3>Extracting element<a class="headerlink" href="#extracting-element" title="Link to this heading">#</a></h3>
-<p>So here is example that adds elements to a sequential array:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">inorder</span><span class="p">(</span><span class="n">root</span> <span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">inorder</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
-        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
-        <span class="n">inorder</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">res</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>And use of the funtion:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">head</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> 
-    <span class="n">Node</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">Node</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="n">Node</span><span class="p">(</span><span class="mi">8</span><span class="p">)),</span> 
-    <span class="n">Node</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">Node</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span> <span class="n">Node</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-<span class="p">)</span>
-<span class="n">print_tree</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
-<span class="n">inorder</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="p">[])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1]
-  [5]
-    [7]
-      [ ]
-      [ ]
-    [8]
-      [ ]
-      [ ]
-  [6]
-    [9]
-      [ ]
-      [ ]
-    [10]
-      [ ]
-      [ ]
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[7, 5, 8, 1, 9, 6, 10]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(180, 240)
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="comparison-of-trees">
-<h3>Comparison of trees<a class="headerlink" href="#comparison-of-trees" title="Link to this heading">#</a></h3>
-<p>Here is algorithm for trees comparison base on inorder.</p>
+<section id="two-passes">
+<h2>Two passes<a class="headerlink" href="#two-passes" title="Link to this heading">#</a></h2>
+<p>There are some tasks for which the event-sorting approach can lead to quadratic complexity. These are tasks that require returning a set of objects corresponding to a specific state - so at each step, the conditions are checked and the current set is copied to the result set. In the worst case, the result set may need to be updated at every event, which results in quadratic complexity with respect to the number of events.</p>
+<p>There are several approaches that can be used in specific cases, but the most universal solution is to go through the events twice: first, to determine the positions where the conditions are met, and second, to find the appropriate result based on those positions.</p>
+<hr class="docutils" />
+<p>Consider the following task: given a set of time periods <span class="math notranslate nohighlight">\((t_i, t'_i)\)</span>, find the set of indices of the periods that fall within the time interval where the maximum number of periods overlap.</p>
+<p>The following cell defines the function that generates the events, as this code is shared by both solutions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">are_trees_equal</span><span class="p">(</span><span class="n">head1</span><span class="p">,</span> <span class="n">head2</span><span class="p">):</span>
-    <span class="c1"># here is </span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">head1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="p">(</span><span class="n">head2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">head1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">if</span> <span class="n">head1</span><span class="o">.</span><span class="n">val</span> <span class="o">!=</span> <span class="n">head2</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="nb">all</span><span class="p">([</span>
-        <span class="n">are_trees_equal</span><span class="p">(</span><span class="n">head1</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">head2</span><span class="o">.</span><span class="n">left</span><span class="p">),</span>
-        <span class="n">are_trees_equal</span><span class="p">(</span><span class="n">head1</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">head2</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
-    <span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">START</span><span class="p">,</span> <span class="n">END</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">construct_events</span><span class="p">(</span><span class="n">intervals</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+    <span class="n">events</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">intervals</span><span class="p">):</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">end</span><span class="p">,</span> <span class="n">END</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">events</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>In the following cell three trees are created. The first and second are different, but the third is just a copy of the first.</p>
+<p>The following cell defines the basic solution. As previously described, it simply copies the best set of the items wheather a better solution is found.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">tree1</span> <span class="o">=</span> <span class="n">gen_tree</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;p style=&#39;font-size:16px&#39;&gt;Tree 1&lt;/p&gt;&quot;</span><span class="p">))</span>
-<span class="n">print_tree</span><span class="p">(</span><span class="n">tree1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">basic_solution</span><span class="p">(</span><span class="n">intervals</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="n">construct_events</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+    <span class="n">events</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 
-<span class="n">tree2</span> <span class="o">=</span> <span class="n">gen_tree</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;p style=&#39;font-size:16px&#39;&gt;Tree 2&lt;/p&gt;&quot;</span><span class="p">))</span>
-<span class="n">print_tree</span><span class="p">(</span><span class="n">tree2</span><span class="p">)</span>
+    <span class="n">intervals_set</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">ans</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
-<span class="n">tree3</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">tree1</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;p style=&#39;font-size:16px&#39;&gt;Tree 3&lt;/p&gt;&quot;</span><span class="p">))</span>
-<span class="n">print_tree</span><span class="p">(</span><span class="n">tree3</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">e_type</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e_type</span> <span class="o">==</span> <span class="n">START</span><span class="p">:</span>
+            <span class="n">intervals_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># e_type == END</span>
+            <span class="n">intervals_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">intervals_set</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">ans</span><span class="p">):</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">intervals_set</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># Notice that we copy the set here</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next code uses the <code class="docutils literal notranslate"><span class="pre">basic_solution</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">basic_solution</span><span class="p">([(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">240</span><span class="p">),</span> <span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">360</span><span class="p">),</span> <span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">550</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><p style='font-size:16px'>Tree 1</p></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[74]
-  [62]
-    [ ]
-    [63]
-      [ ]
-      [ ]
-  [67]
-    [ ]
-    [96]
-      [ ]
-      [18]
-        [ ]
-        [ ]
-</pre></div>
-</div>
-<div class="output text_html"><p style='font-size:16px'>Tree 2</p></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[37]
-  [ ]
-  [23]
-    [ ]
-    [ ]
-</pre></div>
-</div>
-<div class="output text_html"><p style='font-size:16px'>Tree 3</p></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[74]
-  [62]
-    [ ]
-    [63]
-      [ ]
-      [ ]
-  [67]
-    [ ]
-    [96]
-      [ ]
-      [18]
-        [ ]
-        [ ]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1, 2}
 </pre></div>
 </div>
 </div>
 </div>
-<p>Here is the result of the application function under consideration.</p>
+<p>But consider a really specific kind of input, as visualized in the following picture:</p>
+<p><svg width=700 height=200 stroke="black" stroke-width="3"
+    style="font-family: 'LatinModern'" font-style="italic" font-size=30>
+<line x1=0 y1=150 x2=572 y2=150 />
+<line x1=572 y1=150 x2=543.4 y2=160 />
+<line x1=572 y1=150 x2=543.4 y2=140 />
+<g stroke-width="2">
+<line x1=30 y1=130 x2=400 y2=130 />
+<line x1=60 y1=110 x2=430 y2=110 />
+<line x1=90 y1=90 x2=460 y2=90 />
+<line x1=120 y1=70 x2=490 y2=70 />
+<line x1=150 y1=50 x2=520 y2=50 />
+<g stroke-dasharray="4">
+<line x1=30 y1=130 x2=30 y2=150 />
+<line x1=400 y1=130 x2=400 y2=150 />
+<line x1=60 y1=110 x2=60 y2=150 />
+<line x1=430 y1=110 x2=430 y2=150 />
+<line x1=90 y1=90 x2=90 y2=150 />
+<line x1=460 y1=90 x2=460 y2=150 />
+<line x1=120 y1=70 x2=120 y2=150 />
+<line x1=490 y1=70 x2=490 y2=150 />
+<line x1=150 y1=50 x2=150 y2=150 />
+<line x1=520 y1=50 x2=520 y2=150 />
+</g>
+</g>
+<circle cx=30 cy=130 r=2 />
+<circle cx=400 cy=130 r=2 />
+<circle cx=60 cy=110 r=2 />
+<circle cx=430 cy=110 r=2 />
+<circle cx=90 cy=90 r=2 />
+<circle cx=460 cy=90 r=2 />
+<circle cx=120 cy=70 r=2 />
+<circle cx=490 cy=70 r=2 />
+<circle cx=150 cy=50 r=2 />
+<circle cx=520 cy=50 r=2 />
+<g stroke-width=0 text-anchor="middle">
+<text x=580 y=180>t</text>
+<text x=25 y=175>t</text><text x=35 y=180 font-size=15>1</text>
+<text x=395 y=175>t’</text><text x=405 y=180 font-size=15>1</text>
+<text x=55 y=175>t</text><text x=65 y=180 font-size=15>2</text>
+<text x=425 y=175>t’</text><text x=435 y=180 font-size=15>2</text>
+<text x=85 y=175>t</text><text x=95 y=180 font-size=15>3</text>
+<text x=455 y=175>t’</text><text x=465 y=180 font-size=15>3</text>
+<text x=115 y=175>t</text><text x=125 y=180 font-size=15>4</text>
+<text x=485 y=175>t’</text><text x=495 y=180 font-size=15>4</text>
+<text x=145 y=175>t</text><text x=155 y=180 font-size=15>5</text>
+<text x=515 y=175>t’</text><text x=525 y=180 font-size=15>5</text>
+</g>
+</svg></p>
+<p>With each event, a new element is added to the set. Therefore the algorithm is required to copy the accumulated elements to the answer for each of first five iterations.</p>
+<p>The following cell defines a function that generates this type of input at a defined scale.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Tree1==Tree2 -&quot;</span><span class="p">,</span> 
-    <span class="n">are_trees_equal</span><span class="p">(</span><span class="n">tree1</span><span class="p">,</span> <span class="n">tree2</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Tree1==Tree3 -&quot;</span><span class="p">,</span>
-    <span class="n">are_trees_equal</span><span class="p">(</span><span class="n">tree1</span><span class="p">,</span> <span class="n">tree3</span><span class="p">)</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">generate_case</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next code implements the performance estimation function, that gradually increases the arrays generated by <code class="docutils literal notranslate"><span class="pre">generate_case</span></code>, and measures the time it takes to process the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">estimate_time_complexity</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]],</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span> 
+    <span class="n">timings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2_000</span><span class="p">):</span>
+        <span class="n">res</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">target</span><span class="p">(</span><span class="n">generate_case</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+        <span class="n">timings</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">timings</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The execution time progress related to the number of process intervals is displayed in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">timings_basic</span> <span class="o">=</span> <span class="n">estimate_time_complexity</span><span class="p">(</span><span class="n">basic_solution</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">timings_basic</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">timings_basic</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of intervals&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Time (seconds)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tree1==Tree2 - False
-Tree1==Tree3 - True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Time (seconds)&#39;)
+</pre></div>
+</div>
+<img alt="../_images/01b2c6aa7ce672a140cc68761701bcf609131a2a256dc5f45e80b3062fbcb24a.png" src="../_images/01b2c6aa7ce672a140cc68761701bcf609131a2a256dc5f45e80b3062fbcb24a.png" />
+</div>
+</div>
+<p>There is a quadratic progression.</p>
+<p>The approach that solves this issue is realized in the function below. It simply finds the maximum simultanious intervals and then accounts and returns the set of elements it consists of.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">two_pass</span><span class="p">(</span><span class="n">intervals</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="n">construct_events</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+    <span class="n">events</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+    <span class="n">intervals_set</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">max_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># First pass to find the maximum number of overlapping intervals</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">e_type</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e_type</span> <span class="o">==</span> <span class="n">START</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># e_type == END</span>
+            <span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">max_count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_count</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+
+    <span class="c1"># Second pass to find the indices of intervals with the maximum overlap</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">e_type</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e_type</span> <span class="o">==</span> <span class="n">START</span><span class="p">:</span>
+            <span class="n">intervals_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># e_type == END</span>
+            <span class="n">intervals_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">intervals_set</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_count</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">intervals_set</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
+<p>The results of applying the same test applied to the <code class="docutils literal notranslate"><span class="pre">two_pass</span></code> is displayed below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">timings_two_passes</span> <span class="o">=</span> <span class="n">estimate_time_complexity</span><span class="p">(</span><span class="n">two_pass</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">timings_basic</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">timings_basic</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">timings_two_passes</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">timings_two_passes</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of intervals&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Time (seconds)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Time (seconds)&#39;)
+</pre></div>
+</div>
+<img alt="../_images/b063278957b3b0143864b66cfaf31dedc9eb71b6dc9a8ed442d9d37643121fa3.png" src="../_images/b063278957b3b0143864b66cfaf31dedc9eb71b6dc9a8ed442d9d37643121fa3.png" />
+</div>
+</div>
+<p>Even if the exact complexities of the algorithms are not obvious, the <code class="docutils literal notranslate"><span class="pre">two_pass</span></code> approach certainly has better results here.</p>
 </section>
 </section>
 
@@ -1000,11 +1007,11 @@ Tree1==Tree3 - True
       </div>
     </a>
     <a class="right-next"
-       href="dynamic_prog.html"
+       href="data_structures.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Dynamic programming</p>
+        <p class="prev-next-title">Data structures</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1024,11 +1031,8 @@ Tree1==Tree3 - True
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inorder">Inorder</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-element">Extracting element</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-trees">Comparison of trees</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-passes">Two passes</a></li>
 </ul>
   </nav></div>
 

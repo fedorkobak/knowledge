@@ -254,7 +254,11 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Intro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="complexity.html">Complexity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="binary_search.html">Binary search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="trees.html">Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="dynamic_prog.html">Dynamic programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_sort.html">Quick sort</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -651,6 +655,8 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-pointers">Two pointers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-search">Binary search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#event-sort">Event sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structures">Data structures</a></li>
 </ul>
             </nav>
         </div>
@@ -711,7 +717,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">count_prefix_sum</span><span class="p">(</span><span class="n">seq</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]):</span>
-    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ans</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">:</span>
         <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ans</span>
@@ -841,6 +847,129 @@ f(x_i) = \begin{cases}
 </div>
 </div>
 </section>
+<section id="event-sort">
+<h2>Event sort<a class="headerlink" href="#event-sort" title="Link to this heading">#</a></h2>
+<p>The event sort approach is used for tasks involving events that occur at different times (or any other orderable entity). It typically assumes a system with multiple states, where events are used to transition between these states.</p>
+<p>The following picture is a typical illustration of kind of tasks that are usually solved with an even sort:</p>
+<p><svg width=700 height=200 stroke="black" stroke-width="3"
+    style="font-family: 'LatinModern'" font-style="italic" font-size=30>
+<line x1=0 y1=150 x2=600 y2=150 />
+<line x1=600 y1=150 x2=570 y2=160 />
+<line x1=600 y1=150 x2=570 y2=140 />
+<g stroke-width="2">
+<line x1=30 y1=130 x2=130 y2=130 />
+<line x1=160 y1=130 x2=300 y2=130 />
+<line x1=190 y1=110 x2=480 y2=110 />
+<line x1=320 y1=130 x2=440 y2=130 />
+<line x1=350 y1=90 x2=530 y2=90 />
+<g stroke-dasharray="4">
+<line x1=30 y1=130 x2=30 y2=150 />
+<line x1=130 y1=130 x2=130 y2=150 />
+<line x1=160 y1=130 x2=160 y2=150 />
+<line x1=300 y1=130 x2=300 y2=150 />
+<line x1=190 y1=110 x2=190 y2=150 />
+<line x1=480 y1=110 x2=480 y2=150 />
+<line x1=320 y1=130 x2=320 y2=150 />
+<line x1=440 y1=130 x2=440 y2=150 />
+<line x1=350 y1=90 x2=350 y2=150 />
+<line x1=530 y1=90 x2=530 y2=150 />
+</g>
+</g>
+<circle cx=30 cy=130 r=2 />
+<circle cx=130 cy=130 r=2 />
+<circle cx=160 cy=130 r=2 />
+<circle cx=300 cy=130 r=2 />
+<circle cx=190 cy=110 r=2 />
+<circle cx=480 cy=110 r=2 />
+<circle cx=320 cy=130 r=2 />
+<circle cx=440 cy=130 r=2 />
+<circle cx=350 cy=90 r=2 />
+<circle cx=530 cy=90 r=2 />
+<g stroke-width=0>
+<text x=580 y=180>t</text>
+<text x=25 y=175>t</text><text x=35 y=180 font-size=15>1</text>
+<text x=125 y=175>t’</text><text x=135 y=180 font-size=15>1</text>
+<text x=155 y=175>t</text><text x=165 y=180 font-size=15>2</text>
+<text x=295 y=175>t’</text><text x=305 y=180 font-size=15>2</text>
+<text x=185 y=175>t</text><text x=195 y=180 font-size=15>3</text>
+<text x=475 y=175>t’</text><text x=485 y=180 font-size=15>3</text>
+<text x=315 y=175>t</text><text x=325 y=180 font-size=15>4</text>
+<text x=435 y=175>t’</text><text x=445 y=180 font-size=15>4</text>
+<text x=345 y=175>t</text><text x=355 y=180 font-size=15>5</text>
+<text x=525 y=175>t’</text><text x=535 y=180 font-size=15>5</text>
+</g>
+</svg></p>
+<p>The typical input is an array of <span class="math notranslate nohighlight">\((t_i, t'_i)\)</span> pairs, representing the start and end of some process. The values <span class="math notranslate nohighlight">\(t_i\)</span> and <span class="math notranslate nohighlight">\(t'_i\)</span> can have a variety of physical meanings — for example, the time a customer spends in a shop or on a website, distances between objects, and so on.</p>
+<p>The main idea of the approach is to iterate over the <span class="math notranslate nohighlight">\((t_i, t'_i)\)</span> pairs and create a sequence of events <span class="math notranslate nohighlight">\((\tau_j, \text{type}_j, \overline{x}_j)\)</span>, where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\tau_j\)</span> is the timestamp of the event.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{type}_j\)</span> indicates the type of the event — typically one value for the start of a process and another for the end.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\overline{x}_j\)</span> is a vector containing additional information about the event, which varies depending on the specific task.</p></li>
+</ul>
+<p>The array of the vectors of the events <span class="math notranslate nohighlight">\((\tau_j, \text{type}_j, \overline{x}_j)\)</span> is sorted. Usually it supposes lower <span class="math notranslate nohighlight">\(\tau_j\)</span> to go first.  Ordering by <span class="math notranslate nohighlight">\(\text{type}_j\)</span> is also important, so you have to assign lower marks to the events that are supposed to be processed first.</p>
+<p>The second cycle iterates though the sorted array of the events and performs some computations based on their contents.</p>
+</section>
+<section id="data-structures">
+<h2>Data structures<a class="headerlink" href="#data-structures" title="Link to this heading">#</a></h2>
+<p>A <strong>data structure</strong> is a way of organizing and storing data in memory. Different data structures are beneficial in different situations: some allow dynamic expansion of data, others provide faster access, and some offer features that are especially useful for specific tasks.</p>
+<p>The following table represents the basic data structures:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Data Structure</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Example Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>List</strong></p></td>
+<td><p>Mutable ordered collection</p></td>
+<td><p>Storing ordered values</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Tuple</strong></p></td>
+<td><p>Immutable ordered collection</p></td>
+<td><p>Returning multiple values from a function</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Set</strong></p></td>
+<td><p>Unordered collection of unique elements</p></td>
+<td><p>Removing duplicates, membership testing</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Dictionary</strong></p></td>
+<td><p>Key-value mapping</p></td>
+<td><p>Associative arrays, fast key-based access</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Queue</strong></p></td>
+<td><p>FIFO structure (First-In, First-Out)</p></td>
+<td><p>Task scheduling, event processing</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Stack</strong></p></td>
+<td><p>LIFO structure (Last-In, First-Out)</p></td>
+<td><p>Backtracking, undo operations</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Deque</strong></p></td>
+<td><p>Double-ended queue</p></td>
+<td><p>Fast insertion/removal from both ends</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Array</strong></p></td>
+<td><p>Sequence of fixed-type values</p></td>
+<td><p>Efficient numeric data storage</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Linked List</strong></p></td>
+<td><p>Elements linked by references to the next item</p></td>
+<td><p>Frequent insertions/removals in the middle</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Hash Table</strong></p></td>
+<td><p>Key-based access via hash function</p></td>
+<td><p>Underlying structure for dictionaries</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Tree</strong></p></td>
+<td><p>Hierarchical structure with parent-child relationships</p></td>
+<td><p>Representing hierarchical data, parsing XML</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Check more details on some of the data structures at the <a class="reference internal" href="data_structures.html"><span class="std std-doc">Data structures</span></a> page.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -914,6 +1043,8 @@ f(x_i) = \begin{cases}
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-pointers">Two pointers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-search">Binary search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#event-sort">Event sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structures">Data structures</a></li>
 </ul>
   </nav></div>
 
