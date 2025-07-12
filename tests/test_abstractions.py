@@ -16,7 +16,7 @@ class TestDataResponse(TestCase):
     def test_type_mistake(self):
         """If a particular `type` is passed with content that doesn't match."""
         with self.assertRaises(typeguard.TypeCheckError):
-            DatabaseResponse(type="table", content="This is wrong")
+            DatabaseResponse(_type="table", content="This is wrong")
 
 
 class TestDockerRunner(TestCase):
@@ -134,7 +134,7 @@ class TestSeparateQueryRunner(TestCase):
     @patch.object(
         target=TestRunner,
         attribute="_execute_one",
-        return_value=DatabaseResponse(type="text", content="Response")
+        return_value=DatabaseResponse(_type="text", content="Response")
     )
     def test_execute(self, execute_one: MagicMock):
 

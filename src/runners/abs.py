@@ -6,7 +6,7 @@ import docker
 import warnings
 from abc import ABC, abstractmethod
 
-from typing import Any, Literal, Union
+from typing import Any, Literal
 from typeguard import typechecked, check_type, TypeCheckError
 
 
@@ -43,14 +43,18 @@ class DatabaseResponse:
     @typechecked
     def __init__(
         self,
-        type: Literal[*type_mapping.keys()],
-        content: Union[*type_mapping.values()]
+        _type: Literal["table", "text"],
+        content: str | table_output
     ) -> None:
 
-        if not check_type(content, type_mapping[type]):
-            raise TypeCheckError
+        if not check_type(content, type_mapping[_type]):
+            raise TypeCheckError(
+                f"For type {_type} expected content "
+                f"to be {type_mapping[_type]}, "
+                f"but got {type(content)}."
+            )
 
-        self.type = type
+        self.type = _type
         self.content = content
 
 
