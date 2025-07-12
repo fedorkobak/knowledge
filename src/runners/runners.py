@@ -51,14 +51,14 @@ class PostgresRunner(DatabaseInDockerRunner):
         Read messages from the current result set of the specified cursor.
         """
         ans = [
-            DatabaseResponse(type="text", content=log)
+            DatabaseResponse(_type="text", content=log)
             for log in self._logs
         ]
         self._logs.clear()
 
         if not (cursor.statusmessage is None):
             ans.append(
-                DatabaseResponse(type='text', content=cursor.statusmessage)
+                DatabaseResponse(_type='text', content=cursor.statusmessage)
             )
 
         if not (cursor.description is None):
@@ -66,7 +66,7 @@ class PostgresRunner(DatabaseInDockerRunner):
             data = cursor.fetchall()
             ans.append(
                 DatabaseResponse(
-                    type="table",
+                    _type="table",
                     content=(tuple(columns), tuple(data))
                 )
             )
@@ -111,7 +111,7 @@ class ClickHouseRunner(DatabaseInDockerRunner, SeparateQueryRunner):
         result = self.connection.query(command)
         data = [tuple(row) for row in result.result_rows]
         result = (result.column_names, tuple(data))
-        return DatabaseResponse(type="table", content=result)
+        return DatabaseResponse(_type="table", content=result)
 
     def stop(self):
         if hasattr(self, "connection"):
@@ -140,7 +140,7 @@ class SQLiteRunner(SeparateQueryRunner):
             else []
         )
         result = DatabaseResponse(
-            type="table", content=(tuple(columns), tuple(data))
+            _type="table", content=(tuple(columns), tuple(data))
         )
 
         cursor.close()
