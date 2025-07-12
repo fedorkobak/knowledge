@@ -76,7 +76,7 @@ class PostgresRunner(DatabaseInDockerRunner):
     @typeguard.typechecked
     def execute(self, code: str) -> execute_output:
         with self.connection.cursor() as cursor:
-            cursor.execute(code)
+            cursor.execute(code.encode())
 
             res = self._read_result_set(cursor=cursor)
             while cursor.nextset():
@@ -130,6 +130,8 @@ class SQLiteRunner(SeparateQueryRunner):
 
     @typeguard.typechecked
     def _execute_one(self, command: str) -> DatabaseResponse:
+        if self.connection is None:
+            raise RuntimeError("Database connection is not established.")
         cursor = self.connection.cursor()
         cursor.execute(command)
 
