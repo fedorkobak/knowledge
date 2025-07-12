@@ -194,21 +194,25 @@ class DatabaseInDockerRunner(DatabaseRunner):
         ]
 
     @classmethod
-    def _get_container_name(cls) -> None:
+    def _get_container_name(cls) -> str:
         '''
         Create a name for the container. This is ususally a value returned by
         `_default_container_name` with a number suffix.
         '''
         suffix = 1
         containres_names = cls._get_containers_names()
+
         while True:
-            container_name = cls._default_container_name + "_" + str(suffix)
+            container_name = (
+                cls._default_container_name + "_" + str(suffix)
+            )
             if container_name in containres_names:
                 suffix += 1
             else:
-                return container_name
+                break
+        return container_name
 
-    def _get_container(self, **kwargs) -> docker.models.containers.Container:
+    def _get_container(self, **kwargs):
         '''
         Get the container object.
         '''
