@@ -128,6 +128,10 @@ class DatabaseInDockerRunner(DatabaseRunner):
     container: docker.models.containers.Container
         Container object.
     '''
+    _image: str
+    _port: int
+    _other_params: dict[str, Any]
+    _default_container_name: str
     client = docker.from_env()
 
     def __init_subclass__(cls):
