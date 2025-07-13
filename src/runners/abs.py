@@ -6,8 +6,8 @@ import docker
 import warnings
 from abc import ABC, abstractmethod
 
-from typing import Any, Literal
-from typeguard import typechecked, check_type, TypeCheckError
+from typing import Any
+from typeguard import typechecked
 
 
 def find_free_port():
@@ -20,45 +20,6 @@ def find_free_port():
 # The first element of the tuple is a tuple of column names.
 # The second element is a tuple of rows, where each row is a separate tuple.
 table_output = tuple[tuple[str, ...], tuple[tuple[Any, ...], ...]]
-
-type_mapping = {
-    "table": table_output,
-    "text": str
-}
-
-
-class DatabaseResponse:
-    """
-    Keeps single unit of the db output. It can be:
-    - table: result of sql query. It have to follow `table_ouput` format.
-    - text: Supporting messages or logs sent from the db.
-
-    Parameters
-    ----------
-    type: Literal["table", "text"]
-        Type of the message.
-    content: str | table_output
-        Content of the message.
-    """
-    @typechecked
-    def __init__(
-        self,
-        _type: Literal["table", "text"],
-        content: str | table_output
-    ) -> None:
-
-        if not check_type(content, type_mapping[_type]):
-            raise TypeCheckError(
-                f"For type {_type} expected content "
-                f"to be {type_mapping[_type]}, "
-                f"but got {type(content)}."
-            )
-
-        self.type = _type
-        self.content = content
-
-
-execute_output = list[DatabaseResponse]
 
 
 class DatabaseRunner(ABC):
@@ -76,7 +37,7 @@ class DatabaseRunner(ABC):
         pass
 
     @abstractmethod
-    def execute(self, code: str) -> execute_output:
+    def execute(self, code: str) -> tuple[list[str], list[table_output]]:
         '''
         Execute a query in the database and return the results.
         Resutls are suppoesd to be
@@ -244,10 +205,44 @@ class SeparateQueryRunner(DatabaseRunner):
         return res
 
     @abstractmethod
-    def _execute_one(self, command: str) -> DatabaseResponse:
+    def _execute_one(
+        self, command: str
+    ) -> tuple[list[str], list[table_output]]:
+        """
+        Execute separate query.
+
+        Parameters
+        ----------
+        command: str
+            SQL command to execute.
+
+        Returns
+        -------
+        tuple[list[str], list[table_output]]
+            - Messages returned by the query.
+            - Tables returned by the query.
+        """
         pass
 
     @typechecked
-    def execute(self, code: str) -> list[DatabaseResponse]:
+    def execute(self, code: str) -> tuple[list[str], list[table_output]]:
+        """
+        Executea SQL code that can contain multiple statements.
+
+        Parameters
+        ----------
+        code: str
+            SQL code to execute. It can contain multiple statements
+            separated by semicolons.
+
+        Returns
+        -------
+        tuple[list[str], list[table_output]]
+            - Messages returned by the query.
+            - Tables returned by the query.
+        """
         commands = SeparateQueryRunner._separate_code(code)
-        return [self._execute_one(command=command) for command in commands]
+        results = [self._execute_one(command=command) for command in commands]
+        messages = [m for r in results for m in r[0]]
+        tables = [t for r in results for t in r[1]]
+        return messages, tables

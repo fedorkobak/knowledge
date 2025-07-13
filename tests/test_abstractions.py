@@ -1,22 +1,12 @@
-import typeguard
-
 import unittest
 from unittest import TestCase
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from src.runners.abs import (
-    DatabaseResponse,
+    table_output,
     DatabaseInDockerRunner,
     SeparateQueryRunner
 )
-
-
-class TestDataResponse(TestCase):
-    """src.runners.abs.DatabaseResponse"""
-    def test_type_mistake(self):
-        """If a particular `type` is passed with content that doesn't match."""
-        with self.assertRaises(typeguard.TypeCheckError):
-            DatabaseResponse(_type="table", content="This is wrong")
 
 
 class TestDockerRunner(TestCase):
@@ -112,8 +102,13 @@ class TestSeparateQueryRunner(TestCase):
         def start(self):
             pass
 
-        def _execute_one(self, code: str) -> DatabaseResponse:
-            pass
+        def _execute_one(
+            self, code: str
+        ) -> tuple[list[str], list[table_output]]:
+            return (
+                ["Message"],
+                [(("Column1", "Column2"), (("Value1", "Value2"),))]
+            )
 
     def test_separate_code(self):
         inp_out = [
@@ -131,29 +126,42 @@ class TestSeparateQueryRunner(TestCase):
             res = SeparateQueryRunner._separate_code(inp)
             self.assertEqual(out, res, msg=f"Wrong result for {inp}.")
 
-    @patch.object(
-        target=TestRunner,
-        attribute="_execute_one",
-        return_value=DatabaseResponse(_type="text", content="Response")
-    )
-    def test_execute(self, execute_one: MagicMock):
+    def test_execute(self):
 
         code = "Here are some; code"
         commands = self.TestRunner._separate_code(code)
-
-        with patch.object(
+        returns = (
+            ["Message", "Message2"],
+            [
+                (("Column1", "Column2"), (("Value1", "Value2"),)),
+                (("Column1", "Column2"), ((1, 2), (3, 4)))
+            ]
+        )
+        separate_patch = patch.object(
             target=SeparateQueryRunner,
             attribute="_separate_code",
             return_value=commands
-        ) as separate_code:
+        )
+        execute_one_patch = patch.object(
+            target=self.TestRunner,
+            attribute="_execute_one",
+            return_value=returns
+        )
+
+        with separate_patch as separate_code, execute_one_patch as execute_one:
             runner = self.TestRunner()
             result = runner.execute(code=code)
             separate_code.assert_called_once_with(code)
 
-        self.assertEqual(len(result), len(commands))
-
-        for call, command in zip(execute_one.mock_calls, commands):
-            self.assertEqual(call.kwargs, {"command": command})
+            self.assertEqual(
+                result,
+                (
+                    returns[0] * len(commands),
+                    returns[1] * len(commands)
+                )
+            )
+            for call, command in zip(execute_one.mock_calls, commands):
+                self.assertEqual(call.kwargs, {"command": command})
 
 
 if __name__ == "__main__":
