@@ -20,8 +20,8 @@ from .runners.runners import (
 
 
 def display_data(
-    header: tuple[str],
-    rows: tuple[tuple[Any]]
+    header: tuple[str, ...],
+    rows: tuple[tuple[Any, ...], ...]
 ) -> dict[str, Any]:
     d = {
         'data': {
@@ -81,34 +81,28 @@ class SQLKernel(Kernel):
             Code to be executed.
         """
         runner = self._parse_runner(code=code)
-        responses = runner.execute(code)
+        messages, tables = runner.execute(code)
 
-        for response in responses:
-            if response.type == "table":
-                table = response.content
-                self.send_response(
-                    self.iopub_socket,
-                    'display_data',
-                    display_data(header=table[0], rows=table[1])
-                )
-            elif response.type == "text":
-                text: str = response.content
+        for message in messages:
 
-                if not text.endswith("\n"):
-                    text += "\n"
+            if not message.endswith("\n"):
+                message += "\n"
 
-                self.send_response(
-                    self.iopub_socket,
-                    'stream',
-                    {
-                        'name': 'strout',
-                        'text': text
-                    }
-                )
-            else:
-                raise ValueError(
-                    f"Unknown type of the response {response.type}"
-                )
+            self.send_response(
+                self.iopub_socket,
+                'stream',
+                {
+                    'name': 'strout',
+                    'text': message
+                }
+            )
+
+        for table in tables:
+            self.send_response(
+                self.iopub_socket,
+                'display_data',
+                display_data(header=table[0], rows=table[1])
+            )
 
     def do_execute(
         self,
