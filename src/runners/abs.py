@@ -44,6 +44,13 @@ class DatabaseRunner(ABC):
         '''
         pass
 
+    @abstractmethod
+    def stop(self) -> None:
+        '''
+        Stop the runner and release the resources it uses.
+        '''
+        pass
+
 
 class DatabaseInDockerRunner(DatabaseRunner):
     '''
