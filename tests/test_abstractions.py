@@ -127,7 +127,10 @@ class TestSeparateQueryRunner(TestCase):
             self.assertEqual(out, res, msg=f"Wrong result for {inp}.")
 
     def test_execute(self):
-
+        """
+        If the `execute` method correctly prepares the code
+        for execution and composes the output correctly.
+        """
         code = "Here are some; code"
         commands = self.TestRunner._separate_code(code)
         returns = (
@@ -158,7 +161,8 @@ class TestSeparateQueryRunner(TestCase):
                 (
                     returns[0] * len(commands),
                     returns[1] * len(commands)
-                )
+                ),
+                msg="The output doesn't correspond to expected."
             )
             for call, command in zip(execute_one.mock_calls, commands):
                 self.assertEqual(call.kwargs, {"command": command})

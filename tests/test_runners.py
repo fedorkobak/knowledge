@@ -42,11 +42,9 @@ class RunnerBaseCase:
         exp_cols = ("value", "value2")
         exp_data = ((1, 2),)
 
+        messages, tables = self.runner.execute(query)
         # Looking for a first response that have "table" type
-        for response in self.runner.execute(query):
-            if response.type == "table":
-                break
-        ans_cols, ans_data = response.content
+        ans_cols, ans_data = tables[0]
 
         fail_msg = f"Failed for {self.__class__.__name__}"
         self.assertEqual(ans_cols, exp_cols, msg=fail_msg)
@@ -80,9 +78,9 @@ class TestPostgres(RunnerBaseCase, TestCase):
         DROP TABLE test_system_messages;
         """
 
-        ans = self.runner.execute(query)
-        self.assertEqual(ans[0].content, "CREATE TABLE")
-        self.assertEqual(ans[1].content, "DROP TABLE")
+        messages, tables = self.runner.execute(query)
+        self.assertEqual(messages, ["CREATE TABLE", "DROP TABLE"])
+        self.assertEqual(tables, [])
 
     def test_logs_savers(self):
         """
@@ -104,12 +102,12 @@ class TestPostgres(RunnerBaseCase, TestCase):
         They must be the first in the list of DatabaseResponses.
         """
 
-        ans = self.runner.execute(
+        messages, tables = self.runner.execute(
             "DROP TABLE IF EXISTS log_message;"
         )
 
         self.assertEqual(
-            ans[0].content,
+            messages[0],
             'NOTICE: table "log_message" does not exist, skipping'
         )
 

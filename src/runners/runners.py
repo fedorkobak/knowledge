@@ -7,8 +7,7 @@ import typeguard
 from time import sleep
 import clickhouse_connect
 from .abs import (
-    execute_output,
-    DatabaseResponse,
+    table_output,
     DatabaseInDockerRunner,
     SeparateQueryRunner
 )
@@ -46,42 +45,35 @@ class PostgresRunner(DatabaseInDockerRunner):
     def _read_result_set(
         self,
         cursor: psycopg.Cursor
-    ) -> list[DatabaseResponse]:
+    ) -> tuple[list[str], list[table_output]]:
         """
         Read messages from the current result set of the specified cursor.
         """
-        ans = [
-            DatabaseResponse(_type="text", content=log)
-            for log in self._logs
-        ]
+        messages = [log for log in self._logs]
         self._logs.clear()
 
         if not (cursor.statusmessage is None):
-            ans.append(
-                DatabaseResponse(_type='text', content=cursor.statusmessage)
-            )
+            messages.append(cursor.statusmessage)
 
+        tables = list[table_output]()
         if not (cursor.description is None):
             columns = [desc.name for desc in cursor.description]
             data = cursor.fetchall()
-            ans.append(
-                DatabaseResponse(
-                    _type="table",
-                    content=(tuple(columns), tuple(data))
-                )
-            )
+            tables.append((tuple(columns), tuple(data)))
 
-        return ans
+        return messages, tables
 
     @typeguard.typechecked
-    def execute(self, code: str) -> execute_output:
+    def execute(self, code: str) -> tuple[list[str], list[table_output]]:
         with self.connection.cursor() as cursor:
             cursor.execute(code.encode())
 
-            res = self._read_result_set(cursor=cursor)
+            messages, tables = self._read_result_set(cursor=cursor)
             while cursor.nextset():
-                res += self._read_result_set(cursor=cursor)
-            return res
+                m, t = self._read_result_set(cursor=cursor)
+                messages.extend(m)
+                tables.extend(t)
+            return messages, tables
 
     def stop(self):
         if hasattr(self, "connection"):
@@ -107,11 +99,13 @@ class ClickHouseRunner(DatabaseInDockerRunner, SeparateQueryRunner):
         )
 
     @typeguard.typechecked
-    def _execute_one(self, command: str) -> DatabaseResponse:
+    def _execute_one(
+        self, command: str
+    ) -> tuple[list[str], list[table_output]]:
         result = self.connection.query(command)
         data = [tuple(row) for row in result.result_rows]
         result = (result.column_names, tuple(data))
-        return DatabaseResponse(_type="table", content=result)
+        return [], [result]
 
     def stop(self):
         if hasattr(self, "connection"):
@@ -129,7 +123,9 @@ class SQLiteRunner(SeparateQueryRunner):
         self.connection = sqlite3.connect(self.db_path)
 
     @typeguard.typechecked
-    def _execute_one(self, command: str) -> DatabaseResponse:
+    def _execute_one(
+        self, command: str
+    ) -> tuple[list[str], list[table_output]]:
         if self.connection is None:
             raise RuntimeError("Database connection is not established.")
         cursor = self.connection.cursor()
@@ -141,12 +137,10 @@ class SQLiteRunner(SeparateQueryRunner):
             if cursor.description
             else []
         )
-        result = DatabaseResponse(
-            _type="table", content=(tuple(columns), tuple(data))
-        )
+        result = (tuple(columns), tuple(data))
 
         cursor.close()
-        return result
+        return [], [result]
 
     def stop(self):
         if self.connection:
