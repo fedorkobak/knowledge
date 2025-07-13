@@ -110,6 +110,9 @@ class TestSeparateQueryRunner(TestCase):
                 [(("Column1", "Column2"), (("Value1", "Value2"),))]
             )
 
+        def stop(self):
+            pass
+
     def test_separate_code(self):
         inp_out = [
             (

@@ -1,3 +1,4 @@
+from typing import Type
 from unittest import TestCase
 
 from src.runners.runners import (
@@ -8,63 +9,73 @@ from src.runners.runners import (
 from src.runners.abs import DatabaseRunner
 
 
-class RunnerBaseCase:
+class BaseClasses:
     """
-    This is a base class for testing runners. It realies creating and
-    stopping runners. And simple query test with just "SELECT 1;" query.
-
-    Implement
-    ---------
-    runner_class
-        Is an ancestor of the DatabaseRunner that will be tested in this class.
-
-    Attributes
-    ----------
-    runner: DatabaseRunner
-        Instance of the runner.
+    Base classes are not supposed to be executed.
+    https://stackoverflow.com/questions/1323455/python-unit-test-with-base-and-sub-class
     """
-    @classmethod
-    def setUpClass(cls):
-        if not hasattr(cls, "runner_class"):
-            raise NotImplementedError(
-                "runner_class expect to be implemented."
-            )
-        cls.runner: DatabaseRunner = cls.runner_class()
-        return super().setUpClass()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.runner.stop()
-        return super().tearDownClass()
-
-    def test_simple_query(self):
-        query = "SELECT 1 AS value, 2 AS value2;"
-        exp_cols = ("value", "value2")
-        exp_data = ((1, 2),)
-
-        messages, tables = self.runner.execute(query)
-        # Looking for a first response that have "table" type
-        ans_cols, ans_data = tables[0]
-
-        fail_msg = f"Failed for {self.__class__.__name__}"
-        self.assertEqual(ans_cols, exp_cols, msg=fail_msg)
-        self.assertEqual(ans_data, exp_data, msg=fail_msg)
-
-    def test_create_insert_command(self):
+    class RunnerBaseCase(TestCase):
         """
-        If runners ok with CREATE/INSERT commands.
+        This is a base class for testing runners. It realies creating and
+        stopping runners. And simple query test with just "SELECT 1;" query.
+
+        Implement
+        ---------
+        runner_class
+            Is an ancestor of the DatabaseRunner that will be tested in this
+            class.
+
+        Attributes
+        ----------
+        runner: DatabaseRunner
+            Instance of the runner.
         """
-        code = """
-        CREATE TABLE create_table_test (col INT);
-        INSERT INTO create_table_test (col) VALUES (45), (87);
-        """
-        self.runner.execute(code)
+        runner_class: Type
+        runner: DatabaseRunner
+
+        @classmethod
+        def setUpClass(cls):
+            if not hasattr(cls, "runner_class"):
+                raise NotImplementedError(
+                    "runner_class expect to be implemented."
+                )
+            cls.runner = cls.runner_class()
+            return super().setUpClass()
+
+        @classmethod
+        def tearDownClass(cls):
+            cls.runner.stop()
+            return super().tearDownClass()
+
+        def test_simple_query(self):
+            query = "SELECT 1 AS value, 2 AS value2;"
+            exp_cols = ("value", "value2")
+            exp_data = ((1, 2),)
+
+            messages, tables = self.runner.execute(query)
+            # Looking for a first response that have "table" type
+            ans_cols, ans_data = tables[0]
+
+            fail_msg = f"Failed for {self.__class__.__name__}"
+            self.assertEqual(ans_cols, exp_cols, msg=fail_msg)
+            self.assertEqual(ans_data, exp_data, msg=fail_msg)
+
+        def test_create_insert_command(self):
+            """
+            If runners ok with CREATE/INSERT commands.
+            """
+            code = """
+            CREATE TABLE create_table_test (col INT);
+            INSERT INTO create_table_test (col) VALUES (45), (87);
+            """
+            self.runner.execute(code)
 
 
-class TestPostgres(RunnerBaseCase, TestCase):
+class TestPostgres(BaseClasses.RunnerBaseCase, TestCase):
     """
     Test the execute output of the database runners.
     """
+    runner: PostgresRunner
     runner_class = PostgresRunner
 
     def test_system_messages_pg(self):
@@ -112,7 +123,7 @@ class TestPostgres(RunnerBaseCase, TestCase):
         )
 
 
-class TestClickhouse(RunnerBaseCase, TestCase):
+class TestClickhouse(BaseClasses.RunnerBaseCase, TestCase):
     runner_class = ClickHouseRunner
 
     def test_create_insert_command(self):
@@ -127,5 +138,5 @@ class TestClickhouse(RunnerBaseCase, TestCase):
         self.runner.execute(code=code)
 
 
-class TestSQLite(RunnerBaseCase, TestCase):
+class TestSQLite(BaseClasses.RunnerBaseCase, TestCase):
     runner_class = SQLiteRunner
