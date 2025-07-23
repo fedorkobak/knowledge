@@ -24,6 +24,24 @@ For instance, in a dice roll, the event that the result is 2 can be denoted as $
 - $\overline{E}$ is the event that $E$ does not occur.
 
 
+## Probability
+
+**Probability** is a function that maps events to real numbers in the interval [0, 1], reflecting the long-run relative frequency with which the event occurs in repeated independent trials under identical conditions.
+
+So, $P(A)$ is the probability that event A occurs.
+
+There is a set of properties that probability must follow:
+
+- $P(\emptyset) = 0$.
+- $P(E) = 1 - P(E^c)$.
+- $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
+- $\text{if } A \subseteq B \text{ then } P(A) \leq P(B)$.
+- $P(A \cup B) = 1 - P(\overline{A} \cap \overline{B})$.
+- $P(A \cap B^c) = P(A) - P(A \cap B)$.
+- $P\left(\bigcup_{i=1}^{n} E_i\right) \leq \sum_{i=1}^{n} P(E_i)$.
+- $P\left(\bigcup_{i=1}^{n} E_i\right) \geq \max_i P(E_i$)
+
+
 ## Statistical testing
 
 **Statistical testing** is a formal procedure used to determine whether there is enough evidence in a sample of data to infer that a certain condition holds for the entire population.
