@@ -1,5 +1,16 @@
 # MatStat
 
+## Notation
+
+This is the typical notation used in mathematical statistics.
+
+A lowercase letter, such as $\omega$, usually denotes a **simple event**—an individual outcome of an experiment that occurs on its own.
+
+An uppercase letter, such as $E$, denotes a **compound event**—a set of simple events, for example, $E = \left\{ \omega_1, \omega_2, \ldots, \omega_n \right\}$.
+
+For instance, in a dice roll, the event that the result is 2 can be denoted as $\omega = 2$, while the event that the result is an even number can be denoted as $E = \left\{2, 4, 6\right\}$.
+
+
 ## Statistical testing
 
 **Statistical testing** is a formal procedure used to determine whether there is enough evidence in a sample of data to infer that a certain condition holds for the entire population.
