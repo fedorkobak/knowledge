@@ -41,6 +41,7 @@ There is a set of properties that probability must follow:
 - $P\left(\bigcup_{i=1}^{n} E_i\right) \leq \sum_{i=1}^{n} P(E_i)$.
 - $P\left(\bigcup_{i=1}^{n} E_i\right) \geq \max_i P(E_i$)
 
+Check more detailed consideration of some of this formulas in the [Probability](mat_stat/probability.md) page.
 
 ## Statistical testing
 
