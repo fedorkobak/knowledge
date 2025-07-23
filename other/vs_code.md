@@ -81,3 +81,11 @@ For me, a typical case is checking the logic of code specified in a unit test. I
   "console": "integratedTerminal"
 }
 ```
+
+## vim
+
+The [Vim extension](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) allows you to use vim-like navigation and command system inside VS Code. This section provides useful tips for using vim.
+
+### Search and replace
+
+To search in vim just type `/<symbols combo to search>`. As you type, it will move you to the first occurrence below the cursor. It will also highlight all other instances of the search pattern. After pressing `Enter`, the cursor will move to the closest match below. You can move to the next match by pressing `n` and to the previous match by pressing `N`.
