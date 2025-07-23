@@ -1,5 +1,7 @@
 # MatStat
 
+Mathematical statistics is a branch of mathematics that provides a theoretical foundation for statistical methods. It focuses on developing and analyzing tools for collecting, analyzing, interpreting, and presenting data based on formal mathematical principles.
+
 ## Notation
 
 This is the typical notation used in mathematical statistics.
