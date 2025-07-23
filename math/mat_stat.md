@@ -2,9 +2,9 @@
 
 Mathematical statistics is a branch of mathematics that provides a theoretical foundation for statistical methods. It focuses on developing and analyzing tools for collecting, analyzing, interpreting, and presenting data based on formal mathematical principles.
 
-## Notation
+## Events
 
-This is the typical notation used in mathematical statistics.
+An event is the outcome of an observation. Mathematical statistics generally operates with events and has corresponding notation and a system of terms for them. This section describes them.
 
 ### Event
 
@@ -23,6 +23,15 @@ For instance, in a dice roll, the event that the result is 2 can be denoted as $
 - $E \cup F$ implies the event that at least one of $E$ or $F$ occures.
 - $\overline{E}$ is the event that $E$ does not occur.
 
+### Terminology
+
+There is a set of commonty used in matematical statistics terms.
+
+**Sample space** is the set that contains all possible outcomes of an experiment. It is usually denoted by $\Omega$.
+
+**Null event** is the event tha contains no otcomse. It is ususally denoted by $\emptyset$.
+
+**Mutually exclusive** are those that could not appear together, so $A \cap B = \emptyset$.
 
 ## Probability
 
@@ -37,7 +46,7 @@ There is a set of properties that probability must follow:
 - $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
 - $\text{if } A \subseteq B \text{ then } P(A) \leq P(B)$.
 - $P(A \cup B) = 1 - P(\overline{A} \cap \overline{B})$.
-- $P(A \cap B^c) = P(A) - P(A \cap B)$.
+- $P(A \cap \overline{B}) = P(A) - P(A \cap B)$.
 - $P\left(\bigcup_{i=1}^{n} E_i\right) \leq \sum_{i=1}^{n} P(E_i)$.
 - $P\left(\bigcup_{i=1}^{n} E_i\right) \geq \max_i P(E_i$)
 
