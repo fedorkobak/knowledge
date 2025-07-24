@@ -46,3 +46,26 @@ Obviously $P(a \cap a) > 0$ so finally:
 $$2P(a) > 2P(a) - P(a \cap a) \Leftrightarrow P(A) > P(a \cap a).$$
 
 So it's better to open one big store than two small.
+
+
+## Conditional probability
+
+Conditional probability is a probability that one event occurs given that other event was occured.
+
+In event notation, the occurrence of event $A$ given the occurrence of event $B$ is usually denoted as $A \vert B$. Therefore, the conditional probability is denoted as $P(A \vert B)$.
+
+There are a few key identities related to conditional probabilities:
+
+* If events $A$ and $B$ are independent, then $P(A \mid B) = P(A)$.
+* **Law of Total Probability**: If event $A$ depends on a partition of the sample space into events $B_i, \ i = 1, \dots, n$, then
+
+  $$
+  P(A) = \sum_{i=1}^n P(A \mid B_i) P(B_i).
+  $$
+* **Bayes' Theorem** states that the probability of two events $A$ and $B$ occurring simultaneously equals the conditional probability of $B$ given $A$ multiplied by the probability of $A$:
+
+  $$
+  P(B \cap A) = P(B \mid A) P(A).
+  $$
+
+For more details check [conditional probability](probability/conditional_probability.ipynb) page.
