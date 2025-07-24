@@ -1,0 +1,996 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Сonditional probability &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'math/mat_stat/probability/conditional_probability';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Central limit theorem" href="../cent_limit_theorem.html" />
+    <link rel="prev" title="Probability" href="../probability.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../data_science/gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_science/decision_tree.html">Decision tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_science/models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/metrics/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/metrics/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../data_science/ranking_task.html">Ranking task</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../data_science/ranking_task/collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../data_science/ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../data_science/ranking_task/collaborative_filtering/self_made_mem_based.html">Selfmade memory based</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/ranking_task/task_generation.html">Task generation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../data_science/ranking_task/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../data_science/ranking_task/metrics/precision_k.html">precision@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../data_science/ranking_task/metrics/recall_k.html">recall@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../data_science/ranking_task/metrics/average_precision.html">AP@k (average precision)</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../data_science/nlp.html">NLP</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/nlp/preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/nlp/tf_idf.html">TF-IDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/nlp/text_cnn.html">Text CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/nlp/recurrent_translation.html">Recurrent translations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../data_science/dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../data_science/dl_mechanisms/recurrent.html">Recurrent</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Intorduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../geometry.html">Geometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../geometry/triangle.html">Triangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../geometry/cone.html">Cone</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../trigonometry.html">Trigonometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../trigonometry/identities.html">Identities</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../mat_stat.html">MatStat</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../probability.html">Probability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Сonditional probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../cent_limit_theorem.html">Central limit theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../maximum_likelihood.html">Maximum likelihood</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../stat_testing/binomial_test.html">Binomial test</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../latex.html">Latex</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/complexity.html">Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/binary_search.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../algorithms/data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../algorithms/data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/dynamic_prog.html">Dynamic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/quick_sort.html">Quick sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Docker</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../docker/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../docker/containers.html">Containers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../docker/containers/run.html">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../docker/containers/execute_in.html">Execute in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../docker/containers/check_logs.html">Check logs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../docker/images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../docker/images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../docker/images/build_image/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../docker/images/build_image/ignore_files.html">Ignore files</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../docker/images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../docker/images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docker/volumes.html">Volumes</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../docker/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../docker/networks/default_networks.html">Default networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../docker/networks/container_communication.html">Containers communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../docker/networks/local_network.html">Local network</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docker/access.html">Acesss to containers</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../docker/compose.html">Compose</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../docker/compose/up_down.html">Up/down</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../docker/compose/service_configuration.html">Service configuration</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../git/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../git/file_stages.html">File statuses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../git/diff.html">Difference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../git/checkout.html">Checkout</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../git/branches/merge.html">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../git/branches/remote.html">Remotes</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../git/log.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../git/stash.html">Stash</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../git/configuration/variables.html">Variables</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../sql/intro.html">Intro</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../sql/select/join/join_types.html">Join types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/select/sorting.html">Sorting (ORDER BY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/select/unique_values.html">Unique values (DISTINCT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/select/empty_values.html">Empty values</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../sql/select/aggregation_functions.html">Aggregation functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../sql/select/aggregation_functions/collect_array.html">Collect array</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../sql/select/group_by.html">Group by</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../sql/select/group_by/conditions_on_aggregats.html">Conditions on aggregats (HAVING)</a></li>
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../sql/select/window_functions.html">Window functions (OVER)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../sql/select/window_functions/functions.html">Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../sql/select/window_functions/functions/values_shifting_lag_lead.html">Values shifting (LAG/LEAD)</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/select/expand_array.html">Expand array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/select/performance.html">Performance</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../sql/operating_tables.html">Operating tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/operating_tables/tables_properties.html">Tables properties</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../sql/datatypes.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../sql/datatypes/datetime.html">Date and time</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../sql/datatypes/datetime/date_components.html">Date components (DATE_PART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../sql/datatypes/datetime/add_period.html">Add period</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/datatypes/json.html">JSON</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sql/load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sql/versions_issues.html">Versions issues</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../sql/python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/python_interaction/python_from_container.html">Python from container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/python_interaction/python_on_host.html">Python on host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sql/python_interaction/create_database.html">Create database</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../layout/terminology.html">Terminology</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../layout/html.html">HTML</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/html/other.html">Other</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/html/text_format.html">Text format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/html/tables.html">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/html/lists.html">List tags</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../layout/html/svg.html">SVG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../layout/html/svg/text.html">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../layout/html/svg/path.html">Path</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../layout/css.html">CSS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/css/other.html">Other</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/css/style_application.html">Style application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/css/margin.html">Margin (out space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/css/padding.html">Padding (in space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/css/overflow.html">Overflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../layout/css/elements_positions.html">Elements position (<code class="docutils literal notranslate"><span class="pre">display</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../layout/forms.html">Forms</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linux</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/bash.html">Bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/manage_input_output.html">Manage input/output</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../linux/filesystem/archiving.html">Archiving</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/system_information.html">System information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/backup.html">Backup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../linux/network/curl.html">Curl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../linux/network/ssh.html">SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../linux/network/vpn.html">VPN</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../linux/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../linux/users_groups/users_manipulations.html">Users manipulations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/package_management.html">Package management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/path.html">Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/cron.html">Cron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../linux/gnupg.html">GnuPG</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../other/vs_code.html">VS Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/python_apache.html">Python with apache</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../other/kubernetes.html">Kubernetes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../other/redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/redis/zset.html">Zset</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../other/nginx.html">Nginx</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../other/nginx/reverse_proxy.html">Reverse proxy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../other/nginx/reverse_proxy/proxy_pass.html">Proxy pass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../other/nginx/reverse_proxy/cache.html">Cache</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/nginx/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/nginx/server.html">Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/nginx/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/nginx/logs.html">Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/nginx/connections_management.html">Connections management</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/gitlab.html">Gitlab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/java_script.html">Java script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/go_templates.html">Go templates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/fedorkobak/knowledge" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/math/mat_stat/probability/conditional_probability.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Сonditional probability</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-ideas">Basic ideas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule">Chain rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#even-dice">Even dice</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#law-of-total-probability">Law of total probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interesting-task">Interesting task</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-formula">Bayes formula</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks">Tasks</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#borken-product">Borken product</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#counterfeit-coin">Counterfeit coin</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="onditional-probability">
+<h1>Сonditional probability<a class="headerlink" href="#onditional-probability" title="Link to this heading">#</a></h1>
+<p>Conditional probability is a probability that one event occurs given that other event was occured.</p>
+<section id="basic-ideas">
+<h2>Basic ideas<a class="headerlink" href="#basic-ideas" title="Link to this heading">#</a></h2>
+<p>Сonditional probability of event A if event B occurs: <span class="math notranslate nohighlight">\(P(A \mid B)\)</span>.</p>
+<p>Conditions <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> independent if:</p>
+<div class="math notranslate nohighlight">
+\[P(A \mid B)=P(A).\]</div>
+<p>The intuition behind this is that if <span class="math notranslate nohighlight">\(A\)</span> doesn’t depend on <span class="math notranslate nohighlight">\(B\)</span>, it can occur with the same probability, independently of whether <span class="math notranslate nohighlight">\(B\)</span> occurs or not.</p>
+<p>Property:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^n P(A_i)=1 \Leftrightarrow\sum_{i=1}^nP(A_i \mid B)=1.\]</div>
+<p>If <span class="math notranslate nohighlight">\(A_i\)</span> are only events that can happen, then one of them will definitely occur even under the <span class="math notranslate nohighlight">\(B\)</span> condition.</p>
+<p>And a useful practical consequence:</p>
+<div class="math notranslate nohighlight">
+\[P(A \mid B) + P(\overline A \mid B) = 1.\]</div>
+</section>
+<section id="chain-rule">
+<h2>Chain rule<a class="headerlink" href="#chain-rule" title="Link to this heading">#</a></h2>
+<p>The <strong>chain rule for conditional probability</strong> is the statement:</p>
+<div class="math notranslate nohighlight">
+\[
+P(A \mid B) \cdot P(B) = P(A \cap B). \tag{1}
+\]</div>
+<p>The intuition behind this formula is as follows:</p>
+<p>To find the probability that both events <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> occur, we first consider the probability that <span class="math notranslate nohighlight">\(B\)</span> occurs, <span class="math notranslate nohighlight">\(P(B)\)</span>. Then, among the cases where <span class="math notranslate nohighlight">\(B\)</span> has occurred, we consider the probability that <span class="math notranslate nohighlight">\(A\)</span> also occurs — this is the conditional probability <span class="math notranslate nohighlight">\(P(A \mid B)\)</span>. Multiplying these two gives the probability that both <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> happen together.</p>
+<section id="even-dice">
+<h3>Even dice<a class="headerlink" href="#even-dice" title="Link to this heading">#</a></h3>
+<p>Compute the probability of rolling <span class="math notranslate nohighlight">\(2\)</span> with dice, knowing in advance that the dice will return an even number.</p>
+<p>This task can be easily solved without any special ideas related to conditional probability. You are interested in rolling <span class="math notranslate nohighlight">\(1\)</span> of <span class="math notranslate nohighlight">\(3\)</span> possible enven numbers, which can be result of a dice roll, so the probability is <span class="math notranslate nohighlight">\(1/3\)</span>.</p>
+<p>However, you can reach same conclusion by using the Bayes’ formula, which clearly shows that it makes sence:</p>
+<p>Let’s denote:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A\)</span> event that dice roll resulted in even number.</p></li>
+<li><p><span class="math notranslate nohighlight">\(B\)</span> event that dice roll resulted in <span class="math notranslate nohighlight">\(2\)</span>.</p></li>
+</ul>
+<p>Using these definitions, we can write:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(A \cap B)=P(B)=1/6\)</span> as <span class="math notranslate nohighlight">\(A \subset B\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(A) = 1/2\)</span>.</p></li>
+<li><p>The long statement, “the probability of rolling <span class="math notranslate nohighlight">\(2\)</span> with die, knowing in advance that the die iwll return an even number” actually is noting else but <span class="math notranslate nohighlight">\(B \mid A\)</span>, so we are looking for <span class="math notranslate nohighlight">\(P(B \mid A)\)</span>.</p></li>
+</ul>
+<p>Using chain rule:</p>
+<div class="math notranslate nohighlight">
+\[P(B \mid A)P(A)=P(A \cap B) \Rightarrow P(B \mid A) = \frac{P(A \cap B)}{P(A)} = \frac{1}{3}.\]</div>
+<p>The result is the same as when using the basic properties of probability.</p>
+</section>
+</section>
+<section id="law-of-total-probability">
+<h2>Law of total probability<a class="headerlink" href="#law-of-total-probability" title="Link to this heading">#</a></h2>
+<p>If we have event <span class="math notranslate nohighlight">\(A\)</span> that depends on <span class="math notranslate nohighlight">\(n\)</span> events <span class="math notranslate nohighlight">\(B_i, i=\overline{(1,n)}\)</span> probability of <span class="math notranslate nohighlight">\(A\)</span> can be written as:</p>
+<div class="math notranslate nohighlight">
+\[P(A)=\sum_{i=1}^n P(A \mid B_i)P(B_i)\]</div>
+<p>Where <span class="math notranslate nohighlight">\(B_i, i=\overline{1,n}\)</span> - events that don’t happen at the same time, but one of them will.</p>
+<section id="interesting-task">
+<h3>Interesting task<a class="headerlink" href="#interesting-task" title="Link to this heading">#</a></h3>
+<p>Suppose we have an online shop and we have agreed to support a key partner. In a normal situation, users buy the goods of this partner with a probability of 0.05 (without special displays). If we specially show the product on the homepage, the probability of purchase will be 0.2.</p>
+<p>We promised the partner 1000 sales per day, and the traffic per day is 10000 users (one user makes exactly one purchase per day). What is the minimum probability of showing the product on the homepage so that the sales correspond to our agreement?</p>
+<p>Let’s denote:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A\)</span> - user bought the good;</p></li>
+<li><p><span class="math notranslate nohighlight">\(B\)</span> - good was shown to the user on the main page.</p></li>
+</ul>
+<p>So:</p>
+<ul class="simple">
+<li><p>We need <span class="math notranslate nohighlight">\(1000\)</span> realisations of <span class="math notranslate nohighlight">\(A\)</span> in <span class="math notranslate nohighlight">\(10000\)</span> events so <span class="math notranslate nohighlight">\(P(A) = \frac{1000}{10000}=\frac{1}{10}\)</span>;</p></li>
+<li><p>The event “we showed good on the main page and it was bought” can be written <span class="math notranslate nohighlight">\(A \mid B\)</span>, so <span class="math notranslate nohighlight">\(P(A|B)=0.2\)</span>;</p></li>
+<li><p>The event “good bought without being displayed on the main page” can be written as <span class="math notranslate nohighlight">\(A \mid \overline B\)</span>, so <span class="math notranslate nohighlight">\(P(A|\overline B)=0.05\)</span>.</p></li>
+</ul>
+<p>And <span class="math notranslate nohighlight">\(P(B)\)</span> is our goal.</p>
+<p>Using law of total probability we can get:</p>
+<div class="math notranslate nohighlight">
+\[P(A)=P(A \mid B)P(B)+P(A \mid \overline B)P(\overline B) \Rightarrow\]</div>
+<div class="math notranslate nohighlight">
+\[P(A)=P(A \mid B)P(B)+P(A \mid \overline B)[1-P(B)]\]</div>
+<p>Is school equation - <span class="math notranslate nohighlight">\(P(B)=1/3\)</span>.</p>
+<p>Interesting that my original solution was slightly different:</p>
+<p>Let’s denote:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x\)</span> - number of users who were shown the good on the main page;</p></li>
+<li><p><span class="math notranslate nohighlight">\(y\)</span> - number of users who weren’t shown the good on the main page.</p></li>
+</ul>
+<p>Then the system of equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+x+y=10000;\\
+0.2*x+0.05*y=1000.
+\end{cases}
+\end{split}\]</div>
+<p>Which soluton - <span class="math notranslate nohighlight">\(x=333, y= 667\)</span>. So the final result is <span class="math notranslate nohighlight">\(333/10000 = 1/3\)</span>.</p>
+<p>But it’s really the same thing as solution throw law of total probability. Valid expressions:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x = P(B)*10000\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(y = P(\overline B)*10000.\)</span></p></li>
+</ul>
+<p>Let’s substitute them into the system of equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+P(B)*10000+P(\overline B)*10000=10000;\\
+0.2*P(B)*10000+0.05*P(\overline B)*10000=1000.
+\end{cases}
+\end{split}\]</div>
+<p>And divide both equations by <span class="math notranslate nohighlight">\(10000\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+P(\overline B)=1-P(B);\\
+0.2*P(B)+0.05*P(\overline B)=1000/10000.
+\end{cases}
+\end{split}\]</div>
+<p>We are essentially back to the final expression from the first solution.</p>
+</section>
+</section>
+<section id="bayes-formula">
+<h2>Bayes formula<a class="headerlink" href="#bayes-formula" title="Link to this heading">#</a></h2>
+<p>Consider the expression <span class="math notranslate nohighlight">\((1)\)</span> - it can be written similarly for <span class="math notranslate nohighlight">\(B\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[P(B \mid A)P(A)=P(A \cap B)\]</div>
+<p>So we got that:</p>
+<div class="math notranslate nohighlight">
+\[P(A \mid B)P(B)=P(A \cap B)=P(B \mid A)P(A)\]</div>
+<p>From here we can get Bayes formula:</p>
+<div class="math notranslate nohighlight">
+\[P(A \mid B)=\frac{P(B \mid A)P(A)}{P(B)}.\]</div>
+<section id="tasks">
+<h3>Tasks<a class="headerlink" href="#tasks" title="Link to this heading">#</a></h3>
+<p>To make clearer why we may need bayes formula let’s consider few tasks.</p>
+<section id="borken-product">
+<h4>Borken product<a class="headerlink" href="#borken-product" title="Link to this heading">#</a></h4>
+<p>Quite a typical task, but for me every time like a new 0_0.</p>
+<p>We’ve made two batches of the product, and it’s known that:</p>
+<ul class="simple">
+<li><p>In the first batch there were 5000 products and the probability of rejection is 0.1;</p></li>
+<li><p>In the second batch there were 10000 products and the probability of defect is 0.2.</p></li>
+</ul>
+<p>Suppose we take a random product from random batch. It turned out to be defective. We need to calculate the probability that we took a product from the first batch.</p>
+<p>Let:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A_i, i=\overline{1,n}\)</span> - probability that detail is taken from batch <span class="math notranslate nohighlight">\(i\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(B\)</span> is probability that prodcut is broken.</p></li>
+</ul>
+<p>So we have <span class="math notranslate nohighlight">\(P(A_1)=5000/15000 = 1/3, P(A_2)=10000/15000=2/3, P(B|A_1)=0.1, P(B|A_2)=0.2\)</span>.</p>
+<p>And need to find <span class="math notranslate nohighlight">\(P(A_1 \mid B)\)</span>.</p>
+<p>Using Bayes formula <span class="math notranslate nohighlight">\(P(A_1 \mid B)=\frac{P(B|A_1)P(A_1)}{P(B)}=0.05\)</span></p>
+</section>
+<section id="counterfeit-coin">
+<h4>Counterfeit coin<a class="headerlink" href="#counterfeit-coin" title="Link to this heading">#</a></h4>
+<p>Let’s imagine that we have a coin that is 99.9% of cases is regular and in 0.1% of cases counterfeit, i.e. it falls only with an eagle. We tossed this coin 10 times, it fell eagle all 10 times.</p>
+<p>What are the chances that this coin was a regular coin?</p>
+<p>Let’s denote that:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A\)</span> - coin is regular;</p></li>
+<li><p><span class="math notranslate nohighlight">\(B\)</span> - the coin fell 10 times with an eagle.</p></li>
+</ul>
+<p>So the probability we are looking for is <span class="math notranslate nohighlight">\(P(A|B)\)</span> that we got 10 eadgles if the coin is regular. We can find it using the Baues formula:</p>
+<div class="math notranslate nohighlight">
+\[P(A \mid B)=\frac{P(B \mid A)P(A)}{P(B)}.\]</div>
+<p>Now using <a class="reference internal" href="#Law-of-total-probability"><span class="xref myst">law of total probability</span></a> we can rewrite:</p>
+<div class="math notranslate nohighlight">
+\[P(B) = P(B \mid A)P(A) + P(B \mid \overline{A})P(\overline{A});\]</div>
+<div class="math notranslate nohighlight">
+\[P(A \mid B)=\frac{P(B \mid A)P(A)}{P(B \mid A)P(A) + P(B \mid \overline{A})P(\overline{A})}.\]</div>
+<p>Based on the condition we can write the following values:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(B \mid A)=0.5^{10}\)</span> - probability of 10 out of 10 eagles for a regular coin;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(A)=0.999\)</span> - given value that coin under consideration is regular;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(\overline{A})=0.001\)</span> - obviously follows from the previous paragraph;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(B \mid \overline{A})=1\)</span> - coin is broken, so it guarantees edgles.</p></li>
+</ul>
+<p>Now we have everything to solve task under consideration:</p>
+<div class="math notranslate nohighlight">
+\[P(A \mid B)=\frac{0.5^{10}0.999}{0.5^{10}0.999 + 0.001} = 0.4938.\]</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./math/mat_stat/probability"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../probability.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Probability</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../cent_limit_theorem.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Central limit theorem</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-ideas">Basic ideas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule">Chain rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#even-dice">Even dice</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#law-of-total-probability">Law of total probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interesting-task">Interesting task</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-formula">Bayes formula</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks">Tasks</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#borken-product">Borken product</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#counterfeit-coin">Counterfeit coin</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

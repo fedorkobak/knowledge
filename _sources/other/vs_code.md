@@ -106,6 +106,7 @@ The most usefull command are represented in the following table:
 | `:%s/foo/bar/g`              | Replace all occurrences of `foo` with `bar` in the whole file  |
 | `:%s/foo/bar/gc`             | Same as above, but **ask for confirmation** before each change |
 | `:n,m s/foo/bar/g`           | Replace `foo` with `bar` between lines `n` and `m`             |
+| `:'<,'> s/foo/bar/g`         | Replace `foo` with `bar` in the selected in visual mode section. VSCode automatically adds `'<,'>` to the command line when you type `:` in visual mode. |
 | `:%s/\<foo\>/bar/g`          | Replace whole word `foo` with `bar` globally                   |
 | `:%s/foo/bar/gI`             | Replace `foo` with `bar` globally, **case-insensitive**         |
 | `:%s/foo\c/bar/g`            | Also case-insensitive (with `\c` in pattern)                   |

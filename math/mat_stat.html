@@ -63,7 +63,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Union probability" href="mat_stat/union_probability.html" />
+    <link rel="next" title="Probability" href="mat_stat/probability.html" />
     <link rel="prev" title="Identities" href="trigonometry/identities.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -237,8 +237,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">MatStat</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="mat_stat/union_probability.html">Union probability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mat_stat/conditional_probability.html">Сonditional probability</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="mat_stat/probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -648,7 +650,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">Notation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#events">Events</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#event">Event</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operations">Operations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology">Terminology</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability">Probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-testing">Statistical testing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#central-limit-theorem">Central limit theorem</a></li>
 </ul>
@@ -664,12 +672,51 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="matstat">
 <h1>MatStat<a class="headerlink" href="#matstat" title="Link to this heading">#</a></h1>
-<section id="notation">
-<h2>Notation<a class="headerlink" href="#notation" title="Link to this heading">#</a></h2>
-<p>This is the typical notation used in mathematical statistics.</p>
+<p>Mathematical statistics is a branch of mathematics that provides a theoretical foundation for statistical methods. It focuses on developing and analyzing tools for collecting, analyzing, interpreting, and presenting data based on formal mathematical principles.</p>
+<section id="events">
+<h2>Events<a class="headerlink" href="#events" title="Link to this heading">#</a></h2>
+<p>An event is the outcome of an observation. Mathematical statistics generally operates with events and has corresponding notation and a system of terms for them. This section describes them.</p>
+<section id="event">
+<h3>Event<a class="headerlink" href="#event" title="Link to this heading">#</a></h3>
 <p>A lowercase letter, such as <span class="math notranslate nohighlight">\(\omega\)</span>, usually denotes a <strong>simple event</strong>—an individual outcome of an experiment that occurs on its own.</p>
 <p>An uppercase letter, such as <span class="math notranslate nohighlight">\(E\)</span>, denotes a <strong>compound event</strong>—a set of simple events, for example, <span class="math notranslate nohighlight">\(E = \left\{ \omega_1, \omega_2, \ldots, \omega_n \right\}\)</span>.</p>
 <p>For instance, in a dice roll, the event that the result is 2 can be denoted as <span class="math notranslate nohighlight">\(\omega = 2\)</span>, while the event that the result is an even number can be denoted as <span class="math notranslate nohighlight">\(E = \left\{2, 4, 6\right\}\)</span>.</p>
+</section>
+<section id="operations">
+<h3>Operations<a class="headerlink" href="#operations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\omega \in E\)</span> implies that <span class="math notranslate nohighlight">\(E\)</span> occurs when <span class="math notranslate nohighlight">\(\omega\)</span> occurs.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\omega \notin E\)</span> implies that <span class="math notranslate nohighlight">\(E\)</span> occurs when <span class="math notranslate nohighlight">\(\omega\)</span> occurs.</p></li>
+<li><p><span class="math notranslate nohighlight">\(E \subset F\)</span> implies that the occurrence of <span class="math notranslate nohighlight">\(E\)</span> implies the occurrence of <span class="math notranslate nohighlight">\(F\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(E \cap F\)</span> implies the event that both <span class="math notranslate nohighlight">\(E\)</span> and <span class="math notranslate nohighlight">\(F\)</span> occurs.</p></li>
+<li><p><span class="math notranslate nohighlight">\(E \cup F\)</span> implies the event that at least one of <span class="math notranslate nohighlight">\(E\)</span> or <span class="math notranslate nohighlight">\(F\)</span> occures.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\overline{E}\)</span> is the event that <span class="math notranslate nohighlight">\(E\)</span> does not occur.</p></li>
+</ul>
+</section>
+<section id="terminology">
+<h3>Terminology<a class="headerlink" href="#terminology" title="Link to this heading">#</a></h3>
+<p>There is a set of commonty used in matematical statistics terms.</p>
+<p><strong>Sample space</strong> is the set that contains all possible outcomes of an experiment. It is usually denoted by <span class="math notranslate nohighlight">\(\Omega\)</span>.</p>
+<p><strong>Null event</strong> is the event tha contains no otcomse. It is ususally denoted by <span class="math notranslate nohighlight">\(\emptyset\)</span>.</p>
+<p><strong>Mutually exclusive</strong> are those that could not appear together, so <span class="math notranslate nohighlight">\(A \cap B = \emptyset\)</span>.</p>
+</section>
+</section>
+<section id="probability">
+<h2>Probability<a class="headerlink" href="#probability" title="Link to this heading">#</a></h2>
+<p><strong>Probability</strong> is a function that maps events to real numbers in the interval [0, 1], reflecting the long-run relative frequency with which the event occurs in repeated independent trials under identical conditions.</p>
+<p>So, <span class="math notranslate nohighlight">\(P(A)\)</span> is the probability that event A occurs.</p>
+<p>There is a set of properties that probability must follow:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(\emptyset) = 0\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(E) = 1 - P(E^c)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{if } A \subseteq B \text{ then } P(A) \leq P(B)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(A \cup B) = 1 - P(\overline{A} \cap \overline{B})\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(A \cap \overline{B}) = P(A) - P(A \cap B)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left(\bigcup_{i=1}^{n} E_i\right) \leq \sum_{i=1}^{n} P(E_i)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left(\bigcup_{i=1}^{n} E_i\right) \geq \max_i P(E_i\)</span>)</p></li>
+</ul>
+<p>Check more detailed consideration of some of this formulas in the <a class="reference internal" href="mat_stat/probability.html"><span class="std std-doc">Probability</span></a> page.</p>
 </section>
 <section id="statistical-testing">
 <h2>Statistical testing<a class="headerlink" href="#statistical-testing" title="Link to this heading">#</a></h2>
@@ -748,11 +795,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="mat_stat/union_probability.html"
+       href="mat_stat/probability.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Union probability</p>
+        <p class="prev-next-title">Probability</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -772,7 +819,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">Notation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#events">Events</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#event">Event</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operations">Operations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology">Terminology</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability">Probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-testing">Statistical testing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#central-limit-theorem">Central limit theorem</a></li>
 </ul>
