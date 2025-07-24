@@ -1,5 +1,7 @@
 # Сonditional probability
 
+Conditional probability is a probability that one event occurs given that other event was occured.
+
 ## Basic ideas
 
 Сonditional probability of event A if event B occurs: $P(A \mid B)$.
@@ -103,13 +105,11 @@ $$
 
 We are essentially back to the final expression from the first solution.
 
-## Bayse formula
-
-### Derivation
+## Bayes formula
 
 Consider the expression $(1)$ - it can be written similarly for $B$:
 
-$$P(B \mid A)P(A)=p(A \cap B)$$
+$$P(B \mid A)P(A)=P(A \cap B)$$
 
 So we got that:
 
@@ -122,6 +122,31 @@ $$P(A \mid B)=\frac{P(B \mid A)P(A)}{P(B)}.$$
 ### Tasks
 
 To make clearer why we may need bayes formula let's consider few tasks.
+
+#### Even dice
+
+Compute the probability of rolling $2$ with dice, knowing in advance that the dice will return an even number.
+
+This task can be easily solved  without understanding Bayes's law. You are interested in rolling $1$ of $3$ possible enven numbers, which can be result of a dice roll, so the probability is $\frac{1}{3}$.
+
+However, you can reach same conclusion by using the Bayes' formula, which clearly shows that it makes sence:
+
+Let's denote: 
+
+- $A$ event that dice roll resulted in even number.
+- $B$ event that dice roll resulted in $2$.
+
+Using these definitions, we can write:
+
+- $P(A \cap B)=P(B)=1/6$ as $A \subset B$.
+- $P(A) = 1/2$.
+- The long statement, "the probability of rolling $2$ with die, knowing in advance that the die iwll return an even number" actually is noting else but $B \mid A$, so we are looking for $P(B \mid A)$.
+
+Using just bayes formula:
+
+$$P(B \mid A)P(A)=P(A \cap B) \Rightarrow P(B \mid A) = \frac{P(A \cap B)}{P(A)} = \frac{1}{3}.$$
+
+The result is the same as when using the basic properties of probability.
 
 #### Borken product
 
