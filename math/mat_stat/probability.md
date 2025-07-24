@@ -62,7 +62,7 @@ There are a few key identities related to conditional probabilities:
   $$
   P(A) = \sum_{i=1}^n P(A \mid B_i) P(B_i).
   $$
-* **Bayes' Theorem** states that the probability of two events $A$ and $B$ occurring simultaneously equals the conditional probability of $B$ given $A$ multiplied by the probability of $A$:
+* **The chain rule** states that the probability of two events $A$ and $B$ occurring simultaneously equals the conditional probability of $B$ given $A$ multiplied by the probability of $A$:
 
   $$
   P(B \cap A) = P(B \mid A) P(A).

@@ -12,12 +12,6 @@ $$P(A \mid B)=P(A).$$
 
 The intuition behind this is that if $A$ doesn't depend on $B$, it can occur with the same probability, independently of whether $B$ occurs or not.
 
-The expression is valid: 
-
-$$P(A \mid B)P(B)=P(A\cap B). \tag{1}$$
-
-There is such intuition behind this: if $A$ depends on $B$, then when both events occur, $A$ occurs assuming that $B$ has already occurred. Therefore, $P(A \mid B)$ must be used as the probability of $A$.
-
 Property:
 
 $$\sum_{i=1}^n P(A_i)=1 \Leftrightarrow\sum_{i=1}^nP(A_i \mid B)=1.$$
@@ -27,6 +21,44 @@ If $A_i$ are only events that can happen, then one of them will definitely occur
 And a useful practical consequence:
 
 $$P(A \mid B) + P(\overline A \mid B) = 1.$$
+
+## Chain rule
+
+The **chain rule for conditional probability** is the statement:
+
+$$
+P(A \mid B) \cdot P(B) = P(A \cap B). \tag{1}
+$$
+
+The intuition behind this formula is as follows:
+
+To find the probability that both events $A$ and $B$ occur, we first consider the probability that $B$ occurs, $P(B)$. Then, among the cases where $B$ has occurred, we consider the probability that $A$ also occurs — this is the conditional probability $P(A \mid B)$. Multiplying these two gives the probability that both $A$ and $B$ happen together.
+
+### Even dice
+
+Compute the probability of rolling $2$ with dice, knowing in advance that the dice will return an even number.
+
+This task can be easily solved without any special ideas related to conditional probability. You are interested in rolling $1$ of $3$ possible enven numbers, which can be result of a dice roll, so the probability is $1/3$.
+
+However, you can reach same conclusion by using the Bayes' formula, which clearly shows that it makes sence:
+
+Let's denote: 
+
+- $A$ event that dice roll resulted in even number.
+- $B$ event that dice roll resulted in $2$.
+
+Using these definitions, we can write:
+
+- $P(A \cap B)=P(B)=1/6$ as $A \subset B$.
+- $P(A) = 1/2$.
+- The long statement, "the probability of rolling $2$ with die, knowing in advance that the die iwll return an even number" actually is noting else but $B \mid A$, so we are looking for $P(B \mid A)$.
+
+Using chain rule:
+
+$$P(B \mid A)P(A)=P(A \cap B) \Rightarrow P(B \mid A) = \frac{P(A \cap B)}{P(A)} = \frac{1}{3}.$$
+
+The result is the same as when using the basic properties of probability.
+
 
 ## Law of total probability
 
@@ -123,30 +155,6 @@ $$P(A \mid B)=\frac{P(B \mid A)P(A)}{P(B)}.$$
 
 To make clearer why we may need bayes formula let's consider few tasks.
 
-#### Even dice
-
-Compute the probability of rolling $2$ with dice, knowing in advance that the dice will return an even number.
-
-This task can be easily solved  without understanding Bayes's law. You are interested in rolling $1$ of $3$ possible enven numbers, which can be result of a dice roll, so the probability is $\frac{1}{3}$.
-
-However, you can reach same conclusion by using the Bayes' formula, which clearly shows that it makes sence:
-
-Let's denote: 
-
-- $A$ event that dice roll resulted in even number.
-- $B$ event that dice roll resulted in $2$.
-
-Using these definitions, we can write:
-
-- $P(A \cap B)=P(B)=1/6$ as $A \subset B$.
-- $P(A) = 1/2$.
-- The long statement, "the probability of rolling $2$ with die, knowing in advance that the die iwll return an even number" actually is noting else but $B \mid A$, so we are looking for $P(B \mid A)$.
-
-Using just bayes formula:
-
-$$P(B \mid A)P(A)=P(A \cap B) \Rightarrow P(B \mid A) = \frac{P(A \cap B)}{P(A)} = \frac{1}{3}.$$
-
-The result is the same as when using the basic properties of probability.
 
 #### Borken product
 
