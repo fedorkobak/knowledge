@@ -68,4 +68,4 @@ There are a few key identities related to conditional probabilities:
   P(B \cap A) = P(B \mid A) P(A).
   $$
 
-For more details check [conditional probability](probability/conditional_probability.ipynb) page.
+For more details check [conditional probability](probability/conditional_probability.md) page.
