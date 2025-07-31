@@ -186,7 +186,10 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../data_science/gradient_descent.html">Gradient descent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../data_science/decision_tree.html">Decision tree</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../data_science/models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/model_selection/regularization.html">Regularization</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/cross_entropy.html">Cross entropy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/confusion_matrix.html">Confusion matrix</a></li>
@@ -266,6 +269,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/number_reversal.html">Number reversal</a></li>
 </ul>
 </details></li>
 </ul>
@@ -665,15 +669,21 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="statistical-testing">
 <h1>Statistical testing<a class="headerlink" href="#statistical-testing" title="Link to this heading">#</a></h1>
+<p>Statistical testing is a way to make decisions based on data. It usually assumes two hupotesises:</p>
+<ul class="simple">
+<li><p>Null hypotesis: that assumes that characretristics we got from a sample follows some distristribution.</p></li>
+<li><p>Alternative hypotesis: that assumes that characteristics we got from a sample is unlikely to be take from this distribution.</p></li>
+</ul>
+<p>This <strong>some distribution</strong> usually has some properties that allows us to make conclusions about the dataset under consideration.</p>
 <section id="definitions">
 <h2>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Sample</strong> <span class="math notranslate nohighlight">\(X_N \sim P\)</span>, where <span class="math notranslate nohighlight">\(P\)</span> is some distribution;</p></li>
-<li><p><span class="math notranslate nohighlight">\(H_0\)</span>, <span class="math notranslate nohighlight">\(H_1\)</span> - main and alternative <strong>hypotheses</strong>;</p></li>
-<li><p><strong>Statistic</strong> <span class="math notranslate nohighlight">\(T(X_N)\sim D\)</span> sampling function, where <span class="math notranslate nohighlight">\(D\)</span> is some distribution;</p></li>
-<li><p><strong>Significance level</strong> <span class="math notranslate nohighlight">\(\alpha\)</span> - if we reproduce the entire experiment over and over again, <span class="math notranslate nohighlight">\(\alpha\)</span> defines in what proportion of the reproductions we allow for the erroneous rejection of the null hypothesis.;</p></li>
-<li><p><strong>Realisation of the statistics</strong> for the sample under consideration <span class="math notranslate nohighlight">\(t=T(X_N)\)</span>;</p></li>
-<li><p><strong>p_value</strong> achievable level of significance <span class="math notranslate nohighlight">\(p(X_N)=P(T \geq t|H_0)\)</span> - is the probability with which we hit the value of the statistic <span class="math notranslate nohighlight">\(t\)</span> and more extreme in assuption that <span class="math notranslate nohighlight">\(H_0\)</span> is right. <strong>Note</strong> <span class="math notranslate nohighlight">\(T \geq t\)</span> does not necessarily mean that <span class="math notranslate nohighlight">\(T\)</span> is greater than or equal to <span class="math notranslate nohighlight">\(t\)</span>, it simply means that it is more different from the expected value at <span class="math notranslate nohighlight">\(H_0\)</span> fidelity. So if <span class="math notranslate nohighlight">\(P(X_N) \leq \alpha\)</span> means that we got less possible event that we able to accept and we have to reject <span class="math notranslate nohighlight">\(H_0\)</span>.</p></li>
+<li><p><strong>Sample</strong> <span class="math notranslate nohighlight">\(X_N \sim P\)</span>, where <span class="math notranslate nohighlight">\(P\)</span> is some distribution.</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0\)</span>, <span class="math notranslate nohighlight">\(H_1\)</span>: main and alternative <strong>hypotheses</strong>.</p></li>
+<li><p><strong>Statistic</strong> <span class="math notranslate nohighlight">\(T(X_N)\sim D\)</span> sampling function, where <span class="math notranslate nohighlight">\(D\)</span> is some distribution.</p></li>
+<li><p><strong>Significance level</strong> <span class="math notranslate nohighlight">\(\alpha\)</span>: If reproduce the entire experiment over and over again, <span class="math notranslate nohighlight">\(\alpha\)</span> would define in what proportion of times that the <span class="math notranslate nohighlight">\(H_0\)</span> would be incorrectly rejected.</p></li>
+<li><p><strong>Realization of the statistics</strong> for the sample under consideration <span class="math notranslate nohighlight">\(t=T(X_N)\)</span>.</p></li>
+<li><p><strong>P value</strong> achievable level of significance <span class="math notranslate nohighlight">\(p(X_N)=P(T \geq t|H_0)\)</span>: is the probability with which we hit the value of the statistic <span class="math notranslate nohighlight">\(t\)</span> and more extreme in assuption that <span class="math notranslate nohighlight">\(H_0\)</span> is right. <strong>Note</strong> <span class="math notranslate nohighlight">\(T \geq t\)</span> does not necessarily mean that <span class="math notranslate nohighlight">\(T\)</span> is greater than or equal to <span class="math notranslate nohighlight">\(t\)</span>, it simply means that it is more different from the expected value at <span class="math notranslate nohighlight">\(H_0\)</span> fidelity. So if <span class="math notranslate nohighlight">\(P(X_N) \leq \alpha\)</span> means that we got less possible event that we able to accept and we have to reject <span class="math notranslate nohighlight">\(H_0\)</span>.</p></li>
 </ul>
 </section>
 <section id="example">
@@ -697,8 +707,8 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[T(X_N)=\sum_{i=1}^{100} x_i.\]</div>
 <p>And it distributed according binomial with parameters <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(100\)</span> (<span class="math notranslate nohighlight">\(B(p,100)\)</span>).</p>
-<p>The particular realisation of this experiment is that <span class="math notranslate nohighlight">\(t=45\)</span>.</p>
-<p>In fact, <span class="math notranslate nohighlight">\(H_0\)</span> states that our statistics is distributed according to the distribution with the parameter <span class="math notranslate nohighlight">\(p=0.5\)</span> and <span class="math notranslate nohighlight">\(H_1\)</span> that our statistics is distributed according to distribution with some other value of the parameter. So if we assume that <span class="math notranslate nohighlight">\(H_0\)</span> is true, then it turns out that <span class="math notranslate nohighlight">\(t\sim B(0.5, 100)\)</span>.</p>
+<p>In the practical realisation of the experiment, gotten value is <span class="math notranslate nohighlight">\(t = \sum_{i=1}^{100} x'_i = 45\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(H_0\)</span> states that statistics is distributed according to the binobial distribution with the parameter <span class="math notranslate nohighlight">\(p=0.5\)</span> and <span class="math notranslate nohighlight">\(H_1\)</span> that our statistics is distributed according to distribution with some other value of the parameter. So if we assume that <span class="math notranslate nohighlight">\(H_0\)</span> is true, then it turns out that <span class="math notranslate nohighlight">\(t\sim B(0.5, 100)\)</span>.</p>
 <p>Density function for <span class="math notranslate nohighlight">\(B(0.5,100)\)</span> is plotted below. So the most possible number is somewhere around 50.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -725,9 +735,10 @@ document.write(`
 <img alt="../../_images/1e6cd575cfa6dc7111d66c38cfdcffc27c62b349dd914b6317cd63d0dd0571ff.png" src="../../_images/1e6cd575cfa6dc7111d66c38cfdcffc27c62b349dd914b6317cd63d0dd0571ff.png" />
 </div>
 </div>
-<p>Is <span class="math notranslate nohighlight">\(t=45\)</span> a possible value for these conditions? Actually, we didn’t really care that <span class="math notranslate nohighlight">\(t\)</span> took a value smaller than the most expected, we only cared that it shouldn’t be too different from the most expected <span class="math notranslate nohighlight">\(50\)</span>. So the correct question here is how likely are the values 45 and less or 55 and more?</p>
+<p>Is <span class="math notranslate nohighlight">\(t=45\)</span> a possible value for these conditions? Actually, we didn’t really care that <span class="math notranslate nohighlight">\(t\)</span> took a value smaller than the most expected, we only cared that it shouldn’t be too different from the most expected <span class="math notranslate nohighlight">\(50\)</span>. The correct question here is how likely are the values 45 and less or 55 and more?</p>
 <p>We can express these probability:</p>
-<p>$<span class="math notranslate nohighlight">\(P(T\leq 45|H_0) + P(T \geq 55 | H_0)=2P(T\leq 45|H_0)=2F_{B(0.5, 100)}(45)\)</span>$.</p>
+<div class="math notranslate nohighlight">
+\[P(T \leq 45 \mid H_0) + P(T \geq 55 | H_0)=2P(T \leq 45 \mid H_0)=2F_{B(0.5, 100)}(45).\]</div>
 <p>Where <span class="math notranslate nohighlight">\(F_{B(0.5,100)}(x)\)</span> - cumulative distribution function of the binomial distribution corresponding to <span class="math notranslate nohighlight">\(H_0\)</span>.</p>
 <p>So we expressed the probability that this or an even less likely event could have occurred. Question changes again: Are we happy with this probability?</p>
 <p>For this case it took value:</p>

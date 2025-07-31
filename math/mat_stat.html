@@ -186,7 +186,10 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../data_science/gradient_descent.html">Gradient descent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_science/decision_tree.html">Decision tree</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../data_science/models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/model_selection/regularization.html">Regularization</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/cross_entropy.html">Cross entropy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/confusion_matrix.html">Confusion matrix</a></li>
@@ -266,6 +269,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/specific_tasks/number_reversal.html">Number reversal</a></li>
 </ul>
 </details></li>
 </ul>
@@ -657,6 +661,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability">Probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributions">Distributions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-testing">Statistical testing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#central-limit-theorem">Central limit theorem</a></li>
 </ul>
@@ -717,6 +722,102 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(P\left(\bigcup_{i=1}^{n} E_i\right) \geq \max_i P(E_i\)</span>)</p></li>
 </ul>
 <p>Check more detailed consideration of some of this formulas in the <a class="reference internal" href="mat_stat/probability.html"><span class="std std-doc">Probability</span></a> page.</p>
+</section>
+<section id="distributions">
+<h2>Distributions<a class="headerlink" href="#distributions" title="Link to this heading">#</a></h2>
+<p>There is a set of random value distributions that, due to their properties, are useful in some specific applications.</p>
+<p>The following table lists the most common distributions used in practice.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Distribution</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Parameters</p></th>
+<th class="head"><p>Support</p></th>
+<th class="head"><p>Typical Use Cases</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Bernoulli</strong></p></td>
+<td><p>Discrete</p></td>
+<td><p><span class="math notranslate nohighlight">\(p\)</span> (probability of success)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in \{0, 1\}\)</span></p></td>
+<td><p>Binary outcomes (e.g., coin toss)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Binomial</strong></p></td>
+<td><p>Discrete</p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span> (trials), <span class="math notranslate nohighlight">\(p\)</span> (success prob.)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in \{0, \dots, n\}\)</span></p></td>
+<td><p># of successes in fixed # of trials</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Geometric</strong></p></td>
+<td><p>Discrete</p></td>
+<td><p><span class="math notranslate nohighlight">\(p\)</span> (success prob.)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in \{1, 2, \dots\}\)</span></p></td>
+<td><p>Trials until first success</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Poisson</strong></p></td>
+<td><p>Discrete</p></td>
+<td><p><span class="math notranslate nohighlight">\(\lambda\)</span> (rate)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in \{0, 1, 2, \dots\}\)</span></p></td>
+<td><p>Count of events in fixed interval</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Uniform</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p><span class="math notranslate nohighlight">\(a\)</span> (min), <span class="math notranslate nohighlight">\(b\)</span> (max)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in [a, b]\)</span></p></td>
+<td><p>Equal probability over an interval</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Normal (Gaussian)</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span> (mean), <span class="math notranslate nohighlight">\(\sigma^2\)</span> (variance)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in \mathbb{R}\)</span></p></td>
+<td><p>Natural phenomena, errors, CLT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Exponential</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p><span class="math notranslate nohighlight">\(\lambda\)</span> (rate)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in [0, \infty)\)</span></p></td>
+<td><p>Time between Poisson events</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Gamma</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span> (shape), <span class="math notranslate nohighlight">\(\beta\)</span> (rate)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in [0, \infty)\)</span></p></td>
+<td><p>Waiting times, reliability analysis</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Beta</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span> (shape params)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in [0, 1]\)</span></p></td>
+<td><p>Probabilities, Bayesian inference</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Chi-squared</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p><span class="math notranslate nohighlight">\(k\)</span> (degrees of freedom)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in [0, \infty)\)</span></p></td>
+<td><p>Hypothesis testing, variance estimates</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Student’s t</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu\)</span> (degrees of freedom)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in \mathbb{R}\)</span></p></td>
+<td><p>Small-sample inference for means</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>F-distribution</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p><span class="math notranslate nohighlight">\(d_1\)</span>, <span class="math notranslate nohighlight">\(d_2\)</span> (degrees of freedom)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in [0, \infty)\)</span></p></td>
+<td><p>ANOVA, comparing variances</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Log-normal</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span>, <span class="math notranslate nohighlight">\(\sigma\)</span> (log-space params)</p></td>
+<td><p><span class="math notranslate nohighlight">\(x \in (0, \infty)\)</span></p></td>
+<td><p>Skewed data, multiplicative processes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="statistical-testing">
 <h2>Statistical testing<a class="headerlink" href="#statistical-testing" title="Link to this heading">#</a></h2>
@@ -826,6 +927,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability">Probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributions">Distributions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-testing">Statistical testing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#central-limit-theorem">Central limit theorem</a></li>
 </ul>

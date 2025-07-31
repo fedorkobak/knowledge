@@ -52,6 +52,29 @@ There is a set of properties that probability must follow:
 
 Check more detailed consideration of some of this formulas in the [Probability](mat_stat/probability.md) page.
 
+## Distributions
+
+There is a set of random value distributions that, due to their properties, are useful in some specific applications.
+
+The following table lists the most common distributions used in practice.
+
+| Distribution       | Type       | Parameters                            | Support                    | Typical Use Cases                                    |
+|--------------------|------------|----------------------------------------|-----------------------------|------------------------------------------------------|
+| **Bernoulli**      | Discrete   | $p$ (probability of success)           | $x \in \{0, 1\}$           | Binary outcomes (e.g., coin toss)                   |
+| **Binomial**       | Discrete   | $n$ (trials), $p$ (success prob.)      | $x \in \{0, \dots, n\}$    | # of successes in fixed # of trials                 |
+| **Geometric**      | Discrete   | $p$ (success prob.)                    | $x \in \{1, 2, \dots\}$    | Trials until first success                          |
+| **Poisson**        | Discrete   | $\lambda$ (rate)                       | $x \in \{0, 1, 2, \dots\}$ | Count of events in fixed interval                   |
+| **Uniform**        | Continuous | $a$ (min), $b$ (max)                   | $x \in [a, b]$             | Equal probability over an interval                  |
+| **Normal (Gaussian)** | Continuous | $\mu$ (mean), $\sigma^2$ (variance) | $x \in \mathbb{R}$         | Natural phenomena, errors, CLT                      |
+| **Exponential**    | Continuous | $\lambda$ (rate)                       | $x \in [0, \infty)$        | Time between Poisson events                         |
+| **Gamma**          | Continuous | $\alpha$ (shape), $\beta$ (rate)      | $x \in [0, \infty)$        | Waiting times, reliability analysis                 |
+| **Beta**           | Continuous | $\alpha$, $\beta$ (shape params)      | $x \in [0, 1]$             | Probabilities, Bayesian inference                   |
+| **Chi-squared**    | Continuous | $k$ (degrees of freedom)              | $x \in [0, \infty)$        | Hypothesis testing, variance estimates              |
+| **Student's t**    | Continuous | $\nu$ (degrees of freedom)            | $x \in \mathbb{R}$         | Small-sample inference for means                    |
+| **F-distribution** | Continuous | $d_1$, $d_2$ (degrees of freedom)     | $x \in [0, \infty)$        | ANOVA, comparing variances                          |
+| **Log-normal**     | Continuous | $\mu$, $\sigma$ (log-space params)    | $x \in (0, \infty)$        | Skewed data, multiplicative processes               |
+
+
 ## Statistical testing
 
 **Statistical testing** is a formal procedure used to determine whether there is enough evidence in a sample of data to infer that a certain condition holds for the entire population.

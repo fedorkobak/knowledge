@@ -186,7 +186,10 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../data_science/gradient_descent.html">Gradient descent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../data_science/decision_tree.html">Decision tree</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../data_science/models_selection_methods/l2_regularisation.html">L2 (Ridge regularisation)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/model_selection/regularization.html">Regularization</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/cross_entropy.html">Cross entropy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/confusion_matrix.html">Confusion matrix</a></li>
@@ -266,6 +269,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/number_reversal.html">Number reversal</a></li>
 </ul>
 </details></li>
 </ul>
@@ -679,36 +683,6 @@ document.write(`
 </ul>
 <p>A window function performs a calculation across a set of table rows that are somehow related to the current row. This is comparable to the type of calculation that can be done with an aggregate function. But unlike regular aggregate functions, use of a window function does not cause rows to become grouped into a single output row — the rows retain their separate identities. Behind the scenes, the window function is able to access more than just the current row of the query result.</p>
 <p>In fact, you are doing something like aggregation, but the results are not collapsed by variable aggregation.</p>
-<p>Let’s consider an example for this page. We have a numeric variable called <code class="docutils literal notranslate"><span class="pre">some_variable</span></code>, on which we will apply various functions. Also, we have a <code class="docutils literal notranslate"><span class="pre">group</span></code> variable that represents the relationship between rows.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>window_functions_pg<span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>postgres<span class="se">\</span>
-<span class="w">    </span>postgres:15.4<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>window_functions_click<span class="se">\</span>
-<span class="w">    </span>clickhouse/clickhouse-server<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-
-sleep<span class="w"> </span><span class="m">5</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong> Don’t forget to stop the container.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>window_functions_pg<span class="w"> </span>window_functions_click
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>window_functions_example
-</pre></div>
-</div>
-</div>
-</div>
 <section id="syntax">
 <h2>Syntax<a class="headerlink" href="#syntax" title="Link to this heading">#</a></h2>
 <p>If you are using a window function in the <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> block of your query, you can declare a new output column using the following syntax:</p>
@@ -723,67 +697,73 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>Consider the simplest possible example: for each record, calculate the sum of the <code class="docutils literal notranslate"><span class="pre">some_value</span></code> by the <code class="docutils literal notranslate"><span class="pre">group</span></code> of the row.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>window_functions_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT </span>
-<span class="s">    some_value, &quot;group&quot;,</span>
-<span class="s">    SUM(some_value) OVER (PARTITION BY &quot;group&quot;) AS result</span>
-<span class="s">FROM </span>
-<span class="s">(</span>
-<span class="s">    VALUES</span>
-<span class="s">    (3, &#39;C&#39;, &#39;X&#39;),</span>
-<span class="s">    (3, &#39;C&#39;, &#39;Y&#39;),</span>
-<span class="s">    (1, &#39;C&#39;, &#39;X&#39;),</span>
-<span class="s">    (4, &#39;B&#39;, &#39;Y&#39;),</span>
-<span class="s">    (3, &#39;A&#39;, &#39;X&#39;)</span>
-<span class="s">) AS temp(some_value, &quot;group&quot;, group2);</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">some_value</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">result</span>
+<span class="k">FROM</span><span class="w"> </span>
+<span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temp</span><span class="p">(</span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group2</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> some_value | group | result 
-------------+-------+--------
-          3 | A     |      3
-          4 | B     |      4
-          3 | C     |      7
-          3 | C     |      7
-          1 | C     |      7
-(5 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SELECT 5
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  some_value</th><th>group  </th><th style="text-align: right;">  result</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">           3</td><td>A      </td><td style="text-align: right;">       3</td></tr>
+<tr><td style="text-align: right;">           4</td><td>B      </td><td style="text-align: right;">       4</td></tr>
+<tr><td style="text-align: right;">           3</td><td>C      </td><td style="text-align: right;">       7</td></tr>
+<tr><td style="text-align: right;">           3</td><td>C      </td><td style="text-align: right;">       7</td></tr>
+<tr><td style="text-align: right;">           1</td><td>C      </td><td style="text-align: right;">       7</td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>Now, let’s explore a more exotic example to better understand the flexibility of this tool. In this case, for each unique <code class="docutils literal notranslate"><span class="pre">some_value</span></code> we correspond emumeration of the possible values of <code class="docutils literal notranslate"><span class="pre">group</span></code> that ocur with that options of <code class="docutils literal notranslate"><span class="pre">some_value</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>window_functions_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT </span>
-<span class="s">    some_value, &quot;group&quot;,</span>
-<span class="s">    string_agg(&quot;group&quot;, &#39;, &#39;) OVER (PARTITION BY some_value) AS result</span>
-<span class="s">FROM (</span>
-<span class="s">    VALUES</span>
-<span class="s">    (3, &#39;C&#39;, &#39;X&#39;),</span>
-<span class="s">    (3, &#39;B&#39;, &#39;Y&#39;),</span>
-<span class="s">    (1, &#39;C&#39;, &#39;X&#39;),</span>
-<span class="s">    (4, &#39;B&#39;, &#39;Y&#39;),</span>
-<span class="s">    (3, &#39;A&#39;, &#39;X&#39;)</span>
-<span class="s">) AS temp(some_value, &quot;group&quot;, group2);</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">string_agg</span><span class="p">(</span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;, &#39;</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">some_value</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">result</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temp</span><span class="p">(</span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group2</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> some_value | group | result  
-------------+-------+---------
-          1 | C     | C
-          3 | C     | C, B, A
-          3 | B     | C, B, A
-          3 | A     | C, B, A
-          4 | B     | B
-(5 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SELECT 5
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  some_value</th><th>group  </th><th>result  </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">           1</td><td>C      </td><td>C       </td></tr>
+<tr><td style="text-align: right;">           3</td><td>C      </td><td>C, B, A </td></tr>
+<tr><td style="text-align: right;">           3</td><td>B      </td><td>C, B, A </td></tr>
+<tr><td style="text-align: right;">           3</td><td>A      </td><td>C, B, A </td></tr>
+<tr><td style="text-align: right;">           4</td><td>B      </td><td>B       </td></tr>
+</tbody>
+</table></div></div>
 </div>
 <section id="several-variables">
 <h3>Several variables<a class="headerlink" href="#several-variables" title="Link to this heading">#</a></h3>
@@ -792,34 +772,37 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>This example demonstrates how to calculate the sum of <code class="docutils literal notranslate"><span class="pre">some_value</span></code> for every unique combination of <code class="docutils literal notranslate"><span class="pre">group</span></code> and <code class="docutils literal notranslate"><span class="pre">group2</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>window_functions_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT </span>
-<span class="s">    some_value, &quot;group&quot;, group2, </span>
-<span class="s">    SUM(some_value) OVER (PARTITION BY &quot;group&quot;, group2) AS result</span>
-<span class="s">FROM (</span>
-<span class="s">    VALUES</span>
-<span class="s">    (3, &#39;C&#39;, &#39;X&#39;),</span>
-<span class="s">    (3, &#39;B&#39;, &#39;Y&#39;),</span>
-<span class="s">    (1, &#39;C&#39;, &#39;X&#39;),</span>
-<span class="s">    (4, &#39;B&#39;, &#39;Y&#39;),</span>
-<span class="s">    (3, &#39;A&#39;, &#39;X&#39;)</span>
-<span class="s">) AS temp(some_value, &quot;group&quot;, group2);</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">some_value</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">result</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temp</span><span class="p">(</span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group2</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> some_value | group | group2 | result 
-------------+-------+--------+--------
-          3 | A     | X      |      3
-          3 | B     | Y      |      7
-          4 | B     | Y      |      7
-          3 | C     | X      |      4
-          1 | C     | X      |      4
-(5 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SELECT 5
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  some_value</th><th>group  </th><th>group2  </th><th style="text-align: right;">  result</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">           3</td><td>A      </td><td>X       </td><td style="text-align: right;">       3</td></tr>
+<tr><td style="text-align: right;">           3</td><td>B      </td><td>Y       </td><td style="text-align: right;">       7</td></tr>
+<tr><td style="text-align: right;">           4</td><td>B      </td><td>Y       </td><td style="text-align: right;">       7</td></tr>
+<tr><td style="text-align: right;">           3</td><td>C      </td><td>X       </td><td style="text-align: right;">       4</td></tr>
+<tr><td style="text-align: right;">           1</td><td>C      </td><td>X       </td><td style="text-align: right;">       4</td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 </section>
@@ -830,34 +813,37 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>The following examples apply to the computation of sums of <code class="docutils literal notranslate"><span class="pre">some_value</span></code> in the order defined by <code class="docutils literal notranslate"><span class="pre">group</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>window_functions_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT </span>
-<span class="s">    some_value, &quot;group&quot;,</span>
-<span class="s">    SUM(some_value) OVER (ORDER BY &quot;group&quot;) AS sv</span>
-<span class="s">FROM (</span>
-<span class="s">    VALUES</span>
-<span class="s">    (3, &#39;C&#39;, &#39;X&#39;),</span>
-<span class="s">    (3, &#39;B&#39;, &#39;Y&#39;),</span>
-<span class="s">    (1, &#39;C&#39;, &#39;X&#39;),</span>
-<span class="s">    (4, &#39;B&#39;, &#39;Y&#39;),</span>
-<span class="s">    (3, &#39;A&#39;, &#39;X&#39;)</span>
-<span class="s">) AS temp(some_value, &quot;group&quot;, group2);</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">some_value</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">sv</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temp</span><span class="p">(</span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group2</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> some_value | group | sv 
-------------+-------+----
-          3 | A     |  3
-          3 | B     | 10
-          4 | B     | 10
-          3 | C     | 14
-          1 | C     | 14
-(5 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SELECT 5
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  some_value</th><th>group  </th><th style="text-align: right;">  sv</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">           3</td><td>A      </td><td style="text-align: right;">   3</td></tr>
+<tr><td style="text-align: right;">           3</td><td>B      </td><td style="text-align: right;">  10</td></tr>
+<tr><td style="text-align: right;">           4</td><td>B      </td><td style="text-align: right;">  10</td></tr>
+<tr><td style="text-align: right;">           3</td><td>C      </td><td style="text-align: right;">  14</td></tr>
+<tr><td style="text-align: right;">           1</td><td>C      </td><td style="text-align: right;">  14</td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>So for <code class="docutils literal notranslate"><span class="pre">A</span></code> we only have the sum of the <code class="docutils literal notranslate"><span class="pre">some_values</span></code> of the rows corresponding to the <code class="docutils literal notranslate"><span class="pre">A</span></code> group. But for <code class="docutils literal notranslate"><span class="pre">B</span></code> we have the sum on both <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> groups and so on.</p>
 </section>
@@ -868,34 +854,37 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>This example uses <code class="docutils literal notranslate"><span class="pre">group2</span></code> for the <code class="docutils literal notranslate"><span class="pre">PARTITION</span> <span class="pre">BY</span></code> clause and <code class="docutils literal notranslate"><span class="pre">group</span></code> for the <code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> clause within the <code class="docutils literal notranslate"><span class="pre">OVER</span></code> clause.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>window_functions_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT </span>
-<span class="s">    some_value, &quot;group&quot;, group2,</span>
-<span class="s">    SUM(some_value) OVER (PARTITION BY group2 ORDER BY &quot;group&quot;) AS sv</span>
-<span class="s">FROM (</span>
-<span class="s">    VALUES</span>
-<span class="s">    (3, &#39;C&#39;, &#39;X&#39;),</span>
-<span class="s">    (3, &#39;B&#39;, &#39;Y&#39;),</span>
-<span class="s">    (1, &#39;B&#39;, &#39;X&#39;),</span>
-<span class="s">    (4, &#39;C&#39;, &#39;Y&#39;),</span>
-<span class="s">    (3, &#39;A&#39;, &#39;X&#39;)</span>
-<span class="s">) AS temp(some_value, &quot;group&quot;, group2);</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group2</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">some_value</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">group2</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">sv</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temp</span><span class="p">(</span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group2</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> some_value | group | group2 | sv 
-------------+-------+--------+----
-          3 | A     | X      |  3
-          1 | B     | X      |  4
-          3 | C     | X      |  7
-          3 | B     | Y      |  3
-          4 | C     | Y      |  7
-(5 rows)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SELECT 5
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  some_value</th><th>group  </th><th>group2  </th><th style="text-align: right;">  sv</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">           3</td><td>A      </td><td>X       </td><td style="text-align: right;">   3</td></tr>
+<tr><td style="text-align: right;">           1</td><td>B      </td><td>X       </td><td style="text-align: right;">   4</td></tr>
+<tr><td style="text-align: right;">           3</td><td>C      </td><td>X       </td><td style="text-align: right;">   7</td></tr>
+<tr><td style="text-align: right;">           3</td><td>B      </td><td>Y       </td><td style="text-align: right;">   3</td></tr>
+<tr><td style="text-align: right;">           4</td><td>C      </td><td>Y       </td><td style="text-align: right;">   7</td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>As a result, each unique combination of <code class="docutils literal notranslate"><span class="pre">group</span></code> and <code class="docutils literal notranslate"><span class="pre">group2</span></code> receives its own calculated value.  Within each <code class="docutils literal notranslate"><span class="pre">group2</span></code> value, the <code class="docutils literal notranslate"><span class="pre">group</span></code> values are ordered, and the aggregation accumulates only within that specific <code class="docutils literal notranslate"><span class="pre">group2</span></code> value. This means that different <code class="docutils literal notranslate"><span class="pre">group2</span></code> values have independent sequences for the aggregation.</p>
 </section>
@@ -944,16 +933,35 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>The following cell shows failed attempt to apply <code class="docutils literal notranslate"><span class="pre">LAG</span></code> functions without using <code class="docutils literal notranslate"><span class="pre">OVER</span></code> clause.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>window_functions_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT LAG(group2) FROM example_table;</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">LAG</span><span class="p">(</span><span class="n">group2</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temp</span><span class="p">(</span><span class="n">some_value</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;group&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group2</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR:  relation &quot;example_table&quot; does not exist
-LINE 1: SELECT LAG(group2) FROM example_table;
-                                ^
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+  File &quot;/home/fedor/Documents/code/knowledge/src/kernel.py&quot;, line 116, in do_execute
+    self._execute_sql(code=code)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File &quot;/home/fedor/Documents/code/knowledge/src/kernel.py&quot;, line 84, in _execute_sql
+    messages, tables = runner.execute(code)
+                       ~~~~~~~~~~~~~~^^^^^^
+  File &quot;/home/fedor/Documents/code/knowledge/src/runners/runners.py&quot;, line 69, in execute
+    cursor.execute(code.encode())
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File &quot;/home/fedor/.virtualenvironments/knowledge/lib/python3.13/site-packages/psycopg/cursor.py&quot;, line 97, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.WrongObjectType: window function lag requires an OVER clause
+LINE 2: SELECT LAG(group2)
+               ^
 </pre></div>
 </div>
 </div>
@@ -968,42 +976,36 @@ LINE 1: SELECT LAG(group2) FROM example_table;
 <p>The following example shows how to generate an array for each row, which includes preceding, following, and surrounding values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>window_functions_click<span class="w"> </span>clickhouse-client<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">CREATE </span>
-<span class="s2">TEMPORARY TABLE temp (some_value Int32) </span>
-<span class="s2">ENGINE = Memory;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">CREATE</span><span class="w"> </span>
+<span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="p">(</span><span class="n">some_value</span><span class="w"> </span><span class="n">Int32</span><span class="p">)</span><span class="w"> </span>
+<span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Memory</span><span class="p">;</span>
 
-<span class="s2">INSERT INTO temp VALUES</span>
-<span class="s2">    (3), (3), (1), (4), (3);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
 
-<span class="s2">SELECT </span>
-<span class="s2">    some_value,</span>
-<span class="s2">    groupArray(some_value) OVER (ROWS BETWEEN 2 PRECEDING AND 0 PRECEDING) preceding,</span>
-<span class="s2">    groupArray(some_value) OVER (ROWS BETWEEN 1 FOLLOWING AND 2 FOLLOWING) following,</span>
-<span class="s2">    groupArray(some_value) OVER (ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) around </span>
-<span class="s2">FROM temp</span>
-<span class="s2">FORMAT Pretty;</span>
-<span class="s2">&quot;</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">some_value</span><span class="p">,</span>
+<span class="w">    </span><span class="n">groupArray</span><span class="p">(</span><span class="n">some_value</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">PRECEDING</span><span class="p">)</span><span class="w"> </span><span class="n">preceding</span><span class="p">,</span>
+<span class="w">    </span><span class="n">groupArray</span><span class="p">(</span><span class="n">some_value</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">FOLLOWING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">FOLLOWING</span><span class="p">)</span><span class="w"> </span><span class="n">following</span><span class="p">,</span>
+<span class="w">    </span><span class="n">groupArray</span><span class="p">(</span><span class="n">some_value</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">FOLLOWING</span><span class="p">)</span><span class="w"> </span><span class="n">around</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">temp</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┏━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━┓
-   ┃ some_value ┃ preceding ┃ following ┃ around  ┃
-   ┡━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━┩
-1. │          3 │ [3]       │ [3,1]     │ [3,3]   │
-   ├────────────┼───────────┼───────────┼─────────┤
-2. │          3 │ [3,3]     │ [1,4]     │ [3,3,1] │
-   ├────────────┼───────────┼───────────┼─────────┤
-3. │          1 │ [3,3,1]   │ [4,3]     │ [3,1,4] │
-   ├────────────┼───────────┼───────────┼─────────┤
-4. │          4 │ [3,1,4]   │ [3]       │ [1,4,3] │
-   ├────────────┼───────────┼───────────┼─────────┤
-5. │          3 │ [1,4,3]   │ []        │ [4,3]   │
-   └────────────┴───────────┴───────────┴─────────┘
-</pre></div>
-</div>
-</div>
+<div class="output text_html"></div><div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  some_value</th><th>preceding  </th><th>following  </th><th>around   </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">           3</td><td>[3]        </td><td>[3, 1]     </td><td>[3, 3]   </td></tr>
+<tr><td style="text-align: right;">           3</td><td>[3, 3]     </td><td>[1, 4]     </td><td>[3, 3, 1]</td></tr>
+<tr><td style="text-align: right;">           1</td><td>[3, 3, 1]  </td><td>[4, 3]     </td><td>[3, 1, 4]</td></tr>
+<tr><td style="text-align: right;">           4</td><td>[3, 1, 4]  </td><td>[3]        </td><td>[1, 4, 3]</td></tr>
+<tr><td style="text-align: right;">           3</td><td>[1, 4, 3]  </td><td>[]         </td><td>[4, 3]   </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <div class="toctree-wrapper compound">
@@ -1019,16 +1021,16 @@ LINE 1: SELECT LAG(group2) FROM example_table;
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "universal_sql"
         },
         kernelOptions: {
-            name: "bash",
+            name: "universal_sql",
             path: "./sql/select"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'universal_sql'</script>
 
                 </article>
               
