@@ -18,6 +18,7 @@ My typical config is:
     "window.zoomLevel": -2.5,
     "editor.lineNumbers": "relative",
     "python.analysis.typeCheckingMode": "strict",
+    "notebook.lineNumbers": "on", 
 }
 ```
 
