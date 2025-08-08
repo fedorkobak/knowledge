@@ -19,6 +19,7 @@ My typical config is:
     "editor.lineNumbers": "relative",
     "python.analysis.typeCheckingMode": "strict",
     "notebook.lineNumbers": "on", 
+    "vim.langmap": "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
 }
 ```
 
