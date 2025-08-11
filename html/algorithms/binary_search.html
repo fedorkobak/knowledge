@@ -1,0 +1,1083 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Binary search &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'algorithms/binary_search';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Event sort" href="event_sort.html" />
+    <link rel="prev" title="Complexity" href="complexity.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../data_science/gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_science/decision_tree.html">Decision tree</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/model_selection/regularization.html">Regularization</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/ranking_task.html">Ranking task</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/ranking_task/collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/collaborative_filtering/self_made_mem_based.html">Selfmade memory based</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/ranking_task/task_generation.html">Task generation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/ranking_task/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/metrics/precision_k.html">precision@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/metrics/recall_k.html">recall@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/metrics/average_precision.html">AP@k (average precision)</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/nlp.html">NLP</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/nlp/preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/preprocessing/tf_idf.html">TF-IDF</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/text_cnn.html">Text CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/recurrent_translation.html">Recurrent translations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/dl_mechanisms/recurrent.html">Recurrent</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../math/introduction.html">Intorduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../math/geometry.html">Geometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../math/geometry/triangle.html">Triangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/geometry/cone.html">Cone</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../math/trigonometry.html">Trigonometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../math/trigonometry/identities.html">Identities</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../math/mat_stat.html">MatStat</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../math/mat_stat/probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../math/mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../math/mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../math/mat_stat/stat_testing/t_test.html">T-test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../math/mat_stat/stat_testing/binomial_test.html">Binomial test</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/latex.html">Latex</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="complexity.html">Complexity</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamic_prog.html">Dynamic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_sort.html">Quick sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="specific_tasks/emergency_task.html">Emergency task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="specific_tasks/sinking_islands.html">Sinling islands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="specific_tasks/number_reversal.html">Number reversal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Docker</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../docker/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../docker/containers.html">Containers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../docker/containers/run.html">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../docker/containers/execute_in.html">Execute in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../docker/containers/check_logs.html">Check logs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../docker/images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../docker/images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../docker/images/build_image/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../docker/images/build_image/ignore_files.html">Ignore files</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../docker/images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../docker/images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/volumes.html">Volumes</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../docker/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../docker/networks/default_networks.html">Default networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../docker/networks/container_communication.html">Containers communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../docker/networks/local_network.html">Local network</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/access.html">Acesss to containers</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../docker/compose.html">Compose</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../docker/compose/up_down.html">Up/down</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../docker/compose/service_configuration.html">Service configuration</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../git/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/file_stages.html">File statuses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Difference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/checkout.html">Checkout</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/branches/merge.html">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/branches/remote.html">Remotes</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/configuration/variables.html">Variables</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../sql/intro.html">Intro</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/select/join/join_types.html">Join types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/sorting.html">Sorting (ORDER BY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/unique_values.html">Unique values (DISTINCT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/empty_values.html">Empty values</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/aggregation_functions.html">Aggregation functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/select/aggregation_functions/collect_array.html">Collect array</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/group_by.html">Group by</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/select/group_by/conditions_on_aggregats.html">Conditions on aggregats (HAVING)</a></li>
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/window_functions.html">Window functions (OVER)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../sql/select/window_functions/functions.html">Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../sql/select/window_functions/functions/value.html">Value</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/expand_array.html">Expand array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/performance.html">Performance</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/operating_tables.html">Operating tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sql/operating_tables/tables_properties.html">Tables properties</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/datatypes.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/datatypes/datetime.html">Date and time</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/datatypes/datetime/date_components.html">Date components (DATE_PART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sql/datatypes/datetime/add_period.html">Add period</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/datatypes/json.html">JSON</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/versions_issues.html">Versions issues</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/python_from_container.html">Python from container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/python_on_host.html">Python on host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/create_database.html">Create database</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../layout/terminology.html">Terminology</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../layout/html.html">HTML</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../layout/html/other.html">Other</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../layout/html/text_format.html">Text format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/html/tables.html">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/html/lists.html">List tags</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../layout/html/svg.html">SVG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../layout/html/svg/text.html">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../layout/html/svg/path.html">Path</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../layout/css.html">CSS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/other.html">Other</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/style_application.html">Style application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/margin.html">Margin (out space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/padding.html">Padding (in space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/overflow.html">Overflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/elements_positions.html">Elements position (<code class="docutils literal notranslate"><span class="pre">display</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout/forms.html">Forms</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linux</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../linux/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/bash.html">Bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/manage_input_output.html">Manage input/output</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/archiving.html">Archiving</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/system_information.html">System information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/backup.html">Backup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../linux/network/curl.html">Curl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/network/ssh.html">SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/network/vpn.html">VPN</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../linux/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../linux/users_groups/users_manipulations.html">Users manipulations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/package_management.html">Package management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/path.html">Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/cron.html">Cron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/gnupg.html">GnuPG</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../other/vs_code.html">VS Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/python_apache.html">Python with apache</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../other/kubernetes.html">Kubernetes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../other/redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/redis/zset.html">Zset</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../other/nginx.html">Nginx</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../other/nginx/reverse_proxy.html">Reverse proxy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../other/nginx/reverse_proxy/proxy_pass.html">Proxy pass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../other/nginx/reverse_proxy/cache.html">Cache</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/nginx/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/nginx/server.html">Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/nginx/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/nginx/logs.html">Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/nginx/connections_management.html">Connections management</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/gitlab.html">Gitlab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/fedorkobak/knowledge" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/algorithms/binary_search.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Binary search</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-description">Formal description</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#last-entry">Last entry</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#search-by-answer">Search by answer</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="binary-search">
+<h1>Binary search<a class="headerlink" href="#binary-search" title="Link to this heading">#</a></h1>
+<p>Binary search is an algorithm used to find a specific element within an ordered sequence. At each step, it divides the sequence into two equal sub-sequences and continuest searching in only one of them. This page provides an accurate description.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="formal-description">
+<h2>Formal description<a class="headerlink" href="#formal-description" title="Link to this heading">#</a></h2>
+<p>Suppose you are processing the sequence: <span class="math notranslate nohighlight">\(x_1, x_2, \ldots, x_{k-1}, x_k, x_{k+1}, \ldots, x_{n-1}, x_n\)</span>. The element you are trying to find is <span class="math notranslate nohighlight">\(x_k\)</span>.</p>
+<p>In this context, the fact that the sequence is ordered means that one can define a function <span class="math notranslate nohighlight">\(f\)</span> such that it takes the value 0 for all elements before <span class="math notranslate nohighlight">\(x_k\)</span> and 1 for all elements from <span class="math notranslate nohighlight">\(x_k\)</span> onward. More formally,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x_i) = 
+\begin{cases}
+0, &amp; i \in \{1, \ldots, k-1\} \\[6pt]
+1, &amp; i \in \{k, \ldots, n\}.
+\end{cases}
+\end{split}\]</div>
+<p>Define variables that indicate the beginning and the end of the interval beingconsidered: <span class="math notranslate nohighlight">\(l_0 = 0, r_0 = n\)</span>.</p>
+<p>At each step, the middle point of the interval is counted: <span class="math notranslate nohighlight">\(p_j = \left\lfloor \frac{l_j + r_j}{2} \right\rfloor\)</span>. Depending on the value of <span class="math notranslate nohighlight">\(f(x_{p_j})\)</span>, we decide whether to move <span class="math notranslate nohighlight">\(l\)</span> or <span class="math notranslate nohighlight">\(r\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}r_j =
+\begin{cases}
+p_{j - 1}, f(x_{p_j}) = 1 \\
+r_{j - 1}, f(x_{p_j}) = 0.
+\end{cases}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+l_j =
+\begin{cases}
+p_{j - 1}, f(x_{p_j}) = 0 \\
+l_{j - 1}, f(x_{p_j}) = 1.
+\end{cases}
+\end{split}\]</div>
+<p>Procedure continues until <span class="math notranslate nohighlight">\(l_j + 1 &lt; r_j\)</span>. The fact <span class="math notranslate nohighlight">\(l_j + 1 = r_j\)</span> garantees that <span class="math notranslate nohighlight">\(x_{r_j} = x_k\)</span></p>
+<p><strong>Note:</strong> A very common mistake in binary search is to forget to add <span class="math notranslate nohighlight">\(1\)</span> in the stopping condition <span class="math notranslate nohighlight">\(l_j + 1 &lt; r_j\)</span>. Omitting it can lead to an infinite loop. At some point, you may reach the situation where <span class="math notranslate nohighlight">\(l_j = k - 1\)</span> and <span class="math notranslate nohighlight">\(r_j = k\)</span>. Then:</p>
+<div class="math notranslate nohighlight">
+\[
+p_j = \left\lfloor \frac{l_j + r_j}{2} \right\rfloor 
+= \left\lfloor \frac{(k - 1) + k}{2} \right\rfloor 
+= \left\lfloor k - 1 + 0.5 \right\rfloor 
+= k - 1.
+\]</div>
+<p>So,</p>
+<div class="math notranslate nohighlight">
+\[
+f(x_{k - 1}) = 0 \quad \Longrightarrow \quad r_{j + 1} = r_j, 
+\quad l_{j + 1} = p_j = k - 1 = l_j.
+\]</div>
+<p>As a result, <span class="math notranslate nohighlight">\(r_j = r_{j - 1}\)</span> and <span class="math notranslate nohighlight">\(l_j = l_{j - 1}\)</span> — the search interval does not shrink, and the loop runs forever.</p>
+<hr class="docutils" />
+<p>The following cell defines a generalised implemention of the binary search:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">first_entry</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Implementation of the first entry binary search.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequence: list[Any]</span>
+<span class="sd">        Sequence of elements to be processed.</span>
+<span class="sd">    fun: Callable</span>
+<span class="sd">        Function that takes value True for appropriate side of the sequence.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    The first index when fun takes value True.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">fun</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">p</span><span class="p">]):</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">p</span>
+    <span class="k">return</span> <span class="n">r</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell shows how the function implemented earlier used to find a specific number (12) in a list of integers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_entry</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">12</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="last-entry">
+<h2>Last entry<a class="headerlink" href="#last-entry" title="Link to this heading">#</a></h2>
+<p>Binary search algorithm in different sources can be defined slightly different, but important is the one option - last occurance approach.</p>
+<p>The previously defined algorithm, in the case where there are multiple elements with the same value, <span class="math notranslate nohighlight">\(x_k = x_{k+1} = x_{k+2} = \ldots\)</span>, will return <span class="math notranslate nohighlight">\(k\)</span>, which corresponds to the first occurrence of an element for which <span class="math notranslate nohighlight">\(f(x) = 1\)</span>.</p>
+<p>The widely accepted alternative last occurrence approach sugests that <span class="math notranslate nohighlight">\(f\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x_i) = 
+\begin{cases}
+1, &amp; i \in \{1, \ldots, k\} \\[6pt]
+0, &amp; i \in \{k + 1, \ldots, n\}.
+\end{cases}
+\end{split}\]</div>
+<p>Accordingly, the following alterations are expected to be implemented in the mechanisms employed for the computation of interval borders and the midpoint of an interval:</p>
+<div class="math notranslate nohighlight">
+\[
+p_j = \left\lceil \frac{l_j + r_j}{2} \right\rceil
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}r_j =
+\begin{cases}
+p_{j - 1}, f(x_{p_j}) = 0 \\
+r_{j - 1}, f(x_{p_j}) = 1.
+\end{cases}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+l_j =
+\begin{cases}
+p_{j - 1}, f(x_{p_j}) = 1 \\
+l_{j - 1}, f(x_{p_j}) = 0.
+\end{cases}
+\end{split}\]</div>
+<p>Such changes occur in the final steps of the algorithm:</p>
+<ul class="simple">
+<li><p>When <span class="math notranslate nohighlight">\(\frac{l_j + r_j}{2} = k + \varepsilon\)</span>, where <span class="math notranslate nohighlight">\(\varepsilon \in (0, 1)\)</span>, we have <span class="math notranslate nohighlight">\(p_j = \lceil k + \varepsilon \rceil = k + 1\)</span>. Since <span class="math notranslate nohighlight">\(f(x_{k+1}) = 0\)</span>, the right boundary is moved to the <span class="math notranslate nohighlight">\((k+1)\)</span>-th position: <span class="math notranslate nohighlight">\(r_j = k + 1\)</span>.</p></li>
+<li><p>When <span class="math notranslate nohighlight">\(\frac{l_j + r_j}{2} = k - 1 + \varepsilon\)</span>, where <span class="math notranslate nohighlight">\(\varepsilon \in (0, 1)\)</span>, we have <span class="math notranslate nohighlight">\(p_j = \lceil k - 1 + \varepsilon \rceil = k\)</span>. Since <span class="math notranslate nohighlight">\(f(x_k) = 1\)</span>, the left boundary is moved to the <span class="math notranslate nohighlight">\(k\)</span>-th position: <span class="math notranslate nohighlight">\(l_j = k\)</span>.</p></li>
+</ul>
+<p>After all the steps, we have <span class="math notranslate nohighlight">\(l_j = k\)</span> and <span class="math notranslate nohighlight">\(r_j = k + 1\)</span>. Even if there are multiple identical values, <span class="math notranslate nohighlight">\(x_{k - l} = x_{k - l + 1} = \ldots = x_{k - 1} = x_k\)</span>, the algorithm will still point, by the final left boundary, to the <span class="math notranslate nohighlight">\(k\)</span>-th element — the first occurrence of the desired element.</p>
+<hr class="docutils" />
+<p>The next code defines universal implementation of the last entry approach:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">last_entry</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Implementation of the last entry binary search.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequence: list[Any]</span>
+<span class="sd">        Sequence of elements to be processed.</span>
+<span class="sd">    fun: Callable</span>
+<span class="sd">        Function that takes value True for appropriate side of the sequence.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    The last index when fun takes value True.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">fun</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">p</span><span class="p">]):</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">p</span>
+    <span class="k">return</span> <span class="n">l</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Following cell shows, use of the function defined earlier to find index of the 12 value in the list:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">last_entry</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">12</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+</div>
+</div>
+<p>It returns 4, which is the second entry of the value we are looking for.</p>
+</section>
+<section id="search-by-answer">
+<h2>Search by answer<a class="headerlink" href="#search-by-answer" title="Link to this heading">#</a></h2>
+<p>The binary search by answer is an important method for solving a set of tasks.</p>
+<p>It is used for tasks that require finding the minimum or maximum value under certain conditions. The conditions must be able to be represented as a binary function that changes value once at a certain point.</p>
+<p>More formally, for the binary function <span class="math notranslate nohighlight">\(f(x)\)</span> is required to find <span class="math notranslate nohighlight">\(\min_{f(x)=True}{(x)}\)</span>.</p>
+<hr class="docutils" />
+<p>The best way to demonstrate this approach is to show the tasks that can be solved using this approach.</p>
+<p>Given a sequence of numbers ordered in ascending order: <span class="math notranslate nohighlight">\(a_1, a_2, \ldots, a_n\)</span>. Required to find <span class="math notranslate nohighlight">\(L\)</span> non-overlapping <span class="math notranslate nohighlight">\(c\)</span>-elements subsets of numbers such that the maximum difference is minimal:</p>
+<div class="math notranslate nohighlight">
+\[\Delta = \min_{\{i_1, i_2, \ldots, i_L\}}\left[\max_j \left( a_{i_j + c} - a_{i_j} \right)\right]\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(i_j, j=\overline{1,n}\)</span> is the first index of the <span class="math notranslate nohighlight">\(j\)</span>-th group.</p>
+<p>The  binary search solution involves searching for smallest <span class="math notranslate nohighlight">\(\Delta\)</span> that allows the formation of <span class="math notranslate nohighlight">\(L\)</span> non-overlapping <span class="math notranslate nohighlight">\(c\)</span>-element subsets.</p>
+<p>The following cell realizes the function that checks whether it is possible to find such subsets for given <span class="math notranslate nohighlight">\(\Delta\)</span> (<code class="docutils literal notranslate"><span class="pre">D</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">check_groups</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">L</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">D</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if it possible to form L groups of c elements</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">lst_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lst_len</span> <span class="o">-</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">D</span><span class="p">:</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">counter</span> <span class="o">&gt;=</span> <span class="n">L</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Consider set of numbers <span class="math notranslate nohighlight">\(\left\{1, 5, 15, 20, 20\right\}\)</span> and parameters <span class="math notranslate nohighlight">\(L=2\)</span>, <span class="math notranslate nohighlight">\(c=2\)</span>. For <span class="math notranslate nohighlight">\(\Delta=4\)</span> it still possible to find subsets <span class="math notranslate nohighlight">\(\left\{1, 5\right\}, \left\{20, 20\right\}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">check_groups</span><span class="p">(</span>
+    <span class="n">lst</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, for <span class="math notranslate nohighlight">\(\Delta = 1\)</span>, the subset <span class="math notranslate nohighlight">\(\left\{1, 5\right\}\)</span> is incorrect - it’s impossible to find the corresponding subsets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">check_groups</span><span class="p">(</span>
+    <span class="n">lst</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, just binserach for the first <span class="math notranslate nohighlight">\(\Delta\)</span> that corresponds to the requirements:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">solution</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">L</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">check_groups</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="n">lst</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="n">D</span><span class="p">):</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="n">D</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">D</span>
+    <span class="k">return</span> <span class="n">right</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">solution</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./algorithms"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="complexity.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Complexity</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="event_sort.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Event sort</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-description">Formal description</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#last-entry">Last entry</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#search-by-answer">Search by answer</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

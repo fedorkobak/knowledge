@@ -1,0 +1,1433 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Recurrent translations &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data_science/nlp/recurrent_translation';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="DL mechanisms" href="../dl_mechanisms.html" />
+    <link rel="prev" title="Recurrent text gen" href="recurrent_text_gen.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision_tree.html">Decision tree</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../model_selection/regularization.html">Regularization</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ranking_task.html">Ranking task</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ranking_task/collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/collaborative_filtering/self_made_mem_based.html">Selfmade memory based</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ranking_task/task_generation.html">Task generation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ranking_task/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/metrics/precision_k.html">precision@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/metrics/recall_k.html">recall@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/metrics/average_precision.html">AP@k (average precision)</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../nlp.html">NLP</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing/tf_idf.html">TF-IDF</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="text_cnn.html">Text CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recurrent_text_gen.html">Recurrent text gen</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Recurrent translations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dl_mechanisms/recurrent.html">Recurrent</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../math/introduction.html">Intorduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/geometry.html">Geometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math/geometry/triangle.html">Triangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/geometry/cone.html">Cone</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/trigonometry.html">Trigonometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math/trigonometry/identities.html">Identities</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/mat_stat.html">MatStat</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../math/mat_stat/probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../math/mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/stat_testing/t_test.html">T-test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/stat_testing/binomial_test.html">Binomial test</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math/latex.html">Latex</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/complexity.html">Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/binary_search.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../algorithms/data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/dynamic_prog.html">Dynamic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/quick_sort.html">Quick sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/number_reversal.html">Number reversal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Docker</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docker/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/containers.html">Containers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/containers/run.html">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/containers/execute_in.html">Execute in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/containers/check_logs.html">Check logs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_image/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_image/ignore_files.html">Ignore files</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/volumes.html">Volumes</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/networks/default_networks.html">Default networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/networks/container_communication.html">Containers communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/networks/local_network.html">Local network</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/access.html">Acesss to containers</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/compose.html">Compose</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/compose/up_down.html">Up/down</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../docker/compose/service_configuration.html">Service configuration</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../git/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/file_stages.html">File statuses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/diff.html">Difference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/checkout.html">Checkout</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/branches/merge.html">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../git/branches/remote.html">Remotes</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/log.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/stash.html">Stash</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/configuration/variables.html">Variables</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../sql/intro.html">Intro</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/join/join_types.html">Join types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/sorting.html">Sorting (ORDER BY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/unique_values.html">Unique values (DISTINCT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/empty_values.html">Empty values</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/aggregation_functions.html">Aggregation functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/aggregation_functions/collect_array.html">Collect array</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/group_by.html">Group by</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/group_by/conditions_on_aggregats.html">Conditions on aggregats (HAVING)</a></li>
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/window_functions.html">Window functions (OVER)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../sql/select/window_functions/functions.html">Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../sql/select/window_functions/functions/value.html">Value</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/expand_array.html">Expand array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/performance.html">Performance</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/operating_tables.html">Operating tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/operating_tables/tables_properties.html">Tables properties</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/datatypes.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/datatypes/datetime.html">Date and time</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/datatypes/datetime/date_components.html">Date components (DATE_PART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/datatypes/datetime/add_period.html">Add period</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/datatypes/json.html">JSON</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/versions_issues.html">Versions issues</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/python_from_container.html">Python from container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/python_on_host.html">Python on host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/create_database.html">Create database</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../layout/terminology.html">Terminology</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../layout/html.html">HTML</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/other.html">Other</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/text_format.html">Text format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/tables.html">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/lists.html">List tags</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../layout/html/svg.html">SVG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../layout/html/svg/text.html">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../layout/html/svg/path.html">Path</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../layout/css.html">CSS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/other.html">Other</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/style_application.html">Style application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/margin.html">Margin (out space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/padding.html">Padding (in space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/overflow.html">Overflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/elements_positions.html">Elements position (<code class="docutils literal notranslate"><span class="pre">display</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../layout/forms.html">Forms</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linux</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../linux/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/bash.html">Bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/manage_input_output.html">Manage input/output</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/archiving.html">Archiving</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/system_information.html">System information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/backup.html">Backup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/curl.html">Curl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/ssh.html">SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/vpn.html">VPN</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/users_groups/users_manipulations.html">Users manipulations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/package_management.html">Package management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/path.html">Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/cron.html">Cron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/gnupg.html">GnuPG</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../other/vs_code.html">VS Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../other/kubernetes.html">Kubernetes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/redis/zset.html">Zset</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/nginx.html">Nginx</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../other/nginx/reverse_proxy.html">Reverse proxy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../other/nginx/reverse_proxy/proxy_pass.html">Proxy pass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../other/nginx/reverse_proxy/cache.html">Cache</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/server.html">Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/logs.html">Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/connections_management.html">Connections management</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/gitlab.html">Gitlab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/fedorkobak/knowledge" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/data_science/nlp/recurrent_translation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Recurrent translations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model">Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encoder">Encoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoder">Decoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composition">Composition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting">Fitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#result">Result</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="recurrent-translations">
+<h1>Recurrent translations<a class="headerlink" href="#recurrent-translations" title="Link to this heading">#</a></h1>
+<p>This notebook considers the solution of the translation task using recurrent layers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.nn.utils.rnn</span><span class="w"> </span><span class="kn">import</span> <span class="n">pad_sequence</span>
+
+<span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+    <span class="n">DEVICE</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">mps</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+    <span class="n">DEVICE</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;mps&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">DEVICE</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h2>
+<p>As an example, the English-&gt;Russian data set <code class="docutils literal notranslate"><span class="pre">tatoeda</span></code> is considered. <a class="reference external" href="https://tatoeba.org/en/">Tatoeda</a> - collections of sentences and their translations. In particular, it’s <a class="reference external" href="https://huggingface.co/datasets/Helsinki-NLP/tatoeba">hugging face implementation</a> was used. The following cell loads data, transforms it into a more convenient format and displays some sentences from the dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+    <span class="s2">&quot;tatoeba&quot;</span><span class="p">,</span>
+    <span class="n">lang1</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+    <span class="n">lang2</span><span class="o">=</span><span class="s2">&quot;ru&quot;</span><span class="p">,</span>
+    <span class="n">trust_remote_code</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">translation</span><span class="p">[</span><span class="s2">&quot;en&quot;</span><span class="p">],</span> <span class="n">translation</span><span class="p">[</span><span class="s2">&quot;ru&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">translation</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="s2">&quot;translation&quot;</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="n">dataset</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">205</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next cell prepares the following:</p>
+<ul class="simple">
+<li><p>Service tokens.</p></li>
+<li><p>Vocabulary.</p></li>
+<li><p>Tokenization transformation.</p></li>
+<li><p>Mappings between tokens and indices (both directions).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Special tokens</span>
+<span class="n">PAD_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&lt;PAD&gt;&quot;</span>
+<span class="c1"># End of sentence</span>
+<span class="n">EOS_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&lt;EOS&gt;&quot;</span>
+<span class="c1"># Start of sentence</span>
+<span class="n">SOS_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&lt;SOS&gt;&quot;</span>
+<span class="c1"># Unknown</span>
+<span class="n">UNK_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&lt;UNK&gt;&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Tokinelattion of the given stirng  by words&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">sentence</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="n">EN_VOCAB</span> <span class="o">=</span> <span class="p">{</span><span class="n">PAD_TOKEN</span><span class="p">,</span> <span class="n">EOS_TOKEN</span><span class="p">,</span> <span class="n">SOS_TOKEN</span><span class="p">,</span> <span class="n">UNK_TOKEN</span><span class="p">}</span>
+<span class="n">RU_VOCAB</span> <span class="o">=</span> <span class="p">{</span><span class="n">PAD_TOKEN</span><span class="p">,</span> <span class="n">EOS_TOKEN</span><span class="p">,</span> <span class="n">SOS_TOKEN</span><span class="p">,</span> <span class="n">UNK_TOKEN</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">en</span><span class="p">,</span> <span class="n">ru</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="n">EN_VOCAB</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tokenize</span><span class="p">(</span><span class="n">en</span><span class="p">))</span>
+    <span class="n">RU_VOCAB</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tokenize</span><span class="p">(</span><span class="n">ru</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_mappings</span><span class="p">(</span><span class="n">vocab</span><span class="p">:</span> <span class="nb">set</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Create mappings.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">word2int</span> <span class="o">=</span> <span class="p">{</span><span class="n">word</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vocab</span><span class="p">)}</span>
+    <span class="n">int2word</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">word</span> <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">word2int</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">return</span> <span class="n">word2int</span><span class="p">,</span> <span class="n">int2word</span>
+
+<span class="n">EN_WORD2INT</span><span class="p">,</span> <span class="n">EN_INT2WORD</span> <span class="o">=</span> <span class="n">create_mappings</span><span class="p">(</span><span class="n">EN_VOCAB</span><span class="p">)</span>
+<span class="n">RU_WORD2INT</span><span class="p">,</span> <span class="n">RU_INT2WORD</span> <span class="o">=</span> <span class="n">create_mappings</span><span class="p">(</span><span class="n">RU_VOCAB</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, <code class="docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code> is set up to iterate over sentence pairs, already transformed into tensors containing token indices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tensor_tokenize</span><span class="p">(</span>
+    <span class="n">sentence</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">word2int</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">DEVICE</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Transform sentence into tensor with indeces of tokens.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">word2int</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">word2int</span><span class="p">[</span><span class="n">UNK_TOKEN</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="o">+</span> <span class="p">[</span><span class="n">word2int</span><span class="p">[</span><span class="n">EOS_TOKEN</span><span class="p">]],</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="n">device</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TranslationDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;A data set iterating over input-&gt;translation pairs.&#39;&#39;&#39;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">pairs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+        <span class="n">en_word2int</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">ru_word2int</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pairs</span> <span class="o">=</span> <span class="n">pairs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">en_word2int</span> <span class="o">=</span> <span class="n">en_word2int</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ru_word2int</span> <span class="o">=</span> <span class="n">ru_word2int</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pairs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">eng</span><span class="p">,</span> <span class="n">rus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pairs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">eng_tensor</span> <span class="o">=</span> <span class="n">tensor_tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="o">=</span><span class="n">eng</span><span class="p">,</span> <span class="n">word2int</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">en_word2int</span><span class="p">)</span>
+        <span class="n">rus_tensor</span> <span class="o">=</span> <span class="n">tensor_tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="o">=</span><span class="n">rus</span><span class="p">,</span> <span class="n">word2int</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ru_word2int</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">eng_tensor</span><span class="p">,</span> <span class="n">rus_tensor</span>
+
+<span class="n">translation_dataset</span> <span class="o">=</span> <span class="n">TranslationDataset</span><span class="p">(</span>
+    <span class="n">pairs</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+    <span class="n">en_word2int</span><span class="o">=</span><span class="n">EN_WORD2INT</span><span class="p">,</span>
+    <span class="n">ru_word2int</span><span class="o">=</span><span class="n">RU_WORD2INT</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is an example of using the created dataset - it simply returns a pair of tensors containing the indices of English and Russian tokens, respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">translation_dataset</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([12845, 47486, 33172, 36617, 54900, 13416, 17676, 15429, 27838, 33949,
+         35532, 23035, 39765, 51507,  9368], device=&#39;cuda:0&#39;),
+ tensor([ 58057,   7555,  41970, 109240,  52815,  38096,  93771, 115141,  73088,
+          44994,  40218,  11276], device=&#39;cuda:0&#39;))
+</pre></div>
+</div>
+</div>
+</div>
+<p>And finally, a dataloader constructs minibatches of pairs and pads shorter sentences so that data across a set of sentences can be represented as a single tensor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">collate_fn</span><span class="p">(</span><span class="n">batch</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transforms a list of tokinized sentences into the torch tensor. Should be</span>
+<span class="sd">    used as `collate_fn` argument of the dataloader. The main purpose is to</span>
+<span class="sd">    pad all sentences to have the same length.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">eng_batch</span><span class="p">,</span> <span class="n">rus_batch</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">batch</span><span class="p">)</span>
+    <span class="n">eng_batch_padded</span> <span class="o">=</span> <span class="n">pad_sequence</span><span class="p">(</span>
+        <span class="n">eng_batch</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">padding_value</span><span class="o">=</span><span class="n">EN_WORD2INT</span><span class="p">[</span><span class="n">PAD_TOKEN</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">rus_batch_padded</span> <span class="o">=</span> <span class="n">pad_sequence</span><span class="p">(</span>
+        <span class="n">rus_batch</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">padding_value</span><span class="o">=</span><span class="n">RU_WORD2INT</span><span class="p">[</span><span class="n">PAD_TOKEN</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">eng_batch_padded</span><span class="p">,</span> <span class="n">rus_batch_padded</span>
+
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">translation_dataloader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">translation_dataset</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">collate_fn</span><span class="o">=</span><span class="n">collate_fn</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">translation_dataloader</span><span class="p">))</span>
+<span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">2</span><span class="p">],</span> <span class="n">batch</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([[12845, 47486, 33172, 36617, 54900, 13416, 17676, 15429, 27838, 33949,
+          35532, 23035, 39765, 51507,  9368],
+         [40990, 30170, 54430,  9368, 50966, 50966, 50966, 50966, 50966, 50966,
+          50966, 50966, 50966, 50966, 50966]], device=&#39;cuda:0&#39;),
+ tensor([[ 58057,   7555,  41970, 109240,  52815,  38096,  93771, 115141,  73088,
+           44994,  40218,  11276, 129051, 129051, 129051, 129051],
+         [ 82115, 128804,  49943,  11276, 129051, 129051, 129051, 129051, 129051,
+          129051, 129051, 129051, 129051, 129051, 129051, 129051]],
+        device=&#39;cuda:0&#39;))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="model">
+<h2>Model<a class="headerlink" href="#model" title="Link to this heading">#</a></h2>
+<p>This section discusses the model architecture, with the key components being the <strong>encoder</strong> and the <strong>decoder</strong>. The central idea is that the encoder transforms the input text into a vector representation. This vector serves as the initial hidden state for the recurrent decoder, which generates the translation by processing the already translated part of the sentence as its input sequence.</p>
+<section id="encoder">
+<h3>Encoder<a class="headerlink" href="#encoder" title="Link to this heading">#</a></h3>
+<p>The encoder extracts the last hidden state from each layer. Since there are both forward and backward directional layers, the total number of states corresponds to twice the value of the <code class="docutils literal notranslate"><span class="pre">num_layers</span></code> parameter. All these outputs are then concatenated into a single vector for each sample.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">vocab_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">embed_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">hidden_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">num_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">embed_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">RNN</span><span class="p">(</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">embed_size</span><span class="p">,</span>
+            <span class="n">hidden_size</span><span class="o">=</span><span class="n">hidden_size</span><span class="p">,</span>
+            <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">bidirectional</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">num_layers</span><span class="o">=</span><span class="n">num_layers</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x: torch.Tensor</span>
+<span class="sd">            With dimentionality (samples_number, sequence_length).</span>
+<span class="sd">            Original language senteces transformed to indeces.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            ouputs: torch.Tensor</span>
+<span class="sd">                (samples_number, sequence_len, hidden_size)</span>
+<span class="sd">                All states.</span>
+<span class="sd">            hidden: torch.Tensor</span>
+<span class="sd">                (samples_number, hidden_size)</span>
+<span class="sd">                Final state.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">outputs</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">embedded</span><span class="p">)</span>
+        <span class="c1"># Concatenating results of all layers and all directions to one long</span>
+        <span class="c1"># sequence</span>
+        <span class="n">hidden</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">hidden</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hidden</span><span class="p">))],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">hidden</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is the result of applying the recurrent layer to the two transformed sentences.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">(</span>
+    <span class="n">vocab_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">embed_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">hidden_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="mi">5</span>
+<span class="p">)</span>
+<span class="n">encoder</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([1, 2, 100])
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note:</strong> An extra dimension is added to the output of the decoder just to be used as the initial hidden state of a layer RNN in `decoder’.</p>
+</section>
+<section id="decoder">
+<h3>Decoder<a class="headerlink" href="#decoder" title="Link to this heading">#</a></h3>
+<p>The decoder is designed to take the text already generated in the previous steps and the hidden state from the previous steps. <strong>Note:</strong> In the first step, the decoder is supposed to use the start-of-sentence token as the already translated part and the encoder’s hidden state, which contains information about the text to be translated.</p>
+<p>The following cell implements decoder:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">vocab_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">embed_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">hidden_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">embed_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">RNN</span><span class="p">(</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">embed_size</span><span class="p">,</span>
+            <span class="n">hidden_size</span><span class="o">=</span><span class="n">hidden_size</span><span class="p">,</span>
+            <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="n">vocab_size</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">hidden</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x: torch.Tensor</span>
+<span class="sd">            (batch_size, sequence_length)</span>
+<span class="sd">            Each sentence transformed to the indices of tokens.</span>
+<span class="sd">        hidden: torch.Tensor</span>
+<span class="sd">            (1, batch_size, hidden_size)</span>
+<span class="sd">            Hidden state at the previous step.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">hidden</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">hidden</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell shows how <code class="docutils literal notranslate"><span class="pre">Decoder</span></code> can be applied to the two 3-token sentences with a 3-dimensional hidden vector.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decoder</span> <span class="o">=</span> <span class="n">Decoder</span><span class="p">(</span>
+    <span class="n">vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">RU_VOCAB</span><span class="p">),</span>
+    <span class="n">embed_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+    <span class="n">hidden_size</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="n">decoder</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">),</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([[-0.3121, -0.0889,  0.3479,  ...,  0.4920,  0.5068,  0.7837],
+         [-1.1442,  0.4230, -0.1281,  ..., -0.2087,  0.1295,  0.3339]],
+        grad_fn=&lt;ViewBackward0&gt;),
+ tensor([[[-0.7554, -0.1857,  0.8682,  0.2983,  0.3260,  0.7916,  0.3769,
+           -0.6647, -0.7988, -0.7135],
+          [-0.1838,  0.1077,  0.2179, -0.1817, -0.3542,  0.0289, -0.5906,
+           -0.4652, -0.3920, -0.1775]]], grad_fn=&lt;StackBackward0&gt;))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="composition">
+<h3>Composition<a class="headerlink" href="#composition" title="Link to this heading">#</a></h3>
+<p>Have a closer look at how it all works together.</p>
+<p>We’ll look at how it works using the first batch of the data loader we created earlier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">translation_dataloader</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EN shape&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RU shape&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EN shape torch.Size([64, 15])
+RU shape torch.Size([64, 16])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell applies encoder to the input batch.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">embed_size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">hidden_size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">num_layers</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">(</span>
+    <span class="n">vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">EN_VOCAB</span><span class="p">),</span>
+    <span class="n">embed_size</span><span class="o">=</span><span class="n">embed_size</span><span class="p">,</span>
+    <span class="n">hidden_size</span><span class="o">=</span><span class="n">hidden_size</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="n">num_layers</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+<span class="n">hidden</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">hidden</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([1, 64, 80])
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a result, we obtain a vector for each observation in the batch. This vector’s dimensionality is determined by the following logic: the hidden state size of each recurrent layer is multiplied by two because each layer processes the sequence in both forward and reverse directions (<code class="docutils literal notranslate"><span class="pre">bidirectional=True</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decoder</span> <span class="o">=</span> <span class="n">Decoder</span><span class="p">(</span>
+    <span class="n">vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">RU_VOCAB</span><span class="p">),</span>
+    <span class="n">embed_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">hidden_size</span><span class="o">=</span><span class="n">hidden_size</span><span class="o">*</span><span class="n">num_layers</span><span class="o">*</span><span class="mi">2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+<span class="n">decoder</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hidden</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([64, 2145632])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="inference">
+<h2>Inference<a class="headerlink" href="#inference" title="Link to this heading">#</a></h2>
+<p>Consider how the final model can be used in production. The following function represents how the given encoder and decoder can be applied to the arbitrary set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span>
+    <span class="n">encoder</span><span class="p">:</span> <span class="n">Encoder</span><span class="p">,</span>
+    <span class="n">decoder</span><span class="p">:</span> <span class="n">Decoder</span><span class="p">,</span>
+    <span class="n">sentence</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">en_word2int</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">:</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">ru_int2word</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">:</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="n">ru_word2int</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">:</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">DEVICE</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Apply model to a given sentence.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">encoder</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">decoder</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">inference_mode</span><span class="p">():</span>
+        <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">tensor_tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="o">=</span><span class="n">sentence</span><span class="p">,</span> <span class="n">word2int</span><span class="o">=</span><span class="n">en_word2int</span><span class="p">)</span>
+        <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="c1"># Pass input sentence through encoder</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">encoder_hidden</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+        <span class="c1"># Intialise hidden state of decoder</span>
+        <span class="n">decoder_hidden</span> <span class="o">=</span> <span class="n">encoder_hidden</span>
+
+        <span class="n">decoded_words</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">last_word</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="n">en_word2int</span><span class="p">[</span><span class="n">SOS_TOKEN</span><span class="p">]]])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_length</span><span class="p">):</span>
+            <span class="c1"># Pass last predicted token through decoder</span>
+            <span class="n">logits</span><span class="p">,</span> <span class="n">decoder_hidden</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">(</span><span class="n">last_word</span><span class="p">,</span> <span class="n">decoder_hidden</span><span class="p">)</span>
+            <span class="c1"># Selecting the most probable token</span>
+            <span class="n">next_token</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">last_word</span> <span class="o">=</span> <span class="n">next_token</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">next_token</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">==</span> <span class="n">ru_word2int</span><span class="p">[</span><span class="n">EOS_TOKEN</span><span class="p">]:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">decoded_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ru_int2word</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">next_token</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+
+    <span class="c1"># return predicted words as a string</span>
+    <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">decoded_words</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is an example of use on an unfitted encoder/decoder combination:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">translate</span><span class="p">(</span>
+    <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span>
+    <span class="n">decoder</span><span class="o">=</span><span class="n">decoder</span><span class="p">,</span>
+    <span class="n">sentence</span><span class="o">=</span><span class="s2">&quot;hello world&quot;</span><span class="p">,</span>
+    <span class="n">en_word2int</span><span class="o">=</span><span class="n">EN_WORD2INT</span><span class="p">,</span>
+    <span class="n">ru_int2word</span><span class="o">=</span><span class="n">RU_INT2WORD</span><span class="p">,</span>
+    <span class="n">ru_word2int</span><span class="o">=</span><span class="n">RU_WORD2INT</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;оранжевые? проиллюстрировать, сбивать засужу! победители! якоже задул ванну &quot;...они виктории, серии. окликнул сельского вечеринка. якоже волнуетесь. сплошным окиньте остановите. терминах&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting">
+<h2>Fitting<a class="headerlink" href="#fitting" title="Link to this heading">#</a></h2>
+<p>Consider fitting procedure for such model.</p>
+<p>The following cell sets up a parameter of the models that’ll be used for fitting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder_hidden_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">num_layers</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">(</span>
+    <span class="n">vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">EN_VOCAB</span><span class="p">),</span>
+    <span class="n">embed_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">hidden_size</span><span class="o">=</span><span class="n">encoder_hidden_size</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="n">num_layers</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+
+<span class="n">decoder</span> <span class="o">=</span> <span class="n">Decoder</span><span class="p">(</span>
+    <span class="n">vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">RU_VOCAB</span><span class="p">),</span>
+    <span class="n">embed_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">hidden_size</span><span class="o">=</span><span class="n">encoder_hidden_size</span><span class="o">*</span><span class="n">num_layers</span><span class="o">*</span><span class="mi">2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Following code implements fitting procedure:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CrossEntropy loss shouldn&#39;t consider padding during optimilation</span>
+<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">ignore_index</span><span class="o">=</span><span class="n">EN_WORD2INT</span><span class="p">[</span><span class="n">PAD_TOKEN</span><span class="p">])</span>
+
+<span class="n">encoder_optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">(</span><span class="n">encoder</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+<span class="n">decoder_optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">(</span><span class="n">decoder</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">encoder</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">decoder</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+    <span class="n">iterator</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
+        <span class="nb">enumerate</span><span class="p">(</span><span class="n">translation_dataloader</span><span class="p">),</span>
+        <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">translation_dataloader</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">target_tensor</span><span class="p">)</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">:</span>
+        <span class="n">input_tensor</span><span class="p">,</span> <span class="n">target_tensor</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">input_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">),</span>
+            <span class="n">target_tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">encoder_optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">decoder_optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+        <span class="n">target_length</span> <span class="o">=</span> <span class="n">target_tensor</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">encoder_hidden</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+
+        <span class="n">decoder_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">EN_WORD2INT</span><span class="p">[</span><span class="n">SOS_TOKEN</span><span class="p">],</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+        <span class="n">decoder_hidden</span> <span class="o">=</span> <span class="n">encoder_hidden</span>
+
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">DEVICE</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">di</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">target_length</span><span class="p">):</span>
+            <span class="n">logits</span><span class="p">,</span> <span class="n">decoder_hidden</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">(</span><span class="n">decoder_input</span><span class="p">,</span> <span class="n">decoder_hidden</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">+</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">target_tensor</span><span class="p">[:,</span> <span class="n">di</span><span class="p">])</span>
+            <span class="n">decoder_input</span> <span class="o">=</span> <span class="n">target_tensor</span><span class="p">[:,</span> <span class="n">di</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">encoder_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">decoder_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">, &quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;Batch </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">, &quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">target_length</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="result">
+<h2>Result<a class="headerlink" href="#result" title="Link to this heading">#</a></h2>
+<p>Consider results of the gotten models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">simple_tranlation</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="p">(</span>
+        <span class="n">encoder</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span>
+        <span class="n">decoder</span><span class="o">=</span><span class="n">decoder</span><span class="p">,</span>
+        <span class="n">sentence</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+        <span class="n">en_word2int</span><span class="o">=</span><span class="n">EN_WORD2INT</span><span class="p">,</span>
+        <span class="n">ru_int2word</span><span class="o">=</span><span class="n">RU_INT2WORD</span><span class="p">,</span>
+        <span class="n">ru_word2int</span><span class="o">=</span><span class="n">RU_WORD2INT</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">20</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Few examples and their results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simple_tranlation</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;у неё не было.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simple_tranlation</span><span class="p">(</span><span class="s2">&quot;What is this?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;что такое любовь?&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simple_tranlation</span><span class="p">(</span><span class="s2">&quot;How task can be solved in other way?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;как долго он узнал о смерти брата?&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Well, the translation is really far from correct, but at least it looks like sentences.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./data_science/nlp"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="recurrent_text_gen.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Recurrent text gen</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../dl_mechanisms.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">DL mechanisms</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model">Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encoder">Encoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoder">Decoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composition">Composition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting">Fitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#result">Result</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

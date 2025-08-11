@@ -1,0 +1,1571 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Regularization &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data_science/model_selection/regularization';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Metrics" href="../metrics.html" />
+    <link rel="prev" title="Model selection" href="../model_selection.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision_tree.html">Decision tree</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../model_selection.html">Model selection</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Regularization</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/CAP.html">CAP curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/GINI.html">GINI coeficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ranking_task.html">Ranking task</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ranking_task/collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/collaborative_filtering/self_made_mem_based.html">Selfmade memory based</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../ranking_task/task_generation.html">Task generation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ranking_task/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/metrics/precision_k.html">precision@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/metrics/recall_k.html">recall@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ranking_task/metrics/average_precision.html">AP@k (average precision)</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../nlp.html">NLP</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../nlp/preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nlp/preprocessing/tf_idf.html">TF-IDF</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nlp/text_cnn.html">Text CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nlp/recurrent_translation.html">Recurrent translations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dl_mechanisms/recurrent.html">Recurrent</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../math/introduction.html">Intorduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/geometry.html">Geometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math/geometry/triangle.html">Triangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/geometry/cone.html">Cone</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/trigonometry.html">Trigonometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math/trigonometry/identities.html">Identities</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/mat_stat.html">MatStat</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../math/mat_stat/probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../math/mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/stat_testing/t_test.html">T-test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/stat_testing/binomial_test.html">Binomial test</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math/latex.html">Latex</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/complexity.html">Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/binary_search.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../algorithms/data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/dynamic_prog.html">Dynamic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/quick_sort.html">Quick sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/number_reversal.html">Number reversal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Docker</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docker/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/containers.html">Containers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/containers/run.html">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/containers/execute_in.html">Execute in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/containers/check_logs.html">Check logs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_image/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_image/ignore_files.html">Ignore files</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/volumes.html">Volumes</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/networks/default_networks.html">Default networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/networks/container_communication.html">Containers communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/networks/local_network.html">Local network</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/access.html">Acesss to containers</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/compose.html">Compose</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/compose/up_down.html">Up/down</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../docker/compose/service_configuration.html">Service configuration</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../git/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/file_stages.html">File statuses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/diff.html">Difference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/checkout.html">Checkout</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/branches/merge.html">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../git/branches/remote.html">Remotes</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/log.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/stash.html">Stash</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/configuration/variables.html">Variables</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../sql/intro.html">Intro</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/join/join_types.html">Join types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/sorting.html">Sorting (ORDER BY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/unique_values.html">Unique values (DISTINCT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/empty_values.html">Empty values</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/aggregation_functions.html">Aggregation functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/aggregation_functions/collect_array.html">Collect array</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/group_by.html">Group by</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/group_by/conditions_on_aggregats.html">Conditions on aggregats (HAVING)</a></li>
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/window_functions.html">Window functions (OVER)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../sql/select/window_functions/functions.html">Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../sql/select/window_functions/functions/value.html">Value</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/expand_array.html">Expand array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/performance.html">Performance</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/operating_tables.html">Operating tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/operating_tables/tables_properties.html">Tables properties</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/datatypes.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/datatypes/datetime.html">Date and time</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/datatypes/datetime/date_components.html">Date components (DATE_PART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/datatypes/datetime/add_period.html">Add period</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/datatypes/json.html">JSON</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/versions_issues.html">Versions issues</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/python_from_container.html">Python from container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/python_on_host.html">Python on host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/create_database.html">Create database</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../layout/terminology.html">Terminology</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../layout/html.html">HTML</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/other.html">Other</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/text_format.html">Text format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/tables.html">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/lists.html">List tags</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../layout/html/svg.html">SVG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../layout/html/svg/text.html">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../layout/html/svg/path.html">Path</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../layout/css.html">CSS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/other.html">Other</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/style_application.html">Style application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/margin.html">Margin (out space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/padding.html">Padding (in space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/overflow.html">Overflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/elements_positions.html">Elements position (<code class="docutils literal notranslate"><span class="pre">display</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../layout/forms.html">Forms</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linux</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../linux/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/bash.html">Bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/manage_input_output.html">Manage input/output</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/archiving.html">Archiving</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/system_information.html">System information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/backup.html">Backup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/curl.html">Curl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/ssh.html">SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/vpn.html">VPN</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/users_groups/users_manipulations.html">Users manipulations</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/package_management.html">Package management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/path.html">Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/cron.html">Cron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/gnupg.html">GnuPG</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../other/vs_code.html">VS Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../other/kubernetes.html">Kubernetes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/redis/zset.html">Zset</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/nginx.html">Nginx</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../other/nginx/reverse_proxy.html">Reverse proxy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../other/nginx/reverse_proxy/proxy_pass.html">Proxy pass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../other/nginx/reverse_proxy/cache.html">Cache</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/server.html">Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/logs.html">Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/nginx/connections_management.html">Connections management</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/gitlab.html">Gitlab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/fedorkobak/knowledge" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/data_science/model_selection/regularization.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Regularization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compression-example">Compression example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-definition">Alternative definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#l1-coefficients-pruning">L1 coefficients pruning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling">Scaling</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="regularization">
+<h1>Regularization<a class="headerlink" href="#regularization" title="Link to this heading">#</a></h1>
+<p>This document focuses on regularization, a method used to reduce the coefficients of the machine learning models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ridge</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OneHotEncoder</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Suppose we have a parametric machine learning model with weights <span class="math notranslate nohighlight">\(W = \left(w_1, w_2, \ldots, w_n\right)\)</span> that needs to be fitted. It is supposed to be fitted with an <span class="math notranslate nohighlight">\(L\)</span> loss function. In such case:</p>
+<ul class="simple">
+<li><p>L1 regularization (lasso) is supposed to use the loss function <span class="math notranslate nohighlight">\(L'(W) = L(W) + \lambda\sum_{i=1}^n |w_i|\)</span>.</p></li>
+<li><p>L2 regularization (ridge) is supposed to use the loss function <span class="math notranslate nohighlight">\(L'' = L(W) + \lambda\sum_{i=1}^n w_i^2\)</span>.</p></li>
+</ul>
+<p>Here, <span class="math notranslate nohighlight">\(\lambda \geq 0\)</span> is a parameter that defines the strength of the regularization.</p>
+<section id="compression-example">
+<h2>Compression example<a class="headerlink" href="#compression-example" title="Link to this heading">#</a></h2>
+<p>This section reproduces example from the <a class="reference external" href="https://www.statlearning.com/">ISLR</a>.</p>
+<p>Following cell loads and prepares data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Credit</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;regularization_files/Credit.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">nominal_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Gender&quot;</span><span class="p">,</span> <span class="s2">&quot;Student&quot;</span><span class="p">,</span> <span class="s2">&quot;Married&quot;</span><span class="p">,</span> <span class="s2">&quot;Ethnicity&quot;</span><span class="p">]</span>
+
+<span class="n">ohe</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span>
+    <span class="n">sparse_output</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">drop</span> <span class="o">=</span> <span class="s2">&quot;first&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">Credit</span><span class="p">[</span><span class="n">nominal_names</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">Credit</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ohe</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Credit</span><span class="p">[</span><span class="n">nominal_names</span><span class="p">])),</span>
+            <span class="n">columns</span> <span class="o">=</span> <span class="n">ohe</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span>
+            <span class="n">index</span><span class="o">=</span> <span class="n">Credit</span><span class="o">.</span><span class="n">index</span>
+        <span class="p">),</span>
+        <span class="n">Credit</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="o">~</span><span class="n">Credit</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">nominal_names</span><span class="p">)]</span>
+    <span class="p">],</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">Credit</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Credit</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">Credit</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Gender_Female</th>
+      <th>Student_Yes</th>
+      <th>Married_Yes</th>
+      <th>Ethnicity_Asian</th>
+      <th>Ethnicity_Caucasian</th>
+      <th>Income</th>
+      <th>Limit</th>
+      <th>Rating</th>
+      <th>Cards</th>
+      <th>Age</th>
+      <th>Education</th>
+      <th>Balance</th>
+    </tr>
+    <tr>
+      <th>ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>14.891</td>
+      <td>3606</td>
+      <td>283</td>
+      <td>2</td>
+      <td>34</td>
+      <td>11</td>
+      <td>333</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>106.025</td>
+      <td>6645</td>
+      <td>483</td>
+      <td>3</td>
+      <td>82</td>
+      <td>15</td>
+      <td>903</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>104.593</td>
+      <td>7075</td>
+      <td>514</td>
+      <td>4</td>
+      <td>71</td>
+      <td>11</td>
+      <td>580</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>148.924</td>
+      <td>9504</td>
+      <td>681</td>
+      <td>3</td>
+      <td>36</td>
+      <td>11</td>
+      <td>964</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>55.882</td>
+      <td>4897</td>
+      <td>357</td>
+      <td>2</td>
+      <td>68</td>
+      <td>16</td>
+      <td>331</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following cell computes the coefficients of Lasso regression as the value of <span class="math notranslate nohighlight">\(\lambda\)</span> is gradually increased.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs_frame</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]()</span>
+
+<span class="n">stand_X</span> <span class="o">=</span> <span class="n">X</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">X</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">int_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphas</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">alphas</span><span class="p">)):</span>
+    <span class="n">coefs_frame</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">alpha</span><span class="p">)]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+        <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">stand_X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span>
+    <span class="p">)</span>
+
+<span class="n">coefs_frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs_frame</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">coefs_frame</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;alpha&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 20000/20000 [00:30&lt;00:00, 662.32it/s]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The obtained values of coefficients are plotted on the graphs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs_frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;regularization_files/l2_reg_coefs.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plot_var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Limit&quot;</span><span class="p">,</span> <span class="s2">&quot;Rating&quot;</span><span class="p">,</span> <span class="s2">&quot;Student_Yes&quot;</span><span class="p">,</span> <span class="s2">&quot;Income&quot;</span><span class="p">]</span>
+<span class="n">line_styles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">]</span>
+
+<span class="n">beta_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">coefs_frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">coefs_frame</span><span class="p">[</span><span class="s2">&quot;beta_i/beta_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coefs_frame</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">row</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="n">beta_0</span><span class="p">,</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plot_var_names</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">coefs_frame</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> 
+        <span class="n">coefs_frame</span><span class="p">[</span><span class="n">plot_var_names</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span>
+        <span class="n">linestyle</span> <span class="o">=</span> <span class="n">line_styles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="p">)</span>
+    
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">coefs_frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="p">:,</span> <span class="o">~</span><span class="n">coefs_frame</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">plot_var_names</span><span class="p">)</span>
+<span class="p">]:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">coefs_frame</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">coefs_frame</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> 
+        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">plot_var_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">lambda$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plot_var_names</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">coefs_frame</span><span class="p">[</span><span class="s2">&quot;beta_i/beta_0&quot;</span><span class="p">],</span> 
+        <span class="n">coefs_frame</span><span class="p">[</span><span class="n">plot_var_names</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span>
+        <span class="n">linestyle</span> <span class="o">=</span> <span class="n">line_styles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="p">)</span>
+    
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">coefs_frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="p">:,</span> <span class="o">~</span><span class="n">coefs_frame</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">plot_var_names</span><span class="p">)</span>
+<span class="p">]:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">coefs_frame</span><span class="p">[</span><span class="s2">&quot;beta_i/beta_0&quot;</span><span class="p">],</span> <span class="n">coefs_frame</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> 
+        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="p">)</span>
+
+<span class="n">ans</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>
+    <span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">frac{||</span><span class="se">\\</span><span class="s2">hat{</span><span class="se">\\</span><span class="s2">beta}_{</span><span class="se">\\</span><span class="s2">lambda}^R||_2}{||</span><span class="se">\\</span><span class="s2">hat{</span><span class="se">\\</span><span class="s2">beta}||_2}$&quot;</span><span class="p">,</span>
+    <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/fad15ec25458afcdf37ae27d6d286dc25db04cbf778ac25e664511fcbc7d0dea.png" src="../../_images/fad15ec25458afcdf37ae27d6d286dc25db04cbf778ac25e664511fcbc7d0dea.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>The graph on the left shows how the coefficients converge as the regularisation parameter increases. For clarity, a logarithmic scale for the regularisation parameter is taken. The most prominent coefficients are highlighted in colour and line style - the data are standardised, so the scale of the values does not matter;</p></li>
+<li><p>The vergence is plotted to the right on the ordinate:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\frac{||\hat{\beta}_{\lambda}^R|_2}{||\hat{\beta}||_2}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(||\beta||_2 = \sqrt{\sum_{j=1}^p \beta^2_j}\)</span> - is the Euclidean distance of the coefficients <span class="math notranslate nohighlight">\(\beta\)</span> from the origin;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}\)</span> - coefficients obtained by the least squares method (equivalent to the coefficients obtained at <span class="math notranslate nohighlight">\(\lambda = 0\)</span>);</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}^R_{\lambda}\)</span> - coefficients obtained using regularisation.</p></li>
+</ul>
+</section>
+<section id="alternative-definition">
+<h2>Alternative definition<a class="headerlink" href="#alternative-definition" title="Link to this heading">#</a></h2>
+<p>Due to Lagrangean duality optimization tasks in regularization can be redefined.</p>
+<p>In <strong>L1 regularaztion</strong> case, the solution to the optimization problem</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{W \in \mathbb{R}^n} \; L(W) + \lambda \sum_{i=1}^n |w_i|
+\]</div>
+<p>is equivalent to the solution of the problem</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{W \in \mathbb{R}^n} \; L(W)
+\]</div>
+<p>subject to the constraint</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=1}^n |w_i| \leq s,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(s \geq 0\)</span> is a constraint bound. The equivalence holds under appropriate choices of <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(s\)</span>, which correspond to one another via duality.</p>
+<p>Analogically in <strong>L2 regularization</strong> case:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{W \in \mathbb{R}^n} \; L(W) + \lambda \sum_{i=1}^n w_i^2.
+\]</div>
+<p>is equivalent to the solution of the problem</p>
+<div class="math notranslate nohighlight">
+\[\min_{W \in \mathbb{R}^n} L(W)\]</div>
+<p>subject to the constraint</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=1}^n w_i^2 \leq s.
+\]</div>
+</section>
+<section id="l1-coefficients-pruning">
+<h2>L1 coefficients pruning<a class="headerlink" href="#l1-coefficients-pruning" title="Link to this heading">#</a></h2>
+<p>The lasso method typically results in unimportant coefficients being set to zero. This section explores the reasons.</p>
+<p>The following picture illustrates the dual optimization tasks for L1 (left) and L2 (right) regularization in the two-dimensional case.</p>
+<svg width=500 height=500 viewBox="-12 -40 60 60" style="font-family: 'LatinModern'" font-style="italic" font-size="2">
+<path d="M 10 0 L 0 -10 -10 0 0 10" fill="green"/>
+<line x1="-12" y1="0" x2="20" y2="0" stroke="black" stroke-width="0.3"/>
+<line x1="0" y1="-20" x2="0" y2="12" stroke="black" stroke-width="0.3"/>
+<path d="M 19 0.5 L 20 0 19 -0.5"/>
+<text x="19" y="2">w1</text>
+<path d="M 0.5 -19 L 0 -20 -0.5 -19"/>
+<text x="1" y="-18">w2</text>
+<circle cx="10" cy="-20" r="0.5" fill="red"/>
+<ellipse cx="10" cy="-20" rx="14" ry="4.666" stroke-width="0.3" stroke="black" fill="none" transform="rotate(-45, 10, -20)"/>
+<ellipse cx="10" cy="-20" rx="9" ry="3" stroke-width="0.3" stroke="black" fill="none" transform="rotate(-45, 10, -20)"/>
+<ellipse cx="10" cy="-20" rx="6" ry="2" stroke-width="0.3" stroke="black" fill="none" transform="rotate(-45, 10, -20)"/>
+</svg>
+<svg width=500 height=500 viewBox="-12 -40 60 60" style="font-family: 'LatinModern'" font-style="italic" font-size="2">
+<circle cx=0 cy=0 r=10 fill="green"/>
+<line x1="-12" y1="0" x2="20" y2="0" stroke="black" stroke-width="0.3"/>
+<line x1="0" y1="-20" x2="0" y2="12" stroke="black" stroke-width="0.3"/>
+<path d="M 19 0.5 L 20 0 19 -0.5"/>
+<text x="19" y="2">w1</text>
+<path d="M 0.5 -19 L 0 -20 -0.5 -19"/>
+<text x="1" y="-18">w2</text>
+<circle cx="10" cy="-20" r="0.5" fill="red"/>
+<ellipse cx="10" cy="-20" rx="13.5" ry="4.5" stroke-width="0.3" stroke="black" fill="none" transform="rotate(-45, 10, -20)"/>
+<ellipse cx="10" cy="-20" rx="9" ry="3" stroke-width="0.3" stroke="black" fill="none" transform="rotate(-45, 10, -20)"/>
+<ellipse cx="10" cy="-20" rx="6" ry="2" stroke-width="0.3" stroke="black" fill="none" transform="rotate(-45, 10, -20)"/>
+</svg><p>The green area shows the constraint, and the contour shows the original loss function without any additional components related to the regularization.</p>
+<p>This picture shows that the diamond-shaped constraint associated with L1 regularization is more likely to lead to solutions where some learnable parameters become zero.</p>
+<p>The following section examines the properties of the loss function under linear dependency among predictors and explores the implications for solutions subject to L1 and L2 regularization constraints.</p>
+<p>Consider how the linear dependency of the predictors influences the optimization problem subject to the constraints associated with L1 and L2 regularization.</p>
+<p>The following code generates a set of two-dimensional linear regression problems. The problems are constructed so that the predictors exhibit varying degrees of linear dependence. The influence of the second variable on the target is noisy, making it more likely to be excluded by any dimensionality-reducing method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span> 
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.axes</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Polygon</span><span class="p">,</span> <span class="n">Patch</span><span class="p">,</span> <span class="n">Circle</span>
+
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">sample_size</span><span class="p">)</span>
+<span class="n">dependence_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="n">x1</span> <span class="o">*</span> <span class="n">dependence_range</span><span class="p">)</span> <span class="o">+</span>
+    <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">sample_size</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dependence_range</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">x2</span><span class="p">)</span>
+
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">x1</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">x2</span>  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)]</span>
+<span class="p">)</span>
+
+<span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="p">))</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">MSE</span> <span class="o">=</span> <span class="p">((</span><span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The picture below illustrates the relationship between the predictors in the considered regression tasks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="p">),</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7a293c9aca3a8a3c0e43e7df22360a950e530543737e3abf9f5f78a51932d5ec.png" src="../../_images/7a293c9aca3a8a3c0e43e7df22360a950e530543737e3abf9f5f78a51932d5ec.png" />
+</div>
+</div>
+<p>The next code creates a set of visualizations that illustrate optimization problems for regression tasks with low and hight dependency between predictors, from left to right.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="p">))</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">MSE</span> <span class="o">=</span> <span class="p">((</span><span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_loss_contour</span><span class="p">(</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span>
+    <span class="n">W0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">W1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">L</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">conjuction</span><span class="p">:</span> <span class="n">Patch</span>
+<span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span>
+        <span class="n">W0</span><span class="p">,</span> <span class="n">W1</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> 
+        <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$w_1$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$w_2$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">conjuction</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next picture shows a visualization of the MSE loss with conjunctions formed by the inequality <span class="math notranslate nohighlight">\(w_1 + w_2 \leq 5\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">):</span>
+    <span class="n">diamond</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span>
+        <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+        <span class="n">closed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+        <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span>
+    <span class="p">)</span>
+    <span class="n">draw_loss_contour</span><span class="p">(</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">W0</span><span class="o">=</span><span class="n">W</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">W1</span><span class="o">=</span><span class="n">W</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="n">MSE</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">conjuction</span><span class="o">=</span><span class="n">diamond</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e885aeb8d7313409335743672f2f0394364a8eca93f58d0f8223353674cc7f97.png" src="../../_images/e885aeb8d7313409335743672f2f0394364a8eca93f58d0f8223353674cc7f97.png" />
+</div>
+</div>
+<p>For the problems with <strong>low correlation between predictors</strong>, the contour line corresponding to the lowest value of the function that intersects the diamond formed by the conjunction touches the conjunction at an edge - that is, at a point where <span class="math notranslate nohighlight">\(w_1 \neq 0\)</span>, <span class="math notranslate nohighlight">\(w_2 \neq 0\)</span>.</p>
+<p>For problems with a strong linear relationship between predictors, the MSE takes on a more elliptical shape — the weights can substitute for each other. Geometrically, this leads to the optimal contour line permitted by the conjunction intersecting the diamond at a vertex, i.e., at a point where <span class="math notranslate nohighlight">\(w_2 = 0\)</span>.</p>
+<p>In contrast, the following picture represents an optimization problem with conjunctions formed by the L2 regularization: <span class="math notranslate nohighlight">\(w_1^2 + w_2^2 \leq 3\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">):</span>
+    <span class="n">circle</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">(</span>
+        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+        <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span>
+    <span class="p">)</span>
+    <span class="n">draw_loss_contour</span><span class="p">(</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">W0</span><span class="o">=</span><span class="n">W</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">W1</span><span class="o">=</span><span class="n">W</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="n">MSE</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">conjuction</span><span class="o">=</span><span class="n">circle</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/30e009cb6bb3fbb150482fc9ed0d0e496cd157c3a04ca7e7563c9e23e9409541.png" src="../../_images/30e009cb6bb3fbb150482fc9ed0d0e496cd157c3a04ca7e7563c9e23e9409541.png" />
+</div>
+</div>
+<p>Regardless of the shape of the MSE function, the solution to the optimization problem lies at a point where both <span class="math notranslate nohighlight">\(w_1\)</span> and <span class="math notranslate nohighlight">\(w_2\)</span> are non-zero.</p>
+</section>
+<section id="scaling">
+<h2>Scaling<a class="headerlink" href="#scaling" title="Link to this heading">#</a></h2>
+<p>It is recommended to scale the data before performing regularisation. In this page I want to show why.</p>
+<p>The reason is quite simple - popular components of the target function responsible for regularisation of the model look like this.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sum{\beta_i^2}\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sum{\left|\beta_i\right|}\)</span>.</p></li>
+</ul>
+<p>All coefficients have the same contribution to the target function, regardless of their magnitude, so the optimisation algorithm naturally benefits from reducing first those coefficients that make a greater contribution to the target function, regardless of the economic/physical sense of the variables.</p>
+<p>Thus regularisation may compress the coefficients too much at large scales without any intelligible reason for doing so. It is to counteract these phenomena that it is recommended to bring the data to a uniform scale by any available means.</p>
+<p>Below is a small experiment that confirms this idea.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ridge</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s say you have a data frame with two features and their scaling is dramatically different.</p>
+<p>So in the following cell I reproduce such a case. There are two functions and the numbers in the first function are usually 100 times smaller than in the second. But on the target variable, they out of order have about the same effect - each unit in the first variable contributes 100 times more to the value of the explained variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="p">],</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">500</span><span class="p">,</span> <span class="mi">5</span><span class="p">]))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will now gradually increase the scaling. Note that the higher scaling coefficient decreases much faster than the second one. Even in relative units:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_1(\alpha=0) \approx 2*\beta_1(\alpha=45)\)</span> coefficient with higher scaling became twice as low;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_1(\alpha=0) \approx \beta_1(\alpha=45)\)</span> coefficient with lower scaling will decrease a little, but not twice as much as the first coefficient.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display_frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="n">alpha</span><span class="p">:</span><span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">)}</span>
+<span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">display_frame</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha$&quot;</span>
+<span class="n">display_frame</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">beta_1$&quot;</span><span class="p">,</span> <span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">beta_2$&quot;</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">display_frame</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>$\beta_1$</th>
+      <th>$\beta_2$</th>
+    </tr>
+    <tr>
+      <th>$\alpha$</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>499.305569</td>
+      <td>5.029773</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>451.840445</td>
+      <td>5.012651</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>412.616182</td>
+      <td>4.998492</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>379.658049</td>
+      <td>4.986585</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>351.575574</td>
+      <td>4.976432</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>327.361354</td>
+      <td>4.967669</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>306.267632</td>
+      <td>4.960028</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>287.727714</td>
+      <td>4.953306</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>271.304290</td>
+      <td>4.947344</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>256.654507</td>
+      <td>4.942020</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now we want to do the same operation, but with a standardised feature matrix. Display the coefficients you need to multiply with the standardised and original data in different columns.</p>
+<p>As the result:</p>
+<ul class="simple">
+<li><p>The coefficients on the standardized data decrease uniformly even in absolute terms;</p></li>
+<li><p>If you transform coefficients to be used directly with the original data, because of the difference in scaling, the absolute decrease is greater for the features with higher scaling, but relatively both coefficients decreases ~ 20%.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">means</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">X_stand</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">-</span><span class="n">means</span><span class="p">)</span><span class="o">/</span><span class="n">std</span>
+
+
+<span class="n">display_frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="n">alpha</span><span class="p">:</span><span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_stand</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span>  <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">)}</span>
+<span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">display_frame</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha$&quot;</span>
+<span class="n">display_frame</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">beta_1$&quot;</span><span class="p">,</span> <span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">beta_2$&quot;</span><span class="p">]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">display_frame</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">display_frame</span><span class="o">+</span><span class="n">means</span><span class="p">)</span><span class="o">/</span><span class="n">std</span>
+    <span class="p">],</span>
+    <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Standardised data&quot;</span><span class="p">,</span> <span class="s2">&quot;Original data&quot;</span><span class="p">],</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">Standardised data</th>
+      <th colspan="2" halign="left">Original data</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>$\beta_1$</th>
+      <th>$\beta_2$</th>
+      <th>$\beta_1$</th>
+      <th>$\beta_2$</th>
+    </tr>
+    <tr>
+      <th>$\alpha$</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>243.721886</td>
+      <td>232.585223</td>
+      <td>501.430354</td>
+      <td>7.222430</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>237.582185</td>
+      <td>226.708414</td>
+      <td>488.852137</td>
+      <td>7.095341</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>231.744246</td>
+      <td>221.121240</td>
+      <td>476.892129</td>
+      <td>6.974515</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>226.186353</td>
+      <td>215.802807</td>
+      <td>465.505843</td>
+      <td>6.859501</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>220.888825</td>
+      <td>210.734182</td>
+      <td>454.652961</td>
+      <td>6.749890</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>215.833785</td>
+      <td>205.898170</td>
+      <td>444.296855</td>
+      <td>6.645309</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>211.004954</td>
+      <td>201.279119</td>
+      <td>434.404177</td>
+      <td>6.545419</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>206.387481</td>
+      <td>196.862749</td>
+      <td>424.944500</td>
+      <td>6.449913</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>201.967783</td>
+      <td>192.636007</td>
+      <td>415.890002</td>
+      <td>6.358508</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>197.733422</td>
+      <td>188.586938</td>
+      <td>407.215194</td>
+      <td>6.270944</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./data_science/model_selection"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../model_selection.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Model selection</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../metrics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Metrics</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compression-example">Compression example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-definition">Alternative definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#l1-coefficients-pruning">L1 coefficients pruning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling">Scaling</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
