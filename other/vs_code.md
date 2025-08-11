@@ -10,20 +10,33 @@ Look for `settings.json` in `./.vscode` folder for workspace.
 
 Check information on the `settiongs.json` for the user [here](https://code.visualstudio.com/docs/configure/settings#_user-settingsjson-location). For linux, it's typically in `~/.config/Code/User/settings.json`.
 
-My typical config is:
+
+You can list all available attributes that you can specify as settings using `defaultSettings.json` - a read only file that can be opened using the VSCode command `Preferences: OpenDefaultSettings (JSON)`. There are no other source, like official page where listed all settings with description: [Default VSCode settings](https://code.visualstudio.com/docs/reference/default-settings).
+
+VSCode extensions usually have their own settings.
+
+
+### My config
+
+
+Here is my config:
 
 ```json
 {
     "workbench.colorTheme": "Default Light Modern",
     "window.zoomLevel": -2.5,
     "editor.lineNumbers": "relative",
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace",
     "python.analysis.typeCheckingMode": "strict",
     "notebook.lineNumbers": "on", 
     "vim.langmap": "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
 }
 ```
 
-Check [Default VSCode settings](https://code.visualstudio.com/docs/reference/default-settings). VSCode extensions usually have their own settings.
+This is useful for being able to copy/paste it into various configurations.
+
+
+**Note**: The `"editor.fontFamily"` attribute takes the same value as in the default settings. I've tried a few options, and the default VSCode font is the best for me. It is listed in the `configuration.json` file just as a reminder that it was purposely selected. 
 
 
 ## Debug
