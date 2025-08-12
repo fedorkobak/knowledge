@@ -130,7 +130,7 @@ class TestPostgres(BaseClasses.RunnerBaseCase, TestCase):
         corresponding error, but automatically rollback the database so
         that the next correct query runs without troubles.
         """
-        with self.assertRaises(psycopg.errors.SyntaxError):
+        with self.assertRaises(psycopg.errors.Error):
             self.runner.execute("WRONG QUERY")
 
         self.runner.execute("SELECT 1;")

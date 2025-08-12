@@ -68,7 +68,7 @@ class PostgresRunner(DatabaseInDockerRunner):
         with self.connection.cursor() as cursor:
             try:
                 cursor.execute(code.encode())
-            except psycopg.errors.SyntaxError as e:
+            except psycopg.errors.Error as e:
                 self.connection.rollback()
                 raise e
 
