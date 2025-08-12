@@ -66,7 +66,11 @@ class PostgresRunner(DatabaseInDockerRunner):
     @typeguard.typechecked
     def execute(self, code: str) -> tuple[list[str], list[table_output]]:
         with self.connection.cursor() as cursor:
-            cursor.execute(code.encode())
+            try:
+                cursor.execute(code.encode())
+            except psycopg.errors.SyntaxError as e:
+                self.connection.rollback()
+                raise e
 
             messages, tables = self._read_result_set(cursor=cursor)
             while cursor.nextset():

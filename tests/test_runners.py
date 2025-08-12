@@ -8,6 +8,8 @@ from src.runners.runners import (
 )
 from src.runners.abs import DatabaseRunner
 
+import psycopg.errors
+
 
 class BaseClasses:
     """
@@ -121,6 +123,17 @@ class TestPostgres(BaseClasses.RunnerBaseCase, TestCase):
             messages[0],
             'NOTICE: table "log_message" does not exist, skipping'
         )
+
+    def test_after_error_execute(self):
+        """
+        If the runner executed some wrong query, it should raise the
+        corresponding error, but automatically rollback the database so
+        that the next correct query runs without troubles.
+        """
+        with self.assertRaises(psycopg.errors.SyntaxError):
+            self.runner.execute("WRONG QUERY")
+
+        self.runner.execute("SELECT 1;")
 
 
 class TestClickhouse(BaseClasses.RunnerBaseCase, TestCase):
