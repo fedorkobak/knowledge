@@ -63,7 +63,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Cross entropy" href="metrics/cross_entropy.html" />
+    <link rel="next" title="Classification" href="metrics/classification.html" />
     <link rel="prev" title="Regularization" href="model_selection/regularization.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -191,11 +191,15 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Metrics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="metrics/cross_entropy.html">Cross entropy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="metrics/classification.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="metrics/classification/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics/classification/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics/classification/CAP.html">CAP curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metrics/classification/GINI.html">GINI coeficient</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics/model_interpretation.html">Model interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics/CAP.html">CAP curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metrics/GINI.html">GINI coeficient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </details></li>
@@ -447,13 +451,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../linux/backup.html">Backup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/curl.html">Curl</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../linux/network/ssh.html">SSH</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../linux/network/ssh.html">SSH</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../linux/network/ssh/generate_key.html">Generate key</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/vpn.html">VPN</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../linux/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../linux/users_groups/users_manipulations.html">Users manipulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/users_groups/user_management.html">User management</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux/package_management.html">Package management</a></li>
@@ -494,6 +501,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/ansible.html">Ansible</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/kafka.html">Kafka</a></li>
 </ul>
 
     </div>
@@ -657,9 +665,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-entropy">Cross-Entropy</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">Confusion matrix</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-importance">Permutation importance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression">Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-interpretation">Model interpretation</a></li>
 </ul>
             </nav>
         </div>
@@ -682,235 +690,320 @@ document.write(`
 </div>
 </div>
 </div>
-<section id="cross-entropy">
-<h2>Cross-Entropy<a class="headerlink" href="#cross-entropy" title="Link to this heading">#</a></h2>
-<p>The popularity of this metric stems from the fact that it is differentiable, making it suitable to be used as a loss function when fitting the parameters of machine learning models.</p>
-<p>Check:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html#cross-entropy">Cross-Entropy section at MLGlossary</a>.</p></li>
-<li><p><a class="reference internal" href="metrics/cross_entropy.html"><span class="std std-doc">Specific page</span></a>.</p></li>
-</ul>
-<p>Cross-entropy for <span class="math notranslate nohighlight">\(o\)</span>-th observation can be written using following formula:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}-\sum_{c=1}^M y_{o, c} log(p_{o,c})
-\\
-y_{o,c} = 
-\begin{cases}
-1, &amp; \text{if the } o\text{-th observation belongs to class } c, \\
-0, &amp; \text{otherwise}.
-\end{cases}
-\end{split}\]</div>
-<p>Where:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(M\)</span>: number of possible classes.</p></li>
-<li><p><span class="math notranslate nohighlight">\(o\)</span>: index of the observation.</p></li>
-<li><p><span class="math notranslate nohighlight">\(c\)</span>: index of the class.</p></li>
-<li><p><span class="math notranslate nohighlight">\(p_{o,c}\)</span>: predicted probability that object <span class="math notranslate nohighlight">\(o\)</span> belongs to class <span class="math notranslate nohighlight">\(c\)</span>; it must satisfy all probability properties, specifically <span class="math notranslate nohighlight">\(\sum_{c=1}^M p_{o,c} = 1\)</span>.</p></li>
-</ul>
-<hr class="docutils" />
-<p>Consider example estimating performance of the predicted probabilites to the array where each object belongs to one of three classes - <span class="math notranslate nohighlight">\(\{1, 2, 2, 3, 3, 1, 3\}\)</span>.</p>
-<p>It has to be transformed into an array like <span class="math notranslate nohighlight">\(y_{o, c}\)</span>. The following cell shows the corresponding Python code.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-    <span class="p">[</span>
-        <span class="p">(</span><span class="n">array</span><span class="o">==</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">T</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
-    <span class="p">],</span> 
-    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span>
-<span class="n">y</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1, 0, 0],
-       [0, 1, 0],
-       [0, 1, 0],
-       [0, 0, 1],
-       [0, 0, 1],
-       [1, 0, 0],
-       [0, 0, 1]])
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now suppose we have three algorithms that return probabilities <span class="math notranslate nohighlight">\(p_{o,c}\)</span>:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">generare_preds</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">factor</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-    <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="o">*</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">factor</span>
-    <span class="k">return</span> <span class="n">ans</span><span class="o">/</span><span class="n">ans</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">best_probs</span><span class="p">,</span> <span class="n">good_probs</span><span class="p">,</span> <span class="n">bad_probs</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">generare_preds</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
-<span class="p">]</span>
-
-<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span><span class="n">best_probs</span><span class="p">,</span> <span class="n">good_probs</span><span class="p">,</span> <span class="n">bad_probs</span><span class="p">]:</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.67695441, 0.01024423, 0.31280136],
-       [0.36137308, 0.53013996, 0.10848696],
-       [0.11463932, 0.78747887, 0.09788181],
-       [0.03796145, 0.29451329, 0.66752526],
-       [0.00204705, 0.265555  , 0.73239795],
-       [0.5446722 , 0.32421575, 0.13111205],
-       [0.33074201, 0.2575146 , 0.41174339]])
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.41470252, 0.2086117 , 0.37668579],
-       [0.21103849, 0.49388948, 0.29507203],
-       [0.21701083, 0.52880434, 0.25418484],
-       [0.28397734, 0.18396883, 0.53205384],
-       [0.24361812, 0.0690321 , 0.68734978],
-       [0.4491705 , 0.52132683, 0.02950267],
-       [0.24151501, 0.21116556, 0.54731942]])
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.39799116, 0.42683509, 0.17517376],
-       [0.29774474, 0.3534999 , 0.34875537],
-       [0.21948697, 0.51583723, 0.2646758 ],
-       [0.05610816, 0.49294396, 0.45094788],
-       [0.13172646, 0.32382048, 0.54445306],
-       [0.49503411, 0.38716011, 0.11780577],
-       [0.22672704, 0.34266168, 0.43061128]])
-</pre></div>
-</div>
-</div>
-</div>
-<p>The results of the “algorithms” are generated in such a way that there is a decrease in quality. The first and second “algorithms” have almost perfect accuracy, but the predictions of the first “algorithm” are more confident.</p>
-<p>Here are the components of <span class="math notranslate nohighlight">\(y_{o, c} \log(p_{o,c})\)</span>:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">best_probs</span><span class="p">,</span> <span class="n">good_probs</span><span class="p">,</span> <span class="n">bad_probs</span><span class="p">]:</span>
-    <span class="n">display</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.39015135, 0.        , 0.        ],
-       [0.        , 0.63461423, 0.        ],
-       [0.        , 0.23891875, 0.        ],
-       [0.        , 0.        , 0.40417805],
-       [0.        , 0.        , 0.31143127],
-       [0.60757114, 0.        , 0.        ],
-       [0.        , 0.        , 0.88735497]])
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.88019384, 0.        , 0.        ],
-       [0.        , 0.70544352, 0.        ],
-       [0.        , 0.63713679, 0.        ],
-       [0.        , 0.        , 0.6310106 ],
-       [0.        , 0.        , 0.37491197],
-       [0.80035273, 0.        , 0.        ],
-       [0.        , 0.        , 0.6027227 ]])
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.92132549, 0.        , 0.        ],
-       [0.        , 1.03987208, 0.        ],
-       [0.        , 0.66196401, 0.        ],
-       [0.        , 0.        , 0.79640352],
-       [0.        , 0.        , 0.60797354],
-       [0.7031286 , 0.        , 0.        ],
-       [0.        , 0.        , 0.84254951]])
-</pre></div>
-</div>
-</div>
-</div>
-<p>It’s interesting that only the predictions for <span class="math notranslate nohighlight">\(y_{o,c}\)</span> play a role; more confident predictions generate less cross-entropy for that observation.</p>
-<p>And just to be sure, let’s compute the average cross-entropy for the entire sample:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">best_probs</span><span class="p">,</span> <span class="n">good_probs</span><span class="p">,</span> <span class="n">bad_probs</span><span class="p">]:</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.49631710718508326)
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.6616817361606729)
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.7961738233757771)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Obviously, higher-quality algorithms received a lower score.</p>
-</section>
-<section id="confusion-matrix">
-<h2>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Link to this heading">#</a></h2>
-<p>Is a way to learn properties of your classification model.</p>
-<p>Suppose we have formed some classifier. We have the following groups of observations.</p>
-<ul class="simple">
-<li><p><em>True positive</em>: observations that were positive in the sample and we correctly predicted them as positive. We will denote their number as <span class="math notranslate nohighlight">\(TP\)</span>;</p></li>
-<li><p><em>True negative</em>: observations that were negative in the sample and we correcrly predicted then as negative. We will denote their number as <span class="math notranslate nohighlight">\(TN\)</span>;</p></li>
-<li><p><em>False positve</em>: observations that were negative in the sample, but which we then mistakenly predicted to be positive. We will denote their number as <span class="math notranslate nohighlight">\(FP\)</span>;</p></li>
-<li><p><em>False negative</em>: observations that were positive in the sample, but wich we then mistakenly predicted to be negative. We will denote their number as <span class="math notranslate nohighlight">\(FN\)</span>.</p></li>
-</ul>
-<p>So, if you put the actual value on the rows and the predicted value on the columns, you will get a confusion matrix.</p>
+<section id="regression">
+<h2>Regression<a class="headerlink" href="#regression" title="Link to this heading">#</a></h2>
+<p>Regression metrics help to determine how close two sets of numbers are. The following table lists the common regression metrics.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head text-left"><p></p></th>
-<th class="head text-center"><p>Predicted <span class="math notranslate nohighlight">\(N\)</span></p></th>
-<th class="head text-center"><p>Predicted <span class="math notranslate nohighlight">\(P\)</span></p></th>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
+<th class="head"><p>Formula (simplified)</p></th>
+<th class="head"><p>Range</p></th>
+<th class="head"><p>Interpretation</p></th>
+<th class="head"><p>Pros</p></th>
+<th class="head"><p>Cons</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p>Actual <span class="math notranslate nohighlight">\(N\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(TN\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(FP\)</span></p></td>
+<tr class="row-even"><td><p><strong>MSE</strong> (Mean Squared Error)</p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{1}{N}\sum (y - \hat{y})^2 \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td><p>Average squared difference between predicted and true values.</p></td>
+<td><p>Penalizes large errors heavily, differentiable.</p></td>
+<td><p>Not robust to outliers, less interpretable.</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p>Actual <span class="math notranslate nohighlight">\(P\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(FN\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(TP\)</span></p></td>
+<tr class="row-odd"><td><p><strong>RMSE</strong> (Root Mean Squared Error)</p></td>
+<td><p><span class="math notranslate nohighlight">\( \sqrt{\frac{1}{N}\sum (y - \hat{y})^2} \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td><p>Square root of MSE, in same units as target.</p></td>
+<td><p>Interpretable (same units), penalizes large errors.</p></td>
+<td><p>Still sensitive to outliers.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>MAE</strong> (Mean Absolute Error)</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{N}\sum \vert y - \hat{y} \vert \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td><p>Average absolute difference.</p></td>
+<td><p>Robust to outliers, easy to interpret.</p></td>
+<td><p>Less sensitive to large errors, not differentiable at 0.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>MAPE</strong> (Mean Absolute Percentage Error)</p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{100}{N}\sum \frac{\vert y - \hat{y} \vert}{\vert y \vert} \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td><p>Avg. relative error in percentage.</p></td>
+<td><p>Scale-independent, interpretable.</p></td>
+<td><p>Undefined at <span class="math notranslate nohighlight">\(y=0\)</span>, biased toward small values.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>R²</strong> (Coefficient of Determination)</p></td>
+<td><p><span class="math notranslate nohighlight">\(1 - \frac{\sum (y - \hat{y})^2}{\sum (y - \bar{y})^2}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((-\infty, 1]\)</span></p></td>
+<td><p>Proportion of variance explained by model.</p></td>
+<td><p>Intuitive measure of fit.</p></td>
+<td><p>Can be negative, misleading for non-linear models.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Adj. R²</strong> (Adjusted R²)</p></td>
+<td><p><span class="math notranslate nohighlight">\(1 - (1-R^2)\frac{N-1}{N-p-1}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((-\infty, 1]\)</span></p></td>
+<td><p>R² adjusted for number of predictors.</p></td>
+<td><p>Penalizes overfitting, better for model comparison.</p></td>
+<td><p>Interpretation less direct than R².</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>MedAE</strong> (Median Absolute Error)</p></td>
+<td><p><span class="math notranslate nohighlight">\(median(\vert y - \hat{y} \vert\)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td><p>Median absolute difference.</p></td>
+<td><p>Very robust to outliers.</p></td>
+<td><p>Ignores distribution of other errors.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Find out more in the <a class="reference internal" href="#model_properties/confusion_matrix.ipynb"><span class="xref myst">special page</span></a>.</p>
 </section>
-<section id="permutation-importance">
-<h2>Permutation importance<a class="headerlink" href="#permutation-importance" title="Link to this heading">#</a></h2>
-<p>To estimate features importances of the arbitrary model you can use permutation importance algorithm. The idea is to randomly change some features of the input, and estimate a change of the model’s quality measure - big change means that feature was important. For more details check <a class="reference external" href="https://scikit-learn.org/stable/modules/permutation_importance.html#permutation-feature-importance">“Permutation feature importance”</a>, page on sklearn.</p>
-<hr class="docutils" />
-<p>The code in the following cell creates a small <span class="math notranslate nohighlight">\(X \rightarrow y\)</span> relationship dataset, so that each next column has a greater impact on the result than the previous one.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_numer</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">500</span>
-
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> <span class="n">features_numer</span><span class="p">))</span>
-<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">features_numer</span><span class="p">))</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.inspection</span><span class="w"> </span><span class="kn">import</span> <span class="n">permutation_importance</span>
-<span class="n">importances</span> <span class="o">=</span> <span class="n">permutation_importance</span><span class="p">(</span>
-    <span class="n">estimator</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span>
-<span class="p">)[</span><span class="s2">&quot;importances_mean&quot;</span><span class="p">]</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">importances</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;feature&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;feature importance&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Features importances&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
+<section id="classification">
+<h2>Classification<a class="headerlink" href="#classification" title="Link to this heading">#</a></h2>
+<p>Classification metrics are measures that evaluate how well predicted classes or class scores correspond to the true classes. The following cell lists the most important ones.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
+<th class="head"><p>Formula (simplified)</p></th>
+<th class="head"><p>Range</p></th>
+<th class="head"><p>Interpretation</p></th>
+<th class="head"><p>Pros</p></th>
+<th class="head"><p>Cons</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Accuracy</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{TP + TN}{TP + TN + FP + FN}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, 1]\)</span></p></td>
+<td><p>Fraction of correct predictions.</p></td>
+<td><p>Easy to interpret.</p></td>
+<td><p>Misleading with imbalanced data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Precision</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{TP}{TP + FP}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, 1]\)</span></p></td>
+<td><p>How many predicted positives are correct.</p></td>
+<td><p>Good when FP cost is high.</p></td>
+<td><p>Ignores false negatives.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Recall (Sensitivity, TPR)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{TP}{TP + FN}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, 1]\)</span></p></td>
+<td><p>How many actual positives are detected.</p></td>
+<td><p>Good when FN cost is high.</p></td>
+<td><p>Ignores false positives.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>F1-score</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(2 \cdot \frac{Precision \cdot Recall}{Precision + Recall}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, 1]\)</span></p></td>
+<td><p>Harmonic mean of precision &amp; recall.</p></td>
+<td><p>Balances FP and FN.</p></td>
+<td><p>Harder to interpret than accuracy.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Specificity (TNR)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{TN}{TN + FP}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, 1]\)</span></p></td>
+<td><p>How many actual negatives are detected.</p></td>
+<td><p>Complements recall.</p></td>
+<td><p>Ignores false negatives.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ROC-AUC</strong></p></td>
+<td><p>Area under ROC curve</p></td>
+<td><p><span class="math notranslate nohighlight">\([0, 1]\)</span></p></td>
+<td><p>Probability model ranks positive &gt; negative.</p></td>
+<td><p>Threshold-independent.</p></td>
+<td><p>Can be misleading with class imbalance.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Log-Loss (Cross-Entropy)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\frac{1}{N} \sum_{i=1}^N \sum_{c=1}^C y_{i,c} \log(\hat{p}_{i,c})\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td><p>Penalizes wrong confident predictions.</p></td>
+<td><p>Works with probabilities, smooth.</p></td>
+<td><p>Harder to interpret, sensitive to mislabeled data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>MCC (Matthews Corr. Coeff.)</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{TP \cdot TN - FP \cdot FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([-1, 1]\)</span></p></td>
+<td><p>Correlation between predictions and truth.</p></td>
+<td><p>Works well with imbalanced data.</p></td>
+<td><p>Less intuitive than accuracy/precision.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<p>Check more details on the <a class="reference internal" href="metrics/classification.html"><span class="std std-doc">Classification</span></a> page.</p>
+</section>
+<section id="model-interpretation">
+<h2>Model interpretation<a class="headerlink" href="#model-interpretation" title="Link to this heading">#</a></h2>
+<p>There is a set of approaches that allows us to understand why machine learning models make certain decisions. The following table represents some of these approaches:</p>
+<p>Check the <a class="reference external" href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a> book for more details on interpretation of the machine learning models.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Technique</p></th>
+<th class="head"><p>Scope</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>When to Use</p></th>
+<th class="head"><p>Pros</p></th>
+<th class="head"><p>Cons</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Feature Importance (coefficients)</strong></p></td>
+<td><p>Global</p></td>
+<td><p>Model-specific</p></td>
+<td><p>Uses model parameters (e.g., regression coefficients, tree splits).</p></td>
+<td><p>Linear/logistic regression, decision trees, random forests.</p></td>
+<td><p>Simple, direct interpretation.</p></td>
+<td><p>Not reliable for correlated features; model-dependent.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Permutation Importance</strong></p></td>
+<td><p>Global</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>Measures drop in performance after shuffling a feature.</p></td>
+<td><p>Any black-box model.</p></td>
+<td><p>Intuitive, works with any model.</p></td>
+<td><p>Expensive to compute; biased with correlated features.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Partial Dependence Plot (PDP)</strong></p></td>
+<td><p>Global</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>Shows marginal effect of one/two features on predictions.</p></td>
+<td><p>Any model where feature effect needs visualization.</p></td>
+<td><p>Easy to interpret, visual.</p></td>
+<td><p>Misleading if features are correlated.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Accumulated Local Effects (ALE)</strong></p></td>
+<td><p>Global</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>Corrected PDPs that handle correlated features.</p></td>
+<td><p>When feature correlation is present.</p></td>
+<td><p>More reliable than PDPs under correlation.</p></td>
+<td><p>Less intuitive than PDPs.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Global Surrogate Models</strong></p></td>
+<td><p>Global</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>Train a simple interpretable model to approximate complex model.</p></td>
+<td><p>Explaining black-box models globally.</p></td>
+<td><p>Produces interpretable model (tree, linear).</p></td>
+<td><p>Approximation may be poor; loses fidelity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>LIME</strong></p></td>
+<td><p>Local</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>Fits a local interpretable model around one prediction.</p></td>
+<td><p>Explaining individual predictions.</p></td>
+<td><p>Widely used, intuitive.</p></td>
+<td><p>Instability; explanations may vary across runs.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>SHAP</strong></p></td>
+<td><p>Local</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>Shapley values distribute contributions fairly among features.</p></td>
+<td><p>Both global + local explanation; any model.</p></td>
+<td><p>Theoretically solid; consistent; widely adopted.</p></td>
+<td><p>Computationally expensive; approximations needed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Counterfactual Explanations</strong></p></td>
+<td><p>Local</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>Shows what small change in input flips prediction.</p></td>
+<td><p>Explaining actionable changes in decisions (credit, fraud).</p></td>
+<td><p>Intuitive, user-friendly.</p></td>
+<td><p>May suggest unrealistic changes; hard in high dimensions.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Individual Conditional Expectation (ICE)</strong></p></td>
+<td><p>Local</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>Shows how varying one feature changes prediction for one instance.</p></td>
+<td><p>When detailed instance-level effect is needed.</p></td>
+<td><p>Complements PDPs; shows heterogeneity.</p></td>
+<td><p>Hard to interpret with many features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Decision Tree Visualization</strong></p></td>
+<td><p>Global</p></td>
+<td><p>Model-specific</p></td>
+<td><p>Show splits and decision paths.</p></td>
+<td><p>Tree-based models.</p></td>
+<td><p>Easy to visualize, transparent.</p></td>
+<td><p>Only works for small trees; large ones are messy.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Linear Model Coefficients</strong></p></td>
+<td><p>Global</p></td>
+<td><p>Model-specific</p></td>
+<td><p>Coefficients represent feature weights.</p></td>
+<td><p>Linear/logistic regression.</p></td>
+<td><p>Simple, mathematical clarity.</p></td>
+<td><p>Sensitive to scaling and multicollinearity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Generalized Additive Models (GAMs)</strong></p></td>
+<td><p>Global</p></td>
+<td><p>Model-specific</p></td>
+<td><p>Each feature has an interpretable function.</p></td>
+<td><p>When you need balance between accuracy and interpretability.</p></td>
+<td><p>Captures nonlinearity while interpretable.</p></td>
+<td><p>Limited flexibility compared to black-box models.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Attention Mechanisms</strong></p></td>
+<td><p>Local</p></td>
+<td><p>Model-specific</p></td>
+<td><p>Attention weights highlight important parts of input (NLP, vision).</p></td>
+<td><p>Sequence/transformer models.</p></td>
+<td><p>Natural for sequence data; intuitive visualization.</p></td>
+<td><p>Attention ≠ explanation (debated).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Grad-CAM / Saliency Maps</strong></p></td>
+<td><p>Local</p></td>
+<td><p>Model-specific</p></td>
+<td><p>Highlights image regions influencing CNN output.</p></td>
+<td><p>Computer vision models.</p></td>
+<td><p>Strong visual explanations.</p></td>
+<td><p>Sometimes noisy, hard to interpret precisely.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Anchors</strong></p></td>
+<td><p>Local</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>High-precision if-then rules explaining a prediction.</p></td>
+<td><p>Explaining individual decisions clearly.</p></td>
+<td><p>Produces human-readable rules.</p></td>
+<td><p>Can be computationally expensive; rules may not always exist.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Integrated Gradients</strong></p></td>
+<td><p>Local</p></td>
+<td><p>Model-specific</p></td>
+<td><p>Attributes importance by integrating gradients wrt inputs.</p></td>
+<td><p>Deep learning models.</p></td>
+<td><p>Theoretically sound; avoids gradient saturation.</p></td>
+<td><p>Requires baseline choice; complex math.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>SmoothGrad</strong></p></td>
+<td><p>Local</p></td>
+<td><p>Model-specific</p></td>
+<td><p>Averages noisy gradients for stable saliency maps.</p></td>
+<td><p>Deep learning interpretability.</p></td>
+<td><p>Produces clearer explanations.</p></td>
+<td><p>Adds computation overhead.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Feature Interaction (SHAP int.)</strong></p></td>
+<td><p>Both</p></td>
+<td><p>Model-agnostic</p></td>
+<td><p>Identifies feature interaction effects in predictions.</p></td>
+<td><p>When interactions matter (complex models).</p></td>
+<td><p>Highlights hidden relationships.</p></td>
+<td><p>Hard to visualize for many features.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>TCAV (Concept Activation Vectors)</strong></p></td>
+<td><p>Global</p></td>
+<td><p>Model-specific</p></td>
+<td><p>Explains predictions with human concepts, not raw features.</p></td>
+<td><p>Interpreting deep nets with domain concepts.</p></td>
+<td><p>Aligns with human reasoning.</p></td>
+<td><p>Needs well-defined concepts; not trivial to design.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/0499f7bf188c7d4173443141557f1535f23e9eb4d5a6493718a06a86c35fee1c.png" src="../_images/0499f7bf188c7d4173443141557f1535f23e9eb4d5a6493718a06a86c35fee1c.png" />
-</div>
-</div>
-<p>As a result, other features have a greater impact on the outcome.</p>
+<p>Check more details for some of the methods in the <a class="reference internal" href="metrics/model_interpretation.html"><span class="std std-doc">corresponding page</span></a>.</p>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -956,11 +1049,11 @@ y_{o,c} =
       </div>
     </a>
     <a class="right-next"
-       href="metrics/cross_entropy.html"
+       href="metrics/classification.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Cross entropy</p>
+        <p class="prev-next-title">Classification</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -980,9 +1073,9 @@ y_{o,c} =
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-entropy">Cross-Entropy</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">Confusion matrix</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-importance">Permutation importance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression">Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-interpretation">Model interpretation</a></li>
 </ul>
   </nav></div>
 

@@ -189,11 +189,15 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/cross_entropy.html">Cross entropy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../data_science/metrics/classification.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/CAP.html">CAP curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/GINI.html">GINI coeficient</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/model_interpretation.html">Model interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/CAP.html">CAP curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/GINI.html">GINI coeficient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </details></li>
@@ -445,13 +449,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../backup.html">Backup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../network/curl.html">Curl</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../network/ssh.html">SSH</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../network/ssh.html">SSH</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../network/ssh/generate_key.html">Generate key</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../network/vpn.html">VPN</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../users_groups/users_manipulations.html">Users manipulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../users_groups/user_management.html">User management</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../package_management.html">Package management</a></li>
@@ -492,6 +499,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../other/ansible.html">Ansible</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/kafka.html">Kafka</a></li>
 </ul>
 
     </div>
@@ -658,6 +666,11 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list-contents-ls">List contents (ls)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-diretory-mkdir">Make diretory (mkdir)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-parents">Create parents</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-rm">Remove (rm)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recursively">Recursively</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-not-existing">Ignore not existing</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find">Find</a></li>
@@ -827,6 +840,103 @@ rm<span class="w"> </span>-r<span class="w"> </span>/tmp/double_creation
 </div>
 </section>
 </section>
+<section id="remove-rm">
+<h2>Remove (rm)<a class="headerlink" href="#remove-rm" title="Link to this heading">#</a></h2>
+<p>The command to remove the file or directory is <code class="docutils literal notranslate"><span class="pre">rm</span></code>. Options that are specific to this command are listed before:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-f</span></code></p></td>
+<td><p>Force removal without prompting, ignore nonexistent files.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-i</span></code></p></td>
+<td><p>Prompt before each removal.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-I</span></code></p></td>
+<td><p>Prompt once before removing more than three files or when removing recursively.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-r</span></code>, <code class="docutils literal notranslate"><span class="pre">-R</span></code></p></td>
+<td><p>Remove directories and their contents recursively.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-d</span></code></p></td>
+<td><p>Remove empty directories.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-v</span></code></p></td>
+<td><p>Verbose mode, show files as they are removed.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="recursively">
+<h3>Recursively<a class="headerlink" href="#recursively" title="Link to this heading">#</a></h3>
+<p>By default, the <code class="docutils literal notranslate"><span class="pre">rm</span></code> command does not allow you to delete a directory containing other files. Use the <code class="docutils literal notranslate"><span class="pre">-r</span></code> command to remove a directory and all its nested files.</p>
+<hr class="docutils" />
+<p>The following cell creates a directory and places a file inside it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>/tmp/remove_me/
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;some information&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/remove_me/file1.txt
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s not possible to remove the directory just by using the <code class="docutils literal notranslate"><span class="pre">rm</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>/tmp/remove_me
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rm: cannot remove &#39;/tmp/remove_me&#39;: Is a directory
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>But with <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-r</span></code> everything goes fine.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-r<span class="w"> </span>/tmp/remove_me
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ignore-not-existing">
+<h3>Ignore not existing<a class="headerlink" href="#ignore-not-existing" title="Link to this heading">#</a></h3>
+<p>If the file you are trying to delete does not exist, the <code class="docutils literal notranslate"><span class="pre">rm</span></code> command generates an error. This can sometimes be inconvenient—for example, when removing the outputs of a previous script run and recreating an output folder. If the script is run for the first time, the absence of the folder triggers an error and iterupts scripts running.</p>
+<hr class="docutils" />
+<p>The following code shows the output of the <code class="docutils literal notranslate"><span class="pre">rm</span></code> command when the file you’re trying to delete doesn’t exist.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>/tmp/i_dont_exists
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rm: cannot remove &#39;/tmp/i_dont_exists&#39;: No such file or directory
+further operations
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">-f</span></code> flag just skips the error message, so the following don’t have no output.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-f<span class="w"> </span>/tmp/i_dont_exists
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
 <section id="find">
 <h2>Find<a class="headerlink" href="#find" title="Link to this heading">#</a></h2>
 <p>Linux <code class="docutils literal notranslate"><span class="pre">find</span></code> command allows you to search for files in the system. It have following syntax <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">&lt;directory-to-search&gt;</span> <span class="pre">&lt;criteria&gt;</span> <span class="pre">&lt;action&gt;</span></code> where:</p>
@@ -919,6 +1029,11 @@ rm<span class="w"> </span>-r<span class="w"> </span>/tmp/double_creation
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list-contents-ls">List contents (ls)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-diretory-mkdir">Make diretory (mkdir)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-parents">Create parents</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-rm">Remove (rm)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recursively">Recursively</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-not-existing">Ignore not existing</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find">Find</a></li>

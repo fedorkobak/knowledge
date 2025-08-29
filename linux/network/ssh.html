@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Netcat (nc)" href="netcat_nc.html" />
+    <link rel="next" title="Generate key" href="ssh/generate_key.html" />
     <link rel="prev" title="Curl" href="curl.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -189,11 +189,15 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/cross_entropy.html">Cross entropy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../data_science/metrics/classification.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/CAP.html">CAP curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/GINI.html">GINI coeficient</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/model_interpretation.html">Model interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/CAP.html">CAP curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/GINI.html">GINI coeficient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </details></li>
@@ -445,13 +449,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../backup.html">Backup</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../network.html">Network</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="curl.html">Curl</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">SSH</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">SSH</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="ssh/generate_key.html">Generate key</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="vpn.html">VPN</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../users_groups/users_manipulations.html">Users manipulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../users_groups/user_management.html">User management</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../package_management.html">Package management</a></li>
@@ -492,6 +499,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../other/ansible.html">Ansible</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/kafka.html">Kafka</a></li>
 </ul>
 
     </div>
@@ -656,7 +664,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up">Set up</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-key">Generating key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-key">Generate key</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#copying-public-key">Copying public key</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-access">Getting access</a></li>
 </ul>
@@ -725,8 +733,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="generating-key">
-<h2>Generating key<a class="headerlink" href="#generating-key" title="Link to this heading">#</a></h2>
+<section id="generate-key">
+<h2>Generate key<a class="headerlink" href="#generate-key" title="Link to this heading">#</a></h2>
 <p>You need to generate an ssh key. It consists of two parts, a public key and a private key. You can generate it wherever you like. But in our example we will consider the most straightforward option - generating it on the client.</p>
 <p>You can just run <code class="docutils literal notranslate"><span class="pre">ssh-keygen</span></code> and follow the CLI’s instructions. It’ll ask for filepath for the key and passphrase. However, due to the limitations of the jupyter notebook we are using for the presentation, we need to specify some options:</p>
 <ul class="simple">
@@ -858,6 +866,8 @@ file5
 </div>
 <p><strong>Note</strong> The <code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">StrictHostKeyChecking=no</span></code> option is used here to prevent the client from asking if it needs to add host to the list of known hosts.</p>
 </section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -900,11 +910,11 @@ file5
       </div>
     </a>
     <a class="right-next"
-       href="netcat_nc.html"
+       href="ssh/generate_key.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</p>
+        <p class="prev-next-title">Generate key</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -925,7 +935,7 @@ file5
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up">Set up</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-key">Generating key</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-key">Generate key</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#copying-public-key">Copying public key</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-access">Getting access</a></li>
 </ul>

@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Users manipulations" href="users_groups/users_manipulations.html" />
+    <link rel="next" title="User management" href="users_groups/user_management.html" />
     <link rel="prev" title="VPN" href="network/vpn.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -189,11 +189,15 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/cross_entropy.html">Cross entropy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/metrics/classification.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/CAP.html">CAP curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/GINI.html">GINI coeficient</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/model_interpretation.html">Model interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/CAP.html">CAP curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/GINI.html">GINI coeficient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </details></li>
@@ -445,13 +449,16 @@
 <li class="toctree-l1"><a class="reference internal" href="backup.html">Backup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="network/curl.html">Curl</a></li>
-<li class="toctree-l2"><a class="reference internal" href="network/ssh.html">SSH</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="network/ssh.html">SSH</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="network/ssh/generate_key.html">Generate key</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="network/vpn.html">VPN</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Users &amp; groups</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="users_groups/users_manipulations.html">Users manipulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users_groups/user_management.html">User management</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="package_management.html">Package management</a></li>
@@ -492,6 +499,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/ansible.html">Ansible</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/kafka.html">Kafka</a></li>
 </ul>
 
     </div>
@@ -659,7 +667,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#groups-file">Groups file</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#passwords-file">Passwords file</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-groups">Primary groups</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#users-manipulations">Users manipulations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-management">User management</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-remove-group">Add/remove group</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-relationships">Configure relationships</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-group">Primary group</a></li>
@@ -843,14 +851,14 @@ gpasswd<span class="w"> </span>-a<span class="w"> </span>test_user<span class="w
 </div>
 </div>
 </section>
-<section id="users-manipulations">
-<h2>Users manipulations<a class="headerlink" href="#users-manipulations" title="Link to this heading">#</a></h2>
+<section id="user-management">
+<h2>User management<a class="headerlink" href="#user-management" title="Link to this heading">#</a></h2>
 <p>This section considers common tools for manipulating the user list. The most basic things are:</p>
 <ul class="simple">
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">useradd</span></code> to create a new user.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">userdel</span></code> to remove users.</p></li>
 </ul>
-<p>For more details check <a class="reference internal" href="users_groups/users_manipulations.html"><span class="std std-doc">special page</span></a>.</p>
+<p>For more details check <a class="reference internal" href="users_groups/user_management.html"><span class="std std-doc">special page</span></a>.</p>
 <hr class="docutils" />
 <p>The following cell shows how the user <code class="docutils literal notranslate"><span class="pre">my_user</span></code> can be created.</p>
 <div class="cell docutils container">
@@ -1069,11 +1077,11 @@ cat<span class="w"> </span>/etc/passwd<span class="w"> </span><span class="p">|<
       </div>
     </a>
     <a class="right-next"
-       href="users_groups/users_manipulations.html"
+       href="users_groups/user_management.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Users manipulations</p>
+        <p class="prev-next-title">User management</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1097,7 +1105,7 @@ cat<span class="w"> </span>/etc/passwd<span class="w"> </span><span class="p">|<
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#groups-file">Groups file</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#passwords-file">Passwords file</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-groups">Primary groups</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#users-manipulations">Users manipulations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-management">User management</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-remove-group">Add/remove group</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-relationships">Configure relationships</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-group">Primary group</a></li>

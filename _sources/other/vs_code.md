@@ -38,6 +38,8 @@ This is useful for being able to copy/paste it into various configurations.
 
 **Note**: The `"editor.fontFamily"` attribute takes the same value as in the default settings. I've tried a few options, and the default VSCode font is the best for me. It is listed in the `configuration.json` file just as a reminder that it was purposely selected. 
 
+**Note** for some environments, especially data science setups, the practically useful option is `"python.analysis.typeCheckingMode": "basic"`: This makes Pylance less strict.
+
 
 ## Debug
 

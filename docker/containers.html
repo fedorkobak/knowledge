@@ -189,11 +189,15 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/cross_entropy.html">Cross entropy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/metrics/classification.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/CAP.html">CAP curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/GINI.html">GINI coeficient</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/model_interpretation.html">Model interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/CAP.html">CAP curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/GINI.html">GINI coeficient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </details></li>
@@ -445,13 +449,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../linux/backup.html">Backup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/curl.html">Curl</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../linux/network/ssh.html">SSH</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../linux/network/ssh.html">SSH</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../linux/network/ssh/generate_key.html">Generate key</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/vpn.html">VPN</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../linux/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../linux/users_groups/users_manipulations.html">Users manipulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/users_groups/user_management.html">User management</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux/package_management.html">Package management</a></li>
@@ -492,6 +499,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/ansible.html">Ansible</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/kafka.html">Kafka</a></li>
 </ul>
 
     </div>
@@ -662,6 +670,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-files-cp">Copy files (<code class="docutils literal notranslate"><span class="pre">cp</span></code>)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-logs-logs">Check logs (<code class="docutils literal notranslate"><span class="pre">logs</span></code>)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-stats">Monitoring (<code class="docutils literal notranslate"><span class="pre">stats</span></code>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user">User</a></li>
 </ul>
             </nav>
         </div>
@@ -1012,6 +1021,54 @@ ee606c8d43d4   stats_test   0.00%     508KiB / 31.01GiB   0.00%     526B / 0B   
 </div>
 </div>
 </section>
+<section id="user">
+<h2>User<a class="headerlink" href="#user" title="Link to this heading">#</a></h2>
+<p>A typical issue is selecting a user for a docker container. A user can be specified for the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> and <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span></code> commands using the <code class="docutils literal notranslate"><span class="pre">-u</span></code>/<code class="docutils literal notranslate"><span class="pre">--user</span></code> parameters.</p>
+<hr class="docutils" />
+<p>For example, consider the <code class="docutils literal notranslate"><span class="pre">ubuntu</span></code> container, which contains the <code class="docutils literal notranslate"><span class="pre">ubuntu</span></code> user by default. We can switch to this user.</p>
+<p>The next cell shows the <code class="docutils literal notranslate"><span class="pre">whoami</span></code> output for a container without any additional parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>ubuntu:25.10<span class="w"> </span>whoami<span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>root
+</pre></div>
+</div>
+</div>
+</div>
+<p>The default user is <code class="docutils literal notranslate"><span class="pre">root</span></code>. The next code shows the same example, but it uses the <code class="docutils literal notranslate"><span class="pre">-u</span> <span class="pre">ubuntu</span></code> parameter to specify the user.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>-u<span class="w"> </span>ubuntu<span class="w"> </span>ubuntu:25.10<span class="w"> </span>whoami
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ubuntu
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">whoami</span></code> returns corresponding output.</p>
+<p>Finally, the same experiment, but this time entering the existing container shell with the command <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-itd<span class="w"> </span>--name<span class="w"> </span>user_test<span class="w"> </span>ubuntu:25.10<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-u<span class="w"> </span>ubuntu<span class="w"> </span>user_test<span class="w"> </span>whoami
+docker<span class="w"> </span>stop<span class="w"> </span>user_test<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ubuntu
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1087,6 +1144,7 @@ ee606c8d43d4   stats_test   0.00%     508KiB / 31.01GiB   0.00%     526B / 0B   
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-files-cp">Copy files (<code class="docutils literal notranslate"><span class="pre">cp</span></code>)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-logs-logs">Check logs (<code class="docutils literal notranslate"><span class="pre">logs</span></code>)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-stats">Monitoring (<code class="docutils literal notranslate"><span class="pre">stats</span></code>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user">User</a></li>
 </ul>
   </nav></div>
 
