@@ -220,6 +220,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="nlp.html">NLP</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="nlp/preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp/preprocessing/embeddings.html">Embeddings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp/preprocessing/tf_idf.html">TF-IDF</a></li>
 </ul>
 </details></li>
@@ -230,6 +231,7 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">DL mechanisms</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="dl_mechanisms/recurrent.html">Recurrent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dl_mechanisms/transformer.html">Transformer</a></li>
 </ul>
 </details></li>
 </ul>
@@ -666,7 +668,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrent">Recurrent</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-attention">Self-attention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformer</a></li>
 </ul>
             </nav>
         </div>
@@ -702,35 +704,12 @@ document.write(`
 <p>All these computations, resulting in <span class="math notranslate nohighlight">\(h_t\)</span> for <span class="math notranslate nohighlight">\(t = \overline{1,n}\)</span>, can be used in the subsequent steps to describe the process we are interested in.</p>
 <p>For more detailed explanation, checkout on the <a class="reference internal" href="dl_mechanisms/recurrent.html"><span class="std std-doc">Recurrent</span></a> page.</p>
 </section>
-<section id="self-attention">
-<h2>Self-attention<a class="headerlink" href="#self-attention" title="Link to this heading">#</a></h2>
-<p>Self-attention is a mechanism that processes an array of input data. In the general case, each element of the array is a vector, <span class="math notranslate nohighlight">\(x_i \in \mathbb{R}^k\)</span>. Unlike the RNN architecture, the order of the <span class="math notranslate nohighlight">\(x_i\)</span> not central here, but self-attention is usually used to process the ordered sequences as well.</p>
-<p>The main idea is to build such transformation mechanism <span class="math notranslate nohighlight">\(SA\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}SA: x_i \rightarrow y_i.\\ x_i \in \mathbb{R}^k, y_i \in \mathbb{R}^l.\end{split}\]</div>
-<p>For each <span class="math notranslate nohighlight">\(x_i\)</span>, it considers all the other members of the array, <span class="math notranslate nohighlight">\(x_j, i \neq j\)</span>, and it allows the most significant member to influence the result.</p>
-<p>At the highest level, the idea is simple: <span class="math notranslate nohighlight">\(y_i\)</span> is the weighed sum of all the elements in the sequence:</p>
-<div class="math notranslate nohighlight">
-\[y_i = \sum_{j=1}^n w_j W^\nu x_j\]</div>
-<p>Where:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(W^\nu\)</span>: learnable matrix.</p></li>
-<li><p><span class="math notranslate nohighlight">\(w_j\)</span>: is a crucial element of the self-attention approach. It is the weight of the <span class="math notranslate nohighlight">\(j\)</span>-th element of the array in the context of processing <span class="math notranslate nohighlight">\(y_i\)</span>. The process of finding this weight is described below.</p></li>
-</ul>
-<p>For each element introduce two vectors:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}k_i = W^k x_i\\ q_i = W^q x_i.\end{split}\]</div>
-<p>Here <span class="math notranslate nohighlight">\(W^k \in \mathbb{R}^{(k \times a)}\)</span> and <span class="math notranslate nohighlight">\(W^q \in \mathbb{R}^{(l \times a)}\)</span> are learnabale parameters.</p>
-<p>The idea behind the method is that these vectors are queries (<span class="math notranslate nohighlight">\(q\)</span>) and keys (<span class="math notranslate nohighlight">\(k\)</span>). The matrices that produce them (<span class="math notranslate nohighlight">\(W^k, W^q\)</span>) are learned in such a way that keys of one elements have to match the queries of the other elements.</p>
-<p>In this context, “match” refers to the high result of the scalar product of the <span class="math notranslate nohighlight">\(q_i\)</span> and <span class="math notranslate nohighlight">\(k_j\)</span>.</p>
-<p>For each <span class="math notranslate nohighlight">\(j\)</span>-s element of the array that is processed, the vector <span class="math notranslate nohighlight">\((q_i k_1, q_i k_2, \ldots, q_i k_n)\)</span> is computed. The elements which <span class="math notranslate nohighlight">\(k_j\)</span> better matches to the <span class="math notranslate nohighlight">\(q_i\)</span> will be higher.</p>
-<p>So for a chosen element, <span class="math notranslate nohighlight">\(x_i\)</span>, the vector can be considered as the weights of the matches with all other elements. However, to give them the properties of the real weights, this vector is usually processed by a softmax function.</p>
-<p>Finally for weights we got such approach:</p>
-<div class="math notranslate nohighlight">
-\[w_i = softmax \left( W^qx_i W^kx_1, W^qx_i W^kx_2, \ldots, W^qx_i W^kx_n \right)\]</div>
-<p>The entire transformation will take the following form:</p>
-<div class="math notranslate nohighlight">
-\[y_i = \sum_{j=1}^n softmax \left( W^qx_i W^kx_1, W^qx_i W^kx_2, \ldots, W^qx_i W^kx_n \right) W^\nu x_j\]</div>
+<section id="transformer">
+<h2>Transformer<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h2>
+<p>The transformer is a deep learning architecture that was represented in the article <a class="reference external" href="https://papers.nips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf">Attention Is All You Need</a>.</p>
+<p>The schema is represented in the following piture:</p>
+<p><img alt="" src="../_images/schema.svg" /></p>
+<p>Check for details in the <a class="reference internal" href="dl_mechanisms/transformer.html"><span class="std std-doc">transformers</span></a> page.</p>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -801,7 +780,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrent">Recurrent</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-attention">Self-attention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformer</a></li>
 </ul>
   </nav></div>
 
