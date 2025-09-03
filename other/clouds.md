@@ -25,3 +25,12 @@ There are three types of cloud models:
 - **Public cloud**: Different companies can use the same computational resources, which allocated to those who need them more in a moment. This prevents extra consts as you only pay for the computatioins you use.
 
 - **Hybrid cloud**: A company runs some services on a private cloud and others on a public cloud. The decision ususally depends on the particular needs of the service and regulations.
+
+
+## Scaling types
+
+There are two main types of scaling: vertical and horizontal. 
+
+**Vertical** scaling typically involves making existing units more powerful. In the context of computing, it means that the application migrates to machines with more CPU or RAM.
+
+**Horizontal** scaling means that there are new units are added to process typical tasks in parallel. In the context of computing, it means that just more computers are launced.
