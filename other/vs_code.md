@@ -2,6 +2,21 @@
 
 Visual studio code is a highly customizable tool. This page covers the most common settings.
 
+## Environment variables
+
+To access an environment variable in your vscode, simply open vscode from the terminal in which the required environment variable is installed. The list of commands is as following:
+
+```bash
+# just define variable inline
+export VARIABLE="VALUE"
+# load all required variables from .env file
+source .env
+# run vscode
+code .
+```
+
+All the terminals that you run in vscode and jupyter notebooks will have defined variables during their execution.
+
 ## Settings
 
 You can configure your VSCode with editing the `settings.json` file. There are separate `settings.json` for user and for workspace.
@@ -14,7 +29,6 @@ Check information on the `settiongs.json` for the user [here](https://code.visua
 You can list all available attributes that you can specify as settings using `defaultSettings.json` - a read only file that can be opened using the VSCode command `Preferences: OpenDefaultSettings (JSON)`. There are no other source, like official page where listed all settings with description: [Default VSCode settings](https://code.visualstudio.com/docs/reference/default-settings).
 
 VSCode extensions usually have their own settings.
-
 
 ### My config
 
