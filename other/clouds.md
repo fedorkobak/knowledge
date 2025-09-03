@@ -2,6 +2,8 @@
 
 There are a services that allow you to rent computers and run programs on them.
 
+**SLA**: service level argreement. A document that outlines the garantees the service provider gives to the customer. It generally descirbes the cases and times when the service can be unavailable.
+
 ## Responsibility models
 
 There are different models of cloud services. They differ based on what is done the customer's end and what is done on the prvider's side:
