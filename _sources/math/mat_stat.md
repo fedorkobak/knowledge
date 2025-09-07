@@ -74,6 +74,7 @@ The following table lists the most common distributions used in practice.
 | **F-distribution** | Continuous | $d_1$, $d_2$ (degrees of freedom)     | $x \in [0, \infty)$        | ANOVA, comparing variances                          |
 | **Log-normal**     | Continuous | $\mu$, $\sigma$ (log-space params)    | $x \in (0, \infty)$        | Skewed data, multiplicative processes               |
 
+Check more detailed descriptions in the [Distributions](mat_stat/distributions.md) page.
 
 ## Statistical testing
 

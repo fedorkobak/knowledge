@@ -182,6 +182,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../data_science/intro.html">Data science</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_science/gradient_descent.html">Gradient descent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_science/decision_tree.html">Decision tree</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -225,10 +226,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/text_cnn.html">Text CNN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/recurrent_translation.html">Recurrent translations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/LLMs.html">LLMs</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/dl_mechanisms/recurrent.html">Recurrent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/dl_mechanisms/attention.html">Attention</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/dl_mechanisms/transformer.html">Transformer</a></li>
 </ul>
 </details></li>
@@ -250,6 +253,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../math/mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/distributions.html">Distributions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../math/mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -344,6 +348,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../sql/intro.html">Intro</a></li>
+
 <li class="toctree-l1 has-children"><a class="reference internal" href="../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../sql/select/join/join_types.html">Join types</a></li>
@@ -502,6 +507,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/kafka.html">Kafka</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/elastic_search.html">Elastic search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/clouds.html">Clouds</a></li>
 </ul>
 
     </div>
@@ -689,11 +696,11 @@ document.write(`
 <p>The most common use of grep is to find patterns in the output of another command. The following cell creates a file with some text that will be used as an example.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">play_with_grep</span>
-<span class="n">This</span> <span class="n">text</span> <span class="ow">is</span> <span class="n">used</span>
-<span class="n">to</span> <span class="n">show</span> <span class="n">how</span> <span class="n">the</span> <span class="n">grep</span>
-<span class="n">utility</span> <span class="n">works</span>
-<span class="n">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/play_with_grep</span>
+<span class="s">This text is used</span>
+<span class="s">to show how the grep</span>
+<span class="s">utility works</span>
+<span class="s">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -701,7 +708,7 @@ document.write(`
 <p>The following cell applies the <code class="docutils literal notranslate"><span class="pre">cat</span></code> command to the file we created earlier - so its contents will be shown in the standard output. Using the syntax <code class="docutils literal notranslate"><span class="pre">&lt;command&gt;</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">&lt;pattern&gt;</span></code> applies <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">&lt;pattern&gt;</span></code> to the output of <code class="docutils literal notranslate"><span class="pre">&lt;command&gt;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">play_with_grep</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">text</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>/tmp/play_with_grep<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>text
 </pre></div>
 </div>
 </div>
@@ -715,7 +722,7 @@ document.write(`
 <p>The following cell similarly shows the line where the word <code class="docutils literal notranslate"><span class="pre">grep</span></code> appears.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">play_with_grep</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">grep</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>/tmp/play_with_grep<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>grep
 </pre></div>
 </div>
 </div>
@@ -733,11 +740,11 @@ document.write(`
 <p>In the following cell, the <code class="docutils literal notranslate"><span class="pre">cat</span></code> command is passed a multiline expression, which is then printed in the output — this is exactly what the <code class="docutils literal notranslate"><span class="pre">cat</span></code> command does.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span>
-<span class="n">hello</span>
-<span class="n">my</span> <span class="n">name</span> 
-<span class="ow">is</span> <span class="n">fedor</span>
-<span class="n">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">hello</span>
+<span class="s">my name </span>
+<span class="s">is fedor</span>
+<span class="s">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -752,16 +759,38 @@ is fedor
 <p>To understand better what exactly it does. Anoter example with other delimiting identifier and other command applied to the result. Here we are using <code class="docutils literal notranslate"><span class="pre">grep</span></code> to find line that contains <code class="docutils literal notranslate"><span class="pre">FIND</span> <span class="pre">ME</span></code>. Begining and ending of the document is defined by <code class="docutils literal notranslate"><span class="pre">SSS</span></code> combination of the symbols.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="s2">&quot;FIND ME&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">SSS</span>
-<span class="n">this</span> <span class="ow">is</span> <span class="n">some</span> <span class="n">line</span>
-<span class="n">it</span><span class="s1">&#39;s great FIND ME that</span>
-<span class="n">something</span> <span class="n">strange</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">line</span> 
-<span class="n">SSS</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span><span class="s2">&quot;FIND ME&quot;</span><span class="w"> </span><span class="s">&lt;&lt; SSS</span>
+<span class="s">this is some line</span>
+<span class="s">it&#39;s great FIND ME that</span>
+<span class="s">something strange in this line </span>
+<span class="s">SSS</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>it&#39;s great FIND ME that
+</pre></div>
+</div>
+</div>
+</div>
+<p>Another useful application of heredocs is passing programs to bash inline. The following cell passes a program to bash directly from stdin:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">for i in {1..5}</span>
+<span class="s">do</span>
+<span class="s">    echo &quot;Line \$i&quot;</span>
+<span class="s">done</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Line 1
+Line 2
+Line 3
+Line 4
+Line 5
 </pre></div>
 </div>
 </div>
@@ -775,7 +804,7 @@ is fedor
 <p>The following cell uses <code class="docutils literal notranslate"><span class="pre">xclip</span></code> to save the result of the <code class="docutils literal notranslate"><span class="pre">uptime</span></code> command.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">uptime</span> <span class="o">|</span> <span class="n">xclip</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uptime<span class="w"> </span><span class="p">|</span><span class="w"> </span>xclip
 </pre></div>
 </div>
 </div>
@@ -783,7 +812,7 @@ is fedor
 <p><code class="docutils literal notranslate"><span class="pre">xclip</span> <span class="pre">-o</span></code> retrieves the content you’ve previously saved.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xclip</span> <span class="o">-</span><span class="n">o</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xclip<span class="w"> </span>-o
 </pre></div>
 </div>
 </div>
@@ -805,16 +834,16 @@ is fedor
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./linux"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               

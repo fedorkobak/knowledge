@@ -64,7 +64,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Recurrent" href="dl_mechanisms/recurrent.html" />
-    <link rel="prev" title="Recurrent translations" href="nlp/recurrent_translation.html" />
+    <link rel="prev" title="LLMs" href="nlp/LLMs.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -184,6 +184,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
 <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Data science</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gradient_descent.html">Gradient descent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decision_tree.html">Decision tree</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -227,10 +228,12 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp/text_cnn.html">Text CNN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp/recurrent_translation.html">Recurrent translations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp/LLMs.html">LLMs</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">DL mechanisms</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="dl_mechanisms/recurrent.html">Recurrent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dl_mechanisms/attention.html">Attention</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dl_mechanisms/transformer.html">Transformer</a></li>
 </ul>
 </details></li>
@@ -252,6 +255,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../math/mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/distributions.html">Distributions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../math/mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -346,6 +350,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../sql/intro.html">Intro</a></li>
+
 <li class="toctree-l1 has-children"><a class="reference internal" href="../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../sql/select/join/join_types.html">Join types</a></li>
@@ -504,6 +509,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/kafka.html">Kafka</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/elastic_search.html">Elastic search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/clouds.html">Clouds</a></li>
 </ul>
 
     </div>
@@ -668,6 +675,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrent">Recurrent</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attention">Attention</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformer</a></li>
 </ul>
             </nav>
@@ -704,12 +712,32 @@ document.write(`
 <p>All these computations, resulting in <span class="math notranslate nohighlight">\(h_t\)</span> for <span class="math notranslate nohighlight">\(t = \overline{1,n}\)</span>, can be used in the subsequent steps to describe the process we are interested in.</p>
 <p>For more detailed explanation, checkout on the <a class="reference internal" href="dl_mechanisms/recurrent.html"><span class="std std-doc">Recurrent</span></a> page.</p>
 </section>
+<section id="attention">
+<h2>Attention<a class="headerlink" href="#attention" title="Link to this heading">#</a></h2>
+<p>Attention is a type of transformation for the sequence, that uses information hidden within the entire sequence. The source of information can be the sequence itself or another sequence.</p>
+<p>Attention is generally associated with transformer architecture, but idea can be used in other approaches. It contains a wide range of modifications, which makes the attention section potentially very large. That’s why it is considered independently from the transformer here.</p>
+<p>Check <a class="reference internal" href="dl_mechanisms/attention.html"><span class="std std-doc">attention</span></a> page for more details.</p>
+</section>
 <section id="transformer">
 <h2>Transformer<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h2>
 <p>The transformer is a deep learning architecture that was represented in the article <a class="reference external" href="https://papers.nips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf">Attention Is All You Need</a>.</p>
 <p>The schema is represented in the following piture:</p>
 <p><img alt="" src="../_images/schema.svg" /></p>
-<p>Check for details in the <a class="reference internal" href="dl_mechanisms/transformer.html"><span class="std std-doc">transformers</span></a> page.</p>
+<p>The following list outlines the most important concepts used in the transformer architecture:</p>
+<ul class="simple">
+<li><p><strong>Attention transformation</strong>: A transformation applied to a sequence, where each element is computed by incorporating information from other elements in the sequence, with different levels of <em>attention</em> paid to them. Several extensions of the attention mechanism are used in modern transformers:</p>
+<ul>
+<li><p><strong>Multi-Head Attention</strong>: The sequence is transformed by several attention mechanisms in parallel, each referred to as a head.</p></li>
+<li><p><strong>Masked Attention</strong>: A variant of attention where certain positions in the sequence are hiddeng (masked) to prevent an element from attending the future tokens.</p></li>
+<li><p><strong>Self-Attention</strong>: A process in which each element of a sequence attends to other elements within the same sequence.</p></li>
+<li><p><strong>Cross-Attention</strong>: A process in which each element of a sequence attends to elements of another sequence.</p></li>
+</ul>
+</li>
+<li><p><strong>Encoder/Decoder</strong>: The encoder and decoder are essential parts of transformers. The encoder processes the input sequence using self-attention to produce contextual representations. The docoder generates the output sequence by attending to the encoder’s representationand predicts the next token in a sequence.</p></li>
+<li><p><strong>Positional encoding</strong>: Since self-attention does not inherently capture the order of elements, the transformer adds to the input embeddings values computed from a function that depends on each element’s position in the sequence.</p></li>
+<li><p><strong>Feed Forward</strong>: Two linear transforamtions connected by an activation function. The first typically makes increases dimensionality, and the second reduces it back down.</p></li>
+<li><p><strong>Add &amp; Norm</strong>: Add the scip connection information with the output of the attention layers and normilize.</p></li>
+</ul>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -746,12 +774,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="nlp/recurrent_translation.html"
+       href="nlp/LLMs.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Recurrent translations</p>
+        <p class="prev-next-title">LLMs</p>
       </div>
     </a>
     <a class="right-next"
@@ -780,6 +808,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrent">Recurrent</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attention">Attention</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformer</a></li>
 </ul>
   </nav></div>

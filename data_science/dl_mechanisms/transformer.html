@@ -64,7 +64,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Intorduction" href="../../math/introduction.html" />
-    <link rel="prev" title="Recurrent" href="recurrent.html" />
+    <link rel="prev" title="Attention" href="attention.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -184,6 +184,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
 <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Data science</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gradient_descent.html">Gradient descent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../decision_tree.html">Decision tree</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -227,10 +228,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../nlp/text_cnn.html">Text CNN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../nlp/recurrent_translation.html">Recurrent translations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nlp/LLMs.html">LLMs</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../dl_mechanisms.html">DL mechanisms</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="recurrent.html">Recurrent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attention.html">Attention</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Transformer</a></li>
 </ul>
 </details></li>
@@ -252,6 +255,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/distributions.html">Distributions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../math/mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -346,6 +350,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../sql/intro.html">Intro</a></li>
+
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../sql/select/join/join_types.html">Join types</a></li>
@@ -504,6 +509,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/kafka.html">Kafka</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/elastic_search.html">Elastic search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/clouds.html">Clouds</a></li>
 </ul>
 
     </div>
@@ -667,10 +674,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-attention">Self-attention</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation">Matrix representation</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encoder-decoder">Encoder/decoder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#masked-attention">Masked attention</a></li>
 </ul>
             </nav>
         </div>
@@ -684,118 +689,58 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="transformer">
 <h1>Transformer<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h1>
-<p>A transformer is a deep learning architecture that uses an attention mechanism.</p>
-<section id="self-attention">
-<h2>Self-attention<a class="headerlink" href="#self-attention" title="Link to this heading">#</a></h2>
-<p>Define self-attention as <span class="math notranslate nohighlight">\(SA\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[
-SA: x_i \mapsto y_i, \quad 
-x_i \in \mathbb{R}^s,\; y_i \in \mathbb{R}^{d_0},\; i \in \{1, \dots, n\}.
-\]</div>
-<p>Where:</p>
+<p>This page discusses transformer architecture. The following picture shows classical schema to explain the transformer.</p>
+<p><img alt="" src="../../_images/schema.svg" /></p>
+<section id="encoder-decoder">
+<h2>Encoder/decoder<a class="headerlink" href="#encoder-decoder" title="Link to this heading">#</a></h2>
+<p>The transformer uses encoder/decoder achitecture. The idea behind this achitecture is following:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(s\)</span>: the dimensionality of the vector describing a single element of the sequence.</p></li>
-<li><p><span class="math notranslate nohighlight">\(n\)</span>: the length of the sequence to be transformed.</p></li>
-<li><p><span class="math notranslate nohighlight">\(d_o\)</span>: the size of the embedding that represents each element of the sequence after the transformation.</p></li>
+<li><p>In the encoder layer, positional encoding is applied. Then, a multi-head attention is used to create a sequence representation.</p></li>
+<li><p>In the decoder layer, a transformation similar to the one in the encoding is applied to the incomplete output sequence. Then, the multihead attention is used a second time to combine the output of the encoder with the output of the encoded output sequence that was passed as input to the second part. As the result the output can be generated.</p></li>
 </ul>
-<p>The procedure involves calculating several vectors that somehow represent each element. An important parameter of the entire procedure is <span class="math notranslate nohighlight">\(d\)</span>, which is the dimentionality of the information calculated for each element of the processed sequence.</p>
-<p>At the highest level, the idea is simple: <span class="math notranslate nohighlight">\(y_i\)</span> is the weighed sum of all the elements in the sequence:</p>
-<div class="math notranslate nohighlight">
-\[y_i = w_i W^\nu x_i\]</div>
-<p>Where:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(W^\nu \in \mathbb{R}^{(n \times s)}\)</span>: learnable matrix.</p></li>
-<li><p><span class="math notranslate nohighlight">\(w_i \in \mathbb{R}^n\)</span>: is a crucial element of the self-attention approach. It is a vector that shows how the other elements of the sequence influence the the sence of the element under consideration.</p></li>
-</ul>
-<p><strong>Note:</strong> In some sources, the product <span class="math notranslate nohighlight">\(W^\nu x_i\)</span> is interpreted as the vector <span class="math notranslate nohighlight">\(\nu_i \in \mathbb{R}^d\)</span>, which contains the general representation of a word regardless of context.</p>
-<p>For each element introduce two vectors:</p>
-<div class="math notranslate nohighlight">
-\[q_i = x_i W^q , k_i = x_i W^k.\]</div>
-<p>Here <span class="math notranslate nohighlight">\(W^q \in \mathbb{R}^{(s \times d)}\)</span> and <span class="math notranslate nohighlight">\(W^k \in \mathbb{R}^{(s \times d)}\)</span> are learnable parameters. <span class="math notranslate nohighlight">\(d\)</span> is a selectable parameter that determines the dimentionality of the <span class="math notranslate nohighlight">\(q_i \in \mathbb{R}^d\)</span> and <span class="math notranslate nohighlight">\(k_i \in \mathbb{R}^d\)</span>: which influences the complexity of the contexts <span class="math notranslate nohighlight">\(q_i\)</span> and <span class="math notranslate nohighlight">\(k_i\)</span> can understand.</p>
-<p>The idea behind the method is that these vectors are queries (<span class="math notranslate nohighlight">\(q\)</span>) and keys (<span class="math notranslate nohighlight">\(k\)</span>). The matrices that produce them (<span class="math notranslate nohighlight">\(W^q, W^k\)</span>) are learned in such a way that keys of one elements have to match the queries of the other elements.</p>
-<p>In this context, “match” refers to the high result of the scalar product of the <span class="math notranslate nohighlight">\(q_i\)</span> and <span class="math notranslate nohighlight">\(k_j\)</span>.</p>
-<p>For each <span class="math notranslate nohighlight">\(j\)</span>-s element of the array that is processed, the vector <span class="math notranslate nohighlight">\((q_i k_1, q_i k_2, \ldots, q_i k_n)\)</span> is computed. The elements which <span class="math notranslate nohighlight">\(k_j\)</span> better matches to the <span class="math notranslate nohighlight">\(q_i\)</span> will be higher.</p>
-<p>So for a chosen element, <span class="math notranslate nohighlight">\(x_i\)</span>, the vector can be considered as the weights of the matches with all other elements. However, to give them the properties of the real weights, this vector is usually processed by a softmax function.</p>
-<p>Finally for weights we got such approach:</p>
-<div class="math notranslate nohighlight">
-\[w_i = softmax \left( W^qx_i W^kx_1, W^qx_i W^kx_2, \ldots, W^qx_i W^kx_n \right)\]</div>
-<p>The entire transformation will take the following form:</p>
-<div class="math notranslate nohighlight">
-\[y_i = softmax \left( W^qx_i W^kx_1, W^qx_i W^kx_2, \ldots, W^qx_i W^kx_n \right) W^\nu x_i\]</div>
-<section id="matrix-representation">
-<h3>Matrix representation<a class="headerlink" href="#matrix-representation" title="Link to this heading">#</a></h3>
-<p>The previous description provided more detail, explaining the role of each element in the processed sequence. In practice, however, the entire sequence is handled simultaneously. To reflect this, we will now move on to matrix transformations, which enable processing of the whole sequence with just a few matrix multiplications.</p>
-<p>Vectors <span class="math notranslate nohighlight">\(k_i\)</span> and <span class="math notranslate nohighlight">\(q_i\)</span> must be computed for each element of the processed sequence. To do that stack vecticaly sequence element <span class="math notranslate nohighlight">\(x_i \in \mathbb{R^s}, i \in \overline{1,n}\)</span> into matrix <span class="math notranslate nohighlight">\(X = \mathbb{R}^{n \times s}\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-X = \left(\begin{array}{c}
-x_1 \\
-x_2 \\
-\vdots \\
-x_n
-\end{array}\right)
-\end{split}\]</div>
-<p>Matrix multiplications <span class="math notranslate nohighlight">\(K=XW^k\)</span> and <span class="math notranslate nohighlight">\(Q=XW^q\)</span> will produce exactly <span class="math notranslate nohighlight">\(k_i\)</span> and <span class="math notranslate nohighlight">\(q_i\)</span>, <span class="math notranslate nohighlight">\(i=\overline{1,n}\)</span> stacked vertically:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-Q = XW^q = \left(\begin{array}{c}
-x_1 W^q\\ x_2 W^q\\ \vdots \\ x_n W^q
-\end{array}\right) =
-\left(\begin{array}{c}
-q_1\\ q_2\\ \vdots \\ q_n
-\end{array}\right);
-\end{split}\]</div>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-K = XW^k = \left(\begin{array}{c}
-x_1 W^k \\ x_2 W^k \\ \vdots \\ x_n W^k
-\end{array}\right) = 
-\left(\begin{array}{c}
-k_1 \\ k_2 \\ \vdots \\ k_n
-\end{array}\right).
-\end{split}\]</div>
-<p>Just clarifying the dimenions of the obtained matrices <span class="math notranslate nohighlight">\(Q=\mathbb{R}^{n \times d}\)</span>, <span class="math notranslate nohighlight">\(K=\mathbb{R}^{n \times d}\)</span>.</p>
-<p>Now, we need to find all the product combinations of <span class="math notranslate nohighlight">\(q_i\)</span> and <span class="math notranslate nohighlight">\(k_j\)</span> in matrix form:</p>
-<div class="math notranslate nohighlight">
-\[\left(q_ik_j\right)_{n \times n}\]</div>
-<p>We make multiplication of form:</p>
-<div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\begin{split}QK^T =
-\left(\begin{array}{c}
-q_1 \\ q_2 \\ \vdots \\ q_n
-\end{array}\right)\end{split}\\\left(\begin{array}{cccc}k_1 &amp; k_2 &amp; \ldots &amp; k_n\end{array}\right) = \\\begin{split}\left(\begin{array}{cccc}
-q_1k_1 &amp; q_1k_2 &amp; \dots &amp; q_1k_n \\
-q_2k_1 &amp; q_2k_2 &amp; \dots &amp; q_2k_n \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-q_nk_1 &amp; q_nk_2 &amp; \dots &amp; q_nk_n
-\end{array}\right)
-\end{split}\end{aligned}\end{align} \]</div>
-<p>The softmax function is applied to bring the values within the range of <span class="math notranslate nohighlight">\([0,1]\)</span>. It reveals the degree to which the meaning of the <span class="math notranslate nohighlight">\(j\)</span>-th element of the sequence is revealed by the <span class="math notranslate nohighlight">\(i\)</span>-th element:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}softmax(QK^T) = 
-\left(\begin{array}{c}
-softmax(q_1k_1, q_1k_2, \dots, q_1k_n) \\
-softmax(q_2k_1, q_2k_2, \dots, q_2k_n) \\
-\vdots \\
-softmax(q_nk_1, q_nk_2, \dots, q_nk_n)
-\end{array}\right)
-\end{split}\]</div>
-<p>At the same time with similar to the <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(K\)</span> matrices procedure matrix <span class="math notranslate nohighlight">\(V\)</span> as a stacked <span class="math notranslate nohighlight">\(v_i\)</span> vectors is computed:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}V = XW^{\nu} = \left(\begin{array}{c}
-x_1 W^{\nu}\\ x_2 W^{\nu}\\ \vdots \\ x_n W^{\nu}
-\end{array}\right) =
-\left(\begin{array}{c}
-\nu_1\\ \nu_2\\ \vdots \\ \nu_n
-\end{array}\right)
-\end{split}\]</div>
-<p>Here, <span class="math notranslate nohighlight">\(W^{\nu} \in \mathbb{R}^{s \times d_o}\)</span> and <span class="math notranslate nohighlight">\(X \in \mathbb{R}^{n \times s}\)</span>, which gives <span class="math notranslate nohighlight">\(V = XW^{\nu} \in \mathbb{R}^{n \times d_o}\)</span>. <span class="math notranslate nohighlight">\(d_o\)</span> there is selectable parameter - as will become obvious in the following steps it regulates the dimensionality of the output embeddings.</p>
-<p>Finally:</p>
-<div class="math notranslate nohighlight">
-\[softmax(QK^T)V \in \mathbb{R}^{n \times d_0}\]</div>
-<p>represents the elements of the sequence that have been transformed by self-attention and stacked vertically.</p>
 </section>
+<section id="masked-attention">
+<h2>Masked attention<a class="headerlink" href="#masked-attention" title="Link to this heading">#</a></h2>
+<p>Masked attention is used to prevent the model from using the keys of future elements when computing values for the current sequence. To the matrix that contains all possible <span class="math notranslate nohighlight">\(q_i, k_j\)</span> combinations is added matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}M_{ij} = \begin{cases}
+0, &amp; i \leq j \\
+- \infty, &amp; i &gt; j
+\end{cases}\end{split}\]</div>
+<p>Or in more visual represenation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+M = \left(\begin{array}{ccccc}
+0 &amp; -\infty &amp; -\infty &amp; \cdots &amp; -\infty \\
+0 &amp; 0 &amp; -\infty &amp; \cdots &amp; -\infty \\
+0 &amp; 0 &amp; 0 &amp; \cdots &amp; -\infty \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0\
+\end{array}\right)
+\end{split}\]</div>
+<p>So under softmax expression takes form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}QK^T + M = 
+\left(\begin{array}{ccccc}
+q_1k_1 &amp; -\infty &amp; -\infty &amp; \cdots &amp; -\infty \\
+q_2k_1 &amp; q_2k_2 &amp; -\infty &amp; \cdots &amp; -\infty \\
+q_3k_1 &amp; q_3k_2 &amp; q_3k_3 &amp; \cdots &amp; -\infty \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+q_nk_1 &amp; q_nk_2 &amp; q_nk_3 &amp; \cdots &amp; q_nk_n\
+\end{array}\right)
+\end{split}\]</div>
+<p>In softmax transformation <span class="math notranslate nohighlight">\(-\infty\)</span> elements are transformed to zero. That’s why:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}softmax\left(\frac{QK^T + M}{\sqrt{d}}\right) =
+\left(\begin{array}{ccccc}
+s_{11} &amp; 0 &amp; 0 &amp; \cdots &amp; 0 \\
+s_{21} &amp; s_{22} &amp; 0 &amp; \cdots &amp; 0 \\
+s_{31} &amp; s_{32} &amp; s_{33} &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+s_{n1} &amp; s_{n2} &amp; s_{n3} &amp; \cdots &amp; s_{nn}\
+\end{array}\right)
+\end{split}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(s_{ij}\)</span> is the result of a softmax transformation for the <span class="math notranslate nohighlight">\(j\)</span>-th element of the <span class="math notranslate nohighlight">\(i\)</span>-th row.</p>
 </section>
 </section>
 
@@ -830,12 +775,12 @@ x_1 W^{\nu}\\ x_2 W^{\nu}\\ \vdots \\ x_n W^{\nu}
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="recurrent.html"
+       href="attention.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Recurrent</p>
+        <p class="prev-next-title">Attention</p>
       </div>
     </a>
     <a class="right-next"
@@ -863,10 +808,8 @@ x_1 W^{\nu}\\ x_2 W^{\nu}\\ \vdots \\ x_n W^{\nu}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-attention">Self-attention</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation">Matrix representation</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encoder-decoder">Encoder/decoder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#masked-attention">Masked attention</a></li>
 </ul>
   </nav></div>
 
