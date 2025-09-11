@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -221,6 +221,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="nlp.html">NLP</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="nlp/preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp/preprocessing/tokenization.html">Tokenization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp/preprocessing/embeddings.html">Embeddings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp/preprocessing/tf_idf.html">TF-IDF</a></li>
 </ul>
@@ -228,7 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp/text_cnn.html">Text CNN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp/recurrent_translation.html">Recurrent translations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp/LLMs.html">LLMs</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="nlp/LLMs.html">LLMs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp/LLMs/rag/imdb_example.html">IMDB example</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -676,6 +680,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression">Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering">Clustering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-interpretation">Model interpretation</a></li>
 </ul>
             </nav>
@@ -840,6 +845,80 @@ document.write(`
 </table>
 </div>
 <p>Check more details on the <a class="reference internal" href="metrics/classification.html"><span class="std std-doc">Classification</span></a> page.</p>
+</section>
+<section id="clustering">
+<h2>Clustering<a class="headerlink" href="#clustering" title="Link to this heading">#</a></h2>
+<p>Clustering metrics typically evaluate how consistent the clusters are, and how significantly they are separated from each other. The following lists the popular clustering metrics with a short description:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Metric</p></th>
+<th class="head text-left"><p>Formula (simplified)</p></th>
+<th class="head text-left"><p>Range</p></th>
+<th class="head text-left"><p>Interpretation</p></th>
+<th class="head text-left"><p>Pros</p></th>
+<th class="head text-left"><p>Cons</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Average distance to cluster center</strong></p></td>
+<td class="text-left"><p>$<span class="math notranslate nohighlight">\(\frac{\sum_{j=1}^{n^i}d(c_i, x_j)}{n^i}\)</span>$</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\left[0, \infty \right)\)</span></p></td>
+<td class="text-left"><p>The closer observations are to the <span class="math notranslate nohighlight">\(i\)</span>-s cluster center, the more consistent the cluster is.</p></td>
+<td class="text-left"><p>Simple</p></td>
+<td class="text-left"><p>It do not account for possible relationships with other clusters.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Average distance to other cluster center</strong></p></td>
+<td class="text-left"><p>$<span class="math notranslate nohighlight">\(\frac{\sum^{n}_{j=1}d(c_k, x_j)}{n^i}\)</span>$</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\left[0, \infty \right)\)</span></p></td>
+<td class="text-left"><p>The greater the distance from the other clusters, the better the better the clusters are separated.</p></td>
+<td class="text-left"><p>Simple</p></td>
+<td class="text-left"><p>It do not account how consistent cluster is.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Maximum distance to cluster center</strong></p></td>
+<td class="text-left"><p>$<span class="math notranslate nohighlight">\(\max_i \left(d[c, x_i]\right)\)</span>$</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\left[0, \infty \right)\)</span></p></td>
+<td class="text-left"><p>The smaller the maximum distance for the cluster, the better it composed.</p></td>
+<td class="text-left"><p>Extremely simple</p></td>
+<td class="text-left"><p>Sensitive to emissions.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Silhouette Coefficient</strong></p></td>
+<td class="text-left"><p>$<span class="math notranslate nohighlight">\(S(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}\)</span>$</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\([-1, 1]\)</span></p></td>
+<td class="text-left"><p>Measures how well an object is matched to its own cluster compared to other clusters. A high value indicates the object is well-clustered.</p></td>
+<td class="text-left"><p>Works for any number of dimensions; provides an intuitive measure of cluster quality; can be used to compare different clustering algorithms or parameter settings.</p></td>
+<td class="text-left"><p>Can be computationally expensive for large datasets; can be misleading when clusters are not well-separated or have irregular shapes.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Davies-Bouldin Index</strong></p></td>
+<td class="text-left"><p>$<span class="math notranslate nohighlight">\(DB = \frac{1}{k} \sum_{i=1}^{k} \max_{j \neq i} \left( \frac{\sigma_i + \sigma_j}{d(c_i, c_j)} \right)\)</span>$</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td class="text-left"><p>A lower value indicates better clustering. It measures the ratio of within-cluster scatter to between-cluster separation.</p></td>
+<td class="text-left"><p>Fast to compute; simple to understand; works with various cluster shapes.</p></td>
+<td class="text-left"><p>Tends to favor spherical clusters; sensitive to the number of clusters; may not be suitable for clusters with complex or overlapping structures.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Calinski-Harabasz Index</strong></p></td>
+<td class="text-left"><p>$<span class="math notranslate nohighlight">\(CH = \frac{\text{tr}(B_k)}{\text{tr}(W_k)} \frac{N-k}{k-1}\)</span>$</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td class="text-left"><p>Higher values correspond to a better partitioning. It is a ratio of the between-cluster variance to the within-cluster variance.</p></td>
+<td class="text-left"><p>Fast to compute; no assumption on cluster shapes; works for various cluster sizes.</p></td>
+<td class="text-left"><p>Tends to favor spherical and compact clusters; sensitive to outliers.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Dunn Index</strong></p></td>
+<td class="text-left"><p>$<span class="math notranslate nohighlight">\(DI = \min_{i=1..k} \left\{ \min_{j=i+1..k} \left( \frac{d(c_i, c_j)}{\max_{l=1..k} \text{diam}(c_l)} \right) \right\}\)</span>$</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td class="text-left"><p>Higher values indicate better clustering, as it represents well-separated and compact clusters.</p></td>
+<td class="text-left"><p>Does not require assumptions on cluster shapes or density.</p></td>
+<td class="text-left"><p>Computationally expensive due to the need to calculate all pairwise distances; sensitive to noisy data or outliers; may not be effective for overlapping clusters.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Inertia (Within-Cluster Sum of Squares)</strong></p></td>
+<td class="text-left"><p>$<span class="math notranslate nohighlight">\(\sum_{i=0}^{n} \min_{\mu_j \in C} (\lVert x_i - \mu_j\rVert^2)\)</span>$</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\([0, \infty)\)</span></p></td>
+<td class="text-left"><p>A lower value is better, as it indicates more compact clusters. Measures the sum of squared distances of samples to their closest cluster center.</p></td>
+<td class="text-left"><p>Simple to calculate; widely used and easy to interpret.</p></td>
+<td class="text-left"><p>Assumes clusters are spherical and of equal size; not a good measure for clusters with irregular shapes or densities; decreases with the number of clusters, so it’s not useful for comparing different numbers of clusters.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="model-interpretation">
 <h2>Model interpretation<a class="headerlink" href="#model-interpretation" title="Link to this heading">#</a></h2>
@@ -1084,6 +1163,7 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression">Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering">Clustering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-interpretation">Model interpretation</a></li>
 </ul>
   </nav></div>

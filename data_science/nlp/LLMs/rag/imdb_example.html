@@ -1,0 +1,1277 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>IMDB example &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data_science/nlp/LLMs/rag/imdb_example';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="DL mechanisms" href="../../../dl_mechanisms.html" />
+    <link rel="prev" title="LLMs" href="../../LLMs.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../../../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Data science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../decision_tree.html">Decision tree</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../model_selection/regularization.html">Regularization</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../metrics/classification.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../metrics/classification/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../metrics/classification/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../metrics/classification/CAP.html">CAP curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../metrics/classification/GINI.html">GINI coeficient</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics/model_interpretation.html">Model interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../ranking_task.html">Ranking task</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../ranking_task/collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../ranking_task/collaborative_filtering/self_made_mem_based.html">Selfmade memory based</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../ranking_task/task_generation.html">Task generation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../ranking_task/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../ranking_task/metrics/precision_k.html">precision@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../ranking_task/metrics/recall_k.html">recall@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../ranking_task/metrics/average_precision.html">AP@k (average precision)</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../nlp.html">NLP</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../preprocessing/tokenization.html">Tokenization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../preprocessing/embeddings.html">Embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../preprocessing/tf_idf.html">TF-IDF</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../text_cnn.html">Text CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recurrent_text_gen.html">Recurrent text gen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recurrent_translation.html">Recurrent translations</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../../LLMs.html">LLMs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">IMDB example</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../dl_mechanisms/recurrent.html">Recurrent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../dl_mechanisms/attention.html">Attention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../dl_mechanisms/transformer.html">Transformer</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../math/introduction.html">Intorduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../math/geometry.html">Geometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../math/geometry/triangle.html">Triangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../math/geometry/cone.html">Cone</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../math/trigonometry.html">Trigonometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../math/trigonometry/identities.html">Identities</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../math/mat_stat.html">MatStat</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../math/mat_stat/probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../math/mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../math/mat_stat/distributions.html">Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../math/mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../math/mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../math/mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../math/mat_stat/stat_testing/t_test.html">T-test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../math/mat_stat/stat_testing/binomial_test.html">Binomial test</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../math/latex.html">Latex</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../algorithms/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../algorithms/complexity.html">Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../algorithms/binary_search.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../algorithms/event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../algorithms/data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../algorithms/data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../algorithms/dynamic_prog.html">Dynamic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../algorithms/quick_sort.html">Quick sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../algorithms/specific_tasks/number_reversal.html">Number reversal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Docker</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../docker/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../docker/containers.html">Containers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docker/containers/run.html">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docker/containers/execute_in.html">Execute in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docker/containers/check_logs.html">Check logs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../docker/images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../docker/images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../docker/images/build_image/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../docker/images/build_image/ignore_files.html">Ignore files</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../docker/images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../docker/images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docker/volumes.html">Volumes</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../docker/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docker/networks/default_networks.html">Default networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docker/networks/container_communication.html">Containers communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docker/networks/local_network.html">Local network</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docker/access.html">Acesss to containers</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../docker/compose.html">Compose</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docker/compose/up_down.html">Up/down</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../docker/compose/service_configuration.html">Service configuration</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../git/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../git/file_stages.html">File statuses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../git/diff.html">Difference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../git/checkout.html">Checkout</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../git/branches/merge.html">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../git/branches/remote.html">Remotes</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../git/log.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../git/stash.html">Stash</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../git/configuration/variables.html">Variables</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../sql/intro.html">Intro</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sql/select/join/join_types.html">Join types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/select/sorting.html">Sorting (ORDER BY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/select/unique_values.html">Unique values (DISTINCT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/select/empty_values.html">Empty values</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../sql/select/aggregation_functions.html">Aggregation functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sql/select/aggregation_functions/collect_array.html">Collect array</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../sql/select/group_by.html">Group by</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sql/select/group_by/conditions_on_aggregats.html">Conditions on aggregats (HAVING)</a></li>
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../sql/select/window_functions.html">Window functions (OVER)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../sql/select/window_functions/functions.html">Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../sql/select/window_functions/functions/value.html">Value</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/select/expand_array.html">Expand array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/select/performance.html">Performance</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../sql/operating_tables.html">Operating tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/operating_tables/tables_properties.html">Tables properties</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../sql/datatypes.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../sql/datatypes/datetime.html">Date and time</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sql/datatypes/datetime/date_components.html">Date components (DATE_PART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sql/datatypes/datetime/add_period.html">Add period</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/datatypes/json.html">JSON</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sql/load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sql/versions_issues.html">Versions issues</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../sql/python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/python_interaction/python_from_container.html">Python from container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/python_interaction/python_on_host.html">Python on host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sql/python_interaction/create_database.html">Create database</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../layout/terminology.html">Terminology</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../layout/html.html">HTML</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/html/other.html">Other</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/html/text_format.html">Text format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/html/tables.html">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/html/lists.html">List tags</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../layout/html/svg.html">SVG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../layout/html/svg/text.html">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../layout/html/svg/path.html">Path</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../layout/css.html">CSS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/css/other.html">Other</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/css/style_application.html">Style application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/css/margin.html">Margin (out space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/css/padding.html">Padding (in space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/css/overflow.html">Overflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../layout/css/elements_positions.html">Elements position (<code class="docutils literal notranslate"><span class="pre">display</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../layout/forms.html">Forms</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linux</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/bash.html">Bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/manage_input_output.html">Manage input/output</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../linux/filesystem/archiving.html">Archiving</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/system_information.html">System information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/backup.html">Backup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../linux/network/curl.html">Curl</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../linux/network/ssh.html">SSH</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../linux/network/ssh/generate_key.html">Generate key</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../linux/network/vpn.html">VPN</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../linux/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../linux/users_groups/user_management.html">User management</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/package_management.html">Package management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/path.html">Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/cron.html">Cron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../linux/gnupg.html">GnuPG</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/vs_code.html">VS Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/python_apache.html">Python with apache</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/kubernetes.html">Kubernetes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../other/redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../other/redis/zset.html">Zset</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../other/nginx.html">Nginx</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../other/nginx/reverse_proxy.html">Reverse proxy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../other/nginx/reverse_proxy/proxy_pass.html">Proxy pass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../other/nginx/reverse_proxy/cache.html">Cache</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../other/nginx/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../other/nginx/server.html">Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../other/nginx/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../other/nginx/logs.html">Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../other/nginx/connections_management.html">Connections management</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/gitlab.html">Gitlab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/java_script.html">Java script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/go_templates.html">Go templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/kafka.html">Kafka</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/elastic_search.html">Elastic search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other/clouds.html">Clouds</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/fedorkobak/knowledge" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/data_science/nlp/LLMs/rag/imdb_example.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>IMDB example</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-embeddings">Building embeddings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-database">Vector database</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generation-part">Generation part</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="imdb-example">
+<h1>IMDB example<a class="headerlink" href="#imdb-example" title="Link to this heading">#</a></h1>
+<p>This page illustrates the RAG system building process. In more details:</p>
+<ul class="simple">
+<li><p>It uses reviews from the IMDb dataset reviews as a knowledge base.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sentence_transformer</span></code> package to prepare embeddings.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qadrant</span></code> as a vector database.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qwen2</span></code> as a generation model.</p></li>
+</ul>
+<p>In the end, the final RAG system wasn’t very useful, but it can guide you through the major steps of building your own RAG system.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">ollama</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qdrant_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">QdrantClient</span><span class="p">,</span> <span class="n">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sentence_transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SentenceTransformer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="building-embeddings">
+<h2>Building embeddings<a class="headerlink" href="#building-embeddings" title="Link to this heading">#</a></h2>
+<p>The following cell loads a dataset and shows one record from it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;stanfordnlp/imdb&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)[</span><span class="s1">&#39;text&#39;</span><span class="p">])</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;If the crew behind &quot;Zombie Chronicles&quot; ever read this, here\&#39;s some advice &#39;
+ &#39;guys: &lt;br /&gt;&lt;br /&gt;1. In a &quot;Twist Ending&quot;-type movie, it\&#39;s not a good idea &#39;
+ &#39;to insert close-ups of EVERY DEATH IN THE MOVIE in the opening credits. That &#39;
+ &quot;tends to spoil the twists, y&#39;know...? &lt;br /&gt;&lt;br /&gt;2. I know you produced &quot;
+ &#39;this on a shoestring and - to be fair - you worked miracles with your budget &#39;
+ &#39;but please, hire people who can actually act. Or at least, walk, talk and &#39;
+ &quot;gesture at the same time. Joe Haggerty, I&#39;m looking at you...&lt;br /&gt;&lt;br /&gt;3. &quot;
+ &quot;If you&#39;re going to set a part of your movie in the past, only do this if you &quot;
+ &#39;have the props and costumes of the time.&lt;br /&gt;&lt;br /&gt;4. Twist endings are &#39;
+ &quot;supposed to be a surprise. Sure, we don&#39;t want twists that make no sense, &quot;
+ &#39;but signposting the &quot;reveal&quot; as soon as you introduce a character? That\&#39;s &#39;
+ &#39;not a great idea.&lt;br /&gt;&lt;br /&gt;Kudos to the guys for trying, but in all &#39;
+ &quot;honesty, I&#39;d rather they hadn&#39;t...&lt;br /&gt;&lt;br /&gt;Only for zombie completists.&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The texts are generally short and contain more or less consistent ideas. Therefore, we will not apply some extra chunking; we will simply transform the complete texts into embeddings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">embedding_model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span>
+    <span class="s2">&quot;paraphrase-MiniLM-L3-v2&quot;</span><span class="p">,</span>
+    <span class="n">model_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;dtype&#39;</span><span class="p">:</span> <span class="s1">&#39;float16&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following code uses the cache if it exists; otherwise, it re-encodes the text, this can take some time to perform.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;imdb_example_files/embeddings.npy&quot;</span><span class="p">):</span>
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;imdb_example_files/embeddings.npy&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">embedding_model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;imdb_example_files&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;imdb_example_files&quot;</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;imdb_example_files/embeddings&quot;</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;imdb_example_files/.gitignore&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;embeddings.npy</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="vector-database">
+<h2>Vector database<a class="headerlink" href="#vector-database" title="Link to this heading">#</a></h2>
+<p>This section is demonstrates the process of setting up the vector database and uploading information to it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">QdrantClient</span><span class="p">(</span><span class="s2">&quot;:memory:&quot;</span><span class="p">)</span>
+<span class="n">embedding_size</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">&quot;imdb&quot;</span><span class="p">,</span>
+    <span class="n">on_disk_payload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">vectors_config</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">VectorParams</span><span class="p">(</span>
+        <span class="n">size</span><span class="o">=</span><span class="n">embedding_size</span><span class="p">,</span>
+        <span class="n">distance</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">Distance</span><span class="o">.</span><span class="n">COSINE</span><span class="p">,</span>
+        <span class="n">on_disk</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next cell converts the information from the raw embeddings into a format suitable for the input expected by the quadrant.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">points</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">models</span><span class="o">.</span><span class="n">PointStruct</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span>
+        <span class="n">vector</span><span class="o">=</span><span class="n">embeddings</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="n">payload</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]}</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">))</span>
+<span class="p">]</span>
+<span class="n">client</span><span class="o">.</span><span class="n">upsert</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s2">&quot;imdb&quot;</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_411806/985311365.py:9: UserWarning: Local mode is not recommended for collections with more than 20,000 points. Current collection contains 25000 points. Consider using Qdrant in Docker or Qdrant Cloud for better performance with large datasets.
+  client.upsert(collection_name=&quot;imdb&quot;, points=points)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>UpdateResult(operation_id=0, status=&lt;UpdateStatus.COMPLETED: &#39;completed&#39;&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next cell defines the <code class="docutils literal notranslate"><span class="pre">load_relevant_reviews</span></code> function, which loads information from the quadrant and prepares it as a list of strings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">load_relevant_reviews</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="n">embedding</span> <span class="o">=</span> <span class="n">embedding_model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">query</span><span class="p">],</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">relevant_info</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query_points</span><span class="p">(</span>
+        <span class="n">collection_name</span><span class="o">=</span><span class="s2">&quot;imdb&quot;</span><span class="p">,</span>
+        <span class="n">query</span><span class="o">=</span><span class="n">embedding</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">with_payload</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">relevant_info</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following code illustrates which texts are loaded from the database for a specific request.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ans</span> <span class="o">=</span> <span class="n">load_relevant_reviews</span><span class="p">(</span><span class="s2">&quot;What is the typcal plot for a horror movie?&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">ans</span><span class="p">:</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&quot;How can you tell that a horror movie is terrible? when you can&#39;t stop &quot;
+ &#39;laughing about it of course! The plot has been well covered by other &#39;
+ &quot;reviewers, so I&#39;ll just add a few things on the hilarity of it all.&lt;br /&gt;&lt;br &quot;
+ &#39;/&gt;Some reviews have placed the location in South America, others in Africa, &#39;
+ &#39;I thought it was in some random island in the Pacific. Where exactly does &#39;
+ &#39;this take place, seems to be a mystery. The cannibal tribe is conformed by a &#39;
+ &#39;couple of black women some black men, and a man who looks like a young Frank &#39;
+ &#39;Zappa banging the drums... the Devil God is a large black man with a &#39;
+ &#39;terrible case of pink eyes.&lt;br /&gt;&lt;br /&gt;One of the &quot;freakiest&quot; moments in the &#39;
+ &#39;film is when, &quot;Pablito&quot; find his partner hanging from a tree covered in what &#39;
+ &#39;seems to be an orange substance that I assume is blood, starts screaming for &#39;
+ &quot;minutes on and on (that&#39;s actually funny), and then the head of his partner &quot;
+ &#39;falls in the ground and &quot;Pablito&quot; kicks it a bit for what I assume is &quot;shits &#39;
+ &#39;n\&#39; giggles&quot; and the eyes actually move...&lt;br /&gt;&lt;br /&gt;But, of course, then &#39;
+ &#39;the &quot;freak&quot; is gone when you realize the eyes moved because the movie is &#39;
+ &quot;just bad...&lt;br /&gt;&lt;br /&gt;I hadn&#39;t laughed like this in a loooong while, and I &quot;
+ &#39;definitely recommend this film for a Sunday afternoon with your friends and &#39;
+ &#39;you have nothing to do... grab a case of beers and start watching this film, &#39;
+ &quot;you&#39;ll love it! If you are looking for a real horror or gore movie, &quot;
+ &quot;though... don&#39;t&#39; bother.&quot;)
+
+
+(&#39;This movie still chills me to the bone thinking of it. This movie was not &#39;
+ &#39;just bad as in low-budget, badly acted, etc. although it certainly WAS all &#39;
+ &#39;of those things. The problem with this movie is that it seemed to be &#39;
+ &#39;intentionally trying to annoy the viewer, and doing it with great success. &#39;
+ &quot;What I want to know is, is this supposed to be a horror movie? I mean, it&#39;s &quot;
+ &#39;definately horrifying, but not in the way horror movies are supposed to be. &#39;
+ &#39;I could see the first segment trying to be horror and failing, but what the &#39;
+ &quot;hell is the second segment? It&#39;s just annoying. The third segment is like &quot;
+ &#39;watching an artsy student film, which amazingly enough makes it the least &#39;
+ &quot;painful segment. It&#39;s an atrocity that this movie isn&#39;t way low on the &quot;
+ &#39;bottom 100, so get your votes (1/10) in people!! I know some people gave &#39;
+ &quot;this good reviews, but, well, they&#39;re lying in a sadistic attempt to trick &quot;
+ &#39;you. Trust me, it is impossible to like this movie. The only benefit of this &#39;
+ &quot;movie is an amazing life-extending effect: it feels like you&#39;ve been &quot;
+ &#39;watching this movie for years after only the first half hour has passed.&#39;)
+
+
+(&#39;Chilling, majestic piece of cinematic fright, this film combines all the &#39;
+ &#39;great elements of an intellectual thriller, with the grand vision of a &#39;
+ &#39;director who has the instinctual capacity to pace a moody horror flick &#39;
+ &#39;within the realm of his filmmaking genius that includes an eye for the &#39;
+ &#39;original shot, an ice-cold soundtrack and an overall sense of &#39;
+ &#39;dehumanization. This movie cuts through all the typical horror movies like a &#39;
+ &#39;red-poker through a human eye, as it allows the viewer to not only feel the &#39;
+ &#39;violence and psychosis of its protagonist, but appreciate the seed from &#39;
+ &#39;which the derangement stems. One of the scariest things for people to face &#39;
+ &#39;is the unknown and this film presents its plotting with just that thought in &#39;
+ &#39;mind. The setting is perfect, in a desolate winter hideaway. The quietness &#39;
+ &#39;of the moment is a character in itself, as the fermenting aggressor in Jack &#39;
+ &quot;Torrance&#39;s mind wallows in this idle time, and breeds the devil&#39;s new &quot;
+ &#39;playground. I always felt like the presence of evil was dormant in all of &#39;
+ &#39;our minds, with only the circumstances of the moment, and the reasons given &#39;
+ &#39;therein, needed to wake its violent ass and pounce over its unsuspecting &#39;
+ &#39;victims. This film is a perfect example of this very thought.&lt;br /&gt;&lt;br /&gt;And &#39;
+ &quot;it is within this film&#39;s subtle touches of the canvas, the clackity-clacks &quot;
+ &quot;of the young boy&#39;s big wheel riding along the empty hallways of the hotel, &quot;
+ &quot;the labyrinthian garden representing the mind&#39;s fine line between sane and &quot;
+ &quot;insane, Kubrick&#39;s purposely transfixed editing inconsistencies, continuity &quot;
+ &#39;errors and set mis-arrangements, that we discover a world guided by the &#39;
+ &#39;righteous and tangible, but coaxed away by the powerful and unknown. I have &#39;
+ &#39;never read the book upon which the film is based, but without that as a &#39;
+ &#39;comparison point, I am proud to say that this is one of the most terrifying &#39;
+ &quot;films that I have ever seen. I thought that the runtime of the film could&#39;ve &quot;
+ &#39;been cut by a little bit, but then again, I am not one of the most acclaimed &#39;
+ &#39;directors in the history of film, so maybe I should keep my two-cent &#39;
+ &#39;criticisms over a superb film, to myself. All in all, this movie captures &#39;
+ &#39;your attention with its grand form and vision, ropes you in with some terror &#39;
+ &#39;and eccentric direction, and ties you down and stabs you in the heart with &#39;
+ &quot;its cold-eyed view of the man&#39;s mind gone overboard, creepy atmosphere and &quot;
+ &#39;the loss of humanity.&lt;br /&gt;&lt;br /&gt;Rating: 9/10&#39;)
+
+
+(&#39;I am an avid B-Rate horror film buff and have viewed my fair share of &#39;
+ &#39;slasher pictures, so I have a substantial gauge to judge this film by. It &#39;
+ &quot;easily ranks in the upper echelon of the worst horror films the 1980&#39;s has &quot;
+ &quot;to offer. It isn&#39;t as scary as Night of the Demons, it isn&#39;t as gory as &quot;
+ &quot;Re-Animator and lacks the camp value of There&#39;s Nothing Out There. That &quot;
+ &#39;being said, this film has no value. Keep in mind, the movie artwork is for a &#39;
+ &#39;completely different film. The stills shots on the back of the DVD box &#39;
+ &quot;aren&#39;t taken from this film.&lt;br /&gt;&lt;br /&gt;VIOLENCE: $$$ (There is plenty of &quot;
+ &quot;violence but we&#39;ve seen it all before. A murderer kills nubile students and &quot;
+ &#39;the occasional facility member by slitting throats and all the other tired &#39;
+ &#39;methods of murder that horror films utilize).&lt;br /&gt;&lt;br /&gt;NUDITY: None &lt;br &#39;
+ &#39;/&gt;&lt;br /&gt;STORY: $$ (The story focuses on Francine Forbes - who wisely changed &#39;
+ &#39;her name to Forbes Riley after this film was made - who accepts a job &#39;
+ &#39;teaching at a university. People start to die and Forbes believes the killer &#39;
+ &#39;is targeting her. Is it her new heartthrob with a checkered past or the &#39;
+ &#39;libido-crazed student? To be honest, it is impossible to care because the &#39;
+ &quot;script doesn&#39;t flesh out any character outside Forbes).&lt;br /&gt;&lt;br /&gt;ACTING: $ &quot;
+ &#39;(Terrible on all levels. This slasher has the feel of a school production &#39;
+ &#39;-high school that is because college students could make a better flick than &#39;
+ &#39;this. Forbes showcases a modicum of talent as does Seminara as one of the &#39;
+ &#39;students, but everyone else is of the &quot;extras&quot; caliber of acting).&#39;)
+
+
+(&#39;There were a lot of truly great horror movies produced in the seventies - &#39;
+ &quot;but this film certainly isn&#39;t one of them! It&#39;s a shame The Child isn&#39;t &quot;
+ &#39;better as it works from a decent idea that takes in a couple of sometimes &#39;
+ &#39;successful horror themes. We have the idea of a vengeful child, which worked &#39;
+ &#39;so well in classic films such as The Bad Seed and then we have the central &#39;
+ &#39;zombie theme, which of course has been the backbone of many a successful &#39;
+ &#39;horror movie. The plot is basically this: young girl blames a load of people &#39;
+ &#39;for the death of her mother, so she goes to the graveyard and raises the &#39;
+ &#39;dead to get revenge (as you do). This is all well and good, except for the &#39;
+ &quot;fact that it&#39;s boring! Nothing happens for most of the film, and although it &quot;
+ &quot;does pick up at the end with some nice gore; it&#39;s not enough of a finale to &quot;
+ &#39;justify sitting through the rest of it. The film was obviously shot on a &#39;
+ &quot;budget as the locations look cheap and all the actors are rubbish. There&#39;s &quot;
+ &quot;really not much I can say about the film overall as there isn&#39;t much to it. &quot;
+ &quot;The Child is a dismal seventies horror flick and I certainly don&#39;t recommend &quot;
+ &#39;it.&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generation-part">
+<h2>Generation part<a class="headerlink" href="#generation-part" title="Link to this heading">#</a></h2>
+<p>The prompt for the model must include infromation loaded from the RAG system. The next cell defines the <code class="docutils literal notranslate"><span class="pre">generate_system_prompt</span></code> function, which incorporetas the retrieved information into the prompt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">You are a movie expert. You are provided with reviews from the IMDb dataset that are relevant to the user&#39;s request.</span>
+
+<span class="s2">Reviews:</span>
+
+<span class="si">{reviews}</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_system_prompt</span><span class="p">(</span><span class="n">reviews</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">system_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reviews</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reviews</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next cell shows the kind of input associated with the retrieved information available to the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="n">generate_system_prompt</span><span class="p">(</span>
+        <span class="n">load_relevant_reviews</span><span class="p">(</span><span class="s2">&quot;what is the typcal plot for a horror movie?&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>You are a movie expert. You are provided with reviews from the IMDb dataset that are relevant to the user&#39;s request.
+
+Reviews:
+
+How can you tell that a horror movie is terrible? when you can&#39;t stop laughing about it of course! The plot has been well covered by other reviewers, so I&#39;ll just add a few things on the hilarity of it all.&lt;br /&gt;&lt;br /&gt;Some reviews have placed the location in South America, others in Africa, I thought it was in some random island in the Pacific. Where exactly does this take place, seems to be a mystery. The cannibal tribe is conformed by a couple of black women some black men, and a man who looks like a young Frank Zappa banging the drums... the Devil God is a large black man with a terrible case of pink eyes.&lt;br /&gt;&lt;br /&gt;One of the &quot;freakiest&quot; moments in the film is when, &quot;Pablito&quot; find his partner hanging from a tree covered in what seems to be an orange substance that I assume is blood, starts screaming for minutes on and on (that&#39;s actually funny), and then the head of his partner falls in the ground and &quot;Pablito&quot; kicks it a bit for what I assume is &quot;shits n&#39; giggles&quot; and the eyes actually move...&lt;br /&gt;&lt;br /&gt;But, of course, then the &quot;freak&quot; is gone when you realize the eyes moved because the movie is just bad...&lt;br /&gt;&lt;br /&gt;I hadn&#39;t laughed like this in a loooong while, and I definitely recommend this film for a Sunday afternoon with your friends and you have nothing to do... grab a case of beers and start watching this film, you&#39;ll love it! If you are looking for a real horror or gore movie, though... don&#39;t&#39; bother.
+
+This movie still chills me to the bone thinking of it. This movie was not just bad as in low-budget, badly acted, etc. although it certainly WAS all of those things. The problem with this movie is that it seemed to be intentionally trying to annoy the viewer, and doing it with great success. What I want to know is, is this supposed to be a horror movie? I mean, it&#39;s definately horrifying, but not in the way horror movies are supposed to be. I could see the first segment trying to be horror and failing, but what the hell is the second segment? It&#39;s just annoying. The third segment is like watching an artsy student film, which amazingly enough makes it the least painful segment. It&#39;s an atrocity that this movie isn&#39;t way low on the bottom 100, so get your votes (1/10) in people!! I know some people gave this good reviews, but, well, they&#39;re lying in a sadistic attempt to trick you. Trust me, it is impossible to like this movie. The only benefit of this movie is an amazing life-extending effect: it feels like you&#39;ve been watching this movie for years after only the first half hour has passed.
+
+Chilling, majestic piece of cinematic fright, this film combines all the great elements of an intellectual thriller, with the grand vision of a director who has the instinctual capacity to pace a moody horror flick within the realm of his filmmaking genius that includes an eye for the original shot, an ice-cold soundtrack and an overall sense of dehumanization. This movie cuts through all the typical horror movies like a red-poker through a human eye, as it allows the viewer to not only feel the violence and psychosis of its protagonist, but appreciate the seed from which the derangement stems. One of the scariest things for people to face is the unknown and this film presents its plotting with just that thought in mind. The setting is perfect, in a desolate winter hideaway. The quietness of the moment is a character in itself, as the fermenting aggressor in Jack Torrance&#39;s mind wallows in this idle time, and breeds the devil&#39;s new playground. I always felt like the presence of evil was dormant in all of our minds, with only the circumstances of the moment, and the reasons given therein, needed to wake its violent ass and pounce over its unsuspecting victims. This film is a perfect example of this very thought.&lt;br /&gt;&lt;br /&gt;And it is within this film&#39;s subtle touches of the canvas, the clackity-clacks of the young boy&#39;s big wheel riding along the empty hallways of the hotel, the labyrinthian garden representing the mind&#39;s fine line between sane and insane, Kubrick&#39;s purposely transfixed editing inconsistencies, continuity errors and set mis-arrangements, that we discover a world guided by the righteous and tangible, but coaxed away by the powerful and unknown. I have never read the book upon which the film is based, but without that as a comparison point, I am proud to say that this is one of the most terrifying films that I have ever seen. I thought that the runtime of the film could&#39;ve been cut by a little bit, but then again, I am not one of the most acclaimed directors in the history of film, so maybe I should keep my two-cent criticisms over a superb film, to myself. All in all, this movie captures your attention with its grand form and vision, ropes you in with some terror and eccentric direction, and ties you down and stabs you in the heart with its cold-eyed view of the man&#39;s mind gone overboard, creepy atmosphere and the loss of humanity.&lt;br /&gt;&lt;br /&gt;Rating: 9/10
+
+I am an avid B-Rate horror film buff and have viewed my fair share of slasher pictures, so I have a substantial gauge to judge this film by. It easily ranks in the upper echelon of the worst horror films the 1980&#39;s has to offer. It isn&#39;t as scary as Night of the Demons, it isn&#39;t as gory as Re-Animator and lacks the camp value of There&#39;s Nothing Out There. That being said, this film has no value. Keep in mind, the movie artwork is for a completely different film. The stills shots on the back of the DVD box aren&#39;t taken from this film.&lt;br /&gt;&lt;br /&gt;VIOLENCE: $$$ (There is plenty of violence but we&#39;ve seen it all before. A murderer kills nubile students and the occasional facility member by slitting throats and all the other tired methods of murder that horror films utilize).&lt;br /&gt;&lt;br /&gt;NUDITY: None &lt;br /&gt;&lt;br /&gt;STORY: $$ (The story focuses on Francine Forbes - who wisely changed her name to Forbes Riley after this film was made - who accepts a job teaching at a university. People start to die and Forbes believes the killer is targeting her. Is it her new heartthrob with a checkered past or the libido-crazed student? To be honest, it is impossible to care because the script doesn&#39;t flesh out any character outside Forbes).&lt;br /&gt;&lt;br /&gt;ACTING: $ (Terrible on all levels. This slasher has the feel of a school production -high school that is because college students could make a better flick than this. Forbes showcases a modicum of talent as does Seminara as one of the students, but everyone else is of the &quot;extras&quot; caliber of acting).
+
+There were a lot of truly great horror movies produced in the seventies - but this film certainly isn&#39;t one of them! It&#39;s a shame The Child isn&#39;t better as it works from a decent idea that takes in a couple of sometimes successful horror themes. We have the idea of a vengeful child, which worked so well in classic films such as The Bad Seed and then we have the central zombie theme, which of course has been the backbone of many a successful horror movie. The plot is basically this: young girl blames a load of people for the death of her mother, so she goes to the graveyard and raises the dead to get revenge (as you do). This is all well and good, except for the fact that it&#39;s boring! Nothing happens for most of the film, and although it does pick up at the end with some nice gore; it&#39;s not enough of a finale to justify sitting through the rest of it. The film was obviously shot on a budget as the locations look cheap and all the actors are rubbish. There&#39;s really not much I can say about the film overall as there isn&#39;t much to it. The Child is a dismal seventies horror flick and I certainly don&#39;t recommend it.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell builds the <code class="docutils literal notranslate"><span class="pre">model_interface</span></code> function, which allows access the machine learning model.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ollama</span></code> inference server significantly boosts the performance of the generation model. It will be used if the <code class="docutils literal notranslate"><span class="pre">OLLAMA_AVAILABLE</span></code> flag is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>. Otherwise, the <code class="docutils literal notranslate"><span class="pre">pipeline</span></code> provided by the <code class="docutils literal notranslate"><span class="pre">transformers</span></code> package will be used.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">OLLAMA_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">if</span> <span class="n">OLLAMA_AVAILABLE</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_interface</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">ollama</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="s1">&#39;qwen2:1.5b&#39;</span><span class="p">,</span>
+            <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">ans</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No response from the model.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">generation_pipeline</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+        <span class="s2">&quot;text-generation&quot;</span><span class="p">,</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen2-1.5B-Instruct&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">model_interface</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">generation_pipeline</span><span class="p">(</span>
+            <span class="n">messages</span><span class="p">,</span> <span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">top_p</span><span class="o">=</span><span class="mf">0.7</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;generated_text&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell wraps the generation procedure around the function that only returns the system’s response.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">generate_system_prompt</span><span class="p">(</span>
+        <span class="n">load_relevant_reviews</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">request</span><span class="p">}</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">model_interface</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next cells shows the possible responses of the system.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pprint</span><span class="p">(</span><span class="n">generate</span><span class="p">(</span><span class="s2">&quot;What is the typical plot for a horror movie?&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;The typical plot for a horror movie often involves a protagonist who becomes &#39;
+ &#39;suspicious about an event, such as a death in their family or witnessing &#39;
+ &#39;something disturbing, and then seeks out answers through unusual means. This &#39;
+ &#39;leads them into situations that often involve dark secrets, supernatural &#39;
+ &#39;occurrences, or unexpected adversaries. The suspense is built with &#39;
+ &#39;increasing tension as the audience learns more about the mystery at hand.\n&#39;
+ &#39;\n&#39;
+ &#39;The plot may include elements of fear, dread, and psychological horror. &#39;
+ &#39;Characters facing personal tragedies are often revealed to have been &#39;
+ &#39;harboring some kind of secret, which leads them down a path of discovery, &#39;
+ &#39;where they must confront their own fears and confront what has been kept &#39;
+ &#39;hidden from them. The genre typically uses jump scares, suspenseful moments, &#39;
+ &#39;and supernatural elements such as ghosts, vengeful spirits, or other &#39;
+ &#39;entities that haunt people for reasons unknown.\n&#39;
+ &#39;\n&#39;
+ &#39;A horror movie often features action sequences involving the protagonist &#39;
+ &#39;escaping from dangerous situations and fighting off evil forces, as well as &#39;
+ &#39;scenes of violence and gore. The climax might involve a final confrontation &#39;
+ &#39;between the protagonist and their nemesis, with potentially satisfying &#39;
+ &#39;payoffs in terms of character development and resolution.\n&#39;
+ &#39;\n&#39;
+ &#39;In summary, the typical plot for a horror movie involves a compelling &#39;
+ &#39;mystery or intrigue that leads to a confrontational ending, often filled &#39;
+ &#39;with tension, suspense, action, and violence. This genre is designed to keep &#39;
+ &#39;viewers on edge throughout and often includes supernatural elements as part &#39;
+ &#39;of its appeal.&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s difficult to understand what role RAG played here, but the description is not so bad.</p>
+<p>Next request is a bit more details specific.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pprint</span><span class="p">(</span><span class="n">generate</span><span class="p">(</span><span class="s2">&quot;What are the best roles of Robert De Niro?&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;Based on the reviews provided, some of the best roles that Robert De Niro &#39;
+ &#39;has played include:\n&#39;
+ &#39;\n&#39;
+ &#39;1. Taxi Driver (1976): This role was groundbreaking and marked a career &#39;
+ &#39;shift for De Niro as he transitioned from a comedy star to a serious drama &#39;
+ &#39;actor.\n&#39;
+ &#39;\n&#39;
+ &#39;2. The King of Comedy (1982): Another iconic film, this role showcased De &#39;
+ &quot;Niro&#39;s ability to embody a range of characters with his acting skills.\n&quot;
+ &#39;\n&#39;
+ &#39;3. Cape Fear (1991): De Niro delivered one of the greatest performances in &#39;
+ &#39;cinematic history, portraying the title character as a man willing to use &#39;
+ &#39;any means necessary to achieve what he wants.\n&#39;
+ &#39;\n&#39;
+ &quot;4. Taxi Driver: The film showcased De Niro&#39;s ability to deliver emotional &quot;
+ &#39;depth and humor through his acting skills.\n&#39;
+ &#39;\n&#39;
+ &#39;5. The Untouchables (1987): De Niro won an Oscar for this role, showing off &#39;
+ &#39;his range as a character actor in both comedy and serious drama roles.\n&#39;
+ &#39;\n&#39;
+ &quot;6. New York, New York: Although not the best film, De Niro&#39;s performance was &quot;
+ &#39;praised for his &quot;sublime&quot; portrayal of a troubled city businessman.\n&#39;
+ &#39;\n&#39;
+ &#39;7. Casino (1995): De Niro won an Oscar for this role as he portrayed the &#39;
+ &#39;corrupt mobster Frank &quot;Lefty&quot; Luciano.\n&#39;
+ &#39;\n&#39;
+ &quot;8. Taxi (1982): This role highlighted De Niro&#39;s comedic timing and ability &quot;
+ &#39;to deliver emotional depth through his performances.\n&#39;
+ &#39;\n&#39;
+ &quot;In summary, these roles showcased De Niro&#39;s versatility, range of &quot;
+ &#39;performance styles, and ability to transition between genres with ease.&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Robert De Niro played a role in most of the suggested titles.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./data_science/nlp/LLMs/rag"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../LLMs.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">LLMs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../../dl_mechanisms.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">DL mechanisms</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-embeddings">Building embeddings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-database">Vector database</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generation-part">Generation part</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

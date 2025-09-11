@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -218,6 +218,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/nlp.html">NLP</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/nlp/preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/preprocessing/tokenization.html">Tokenization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/preprocessing/embeddings.html">Embeddings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/preprocessing/tf_idf.html">TF-IDF</a></li>
 </ul>
@@ -225,7 +226,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/text_cnn.html">Text CNN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/recurrent_translation.html">Recurrent translations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/LLMs.html">LLMs</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/nlp/LLMs.html">LLMs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/LLMs/rag/imdb_example.html">IMDB example</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -671,6 +675,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#providers">Providers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aws">AWS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#azure">Azure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gcp">GCP</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#responsibility-models">Responsibility models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-models">Cloud models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-types">Scaling types</a></li>
@@ -689,6 +699,322 @@ document.write(`
 <h1>Clouds<a class="headerlink" href="#clouds" title="Link to this heading">#</a></h1>
 <p>There are a services that allow you to rent computers and run programs on them.</p>
 <p><strong>SLA</strong>: service level argreement. A document that outlines the garantees the service provider gives to the customer. It generally descirbes the cases and times when the service can be unavailable.</p>
+<section id="providers">
+<h2>Providers<a class="headerlink" href="#providers" title="Link to this heading">#</a></h2>
+<p>Today, three are main providers of the cloud infrastructure:</p>
+<ul class="simple">
+<li><p><strong>AWS</strong>: amazon web services.</p></li>
+<li><p><strong>Azure</strong>: service from microsoft.</p></li>
+<li><p><strong>GCP</strong>: google cloud platform.</p></li>
+</ul>
+<p>They all offer a set of services based on their infrastructure. The following sections in tabular form list and describe the available services from different providers in tabular form.</p>
+<section id="aws">
+<h3>AWS<a class="headerlink" href="#aws" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Category</p></th>
+<th class="head text-left"><p>Key Services</p></th>
+<th class="head text-left"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Compute</strong></p></td>
+<td class="text-left"><p><strong>Amazon EC2</strong> (Elastic Compute Cloud)</p></td>
+<td class="text-left"><p>Provides secure and resizable virtual servers (instances) in the cloud. It is the foundational IaaS service for running applications and workloads.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>AWS Lambda</strong></p></td>
+<td class="text-left"><p>A serverless, event-driven compute service that lets you run code without provisioning or managing servers. You only pay for the compute time you consume.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>AWS Elastic Beanstalk</strong></p></td>
+<td class="text-left"><p>A PaaS offering that simplifies the deployment and management of web applications and services by automatically handling the underlying infrastructure.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>AWS Fargate</strong></p></td>
+<td class="text-left"><p>A serverless compute engine for containers that works with both Amazon ECS and EKS. It allows you to run containers without managing the underlying EC2 instances.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Storage</strong></p></td>
+<td class="text-left"><p><strong>Amazon S3</strong> (Simple Storage Service)</p></td>
+<td class="text-left"><p>An object storage service that is highly scalable, durable, and available. It’s used for data lakes, backups, and static website hosting.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon EBS</strong> (Elastic Block Store)</p></td>
+<td class="text-left"><p>Provides persistent block storage volumes for use with EC2 instances. It is similar to a virtual hard drive for your cloud servers.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon EFS</strong> (Elastic File System)</p></td>
+<td class="text-left"><p>A scalable, managed file storage service that can be shared across multiple EC2 instances.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon S3 Glacier</strong></p></td>
+<td class="text-left"><p>A low-cost storage class for data archiving and long-term backup. It is designed for data that is infrequently accessed.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Database</strong></p></td>
+<td class="text-left"><p><strong>Amazon RDS</strong> (Relational Database Service)</p></td>
+<td class="text-left"><p>A managed service that makes it easy to set up, operate, and scale a relational database (e.g., MySQL, PostgreSQL, Oracle).</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon DynamoDB</strong></p></td>
+<td class="text-left"><p>A fast, fully managed NoSQL database service that provides single-digit millisecond performance at any scale.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon Aurora</strong></p></td>
+<td class="text-left"><p>A MySQL and PostgreSQL-compatible relational database engine that combines the speed and availability of high-end commercial databases with the simplicity and cost-effectiveness of open-source databases.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon Redshift</strong></p></td>
+<td class="text-left"><p>A fully managed, petabyte-scale data warehouse service that makes it simple and cost-effective to analyze all your data using standard SQL.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Networking</strong></p></td>
+<td class="text-left"><p><strong>Amazon VPC</strong> (Virtual Private Cloud)</p></td>
+<td class="text-left"><p>A service that allows you to provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon Route 53</strong></p></td>
+<td class="text-left"><p>A scalable and highly available Domain Name System (DNS) web service.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon CloudFront</strong></p></td>
+<td class="text-left"><p>A fast content delivery network (CDN) that securely delivers data, videos, applications, and APIs to customers globally with low latency.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Security, Identity, &amp; Compliance</strong></p></td>
+<td class="text-left"><p><strong>AWS IAM</strong> (Identity and Access Management)</p></td>
+<td class="text-left"><p>Enables you to securely control access to AWS services and resources for your users.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>AWS WAF</strong> (Web Application Firewall)</p></td>
+<td class="text-left"><p>Helps protect web applications from common web exploits that could affect application availability or compromise security.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon GuardDuty</strong></p></td>
+<td class="text-left"><p>A managed threat detection service that continuously monitors for malicious activity and unauthorized behavior.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Management &amp; Governance</strong></p></td>
+<td class="text-left"><p><strong>Amazon CloudWatch</strong></p></td>
+<td class="text-left"><p>A monitoring and observability service that provides data and actionable insights to monitor your applications and infrastructure.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>AWS CloudFormation</strong></p></td>
+<td class="text-left"><p>An Infrastructure as Code (IaC) service that allows you to model, provision, and manage AWS and third-party resources.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>AWS Systems Manager</strong></p></td>
+<td class="text-left"><p>A unified user interface that helps you manage your operational data and automate tasks across your AWS resources.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Machine Learning &amp; AI</strong></p></td>
+<td class="text-left"><p><strong>Amazon SageMaker</strong></p></td>
+<td class="text-left"><p>A fully managed service that provides every developer and data scientist with the ability to build, train, and deploy machine learning models quickly.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon Bedrock</strong></p></td>
+<td class="text-left"><p>A service for building and scaling generative AI applications using foundation models.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Amazon Rekognition</strong></p></td>
+<td class="text-left"><p>A service that makes it easy to add image and video analysis to your applications.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="azure">
+<h3>Azure<a class="headerlink" href="#azure" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Category</p></th>
+<th class="head text-left"><p>Key Services</p></th>
+<th class="head text-left"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Compute</strong></p></td>
+<td class="text-left"><p><strong>Azure Virtual Machines</strong></p></td>
+<td class="text-left"><p>An IaaS offering that provides on-demand, scalable computing resources. It allows you to provision Windows or Linux VMs in seconds and pay only for what you use.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure Functions</strong></p></td>
+<td class="text-left"><p>A serverless compute service that enables you to run event-triggered code without provisioning or managing infrastructure. It’s ideal for building microservices and automating tasks.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure App Service</strong></p></td>
+<td class="text-left"><p>A PaaS offering for building, deploying, and scaling web apps and APIs for a variety of platforms and languages without managing servers.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure Kubernetes Service (AKS)</strong></p></td>
+<td class="text-left"><p>A managed Kubernetes service that simplifies the deployment, management, and scaling of containerized applications.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Storage</strong></p></td>
+<td class="text-left"><p><strong>Azure Blob Storage</strong></p></td>
+<td class="text-left"><p>A massively scalable object storage service for unstructured data, such as text, images, and video. It’s used for data lakes, archiving, and backups.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure Disk Storage</strong></p></td>
+<td class="text-left"><p>Provides block-level storage volumes for Azure Virtual Machines, offering high performance and low latency.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure File Storage</strong></p></td>
+<td class="text-left"><p>A fully managed file share service in the cloud. It can be accessed via the Server Message Block (SMB) protocol and is often used to lift and shift applications that rely on file shares.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure Table Storage</strong></p></td>
+<td class="text-left"><p>A NoSQL key-value store for storing large amounts of structured, non-relational data.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Database</strong></p></td>
+<td class="text-left"><p><strong>Azure SQL Database</strong></p></td>
+<td class="text-left"><p>A managed, relational database service based on the Microsoft SQL Server engine. It automates database management functions like patching, backups, and monitoring.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure Cosmos DB</strong></p></td>
+<td class="text-left"><p>A globally distributed, multi-model database service for building high-performance, highly available applications. It supports multiple APIs, including SQL, MongoDB, and Cassandra.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure Database for MySQL/PostgreSQL</strong></p></td>
+<td class="text-left"><p>Fully managed relational database services for open-source database engines, offering built-in high availability and automated backups.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Networking</strong></p></td>
+<td class="text-left"><p><strong>Azure Virtual Network (VNet)</strong></p></td>
+<td class="text-left"><p>The fundamental building block for your private network in Azure. It allows you to create an isolated, private cloud environment.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure Load Balancer</strong></p></td>
+<td class="text-left"><p>A Layer 4 load balancer that distributes traffic across a pool of VMs or services to ensure high availability and responsiveness.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure Application Gateway</strong></p></td>
+<td class="text-left"><p>An advanced web traffic load balancer that offers Layer 7 load-balancing capabilities and a web application firewall (WAF).</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure VPN Gateway</strong></p></td>
+<td class="text-left"><p>A service for creating secure, encrypted cross-premises connections to your virtual network from on-premises locations or between VNets.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Security, Identity, &amp; Compliance</strong></p></td>
+<td class="text-left"><p><strong>Microsoft Entra ID</strong> (formerly Azure AD)</p></td>
+<td class="text-left"><p>A cloud-based identity and access management service that provides single sign-on, multifactor authentication, and conditional access.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Microsoft Defender for Cloud</strong></p></td>
+<td class="text-left"><p>A security posture management and threat protection service that helps you find and fix vulnerabilities and detect threats across your hybrid cloud workloads.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure Key Vault</strong></p></td>
+<td class="text-left"><p>A service for securely storing and managing cryptographic keys, certificates, and secrets like passwords and API keys.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>AI &amp; Machine Learning</strong></p></td>
+<td class="text-left"><p><strong>Azure Machine Learning</strong></p></td>
+<td class="text-left"><p>An enterprise-grade service for the end-to-end machine learning lifecycle, from building and training models to deploying them.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure AI Services</strong></p></td>
+<td class="text-left"><p>A collection of pre-built AI APIs and services for vision, language, speech, and decision-making, allowing you to add cognitive capabilities to your applications.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Azure OpenAI Service</strong></p></td>
+<td class="text-left"><p>Provides access to powerful large language models (LLMs) from OpenAI, such as GPT-4, with the security and enterprise-grade capabilities of Azure.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="gcp">
+<h3>GCP<a class="headerlink" href="#gcp" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Category</p></th>
+<th class="head text-left"><p>Key Services</p></th>
+<th class="head text-left"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Compute</strong></p></td>
+<td class="text-left"><p><strong>Compute Engine</strong></p></td>
+<td class="text-left"><p>The foundational IaaS service for GCP. It provides customizable virtual machines (VMs) that allow you to run a wide range of workloads.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Google Kubernetes Engine (GKE)</strong></p></td>
+<td class="text-left"><p>A managed environment for deploying, managing, and scaling containerized applications using Kubernetes. It automates much of the infrastructure management.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Cloud Functions</strong></p></td>
+<td class="text-left"><p>A serverless Function as a Service (FaaS) platform. It allows you to run code in response to events without provisioning or managing servers.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Cloud Run</strong></p></td>
+<td class="text-left"><p>A fully managed serverless platform for containerized applications. It automatically scales your container and gives you the flexibility to use any language or framework.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Storage</strong></p></td>
+<td class="text-left"><p><strong>Cloud Storage</strong></p></td>
+<td class="text-left"><p>A highly scalable and durable object storage service. It’s used for everything from backups and data archiving to serving static web content.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Persistent Disk</strong></p></td>
+<td class="text-left"><p>Provides block storage volumes for Compute Engine VMs. These are persistent, high-performance disks that can be attached to your virtual machines.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Filestore</strong></p></td>
+<td class="text-left"><p>A fully managed file storage service that provides a simple, scalable network file system for Compute Engine and GKE.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Database</strong></p></td>
+<td class="text-left"><p><strong>Cloud SQL</strong></p></td>
+<td class="text-left"><p>A fully managed relational database service for MySQL, PostgreSQL, and SQL Server. It handles patching, backups, and replication.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Cloud Spanner</strong></p></td>
+<td class="text-left"><p>A globally distributed, highly available, and strongly consistent relational database service. It is designed for mission-critical applications at a global scale.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Firestore</strong></p></td>
+<td class="text-left"><p>A serverless, flexible, and scalable NoSQL document database for mobile, web, and server development. It offers real-time synchronization.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Bigtable</strong></p></td>
+<td class="text-left"><p>A high-performance, scalable NoSQL database service for large analytical and operational workloads, often used for big data and real-time applications.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Networking</strong></p></td>
+<td class="text-left"><p><strong>Virtual Private Cloud (VPC)</strong></p></td>
+<td class="text-left"><p>A virtual network that provides a logically isolated and secure environment for your GCP resources.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Cloud Load Balancing</strong></p></td>
+<td class="text-left"><p>Distributes incoming traffic across multiple instances, services, or regions to ensure high availability and responsiveness.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Cloud CDN</strong> (Content Delivery Network)</p></td>
+<td class="text-left"><p>A global content delivery network that caches your web content at edge locations to deliver it with low latency to users worldwide.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Cloud DNS</strong></p></td>
+<td class="text-left"><p>A scalable and reliable managed DNS service that runs on the same infrastructure as Google.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Security &amp; Identity</strong></p></td>
+<td class="text-left"><p><strong>Cloud IAM</strong> (Identity and Access Management)</p></td>
+<td class="text-left"><p>Enables you to define and manage access controls for your GCP resources and services.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Cloud Armor</strong></p></td>
+<td class="text-left"><p>A security service that provides protection against DDoS attacks and web application vulnerabilities.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Cloud KMS</strong> (Key Management Service)</p></td>
+<td class="text-left"><p>A managed service for creating, managing, and using cryptographic keys.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>AI &amp; Machine Learning</strong></p></td>
+<td class="text-left"><p><strong>Vertex AI</strong></p></td>
+<td class="text-left"><p>A unified platform for the entire machine learning workflow. It enables developers and data scientists to build, train, and deploy models, including generative AI models, efficiently.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Google AI Services</strong></p></td>
+<td class="text-left"><p>A suite of pre-trained and customizable AI APIs, including services for Vision AI, Natural Language AI, and Speech-to-Text.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>Generative AI on Google Cloud</strong></p></td>
+<td class="text-left"><p>Provides access to Google’s most powerful large language models (LLMs) like Gemini, with tools for fine-tuning and deploying them securely.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
 <section id="responsibility-models">
 <h2>Responsibility models<a class="headerlink" href="#responsibility-models" title="Link to this heading">#</a></h2>
 <p>There are different models of cloud services. They differ based on what is done the customer’s end and what is done on the prvider’s side:</p>
@@ -772,6 +1098,12 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#providers">Providers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aws">AWS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#azure">Azure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gcp">GCP</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#responsibility-models">Responsibility models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-models">Cloud models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-types">Scaling types</a></li>

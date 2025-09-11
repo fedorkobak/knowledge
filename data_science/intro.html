@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -57,6 +57,8 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'data_science/intro';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -219,6 +221,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="nlp.html">NLP</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="nlp/preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp/preprocessing/tokenization.html">Tokenization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp/preprocessing/embeddings.html">Embeddings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp/preprocessing/tf_idf.html">TF-IDF</a></li>
 </ul>
@@ -226,7 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp/text_cnn.html">Text CNN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp/recurrent_translation.html">Recurrent translations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp/LLMs.html">LLMs</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="nlp/LLMs.html">LLMs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp/LLMs/rag/imdb_example.html">IMDB example</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -672,6 +678,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiclass">Multiclass</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-mechanisms">DL mechanisms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-vision">Computer Vision</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nlp">NLP</a></li>
 </ul>
@@ -688,6 +699,29 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="data-science">
 <h1>Data science<a class="headerlink" href="#data-science" title="Link to this heading">#</a></h1>
 <p>Data science is a field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from the structured and unstructured data.</p>
+<section id="classification">
+<h2>Classification<a class="headerlink" href="#classification" title="Link to this heading">#</a></h2>
+<p>Classification is a set of supervised machine learning tasks that are supposed to predict the lable to which a particular object corresponds.</p>
+<ul class="simple">
+<li><p><strong>Binary classification</strong>: is a task that separates samples into two groups.</p></li>
+<li><p><strong>Multiclass classification</strong>: separates data into more that two groups.</p></li>
+</ul>
+<section id="multiclass">
+<h3>Multiclass<a class="headerlink" href="#multiclass" title="Link to this heading">#</a></h3>
+<p>Multiclass classification is a group of machine learning approaches that enables the separation of data into <span class="math notranslate nohighlight">\(n\)</span> groups.</p>
+<p>There are two groups of the machine learning algorithms for multiclass classification:</p>
+<ul class="simple">
+<li><p><strong>One-vs-Rest</strong> trains a binary classification model to distinguish samples that belonging to a particular class from the all others: <span class="math notranslate nohighlight">\(f^i(x)=P(y=i|x), i = \overline{1,n}\)</span>.</p></li>
+<li><p><strong>Multinomial</strong> builds a transformation of the input data to produce a vector containing a score that describes the likelihood of each class to correspond to the given <span class="math notranslate nohighlight">\(x\)</span>: <span class="math notranslate nohighlight">\(f(x) = \left[P(y=1|x), P(y=2|x), \ldots, P(y=n|x)\right]\)</span>.</p></li>
+</ul>
+</section>
+</section>
+<section id="dl-mechanisms">
+<h2>DL mechanisms<a class="headerlink" href="#dl-mechanisms" title="Link to this heading">#</a></h2>
+<p>Deep Learning is an advanced form of machine learning. It implements the concept of the human brain in the mathematical terms. A set of signals (actions) that appears when a specific input is received. In mathematics, this is usually implemented as a deep composition of functions - that’s actually the term term “deep learning” come from.</p>
+<p>The DL is typically used in computer vision and complex NLP tasks. There are other sections for applications. This section considers general deep learning approaches.</p>
+<p>Check details in the <a class="reference internal" href="dl_mechanisms.html"><span class="std std-doc">DL meachanisms</span></a></p>
+</section>
 <section id="computer-vision">
 <h2>Computer Vision<a class="headerlink" href="#computer-vision" title="Link to this heading">#</a></h2>
 <p>Computer vision tasks are commonly divided into categories. It is important to understand the differences in order to select the correct approach.</p>
@@ -779,6 +813,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiclass">Multiclass</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-mechanisms">DL mechanisms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-vision">Computer Vision</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nlp">NLP</a></li>
 </ul>

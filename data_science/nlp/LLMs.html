@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -63,7 +63,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="DL mechanisms" href="../dl_mechanisms.html" />
+    <link rel="next" title="IMDB example" href="LLMs/rag/imdb_example.html" />
     <link rel="prev" title="Recurrent translations" href="recurrent_translation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -221,6 +221,7 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../nlp.html">NLP</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing/tokenization.html">Tokenization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preprocessing/embeddings.html">Embeddings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preprocessing/tf_idf.html">TF-IDF</a></li>
 </ul>
@@ -228,7 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="text_cnn.html">Text CNN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="recurrent_translation.html">Recurrent translations</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">LLMs</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">LLMs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="LLMs/rag/imdb_example.html">IMDB example</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -680,6 +684,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompting-techniques">Prompting techniques</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag">RAG</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
 </ul>
             </nav>
@@ -697,7 +702,7 @@ document.write(`
 <p>LLMs are models designed primarily to predict text. The most advanced LLMs can simulate a wide range of linguistic behaviors. With the right configuration, they can be applied to many problems that are difficult to solve with traditional programming.</p>
 <section id="chat-templates">
 <h2>Chat templates<a class="headerlink" href="#chat-templates" title="Link to this heading">#</a></h2>
-<p>Since LLMs are designed only to predict the next token based on a range of previous tokens, they are not able to behive in a chat-like pattern by default. To achieve this, models are fine-tuned to follow the chat templates.</p>
+<p>Since LLMs are designed only to predict the next token based on a range of previous tokens, they are not able to behive in a chat-like pattern by default. To achieve this, models are fine-tuned to follow the chat templates. A model that has passed the so-called supervised fine-tuning, which is intended to train it to follow the “query-response” pattern, usually has the <code class="docutils literal notranslate"><span class="pre">instruct</span></code> prefix or postfix somewhere in its name/identifier.</p>
 <p><strong>Chat template</strong> is a set of rules for structuring model inputs, separating messages, and specifying the role of the speaker for each message.</p>
 <p>Special tokens ussually define the beginning and ending of different messages. Role is specified using some defined syntax.</p>
 <p>The chat-templates for a popular LLMs are:</p>
@@ -794,11 +799,26 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 <p><strong>Chain of Thought (CoT)</strong>: A technique in which the model is asked to solve a task step by step. In the most basic implementation, the prompt literally asks the model to solve the problem “step by step”.</p>
 </section>
 </section>
+<section id="rag">
+<h2>RAG<a class="headerlink" href="#rag" title="Link to this heading">#</a></h2>
+<p>Retrieval-Augmented Generation (RAG) is an approach that provides LLM with context associated with the specific information. The general idea is to create a knowledge base in the form of vector database, where encoded as embeddings documents corresponding to the information to be added to the model context. When the system needs information, it searches for embeddings with corresponding properties decodes them, and add them as context to the machine learning model.</p>
+<p>There are sevaral topics related to RAG systems that need to be discussed:</p>
+<ul class="simple">
+<li><p><strong>Chunking</strong>: The process of separating documents from the knowledge base into the chunks that can be used to prepare the embeddings.</p></li>
+<li><p><strong>Retrieval</strong>: There are a set of approaches and tools to collect the relevant information contained in the chunks.</p></li>
+<li><p><strong>Qality estimation</strong>: As there are few compoments in the RAG system that’s why the estimation of the system is a complex process.</p></li>
+</ul>
+<p>Check more in the corresponding <a class="reference internal" href="LLMs/rag.html"><span class="std std-doc">RAG</span></a> page.</p>
+</section>
 <section id="agents">
 <h2>Agents<a class="headerlink" href="#agents" title="Link to this heading">#</a></h2>
 <p><strong>AI agents are</strong> programs where AI controls workflow.</p>
-<p>Agent can complete some <strong>actions</strong> using some <strong>tools</strong>.</p>
-<p><strong>Tools</strong>:  provide the agent with the ability to execute actions a text-generation model cannot perform natively, such as making coffe or generating images.</p>
+<p>There is some typical terminology in the field of agentic frameworks:</p>
+<ul class="simple">
+<li><p><strong>Tools</strong>:  provide the agent with the ability to execute actions a text-generation model cannot perform natively, such as making coffe or generating images.</p></li>
+<li><p><strong>Actions</strong> are the concrete steps an AI agent takes to interact with its environment.</p></li>
+<li><p><strong>Observations</strong>: The ouputs of the tools tha are used as a context for the model.</p></li>
+</ul>
 <p>There are different ways in which AI outputs can influence the workflow. These approaches are listed in the following table:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -831,7 +851,10 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 </tbody>
 </table>
 </div>
+<p>Check more details in the <a class="reference internal" href="LLMs/agents.html"><span class="std std-doc">Agents</span></a> page.</p>
 </section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -874,11 +897,11 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
       </div>
     </a>
     <a class="right-next"
-       href="../dl_mechanisms.html"
+       href="LLMs/rag/imdb_example.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">DL mechanisms</p>
+        <p class="prev-next-title">IMDB example</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -904,6 +927,7 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompting-techniques">Prompting techniques</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag">RAG</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
 </ul>
   </nav></div>
