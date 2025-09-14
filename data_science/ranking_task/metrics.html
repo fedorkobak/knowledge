@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -204,6 +204,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../arima.html">ARIMA</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../ranking_task.html">Ranking task</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
@@ -230,7 +231,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../nlp/recurrent_translation.html">Recurrent translations</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../nlp/LLMs.html">LLMs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../nlp/LLMs/rag/imdb_example.html">IMDB example</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../nlp/LLMs/rag.html">RAG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../nlp/LLMs/rag/imdb_example.html">IMDB example</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../nlp/LLMs/agents.html">Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nlp/LLMs/MCP.html">MCP</a></li>
 </ul>
 </details></li>
 </ul>
@@ -680,6 +686,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task">Task</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solutions">Solutions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mrr">MRR</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ndcg">NDCG</a></li>
 </ul>
             </nav>
@@ -1234,6 +1241,17 @@ document.write(`
 </div>
 </div>
 </section>
+<section id="mrr">
+<h2>MRR<a class="headerlink" href="#mrr" title="Link to this heading">#</a></h2>
+<p>Mean Reciprocal Rank (MRR): The inverted rank of the first relevant item is computed for each query from the test dataset. This is reciprocal rank. The mean value for all queries forms the mean reciprocal rank:</p>
+<div class="math notranslate nohighlight">
+\[MRR = \frac{1}{\vert Q\vert}\sum_{i=1}^{\vert Q \vert}\frac{1}{rank_i}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\vert Q \vert\)</span>: is a number of the queries in the test dataset.</p></li>
+<li><p><span class="math notranslate nohighlight">\(rank_i\)</span>: the rank of the first relevant element for the <span class="math notranslate nohighlight">\(i\)</span>-th query.</p></li>
+</ul>
+</section>
 <section id="ndcg">
 <h2>NDCG<a class="headerlink" href="#ndcg" title="Link to this heading">#</a></h2>
 <p><span class="math notranslate nohighlight">\(NDCG&#64;k\)</span> is a popular way to measure ranking algorithms. Its formula is:</p>
@@ -1332,6 +1350,7 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task">Task</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solutions">Solutions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mrr">MRR</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ndcg">NDCG</a></li>
 </ul>
   </nav></div>

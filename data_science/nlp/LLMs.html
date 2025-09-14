@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -63,7 +63,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="IMDB example" href="LLMs/rag/imdb_example.html" />
+    <link rel="next" title="RAG" href="LLMs/rag.html" />
     <link rel="prev" title="Recurrent translations" href="recurrent_translation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -204,6 +204,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../arima.html">ARIMA</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../ranking_task.html">Ranking task</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../ranking_task/collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
@@ -230,7 +231,12 @@
 <li class="toctree-l2"><a class="reference internal" href="recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="recurrent_translation.html">Recurrent translations</a></li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">LLMs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="LLMs/rag/imdb_example.html">IMDB example</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="LLMs/rag.html">RAG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="LLMs/rag/imdb_example.html">IMDB example</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="LLMs/agents.html">Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="LLMs/MCP.html">MCP</a></li>
 </ul>
 </details></li>
 </ul>
@@ -686,6 +692,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag">RAG</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp">MCP</a></li>
 </ul>
             </nav>
         </div>
@@ -853,6 +860,30 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 </div>
 <p>Check more details in the <a class="reference internal" href="LLMs/agents.html"><span class="std std-doc">Agents</span></a> page.</p>
 </section>
+<section id="mcp">
+<h2>MCP<a class="headerlink" href="#mcp" title="Link to this heading">#</a></h2>
+<p>MCP (Model Context Protocol) allows LLM to connect with external data sources, tools, and environments. This enables the seamless transfer of information and capabilities between AI systems and other digital tools. The MCP standardizes the method to interacting with LLMs, enabling tool builders to create a simple tool that can be used with any LLM.</p>
+<p>Understanding the architecture of MCP, which follows the rules determined by the role of each compoment, makes it easier to build LLM-based applications. There are 3 components in model that uses MCP:</p>
+<ul class="simple">
+<li><p><strong>Host</strong>: the application that is supposed to interact with the LLM.</p></li>
+<li><p><strong>Client</strong>: the compoment of the host that establishes a connection with the MCP server.</p></li>
+<li><p><strong>Server</strong>: external process that establishes the capabilities of the LLMs through the MCP protocol.</p></li>
+</ul>
+<p>With MCP, you can build the integration you want. But there are typical usecases which is called <strong>capabilities</strong>:</p>
+<ul class="simple">
+<li><p><strong>Tool</strong>: These are executable functions that the model can use to perform actions.</p></li>
+<li><p><strong>Resources</strong>: Read-only sources of information.</p></li>
+<li><p><strong>Prompt</strong>: Pre-defined prompt templates that define the way host provide the integration wiht LLM.</p></li>
+<li><p><strong>Sampling</strong>: Server-initiated requests for the Client/Host to perform LLM interactions, enabling recursive actions where the LLM can review generated content and make further decisions.</p></li>
+</ul>
+<p>For messaging MCP uses JSON-RPC.</p>
+<p>For more details check:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://modelcontextprotocol.io/docs/getting-started/intro">Model Context Protocol</a> website.</p></li>
+<li><p><a class="reference external" href="https://huggingface.co/learn/mcp-course/unit0/introduction">MCP cource</a> in hugging face.</p></li>
+<li><p><a class="reference internal" href="LLMs/MCP.html"><span class="std std-doc">MCP</span></a> page.</p></li>
+</ul>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -897,11 +928,11 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
       </div>
     </a>
     <a class="right-next"
-       href="LLMs/rag/imdb_example.html"
+       href="LLMs/rag.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">IMDB example</p>
+        <p class="prev-next-title">RAG</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -929,6 +960,7 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag">RAG</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp">MCP</a></li>
 </ul>
   </nav></div>
 
