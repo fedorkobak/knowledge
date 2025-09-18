@@ -136,3 +136,16 @@ Consider the main types of data storage.
 **Data Lakes**: They provide a way to store an unstructured or semi-structured data.
 
 **Lake houses**: Data warehouses built on top of data lakes.
+
+## Databrikcs
+
+Databricks is a platform that offers many tools for porcessing data.
+
+It integrates with: AWS, Azure and GCP.
+
+The core services are:
+
+- Mozaic AI: For the entire machine learning model lifecycle.
+- DataBricks SQL: Brings data warehousing capabilities to your existing data lakes.
+- Workflows/DLT: data engineering tools: ingesting, ETL, and streaming.
+- AI/BI: tool for data analytics.
