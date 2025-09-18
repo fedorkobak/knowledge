@@ -126,3 +126,13 @@ There are two main types of scaling: vertical and horizontal.
 **Vertical** scaling typically involves making existing units more powerful. In the context of computing, it means that the application migrates to machines with more CPU or RAM.
 
 **Horizontal** scaling means that there are new units are added to process typical tasks in parallel. In the context of computing, it means that just more computers are launced.
+
+## Data storages
+
+Consider the main types of data storage.
+
+**Data warehouse**: Stores data from different sources in a well-organized manner. It is perfect for querying and anlisys.
+
+**Data Lakes**: They provide a way to store an unstructured or semi-structured data.
+
+**Lake houses**: Data warehouses built on top of data lakes.
