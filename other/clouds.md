@@ -149,3 +149,11 @@ The core services are:
 - DataBricks SQL: Brings data warehousing capabilities to your existing data lakes.
 - Workflows/DLT: data engineering tools: ingesting, ETL, and streaming.
 - AI/BI: tool for data analytics.
+
+**Unity catalog** is a unified governance model for all the data and AI assets within the databricks.
+
+**Data Ingestion**: Databricks uses a **medallion data architecture**, in which data are separated into a few processing phases:
+
+- *Bronze*: Raw data that data engineers apply their ETL pipelines to.
+- *Silver*: Data from the Bronze layer undergoes significant transformation, validation, and cleaning. This layer provides a reliable, single source of truth for enterprise data product.
+- *Gold*: This layer contains highly refined, aggregated, and enriched data that is ready for business intelligence and machine learning applications. It is desined for specific business use cases and provides analytics-ready datasets.
