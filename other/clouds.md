@@ -150,7 +150,11 @@ The core services are:
 - Workflows/DLT: data engineering tools: ingesting, ETL, and streaming.
 - AI/BI: tool for data analytics.
 
-**Unity catalog** is a unified governance model for all the data and AI assets within the databricks.
+**Unity catalog** is a unified governance model for all the data and AI assets within the databricks. Check tutorial [What is Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/).
+
+**Delta Lake** is noting more than a database format that provides transactional guarantees, schema enforcement, and time travel. It is the default table format in Databricks, but on its own, it is just a format with open-source implementations beyond Databricks.
+
+**Feature store** is a special Delta Lake table that provides access to features intended for use in machine learning (ML) models. Built on top of Delta tables, it adds additional metadata, primary keys, constraints, and tracking of feature lieage. 
 
 **Data Ingestion**: Databricks uses a **medallion data architecture**, in which data are separated into a few processing phases:
 
