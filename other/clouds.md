@@ -178,3 +178,5 @@ fe.create_table(
 - *Bronze*: Raw data that data engineers apply their ETL pipelines to.
 - *Silver*: Data from the Bronze layer undergoes significant transformation, validation, and cleaning. This layer provides a reliable, single source of truth for enterprise data product.
 - *Gold*: This layer contains highly refined, aggregated, and enriched data that is ready for business intelligence and machine learning applications. It is desined for specific business use cases and provides analytics-ready datasets.
+
+Databricks provides **OpenAI-compatible models** endpoints, so you can access some models using only your databricks credentials. Check more [Get started querying LLMs on Databricks](https://docs.databricks.com/aws/en/large-language-models/llm-serving-intro).
