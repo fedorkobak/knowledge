@@ -137,7 +137,7 @@ Consider the main types of data storage.
 
 **Lake houses**: Data warehouses built on top of data lakes.
 
-## Databrikcs
+## Databricks
 
 Databricks is a platform that offers many tools for porcessing data.
 
