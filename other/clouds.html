@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -61,6 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NPM" href="npm.html" />
     <link rel="prev" title="Elastic search" href="elastic_search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -457,6 +458,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../linux/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/permission%26ownership.html">Permission&amp;Ownership</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/archiving.html">Archiving</a></li>
 </ul>
 </details></li>
@@ -518,6 +520,7 @@
 <li class="toctree-l1"><a class="reference internal" href="kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="npm.html">NPM</a></li>
 </ul>
 
     </div>
@@ -690,6 +693,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#responsibility-models">Responsibility models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-models">Cloud models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-types">Scaling types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-storages">Data storages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databricks">Databricks</a></li>
 </ul>
             </nav>
         </div>
@@ -1047,6 +1052,49 @@ document.write(`
 <p><strong>Vertical</strong> scaling typically involves making existing units more powerful. In the context of computing, it means that the application migrates to machines with more CPU or RAM.</p>
 <p><strong>Horizontal</strong> scaling means that there are new units are added to process typical tasks in parallel. In the context of computing, it means that just more computers are launced.</p>
 </section>
+<section id="data-storages">
+<h2>Data storages<a class="headerlink" href="#data-storages" title="Link to this heading">#</a></h2>
+<p>Consider the main types of data storage.</p>
+<p><strong>Data warehouse</strong>: Stores data from different sources in a well-organized manner. It is perfect for querying and anlisys.</p>
+<p><strong>Data Lakes</strong>: They provide a way to store an unstructured or semi-structured data.</p>
+<p><strong>Lake houses</strong>: Data warehouses built on top of data lakes.</p>
+</section>
+<section id="databricks">
+<h2>Databricks<a class="headerlink" href="#databricks" title="Link to this heading">#</a></h2>
+<p>Databricks is a platform that offers many tools for porcessing data.</p>
+<p>It integrates with: AWS, Azure and GCP.</p>
+<p>The core services are:</p>
+<ul class="simple">
+<li><p>Mozaic AI: For the entire machine learning model lifecycle.</p></li>
+<li><p>DataBricks SQL: Brings data warehousing capabilities to your existing data lakes.</p></li>
+<li><p>Workflows/DLT: data engineering tools: ingesting, ETL, and streaming.</p></li>
+<li><p>AI/BI: tool for data analytics.</p></li>
+</ul>
+<p><strong>Unity catalog</strong> is a unified governance model for all the data and AI assets within the databricks. Check tutorial <a class="reference external" href="https://docs.databricks.com/aws/en/data-governance/unity-catalog/">What is Unity Catalog</a>.</p>
+<p><strong>Delta Lake</strong> is noting more than a database format that provides transactional guarantees, schema enforcement, and time travel. It is the default table format in Databricks, but on its own, it is just a format with open-source implementations beyond Databricks.</p>
+<p><strong>Feature store</strong> is a special Delta Lake table that provides access to features intended for use in machine learning (ML) models. Built on top of Delta tables, it adds additional metadata, primary keys, constraints, and tracking of feature lieage.</p>
+<p>You can manipulate the feature store using the databricks Python SDK, module: <code class="docutils literal notranslate"><span class="pre">databricks.feature_engineering</span></code>. This is not provided with the Databricks Python SDK out of the box - install the separatre <a class="reference external" href="https://pypi.org/project/databricks-feature-engineering/">PyPI published package</a>.</p>
+<p>Create the feature store with code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">databricks.feature_engineering</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeatureEngineeringClient</span>
+<span class="n">fe</span> <span class="o">=</span> <span class="n">FeatureEngineeringClient</span><span class="p">()</span>
+
+<span class="n">fe</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;catalog&gt;.&lt;schema&gt;.&lt;table name&gt;&quot;</span><span class="p">,</span>
+    <span class="n">primary_keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&lt;primary key 1&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;primary key2&gt;&quot;</span><span class="p">],</span>
+    <span class="n">df</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;This is some sort of description&quot;</span><span class="p">,</span>
+    <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;bronze&quot;</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;delta&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Data Ingestion</strong>: Databricks uses a <strong>medallion data architecture</strong>, in which data are separated into a few processing phases:</p>
+<ul class="simple">
+<li><p><em>Bronze</em>: Raw data that data engineers apply their ETL pipelines to.</p></li>
+<li><p><em>Silver</em>: Data from the Bronze layer undergoes significant transformation, validation, and cleaning. This layer provides a reliable, single source of truth for enterprise data product.</p></li>
+<li><p><em>Gold</em>: This layer contains highly refined, aggregated, and enriched data that is ready for business intelligence and machine learning applications. It is desined for specific business use cases and provides analytics-ready datasets.</p></li>
+</ul>
+<p>Databricks provides <strong>OpenAI-compatible models</strong> endpoints, so you can access some models using only your databricks credentials. Check more <a class="reference external" href="https://docs.databricks.com/aws/en/large-language-models/llm-serving-intro">Get started querying LLMs on Databricks</a>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1088,6 +1136,15 @@ document.write(`
         <p class="prev-next-title">Elastic search</p>
       </div>
     </a>
+    <a class="right-next"
+       href="npm.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">NPM</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1113,6 +1170,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#responsibility-models">Responsibility models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cloud-models">Cloud models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-types">Scaling types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-storages">Data storages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databricks">Databricks</a></li>
 </ul>
   </nav></div>
 

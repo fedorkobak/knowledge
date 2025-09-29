@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -460,6 +460,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../linux/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/permission%26ownership.html">Permission&amp;Ownership</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/archiving.html">Archiving</a></li>
 </ul>
 </details></li>
@@ -521,6 +522,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/clouds.html">Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/npm.html">NPM</a></li>
 </ul>
 
     </div>
@@ -705,36 +707,6 @@ document.write(`
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.postgresql.org/docs/current/sql-createtable.html">Manual on <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code></a> directive in postgreSQL.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="c1">--rm\</span>
-<span class="w">    </span><span class="c1">--name building_tables_examples_pg\</span>
-<span class="w">    </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">POSTGRES_PASSWORD</span><span class="o">=</span><span class="n">postgres</span><span class="err">\</span>
-<span class="w">    </span><span class="n">postgres</span><span class="p">:</span><span class="mi">15</span><span class="p">.</span><span class="mi">4</span>
-
-<span class="n">sleep</span><span class="w"> </span><span class="mi">5</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c5fefba317fe96b98bff03f96e05c92d6ea2c446aa6d249b0478007988e0fa83
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong>: Don’t forget to stop the experimental container afterward.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">building_tables_examples_pg</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>building_tables_examples_pg
-</pre></div>
-</div>
-</div>
-</div>
 <section id="default-values">
 <h2>Default values<a class="headerlink" href="#default-values" title="Link to this heading">#</a></h2>
 <p>You can define default values that will be used during table creation. You need to use the <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> keyword after specifying the column type, followed by the value that the column should take.</p>
@@ -819,9 +791,9 @@ CREATE TABLE
 <tr><th>bool_value  </th><th style="text-align: right;">  real_value</th><th>date_time                 </th><th>json_type         </th></tr>
 </thead>
 <tbody>
-<tr><td>True        </td><td style="text-align: right;">          10</td><td>2025-05-10 17:12:59.923168</td><td>{&#x27;A&#x27;: 10, &#x27;B&#x27;: 20}</td></tr>
-<tr><td>False       </td><td style="text-align: right;">          30</td><td>2025-05-10 17:12:59.923168</td><td>{&#x27;A&#x27;: 10, &#x27;B&#x27;: 20}</td></tr>
-<tr><td>False       </td><td style="text-align: right;">          32</td><td>2025-05-10 17:12:59.923168</td><td>{&#x27;A&#x27;: 10, &#x27;B&#x27;: 20}</td></tr>
+<tr><td>True        </td><td style="text-align: right;">          10</td><td>2025-09-23 08:59:33.969619</td><td>{&#x27;A&#x27;: 10, &#x27;B&#x27;: 20}</td></tr>
+<tr><td>False       </td><td style="text-align: right;">          30</td><td>2025-09-23 08:59:33.969619</td><td>{&#x27;A&#x27;: 10, &#x27;B&#x27;: 20}</td></tr>
+<tr><td>False       </td><td style="text-align: right;">          32</td><td>2025-09-23 08:59:33.969619</td><td>{&#x27;A&#x27;: 10, &#x27;B&#x27;: 20}</td></tr>
 </tbody>
 </table></div></div>
 </div>
@@ -830,23 +802,94 @@ CREATE TABLE
 <h2>Tables properties<a class="headerlink" href="#tables-properties" title="Link to this heading">#</a></h2>
 <p>It’s a typical task to analyze your tables. This section considers questions associated with columns in tables, their types, and other properties. For more check <a class="reference internal" href="operating_tables/tables_properties.html"><span class="std std-doc">special page</span></a>.</p>
 <hr class="docutils" />
-<p>The following cell shows an example of how you can list all tables available in your database by using the <code class="docutils literal notranslate"><span class="pre">\dt</span></code> command.</p>
+<p>A great way to find information about the tables in the PostgreSQL is to load the <code class="docutils literal notranslate"><span class="pre">pg_catalog.pg_tables</span></code> table:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">building_tables_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
-<span class="err">\</span><span class="n">dt</span>
-<span class="n">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_tables</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error response from daemon: No such container: building_tables_examples_pg
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SELECT 69
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>schemaname        </th><th>tablename               </th><th>tableowner  </th><th>tablespace  </th><th>hasindexes  </th><th>hasrules  </th><th>hastriggers  </th><th>rowsecurity  </th></tr>
+</thead>
+<tbody>
+<tr><td>public            </td><td>default_values_example  </td><td>postgres    </td><td>            </td><td>False       </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_statistic            </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_type                 </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_foreign_table        </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_authid               </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_statistic_ext_data   </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_user_mapping         </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_subscription         </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_attribute            </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_proc                 </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_class                </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_attrdef              </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_constraint           </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_inherits             </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_index                </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_operator             </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_opfamily             </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_opclass              </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_am                   </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_amop                 </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_amproc               </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_language             </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_largeobject_metadata </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_aggregate            </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_statistic_ext        </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_rewrite              </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_trigger              </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_event_trigger        </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_description          </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_cast                 </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_enum                 </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_namespace            </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_conversion           </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_depend               </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_database             </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_db_role_setting      </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_tablespace           </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_auth_members         </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_shdepend             </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_shdescription        </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_ts_config            </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_ts_config_map        </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_ts_dict              </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_ts_parser            </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_ts_template          </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_extension            </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_foreign_data_wrapper </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_foreign_server       </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_policy               </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_replication_origin   </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_default_acl          </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_init_privs           </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_seclabel             </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_shseclabel           </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_collation            </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_parameter_acl        </td><td>postgres    </td><td>pg_global   </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_partitioned_table    </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_range                </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_transform            </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_sequence             </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_publication          </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_publication_namespace</td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_publication_rel      </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_subscription_rel     </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>pg_catalog        </td><td>pg_largeobject          </td><td>postgres    </td><td>            </td><td>True        </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>information_schema</td><td>sql_parts               </td><td>postgres    </td><td>            </td><td>False       </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>information_schema</td><td>sql_features            </td><td>postgres    </td><td>            </td><td>False       </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>information_schema</td><td>sql_implementation_info </td><td>postgres    </td><td>            </td><td>False       </td><td>False     </td><td>False        </td><td>False        </td></tr>
+<tr><td>information_schema</td><td>sql_sizing              </td><td>postgres    </td><td>            </td><td>False       </td><td>False     </td><td>False        </td><td>False        </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="indexes">

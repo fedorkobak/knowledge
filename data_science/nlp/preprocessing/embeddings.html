@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -460,6 +460,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../linux/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../linux/filesystem/permission%26ownership.html">Permission&amp;Ownership</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../linux/filesystem/archiving.html">Archiving</a></li>
 </ul>
 </details></li>
@@ -521,6 +522,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../other/kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other/elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other/clouds.html">Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/npm.html">NPM</a></li>
 </ul>
 
     </div>
@@ -684,7 +686,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dence-vs-sparce">Dence vs Sparce</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word2vec">Word2Vec</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bert">BERT</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training">Training</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -699,6 +706,12 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="embeddings">
 <h1>Embeddings<a class="headerlink" href="#embeddings" title="Link to this heading">#</a></h1>
 <p>Embedding is the representation of something as a vector.</p>
+<section id="dence-vs-sparce">
+<h2>Dence vs Sparce<a class="headerlink" href="#dence-vs-sparce" title="Link to this heading">#</a></h2>
+<p>There are two types of embeddings: <strong>dence</strong> and <strong>sparce</strong>.</p>
+<p><strong>Sparce</strong> embeddings usually result in a high-dimensional vector close to the vocabulary size (30 000 is a typical size). Each position of in the encoding vector corresponds to a specific token in the vocabulary, which makes the interpreting the results easier.</p>
+<p><strong>Dence</strong> embeddings typically have fewer dimentions (384, 768, or 1024 elements), and the position of an element is not directly related to a specific token.</p>
+</section>
 <section id="word2vec">
 <h2>Word2Vec<a class="headerlink" href="#word2vec" title="Link to this heading">#</a></h2>
 <p>Word2Vec (W2V) is an approach to building word embeddings based on the context. Words with similar contexts will have similar embeddings.</p>
@@ -714,6 +727,56 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\sigma\)</span>: sigmoid function.</p></li>
 </ul>
 <p>The optimization algorithm looks for <span class="math notranslate nohighlight">\(u_i\)</span> and <span class="math notranslate nohighlight">\(\nu_i\)</span> that maximize <span class="math notranslate nohighlight">\(p_{ij}\)</span> when word <span class="math notranslate nohighlight">\(i\)</span> contains word <span class="math notranslate nohighlight">\(j\)</span> in its context and minimize it when it does not.</p>
+</section>
+<section id="bert">
+<h2>BERT<a class="headerlink" href="#bert" title="Link to this heading">#</a></h2>
+<p>BERT is a popular model for building embeddings. Developed by Google, it has a many modicications for specific tasks.</p>
+<section id="training">
+<h3>Training<a class="headerlink" href="#training" title="Link to this heading">#</a></h3>
+<p>BERT training icluded solving two tasks: Masked token prediction (MTP) and Next Sentence Prediction (NSP).</p>
+<p><strong>Masked Token Prediction (MTP)</strong>: some tokens of the sentence were masked or replaced and the goal of the model was to predict the correct token in that places.</p>
+<p>Replacements usually follow empirical rules:</p>
+<ul class="simple">
+<li><p>15% of the tokens form the original data are selected to participate in loss function calculation.</p></li>
+<li><p>80% of the selected tokens must be replaced with a mask (the original BERT typically uses the special <code class="docutils literal notranslate"><span class="pre">[MASKED]</span></code> token).</p></li>
+<li><p>10% of the selected tokens must be replaced with random ones.</p></li>
+<li><p>10% of the selected tokens must be left unchanged.</p></li>
+</ul>
+<p>This rule is important for avoiding model overfitting. The specific values were discovered through experementation.</p>
+<p>As example consider the following sentence:</p>
+<ul class="simple">
+<li><p><em>Finetuning sparse embedding models involves several components: the model, datasets, loss functions, training arguments, evaluators, and the trainer class.</em></p></li>
+</ul>
+<p>For simplicity, we will consider the case of white space tokenization.</p>
+<ul class="simple">
+<li><p><em>Finetuning sparse embedding <span style="color:#A0A35B">[MASKED]</span> involves several <span style="color:green">components:</span> the model, datasets, loss <span style="color:red">dogs</span>, training arguments, <span style="color:#A0A35B">[MASKED]</span>, and the trainer class.</em></p></li>
+</ul>
+<p>We expect the model to predict something like this:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[-][-][-][models][-][-][components:][-][-][-][-][functions][-][-][evaluators][-][-][-]</span></code></p></li>
+</ul>
+<p>Here <code class="docutils literal notranslate"><span class="pre">[-]</span></code> marks tokens that are unimportant to us - they do not appear in 15% of the “interesting” tokens and are not used in the loss function calculation. However, the words that appear in 15% of the “interesting” tokens must be determined directly to minimize the loss.</p>
+<p><strong>Next Sentence Prediction (NSP)</strong>: The model is given a sentence that is separated by a special token. It must to classify whether the second part matches the first.</p>
+<p>The original approach by google sentence uses:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[CLS]</span></code>:  token that idicates where the outcome should come from.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[SEP]</span></code>: token separates the the part of the sentence that is guaranteed to be correct and, possibly, uncorrect.</p></li>
+</ul>
+<p>Suppose the training dataset contains the following sentence:</p>
+<ul class="simple">
+<li><p><em>Born in Nine Mile, Jamaica, Marley began his career in 1963, after forming the group Teenagers with Peter Tosh and Bunny Wailer, which became the Wailers</em>.</p></li>
+</ul>
+<p>For NSP it can be transformed as:</p>
+<ul class="simple">
+<li><p><em><strong>[CLS]</strong> Born in Nine Mile, Jamaica, Marley began his career in 1963, after forming the <strong>[SEP]</strong> group Teenagers with Peter Tosh and Bunny Wailer, which became the Wailers</em>.</p></li>
+</ul>
+<p>In this case, the output sequence at the positions corresponding to the [CLS] must contain a signal that can be interpreted as “true”.</p>
+<p>Or sentence can be transformed as:</p>
+<ul class="simple">
+<li><p><em><strong>[CLS]</strong> Born in Nine Mile, Jamaica, Marley began his career in 1963, after forming the <strong>[SEP]</strong> mama of hand typing fast</em>.</p></li>
+</ul>
+<p>This makes no sense, so the model trains to predict a “false” signal in hte possition corresponding to [CLS] token.</p>
+</section>
 </section>
 </section>
 
@@ -781,7 +844,12 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dence-vs-sparce">Dence vs Sparce</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word2vec">Word2Vec</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bert">BERT</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training">Training</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

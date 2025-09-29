@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -460,6 +460,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../linux/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/permission%26ownership.html">Permission&amp;Ownership</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/archiving.html">Archiving</a></li>
 </ul>
 </details></li>
@@ -521,6 +522,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/clouds.html">Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/npm.html">NPM</a></li>
 </ul>
 
     </div>
@@ -684,13 +686,21 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-processing">Data processing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standartization">Standartization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-encoding">Categorical encoding</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-data">Splitting data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiclass">Multiclass</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameter-tuning">Hyperparameter tuning</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-mechanisms">DL mechanisms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-vision">Computer Vision</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nlp">NLP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-deployment">Model deployment</a></li>
 </ul>
             </nav>
         </div>
@@ -705,6 +715,60 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="data-science">
 <h1>Data science<a class="headerlink" href="#data-science" title="Link to this heading">#</a></h1>
 <p>Data science is a field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from the structured and unstructured data.</p>
+<section id="data-processing">
+<h2>Data processing<a class="headerlink" href="#data-processing" title="Link to this heading">#</a></h2>
+<p>There are methods for preparing data for model fitting that can improve the final model’s performance.</p>
+<section id="standartization">
+<h3>Standartization<a class="headerlink" href="#standartization" title="Link to this heading">#</a></h3>
+<p><strong>Standartization</strong>: Makes the mean value of the data 0 and hte strandard deviation 1.</p>
+<p>Sometimes confusion arises regarding the terms <em>standardization</em> and <em>normalization</em>. <strong>Normalization</strong> involves adjusting data to a fixed range.</p>
+<p>The following benefits result from performing the standardization:</p>
+<ul class="simple">
+<li><p>Better Interpretability of the model.</p></li>
+<li><p>Prevention of Model Biases to the fiatures with higher scale.</p></li>
+<li><p>Enhanced Convergence: makes the values of a loss function is more controllable.</p></li>
+</ul>
+<p>There are methods that certainly require the standardization of the data:</p>
+<ul class="simple">
+<li><p>Liear Models.</p></li>
+<li><p>Support Vector Machines (SVM).</p></li>
+<li><p>K-Nearest Neighbours (KNN).</p></li>
+<li><p>Neural networks.</p></li>
+</ul>
+</section>
+<section id="categorical-encoding">
+<h3>Categorical encoding<a class="headerlink" href="#categorical-encoding" title="Link to this heading">#</a></h3>
+<p>Most of the machine learning approaches do not allow the use of categorical features. However, there are approaches that can convert them into a numerical form:</p>
+<ul class="simple">
+<li><p><strong>One-Hot Encoding</strong>: Create a binary variable for each category. The variable takes a value of 1 if the corresponding value appears in the original column and 0 otherwise.</p></li>
+<li><p><strong>Label encoding</strong>: Assigns an integer to each category.</p></li>
+<li><p><strong>Target encoding</strong>: Assigns a signle value to the target values that corresponds to the encoded category.</p></li>
+<li><p><strong>Embeddings</strong>: Assigns a special vector to each category that considers the relationships between the encoded categories.</p></li>
+</ul>
+</section>
+</section>
+<section id="splitting-data">
+<h2>Splitting data<a class="headerlink" href="#splitting-data" title="Link to this heading">#</a></h2>
+<p>A crusial step in validating the machine learning model is splitting the data: the model is trained on the one split and validated on the other. This approach allows ensures that the model’s good performance isn’t just due to overfitting - memorizing the entire training dataset - but rather, it’s due to the identification of general rules that accurately describe the process under consideration.</p>
+<p>In terms of data splitting, 3 subsets of data are usually created:</p>
+<ul class="simple">
+<li><p><strong>train</strong>: a set of data that is used training a model.</p></li>
+<li><p><strong>valid</strong>: a set of data on which all the different models will be estimated during the experimentation phase.</p></li>
+<li><p><strong>test</strong>: a set of data that is used to estimate the final model. This step is necessary to eliminate the bias associated with the process of selecting optimal hyperparameters.</p></li>
+</ul>
+<p><strong>Sampling</strong> is an approach for selecting samples from each group. There are a few approaches that are reasonable in most cases:</p>
+<ul class="simple">
+<li><p><strong>Random</strong>: Select points at random for different group.</p></li>
+<li><p><strong>Stratified</strong>: Each split has a proportional representation of the specified groups, as in the original dataset.</p></li>
+<li><p><strong>Cluster</strong>: Selects the entire group instead of individual points.</p></li>
+</ul>
+<p><strong>Cross-validation</strong> is an approach in which a train-test split is performed multiple times. Each time, the model is trained from scratch using each training set and evaluated using each testing set. There are few typicall approaches how to perform a cross-validation:</p>
+<ul class="simple">
+<li><p><strong>K-Fold</strong>: Define <span class="math notranslate nohighlight">\(k\)</span> different, non-overlapping test subsets. The remaining data for each test subset is considered training data.</p></li>
+<li><p><strong>Stratified K-Fold</strong>: In each train-test split, there is a strata that are proportional to those in the entire dataset.</p></li>
+<li><p><strong>Time-series</strong>: In each split, the data is separated according to the timming of the observations. Earlier data goes to the training set, and later data goes to the test set.</p></li>
+</ul>
+</section>
 <section id="classification">
 <h2>Classification<a class="headerlink" href="#classification" title="Link to this heading">#</a></h2>
 <p>Classification is a set of supervised machine learning tasks that are supposed to predict the lable to which a particular object corresponds.</p>
@@ -721,6 +785,17 @@ document.write(`
 <li><p><strong>Multinomial</strong> builds a transformation of the input data to produce a vector containing a score that describes the likelihood of each class to correspond to the given <span class="math notranslate nohighlight">\(x\)</span>: <span class="math notranslate nohighlight">\(f(x) = \left[P(y=1|x), P(y=2|x), \ldots, P(y=n|x)\right]\)</span>.</p></li>
 </ul>
 </section>
+</section>
+<section id="hyperparameter-tuning">
+<h2>Hyperparameter tuning<a class="headerlink" href="#hyperparameter-tuning" title="Link to this heading">#</a></h2>
+<p><strong>Hyperparameter</strong> is a parameter whose values is used to control the training process.</p>
+<p><strong>Hyperparameter tuning</strong> is the process of adjusting the hyperparameters of a model to find the best configuration that maximizes its performance on a given dataset.</p>
+<p>There are three typical approaches to perform a hyperparameter search:</p>
+<ul class="simple">
+<li><p><strong>Grid Search</strong>: For each hyperparameter, a set of possible values is defined, and the algorithm tries all possible combinations.</p></li>
+<li><p><strong>Random Serach</strong>: Random selection of the combinations of hyperparameters.</p></li>
+<li><p><strong>Bayesian Optimization</strong>: A set of approaches that introduces a probability model of the objective function. These approaches guide the search based on previous evaluations.</p></li>
+</ul>
 </section>
 <section id="dl-mechanisms">
 <h2>DL mechanisms<a class="headerlink" href="#dl-mechanisms" title="Link to this heading">#</a></h2>
@@ -752,6 +827,42 @@ document.write(`
 <li><p>Texts generation.</p></li>
 </ul>
 <p>For more details, check the <a class="reference internal" href="nlp.html"><span class="std std-doc">NLP</span></a> page.</p>
+</section>
+<section id="model-deployment">
+<h2>Model deployment<a class="headerlink" href="#model-deployment" title="Link to this heading">#</a></h2>
+<p>There are a few methods for machine learning model deployment. The following table lists and describes them:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Deployment Method</p></th>
+<th class="head"><p>Throughput</p></th>
+<th class="head"><p>Latency</p></th>
+<th class="head"><p>Example Application</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Batch</p></td>
+<td><p>High</p></td>
+<td><p>High (hours to days)</p></td>
+<td><p>Periodic customer churn prediction</p></td>
+</tr>
+<tr class="row-odd"><td><p>Streaming</p></td>
+<td><p>Moderate</p></td>
+<td><p>Moderate (seconds to minutes)</p></td>
+<td><p>Dynamic pricing application</p></td>
+</tr>
+<tr class="row-even"><td><p>Real-time</p></td>
+<td><p>Low</p></td>
+<td><p>Low (milliseconds)</p></td>
+<td><p>Recommendation systems &amp; Chatbot</p></td>
+</tr>
+<tr class="row-odd"><td><p>Edge/Embedded</p></td>
+<td><p>Low</p></td>
+<td><p>Low (Dependent on device processing power)</p></td>
+<td><p>IoT Applications. Farm sensor for detecting humidity</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 </section>
 
@@ -819,13 +930,21 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-processing">Data processing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standartization">Standartization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-encoding">Categorical encoding</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-data">Splitting data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiclass">Multiclass</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameter-tuning">Hyperparameter tuning</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-mechanisms">DL mechanisms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-vision">Computer Vision</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nlp">NLP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-deployment">Model deployment</a></li>
 </ul>
   </nav></div>
 

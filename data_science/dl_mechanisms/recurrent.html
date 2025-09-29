@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -460,6 +460,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/permission%26ownership.html">Permission&amp;Ownership</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/archiving.html">Archiving</a></li>
 </ul>
 </details></li>
@@ -521,6 +522,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../other/kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/clouds.html">Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/npm.html">NPM</a></li>
 </ul>
 
     </div>
@@ -684,7 +686,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#realization-on-python">Realization on python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classic">Classic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#realization-on-python">Realization on python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lstm">LSTM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forget-gate">Forget gate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-gate">Input gate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-update">Memory update</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-gate">Output gate</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -702,7 +714,9 @@ document.write(`
 <p>The key idea is to create a mechanism where each input affects the processing and outcome of subsequent inputs.</p>
 <p><img alt="" src="../../_images/recurrent_schema.svg" /></p>
 <p>An RNN is essentially a single layer. At each step, it uses <span class="math notranslate nohighlight">\(h_{t-1}\)</span>, a special state vector from the previous step.</p>
-<p>Strictly speaking, the deduction is as follows:</p>
+<section id="classic">
+<h2>Classic<a class="headerlink" href="#classic" title="Link to this heading">#</a></h2>
+<p>The computation that lays behind the classical RNN can be written using the following formula:</p>
 <div class="math notranslate nohighlight">
 \[h_t = f(x_t W^T_1 + b_1 + h_{t-1} W^T_2 + b_2)\]</div>
 <p>Where:</p>
@@ -715,8 +729,12 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(b_2\)</span>: bias associated with the state.</p></li>
 <li><p><span class="math notranslate nohighlight">\(f\)</span>: activation function, typically a hyperbolic tangent.</p></li>
 </ul>
+<p>Really popular wa to visualise RNN transformation is following:</p>
+<p><img alt="" src="data_science/dl_mechanisms/recurrent_files/Basic%20RNN%20schema.svg" /></p>
+<p>It is assumed that to the hidden state <span class="math notranslate nohighlight">\(h_t\)</span> can be applied linear transformation, <span class="math notranslate nohighlight">\(O\)</span>, that brings it to the expected dimensionality if this element is to be used in the subsequent steps.</p>
+<p>It’s important to understand this approach to visualization because as it is widely used to describe the RNN’s modifications.</p>
 <section id="realization-on-python">
-<h2>Realization on python<a class="headerlink" href="#realization-on-python" title="Link to this heading">#</a></h2>
+<h3>Realization on python<a class="headerlink" href="#realization-on-python" title="Link to this heading">#</a></h3>
 <p>In this section, we will step by step implement the computations performed by a recurrent layer and compare them with <code class="docutils literal notranslate"><span class="pre">torch.nn.RNN</span></code> as the reference.</p>
 <p>The following cell defines the parameters of the recurrent procedure that we will use as an example.</p>
 <p>We have:</p>
@@ -881,6 +899,66 @@ document.write(`
 </div>
 </section>
 </section>
+<section id="lstm">
+<h2>LSTM<a class="headerlink" href="#lstm" title="Link to this heading">#</a></h2>
+<p>Long Short-Term Memory (LSTM) is the RNN modification that solves the classic RNN problem of “forgetting” information associated with early sequence elements. LSTM introduces a long-term memory vector <span class="math notranslate nohighlight">\(C_t\)</span> which selectevely update with each new element of the input sequence.</p>
+<p>To perform the update the information stored in the long-term memory, the mechanisms known as “gates” are introduced:</p>
+<ul class="simple">
+<li><p><strong>Forget gate</strong>: clears useless information from the <span class="math notranslate nohighlight">\(C_t\)</span>.</p></li>
+<li><p><strong>Input gate</strong>: defines which of the new information must be added to the <span class="math notranslate nohighlight">\(C_t\)</span>.</p></li>
+</ul>
+<p>There are also <strong>output gate</strong> that prepare information for subsequent steps just like classical RNN transformation.</p>
+<section id="forget-gate">
+<h3>Forget gate<a class="headerlink" href="#forget-gate" title="Link to this heading">#</a></h3>
+<p>Forgate gate is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[f_t = \sigma\left(W^f_1 x_{t-1} + W^f_2 h_{t-1} + b^f\right)\]</div>
+<p>Here: The matrices of parameters, <span class="math notranslate nohighlight">\(W^f_1\)</span>, <span class="math notranslate nohighlight">\(W^f_2\)</span> and <span class="math notranslate nohighlight">\(b^f\)</span>, are learnable.</p>
+<p>It’s a really similar idea like to the classic RNN. However, it is crusial to use the sigmoid function as the activation here: this can cause some elements to become very close to zero as <span class="math notranslate nohighlight">\(f_t \in [0,1]\)</span>. The idea is that it should be multiplied by the long-term memory vector from the previous step, <span class="math notranslate nohighlight">\(C_{t-1}\)</span>, and elements that gate “wants to delete” will be removed from the <span class="math notranslate nohighlight">\(C_t\)</span>.</p>
+</section>
+<section id="input-gate">
+<h3>Input gate<a class="headerlink" href="#input-gate" title="Link to this heading">#</a></h3>
+<p>Consist of two elements:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+i_t = \sigma\left(W^i_1 x_{t-1} + W^i_2 h_{t-1} + b^i\right), \\
+i_t \in [0, 1]
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\tilde{c}_t = \tanh\left(W^c_1 x_{t-1} + W^c_2 h_{t-1} + b^c\right), \\
+\tilde{c}_t \in [-1, 1]
+\end{split}\]</div>
+<p>Here <span class="math notranslate nohighlight">\(W^i_1\)</span>, <span class="math notranslate nohighlight">\(W^i_2\)</span>, <span class="math notranslate nohighlight">\(b^i\)</span>, <span class="math notranslate nohighlight">\(W^c_1\)</span>, <span class="math notranslate nohighlight">\(W^c_2\)</span> and <span class="math notranslate nohighlight">\(b^c\)</span> are learnable matrices.</p>
+<p>The output of the gate is:</p>
+<div class="math notranslate nohighlight">
+\[I_t = i_t \odot \tilde{c}_t\]</div>
+<p>The intucion behind that is following:</p>
+<ul class="simple">
+<li><p>The <span class="math notranslate nohighlight">\(i_t\)</span> vector is produced by a sigmoid transformation. This property enables vector to remove “unsignificant” information from the vector with which it element-wise multipliedit elemnt-wise producted with.</p></li>
+<li><p>The vector, <span class="math notranslate nohighlight">\(\tilde{c}_t\)</span>, is produced by hiperbolic tangent transformation, taking values from -1 to 1. It incodes all the information extracted from the element of the processed sequence under consideration.</p></li>
+</ul>
+</section>
+<section id="memory-update">
+<h3>Memory update<a class="headerlink" href="#memory-update" title="Link to this heading">#</a></h3>
+<p>According to the previous steps, the long-term memory vector will be updated using the following formula:</p>
+<div class="math notranslate nohighlight">
+\[C_t = C_{t-1} \odot f_t + I_t\]</div>
+<p>The component <span class="math notranslate nohighlight">\(C_{t-1} \odot f_t\)</span> removes the useless information from the <span class="math notranslate nohighlight">\(C_t\)</span>. <span class="math notranslate nohighlight">\(I_t\)</span> adds important information loaded from this step.</p>
+</section>
+<section id="output-gate">
+<h3>Output gate<a class="headerlink" href="#output-gate" title="Link to this heading">#</a></h3>
+<p>It produces the output of the model, whether it will be used in the following LSTM block or by something else. Mathematically, this can be written as following:</p>
+<div class="math notranslate nohighlight">
+\[
+h_t = \sigma\left(W_1^o x_{t-1} + W_2^o h_{t-1} + b^o\right) \odot \tanh(C_t),
+h_t \in [0, 1]
+\]</div>
+<p>Here: The matrices of parameters, <span class="math notranslate nohighlight">\(W^o_1\)</span>, <span class="math notranslate nohighlight">\(W^o_2\)</span> and <span class="math notranslate nohighlight">\(b^o\)</span>, are learnable.</p>
+<p>Using the same logic as was used in the other gates, this stage determines which exactly information from the <span class="math notranslate nohighlight">\(C_{t}\)</span> must be included in the outputs of the <span class="math notranslate nohighlight">\(t\)</span>-th step.</p>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -946,7 +1024,17 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#realization-on-python">Realization on python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classic">Classic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#realization-on-python">Realization on python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lstm">LSTM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forget-gate">Forget gate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-gate">Input gate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-update">Memory update</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-gate">Output gate</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

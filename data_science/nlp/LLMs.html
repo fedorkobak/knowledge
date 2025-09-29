@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -460,6 +460,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/permission%26ownership.html">Permission&amp;Ownership</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/archiving.html">Archiving</a></li>
 </ul>
 </details></li>
@@ -521,6 +522,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../other/kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/clouds.html">Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/npm.html">NPM</a></li>
 </ul>
 
     </div>
@@ -690,6 +692,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompting-techniques">Prompting techniques</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-compatibility">OpenAI compatibility</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag">RAG</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp">MCP</a></li>
@@ -805,6 +808,93 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 <p><strong>Step-back prompting</strong>: Two prompts are provided: a spefic prompt and a more general prompt. The more general prompt ussually asks about typical approaches to the issue described in the specific prompt. The second prompt includes the model’s answer to the general prompt as context and the specific prompt as the taks.</p>
 <p><strong>Chain of Thought (CoT)</strong>: A technique in which the model is asked to solve a task step by step. In the most basic implementation, the prompt literally asks the model to solve the problem “step by step”.</p>
 </section>
+</section>
+<section id="openai-compatibility">
+<h2>OpenAI compatibility<a class="headerlink" href="#openai-compatibility" title="Link to this heading">#</a></h2>
+<p>The principles behind openAI’s API have already become the industry standard. If an API OpenAI compatabile, it means you can communicate with it using the same format used by the OpenAI API.</p>
+<hr class="docutils" />
+<p>For example, the following cell sends a request to the Ollama server launched on port 11434 port with the pulled <code class="docutils literal notranslate"><span class="pre">llama3.2:1b</span></code> model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ans</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="s2">&quot;http://localhost:11434/v1/chat/completions&quot;</span><span class="p">,</span>
+    <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;llama3.2:1b&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You&#39;re an assistant&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of GB?&quot;</span><span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ans</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;id&#39;: &#39;chatcmpl-616&#39;,
+ &#39;object&#39;: &#39;chat.completion&#39;,
+ &#39;created&#39;: 1758182631,
+ &#39;model&#39;: &#39;llama3.2:1b&#39;,
+ &#39;system_fingerprint&#39;: &#39;fp_ollama&#39;,
+ &#39;choices&#39;: [{&#39;index&#39;: 0,
+   &#39;message&#39;: {&#39;role&#39;: &#39;assistant&#39;,
+    &#39;content&#39;: &#39;The capital of the United Kingdom, which includes England, Scotland, Wales, and Northern Ireland, is London.&#39;},
+   &#39;finish_reason&#39;: &#39;stop&#39;}],
+ &#39;usage&#39;: {&#39;prompt_tokens&#39;: 36, &#39;completion_tokens&#39;: 23, &#39;total_tokens&#39;: 59}}
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell shows the request sent to the model that was deployed with the <code class="docutils literal notranslate"><span class="pre">llama.cpp</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ans</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="s2">&quot;http://localhost:5893/v1/chat/completions&quot;</span><span class="p">,</span>
+    <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;You&#39;re an assistant&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of GB?&quot;</span><span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ans</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;choices&#39;: [{&#39;finish_reason&#39;: &#39;stop&#39;,
+   &#39;index&#39;: 0,
+   &#39;message&#39;: {&#39;role&#39;: &#39;assistant&#39;,
+    &#39;content&#39;: &#39;The capital of GB is London. 😊&#39;}}],
+ &#39;created&#39;: 1758182635,
+ &#39;model&#39;: &#39;gpt-3.5-turbo&#39;,
+ &#39;system_fingerprint&#39;: &#39;b6503-62c3b645&#39;,
+ &#39;object&#39;: &#39;chat.completion&#39;,
+ &#39;usage&#39;: {&#39;completion_tokens&#39;: 9, &#39;prompt_tokens&#39;: 22, &#39;total_tokens&#39;: 31},
+ &#39;id&#39;: &#39;chatcmpl-PGsByExDI96hgvHJ9SIGaAOWVmgmjaDe&#39;,
+ &#39;timings&#39;: {&#39;cache_n&#39;: 21,
+  &#39;prompt_n&#39;: 1,
+  &#39;prompt_ms&#39;: 35.968,
+  &#39;prompt_per_token_ms&#39;: 35.968,
+  &#39;prompt_per_second&#39;: 27.802491103202843,
+  &#39;predicted_n&#39;: 9,
+  &#39;predicted_ms&#39;: 232.494,
+  &#39;predicted_per_token_ms&#39;: 25.832666666666668,
+  &#39;predicted_per_second&#39;: 38.71067640455237}}
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note:</strong> The model is not specified for llama.cpp because the endpoint created for the example only serves one model.</p>
 </section>
 <section id="rag">
 <h2>RAG<a class="headerlink" href="#rag" title="Link to this heading">#</a></h2>
@@ -958,6 +1048,7 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompting-techniques">Prompting techniques</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-compatibility">OpenAI compatibility</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag">RAG</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp">MCP</a></li>

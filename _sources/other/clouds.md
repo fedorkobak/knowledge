@@ -126,3 +126,57 @@ There are two main types of scaling: vertical and horizontal.
 **Vertical** scaling typically involves making existing units more powerful. In the context of computing, it means that the application migrates to machines with more CPU or RAM.
 
 **Horizontal** scaling means that there are new units are added to process typical tasks in parallel. In the context of computing, it means that just more computers are launced.
+
+## Data storages
+
+Consider the main types of data storage.
+
+**Data warehouse**: Stores data from different sources in a well-organized manner. It is perfect for querying and anlisys.
+
+**Data Lakes**: They provide a way to store an unstructured or semi-structured data.
+
+**Lake houses**: Data warehouses built on top of data lakes.
+
+## Databricks
+
+Databricks is a platform that offers many tools for porcessing data.
+
+It integrates with: AWS, Azure and GCP.
+
+The core services are:
+
+- Mozaic AI: For the entire machine learning model lifecycle.
+- DataBricks SQL: Brings data warehousing capabilities to your existing data lakes.
+- Workflows/DLT: data engineering tools: ingesting, ETL, and streaming.
+- AI/BI: tool for data analytics.
+
+**Unity catalog** is a unified governance model for all the data and AI assets within the databricks. Check tutorial [What is Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/).
+
+**Delta Lake** is noting more than a database format that provides transactional guarantees, schema enforcement, and time travel. It is the default table format in Databricks, but on its own, it is just a format with open-source implementations beyond Databricks.
+
+**Feature store** is a special Delta Lake table that provides access to features intended for use in machine learning (ML) models. Built on top of Delta tables, it adds additional metadata, primary keys, constraints, and tracking of feature lieage.
+
+You can manipulate the feature store using the databricks Python SDK, module: `databricks.feature_engineering`. This is not provided with the Databricks Python SDK out of the box - install the separatre [PyPI published package](https://pypi.org/project/databricks-feature-engineering/).
+
+Create the feature store with code:
+
+```python
+from databricks.feature_engineering import FeatureEngineeringClient
+fe = FeatureEngineeringClient()
+
+fe.create_table(
+    name="<catalog>.<schema>.<table name>",
+    primary_keys=["<primary key 1>", "<primary key2>"],
+    df=data,
+    description="This is some sort of description",
+    tags={"source": "bronze", "format": "delta"}
+)
+```
+
+**Data Ingestion**: Databricks uses a **medallion data architecture**, in which data are separated into a few processing phases:
+
+- *Bronze*: Raw data that data engineers apply their ETL pipelines to.
+- *Silver*: Data from the Bronze layer undergoes significant transformation, validation, and cleaning. This layer provides a reliable, single source of truth for enterprise data product.
+- *Gold*: This layer contains highly refined, aggregated, and enriched data that is ready for business intelligence and machine learning applications. It is desined for specific business use cases and provides analytics-ready datasets.
+
+Databricks provides **OpenAI-compatible models** endpoints, so you can access some models using only your databricks credentials. Check more [Get started querying LLMs on Databricks](https://docs.databricks.com/aws/en/large-language-models/llm-serving-intro).
