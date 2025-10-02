@@ -20,3 +20,24 @@ fe.create_table(
     tags={"source": "bronze", "format": "delta"}
 )
 ```
+
+## Jobs&Workflows
+
+Jobs and workflows allows to orchestrate tasks, wich are pieces of code that perform actions on the platform, and build relationships between them.
+
+The following table lists teh ways you can define the databricks tasks.
+
+| Task Type | Description | Primary Use Case |
+| :--- | :--- | :--- |
+| **Notebook Task** | Runs a Databricks notebook written in Python, Scala, SQL, or R. | Executing interactive code, ETL logic, or ML training pipelines. |
+| **Pipeline Task** | Runs a specified Delta Live Tables (DLT) pipeline. | Orchestrating end-to-end declarative ETL/streaming data pipelines. |
+| **SQL File Task** | Executes a SQL script file stored in the workspace or a Git repository. | Running complex SQL transformations, DDL, or DML statements. |
+| **Python Script Task** | Executes a Python file on the cluster using `spark-submit`. | Running standard Python code, often with Spark (PySpark) libraries. |
+| **Python Wheel Task** | Runs a Python function packaged within a Python Wheel (`.whl`) file. | Running production-grade, modular, and version-controlled Python code. |
+| **JAR Task** | Executes a compiled Java or Scala application packaged as a JAR file. | Running compiled, production-ready code, typically for complex logic. |
+| **Spark-Submit Task** | Allows submission of a generic Spark application via the `spark-submit` command. | Running custom or highly specialized Spark applications. |
+| **dbt Task** | Runs one or more `dbt` (data build tool) commands. | Orchestrating and running dbt projects for data transformation. |
+| **Run Job Task** | Executes another Databricks Job as a task. | Creating nested, modular, or reusable workflows (Parent-Child jobs). |
+| **If/Else Condition Task**| Evaluates a condition and controls the execution flow of subsequent tasks. | Adding conditional logic (branching) to a workflow. |
+| **For Each Task** | Iterates over a collection of input values and runs a nested task for each value. | Parallel processing or batch operations over a list of items. |
+| **Dashboard Task** | Updates a Databricks SQL Dashboard. | Automating the refresh of business intelligence dashboards. |
