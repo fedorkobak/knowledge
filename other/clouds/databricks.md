@@ -41,3 +41,12 @@ The following table lists teh ways you can define the databricks tasks.
 | **If/Else Condition Task**| Evaluates a condition and controls the execution flow of subsequent tasks. | Adding conditional logic (branching) to a workflow. |
 | **For Each Task** | Iterates over a collection of input values and runs a nested task for each value. | Parallel processing or batch operations over a list of items. |
 | **Dashboard Task** | Updates a Databricks SQL Dashboard. | Automating the refresh of business intelligence dashboards. |
+
+### Tasks communication
+
+To communicate between tasks you can set and read "tasks values".
+
+In python code use for that [dbutils.jobs.tasksValue](https://docs.databricks.com/aws/en/dev-tools/databricks-utils#taskvalues-subutility-dbutilsjobstaskvalues):
+
+- `dbutils.jobs.taskValues.set(key="<key>", value="<value>")` for setting a value.
+- `dbutils.jobs.taskValues.get(taskKey="<name of the previous task>", key='key_from_script')` for reading the value.
