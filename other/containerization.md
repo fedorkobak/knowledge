@@ -6,6 +6,18 @@ This page explains the theory behind the containerization.
 
 **Container image** bundles an application along with its runtimes, libraries, and dependencies together.
 
+**Container runtime** is the tool that allows to start containers, there are following popular options:
+
+| Runtime | Type/Level | Primary Use Case(s) | Key Feature(s) | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Docker Engine** | High-Level Platform | Development, end-to-end container workflows | Integrated image building, user-friendly CLI, large ecosystem. | Built on top of `containerd` and `runc`. |
+| **containerd** | Mid-Level Runtime | Container lifecycle management (used by Kubernetes) | Manages image transfer, storage, and container execution. | CNCF graduated project. Used as the default runtime for modern Kubernetes. |
+| **CRI-O** | High-Level Runtime | Optimized for Kubernetes | Implements the Kubernetes Container Runtime Interface (CRI) cleanly. | Minimalistic, focuses only on being a Kubernetes runtime. |
+| **runc** | Low-Level Runtime | Spawning and running containers | Implements the OCI Runtime Specification. | The fundamental, process-level component used by almost all other runtimes. |
+| **Podman** | High-Level Platform | Daemonless container management, Docker replacement | Daemonless architecture, rootless mode, native pod management. | CLI is largely compatible with Docker's. |
+| **Kata Containers** | Sandboxed/Virtualized | Enhanced security and isolation | Runs containers within lightweight Virtual Machines (VMs). | Provides stronger separation from the host kernel. |
+| **gVisor (runsc)** | Sandboxed Runtime | Enhanced security | Intercepts system calls using an application kernel (runsc). | A secure layer between the container and the host kernel. |
+
 **Container orchestrator** is a tool that groups containers together and meets the following requirements:
 
 - Fault-tolerance.
