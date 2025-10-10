@@ -32,3 +32,25 @@ Most of them are able to:
 - Group sets of containers and bind the to load-balancing construct.
 - Manage and optimize the resources usage.
 - Allow for implementation of policies to secure access to applications running inside containers.
+
+## Docker
+
+Is the most popular tool for defining images and running containers. Check out the corresponding [page](../docker/overview.ipynb).
+
+## Kubernetes
+
+Kubernetes (kuber, k8s) is a container orchestration tool devoloped by Google based on their internal tool Borg.
+
+Features supported by k8s are:
+
+- **Automatic bin packing**: Kubernetes automatically schedules containers based on resource needs and constraints to maxmize utilization.
+- **Extensibility**: Kubernetes can be extended with custom features without modyfying the source code.
+- **Self-healing**: Kubernetes automatically replaces and reschedules containers from failed nodes.
+- **Horizontal scaling**: Kubernetes scales applications manually or automatically based on CPU or custom metrics.
+- **Service discovery and load balancing**: Containers receive IP address from Kubernetes, while it assigns a DNS to a set of caontainers.
+- **Automated rollouts and rollbacks**: kubernetes seamlessly rechecks the services and updates them it if needed preventing downtime.
+- **Secret and configuration management**.
+- **Storage orchestration**: k8s automatically ads more storage to the containers from the defined sources.
+- **Batch execution**: k8s supports batch execution, long-running jobs, and replaces failed containers.
+
+Check more in the [Kubernetes](kubernetes.ipynb) page.
