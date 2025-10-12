@@ -156,22 +156,11 @@ The core services are:
 
 **Feature store** is a special Delta Lake table that provides access to features intended for use in machine learning (ML) models. Built on top of Delta tables, it adds additional metadata, primary keys, constraints, and tracking of feature lieage.
 
-You can manipulate the feature store using the databricks Python SDK, module: `databricks.feature_engineering`. This is not provided with the Databricks Python SDK out of the box - install the separatre [PyPI published package](https://pypi.org/project/databricks-feature-engineering/).
+**Integration with [Spark Declarative Pipelines](https://spark.apache.org/docs/4.1.0-preview1/declarative-pipelines-programming-guide.html)**: You can define a special Jupyter notebook, attach it as a source to a Databricks pipeline, and all Spark materialized views that was defined there will be treated as tables by Databricks and updated when the pipeline executes. Also it provides graph visualisation in the Databricks interface.
 
-Create the feature store with code:
+Before spark declarative pipelines was used **dlt (Delta Live Tables)** for the same purpose, therefore, you can meet legacy gode that implements the same things but using exactly `dlt`.
 
-```python
-from databricks.feature_engineering import FeatureEngineeringClient
-fe = FeatureEngineeringClient()
-
-fe.create_table(
-    name="<catalog>.<schema>.<table name>",
-    primary_keys=["<primary key 1>", "<primary key2>"],
-    df=data,
-    description="This is some sort of description",
-    tags={"source": "bronze", "format": "delta"}
-)
-```
+**Note.** The `dlt` package is only available in Databricks. There is another Python framework with the same name, [*dlt (data load tool)*](https://dlthub.com/).
 
 **Data Ingestion**: Databricks uses a **medallion data architecture**, in which data are separated into a few processing phases:
 
@@ -180,3 +169,7 @@ fe.create_table(
 - *Gold*: This layer contains highly refined, aggregated, and enriched data that is ready for business intelligence and machine learning applications. It is desined for specific business use cases and provides analytics-ready datasets.
 
 Databricks provides **OpenAI-compatible models** endpoints, so you can access some models using only your databricks credentials. Check more [Get started querying LLMs on Databricks](https://docs.databricks.com/aws/en/large-language-models/llm-serving-intro).
+
+**Jobs & workflows** allows you to create a automated pipelines. Each job consists of tasks. These tasks can be ralted one another.
+
+Find out more in the [Databricks](clouds/databricks.md) page.
