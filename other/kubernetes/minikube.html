@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Redis" href="../redis.html" />
+    <link rel="next" title="Pods" href="pods.html" />
     <link rel="prev" title="Kubernetes" href="../kubernetes.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -502,6 +502,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../containerization.html">Containerization</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../kubernetes.html">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Minikube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pods.html">Pods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pods_controllers.html">Pods controllers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -698,6 +700,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lifecycle">Lifecycle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profiles">Profiles</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nodes">Nodes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#addons">Addons</a></li>
 </ul>
             </nav>
         </div>
@@ -991,6 +994,71 @@ minikube-m02	192.168.49.3
 </div>
 </div>
 </section>
+<section id="addons">
+<h2>Addons<a class="headerlink" href="#addons" title="Link to this heading">#</a></h2>
+<p>The add-ons are managed in <code class="docutils literal notranslate"><span class="pre">minikube</span></code> by the <code class="docutils literal notranslate"><span class="pre">addons</span></code> commands group:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">addons</span> <span class="pre">list</span></code> to list available addons.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">addons</span> <span class="pre">enable</span> <span class="pre">&lt;name&gt;</span></code> to enable add-on.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell lists available add-ons.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>minikube<span class="w"> </span>addons<span class="w"> </span>list
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌─────────────────────────────┬──────────┬────────────┬────────────────────────────────────────┐
+│         ADDON NAME          │ PROFILE  │   STATUS   │               MAINTAINER               │
+├─────────────────────────────┼──────────┼────────────┼────────────────────────────────────────┤
+│ ambassador                  │ minikube │ disabled   │ 3rd party (Ambassador)                 │
+│ amd-gpu-device-plugin       │ minikube │ disabled   │ 3rd party (AMD)                        │
+│ auto-pause                  │ minikube │ disabled   │ minikube                               │
+│ cloud-spanner               │ minikube │ disabled   │ Google                                 │
+│ csi-hostpath-driver         │ minikube │ disabled   │ Kubernetes                             │
+│ dashboard                   │ minikube │ enabled ✅ │ Kubernetes                             │
+│ default-storageclass        │ minikube │ enabled ✅ │ Kubernetes                             │
+│ efk                         │ minikube │ disabled   │ 3rd party (Elastic)                    │
+│ freshpod                    │ minikube │ disabled   │ Google                                 │
+│ gcp-auth                    │ minikube │ disabled   │ Google                                 │
+│ gvisor                      │ minikube │ disabled   │ minikube                               │
+│ headlamp                    │ minikube │ disabled   │ 3rd party (kinvolk.io)                 │
+│ inaccel                     │ minikube │ disabled   │ 3rd party (InAccel [info@inaccel.com]) │
+│ ingress                     │ minikube │ disabled   │ Kubernetes                             │
+│ ingress-dns                 │ minikube │ disabled   │ minikube                               │
+│ inspektor-gadget            │ minikube │ disabled   │ 3rd party (inspektor-gadget.io)        │
+│ istio                       │ minikube │ disabled   │ 3rd party (Istio)                      │
+│ istio-provisioner           │ minikube │ disabled   │ 3rd party (Istio)                      │
+│ kong                        │ minikube │ disabled   │ 3rd party (Kong HQ)                    │
+│ kubeflow                    │ minikube │ disabled   │ 3rd party                              │
+│ kubetail                    │ minikube │ disabled   │ 3rd party (kubetail.com)               │
+│ kubevirt                    │ minikube │ disabled   │ 3rd party (KubeVirt)                   │
+│ logviewer                   │ minikube │ disabled   │ 3rd party (unknown)                    │
+│ metallb                     │ minikube │ disabled   │ 3rd party (MetalLB)                    │
+│ metrics-server              │ minikube │ disabled   │ Kubernetes                             │
+│ nvidia-device-plugin        │ minikube │ disabled   │ 3rd party (NVIDIA)                     │
+│ nvidia-driver-installer     │ minikube │ disabled   │ 3rd party (NVIDIA)                     │
+│ nvidia-gpu-device-plugin    │ minikube │ disabled   │ 3rd party (NVIDIA)                     │
+│ olm                         │ minikube │ disabled   │ 3rd party (Operator Framework)         │
+│ pod-security-policy         │ minikube │ disabled   │ 3rd party (unknown)                    │
+│ portainer                   │ minikube │ disabled   │ 3rd party (Portainer.io)               │
+│ registry                    │ minikube │ disabled   │ minikube                               │
+│ registry-aliases            │ minikube │ disabled   │ 3rd party (unknown)                    │
+│ registry-creds              │ minikube │ disabled   │ 3rd party (UPMC Enterprises)           │
+│ storage-provisioner         │ minikube │ enabled ✅ │ minikube                               │
+│ storage-provisioner-gluster │ minikube │ disabled   │ 3rd party (Gluster)                    │
+│ storage-provisioner-rancher │ minikube │ disabled   │ 3rd party (Rancher)                    │
+│ volcano                     │ minikube │ disabled   │ third-party (volcano)                  │
+│ volumesnapshots             │ minikube │ disabled   │ Kubernetes                             │
+│ yakd                        │ minikube │ disabled   │ 3rd party (marcnuri.com)               │
+└─────────────────────────────┴──────────┴────────────┴────────────────────────────────────────┘
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1033,11 +1101,11 @@ minikube-m02	192.168.49.3
       </div>
     </a>
     <a class="right-next"
-       href="../redis.html"
+       href="pods.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Redis</p>
+        <p class="prev-next-title">Pods</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1060,6 +1128,7 @@ minikube-m02	192.168.49.3
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lifecycle">Lifecycle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#profiles">Profiles</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nodes">Nodes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#addons">Addons</a></li>
 </ul>
   </nav></div>
 

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -502,6 +502,8 @@
 <li class="toctree-l1"><a class="reference internal" href="containerization.html">Containerization</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="kubernetes/minikube.html">Minikube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes/pods.html">Pods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes/pods_controllers.html">Pods controllers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -700,11 +702,22 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minikube">Minikube</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minikube">Minikube</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#autocompletion">Autocompletion</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubectl">kubectl</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-components">Core components</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubectl">kubectl</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-information">Cluster information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proxy">Proxy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods">Pods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods-contorllers">Pods contorllers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling-update">Rolling update</a></li>
 </ul>
             </nav>
         </div>
@@ -748,6 +761,7 @@ document.write(`
 </ul>
 <p>A <strong>pod</strong> is the smallest unit in the Kubernetes. It literally represents an application. In the container runtime, it looks like a group of the containers that are deployed to handle a single application.</p>
 <p><strong>Proxy</strong> is a special kube-proxy application installed on each node, that manages the node’s the network.</p>
+<p>In k8s temrs, a <strong>controller</strong> is a piece of software that periodically checks the status of the cluster and changes it according to it’s configuration.</p>
 <section id="kubelet">
 <h3>Kubelet<a class="headerlink" href="#kubelet" title="Link to this heading">#</a></h3>
 <p>A Kubelet is a special process in each node, that receives pod information from the API server and runs it in the container runtime.</p>
@@ -813,6 +827,10 @@ kubeconfig: Configured
 </div>
 </div>
 </div>
+<section id="autocompletion">
+<h4>Autocompletion<a class="headerlink" href="#autocompletion" title="Link to this heading">#</a></h4>
+<p>To set up <code class="docutils literal notranslate"><span class="pre">TAB</span></code> completion, add the script printed to the standard output by <code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">completion</span> <span class="pre">bash</span></code> to the source: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;(minikube</span> <span class="pre">completion</span> <span class="pre">bash)</span></code>. To enable the completion when running the shell, add the command to the <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file: <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">'source</span> <span class="pre">&lt;(minikube</span> <span class="pre">completion</span> <span class="pre">bash)'</span> <span class="pre">&gt;&gt;</span> <span class="pre">~/.bashrc</span></code>.</p>
+</section>
 </section>
 </section>
 <section id="kubectl">
@@ -820,6 +838,7 @@ kubeconfig: Configured
 <p><code class="docutils literal notranslate"><span class="pre">kubectl</span></code> is a command line interface that allows you to interact with Kubernetes.</p>
 <p>Check <a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">installation guide</a> for <code class="docutils literal notranslate"><span class="pre">kubectl</span></code>.</p>
 <p>For me, using the ubuntu option <code class="docutils literal notranslate"><span class="pre">snap</span> <span class="pre">install</span> <span class="pre">kubectl</span> <span class="pre">--classic</span></code> worked well.</p>
+<p>To enable <code class="docutils literal notranslate"><span class="pre">TAB</span></code> completion add <code class="docutils literal notranslate"><span class="pre">source</span></code> the script printed with <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">completion</span> <span class="pre">bash</span></code>: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;(kubectl</span> <span class="pre">completion</span> <span class="pre">bash)</span></code>. To enable completion at the start of the shell, add line into <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file: <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">'source</span> <span class="pre">&lt;(kubectl</span> <span class="pre">completion</span> <span class="pre">bash)'</span> <span class="pre">&gt;&gt;</span> <span class="pre">~/.bashrc</span></code>.</p>
 <p>If you’re using <code class="docutils literal notranslate"><span class="pre">minikube</span></code>, you can access the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> using the command <code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">kubectl</span> <span class="pre">--</span> <span class="pre">&lt;subcommands&gt;</span></code>. This will give you access to <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> for minikube.</p>
 <p><strong>Note:</strong> Even for learning purposes, we’ll use a separate installation of the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code>, as this installation closer to the real-world challanges.</p>
 <hr class="docutils" />
@@ -852,86 +871,362 @@ Server Version: v1.34.0
 </div>
 </div>
 </div>
+<section id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h3>
+<p>The behavior of the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> is typically defined by the configuration file that is located in the <code class="docutils literal notranslate"><span class="pre">~/.kube/config</span></code> directory.</p>
+<hr class="docutils" />
+<p>The following cell displays a few lines of the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> configuration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>~/.kube/config<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /home/user/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Mon, 13 Oct 2025 09:07:40 CEST
+        provider: minikube.sigs.k8s.io
+        version: v1.37.0
+      name: cluster_info
+</pre></div>
+</div>
+</div>
+</div>
 </section>
-<section id="core-components">
-<h2>Core components<a class="headerlink" href="#core-components" title="Link to this heading">#</a></h2>
-<p>Here we will discuss components of the kubernetes:</p>
+<section id="cluster-information">
+<h3>Cluster information<a class="headerlink" href="#cluster-information" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">cluster-info</span></code> command displays the information about the cluster that <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> currently connected to.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>cluster-info
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kubernetes control plane is running at https://192.168.49.2:8443
+CoreDNS is running at https://192.168.49.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use &#39;kubectl cluster-info dump&#39;.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="proxy">
+<h3>Proxy<a class="headerlink" href="#proxy" title="Link to this heading">#</a></h3>
+<p>Since <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> is just convenient wrapper around the Kubernetes API, it can communicate with the kubernetes API and allow you to create a locally hosted proxy for it. Use the <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">proxy</span></code> command for this.</p>
+<hr class="docutils" />
+<p>The following cell runs the proxy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>proxy<span class="w"> </span><span class="p">&amp;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">proxy_pid</span><span class="o">=</span><span class="nv">$!</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 101050
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now you are able to access api:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>localhost:8001/api
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting to serve on 127.0.0.1:8001
+{
+  &quot;kind&quot;: &quot;APIVersions&quot;,
+  &quot;versions&quot;: [
+    &quot;v1&quot;
+  ],
+  &quot;serverAddressByClientCIDRs&quot;: [
+    {
+      &quot;clientCIDR&quot;: &quot;0.0.0.0/0&quot;,
+      &quot;serverAddress&quot;: &quot;192.168.49.2:8443&quot;
+    }
+  ]
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">kill</span><span class="w"> </span><span class="nv">$proxy_pid</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pods">
+<h2>Pods<a class="headerlink" href="#pods" title="Link to this heading">#</a></h2>
+<p>In k8s, a pod is an abstraction representing an application. In the container runtime, it is ususally represented by a set of the containers/volumes in the container runtime.</p>
+<p>The are following operations that you can do with the pods:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Opearation</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">kubectl</span></code> command</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Create</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">create</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Run</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">run</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Get pods</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Describe</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">describe</span> <span class="pre">pod</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<p>The following cell uses the command <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">run</span></code> to create and run the pod.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>run<span class="w"> </span>nginx-pod<span class="w"> </span>--image<span class="o">=</span>nginx:1.22.1
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pod/nginx-pod created
+</pre></div>
+</div>
+</div>
+</div>
+<p>The corresponding pod appears in the output of the <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME        READY   STATUS    RESTARTS   AGE
+nginx-pod   1/1     Running   0          1s
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use the command <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">delete</span> <span class="pre">pod</span> <span class="pre">&lt;pod</span> <span class="pre">name&gt;</span></code> to delete the pod. The following cell deletes the pod that was created earlier and lists the pods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>nginx-pod
+kubectl<span class="w"> </span>get<span class="w"> </span>pods
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pod &quot;nginx-pod&quot; deleted from default namespace
+No resources found in default namespace.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="labels">
+<h2>Labels<a class="headerlink" href="#labels" title="Link to this heading">#</a></h2>
+<p>A label is a mechanism for grouping resources. The core <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> patterns that can be useful when working with labels are:</p>
 <ul class="simple">
-<li><p><strong>Pod</strong> is a group of containers.</p></li>
-<li><p><strong>Deployment</strong> is an abstraction that manages pods.</p></li>
-<li><p><strong>Service</strong> is pod that was exposed.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">label</span></code> command allows to assign lables to the resource.</p></li>
+<li><p>Many <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> subcommands have an <code class="docutils literal notranslate"><span class="pre">-l</span></code> flag that specifies a pattern for searching labels.</p></li>
 </ul>
-<p>Creating <code class="docutils literal notranslate"><span class="pre">hello-node</span></code> deployment.</p>
+<p>Check more in the <a class="reference external" href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/">Labels and Selectors</a> section of the official documentation.</p>
+<hr class="docutils" />
+<p>The following cell runs two pods, to which we will apply the labels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!kubectl<span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span>hello-node<span class="w"> </span>--image<span class="o">=</span>registry.k8s.io/e2e-test-images/agnhost:2.39<span class="w"> </span>--<span class="w"> </span>/agnhost<span class="w"> </span>netexec<span class="w"> </span>--http-port<span class="o">=</span><span class="m">8080</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>run<span class="w"> </span>nginx-pod<span class="w"> </span>--image<span class="o">=</span>nginx:1.22.1
+kubectl<span class="w"> </span>run<span class="w"> </span>ubuntu-pod<span class="w"> </span>--image<span class="o">=</span>ubuntu:22.04
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>deployment.apps/hello-node created
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error from server (AlreadyExists): pods &quot;nginx-pod&quot; already exists
+pod/ubuntu-pod created
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now we can access the deployments list:</p>
+<p>The next cell adds labels to the containers runned earlier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!kubectl<span class="w"> </span>get<span class="w"> </span>deployments
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>label<span class="w"> </span>pod<span class="w"> </span>nginx-pod<span class="w"> </span><span class="nv">hello</span><span class="o">=</span>world
+kubectl<span class="w"> </span>label<span class="w"> </span>pod<span class="w"> </span>ubuntu-pod<span class="w"> </span><span class="nv">hello</span><span class="o">=</span>hell
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME         READY   UP-TO-DATE   AVAILABLE   AGE
-hello-node   1/1     1            1           51s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pod/nginx-pod labeled
+pod/ubuntu-pod labeled
 </pre></div>
 </div>
 </div>
 </div>
-<p>It have a pod that can be listed using the appropriate command:</p>
+<p>The following cell selects the <code class="docutils literal notranslate"><span class="pre">hello=world</span></code> labeled containers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!kubectl<span class="w"> </span>get<span class="w"> </span>pods
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-l<span class="w"> </span><span class="nv">hello</span><span class="o">=</span>world
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME                          READY   STATUS    RESTARTS   AGE
-hello-node-55fdcd95bf-v9w97   1/1     Running   0          2m18s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME        READY   STATUS    RESTARTS   AGE
+nginx-pod   1/1     Running   0          3m28s
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now we only have a basic service that runs on k8s.</p>
+<p>In constrast, following code represents <code class="docutils literal notranslate"><span class="pre">hello=hell</span></code> labled containers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!kubectl<span class="w"> </span>get<span class="w"> </span>services
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-l<span class="w"> </span><span class="nv">hello</span><span class="o">=</span>hell
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   5m17s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME         READY   STATUS             RESTARTS      AGE
+ubuntu-pod   0/1     CrashLoopBackOff   5 (29s ago)   3m14s
 </pre></div>
 </div>
 </div>
 </div>
-<p>But after exposing <code class="docutils literal notranslate"><span class="pre">hello-node</span></code> we’ll have one more service.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%%bash
-kubectl<span class="w"> </span>expose<span class="w"> </span>deployment<span class="w"> </span>hello-node<span class="w"> </span>--type<span class="o">=</span>LoadBalancer<span class="w"> </span>--port<span class="o">=</span><span class="m">8080</span>
-kubectl<span class="w"> </span>get<span class="w"> </span>services
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>delete<span class="w"> </span>pods<span class="w"> </span>nginx-pod<span class="w"> </span>ubuntu-pod
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error from server (AlreadyExists): services &quot;hello-node&quot; already exists
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pod &quot;nginx-pod&quot; deleted from default namespace
+pod &quot;ubuntu-pod&quot; deleted from default namespace
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME         TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-hello-node   LoadBalancer   10.97.143.213   &lt;pending&gt;     8080:32657/TCP   90s
-kubernetes   ClusterIP      10.96.0.1       &lt;none&gt;        443/TCP          7m57s
+</div>
+</div>
+</section>
+<section id="pods-contorllers">
+<h2>Pods contorllers<a class="headerlink" href="#pods-contorllers" title="Link to this heading">#</a></h2>
+<p>There is a set of controllers that manages the pods running in the different clusters. There are following types of the built in k8s controllers:</p>
+<ul class="simple">
+<li><p><strong>ReplicaSet</strong>: Keeps a given number of pods of the same type in the cluster.</p></li>
+<li><p><strong>Deployment</strong>: Extends the RepcicaSet. Hides some details of configuration. It allows the use of a rolling update mechanism.</p></li>
+<li><p><strong>DemonSet</strong>: Deploys a single instance of the given pod on each node. Typical use is deploying monitoring, proxy, networking etc. daemons.</p></li>
+<li><p><strong>StatefulSet</strong>: Maintains a sticky identity for each deployed Pods. This is useful for managing applications that need persistent storage or a stable, unique network identity.</p></li>
+</ul>
+<p>Check more in <a class="reference internal" href="kubernetes/pods_controllers.html"><span class="std std-doc">Pods controllers</span></a> page.</p>
+</section>
+<section id="rolling-update">
+<h2>Rolling update<a class="headerlink" href="#rolling-update" title="Link to this heading">#</a></h2>
+<p>If you update the configuration of a Deployment, DaemonSets or StatefulSets, you’re supposed to run a process that will deploy new configuration. K8s have for that <strong>rolling update</strong> strategy: it keeps old replica set until it ensures that new version of the application is healthy and only after that it moves the payload to the freashly deployed version.</p>
+<p>Versioons of the application are called <strong>revisions</strong>.</p>
+<p>K8s keeps 10 previous revisions, allowing you are able to <strong>roll back</strong> to an earlier version.</p>
+<hr class="docutils" />
+<p>Consider the rolling update process and how it looks like from the k8s perspective.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span>some-deployment<span class="w"> </span>--image<span class="o">=</span>nginx:1.20.1<span class="w"> </span>--replicas<span class="o">=</span><span class="m">2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>deployment.apps/some-deployment created
+</pre></div>
+</div>
+</div>
+</div>
+<p>It obviously creates the corresponding ReplicaSet.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>rs
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME                         DESIRED   CURRENT   READY   AGE
+some-deployment-544dbb68bb   2         2         2       1s
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pods received the specified container version.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>some-deployment<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].spec.containers[0].image}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>nginx:1.20.1
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell updates the image that is used for the deployemnt.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span><span class="nb">set</span><span class="w"> </span>image<span class="w"> </span>deployment<span class="w"> </span>some-deployment<span class="w"> </span><span class="nv">nginx</span><span class="o">=</span>nginx:1.21.6
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>deployment.apps/some-deployment image updated
+</pre></div>
+</div>
+</div>
+</div>
+<p>Surprisingly, there are now there are two ReplicaSets, but only one is used.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>rs
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME                         DESIRED   CURRENT   READY   AGE
+some-deployment-544dbb68bb   0         0         0       23s
+some-deployment-8fb6f4fcb    2         2         2       14s
+</pre></div>
+</div>
+</div>
+</div>
+<p>One ReplicaSet corresponds to the initial deployment, while another corresponds to the updated revision.</p>
+<p>Make sure that the application uses the updated version of Nginx.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>some-deployment<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].spec.containers[0].image}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>nginx:1.21.6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>delete<span class="w"> </span>deployment<span class="w"> </span>some-deployment
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>deployment.apps &quot;some-deployment&quot; deleted from default namespace
 </pre></div>
 </div>
 </div>
@@ -1010,11 +1305,22 @@ kubernetes   ClusterIP      10.96.0.1       &lt;none&gt;        443/TCP         
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minikube">Minikube</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minikube">Minikube</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#autocompletion">Autocompletion</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubectl">kubectl</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-components">Core components</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubectl">kubectl</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-information">Cluster information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proxy">Proxy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods">Pods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods-contorllers">Pods contorllers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling-update">Rolling update</a></li>
 </ul>
   </nav></div>
 

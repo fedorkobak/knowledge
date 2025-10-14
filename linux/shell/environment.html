@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -502,6 +502,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../other/containerization.html">Containerization</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../other/kubernetes.html">Kubernetes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../other/kubernetes/minikube.html">Minikube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/kubernetes/pods.html">Pods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/kubernetes/pods_controllers.html">Pods controllers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../other/redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -697,6 +699,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path">Path</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#script-update">Script update</a></li>
 </ul>
             </nav>
         </div>
@@ -724,8 +727,8 @@ document.write(`
 <p>The following code demonstrates defining a variable and substituting its value into the <code class="docutils literal notranslate"><span class="pre">echo</span></code> command.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">MY_VAR</span><span class="o">=</span><span class="mi">10</span>
-<span class="n">echo</span> <span class="err">$</span><span class="n">MY_VAR</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">MY_VAR</span><span class="o">=</span><span class="m">10</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$MY_VAR</span>
 </pre></div>
 </div>
 </div>
@@ -738,10 +741,10 @@ document.write(`
 <p>The following cell defines an environment variable and a regular variable, then attempts to access both from a nested <code class="docutils literal notranslate"><span class="pre">bash</span></code> shell:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">env_var</span><span class="o">=</span><span class="s2">&quot;environment&quot;</span>
-<span class="n">just_var</span><span class="o">=</span><span class="s2">&quot;local&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">env_var</span><span class="o">=</span><span class="s2">&quot;environment&quot;</span>
+<span class="nv">just_var</span><span class="o">=</span><span class="s2">&quot;local&quot;</span>
 
-<span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;echo </span><span class="se">\&quot;</span><span class="s2">\$just_var \$env_var</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;echo \&quot;\$just_var \$env_var\&quot;&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -761,7 +764,7 @@ document.write(`
 <p>The following cell displays the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> value of the environment the notebook is running in.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="err">$</span><span class="n">PATH</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$PATH</span>
 </pre></div>
 </div>
 </div>
@@ -774,7 +777,7 @@ document.write(`
 <p>Consider the contents of <code class="docutils literal notranslate"><span class="pre">/usr/local/bin</span></code>, one of the folders typically listed in the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>/usr/local/bin
 </pre></div>
 </div>
 </div>
@@ -792,6 +795,51 @@ idle3.12   jupyter-run	       pydoc3.12	     python3.12-config
 </div>
 <p>Some of the names correspond to commands commonly used for managing Jupyter.</p>
 </section>
+<section id="script-update">
+<h2>Script update<a class="headerlink" href="#script-update" title="Link to this heading">#</a></h2>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;file_name&gt;</span></code> command to update environment from script. The <code class="docutils literal notranslate"><span class="pre">.</span> <span class="pre">&lt;file_name&gt;</span></code> command is typically equivalent.</p>
+<hr class="docutils" />
+<p>The following cell creates a script that sets the <code class="docutils literal notranslate"><span class="pre">var=&quot;hello</span> <span class="pre">world&quot;</span></code> environment variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span>/tmp/source
+mkdir<span class="w"> </span>-p<span class="w"> </span>/tmp/source
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/source/script.sh</span>
+<span class="s">export var=&quot;hello world&quot;</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In case script is executed from bash, the environment still doesn’t recognize the variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>/tmp/source/script.sh
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$var</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, if the script is executed with the <code class="docutils literal notranslate"><span class="pre">source</span></code> command the corresponding <code class="docutils literal notranslate"><span class="pre">var</span></code> variable appears in the environment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/tmp/source/script.sh
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$var</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello world
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -803,16 +851,16 @@ idle3.12   jupyter-run	       pydoc3.12	     python3.12-config
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./linux/shell"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -860,6 +908,7 @@ idle3.12   jupyter-run	       pydoc3.12	     python3.12-config
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path">Path</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#script-update">Script update</a></li>
 </ul>
   </nav></div>
 
