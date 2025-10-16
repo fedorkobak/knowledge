@@ -1,0 +1,1206 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Kubectl &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'other/kubernetes/kubectl';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Pods" href="pods.html" />
+    <link rel="prev" title="Minikube" href="minikube.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Knowlege
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../data_science/intro.html">Data science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_science/gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_science/decision_tree.html">Decision tree</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/model_selection/regularization.html">Regularization</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../data_science/metrics/classification.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/CAP.html">CAP curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/metrics/classification/GINI.html">GINI coeficient</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/model_interpretation.html">Model interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_science/arima.html">ARIMA</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/ranking_task.html">Ranking task</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../data_science/ranking_task/collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/collaborative_filtering/self_made_mem_based.html">Selfmade memory based</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/ranking_task/task_generation.html">Task generation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../data_science/ranking_task/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/metrics/precision_k.html">precision@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/metrics/recall_k.html">recall@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/ranking_task/metrics/average_precision.html">AP@k (average precision)</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/nlp.html">NLP</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../data_science/nlp/preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/nlp/preprocessing/tokenization.html">Tokenization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/nlp/preprocessing/embeddings.html">Embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/nlp/preprocessing/tf_idf.html">TF-IDF</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/nlp/text_cnn.html">Text CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/nlp/recurrent_translation.html">Recurrent translations</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../data_science/nlp/LLMs.html">LLMs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../data_science/nlp/LLMs/rag.html">RAG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../data_science/nlp/LLMs/rag/imdb_example.html">IMDB example</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/nlp/LLMs/agents.html">Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_science/nlp/LLMs/MCP.html">MCP</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data_science/dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/dl_mechanisms/recurrent.html">Recurrent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/dl_mechanisms/attention.html">Attention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data_science/dl_mechanisms/transformer.html">Transformer</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../math/introduction.html">Intorduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/geometry.html">Geometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math/geometry/triangle.html">Triangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/geometry/cone.html">Cone</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/trigonometry.html">Trigonometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math/trigonometry/identities.html">Identities</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math/mat_stat.html">MatStat</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../math/mat_stat/probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/distributions.html">Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math/mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../math/mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/stat_testing/t_test.html">T-test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../math/mat_stat/stat_testing/binomial_test.html">Binomial test</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math/latex.html">Latex</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/complexity.html">Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/binary_search.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../algorithms/data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/dynamic_prog.html">Dynamic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/quick_sort.html">Quick sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../algorithms/specific_tasks/number_reversal.html">Number reversal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Docker</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docker/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/containers.html">Containers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/containers/run.html">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/containers/execute_in.html">Execute in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/containers/check_logs.html">Check logs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_image/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_image/ignore_files.html">Ignore files</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/volumes.html">Volumes</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/networks/default_networks.html">Default networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/networks/container_communication.html">Containers communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/networks/local_network.html">Local network</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/access.html">Acesss to containers</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/compose.html">Compose</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../docker/compose/up_down.html">Up/down</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../docker/compose/service_configuration.html">Service configuration</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../git/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/file_stages.html">File statuses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/diff.html">Difference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/checkout.html">Checkout</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/branches/merge.html">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../git/branches/remote.html">Remotes</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/log.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/stash.html">Stash</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/configuration/variables.html">Variables</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../sql/intro.html">Intro</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/join/join_types.html">Join types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/sorting.html">Sorting (ORDER BY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/unique_values.html">Unique values (DISTINCT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/empty_values.html">Empty values</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/aggregation_functions.html">Aggregation functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/aggregation_functions/collect_array.html">Collect array</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/group_by.html">Group by</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/group_by/conditions_on_aggregats.html">Conditions on aggregats (HAVING)</a></li>
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/window_functions.html">Window functions (OVER)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../sql/select/window_functions/functions.html">Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../sql/select/window_functions/functions/value.html">Value</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/expand_array.html">Expand array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/performance.html">Performance</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/operating_tables.html">Operating tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/operating_tables/tables_properties.html">Tables properties</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/datatypes.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/datatypes/datetime.html">Date and time</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/datatypes/datetime/date_components.html">Date components (DATE_PART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/datatypes/datetime/add_period.html">Add period</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/datatypes/json.html">JSON</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/versions_issues.html">Versions issues</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/python_from_container.html">Python from container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/python_on_host.html">Python on host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/python_interaction/create_database.html">Create database</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../layout/terminology.html">Terminology</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../layout/html.html">HTML</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/other.html">Other</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/text_format.html">Text format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/tables.html">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/html/lists.html">List tags</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../layout/html/svg.html">SVG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../layout/html/svg/text.html">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../layout/html/svg/path.html">Path</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../layout/css.html">CSS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/other.html">Other</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/style_application.html">Style application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/margin.html">Margin (out space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/padding.html">Padding (in space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/overflow.html">Overflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../layout/css/elements_positions.html">Elements position (<code class="docutils literal notranslate"><span class="pre">display</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../layout/forms.html">Forms</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linux</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../linux/intro.html">Intro</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/shell.html">Shell</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/shell/manage_input_output.html">Manage input/output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/shell/environment.html">Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/shell/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/shell/path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/shell/bash.html">Bash</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../linux/shell/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../linux/shell/users_groups/user_management.html">User management</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/permission%26ownership.html">Permission&amp;Ownership</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/filesystem/archiving.html">Archiving</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/system_information.html">System information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/backup.html">Backup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/curl.html">Curl</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../linux/network/ssh.html">SSH</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../linux/network/ssh/generate_key.html">Generate key</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/vpn.html">VPN</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/package_management.html">Package management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/cron.html">Cron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux/gnupg.html">GnuPG</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../vs_code.html">VS Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_apache.html">Python with apache</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../containerization.html">Containerization</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../kubernetes.html">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="minikube.html">Minikube</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Kubectl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pods.html">Pods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pods_controllers.html">Pods controllers</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../redis/zset.html">Zset</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../nginx.html">Nginx</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../nginx/reverse_proxy.html">Reverse proxy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nginx/reverse_proxy/proxy_pass.html">Proxy pass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nginx/reverse_proxy/cache.html">Cache</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nginx/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nginx/server.html">Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nginx/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nginx/logs.html">Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nginx/connections_management.html">Connections management</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../gitlab.html">Gitlab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../java_script.html">Java script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../go_templates.html">Go templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kafka.html">Kafka</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../elastic_search.html">Elastic search</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../clouds/databricks.html">Databricks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../clouds/databricks/assets_bundles.html">Assets bundles</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../npm.html">NPM</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/fedorkobak/knowledge" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/other/kubernetes/kubectl.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Kubectl</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-config">Install&amp;Config</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#config-file">Config file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#context">Context</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-information">Cluster information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proxy">Proxy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-resouces">Display resouces</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-format">Output format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#management-types">Management types</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="kubectl">
+<h1>Kubectl<a class="headerlink" href="#kubectl" title="Link to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> utility is a primary way to interact with k8s cluster.</p>
+<p>Different k8s resources have slightly different configurations. However, <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> is designed in such a way that different resources often have many features in common. This page addresses the questions about managing the entire cluster with <code class="docutils literal notranslate"><span class="pre">kubectl</span></code>, as well as common details about managing different resource types. It is not always very detailed regarding questions specific to particular resources - there are specific pages for such details.</p>
+<section id="install-config">
+<h2>Install&amp;Config<a class="headerlink" href="#install-config" title="Link to this heading">#</a></h2>
+<p>Check <a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">installation guide</a> for <code class="docutils literal notranslate"><span class="pre">kubectl</span></code>. For me, using the ubuntu option <code class="docutils literal notranslate"><span class="pre">snap</span> <span class="pre">install</span> <span class="pre">kubectl</span> <span class="pre">--classic</span></code> worked well.</p>
+<p>To enable <code class="docutils literal notranslate"><span class="pre">TAB</span></code> completion add <code class="docutils literal notranslate"><span class="pre">source</span></code> the script printed with <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">completion</span> <span class="pre">bash</span></code>: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;(kubectl</span> <span class="pre">completion</span> <span class="pre">bash)</span></code>. To enable completion at the start of the shell, add line into <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file: <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">'source</span> <span class="pre">&lt;(kubectl</span> <span class="pre">completion</span> <span class="pre">bash)'</span> <span class="pre">&gt;&gt;</span> <span class="pre">~/.bashrc</span></code>.</p>
+<section id="config-file">
+<h3>Config file<a class="headerlink" href="#config-file" title="Link to this heading">#</a></h3>
+<p>The behavior of the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> is typically defined by the configuration file that is located in the <code class="docutils literal notranslate"><span class="pre">~/.kube/config</span></code> directory.</p>
+<hr class="docutils" />
+<p>The following cell displays a few lines of the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> configuration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>~/.kube/config<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /home/user/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Mon, 13 Oct 2025 09:07:40 CEST
+        provider: minikube.sigs.k8s.io
+        version: v1.37.0
+      name: cluster_info
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="context">
+<h3>Context<a class="headerlink" href="#context" title="Link to this heading">#</a></h3>
+<p>A k8s <a class="reference internal" href="#kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/#context"><span class="xref myst">context</span></a> is a configuration setup under a convenient name. You can switch between different <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> configurations, which provide access to different clusters or different setups for the same cluster.</p>
+<p>The following table shows useful <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> commands that can be beneficial for managing the context.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Command</p></th>
+<th class="head text-left"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">config</span> <span class="pre">current-context</span></code></p></td>
+<td class="text-left"><p>Displays the name of the context that is currently active.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">config</span> <span class="pre">get-contexts</span></code></p></td>
+<td class="text-left"><p>Lists all the contexts defined in your kubeconfig file.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">config</span> <span class="pre">use-context</span> <span class="pre">&lt;name&gt;</span></code></p></td>
+<td class="text-left"><p>Sets the specified context as the current-context, switching the cluster/user/namespace your commands target.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">config</span> <span class="pre">set-context</span> <span class="pre">&lt;name&gt;</span> <span class="pre">--cluster=&lt;cluster&gt;</span> <span class="pre">--user=&lt;user&gt;</span> <span class="pre">--namespace=&lt;namespace&gt;</span></code></p></td>
+<td class="text-left"><p>Creates a new context or modifies an existing one to link a specific cluster, user, and/or default namespace.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">config</span> <span class="pre">delete-context</span> <span class="pre">&lt;name&gt;</span></code></p></td>
+<td class="text-left"><p>Deletes the specified context from your kubeconfig file.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<p>Minikube, which is primarily used as an example k8s setup, automatically creates a <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> context for each profile. For example, consider how to select a <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> context from the options provided by <code class="docutils literal notranslate"><span class="pre">minikube</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>minikube<span class="w"> </span>start<span class="w"> </span>--profile<span class="w"> </span>one-node<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+minikube<span class="w"> </span>start<span class="w"> </span>--profile<span class="w"> </span>two-nodes<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell shows the available <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> contexts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>config<span class="w"> </span>get-contexts
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
+          one-node    one-node    one-node    default
+*         two-nodes   two-nodes   two-nodes   default
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">two-nodes</span></code> context is marked as CURRENT. The following cell switches contexts and displays list of contexts list again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>one-node
+kubectl<span class="w"> </span>config<span class="w"> </span>get-contexts
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Switched to context &quot;one-node&quot;.
+CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
+*         one-node    one-node    one-node    default
+          two-nodes   two-nodes   two-nodes   default
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now there is different context specified as CURRENT.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>minikube<span class="w"> </span>delete<span class="w"> </span>--profile<span class="w"> </span>one-node<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+minikube<span class="w"> </span>delete<span class="w"> </span>--profile<span class="w"> </span>two-nodes<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="cluster-information">
+<h2>Cluster information<a class="headerlink" href="#cluster-information" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">cluster-info</span></code> command displays the information about the cluster that <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> currently connected to.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>cluster-info
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kubernetes control plane is running at https://192.168.49.2:8443
+CoreDNS is running at https://192.168.49.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use &#39;kubectl cluster-info dump&#39;.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="proxy">
+<h2>Proxy<a class="headerlink" href="#proxy" title="Link to this heading">#</a></h2>
+<p>Since <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> is just convenient wrapper around the Kubernetes API, it can communicate with the kubernetes API and allow you to create a locally hosted proxy for it. Use the <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">proxy</span></code> command for this.</p>
+<hr class="docutils" />
+<p>The following cell runs the proxy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>proxy<span class="w"> </span><span class="p">&amp;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">proxy_pid</span><span class="o">=</span><span class="nv">$!</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 101050
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now you are able to access api:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>localhost:8001/api
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting to serve on 127.0.0.1:8001
+{
+  &quot;kind&quot;: &quot;APIVersions&quot;,
+  &quot;versions&quot;: [
+    &quot;v1&quot;
+  ],
+  &quot;serverAddressByClientCIDRs&quot;: [
+    {
+      &quot;clientCIDR&quot;: &quot;0.0.0.0/0&quot;,
+      &quot;serverAddress&quot;: &quot;192.168.49.2:8443&quot;
+    }
+  ]
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">kill</span><span class="w"> </span><span class="nv">$proxy_pid</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="display-resouces">
+<h2>Display resouces<a class="headerlink" href="#display-resouces" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span></code> command displays given resources. It have subcommands for all resources types. The most common are:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>Resource Kind</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span></code></p></td>
+<td><p><strong>Pod</strong></p></td>
+<td><p>The smallest deployable unit — runs one or more containers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">deployments</span></code></p></td>
+<td><p><strong>Deployment</strong></p></td>
+<td><p>Manages Pods and ReplicaSets; handles rolling updates.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">services</span></code></p></td>
+<td><p><strong>Service</strong></p></td>
+<td><p>Exposes a set of Pods on a network endpoint (ClusterIP, NodePort, etc.).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">replicasets</span></code></p></td>
+<td><p><strong>ReplicaSet</strong></p></td>
+<td><p>Ensures a specified number of Pods are running.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">daemonsets</span></code></p></td>
+<td><p><strong>DaemonSet</strong></p></td>
+<td><p>Runs one Pod on each (or selected) node.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">statefulsets</span></code></p></td>
+<td><p><strong>StatefulSet</strong></p></td>
+<td><p>Manages Pods with stable identities (useful for databases).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">jobs</span></code></p></td>
+<td><p><strong>Job</strong></p></td>
+<td><p>Runs Pods to completion (batch jobs).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">cronjobs</span></code></p></td>
+<td><p><strong>CronJob</strong></p></td>
+<td><p>Schedules Jobs to run periodically.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">nodes</span></code></p></td>
+<td><p><strong>Node</strong></p></td>
+<td><p>Shows the cluster’s worker nodes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">namespaces</span></code></p></td>
+<td><p><strong>Namespace</strong></p></td>
+<td><p>Lists logical partitions of the cluster.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="output-format">
+<h3>Output format<a class="headerlink" href="#output-format" title="Link to this heading">#</a></h3>
+<p>The important thing is how you specify the output format. Use the <code class="docutils literal notranslate"><span class="pre">-o</span></code> option followed by the instructions on how to display the output.</p>
+<p>There following types of instructions:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Format</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">wide</span></code></p></td>
+<td><p>Adds more columns (e.g., node name, IP).</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">-o</span> <span class="pre">wide</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>Prints only resource names.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">-o</span> <span class="pre">name</span></code> → <code class="docutils literal notranslate"><span class="pre">pod/nginx-1234</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">yaml</span></code></p></td>
+<td><p>Full YAML definition (like what’s stored in the API).</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pod</span> <span class="pre">nginx</span> <span class="pre">-o</span> <span class="pre">yaml</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">json</span></code></p></td>
+<td><p>Same as above but in JSON.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pod</span> <span class="pre">nginx</span> <span class="pre">-o</span> <span class="pre">json</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">jsonpath</span></code></p></td>
+<td><p>Extracts specific fields using JSONPath syntax.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">-o</span> <span class="pre">jsonpath='{.items[*].metadata.name}'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">jsonpath-as-json</span></code></p></td>
+<td><p>Like <code class="docutils literal notranslate"><span class="pre">jsonpath</span></code>, but ensures valid JSON output.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">-o</span> <span class="pre">jsonpath-as-json='{.items[*].metadata.name}'</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">go-template</span></code></p></td>
+<td><p>Uses Go templates to define custom output.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">-o</span> <span class="pre">go-template='{{.items[0].metadata.name}}'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">custom-columns</span></code></p></td>
+<td><p>Displays only selected fields as table columns.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">-o</span> <span class="pre">custom-columns=NAME:.metadata.name,STATUS:.status.phase</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<p>For example, consider the output of the raw <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span></code> command and the configuration option that shows additional information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span>temp<span class="w"> </span>--image<span class="o">=</span>nginx:1.22.1<span class="w"> </span>--replicas<span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell represents regular output:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME                    READY   STATUS    RESTARTS   AGE
+temp-5dcd5945c4-255xn   1/1     Running   0          17s
+temp-5dcd5945c4-rfvt7   1/1     Running   0          17s
+temp-5dcd5945c4-rrm9p   1/1     Running   0          17s
+</pre></div>
+</div>
+</div>
+</div>
+<p>The wide output adds some additional columns to the output table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME                    READY   STATUS    RESTARTS   AGE   IP           NODE         NOMINATED NODE   READINESS GATES
+temp-5dcd5945c4-255xn   1/1     Running   0          34s   10.244.0.4   daemon       &lt;none&gt;           &lt;none&gt;
+temp-5dcd5945c4-rfvt7   1/1     Running   0          34s   10.244.1.3   daemon-m02   &lt;none&gt;           &lt;none&gt;
+temp-5dcd5945c4-rrm9p   1/1     Running   0          34s   10.244.2.3   daemon-m03   &lt;none&gt;           &lt;none&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>delete<span class="w"> </span>deployment<span class="w"> </span>temp<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="management-types">
+<h2>Management types<a class="headerlink" href="#management-types" title="Link to this heading">#</a></h2>
+<p>The k8s supports two management types:</p>
+<ul class="simple">
+<li><p>The <strong>imperative</strong>: operates directly on live objects in a cluster.</p></li>
+<li><p>The <strong>declarative</strong>: operates through configuration files that declare the objects.</p></li>
+</ul>
+<p>Check more in the <a class="reference external" href="https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/">k8s Object Management</a> page of the official documentation.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "bash"
+        },
+        kernelOptions: {
+            name: "bash",
+            path: "./other/kubernetes"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'bash'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="minikube.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Minikube</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pods.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pods</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-config">Install&amp;Config</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#config-file">Config file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#context">Context</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-information">Cluster information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proxy">Proxy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#display-resouces">Display resouces</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-format">Output format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#management-types">Management types</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

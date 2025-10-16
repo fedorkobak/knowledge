@@ -502,6 +502,7 @@
 <li class="toctree-l1"><a class="reference internal" href="containerization.html">Containerization</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="kubernetes/minikube.html">Minikube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes/kubectl.html">Kubectl</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kubernetes/pods.html">Pods</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kubernetes/pods_controllers.html">Pods controllers</a></li>
 </ul>
@@ -530,7 +531,10 @@
 <li class="toctree-l1"><a class="reference internal" href="kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="clouds/databricks.html">Databricks</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="clouds/databricks.html">Databricks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="clouds/databricks/assets_bundles.html">Assets bundles</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="npm.html">NPM</a></li>
@@ -708,12 +712,7 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubectl">kubectl</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-information">Cluster information</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proxy">Proxy</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubectl">kubectl</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods">Pods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods-contorllers">Pods contorllers</a></li>
@@ -836,11 +835,14 @@ kubeconfig: Configured
 <section id="kubectl">
 <h2>kubectl<a class="headerlink" href="#kubectl" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">kubectl</span></code> is a command line interface that allows you to interact with Kubernetes.</p>
-<p>Check <a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">installation guide</a> for <code class="docutils literal notranslate"><span class="pre">kubectl</span></code>.</p>
-<p>For me, using the ubuntu option <code class="docutils literal notranslate"><span class="pre">snap</span> <span class="pre">install</span> <span class="pre">kubectl</span> <span class="pre">--classic</span></code> worked well.</p>
-<p>To enable <code class="docutils literal notranslate"><span class="pre">TAB</span></code> completion add <code class="docutils literal notranslate"><span class="pre">source</span></code> the script printed with <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">completion</span> <span class="pre">bash</span></code>: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;(kubectl</span> <span class="pre">completion</span> <span class="pre">bash)</span></code>. To enable completion at the start of the shell, add line into <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file: <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">'source</span> <span class="pre">&lt;(kubectl</span> <span class="pre">completion</span> <span class="pre">bash)'</span> <span class="pre">&gt;&gt;</span> <span class="pre">~/.bashrc</span></code>.</p>
+<p>Check <a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">installation guide</a> for <code class="docutils literal notranslate"><span class="pre">kubectl</span></code>. For me, using the ubuntu option <code class="docutils literal notranslate"><span class="pre">snap</span> <span class="pre">install</span> <span class="pre">kubectl</span> <span class="pre">--classic</span></code> worked well.</p>
 <p>If you’re using <code class="docutils literal notranslate"><span class="pre">minikube</span></code>, you can access the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> using the command <code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">kubectl</span> <span class="pre">--</span> <span class="pre">&lt;subcommands&gt;</span></code>. This will give you access to <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> for minikube.</p>
 <p><strong>Note:</strong> Even for learning purposes, we’ll use a separate installation of the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code>, as this installation closer to the real-world challanges.</p>
+<p>For more information check:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://kubernetes.io/docs/reference/kubectl/">Kubectl official reference</a>.</p></li>
+<li><p><a class="reference internal" href="kubernetes/kubectl.html"><span class="std std-doc">Kubectl</span></a> page.</p></li>
+</ul>
 <hr class="docutils" />
 <p>The following cell shows the version of the cluster displayed using <code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">kubectl</span> <span class="pre">--</span> <span class="pre">version</span> <span class="pre">--client</span></code>.</p>
 <div class="cell docutils container">
@@ -871,103 +873,6 @@ Server Version: v1.34.0
 </div>
 </div>
 </div>
-<section id="configuration">
-<h3>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h3>
-<p>The behavior of the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> is typically defined by the configuration file that is located in the <code class="docutils literal notranslate"><span class="pre">~/.kube/config</span></code> directory.</p>
-<hr class="docutils" />
-<p>The following cell displays a few lines of the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> configuration.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>~/.kube/config<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority: /home/user/.minikube/ca.crt
-    extensions:
-    - extension:
-        last-update: Mon, 13 Oct 2025 09:07:40 CEST
-        provider: minikube.sigs.k8s.io
-        version: v1.37.0
-      name: cluster_info
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="cluster-information">
-<h3>Cluster information<a class="headerlink" href="#cluster-information" title="Link to this heading">#</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">cluster-info</span></code> command displays the information about the cluster that <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> currently connected to.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>cluster-info
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kubernetes control plane is running at https://192.168.49.2:8443
-CoreDNS is running at https://192.168.49.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-
-To further debug and diagnose cluster problems, use &#39;kubectl cluster-info dump&#39;.
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="proxy">
-<h3>Proxy<a class="headerlink" href="#proxy" title="Link to this heading">#</a></h3>
-<p>Since <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> is just convenient wrapper around the Kubernetes API, it can communicate with the kubernetes API and allow you to create a locally hosted proxy for it. Use the <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">proxy</span></code> command for this.</p>
-<hr class="docutils" />
-<p>The following cell runs the proxy.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>proxy<span class="w"> </span><span class="p">&amp;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">proxy_pid</span><span class="o">=</span><span class="nv">$!</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 101050
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now you are able to access api:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>localhost:8001/api
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting to serve on 127.0.0.1:8001
-{
-  &quot;kind&quot;: &quot;APIVersions&quot;,
-  &quot;versions&quot;: [
-    &quot;v1&quot;
-  ],
-  &quot;serverAddressByClientCIDRs&quot;: [
-    {
-      &quot;clientCIDR&quot;: &quot;0.0.0.0/0&quot;,
-      &quot;serverAddress&quot;: &quot;192.168.49.2:8443&quot;
-    }
-  ]
-}
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">kill</span><span class="w"> </span><span class="nv">$proxy_pid</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 </section>
 <section id="pods">
 <h2>Pods<a class="headerlink" href="#pods" title="Link to this heading">#</a></h2>
@@ -1311,12 +1216,7 @@ some-deployment-8fb6f4fcb    2         2         2       14s
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubectl">kubectl</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-information">Cluster information</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proxy">Proxy</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubectl">kubectl</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods">Pods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods-contorllers">Pods contorllers</a></li>

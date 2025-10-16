@@ -502,6 +502,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../containerization.html">Containerization</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../kubernetes.html">Kubernetes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="minikube.html">Minikube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubectl.html">Kubectl</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pods.html">Pods</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Pods controllers</a></li>
 </ul>
@@ -530,7 +531,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../clouds/databricks.html">Databricks</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../clouds/databricks.html">Databricks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../clouds/databricks/assets_bundles.html">Assets bundles</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../npm.html">NPM</a></li>
@@ -699,6 +703,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#replicaset">ReplicaSet</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">Deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daemonset">DaemonSet</a></li>
 </ul>
             </nav>
         </div>
@@ -720,25 +725,25 @@ document.write(`
 <p>The following cell creates a replica set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span>
-<span class="n">apiVersion</span><span class="p">:</span> <span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
-<span class="n">kind</span><span class="p">:</span> <span class="n">ReplicaSet</span>
-<span class="n">metadata</span><span class="p">:</span>
-  <span class="n">name</span><span class="p">:</span> <span class="n">frontend</span>
-<span class="n">spec</span><span class="p">:</span>
-  <span class="n">replicas</span><span class="p">:</span> <span class="mi">3</span>
-  <span class="n">selector</span><span class="p">:</span>
-    <span class="n">matchLabels</span><span class="p">:</span>
-      <span class="n">tier</span><span class="p">:</span> <span class="n">frontend</span>
-  <span class="n">template</span><span class="p">:</span>
-    <span class="n">metadata</span><span class="p">:</span>
-      <span class="n">labels</span><span class="p">:</span>
-        <span class="n">tier</span><span class="p">:</span> <span class="n">frontend</span>
-    <span class="n">spec</span><span class="p">:</span>
-      <span class="n">containers</span><span class="p">:</span>
-      <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">php</span><span class="o">-</span><span class="n">redis</span>
-        <span class="n">image</span><span class="p">:</span> <span class="n">us</span><span class="o">-</span><span class="n">docker</span><span class="o">.</span><span class="n">pkg</span><span class="o">.</span><span class="n">dev</span><span class="o">/</span><span class="n">google</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">gke</span><span class="o">/</span><span class="n">gb</span><span class="o">-</span><span class="n">frontend</span><span class="p">:</span><span class="n">v5</span>
-<span class="n">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">apiVersion: apps/v1</span>
+<span class="s">kind: ReplicaSet</span>
+<span class="s">metadata:</span>
+<span class="s">  name: frontend</span>
+<span class="s">spec:</span>
+<span class="s">  replicas: 3</span>
+<span class="s">  selector:</span>
+<span class="s">    matchLabels:</span>
+<span class="s">      tier: frontend</span>
+<span class="s">  template:</span>
+<span class="s">    metadata:</span>
+<span class="s">      labels:</span>
+<span class="s">        tier: frontend</span>
+<span class="s">    spec:</span>
+<span class="s">      containers:</span>
+<span class="s">      - name: php-redis</span>
+<span class="s">        image: us-docker.pkg.dev/google-samples/containers/gke/gb-frontend:v5</span>
+<span class="s">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -751,7 +756,7 @@ document.write(`
 <p>The result is 3 pods (as specified in the <code class="docutils literal notranslate"><span class="pre">spec.replicas</span></code>). They all belong to the <code class="docutils literal notranslate"><span class="pre">frontent</span></code> replica set, that is clear from their naming.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
 </pre></div>
 </div>
 </div>
@@ -767,7 +772,7 @@ frontend-b7v94   1/1     Running   0          7s
 <p>You can use the command <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">rs</span></code> to list replica sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">rs</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>rs
 </pre></div>
 </div>
 </div>
@@ -781,7 +786,7 @@ frontend   3         3         3       8s
 <p>Use the command <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">delete</span> <span class="pre">rs</span> <span class="pre">frontend</span></code> to delete the replica set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="n">rs</span> <span class="n">frontend</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>delete<span class="w"> </span>rs<span class="w"> </span>frontend
 </pre></div>
 </div>
 </div>
@@ -799,7 +804,7 @@ frontend   3         3         3       8s
 <p>The following cell uses an imperative approach to create a deployment.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">create</span> <span class="n">deployment</span> <span class="n">nginx</span><span class="o">-</span><span class="n">deployment</span> <span class="o">--</span><span class="n">image</span><span class="o">=</span><span class="n">nginx</span><span class="p">:</span><span class="mf">1.22.1</span> <span class="o">--</span><span class="n">replicas</span><span class="o">=</span><span class="mi">3</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span>nginx-deployment<span class="w"> </span>--image<span class="o">=</span>nginx:1.22.1<span class="w"> </span>--replicas<span class="o">=</span><span class="m">3</span>
 </pre></div>
 </div>
 </div>
@@ -812,7 +817,7 @@ frontend   3         3         3       8s
 <p>You can view a list of available deployments by entering the command <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">deployment</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">deployment</span> 
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>deployment<span class="w"> </span>
 </pre></div>
 </div>
 </div>
@@ -826,7 +831,7 @@ nginx-deployment   3/3     3            3           102s
 <p>As was specified by the <code class="docutils literal notranslate"><span class="pre">replicas=3</span></code>, three identical pods have been deployed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
 </pre></div>
 </div>
 </div>
@@ -841,12 +846,75 @@ nginx-deployment-799db84976-hs492   1/1     Running   0          112s
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="n">deployment</span> <span class="n">nginx</span><span class="o">-</span><span class="n">deployment</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>delete<span class="w"> </span>deployment<span class="w"> </span>nginx-deployment
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>deployment.apps &quot;nginx-deployment&quot; deleted from default namespace
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="daemonset">
+<h2>DaemonSet<a class="headerlink" href="#daemonset" title="Link to this heading">#</a></h2>
+<p>The DaemonSet is a controller that runs a single instance of the same pod on each node in the cluster.</p>
+<hr class="docutils" />
+<p>The following cell runs the daemon set on the new cluster consisting of three nodes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>minikube<span class="w"> </span>start<span class="w"> </span>--profile<span class="w"> </span>daemonset-example<span class="w"> </span>--nodes<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">apiVersion: apps/v1</span>
+<span class="s">kind: DaemonSet</span>
+<span class="s">metadata:</span>
+<span class="s">  name: fluentd-agent</span>
+<span class="s">  namespace: default</span>
+<span class="s">  labels:</span>
+<span class="s">    k8s-app: fluentd-agent</span>
+<span class="s">spec:</span>
+<span class="s">  selector:</span>
+<span class="s">    matchLabels:</span>
+<span class="s">      k8s-app: fluentd-agent</span>
+<span class="s">  template:</span>
+<span class="s">    metadata:</span>
+<span class="s">      labels:</span>
+<span class="s">        k8s-app: fluentd-agent</span>
+<span class="s">    spec:</span>
+<span class="s">      containers:</span>
+<span class="s">      - name: fluentd</span>
+<span class="s">        image: quay.io/fluentd_elasticsearch/fluentd:v4.5.2</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>daemonset.apps/fluentd-agent created
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell shows the pods in the cluster.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME                  READY   STATUS              RESTARTS   AGE   IP       NODE                    NOMINATED NODE   READINESS GATES
+fluentd-agent-f7hl4   0/1     ContainerCreating   0          0s    &lt;none&gt;   daemonset-example-m02   &lt;none&gt;           &lt;none&gt;
+fluentd-agent-wqkhj   0/1     ContainerCreating   0          0s    &lt;none&gt;   daemonset-example       &lt;none&gt;           &lt;none&gt;
+fluentd-agent-ztwl4   0/1     ContainerCreating   0          0s    &lt;none&gt;   daemonset-example-m03   &lt;none&gt;           &lt;none&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">NODE</span></code> column of the output is important here - each pod is on uniqe node, and the DaemonSet garantees that.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>minikube<span class="w"> </span>delete<span class="w"> </span>--profile<span class="w"> </span>daemonset-example<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 </pre></div>
 </div>
 </div>
@@ -863,16 +931,16 @@ nginx-deployment-799db84976-hs492   1/1     Running   0          112s
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./other/kubernetes"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -920,6 +988,7 @@ nginx-deployment-799db84976-hs492   1/1     Running   0          112s
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#replicaset">ReplicaSet</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">Deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daemonset">DaemonSet</a></li>
 </ul>
   </nav></div>
 

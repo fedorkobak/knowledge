@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="NPM" href="../npm.html" />
+    <link rel="next" title="Assets bundles" href="databricks/assets_bundles.html" />
     <link rel="prev" title="Clouds" href="../clouds.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -502,6 +502,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../containerization.html">Containerization</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../kubernetes.html">Kubernetes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../kubernetes/minikube.html">Minikube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kubernetes/kubectl.html">Kubectl</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../kubernetes/pods.html">Pods</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../kubernetes/pods_controllers.html">Pods controllers</a></li>
 </ul>
@@ -530,7 +531,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../clouds.html">Clouds</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Databricks</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Databricks</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="databricks/assets_bundles.html">Assets bundles</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../npm.html">NPM</a></li>
@@ -703,6 +707,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli">CLI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assets-bundles">Assets bundles</a></li>
 </ul>
             </nav>
         </div>
@@ -1058,6 +1063,48 @@ Use &quot;databricks [command] --help&quot; for more information about a command
 </div>
 </div>
 </section>
+<section id="assets-bundles">
+<h2>Assets bundles<a class="headerlink" href="#assets-bundles" title="Link to this heading">#</a></h2>
+<p>The assets bundles is an instruction in a YAML file for managing a Databricks project.</p>
+<p>There are two importatn concepts in the databricks assets bundles:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">databricks.yml</span></code> file and its configuration allow you to specify the bundle.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">databricks</span> <span class="pre">bundle</span></code> subcommand of the databricks CLI allows you to manipulate the bundle.</p></li>
+</ul>
+<p>For more details check:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.databricks.com/aws/en/dev-tools/bundles/">What is Databricks Asset Bundles</a>.</p></li>
+<li><p><a class="reference external" href="https://docs.databricks.com/aws/en/dev-tools/bundles/work-tasks">Develop Databricks Asset Bundles</a>: will guide you through the process of creating and deploying a bundle.</p></li>
+<li><p>The <a class="reference external" href="https://docs.databricks.com/aws/en/dev-tools/cli/bundle-commands"><code class="docutils literal notranslate"><span class="pre">bundle</span></code> command group</a> describes the details of the databricks CLI that are responsible for managing bundles.</p></li>
+<li><p>The <a class="reference internal" href="databricks/assets_bundles.html"><span class="std std-doc">assets bundles</span></a> page in the site.</p></li>
+</ul>
+<hr class="docutils" />
+<p>Consider the process of creating the simpliest asset bundle.</p>
+<p>Create the folder and the <code class="docutils literal notranslate"><span class="pre">databricks.yml</span></code> file within it:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">bundle</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knowledge</span>
+
+<span class="nt">resources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">jobs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">hello-job</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello-job</span>
+<span class="w">      </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">task_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello-task</span>
+<span class="w">          </span><span class="nt">notebook_task</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">notebook_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./hello.ipynb</span>
+
+<span class="nt">targets</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dev</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<p>Create <code class="docutils literal notranslate"><span class="pre">hello.ipynb</span></code> as “project” defines task based on it.</p>
+<p>Use the command: <code class="docutils literal notranslate"><span class="pre">databricks</span> <span class="pre">bundle</span> <span class="pre">deploy</span></code> to push your bundle to the Databricks environment.</p>
+<p>After these manipulations, you have to have the corresponding folder in the <code class="docutils literal notranslate"><span class="pre">.bundles</span></code> folder of your db environment. And <code class="docutils literal notranslate"><span class="pre">hello-job</span></code> will be listed in the jobs list.</p>
+<p>To delete the bundle (only in the databricks environment) use the <code class="docutils literal notranslate"><span class="pre">databricks</span> <span class="pre">bundle</span> <span class="pre">destroy</span></code>.</p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1100,11 +1147,11 @@ Use &quot;databricks [command] --help&quot; for more information about a command
       </div>
     </a>
     <a class="right-next"
-       href="../npm.html"
+       href="databricks/assets_bundles.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">NPM</p>
+        <p class="prev-next-title">Assets bundles</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1130,6 +1177,7 @@ Use &quot;databricks [command] --help&quot; for more information about a command
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli">CLI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assets-bundles">Assets bundles</a></li>
 </ul>
   </nav></div>
 
