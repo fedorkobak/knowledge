@@ -48,7 +48,11 @@ The agent in AWS consists of:
 - If needed associated knowledge base.
 - Specify the prompt template to define the LLM's behaviour.
 
+For more details 
+
 The action group can be defined in two ways through:
 
 - The [OpenAPI schema](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html) specifies the way model have to interact with the API.
 - The [Function details](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-action-function.html) which specifies the approach for invoking a lambda function that has been defined in your AWS system.
+
+Generally check [Define actions in the action group](https://docs.aws.amazon.com/bedrock/latest/userguide/action-define.html).
