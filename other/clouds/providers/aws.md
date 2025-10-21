@@ -39,3 +39,11 @@ The unstructured data are supposed are supposed to be stored in the vector datab
 - Pinecone.
 - Redis Enterprise Cloud.
 - MongoDB Atlas.
+
+### AI Agent
+
+The agent in AWS consists of:
+
+- Action groups that define the tools that an agent can use, as well as the principles by which the agent will invoke the tools and retrieve parameters for the tool from the user's query.
+- If needed associated knowledge base.
+- Specify the prompt template to define the LLM's behaviour.
