@@ -44,6 +44,13 @@ They all offer a set of services based on their infrastructure. The following se
 | | **Amazon Bedrock** | A service for building and scaling generative AI applications using foundation models. |
 | | **Amazon Rekognition** | A service that makes it easy to add image and video analysis to your applications. |
 
+### Bedrock
+
+Bedrock is generally is an API that provides an access to the **Foundation Models** (FMs). It also contains a few additional components that help to implement typical LLM applications:
+
+- Knowledge base: collects information and prepares information from external sources.
+- Agents workflow: enables the creation of agentic systems based on FMs.
+
 ### Azure
 
 | Category | Key Services | Description |
