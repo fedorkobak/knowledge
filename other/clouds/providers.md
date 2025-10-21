@@ -31,45 +31,6 @@ Today, there are only a few popular cloud infrastructure providers. This page pr
 | | **Amazon Bedrock** | A service for building and scaling generative AI applications using foundation models. |
 | | **Amazon Rekognition** | A service that makes it easy to add image and video analysis to your applications. |
 
-### Bedrock
-
-Bedrock is generally is an API that provides an access to the **Foundation Models** (FMs). It also contains a few additional components that help to implement typical LLM applications:
-
-- Knowledge base: collects information and prepares information from external sources.
-- Agents workflow: enables the creation of agentic systems based on FMs.
-
-#### Knowledge base
-
-In the **knowledge base**, you are supposed to specify the *data source*, the *embedding model* and the *vector store*.
-
-There are following supported **data sources**:
-
-- Sources for unstructured data:
-    - Amazon S3.
-    - Confluence.
-    - Microsoft Share Point.
-    - Salesforce.
-    - Web Crawler.
-    - Custom data source.
-- Sources for structured data:
-    - Amazon Redshift.
-    - AWS Glue Data Catalog.
-
-The following sources can be used to retrieve the structured data:
-
-- Amazon Redshift.
-- AWS Glue Data Catalog.
-
-The unstructured data are supposed are supposed to be stored in the vector database, the supported ones are:
-
-- Amazon OpenSearch Serverless.
-- Amazon Neptune.
-- Amazon Aurora.
-- Pinecone.
-- Redis Enterprise Cloud.
-- MongoDB Atlas.
-
-
 ## Azure
 
 | Category | Key Services | Description |
