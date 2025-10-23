@@ -190,3 +190,24 @@ The following cell shows the most common values of the trigonometric functions.
 | 315°      | $\frac{7\pi}{4}$  | $-\frac{\sqrt{2}}{2}$ | $\frac{\sqrt{2}}{2}$  | $-1$                  |
 | 330°      | $\frac{11\pi}{6}$ | $-\frac{1}{2}$        | $\frac{\sqrt{3}}{2}$  | $-\frac{1}{\sqrt{3}}$ |
 | 360°      | $2\pi$            | $0$                   | $1$                   | $0$                   |
+
+## Taylor series
+
+The Taylor series allows to build a polinomial approximation of the given function in an area around a selected point. Generally Taylor expansion can be written as:
+
+$$
+P(x) = f(a) + \frac{\mathrm{d}f}{\mathrm{d}x}\frac{(x - a)}{1!} +
+\frac{\mathrm{d}^2f}{\mathrm{d}x^2}\frac{(x - a)^2}{2!} + \cdots =
+\sum_{i=0}^{\infty} \frac{\mathrm{d}^if}{\mathrm{d}x^i} \frac{(x - a)^i}{i!}
+$$
+
+Where:
+
+- $f(x)$: is a function we want to approximate. 
+- $P(x)$: is an approximation function - the polinom that approximates $f(x)$.
+- $a$: the point at which which the approximation is obtained.
+
+Check more in:
+
+- [Taylor series](https://en.wikipedia.org/wiki/Taylor_series) wikipedia page.
+- [Taylor series](https://www.youtube.com/watch?v=3d6DsjIBzJ4)  3Blue1Brown  lesson.
