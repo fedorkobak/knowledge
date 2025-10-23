@@ -2,6 +2,16 @@
 
 AWS stands Amzon Web Services. It contains a wide range of services that can be used for varioous purposes. This page considers the possibilities of some of these services, and provides corresponding references to the official documentation.
 
+## SageMaker
+
+Amazon SageMaker is an environment that allows to build machine learning solutions. It includes:
+
+- **Machine Learning environments**.
+- **Data labeling**.
+- **Data processing**.
+- **Scheduled/triggered jobs**.
+- **MLOps features**.
+
 ## Bedrock
 
 Bedrock is generally is an API that provides an access to the **Foundation Models** (FMs). It also contains a few additional components that help to implement typical LLM applications:
