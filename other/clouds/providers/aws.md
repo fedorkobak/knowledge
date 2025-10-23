@@ -12,6 +12,8 @@ Amazon SageMaker is an environment that allows to build machine learning solutio
 - **Scheduled/triggered jobs**.
 - **MLOps features**.
 
+For more features check the [What is Amazon SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html).
+
 ## Bedrock
 
 Bedrock is generally is an API that provides an access to the **Foundation Models** (FMs). It also contains a few additional components that help to implement typical LLM applications:
