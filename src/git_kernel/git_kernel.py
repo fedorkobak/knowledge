@@ -21,6 +21,22 @@ class GitKernel(BashKernel):
         template = env.get_template("create_repo.sh.j2")
         return template.render(repo_path=self.repo_path)
 
+    def process_code(self, code: str) -> tuple[bool, str]:
+        '''
+        Takes code and looks for magic pattern in it.
+
+        Parameters
+        ----------
+        code: str
+            Code to be processed.
+
+        Returns
+        -------
+        - True if new git repo has to be created.
+        - Code that have to be executed.
+        '''
+        pass
+
     def do_execute(
         self,
         code,
