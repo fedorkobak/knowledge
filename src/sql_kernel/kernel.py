@@ -141,8 +141,3 @@ class SQLKernel(Kernel):
     def do_shutdown(self, restart: bool):
         for runner in self.runners.values():
             runner.stop()
-
-
-if __name__ == '__main__':
-    from ipykernel.kernelapp import IPKernelApp
-    IPKernelApp.launch_instance(kernel_class=SQLKernel)

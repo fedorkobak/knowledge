@@ -1,12 +1,12 @@
 from typing import Type
 from unittest import TestCase
 
-from src.runners.runners import (
+from src.sql_kernel.runners.runners import (
     PostgresRunner,
     ClickHouseRunner,
     SQLiteRunner
 )
-from src.runners.abs import DatabaseRunner
+from src.sql_kernel.runners.abs import DatabaseRunner
 
 import psycopg.errors
 

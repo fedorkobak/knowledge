@@ -2,7 +2,7 @@ import unittest
 from unittest import TestCase
 from unittest.mock import patch
 
-from src.runners.abs import (
+from src.sql_kernel.runners.abs import (
     table_output,
     DatabaseInDockerRunner,
     SeparateQueryRunner
@@ -56,7 +56,7 @@ class TestDockerRunner(TestCase):
         exp = "test_container_3"
         self.assertEqual(res, exp)
 
-    @patch("src.runners.abs.find_free_port")
+    @patch("src.sql_kernel.runners.abs.find_free_port")
     def test_container_parameters(self, find_free_port):
         '''
         Test if container parameters processed
