@@ -1,4 +1,3 @@
-from textwrap import dedent
 from unittest import TestCase
 from src.git_kernel.git_kernel import GitKernel
 
