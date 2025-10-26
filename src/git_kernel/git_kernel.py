@@ -12,6 +12,14 @@ class GitKernel(BashKernel):
 
     repo_path = "/tmp/git_temp"
 
+    def _init_new_repo(self):
+        command = self._render_script()
+        self.bashwrapper.run_command(command=command)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._init_new_repo()
+
     def _render_script(self) -> str:
         '''
         Builds the script that creates a new git repo.
@@ -35,7 +43,14 @@ class GitKernel(BashKernel):
         - True if new git repo has to be created.
         - Code that have to be executed.
         '''
-        pass
+        lines = code.splitlines()
+        new_repo = lines[0].strip() == "%init"
+        if new_repo:
+            out_code = "\n".join(lines[1:])
+        else:
+            out_code = code
+
+        return new_repo, out_code
 
     def do_execute(
         self,
@@ -45,8 +60,11 @@ class GitKernel(BashKernel):
         user_expressions=None,
         allow_stdin=False
     ):
-        command = self._render_script()
-        self.bashwrapper.run_command(command=command)
+        new_repo, code = self.process_code(code=code)
+
+        if new_repo:
+            self._init_new_repo()
+
         return super().do_execute(
             code, silent, store_history,
             user_expressions, allow_stdin
