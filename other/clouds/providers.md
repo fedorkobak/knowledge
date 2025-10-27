@@ -57,6 +57,13 @@ Today, there are only a few popular cloud infrastructure providers. This page pr
 | | **Azure AI Services** | A collection of pre-built AI APIs and services for vision, language, speech, and decision-making, allowing you to add cognitive capabilities to your applications. |
 | | **Azure OpenAI Service** | Provides access to powerful large language models (LLMs) from OpenAI, such as GPT-4, with the security and enterprise-grade capabilities of Azure. |
 
+### Endpoint
+
+In order to deploy your solution to production, you may need to create an endpoint that will be requested by other components of the system. There are two ways to do this:
+
+- **Kubernetes online endpoints:** Users manage the k8s cluster which provides the necessary infrastructure.
+- **Managed online endpoints:** Azure Machine Learning manages all the underlying infrastructure. This is a standard approach for machine learning engineers.
+
 ## GCP
 
 | Category | Key Services | Description |
