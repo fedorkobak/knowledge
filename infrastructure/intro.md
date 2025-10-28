@@ -16,6 +16,15 @@ It is a container orchestration tool that allows you to manage deployments acros
 
 For details check the [Kubernetes](kubernetes.ipynb) page.
 
+## Terraform
+
+Is a tool to build infrastructure as a code. In a special declarative format you can describe your infrastructure. Such approach provides serveral benefits:
+
+- If you need to deploy the solution from scratch you, simply apply the ready configuration through terraform.
+- You can use the regular control system for code to version-control the infrastructure.
+
+Check the [get started tutorials](https://developer.hashicorp.com/terraform/tutorials/docker-get-started/infrastructure-as-code).
+
 ## Clouds
 
 Maintaining your own hardware can be really expencive; some vendors provide the infrastructure to run your application. This could be just the hardware, or it could include configurable services that provide additional functionality. Those groups of services are called **clouds**. This section covers the services provided in the clouds and ways to manage them. 
