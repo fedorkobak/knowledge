@@ -23,7 +23,10 @@ Is a tool to build infrastructure as a code. In a special declarative format you
 - If you need to deploy the solution from scratch you, simply apply the ready configuration through terraform.
 - You can use the regular control system for code to version-control the infrastructure.
 
-Check the [get started tutorials](https://developer.hashicorp.com/terraform/tutorials/docker-get-started/infrastructure-as-code).
+For more details check:
+
+- [Get started tutorials](https://developer.hashicorp.com/terraform/tutorials/docker-get-started/infrastructure-as-code).
+- [Install Terraform](https://developer.hashicorp.com/terraform/tutorials/docker-get-started/install-cli) page.
 
 ## Clouds
 
