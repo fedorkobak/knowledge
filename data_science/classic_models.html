@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Decision tree &#8212; Knowledge base</title>
+    <title>Classic models &#8212; Knowledge base</title>
   
   
   
@@ -59,12 +59,12 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'data_science/decision_tree';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data_science/classic_models';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Model selection" href="model_selection.html" />
-    <link rel="prev" title="Gradient descent" href="gradient_descent.html" />
+    <link rel="next" title="Decision tree" href="classic_models/decision_tree.html" />
+    <link rel="prev" title="Jaccard index" href="metrics/jaccard_index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -186,7 +186,6 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Data science</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gradient_descent.html">Gradient descent</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Decision tree</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="model_selection/regularization.html">Regularization</a></li>
 </ul>
@@ -204,7 +203,11 @@
 <li class="toctree-l2"><a class="reference internal" href="metrics/jaccard_index.html">Jaccard index</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="arima.html">ARIMA</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Classic models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="classic_models/decision_tree.html">Decision tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classic_models/arima.html">ARIMA</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="ranking_task.html">Ranking task</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="ranking_task/collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
@@ -336,11 +339,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../git/overview.html">Overview</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../git/file_stages.html">File statuses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/commit.html">Commit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Difference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -509,8 +507,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../other/kubernetes/pods_controllers.html">Pods controllers</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../other/redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../other/redis/zset.html">Zset</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../other/data_brokers.html">Data brokers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../other/data_brokers/redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../other/data_brokers/redis/zset.html">Zset</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../other/nginx.html">Nginx</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -530,9 +532,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/ansible.html">Ansible</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../other/kafka.html">Kafka</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../other/clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../other/clouds/providers.html">Providers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../other/clouds/providers/aws.html">AWS</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../other/clouds/databricks.html">Databricks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../other/clouds/databricks/assets_bundles.html">Assets bundles</a></li>
 </ul>
@@ -609,7 +614,7 @@
       
       
       
-      <li><a href="../_sources/data_science/decision_tree.ipynb" target="_blank"
+      <li><a href="../_sources/data_science/classic_models.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -693,7 +698,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Decision tree</h1>
+    <h1>Classic models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -703,9 +708,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tree-model">Tree model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-procedure">Fitting procedure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance">Feature importance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-boosting">Gradient boosting</a></li>
 </ul>
             </nav>
         </div>
@@ -717,328 +720,43 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="decision-tree">
-<h1>Decision tree<a class="headerlink" href="#decision-tree" title="Link to this heading">#</a></h1>
-<p>There is a group of statistical models based on the <em>decision tree</em> algorithm. This page discusses these algorithms.</p>
-<p>Findout more in:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="classic-models">
+<h1>Classic models<a class="headerlink" href="#classic-models" title="Link to this heading">#</a></h1>
+<p>There is a set of approaches for building algorithms that learn patterns from data, which were spreaded before the deep learning networks. This page considers these approaches.</p>
+<section id="gradient-boosting">
+<h2>Gradient boosting<a class="headerlink" href="#gradient-boosting" title="Link to this heading">#</a></h2>
+<p>Gradient boosting is an ensemble approach to fitting machine learning models. Each subsequent weak learner (single model which composes the final ensemble) corrects the errors of the previous one.</p>
+<p>Consider <strong>general boosting algorithm</strong>:</p>
+<p>Lets denote:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://www.statlearning.com/">Introduction to statistical learning</a>.</p></li>
-<li><p>Many useful information in <a class="reference external" href="https://scikit-learn.org/stable/modules/tree.html#decision-trees">Decision Trees</a> page of the official documentation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(K\)</span>: nubmer of weak learners in the model.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f_k(x_i), k = \overline{1, K}\)</span>: <span class="math notranslate nohighlight">\(k\)</span>-th weak laerner.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}_i^{(k)}, k = \overline{1, K}\)</span>: predict of the <span class="math notranslate nohighlight">\(k\)</span>-th weak learner for <span class="math notranslate nohighlight">\(i\)</span>-th observation.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">graphviz</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Markdown</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">cm</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tree</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.inspection</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">decision_tree.prog</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_Q_scatter</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="tree-model">
-<h2>Tree model<a class="headerlink" href="#tree-model" title="Link to this heading">#</a></h2>
-<p>A decision tree can be used to solve both regression and classification tasks. The idea is to split the original predictor space into regions (<span class="math notranslate nohighlight">\(R_1, R_2, \dots, R_m\)</span>), where a prediction is made for each region <span class="math notranslate nohighlight">\(R_i\)</span> based on the observations within it.</p>
-<p>For example, in a regression task, the mean response value can be predicted for the selected region. In the following example, a decision tree is shown that could be formed for data corresponding to a paraboloid.</p>
-<p>The graph at the top illustrates the decision-making process, while the diagrams below show how predictions were formed.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{y}_i^{(0)} = 0 \\
+\hat{y}_i^{(1)} = f_1(x_i) = \hat{y}_i^{(0)} + f_1(x_i) \\
+\hat{y}_i^{(2)} = f_1(x_i) + f_2(x_i)  = \hat{y}_i^{(1)} + f_2(x_i)\\
+\ldots \\
+\hat{y}_i^{(K)} = \hat{y}_i^{(K-1)} + f_{K}(x_i)  
+\end{split}\]</div>
+<p>The final learner is:</p>
+<div class="math notranslate nohighlight">
+\[\hat{y}_i^{(K)} = \hat{y}_i^{(K-1)} + f_{K}(x_i) = \sum_{k=0}^{K} f_k(x_i)\]</div>
+<p>The the best results are achieved by a special modification of the boosting: <strong>Gradient Boosting</strong>. The main feature of the gradient boosting is a way it looks for subsequent weak learners <span class="math notranslate nohighlight">\(f_k, k=\overline{1, K}\)</span>.</p>
+<p>Let’s consider the <span class="math notranslate nohighlight">\(k\)</span>-th step of the fitting algorithm for consideration. The idea dehind gradient boosting is to fit <span class="math notranslate nohighlight">\(f_k(x_j)\)</span><span class="math notranslate nohighlight">\( in order to predict the values of partial derivatives of some loss funciton \)</span>L[y, \hat{y}^{(k-1)}]<span class="math notranslate nohighlight">\( by \)</span>\hat{y}^{(k-1)}_j<span class="math notranslate nohighlight">\(. More formally, the values that are supposed to be predicted by weak learner \)</span>f_k$ are:</p>
+<div class="math notranslate nohighlight">
+\[s_i = -\frac{\partial L\left[y, \hat{y}^{(k-1)}\right]}{\partial \hat{y}^{(k-1)}_i}\left(\hat{y}^{(k-1)}\right)\]</div>
+<p>Where:</p>
 <ul class="simple">
-<li><p>The nodes in the graph where decisions are made are called <strong>internal nodes</strong>.</p></li>
-<li><p>The nodes in the graph that produce the final result and correspond to <span class="math notranslate nohighlight">\(R_i\)</span> are called <strong>terminal nodes or leaves</strong>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y=\left(y_1, y_2, \ldots, y_n \right)\)</span>: the vector of final targets.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y}^{(k-1)} = \left(\hat{y}^{(k-1)}_1, \hat{y}^{k-1}_2, \ldots, \hat{y}^{k-1}_n\right)\)</span>: the vector of predictions is produced by the enseble of the first <span class="math notranslate nohighlight">\(k-1\)</span> weak learners.</p></li>
 </ul>
-<hr class="docutils" />
-<p>As an example, consider the approximation of a two-dimensional function whose observed values are represented as a table. We’ll use <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code> to build a model that will serve as our example.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fitting sample</span>
-<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-
-<span class="n">x1_lim</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="n">x2_lim</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-
-<span class="n">sample_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;$x_1$&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">x1_lim</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">),</span>
-    <span class="s2">&quot;$x_2$&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">x2_lim</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">),</span>
-<span class="p">})</span>
-
-<span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;$y$&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
-<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="n">sample_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">()))</span>
-
-<span class="c1"># Model fitting</span>
-<span class="n">my_first_tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">sample_df</span><span class="p">[[</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="s2">&quot;$x_2$&quot;</span><span class="p">]],</span>
-    <span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;$y$&quot;</span><span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<p>|    |     $x_1$ |     $x_2$ |      $y$ |
-|—:|———-:|———-:|———:|
-|  0 |  1.44144  | -1.07023  |  3.22313 |
-|  1 | -1.19252  | -3.61171  | 14.4665  |
-|  2 |  1.63048  |  0.776403 |  3.26126 |
-|  3 | -3.36349  | -2.75274  | 18.8907  |
-|  4 |  4.62608  | -3.10274  | 31.0276  |
-|  5 | -1.53338  | -3.29912  | 13.2355  |
-|  6 |  4.91751  | -1.39531  | 26.1288  |
-|  7 | -2.64942  |  0.363438 |  7.15152 |
-|  8 |  0.856943 | -4.04761  | 17.1175  |
-|  9 | -0.933099 | -0.801175 |  1.51255 |</p>
-</div>
-</div>
-<p>The following cell visualizes the decision tree. Each node splits the data into two subsets, with each subset being further divided by the subsequent nodes.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisation of the tree</span>
-<span class="n">dot_data</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">export_graphviz</span><span class="p">(</span>
-    <span class="n">my_first_tree</span><span class="p">,</span> 
-    <span class="n">out_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x_1&quot;</span><span class="p">,</span> <span class="s2">&quot;x_2&quot;</span><span class="p">],</span>
-    <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-    <span class="n">rounded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  
-    <span class="n">special_characters</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-<span class="n">graph</span> <span class="o">=</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Source</span><span class="p">(</span><span class="n">dot_data</span><span class="p">)</span>
-<span class="n">graph</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/5d4e356bad164ced412efceb824e734c3f543da8f7b9987e27bf1c7e1a164607.svg" src="../_images/5d4e356bad164ced412efceb824e734c3f543da8f7b9987e27bf1c7e1a164607.svg" />
-</div>
-</div>
-<p>The output of the same model is represented as a set of sectors on the <span class="math notranslate nohighlight">\(x_1\)</span>-<span class="math notranslate nohighlight">\(x_2\)</span> surface.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
-
-<span class="c1"># Predictions grid</span>
-<span class="n">x1_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">x1_lim</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="n">x2_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">x2_lim</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="n">x1_mesh</span><span class="p">,</span> <span class="n">x2_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x1_range</span><span class="p">,</span> <span class="n">x2_range</span><span class="p">)</span>
-<span class="n">mesh_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;$x_1$&quot;</span> <span class="p">:</span> <span class="n">x1_mesh</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
-    <span class="s2">&quot;$x_2$&quot;</span> <span class="p">:</span> <span class="n">x2_mesh</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-<span class="p">})</span>
-<span class="n">p_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
-    <span class="n">my_first_tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">mesh_df</span><span class="p">),</span>
-    <span class="n">x1_mesh</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
-
-<span class="c1"># Visualisation of the decision surface</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
-<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-    <span class="n">my_first_tree</span><span class="p">,</span>
-    <span class="n">mesh_df</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span>
-    <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax1</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">sample_df</span><span class="p">,</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span>
-    <span class="n">size</span> <span class="o">=</span> <span class="s2">&quot;$y$&quot;</span><span class="p">,</span>
-    <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span>
-    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
-
-<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-    <span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">],</span>
-    <span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">],</span>
-    <span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;$y$&quot;</span><span class="p">],</span>
-    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
-<span class="p">)</span>
-<span class="n">surf</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span>
-    <span class="n">x1_mesh</span><span class="p">,</span> <span class="n">x2_mesh</span><span class="p">,</span> <span class="n">p_mesh</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span>
-<span class="p">)</span>
-
-<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/7d30471744dfa9fc5d0f2620986d95834773377cb020294ed1091435f6379287.png" src="../_images/7d30471744dfa9fc5d0f2620986d95834773377cb020294ed1091435f6379287.png" />
-</div>
-</div>
+<p>This approach assumes that, using gradient boosting, you try to select such an <span class="math notranslate nohighlight">\(f_k\)</span> that its predictions are close to the <span class="math notranslate nohighlight">\(s_i\)</span> that correspond is corresponds to the direction that minimises the selected loss.</p>
 </section>
-<section id="fitting-procedure">
-<h2>Fitting procedure<a class="headerlink" href="#fitting-procedure" title="Link to this heading">#</a></h2>
-<p>Such group of models usually uses so called “gready search” approaches for fitting. At each step it tries all possible separations and select the best according to the chosen role.</p>
-<p>Check <a class="reference external" href="https://scikit-learn.org/stable/modules/tree.html#tree-algorithms-id3-c4-5-c5-0-and-cart">different implementations</a> of the algorithm listed in sklearn. We’ll consider more carefully approch used by sklearn implementations, check offical description <a class="reference external" href="https://scikit-learn.org/stable/modules/tree.html#mathematical-formulation">here</a>.</p>
-<hr class="docutils" />
-<p>At each step of the algorithm, you need to choose the best separation according to the given data. We’ll consider an example so simple that you can find the best separation by hand. But we’ll look at the best option.</p>
-<p>The following cell creates set of points that we’ll use as example.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;$x_1$&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span>     <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span>   <span class="mi">8</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">],</span>
-    <span class="s2">&quot;$x_2$&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">3</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span>   <span class="mi">4</span><span class="p">],</span>
-    <span class="s2">&quot;$y$&quot;</span><span class="p">:</span>   <span class="p">[</span><span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">1</span><span class="p">]</span>
-<span class="p">})</span>
-<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">()))</span>
-
-<span class="n">plot_Q_scatter</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$y$&quot;</span><span class="p">],</span>
-    <span class="n">arrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
+<div class="toctree-wrapper compound">
 </div>
-</div>
-<div class="cell_output docutils container">
-<p>|    |   $x_1$ |   $x_2$ |   $y$ |
-|—:|——–:|——–:|——:|
-|  0 |     1   |     1.5 |     0 |
-|  1 |     5   |     2.5 |     0 |
-|  2 |     6   |     2   |     1 |
-|  3 |     5.5 |     1   |     0 |
-|  4 |     6.5 |     3   |     1 |
-|  5 |     8   |     3.5 |     1 |
-|  6 |     8.5 |     4   |     1 |</p>
-<img alt="../_images/c95e019380001c656f49b96f395452b474678ba467bee4b12d6cd034419657ae.png" src="../_images/c95e019380001c656f49b96f395452b474678ba467bee4b12d6cd034419657ae.png" />
-</div>
-</div>
-<p>Consider three different separations. Each separation forms two subsets of the observation <span class="math notranslate nohighlight">\(Q^{left}\)</span> and <span class="math notranslate nohighlight">\(Q^{right}\)</span>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
-<span class="n">plot_Q_scatter</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$y$&quot;</span><span class="p">],</span>
-    <span class="n">arrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-    <span class="n">sep_orient</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span>
-    <span class="n">sep_val</span><span class="o">=</span><span class="mf">1.7</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Separation 1&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
-<span class="n">plot_Q_scatter</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$y$&quot;</span><span class="p">],</span>
-    <span class="n">arrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-    <span class="n">sep_orient</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">,</span>
-    <span class="n">sep_val</span><span class="o">=</span><span class="mf">5.7</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Separation 2&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
-<span class="n">plot_Q_scatter</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$y$&quot;</span><span class="p">],</span>
-    <span class="n">arrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-    <span class="n">sep_orient</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">,</span>
-    <span class="n">sep_val</span><span class="o">=</span><span class="mf">8.25</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Separation 3&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/aee58d5f5dffee5b21c342dd534846ac1dc168434c951280b3b0fe1907314f98.png" src="../_images/aee58d5f5dffee5b21c342dd534846ac1dc168434c951280b3b0fe1907314f98.png" />
-</div>
-</div>
-<p>Obviously, <em>Separation 2</em> is the best, since it ideally separates observations according to their real classes. Now we’ll study how to get the same result formally.</p>
-<p>There are functions that allow us to estimate the homogeneity of an observation subset: <span class="math notranslate nohighlight">\(Q\)</span>. For different tasks, <span class="math notranslate nohighlight">\(H(Q)\)</span> can be defined differently, but we will focus on the Gini coefficient:</p>
-<div class="math notranslate nohighlight">
-\[H(Q) = \sum_{k=1}^K p_{k}(1-p_{k})\]</div>
-<p>Where <span class="math notranslate nohighlight">\(p_{k}\)</span> is the fraction of observations of the <span class="math notranslate nohighlight">\(k\)</span>-th class in <span class="math notranslate nohighlight">\(Q\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[p_{k} = \frac{1}{n} \sum_{y \in Q} I(y=k)\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(n\)</span>: number of observations.</p></li>
-<li><p><span class="math notranslate nohighlight">\(I(y=k)\)</span>: takes value 1 if <span class="math notranslate nohighlight">\(y=k\)</span> and 0 otherwise.</p></li>
-<li><p><span class="math notranslate nohighlight">\(K\)</span>: number of classes.</p></li>
-</ul>
-<p>The following cell computes and displays the <span class="math notranslate nohighlight">\(H(Q^{left}(i))\)</span> and <span class="math notranslate nohighlight">\(H(Q^{right}(i))\)</span> coefficients, where <span class="math notranslate nohighlight">\(i\)</span> is the separation number.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">H</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Q</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="n">p_vals</span> <span class="o">=</span> <span class="p">[(</span><span class="n">y</span><span class="p">[</span><span class="n">Q</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">Q</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()]</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">p_vals</span><span class="p">])</span>
-
-
-<span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;$y$&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-
-<span class="n">Q_options</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">1.7</span><span class="p">,</span>
-    <span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">5.7</span><span class="p">,</span>
-    <span class="n">X</span><span class="p">[</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">8.25</span>
-<span class="p">]</span>
-
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">Q_left</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Q_options</span><span class="p">):</span>
-    <span class="n">Q_left</span> <span class="o">=</span> <span class="n">Q_left</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-    <span class="n">H_left</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="n">Q_left</span><span class="p">)</span>
-    <span class="n">H_right</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">Q</span><span class="o">=~</span><span class="n">Q_left</span><span class="p">)</span>
-
-    <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;$H(Q^</span><span class="se">{{</span><span class="s2">left</span><span class="se">}}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">H_left</span><span class="si">}</span><span class="s2">$; &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;$H(Q^</span><span class="se">{{</span><span class="s2">right</span><span class="se">}}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">H_right</span><span class="si">}</span><span class="s2">$&quot;</span>
-    <span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<p>$H(Q^{left}_1) = 0.0$; $H(Q^{right}_1) = 0.32$</p>
-<p>$H(Q^{left}_2) = 0.0$; $H(Q^{right}_2) = 0.0$</p>
-<p>$H(Q^{left}_3) = 0.5$; $H(Q^{right}_3) = 0.0$</p>
-</div>
-</div>
-<p>The more homogeneous the observations in the subset <span class="math notranslate nohighlight">\(Q_i\)</span> - which is generally favorable for us - the smaller the value of <span class="math notranslate nohighlight">\(H(Q_i)\)</span>.</p>
-<p>To estimate the total quality of a separation (so called “impurity”), scikit-learn uses the following formula:</p>
-<div class="math notranslate nohighlight">
-\[G(Q, i) = \frac{n^{left}}{n}H(Q^{left}(i)) + \frac{n^{right}}{n}H(Q^{right}(i))\]</div>
-<p>Here, <span class="math notranslate nohighlight">\(n^{left} = |Q^{left}|\)</span> and <span class="math notranslate nohighlight">\(n^{right} = |Q^{right}|\)</span>.</p>
-<p>This represents the weighted mean of the homogeneity measures for the two subsets, weighted by the number of observations in each subset.</p>
-<p>Finally you just have to select separation with the smallest impurity <span class="math notranslate nohighlight">\(i^* = argmin_i(G(Q,i))\)</span>.</p>
-</section>
-<section id="feature-importance">
-<h2>Feature importance<a class="headerlink" href="#feature-importance" title="Link to this heading">#</a></h2>
-<p>Models based on the decision tree algorithm allow for the calculation of <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code>. This value characterizes how often a feature was used in different nodes of the tree.</p>
-<hr class="docutils" />
-<p>The following cell generates <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(y\)</span> such that each next feature influences <span class="math notranslate nohighlight">\(y\)</span> more than the previous one. Fits the decision tree to it and estimates the importance of the features.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_count</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">500</span>
-
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> <span class="n">features_count</span><span class="p">))</span>
-
-<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">features_count</span><span class="p">))</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">DecisionTreeRegressor</span><span class="p">(</span>
-    <span class="n">max_depth</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">features_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">model</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;feature&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;feature importance&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Features importances&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/700ae3af519cd85ecb643237a94435044aeec5003191e2ad939b2c6f8ffa806e.png" src="../_images/700ae3af519cd85ecb643237a94435044aeec5003191e2ad939b2c6f8ffa806e.png" />
-</div>
-</div>
-<p>As a result, the feature importance for the feature we designed to have a greater influence on the target is higher.</p>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1072,20 +790,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="gradient_descent.html"
+       href="metrics/jaccard_index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Gradient descent</p>
+        <p class="prev-next-title">Jaccard index</p>
       </div>
     </a>
     <a class="right-next"
-       href="model_selection.html"
+       href="classic_models/decision_tree.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Model selection</p>
+        <p class="prev-next-title">Decision tree</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1105,9 +823,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tree-model">Tree model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-procedure">Fitting procedure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance">Feature importance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-boosting">Gradient boosting</a></li>
 </ul>
   </nav></div>
 
