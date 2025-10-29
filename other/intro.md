@@ -23,3 +23,7 @@ In Scrum, work involves iterative improvements to the software. Each iteration t
     - *Product owner*: person responsible for communication with the customer.
     - *Scrum master*: person that checks that scrum rules are followed.
     - *Scrum team*: people who complete the tasks.
+
+### Kanban
+
+Kanban just takes from scrum the groups of tasks: *to do*, *doing* and *done*.
