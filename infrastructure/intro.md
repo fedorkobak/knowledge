@@ -2,6 +2,16 @@
 
 This section considers the various tools that can be used to create and support the infrastructure of you solution.
 
+## DevOps
+
+DevOps is a set of practices:
+
+- Version Control: all versions of the code have to be kept in the VCS (Version Control System).
+- Continious Intergration(CI) and Continious Testing: Assumes that code merging, testing and acquiring artefacts must be done as early as possible.
+- Continious Delivery (CD) automates the process of passing the components of the different software components from developers to the consumers.
+- Continuous monitoring requires setting up the automated collection of the information about the system, including: logs, telemetry and the properties of the underlying infrastructure.
+- Infrastructure as a Code: requires that all infrastructure have to be described in some kind of scripts that can be used for deployment.
+
 ## Containerazation
 
 Containerization is an approach to delivering solutions into production. The idea is to pack not only the application, but also the environment in which the application was developed, so that development environment is the same as those where application was tested.
