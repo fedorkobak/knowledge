@@ -56,6 +56,7 @@ Today, there are only a few popular cloud infrastructure providers. This page pr
 | **AI & Machine Learning** | **Azure Machine Learning** | An enterprise-grade service for the end-to-end machine learning lifecycle, from building and training models to deploying them. |
 | | **Azure AI Services** | A collection of pre-built AI APIs and services for vision, language, speech, and decision-making, allowing you to add cognitive capabilities to your applications. |
 | | **Azure OpenAI Service** | Provides access to powerful large language models (LLMs) from OpenAI, such as GPT-4, with the security and enterprise-grade capabilities of Azure. |
+| | **Azure AI Foundry** | Azure AI Foundry provides a comprehensive and dynamic marketplace containing models sold directly by Microsoft and models from its partners and community. |
 
 ### Endpoint
 
@@ -63,6 +64,10 @@ In order to deploy your solution to production, you may need to create an endpoi
 
 - **Kubernetes online endpoints:** Users manage the k8s cluster which provides the necessary infrastructure.
 - **Managed online endpoints:** Azure Machine Learning manages all the underlying infrastructure. This is a standard approach for machine learning engineers.
+
+### Azure AI Foundry
+
+In Azure AI Foundry, you must create a **hub**: is a workspace that organises and connects all the resources, tools, and services you use to build AI solutions. Within the hub, you can define **projects**, which provide more specific access to model and agents development.
 
 ## GCP
 
