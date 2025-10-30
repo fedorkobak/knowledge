@@ -12,6 +12,9 @@ DevOps is a set of practices:
 - Continuous monitoring requires setting up the automated collection of the information about the system, including: logs, telemetry and the properties of the underlying infrastructure.
 - Infrastructure as a Code: requires that all infrastructure have to be described in some kind of scripts that can be used for deployment.
 
+### Continious integration
+
+Continuous integration is an approach to adding changes to the software. Each feature is developed in a separate branch, and the changes are then added to the main code base. During the merge attempt the unit tests are applied to the code base with the implemented changes. If the tests pass successfully, the new feature is merged into the main code base.
 
 ### IaC
 
