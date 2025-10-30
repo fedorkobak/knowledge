@@ -12,6 +12,11 @@ DevOps is a set of practices:
 - Continuous monitoring requires setting up the automated collection of the information about the system, including: logs, telemetry and the properties of the underlying infrastructure.
 - Infrastructure as a Code: requires that all infrastructure have to be described in some kind of scripts that can be used for deployment.
 
+
+### IaC
+
+Infrastructure as a Code (IaC) is an approach to setup the compute, networks, datastorage etc. via programming methods, instead of manually setting up evertything by hands  using interative admistration tools. It allows developers and operational teams to manage infrastructure using code. This code is usually written in a high-level, human-readable scripting language. These scripts are then executed to automate the provisioning and configuration of infrastructure, making the process more efficient, consistent and scalable. 
+
 ## Containerazation
 
 Containerization is an approach to delivering solutions into production. The idea is to pack not only the application, but also the environment in which the application was developed, so that development environment is the same as those where application was tested.
