@@ -16,6 +16,15 @@ DevOps is a set of practices:
 
 Continuous integration is an approach to adding changes to the software. Each feature is developed in a separate branch, and the changes are then added to the main code base. During the merge attempt the unit tests are applied to the code base with the implemented changes. If the tests pass successfully, the new feature is merged into the main code base.
 
+### Testing frameworks
+
+Testing is an essential part of CI. There are different types of test for different purposes:
+
+- **Unit tests**: This tests check if the conditionally atomic sections of the programm works according to the requirements.
+- **Smoke tests**: Check that core functionality of the entire application is working. This generally ensures building processes are still being carried out. The name refers to the "smoke" that indicates that there is a "fire" somewhere in your codebase.
+- **Integration tests**: Ensures that various services interact with each other in accordance with the requirements imposed on them.
+- **Acceptance tests**: Ensures that the final application meets all business requirements and is ready to shipment to the customer.
+
 ### IaC
 
 Infrastructure as a Code (IaC) is an approach to setup the compute, networks, datastorage etc. via programming methods, instead of manually setting up evertything by hands  using interative admistration tools. It allows developers and operational teams to manage infrastructure using code. This code is usually written in a high-level, human-readable scripting language. These scripts are then executed to automate the provisioning and configuration of infrastructure, making the process more efficient, consistent and scalable. 
