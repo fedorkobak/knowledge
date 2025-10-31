@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Build image" href="images/build_image.html" />
+    <link rel="next" title="Build interface" href="images/build_interface.html" />
     <link rel="prev" title="Check logs" href="containers/check_logs.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -307,13 +307,13 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Images</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="images/build_image/build_context.html">Build context</a></li>
-<li class="toctree-l3"><a class="reference internal" href="images/build_image/ignore_files.html">Ignore files</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="images/build_interface.html">Build interface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="images/build_interface/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="images/build_interface/ignore_files.html">Ignore files</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="images/dockerfile.html">Dockerfile</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="images/dockerfile/execute_with_run.html">Execute with start</a></li>
 </ul>
 </details></li>
 </ul>
@@ -511,7 +511,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../infrastructure/gitlab.html">Gitlab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../infrastructure/terraform.html">Terraform</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../infrastructure/terraform.html">Terraform</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../infrastructure/terraform/configuration_language.html">Configuration language</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../infrastructure/ansible.html">Ansible</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../infrastructure/clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../infrastructure/clouds/providers.html">Providers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -527,6 +530,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../other/intro.html">Intro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/vs_code.html">VS Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/python_apache.html">Python with apache</a></li>
 
@@ -711,11 +715,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-image">Build image</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-container-to-image">Commit container to image</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prune-images">Prune images</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dockerfile-directives">Dockerfile directives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-interface">Build interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multistage">Multistage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-container">Commit container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dockerfile">Dockerfile</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#history-layers">History (layers)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prune-images">Prune images</a></li>
 </ul>
             </nav>
         </div>
@@ -730,19 +735,22 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="images">
 <h1>Images<a class="headerlink" href="#images" title="Link to this heading">#</a></h1>
 <p>This page focuses on the features associated with docker images.</p>
-<section id="build-image">
-<h2>Build image<a class="headerlink" href="#build-image" title="Link to this heading">#</a></h2>
-<p>You can build docker images using the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span> <span class="pre">&lt;path</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">folder&gt;</span></code> command. The <code class="docutils literal notranslate"><span class="pre">&lt;folder</span> <span class="pre">path&gt;</span></code> should contain a <code class="docutils literal notranslate"><span class="pre">dockerfile</span></code> with the instructions to build the images.</p>
-<p>Check more in the <a class="reference internal" href="images/build_image.html"><span class="std std-doc">corresponding page</span></a>.</p>
+<section id="build-interface">
+<h2>Build interface<a class="headerlink" href="#build-interface" title="Link to this heading">#</a></h2>
+<p>Consider the docker interface for building images.</p>
+<p>The main method is to use the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span></code> command. However, this is actually a wrapper for a <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">buildx</span></code> command.</p>
+<p>Check more in the <a class="reference internal" href="images/build_interface.html"><span class="std std-doc">corresponding page</span></a>.</p>
 <hr class="docutils" />
 <p>Consider example - the following cell creates the simplest possible <code class="docutils literal notranslate"><span class="pre">dockerfile</span></code> it just modifies alpine linux to echo message <code class="docutils literal notranslate"><span class="pre">this_is_new_container</span></code> at container startup.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39; &gt; images_files/dockerfile</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">example_directory</span><span class="o">=</span><span class="s2">&quot;/tmp/build_examples&quot;</span>
+rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$example_directory</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>mkdir<span class="w"> </span><span class="nv">$example_directory</span>
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$example_directory</span>
 
+cat<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39; &gt; dockerfile</span>
 <span class="s">FROM alpine</span>
 <span class="s">CMD [&quot;echo&quot;, &quot;this_is_new_image&quot;]</span>
-
 <span class="s">EOF</span>
 </pre></div>
 </div>
@@ -753,8 +761,7 @@ document.write(`
 <p>Also here is specified <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">docker_build_example</span></code> option it specifies name of the container.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>images_files
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>docker_build_example<span class="w"> </span>.<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>docker_build_example<span class="w"> </span>.<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 <span class="nb">cd</span><span class="w"> </span>..
 </pre></div>
 </div>
@@ -768,8 +775,8 @@ docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPOSITORY             TAG       IMAGE ID       CREATED      SIZE
-docker_build_example   latest    1615e7501182   3 days ago   7.83MB
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>REPOSITORY             TAG       IMAGE ID       CREATED       SIZE
+docker_build_example   latest    e0b69d48dc28   3 weeks ago   8.32MB
 </pre></div>
 </div>
 </div>
@@ -791,8 +798,54 @@ Deleted: sha256:1615e7501182ca1dc43eb1affa2173af6bc3214c030c5ef0acb4ca96bdb6a916
 </div>
 </div>
 </section>
-<section id="commit-container-to-image">
-<h2>Commit container to image<a class="headerlink" href="#commit-container-to-image" title="Link to this heading">#</a></h2>
+<section id="multistage">
+<h2>Multistage<a class="headerlink" href="#multistage" title="Link to this heading">#</a></h2>
+<p>The multistage build in docker enables you to generate artifacts using one base image and use it in the other.</p>
+<p>For more information check the <a class="reference external" href="https://docs.docker.com/build/building/multi-stage/">Multi-stage builds</a>.</p>
+<hr class="docutils" />
+<p>Consider the case where you need to use some a Python package and the final image must contain the outputs but must be based on the <code class="docutils literal notranslate"><span class="pre">alpine</span></code> image without unneccessary for python installation.</p>
+<p>The following cell shows build which at the first stage generates the <code class="docutils literal notranslate"><span class="pre">cowsay</span></code> output, the second saves this output to the final image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>multistage<span class="w"> </span>-<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">FROM python:slim </span>
+
+<span class="s">RUN pip3 install cowsay</span>
+<span class="s">RUN python -m cowsay -t &quot;I&#39;m from previous stage&quot; &gt; /cow_content</span>
+
+<span class="s">FROM alpine:latest</span>
+<span class="s">WORKDIR /my_test_dir</span>
+<span class="s">COPY --from=0 /cow_content ./content</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next cell prints the content from the final image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>multistage<span class="w"> </span>cat<span class="w"> </span>content
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  _______________________
+| I&#39;m from previous stage |
+  =======================
+                       \
+                        \
+                          ^__^
+                          (oo)\_______
+                          (__)\       )\/\
+                              ||----w |
+                              ||     ||
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="commit-container">
+<h2>Commit container<a class="headerlink" href="#commit-container" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">commit</span></code> command allows you to save the current state of a container as a new image. This is useful if you have made changes or created something new within a container and want to preserve these modifications. To save the current state of a container as a new image, use the following syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">commit</span> <span class="o">&lt;</span><span class="n">container</span> <span class="n">name</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">new</span> <span class="n">image</span> <span class="n">name</span><span class="o">&gt;</span>
 </pre></div>
@@ -865,6 +918,134 @@ Deleted: sha256:d45b95ae0c5e8765eebc035f638f39e1cfcf6d20cd0df26e0915f9ab087793c5
 </div>
 </div>
 </section>
+<section id="dockerfile">
+<h2>Dockerfile<a class="headerlink" href="#dockerfile" title="Link to this heading">#</a></h2>
+<p>A Docker file is a set of instructions that specifies the properties of the final image. The syntax includes:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.docker.com/reference/dockerfile/#parser-directives">Parser directives</a>.</p></li>
+<li><p>Directives with their arguments.</p></li>
+<li><p>Comments.</p></li>
+</ul>
+<p>Dockerfile directives describe the behaviour of the dockerbuild command.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Directive</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FROM</span></code></p></td>
+<td><p>Sets the base image for the new image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">WORKDIR</span></code></p></td>
+<td><p>Sets the working directory within the image.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">COPY</span></code></p></td>
+<td><p>Copies files or directories from the host to the image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RUN</span></code></p></td>
+<td><p>Executes commands in a new layer on top of the current image.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CMD</span></code></p></td>
+<td><p>Provides a command that will run when a container is started.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">EXPOSE</span></code></p></td>
+<td><p>Informs Docker that the container listens on the specified network ports.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ENV</span></code></p></td>
+<td><p>Sets environment variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ADD</span></code></p></td>
+<td><p>Copies files, directories, or remote file URLs from the host to the image.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code></p></td>
+<td><p>Configures a container to run as an executable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VOLUME</span></code></p></td>
+<td><p>Creates a mount point with specified path and marks it as holding external data.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">USER</span></code></p></td>
+<td><p>Sets the username or UID to use when running the image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LABEL</span></code></p></td>
+<td><p>Adds metadata to an image.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ARG</span></code></p></td>
+<td><p>Defines a variable that users can pass at build-time to the builder.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ONBUILD</span></code></p></td>
+<td><p>Adds a trigger instruction to be executed when the image is used as a base for another build.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">STOPSIGNAL</span></code></p></td>
+<td><p>Sets the system call signal that will be sent to the container to exit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HEALTHCHECK</span></code></p></td>
+<td><p>Tells Docker how to test a container to check that it is still working.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SHELL</span></code></p></td>
+<td><p>Allows the default shell used for the shell form of commands to be overridden.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For more details check:</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://docs.docker.com/build/concepts/dockerfile/">Dockerfile overview</a> the official documentation.</p></li>
+<li><p>The <a class="reference external" href="https://docs.docker.com/reference/dockerfile/">Dockerfile referece</a>.</p></li>
+<li><p>The <a class="reference internal" href="#images/docker_file_directives.ipynb"><span class="xref myst">Dockerfile</span></a> page.</p></li>
+</ul>
+</section>
+<section id="history-layers">
+<h2>History (layers)<a class="headerlink" href="#history-layers" title="Link to this heading">#</a></h2>
+<p>With <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">history</span> <span class="pre">&lt;image</span> <span class="pre">name&gt;</span></code>, you can view the manipulations used to create the image. Some of them are layers — a layer is a row in the history with a non-zero <code class="docutils literal notranslate"><span class="pre">SIZE</span></code>.</p>
+<hr class="docutils" />
+<p>The following cell pulls the <code class="docutils literal notranslate"><span class="pre">alpine</span></code> image, and showen history of the layer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>alpine<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>alpine
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>IMAGE          CREATED      CREATED BY                                      SIZE      COMMENT
+b0c9d60fc5e3   3 days ago   CMD [&quot;/bin/sh&quot;]                                 0B        buildkit.dockerfile.v0
+&lt;missing&gt;      3 days ago   ADD alpine-minirootfs-3.21.2-x86_64.tar.gz /…   7.83MB    buildkit.dockerfile.v0
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note:</strong> A <code class="docutils literal notranslate"><span class="pre">0B</span></code> size history event for specifying <code class="docutils literal notranslate"><span class="pre">CMD</span></code> represents metadata of the image. It is part of the history but not a layer.</p>
+<p>The following code creates a new image based on the <code class="docutils literal notranslate"><span class="pre">alpine</span></code> loaded in the previous cell. It adds two <code class="docutils literal notranslate"><span class="pre">RUN</span></code> commands.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>extra_layer<span class="w"> </span>-<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">FROM alpine</span>
+<span class="s">RUN echo &quot;hello world&quot; &gt; test_file </span>
+<span class="s">RUN echo &quot;hello world&quot;</span>
+<span class="s">EOF</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is two <code class="docutils literal notranslate"><span class="pre">RUN</span></code> commands in the <code class="docutils literal notranslate"><span class="pre">history</span></code> of the image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>extra_layer
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>IMAGE          CREATED              CREATED BY                                      SIZE      COMMENT
+9872f645ca65   About a minute ago   RUN /bin/sh -c echo &quot;hello world&quot; # buildkit    0B        buildkit.dockerfile.v0
+&lt;missing&gt;      About a minute ago   RUN /bin/sh -c echo &quot;hello world&quot; &gt; test_fil…   12B       buildkit.dockerfile.v0
+&lt;missing&gt;      3 days ago           CMD [&quot;/bin/sh&quot;]                                 0B        buildkit.dockerfile.v0
+&lt;missing&gt;      3 days ago           ADD alpine-minirootfs-3.21.2-x86_64.tar.gz /…   7.83MB    buildkit.dockerfile.v0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="prune-images">
 <h2>Prune images<a class="headerlink" href="#prune-images" title="Link to this heading">#</a></h2>
 <p>Docker prune allows you to remove a set of images. By default, it removes containers with the <code class="docutils literal notranslate"><span class="pre">&lt;none&gt;</span></code> tag, which are typically intermediate images that were replaced by other containers with the same tag. These <code class="docutils literal notranslate"><span class="pre">&lt;none&gt;</span></code> images can be safely removed.</p>
@@ -929,123 +1110,6 @@ alpine       latest    b0c9d60fc5e3   3 days ago   7.83MB
 </div>
 </div>
 </section>
-<section id="dockerfile-directives">
-<h2>Dockerfile directives<a class="headerlink" href="#dockerfile-directives" title="Link to this heading">#</a></h2>
-<p>Dockerfile directives describe the behaviour of the dockerbuild command.</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Directive</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FROM</span></code></p></td>
-<td><p>Sets the base image for the new image.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">WORKDIR</span></code></p></td>
-<td><p>Sets the working directory within the image.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">COPY</span></code></p></td>
-<td><p>Copies files or directories from the host to the image.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RUN</span></code></p></td>
-<td><p>Executes commands in a new layer on top of the current image.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CMD</span></code></p></td>
-<td><p>Provides a command that will run when a container is started.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">EXPOSE</span></code></p></td>
-<td><p>Informs Docker that the container listens on the specified network ports.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ENV</span></code></p></td>
-<td><p>Sets environment variables.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ADD</span></code></p></td>
-<td><p>Copies files, directories, or remote file URLs from the host to the image.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code></p></td>
-<td><p>Configures a container to run as an executable.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VOLUME</span></code></p></td>
-<td><p>Creates a mount point with specified path and marks it as holding external data.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">USER</span></code></p></td>
-<td><p>Sets the username or UID to use when running the image.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LABEL</span></code></p></td>
-<td><p>Adds metadata to an image.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ARG</span></code></p></td>
-<td><p>Defines a variable that users can pass at build-time to the builder.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ONBUILD</span></code></p></td>
-<td><p>Adds a trigger instruction to be executed when the image is used as a base for another build.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">STOPSIGNAL</span></code></p></td>
-<td><p>Sets the system call signal that will be sent to the container to exit.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HEALTHCHECK</span></code></p></td>
-<td><p>Tells Docker how to test a container to check that it is still working.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SHELL</span></code></p></td>
-<td><p>Allows the default shell used for the shell form of commands to be overridden.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>Check more</strong> in <a class="reference internal" href="images/docker_file_directives.html"><span class="std std-doc">specific page</span></a> for dockerfile directives.</p>
-</section>
-<section id="history-layers">
-<h2>History (layers)<a class="headerlink" href="#history-layers" title="Link to this heading">#</a></h2>
-<p>With <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">history</span> <span class="pre">&lt;image</span> <span class="pre">name&gt;</span></code>, you can view the manipulations used to create the image. Some of them are layers — a layer is a row in the history with a non-zero <code class="docutils literal notranslate"><span class="pre">SIZE</span></code>.</p>
-<hr class="docutils" />
-<p>The following cell pulls the <code class="docutils literal notranslate"><span class="pre">alpine</span></code> image, and showen history of the layer.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>alpine<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>alpine
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>IMAGE          CREATED      CREATED BY                                      SIZE      COMMENT
-b0c9d60fc5e3   3 days ago   CMD [&quot;/bin/sh&quot;]                                 0B        buildkit.dockerfile.v0
-&lt;missing&gt;      3 days ago   ADD alpine-minirootfs-3.21.2-x86_64.tar.gz /…   7.83MB    buildkit.dockerfile.v0
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note:</strong> A <code class="docutils literal notranslate"><span class="pre">0B</span></code> size history event for specifying <code class="docutils literal notranslate"><span class="pre">CMD</span></code> represents metadata of the image. It is part of the history but not a layer.</p>
-<p>The following code creates a new image based on the <code class="docutils literal notranslate"><span class="pre">alpine</span></code> loaded in the previous cell. It adds two <code class="docutils literal notranslate"><span class="pre">RUN</span></code> commands.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>extra_layer<span class="w"> </span>-<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">FROM alpine</span>
-<span class="s">RUN echo &quot;hello world&quot; &gt; test_file </span>
-<span class="s">RUN echo &quot;hello world&quot;</span>
-<span class="s">EOF</span><span class="w"> </span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The result is two <code class="docutils literal notranslate"><span class="pre">RUN</span></code> commands in the <code class="docutils literal notranslate"><span class="pre">history</span></code> of the image.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>extra_layer
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>IMAGE          CREATED              CREATED BY                                      SIZE      COMMENT
-9872f645ca65   About a minute ago   RUN /bin/sh -c echo &quot;hello world&quot; # buildkit    0B        buildkit.dockerfile.v0
-&lt;missing&gt;      About a minute ago   RUN /bin/sh -c echo &quot;hello world&quot; &gt; test_fil…   12B       buildkit.dockerfile.v0
-&lt;missing&gt;      3 days ago           CMD [&quot;/bin/sh&quot;]                                 0B        buildkit.dockerfile.v0
-&lt;missing&gt;      3 days ago           ADD alpine-minirootfs-3.21.2-x86_64.tar.gz /…   7.83MB    buildkit.dockerfile.v0
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1090,11 +1154,11 @@ b0c9d60fc5e3   3 days ago   CMD [&quot;/bin/sh&quot;]                           
       </div>
     </a>
     <a class="right-next"
-       href="images/build_image.html"
+       href="images/build_interface.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Build image</p>
+        <p class="prev-next-title">Build interface</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1114,11 +1178,12 @@ b0c9d60fc5e3   3 days ago   CMD [&quot;/bin/sh&quot;]                           
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-image">Build image</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-container-to-image">Commit container to image</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prune-images">Prune images</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dockerfile-directives">Dockerfile directives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-interface">Build interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multistage">Multistage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-container">Commit container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dockerfile">Dockerfile</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#history-layers">History (layers)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prune-images">Prune images</a></li>
 </ul>
   </nav></div>
 

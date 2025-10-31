@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -307,13 +307,13 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../images/build_image/build_context.html">Build context</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../images/build_image/ignore_files.html">Ignore files</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../images/build_interface.html">Build interface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../images/build_interface/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../images/build_interface/ignore_files.html">Ignore files</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../images/dockerfile.html">Dockerfile</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../images/dockerfile/execute_with_run.html">Execute with start</a></li>
 </ul>
 </details></li>
 </ul>
@@ -511,7 +511,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../infrastructure/gitlab.html">Gitlab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/terraform.html">Terraform</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../infrastructure/terraform.html">Terraform</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../infrastructure/terraform/configuration_language.html">Configuration language</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../infrastructure/ansible.html">Ansible</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../infrastructure/clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../infrastructure/clouds/providers.html">Providers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -527,6 +530,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../other/intro.html">Intro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/vs_code.html">VS Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
 
@@ -711,7 +715,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ports">Ports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ports">Ports</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#publish-exposed">Publish exposed</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memory">Memory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cpus">CPUs</a></li>
@@ -731,7 +738,12 @@ document.write(`
 <p>Here are some different options associated with running Docker containers.</p>
 <section id="ports">
 <h2>Ports<a class="headerlink" href="#ports" title="Link to this heading">#</a></h2>
-<p>To be able to communicate with docker containers from outside the environment, you need to bind ports on the host to the ports on the container. To do this, use <code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">&lt;port</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">host&gt;:&lt;port</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">container&gt;</span></code> when starting the container.</p>
+<p>To be able to communicate with docker containers from outside the environment, you need to bind ports on the host to the ports on the container. In terms of docker this called ports publishing.</p>
+<p>There are several options in <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> to specify the published ports:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">&lt;port</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">host&gt;:&lt;port</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">container&gt;</span></code> publishes the specified <code class="docutils literal notranslate"><span class="pre">&lt;port</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">container&gt;</span></code> as some <code class="docutils literal notranslate"><span class="pre">&lt;port</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">host&gt;</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">-P</span></code>, <code class="docutils literal notranslate"><span class="pre">--publish-all</span></code>: published all the ports that are exposed by the image.</p></li>
+</ul>
 <hr class="docutils" />
 <p>The next cell starts the container with <code class="docutils literal notranslate"><span class="pre">nc</span></code> listening on port <code class="docutils literal notranslate"><span class="pre">999</span></code> port. At the same time container maps port <code class="docutils literal notranslate"><span class="pre">888</span></code> of the host to the port <code class="docutils literal notranslate"><span class="pre">999</span></code> of the container.</p>
 <div class="cell docutils container">
@@ -785,6 +797,53 @@ docker<span class="w"> </span>rm<span class="w"> </span>port_example<span class=
 </div>
 </div>
 </div>
+<section id="publish-exposed">
+<h3>Publish exposed<a class="headerlink" href="#publish-exposed" title="Link to this heading">#</a></h3>
+<p>To publish all ports that defined as exposed in the Docker image use the <code class="docutils literal notranslate"><span class="pre">-P</span></code> option of the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>. This selects the host’s ports to be bound with the container ports, one by one, from the range of ports specified in the <code class="docutils literal notranslate"><span class="pre">/proc/sys/net/ipv4/ip_local_port_range</span></code> file.</p>
+<hr class="docutils" />
+<p>The following  cell runs the clickhouse container, which requires many ports to be exposed, and shows the output of the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="w"> </span>-P<span class="w"> </span>--name<span class="w"> </span>all_ports<span class="w"> </span>clickhouse/clickhouse-server:25.3-alpine
+docker<span class="w"> </span>ps
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>732c3956f2a1bff29a49e7a7124181f9c0abb46fc1d7a932a74630f9c917c8c6
+CONTAINER ID   IMAGE                                      COMMAND            CREATED        STATUS                  PORTS                                                                                                                                         NAMES
+732c3956f2a1   clickhouse/clickhouse-server:25.3-alpine   &quot;/entrypoint.sh&quot;   1 second ago   Up Less than a second   0.0.0.0:32786-&gt;8123/tcp, [::]:32786-&gt;8123/tcp, 0.0.0.0:32787-&gt;9000/tcp, [::]:32787-&gt;9000/tcp, 0.0.0.0:32788-&gt;9009/tcp, [::]:32788-&gt;9009/tcp   all_ports
+</pre></div>
+</div>
+</div>
+</div>
+<p>Five ports were exposed with just <code class="docutils literal notranslate"><span class="pre">-P</span></code> option.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>all_ports
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>all_ports
+</pre></div>
+</div>
+</div>
+</div>
+<p>The range of ports that Docker will attempt to use by default is displayed in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>/proc/sys/net/ipv4/ip_local_port_range
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32768	60999
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="environment-variables">
 <h2>Environment variables<a class="headerlink" href="#environment-variables" title="Link to this heading">#</a></h2>
@@ -985,7 +1044,10 @@ docker<span class="w"> </span>stop<span class="w"> </span>cpu_experiments<span c
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ports">Ports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ports">Ports</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#publish-exposed">Publish exposed</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memory">Memory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cpus">CPUs</a></li>

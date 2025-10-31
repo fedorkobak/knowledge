@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Ansible" href="ansible.html" />
+    <link rel="next" title="Configuration language" href="terraform/configuration_language.html" />
     <link rel="prev" title="Gitlab" href="gitlab.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -307,13 +307,13 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../docker/images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../docker/images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../docker/images/build_image/build_context.html">Build context</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../docker/images/build_image/ignore_files.html">Ignore files</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../docker/images/build_interface.html">Build interface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../docker/images/build_interface/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../docker/images/build_interface/ignore_files.html">Ignore files</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../docker/images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../docker/images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../docker/images/dockerfile.html">Dockerfile</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../docker/images/dockerfile/execute_with_run.html">Execute with start</a></li>
 </ul>
 </details></li>
 </ul>
@@ -511,7 +511,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="gitlab.html">Gitlab</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Terraform</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Terraform</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="terraform/configuration_language.html">Configuration language</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="ansible.html">Ansible</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="clouds/providers.html">Providers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -527,6 +530,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../other/intro.html">Intro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/vs_code.html">VS Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/python_apache.html">Python with apache</a></li>
 
@@ -712,6 +716,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli">CLI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-language">Configuration language</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#providers">Providers</a></li>
 </ul>
             </nav>
         </div>
@@ -726,6 +732,12 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="terraform">
 <h1>Terraform<a class="headerlink" href="#terraform" title="Link to this heading">#</a></h1>
 <p>With Terraform, you can describe your infrastructure using a special declarative language.</p>
+<p>The Terraform can manipulate different pieces of software with an API. Each piece of software managed by the Terraform is called a <strong>provider</strong>. A provider could be:</p>
+<ul class="simple">
+<li><p>IaaS: AWS/Azure/GCP.</p></li>
+<li><p>PaaS: K8s.</p></li>
+<li><p>Specific software: Docker.</p></li>
+</ul>
 <section id="cli">
 <h2>CLI<a class="headerlink" href="#cli" title="Link to this heading">#</a></h2>
 <p>To manipulate the terraform use special CLI. The basic commands are:</p>
@@ -733,8 +745,9 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code>: to init the terraform directory.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">validate</span></code>: to check if there are syntax mistakes in your terrform configuration.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code>: to apply the configuration.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span> <span class="pre">-destroy</span></code>: to unroll the infrastructure.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">destroy</span></code>: to unroll the infrastructure.</p></li>
 </ul>
+<p>For more details check the <a class="reference external" href="https://developer.hashicorp.com/terraform/cli">Terraform CLI Documentation</a>.</p>
 <hr class="docutils" />
 <p>The following cell defines a simple Terraform configuration that deploys an <code class="docutils literal notranslate"><span class="pre">nginx</span></code> image in the Docker runtime.</p>
 <div class="cell docutils container">
@@ -815,11 +828,11 @@ you run &quot;terraform init&quot; in the future.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 56
-drwxrwxr-x  3 user user  4096 paź 28 15:53 <span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
-drwxrwxrwt 25 root root 36864 paź 28 15:53 <span class=" -Color -Color-Black -Color-Black-BGGreen">..</span>
--rw-rw-r--  1 user user   400 paź 28 15:53 main.tf
-drwxr-xr-x  3 user user  4096 paź 28 15:53 <span class=" -Color -Color-Bold -Color-Bold-Blue">.terraform</span>
--rw-r--r--  1 user user  1337 paź 28 15:53 .terraform.lock.hcl
+drwxrwxr-x  3 user user  4096 paź 29 07:44 <span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
+drwxrwxrwt 22 root root 36864 paź 29 07:44 <span class=" -Color -Color-Black -Color-Black-BGGreen">..</span>
+-rw-rw-r--  1 user user   400 paź 29 07:44 main.tf
+drwxr-xr-x  3 user user  4096 paź 29 07:44 <span class=" -Color -Color-Bold -Color-Bold-Blue">.terraform</span>
+-rw-r--r--  1 user user  1337 paź 29 07:44 .terraform.lock.hcl
 </pre></div>
 </div>
 </div>
@@ -854,16 +867,16 @@ drwxr-xr-x  3 user user  4096 paź 28 15:53 <span class=" -Color -Color-Bold -Co
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID   IMAGE          COMMAND                  CREATED        STATUS        PORTS                  NAMES
-e98472d16175   657fdcd1c365   &quot;/docker-entrypoint.…&quot;   1 second ago   Up 1 second   0.0.0.0:8000-&gt;80/tcp   terraform_example
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                  NAMES
+4b2945deff80   9d0e6f6199dc   &quot;/docker-entrypoint.…&quot;   2 seconds ago   Up 2 seconds   0.0.0.0:8000-&gt;80/tcp   terraform_example
 </pre></div>
 </div>
 </div>
 </div>
-<p>The following cell shows that after <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span> <span class="pre">-destroy</span></code> the container deployed by terraform disappered:</p>
+<p>The following cell shows that after <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">destroy</span></code> the container deployed by terraform disappered:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>terraform<span class="w"> </span>apply<span class="w"> </span>-auto-approve<span class="w"> </span>-destroy<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>terraform<span class="w"> </span>destroy<span class="w"> </span>-auto-approve<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 docker<span class="w"> </span>ps
 </pre></div>
 </div>
@@ -875,6 +888,127 @@ docker<span class="w"> </span>ps
 </div>
 </div>
 </section>
+<section id="configuration-language">
+<h2>Configuration language<a class="headerlink" href="#configuration-language" title="Link to this heading">#</a></h2>
+<p>Terraform configuration language operates with blocks. Generall block syntax is following:</p>
+<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="err">&lt;BLOCK</span><span class="w"> </span><span class="err">TYPE&gt;</span><span class="w"> </span><span class="s2">&quot;&lt;BLOCK LABEL&gt;&quot; &quot;&lt;BLOCK LABEL&gt;&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="c1">  # Block body</span>
+<span class="w">  </span><span class="err">&lt;IDENTIFIER&gt;</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">&lt;EXPRESSION&gt;</span><span class="c1"> # Argument</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The most usefull block types are:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Block</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">terraform</span></code></p></td>
+<td><p>Configures settings related to the Terraform itself (e.g., backend, required providers, version).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">provider</span></code></p></td>
+<td><p>Defines the provider (e.g., AWS, GCP, Azure) and its configuration parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">resource</span></code></p></td>
+<td><p>Declares infrastructure objects to be created or managed by Terraform.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">data</span></code></p></td>
+<td><p>Reads information from existing infrastructure or external sources.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">variable</span></code></p></td>
+<td><p>Defines input variables to parameterize configurations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">output</span></code></p></td>
+<td><p>Exposes information about resources after deployment.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">locals</span></code></p></td>
+<td><p>Declares local variables for reuse within the configuration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">module</span></code></p></td>
+<td><p>Reuses a set of Terraform configurations from local paths or remote sources.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">backend</span></code></p></td>
+<td><p>Defines where Terraform stores its state file (inside the <code class="docutils literal notranslate"><span class="pre">terraform</span></code> block).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">provisioner</span></code></p></td>
+<td><p>Runs scripts or commands on a resource after it is created or destroyed.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">depends_on</span></code></p></td>
+<td><p>Explicitly defines dependencies between resources or modules.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For more details check:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://developer.hashicorp.com/terraform/language">Terraform language documentation</a>.</p></li>
+<li><p><a class="reference internal" href="terraform/configuration_language.html"><span class="std std-doc">Configuration language</span></a> page considers the standard block types.</p></li>
+</ul>
+</section>
+<section id="providers">
+<h2>Providers<a class="headerlink" href="#providers" title="Link to this heading">#</a></h2>
+<p>Provider is a piece of software that allows the terraform to interact with some tools. Check the <a class="reference external" href="https://registry.terraform.io/browse/providers">list of official providres</a>.</p>
+<p>The following table list the most popular terraform providers:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Provider</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">aws</span></code></p></td>
+<td><p>Manages resources on Amazon Web Services (EC2, S3, RDS, IAM, etc.).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">azurerm</span></code></p></td>
+<td><p>Manages Microsoft Azure resources (VMs, Storage, Networking, etc.).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">google</span></code></p></td>
+<td><p>Manages Google Cloud Platform resources (Compute, Storage, IAM, etc.).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kubernetes</span></code></p></td>
+<td><p>Manages Kubernetes clusters and resources (Pods, Deployments, Services, etc.).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">helm</span></code></p></td>
+<td><p>Manages Helm charts within Kubernetes clusters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docker</span></code></p></td>
+<td><p>Manages Docker images, containers, and networks.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vault</span></code></p></td>
+<td><p>Manages HashiCorp Vault secrets and policies.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">github</span></code></p></td>
+<td><p>Manages GitHub repositories, teams, and workflows.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gitlab</span></code></p></td>
+<td><p>Manages GitLab projects, users, and CI/CD pipelines.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cloudflare</span></code></p></td>
+<td><p>Manages Cloudflare DNS, firewall, and CDN configurations.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">datadog</span></code></p></td>
+<td><p>Manages Datadog monitors, dashboards, and integrations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">newrelic</span></code></p></td>
+<td><p>Manages New Relic alerts, dashboards, and integrations.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">postgresql</span></code></p></td>
+<td><p>Manages PostgreSQL databases, roles, and permissions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">random</span></code></p></td>
+<td><p>Generates random strings, IDs, or numbers for use in Terraform configs.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td><p>Provides null resources for running local scripts or defining dependencies.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -917,11 +1051,11 @@ docker<span class="w"> </span>ps
       </div>
     </a>
     <a class="right-next"
-       href="ansible.html"
+       href="terraform/configuration_language.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Ansible</p>
+        <p class="prev-next-title">Configuration language</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -942,6 +1076,8 @@ docker<span class="w"> </span>ps
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli">CLI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-language">Configuration language</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#providers">Providers</a></li>
 </ul>
   </nav></div>
 

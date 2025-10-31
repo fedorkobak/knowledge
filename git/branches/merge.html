@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -307,13 +307,13 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../docker/images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/build_image.html">Build image</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_image/build_context.html">Build context</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_image/ignore_files.html">Ignore files</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/build_interface.html">Build interface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_interface/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/build_interface/ignore_files.html">Ignore files</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/docker_file_directives.html">Dockerfile directives</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../docker/images/docker_file_directives/execute_with_run.html">Execute with start</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../docker/images/dockerfile.html">Dockerfile</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../docker/images/dockerfile/execute_with_run.html">Execute with start</a></li>
 </ul>
 </details></li>
 </ul>
@@ -511,7 +511,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../infrastructure/gitlab.html">Gitlab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/terraform.html">Terraform</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../infrastructure/terraform.html">Terraform</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../infrastructure/terraform/configuration_language.html">Configuration language</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../infrastructure/ansible.html">Ansible</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../infrastructure/clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../infrastructure/clouds/providers.html">Providers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -527,6 +530,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../other/intro.html">Intro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/vs_code.html">VS Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
 
@@ -711,10 +715,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-ancestor-sec-to-ancestor">To ancestor{#sec-to_ancestor}</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-case-sec-basic-case">Basic case{#sec-basic_case}</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-forward">Fast-forward</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-way-merge">Three-Way Merge</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-conflict">Solve conflict</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-example">Manual example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-version">Select version</a></li>
 </ul>
 </li>
@@ -733,189 +736,167 @@ document.write(`
 <h1>Merge<a class="headerlink" href="#merge" title="Link to this heading">#</a></h1>
 <p>Branches merge is opertion that allows you to get changes from intependend branches in one common commit. The <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span></code> command is crucial for this page.</p>
 <p>To merge branches you need to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span></code> to brunch to which we merge all the changes, and execute command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span> <span class="pre">&lt;branch</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">merged&gt;</span></code>.</p>
-<section id="to-ancestor-sec-to-ancestor">
-<h2>To ancestor{#sec-to_ancestor}<a class="headerlink" href="#to-ancestor-sec-to-ancestor" title="Link to this heading">#</a></h2>
+<section id="fast-forward">
+<h2>Fast-forward<a class="headerlink" href="#fast-forward" title="Link to this heading">#</a></h2>
 <p>The simplest case is when you create a branch, make a few commits, and want to add those changes from an ancestor branch that hasn’t changed.</p>
 <p>Simply put, you just tell the parent branch to just start referencing the last commit of the branch you want to merge into the parent branch.</p>
-<p>In the next cell:</p>
-<ul class="simple">
-<li><p>Created repository where there is <code class="docutils literal notranslate"><span class="pre">basic</span> <span class="pre">commit</span></code>;</p></li>
-<li><p>From <code class="docutils literal notranslate"><span class="pre">basic</span> <span class="pre">commit</span></code> branch <code class="docutils literal notranslate"><span class="pre">example_branch</span></code> was created;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">branch_commit</span></code> was commited to <code class="docutils literal notranslate"><span class="pre">example_branch</span></code>, first <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> display exactly this state of the repository;</p></li>
-<li><p>Then <code class="docutils literal notranslate"><span class="pre">example_branch</span></code> was merged to <code class="docutils literal notranslate"><span class="pre">master</span></code> - on <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> it just desplayed as <code class="docutils literal notranslate"><span class="pre">master</span></code> moved to same commit as <code class="docutils literal notranslate"><span class="pre">example_branch</span></code>.</p></li>
-</ul>
+<hr class="docutils" />
+<p>Consider the corresponding example.</p>
+<p>The following cell illustrates a scenario in which an “example branch” that is created from the “initial commit” in the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-mkdir merge_example
-cd merge_example
-git init &amp;&gt; /dev/null
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>test_file
+git<span class="w"> </span>add<span class="w"> </span>--all
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;initial commit&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 
-echo &quot;content&quot; &gt; test_file
-git add --all
-git commit -m &quot;basic commit&quot; &amp;&gt; /dev/null
-
-echo
-echo &quot;=====creating branch=====&quot;
-git checkout -b example_branch 2&gt;&amp;1
-echo &quot;content2&quot; &gt; test_file
-git commit -am &quot;branch commit&quot; &amp;&gt; /dev/null
-git log --decorate --graph
-
-echo
-echo &quot;=====merging to master=====&quot;
-git checkout master 2&gt;&amp;1
-
-echo &quot;-----git merge-----&quot;
-git merge example_branch
-echo &quot;-----git log-----&quot;
-git log --decorate --graph
-
-cd ..
-rm -r merge_example
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>example_branch<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content2&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>test_file
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;branch commit&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+git<span class="w"> </span>log<span class="w"> </span>--decorate<span class="w"> </span>--graph
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====creating branch=====
-Switched to a new branch &#39;example_branch&#39;
-* commit bbd3463120a7fc513429a75ca2ebfff325571f84 (HEAD -&gt; example_branch)
-| Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-| Date:   Sun Sep 10 16:20:47 2023 +0300
-| 
-|     branch commit
-| 
-* commit c42d7deed4d71b0f5c9036816fe65e7295a5e227 (master)
-  Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-  Date:   Sun Sep 10 16:20:47 2023 +0300
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>* <span class=" -Color -Color-Yellow">commit d8c45de49e1910b95336a842d0371da6b346f9ba (</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">HEAD</span><span class=" -Color -Color-Yellow"> -&gt; </span><span class=" -Color -Color-Bold -Color-Bold-Green">example_branch</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|</span> Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span> Date:   Thu Oct 30 23:30:30 2025 +0300
+<span class=" -Color -Color-Red">|</span> 
+<span class=" -Color -Color-Red">|</span>     branch commit
+<span class=" -Color -Color-Red">|</span> 
+* <span class=" -Color -Color-Yellow">commit a725eb28b0d67d4e49130dadbe73c8ec0314e69b (</span><span class=" -Color -Color-Bold -Color-Bold-Green">master</span><span class=" -Color -Color-Yellow">)</span>
+  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+  Date:   Thu Oct 30 23:30:30 2025 +0300
   
-      basic commit
-
-=====merging to master=====
-Switched to branch &#39;master&#39;
------git merge-----
-Updating c42d7de..bbd3463
+      initial commit
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell checks out to the “main” branch and merges the “example_branch” into it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>master<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+git<span class="w"> </span>merge<span class="w"> </span>example_branch
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Updating 1956595..8659f34
 Fast-forward
- test_file | 2 +-
+ test_file | 2 <span class=" -Color -Color-Green">+</span><span class=" -Color -Color-Red">-</span>
  1 file changed, 1 insertion(+), 1 deletion(-)
------git log-----
-* commit bbd3463120a7fc513429a75ca2ebfff325571f84 (HEAD -&gt; master, example_branch)
-| Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-| Date:   Sun Sep 10 16:20:47 2023 +0300
-| 
-|     branch commit
-| 
-* commit c42d7deed4d71b0f5c9036816fe65e7295a5e227
-  Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-  Date:   Sun Sep 10 16:20:47 2023 +0300
-  
-      basic commit
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="basic-case-sec-basic-case">
-<h2>Basic case{#sec-basic_case}<a class="headerlink" href="#basic-case-sec-basic-case" title="Link to this heading">#</a></h2>
-<p>Here I’ll play with the case when you have to branches but one doesn’t refer to any ancestor of other (like it was in <a class="reference internal" href="#sec-to_ancestor"><span class="xref myst">To ancestor</span></a>) section, so we have two separate branches.</p>
-<p><strong>Note</strong> in this example I don’t pay any attention ot conflicts, the example is made in such a way as to avoid conflicts.</p>
-<p>In the example:</p>
-<ul class="simple">
-<li><p>I created a repository where there are two branches that have independent commits in them, this is shown in the first <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> output;</p></li>
-<li><p>Then I merge <code class="docutils literal notranslate"><span class="pre">example_branch</span></code> into <code class="docutils literal notranslate"><span class="pre">master</span></code>;</p></li>
-<li><p>In the final <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> output:</p>
-<ul>
-<li><p>There is a new commit where the two branches merge;</p></li>
-<li><p>The message of the commit is <code class="docutils literal notranslate"><span class="pre">Merge</span> <span class="pre">branch</span> <span class="pre">'example_branch'</span></code> - automatically generated by git, in practice you’ll be able to set the message you want.</p></li>
-</ul>
-</li>
-</ul>
+<p>As the result the commit tree looks like presented in the following cell.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-mkdir merge_example
-cd merge_example
-git init &amp;&gt; /dev/null
-
-echo &quot;content&quot; &gt; file
-git add --all
-git commit -m &quot;basic commit&quot; &amp;&gt; /dev/null
-
-git checkout -b example_branch &amp;&gt; /dev/null
-echo &quot;content&quot; &gt; branch_file
-git add --all
-git commit -m &quot;branch commit&quot; &amp;&gt; /dev/null
-
-git checkout master &amp;&gt; /dev/null
-echo &quot;master content&quot; &gt; file
-git commit -am &quot;master commit&quot; &amp;&gt; /dev/null
-
-echo
-echo &quot;=====log=====&quot;
-git log --decorate --graph --all
-
-echo
-echo &quot;=====merge=====&quot;
-git merge example_branch
-
-echo
-echo &quot;=====log=====&quot;
-git log --decorate --graph --all
-
-cd ..
-rm -r merge_example
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>log<span class="w"> </span>--decorate<span class="w"> </span>--graph
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====log=====
-* commit 6ea69b66f6c2a49ea60a3a6b5b3de66181274234 (example_branch)
-| Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-| Date:   Sun Sep 10 13:00:54 2023 +0300
-| 
-|     branch commit
-|   
-| * commit 8b9f875b80b9d44020dedf40a39b1894f4a406d6 (HEAD -&gt; master)
-|/  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-|   Date:   Sun Sep 10 13:00:54 2023 +0300
-|   
-|       master commit
-| 
-* commit 15149be74a6d219dac74624c94bd7aeda0691e9d
-  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-  Date:   Sun Sep 10 13:00:54 2023 +0300
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>* <span class=" -Color -Color-Yellow">commit 8659f342f775f3461847c9e910d34b10dd81fb81 (</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">HEAD</span><span class=" -Color -Color-Yellow"> -&gt; </span><span class=" -Color -Color-Bold -Color-Bold-Green">master</span><span class=" -Color -Color-Yellow">, </span><span class=" -Color -Color-Bold -Color-Bold-Green">example_branch</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|</span> Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span> Date:   Thu Oct 30 23:27:18 2025 +0300
+<span class=" -Color -Color-Red">|</span> 
+<span class=" -Color -Color-Red">|</span>     branch commit
+<span class=" -Color -Color-Red">|</span> 
+* <span class=" -Color -Color-Yellow">commit 19565951c5cb967ddabf39037159787bda7016b9</span>
+  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+  Date:   Thu Oct 30 23:27:16 2025 +0300
   
       basic commit
+</pre></div>
+</div>
+</div>
+</div>
+<p>The master is “pulled” to the <code class="docutils literal notranslate"><span class="pre">example_branch</span></code>.</p>
+</section>
+<section id="three-way-merge">
+<h2>Three-Way Merge<a class="headerlink" href="#three-way-merge" title="Link to this heading">#</a></h2>
+<p>In the case when both branches you intend to merge have diverged (i.e., both have new commits relative to their closest common ancestor), the merging process will result in Git performing a three-way merge. The system will then automatically create a merge commit that “joins” the two separate lines of development.</p>
+<hr class="docutils" />
+<p>The following cell generates a Git history corresponding to the case in question.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+git<span class="w"> </span>add<span class="w"> </span>--all
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;basic commit&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 
-=====merge=====
-Merge made by the &#39;ort&#39; strategy.
- branch_file | 1 +
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>example_branch<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>branch_file
+git<span class="w"> </span>add<span class="w"> </span>--all
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;branch commit&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+
+git<span class="w"> </span>checkout<span class="w"> </span>master<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;master content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;master commit&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+
+git<span class="w"> </span>log<span class="w"> </span>--decorate<span class="w"> </span>--graph<span class="w"> </span>--all
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>* <span class=" -Color -Color-Yellow">commit 46267d0192969dc0c68cb43a1753f703c63109b1 (</span><span class=" -Color -Color-Bold -Color-Bold-Green">example_branch</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|</span> Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span> Date:   Fri Oct 31 07:23:08 2025 +0100
+<span class=" -Color -Color-Red">|</span> 
+<span class=" -Color -Color-Red">|</span>     branch commit
+<span class=" -Color -Color-Red">|</span>   
+<span class=" -Color -Color-Red">|</span> * <span class=" -Color -Color-Yellow">commit f36877029ce3bc142a92bb32f620573914c2787d (</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">HEAD</span><span class=" -Color -Color-Yellow"> -&gt; </span><span class=" -Color -Color-Bold -Color-Bold-Green">master</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|/</span>  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span>   Date:   Fri Oct 31 07:23:08 2025 +0100
+<span class=" -Color -Color-Red">|</span>   
+<span class=" -Color -Color-Red">|</span>       master commit
+<span class=" -Color -Color-Red">|</span> 
+* <span class=" -Color -Color-Yellow">commit 3234248174eb54c295070946178d1442866abd5e</span>
+  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+  Date:   Fri Oct 31 07:23:08 2025 +0100
+  
+      basic commit
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next cell merges the <code class="docutils literal notranslate"><span class="pre">example_branch</span></code> with the <code class="docutils literal notranslate"><span class="pre">main</span></code> and shows the corresponding output.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>merge<span class="w"> </span>example_branch<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;merge commit&quot;</span>
+git<span class="w"> </span>log<span class="w"> </span>--decorate<span class="w"> </span>--graph<span class="w"> </span>--all
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Merge made by the &#39;ort&#39; strategy.
+ branch_file | 1 <span class=" -Color -Color-Green">+</span>
  1 file changed, 1 insertion(+)
  create mode 100644 branch_file
-
-=====log=====
-*   commit 96f925a2adbada606ba4678c71460cf697fd8590 (HEAD -&gt; master)
-|\  Merge: 8b9f875 6ea69b6
-| | Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-| | Date:   Sun Sep 10 13:00:54 2023 +0300
-| | 
-| |     Merge branch &#39;example_branch&#39;
-| | 
-| * commit 6ea69b66f6c2a49ea60a3a6b5b3de66181274234 (example_branch)
-| | Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-| | Date:   Sun Sep 10 13:00:54 2023 +0300
-| | 
-| |     branch commit
-| | 
-* | commit 8b9f875b80b9d44020dedf40a39b1894f4a406d6
-|/  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-|   Date:   Sun Sep 10 13:00:54 2023 +0300
-|   
-|       master commit
-| 
-* commit 15149be74a6d219dac74624c94bd7aeda0691e9d
-  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-  Date:   Sun Sep 10 13:00:54 2023 +0300
+*   <span class=" -Color -Color-Yellow">commit 2065d26a68bfb1ea451877a7460b8f249320915d (</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">HEAD</span><span class=" -Color -Color-Yellow"> -&gt; </span><span class=" -Color -Color-Bold -Color-Bold-Green">master</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|</span><span class=" -Color -Color-Green">\</span>  Merge: f368770 46267d0
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> Date:   Fri Oct 31 07:23:24 2025 +0100
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> 
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span>     merge commit
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> 
+<span class=" -Color -Color-Red">|</span> * <span class=" -Color -Color-Yellow">commit 46267d0192969dc0c68cb43a1753f703c63109b1 (</span><span class=" -Color -Color-Bold -Color-Bold-Green">example_branch</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> Date:   Fri Oct 31 07:23:08 2025 +0100
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> 
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span>     branch commit
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> 
+* <span class=" -Color -Color-Green">|</span> <span class=" -Color -Color-Yellow">commit f36877029ce3bc142a92bb32f620573914c2787d</span>
+<span class=" -Color -Color-Green">|/</span>  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Green">|</span>   Date:   Fri Oct 31 07:23:08 2025 +0100
+<span class=" -Color -Color-Green">|</span>   
+<span class=" -Color -Color-Green">|</span>       master commit
+<span class=" -Color -Color-Green">|</span> 
+* <span class=" -Color -Color-Yellow">commit 3234248174eb54c295070946178d1442866abd5e</span>
+  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+  Date:   Fri Oct 31 07:23:08 2025 +0100
   
       basic commit
 </pre></div>
@@ -925,109 +906,72 @@ Merge made by the &#39;ort&#39; strategy.
 </section>
 <section id="solve-conflict">
 <h2>Solve conflict<a class="headerlink" href="#solve-conflict" title="Link to this heading">#</a></h2>
-<p>In the section <a class="reference internal" href="#sec-basic_case"><span class="xref myst">basic case</span></a> the example shows the case where the brances to be merged modify different files. But how does git deal with the case where branches being merged have changes in the same files?</p>
-<p>Git will enter a special state - a merge conflict. It will be necessary to edit the files that caused the conflict, add changes to the stage, and commit the changes.</p>
-<p>When there is a conflict, git will make some changes to the conflicting files. It will record where there is a conflict:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="n">HEAD</span>
-<span class="o">&lt;</span><span class="n">content</span> <span class="n">of</span> <span class="n">the</span> <span class="n">branch</span> <span class="n">we</span> <span class="n">are</span> <span class="n">merging</span> <span class="n">into</span><span class="o">&gt;</span>
-<span class="o">===========</span>
-<span class="o">&lt;</span><span class="n">content</span> <span class="n">of</span> <span class="n">the</span> <span class="n">branch</span> <span class="n">we</span> <span class="n">merge</span> <span class="n">into</span> <span class="n">another</span><span class="o">&gt;</span>
-<span class="o">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="o">&lt;</span><span class="n">branch</span> <span class="n">ot</span> <span class="n">be</span> <span class="n">merged</span> <span class="n">name</span><span class="o">&gt;</span>
+<p>The same file may have been modified in the both commits that you are attempting to merge. This situation is called a <strong>merge conflict</strong>. The conflicting file will contain the content of both branches in the following format:</p>
+<div class="highlight-txt notranslate"><div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;content of the branch we are merging into&gt;
+===========
+&lt;content of the branch we merge into another&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; &lt;branch ot be merged name&gt;
 </pre></div>
 </div>
-<section id="manual-example">
-<h3>Manual example<a class="headerlink" href="#manual-example" title="Link to this heading">#</a></h3>
-<p>We can put any content there: we can put content from one of the branches, or we can put completely different content.</p>
-<p>So in the following example</p>
-<ul class="simple">
-<li><p>Create a repository;</p></li>
-<li><p>Commit with the message <code class="docutils literal notranslate"><span class="pre">basic</span> <span class="pre">commit</span></code>;</p></li>
-<li><p>From <code class="docutils literal notranslate"><span class="pre">basic</span> <span class="pre">commit</span></code> commit created <code class="docutils literal notranslate"><span class="pre">example</span> <span class="pre">branch</span></code> commit of which <code class="docutils literal notranslate"><span class="pre">file</span></code> has <code class="docutils literal notranslate"><span class="pre">content</span> <span class="pre">for</span> <span class="pre">example</span> <span class="pre">branch</span></code>;</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">master</span></code> branch continues it’s way with a commit which has <code class="docutils literal notranslate"><span class="pre">file</span></code> with <code class="docutils literal notranslate"><span class="pre">content</span> <span class="pre">for</span> <span class="pre">example</span> <span class="pre">branch</span></code>;</p></li>
-<li><p>The first <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code> output shows the state of the repository at this step, so for now we have two branches where <code class="docutils literal notranslate"><span class="pre">file</span></code> has different contents;</p></li>
-<li><p>Tried to merge <code class="docutils literal notranslate"><span class="pre">example_branch</span></code> into the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch and got a message that there was a merge conflict;</p></li>
-<li><p>Shows what the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> of the repository looks like in this state:</p>
-<ul>
-<li><p>Prints possible solutions;</p></li>
-<li><p>Prints the files that caused the merge conflict;</p></li>
-</ul>
-</li>
-<li><p>Suppose we want to fix a conflict. Our actions are to write into the conflict files how they should be fixed as a result, add them to the stage, and then commit;</p></li>
-<li><p>Interestingly, git will overwrite the files involved in the conflict. The example shows what our file will look like, see <code class="docutils literal notranslate"><span class="pre">=====conflict</span> <span class="pre">file=====</span></code>;</p></li>
-<li><p>I set the file to <code class="docutils literal notranslate"><span class="pre">after</span> <span class="pre">merge</span> <span class="pre">content</span></code> and just commit the changes - this commit will become the merge point for the conflicting branches.</p></li>
-</ul>
+<p>In this case, you must create the versions of all conflicting files and fix them in a merge commit.</p>
+<p>To apply the changes from one of the branches use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">--thers/ours</span> <span class="pre">&lt;file_name&gt;</span></code>.</p>
+<hr class="docutils" />
+<p>The following cell creates a git history in which the two branches intend to modify the <code class="docutils literal notranslate"><span class="pre">file</span></code> in a different ways.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-mkdir merge_example
-cd merge_example
-git init &amp;&gt; /dev/null
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content for basic commit&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+git<span class="w"> </span>add<span class="w"> </span>--all
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;basic commit&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 
-echo &quot;content for basic commit&quot; &gt; file
-git add --all
-git commit -m &quot;basic commit&quot; &amp;&gt; /dev/null
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>example_branch<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content for example branch&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;commit in example_branch&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 
-git checkout -b example_branch &amp;&gt; /dev/null
-echo &quot;content for example branch&quot; &gt; file
-git commit -am &quot;commit in example_branch&quot; &amp;&gt; /dev/null
+git<span class="w"> </span>checkout<span class="w"> </span>master<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content for master branch&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;commit in master&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 
-git checkout master &amp;&gt; /dev/null
-echo &quot;content for master branch&quot; &gt; file
-git commit -am &quot;commit in master&quot; &amp;&gt; /dev/null
-
-echo &quot;=====git log=====&quot;
-git log --decorate --graph --all
-
-echo
-echo &quot;=====merge try=====&quot;
-git merge example_branch
-echo
-echo &quot;=====git status=====&quot;
-git status
-echo
-echo &quot;=====conflict file=====&quot;
-cat file
-
-echo &quot;after merge content&quot; &gt; file
-git add file
-git commit -am &quot;my after merge commit&quot; &amp;&gt; /dev/null
-
-echo
-echo &quot;=====git log=====&quot;
-git log --all --decorate --graph
-
-
-cd ..
-rm -r merge_example
+git<span class="w"> </span>log<span class="w"> </span>--decorate<span class="w"> </span>--graph<span class="w"> </span>--all
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====git log=====
-* commit 69a666cd3dc1c3f0b436a1ecbeb58ea32eb080c1 (example_branch)
-| Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-| Date:   Sun Sep 10 16:43:44 2023 +0300
-| 
-|     commit in example_branch
-|   
-| * commit 51377f0e8c2f305bfcab9c4a97a6a36d8e44c99f (HEAD -&gt; master)
-|/  Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-|   Date:   Sun Sep 10 16:43:44 2023 +0300
-|   
-|       commit in master
-| 
-* commit 7307ad26c4cc29bbb0eac4b9ad2420aeab716f0b
-  Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-  Date:   Sun Sep 10 16:43:44 2023 +0300
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>* <span class=" -Color -Color-Yellow">commit 73095508558ded1759bc13a3f8afdc4f37b99f85 (</span><span class=" -Color -Color-Bold -Color-Bold-Green">example_branch</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|</span> Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span> Date:   Fri Oct 31 07:32:43 2025 +0100
+<span class=" -Color -Color-Red">|</span> 
+<span class=" -Color -Color-Red">|</span>     commit in example_branch
+<span class=" -Color -Color-Red">|</span>   
+<span class=" -Color -Color-Red">|</span> * <span class=" -Color -Color-Yellow">commit 95d59aa007c0ecf98bc14df8bf6974491d51adf0 (</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">HEAD</span><span class=" -Color -Color-Yellow"> -&gt; </span><span class=" -Color -Color-Bold -Color-Bold-Green">master</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|/</span>  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span>   Date:   Fri Oct 31 07:32:43 2025 +0100
+<span class=" -Color -Color-Red">|</span>   
+<span class=" -Color -Color-Red">|</span>       commit in master
+<span class=" -Color -Color-Red">|</span> 
+* <span class=" -Color -Color-Yellow">commit 80f3a21ebda928f420f04329140812fe8c5350a6</span>
+  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+  Date:   Fri Oct 31 07:32:43 2025 +0100
   
       basic commit
-
-=====merge try=====
-Auto-merging file
-CONFLICT (content): Merge conflict in file
-Automatic merge failed; fix conflicts and then commit the result.
-
-=====git status=====
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a result, attempting to merge these branches results in a merging error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>merge<span class="w"> </span>example_branch
+git<span class="w"> </span>status
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>error: Merging is not possible because you have unmerged files.
+<span class=" -Color -Color-Yellow">hint: Fix them up in the work tree, and then use &#39;git add/rm &lt;file&gt;&#39;</span>
+<span class=" -Color -Color-Yellow">hint: as appropriate to mark resolution and make a commit.</span>
+fatal: Exiting because of an unresolved conflict.
 On branch master
 You have unmerged paths.
   (fix conflicts and run &quot;git commit&quot;)
@@ -1035,182 +979,148 @@ You have unmerged paths.
 
 Unmerged paths:
   (use &quot;git add &lt;file&gt;...&quot; to mark resolution)
-	both modified:   file
+	<span class=" -Color -Color-Red">both modified:   file</span>
 
 no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
-
-=====conflict file=====
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+</pre></div>
+</div>
+</div>
+</div>
+<p>Git offers to set the correct state of the <code class="docutils literal notranslate"><span class="pre">file</span></code>, add it and then commit.</p>
+<p>Consider how the current appearance of the <code class="docutils literal notranslate"><span class="pre">file</span></code> in the working directory:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>file
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 content for master branch
 =======
 content for example branch
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; example_branch
+</pre></div>
+</div>
+</div>
+</div>
+<p>The options from both branches are highlighted there.</p>
+<p>The following cell sets the content of the <code class="docutils literal notranslate"><span class="pre">file</span></code>, commits its current state displays the resulting history.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;after merge content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+git<span class="w"> </span>add<span class="w"> </span>file
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;my after merge commit&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 
-=====git log=====
-*   commit acb33c07dd270ac0ff04f29c37303d10ecb2ed0c (HEAD -&gt; master)
-|\  Merge: 51377f0 69a666c
-| | Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-| | Date:   Sun Sep 10 16:43:44 2023 +0300
-| | 
-| |     my after merge commit
-| | 
-| * commit 69a666cd3dc1c3f0b436a1ecbeb58ea32eb080c1 (example_branch)
-| | Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-| | Date:   Sun Sep 10 16:43:44 2023 +0300
-| | 
-| |     commit in example_branch
-| | 
-* | commit 51377f0e8c2f305bfcab9c4a97a6a36d8e44c99f
-|/  Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-|   Date:   Sun Sep 10 16:43:44 2023 +0300
-|   
-|       commit in master
-| 
-* commit 7307ad26c4cc29bbb0eac4b9ad2420aeab716f0b
-  Author: Dranikf &lt;kobfedsur@gmail.com&gt;
-  Date:   Sun Sep 10 16:43:44 2023 +0300
+git<span class="w"> </span>log<span class="w"> </span>--all<span class="w"> </span>--decorate<span class="w"> </span>--graph
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>*   <span class=" -Color -Color-Yellow">commit 7b5848d65237c67d74df095c6466e434c2782ecb (</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">HEAD</span><span class=" -Color -Color-Yellow"> -&gt; </span><span class=" -Color -Color-Bold -Color-Bold-Green">master</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|</span><span class=" -Color -Color-Green">\</span>  Merge: 95d59aa 7309550
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> Date:   Fri Oct 31 07:33:42 2025 +0100
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> 
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span>     my after merge commit
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> 
+<span class=" -Color -Color-Red">|</span> * <span class=" -Color -Color-Yellow">commit 73095508558ded1759bc13a3f8afdc4f37b99f85 (</span><span class=" -Color -Color-Bold -Color-Bold-Green">example_branch</span><span class=" -Color -Color-Yellow">)</span>
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> Date:   Fri Oct 31 07:32:43 2025 +0100
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> 
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span>     commit in example_branch
+<span class=" -Color -Color-Red">|</span> <span class=" -Color -Color-Green">|</span> 
+* <span class=" -Color -Color-Green">|</span> <span class=" -Color -Color-Yellow">commit 95d59aa007c0ecf98bc14df8bf6974491d51adf0</span>
+<span class=" -Color -Color-Green">|/</span>  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+<span class=" -Color -Color-Green">|</span>   Date:   Fri Oct 31 07:32:43 2025 +0100
+<span class=" -Color -Color-Green">|</span>   
+<span class=" -Color -Color-Green">|</span>       commit in master
+<span class=" -Color -Color-Green">|</span> 
+* <span class=" -Color -Color-Yellow">commit 80f3a21ebda928f420f04329140812fe8c5350a6</span>
+  Author: fedorkobak &lt;kobfedsur@gmail.com&gt;
+  Date:   Fri Oct 31 07:32:43 2025 +0100
   
       basic commit
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 <section id="select-version">
 <h3>Select version<a class="headerlink" href="#select-version" title="Link to this heading">#</a></h3>
-<p>Sometimes files can differ significantly between branches, so it can be difficult to edit files in all the difference entries. You may want to consider specifying which branch file should be taken for the merge commit.</p>
-<p>You can do this with the syntax <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">--theirs/ours</span> <span class="pre">&lt;list</span> <span class="pre">of</span> <span class="pre">files&gt;</span></code>. If you use <code class="docutils literal notranslate"><span class="pre">ours</span></code> it will take the version of the file from the current branch, if you use <code class="docutils literal notranslate"><span class="pre">theirs</span></code> it will take the version from the merging branch.</p>
-<p>The following example shows the difference:</p>
+<p>If your repository is in a merge conflict state, you can select the changes that you want to keep:</p>
 <ul class="simple">
-<li><p>There are two files added to the git repository;</p></li>
-<li><p>In <code class="docutils literal notranslate"><span class="pre">new_branch</span></code> the files change one way in <code class="docutils literal notranslate"><span class="pre">master</span></code> the other, so you’ll have conflicts when merging;</p></li>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span></code> to resolve the conflict:</p>
-<ul>
-<li><p>For <code class="docutils literal notranslate"><span class="pre">test_file1</span></code> we use the <code class="docutils literal notranslate"><span class="pre">--ours</span></code> option;</p></li>
-<li><p>For <code class="docutils literal notranslate"><span class="pre">test_file2</span></code> we use the <code class="docutils literal notranslate"><span class="pre">--theirs</span></code> option;</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">--ours</span> <span class="pre">&lt;file&gt;</span></code> to take the version of the <strong>branch you are currently on</strong> (the destination branch, i.e., the branch to which you intended to merge).</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">--theirs</span> <span class="pre">&lt;file&gt;</span></code> to take the version of the <strong>branch you are merging into</strong> the current one (the source branch, i.e., the branch from which you intended to merge).</p></li>
 </ul>
-</li>
-<li><p>As a result we have the version from <code class="docutils literal notranslate"><span class="pre">master</span></code> for <code class="docutils literal notranslate"><span class="pre">test_file1</span></code> and the version from <code class="docutils literal notranslate"><span class="pre">example_branch</span></code> for <code class="docutils literal notranslate"><span class="pre">test_file2</span></code>;</p></li>
-</ul>
+<hr class="docutils" />
+<p>The following cell creates the repository that will contain the merging conflict between the <code class="docutils literal notranslate"><span class="pre">main</span></code> and <code class="docutils literal notranslate"><span class="pre">new_branch</span></code> over <code class="docutils literal notranslate"><span class="pre">file</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-mkdir merge_example
-cd merge_example
-git init &amp;&gt; /dev/null
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
 
-echo -e &quot;version\n&quot;\
-&quot;of the test_file1\n&quot;\
-&quot;from initian commit&quot;\
-&gt; test_file1
-echo -e &quot;version\n&quot;\
-&quot;of the test_file2\n&quot;\
-&quot;from initian commit&quot;\
-&gt; test_file2
+git<span class="w"> </span>add<span class="w"> </span>--all
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;initial commit&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 
-git add --all
-git commit -m &quot;initial commit&quot; &amp;&gt; /dev/null
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>new_branch<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;new_branch content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;commit from new_branch&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 
-git checkout -b new_branch &amp;&gt; /dev/null
-echo -e &quot;version\n&quot;\
-&quot;of the test_file1\n&quot;\
-&quot;from new_branch&quot;\
-&gt; test_file1
-echo -e &quot;version\n&quot;\
-&quot;of the test_file2\n&quot;\
-&quot;from new_branch&quot;\
-&gt; test_file2
-git commit -am &quot;commit from new_branch&quot; &amp;&gt; /dev/null
-
-git checkout master &amp;&gt; /dev/null
-echo -e &quot;version\n&quot;\
-&quot;of the test_file1\n&quot;\
-&quot;from master&quot;\
-&gt; test_file1
-echo -e &quot;version\n&quot;\
-&quot;of the test_file2\n&quot;\
-&quot;from master&quot;\
-&gt; test_file2
-git commit -am &quot;commit from master&quot; &amp;&gt; /dev/null
-
-git log --graph --decorate --all
-
-git merge new_branch &amp;&gt; /dev/null
-
-echo
-echo
-echo &quot;=====Files before checkout=====&quot;
-echo &quot;-----test_file1-----&quot;
-cat test_file1
-echo &quot;-----test_file2-----&quot;
-cat test_file2
-
-
-echo
-echo &quot;=====Files after checkout=====&quot;
-git checkout --ours test_file1 &amp;&gt; /dev/null
-git checkout --theirs test_file2 &amp;&gt; /dev/null
-echo &quot;-----test_file1-----&quot;
-cat test_file1
-echo &quot;-----test_file1-----&quot;
-cat test_file2
-
-cd ..
-rm -r merge_example
+git<span class="w"> </span>checkout<span class="w"> </span>master<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;main contetn&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;commit from master&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+<p>The results of the merging attempt are shown in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>merge<span class="w"> </span>new_branch<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+cat<span class="w"> </span>file
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>* commit 7d17539a009082402162cd98502bc9e3e0032aca (HEAD -&gt; master)
-| Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-| Date:   Mon Oct 30 15:50:33 2023 +0300
-| 
-|     commit from master
-|   
-| * commit 40934888b03ac7bb5e4d2df298f6eb294a881cce (new_branch)
-|/  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-|   Date:   Mon Oct 30 15:50:33 2023 +0300
-|   
-|       commit from new_branch
-| 
-* commit c830f9d4e47bb64137721c148926432b922365ed
-  Author: Fedor Kobak &lt;kobfedsur@gmail.com&gt;
-  Date:   Mon Oct 30 15:50:33 2023 +0300
-  
-      initial commit
-
-
-=====Files for merge=====
------test_file1-----
-version
-of the test_file1
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-from master
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+main contetn
 =======
-from new_branch
+new_branch content
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; new_branch
------test_file2-----
-version
-of the test_file2
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-from master
-=======
-from new_branch
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; new_branch
-
-=====Files before checkout=====
------test_file1-----
-version
-of the test_file1
-from master
------test_file1-----
-version
-of the test_file2
-from new_branch
 </pre></div>
 </div>
 </div>
 </div>
+<p>The following cell displays the output of the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">--ours</span> <span class="pre">file</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>--ours<span class="w"> </span>file<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+cat<span class="w"> </span>file
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>main contetn
+</pre></div>
+</div>
+</div>
+</div>
+<p>The file takes <code class="docutils literal notranslate"><span class="pre">main</span></code> content.</p>
+<p>The following cell shows <code class="docutils literal notranslate"><span class="pre">--theirs</span></code> option.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>--theirs<span class="w"> </span>file<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+cat<span class="w"> </span>file
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>new_branch content
+</pre></div>
+</div>
+</div>
+</div>
+<p>The file contains the content that corresponding to the <code class="docutils literal notranslate"><span class="pre">new_branch</span></code> state.</p>
 </section>
 </section>
 </section>
@@ -1224,16 +1134,16 @@ from new_branch
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "git"
         },
         kernelOptions: {
-            name: "python3",
+            name: "git",
             path: "./git/branches"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'git'</script>
 
                 </article>
               
@@ -1279,10 +1189,9 @@ from new_branch
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-ancestor-sec-to-ancestor">To ancestor{#sec-to_ancestor}</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-case-sec-basic-case">Basic case{#sec-basic_case}</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-forward">Fast-forward</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-way-merge">Three-Way Merge</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-conflict">Solve conflict</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-example">Manual example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-version">Select version</a></li>
 </ul>
 </li>
