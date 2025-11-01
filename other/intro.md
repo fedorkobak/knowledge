@@ -33,9 +33,6 @@ Kanban just takes from scrum the groups of tasks: *to do*, *doing* and *done*.
 
 Markdown is a special text formatting language. The overview:
 
-Markdown is a lightweight markup language for formatting plain text.
-Here are its basic features:
-
 * **Headings:** `# H1`, `## H2`, `### H3`
 * **Emphasis:** `*italic*`, `**bold**`, `~~strikethrough~~`
 * **Lists:**
@@ -116,5 +113,3 @@ Just address https://google.com
 [Reference-stype link][1].
 
 [1]: https://google.com
-
-
