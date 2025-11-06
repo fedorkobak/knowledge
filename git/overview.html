@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Difference" href="diff.html" />
+    <link rel="next" title="Stages" href="stages.html" />
     <link rel="prev" title="Service configuration" href="../docker/compose/service_configuration.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -337,7 +337,12 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diff.html">Difference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="stages.html">Stages</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="diff.html">Diff</a></li>
 <li class="toctree-l1"><a class="reference internal" href="checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="branches/merge.html">Merge</a></li>
@@ -346,7 +351,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="configuration/variables.html">Variables</a></li>
@@ -456,7 +461,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/environment.html">Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/variables.html">Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../linux/shell/path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/shell/commands.html">Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/bash.html">Bash</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../linux/shell/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../linux/shell/users_groups/user_management.html">User management</a></li>
@@ -721,6 +726,9 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stages">Stages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#status">Status</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore">Ignore</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diff">Diff</a></li>
 </ul>
             </nav>
         </div>
@@ -835,6 +843,173 @@ drwxrwxr-x  7 fedor fedor  4096 Jan  8 18:47 <span class=" -Color -Color-Bold -C
 </div>
 <p>For more check the <a class="reference internal" href="configuration.html"><span class="std std-doc">Configuration</span></a> page.</p>
 </section>
+<section id="status">
+<h2>Status<a class="headerlink" href="#status" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> command prints the status of the repository.</p>
+<p>To get more compact output use <code class="docutils literal notranslate"><span class="pre">-s</span></code> (<code class="docutils literal notranslate"><span class="pre">--short</span></code>) option, so the result will be just files with corresponding markers:</p>
+<ul class="simple">
+<li><p>The <strong>first symbol</strong> in the marker indicates how a file got into staged area.</p></li>
+<li><p>The <strong>second symbol</strong> in the marker indicates if a file modified in unstaged area.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Untracked</span> <span class="pre">file</span></code> fill be denoted with <code class="docutils literal notranslate"><span class="pre">??</span></code> marker.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell creates the, files that have different stages.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>modified
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>modified_staged
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>modified_staged_modified
+git<span class="w"> </span>add<span class="w"> </span>modified<span class="w"> </span>modified_staged<span class="w"> </span>modified_staged_modified
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;add modified&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>staged_file
+git<span class="w"> </span>add<span class="w"> </span>staged_file<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>new_file
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;new&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>modified
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;new&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>modified_staged
+git<span class="w"> </span>add<span class="w"> </span>modified_staged
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>new_staged_modified
+git<span class="w"> </span>add<span class="w"> </span>new_staged_modified
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;new&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>new_staged_modified
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;new&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>modified_staged_modified
+git<span class="w"> </span>add<span class="w"> </span>modified_staged_modified
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;new&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>modified_staged_modified
+</pre></div>
+</div>
+</div>
+</div>
+<p>The git status output for such repo is represented in the following cell:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On branch master
+Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+	<span class=" -Color -Color-Green">modified:   modified_staged</span>
+	<span class=" -Color -Color-Green">modified:   modified_staged_modified</span>
+	<span class=" -Color -Color-Green">new file:   new_staged_modified</span>
+	<span class=" -Color -Color-Green">new file:   staged_file</span>
+
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+	<span class=" -Color -Color-Red">modified:   modified</span>
+	<span class=" -Color -Color-Red">modified:   modified_staged_modified</span>
+	<span class=" -Color -Color-Red">modified:   new_staged_modified</span>
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+	<span class=" -Color -Color-Red">new_file</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>While most output is easy to understand, but consider some tricky cases:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">modified_staged_modified</span></code>: the case when a file has both staged and unstaged changes, so it appars in both “Changes to be commited” and “Changes not staged for commit”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">new_staged_modified</span></code>: the close to previous case but file was staged as new file and modified, therefore in <em>“Changes to be commited”</em> it appears as a <em>“new file”</em>.</p></li>
+</ul>
+<p>The corresponding short output is in the following cell:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status<span class="w"> </span>-s
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> <span class=" -Color -Color-Red">M</span> modified
+<span class=" -Color -Color-Green">M</span>  modified_staged
+<span class=" -Color -Color-Green">M</span><span class=" -Color -Color-Red">M</span> modified_staged_modified
+<span class=" -Color -Color-Green">A</span><span class=" -Color -Color-Red">M</span> new_staged_modified
+<span class=" -Color -Color-Green">A</span>  staged_file
+<span class=" -Color -Color-Red">??</span> new_file
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ignore">
+<h2>Ignore<a class="headerlink" href="#ignore" title="Link to this heading">#</a></h2>
+<p>Specify the files you want <code class="docutils literal notranslate"><span class="pre">git</span></code> to ignore in the <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file. There are several features important to know about git ignore:</p>
+<ul class="simple">
+<li><p>You can specify the patterns in regex-like style.</p></li>
+<li><p>You can specify the <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file not only in the root directory of the project. If place the file in the nested folder the rules would be applied just to this folder.</p></li>
+<li><p>The lines tha begins with <code class="docutils literal notranslate"><span class="pre">#</span></code> symbol would be underestood as comment.</p></li>
+</ul>
+<p>Check details in the <a class="reference internal" href="ignore.html"><span class="std std-doc">Ignore</span></a> page.</p>
+<hr class="docutils" />
+<p>The following cell adds <code class="docutils literal notranslate"><span class="pre">file</span></code> to the <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content2&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file2
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; .gitignore</span>
+<span class="s">file</span>
+<span class="s">EOF</span>
+
+git<span class="w"> </span>status
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On branch master
+
+No commits yet
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+	<span class=" -Color -Color-Red">.gitignore</span>
+	<span class=" -Color -Color-Red">file2</span>
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a result, there is no <code class="docutils literal notranslate"><span class="pre">file</span></code> in the outputs of the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> because it is ignored <code class="docutils literal notranslate"><span class="pre">git</span></code>.</p>
+</section>
+<section id="diff">
+<h2>Diff<a class="headerlink" href="#diff" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span> <span class="pre">&lt;file</span> <span class="pre">name&gt;</span></code> allows to review the changes to a file at different stages. For example, the raw <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span></code> shows the difference between the staged file state and the current state in the working directory.</p>
+<p>Check more details in <a class="reference internal" href="diff.html"><span class="std std-doc">Diff</span></a> page.</p>
+<hr class="docutils" />
+<p>The following code shows the output of applying the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span></code> command to a the file that was modified after initial staging.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
+git<span class="w"> </span>add<span class="w"> </span>--all
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;new content&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>file
+git<span class="w"> </span>diff
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">diff --git a/file b/file</span>
+<span class=" -Color -Color-Bold">index d95f3ad..cc25e9d 100644</span>
+<span class=" -Color -Color-Bold">--- a/file</span>
+<span class=" -Color -Color-Bold">+++ b/file</span>
+<span class=" -Color -Color-Cyan">@@ -1 +1,2 @@</span>
+ content
+<span class=" -Color -Color-Green">+new content</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -846,16 +1021,16 @@ drwxrwxr-x  7 fedor fedor  4096 Jan  8 18:47 <span class=" -Color -Color-Bold -C
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "git"
         },
         kernelOptions: {
-            name: "bash",
+            name: "git",
             path: "./git"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'git'</script>
 
                 </article>
               
@@ -877,11 +1052,11 @@ drwxrwxr-x  7 fedor fedor  4096 Jan  8 18:47 <span class=" -Color -Color-Bold -C
       </div>
     </a>
     <a class="right-next"
-       href="diff.html"
+       href="stages.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Difference</p>
+        <p class="prev-next-title">Stages</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -907,6 +1082,9 @@ drwxrwxr-x  7 fedor fedor  4096 Jan  8 18:47 <span class=" -Color -Color-Bold -C
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stages">Stages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#status">Status</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore">Ignore</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diff">Diff</a></li>
 </ul>
   </nav></div>
 

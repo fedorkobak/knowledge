@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How git ignore works &#8212; Knowledge base</title>
+    <title>Ignore &#8212; Knowledge base</title>
   
   
   
@@ -337,7 +337,12 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diff.html">Difference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="stages.html">Stages</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="diff.html">Diff</a></li>
 <li class="toctree-l1"><a class="reference internal" href="checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="branches/merge.html">Merge</a></li>
@@ -346,7 +351,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">How git ignore works</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="configuration/variables.html">Variables</a></li>
@@ -456,7 +461,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/environment.html">Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/variables.html">Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../linux/shell/path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/shell/commands.html">Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/bash.html">Bash</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../linux/shell/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../linux/shell/users_groups/user_management.html">User management</a></li>
@@ -705,7 +710,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>How git ignore works</h1>
+    <h1>Ignore</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -715,7 +720,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-ignored-files">Check ignored files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-ignored">Get ignored</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#any-entry">Any entry</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gitignore-in-subfolders">.gitignore in subfolders</a></li>
 </ul>
@@ -729,195 +734,47 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="how-git-ignore-works">
-<h1>How git ignore works<a class="headerlink" href="#how-git-ignore-works" title="Link to this heading">#</a></h1>
-<section id="check-ignored-files">
-<h2>Check ignored files<a class="headerlink" href="#check-ignored-files" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="ignore">
+<h1>Ignore<a class="headerlink" href="#ignore" title="Link to this heading">#</a></h1>
+<p>It sometimes useful to declare a group of files that should be ingored by Git.</p>
+<section id="get-ignored">
+<h2>Get ignored<a class="headerlink" href="#get-ignored" title="Link to this heading">#</a></h2>
 <p>To list files that match any pattern in your <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>, use the <code class="docutils literal notranslate"><span class="pre">--ignored</span></code> option to the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> command. All files to be ignored will be listed in the <code class="docutils literal notranslate"><span class="pre">Ignored</span> <span class="pre">files:</span></code> section.</p>
-<p>In the next cell I define a <code class="docutils literal notranslate"><span class="pre">.gitignore'</span> <span class="pre">file,</span> <span class="pre">which</span> <span class="pre">tells</span> <span class="pre">git</span> <span class="pre">to</span> <span class="pre">ignore</span> <span class="pre">any</span> <span class="pre">file</span> <span class="pre">that</span> <span class="pre">matches</span> </code>file_to_be_ignored*’.</p>
+<hr class="docutils" />
+<p>In the next cell is defined a <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file, which tells git to ignore any file that matches `file_to_be_ignored*’.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> ignore_files/check_ignored_files/.gitignore
-<span class="n">file_to_be_ignored</span><span class="o">*</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; .gitignore</span>
+<span class="s">file_to_be_ignored*</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell defines two types of files. One group corresponds to the pattern defined in the <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>; the other does not.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>file_to_be_ignored<span class="o">{</span><span class="m">1</span>..3<span class="o">}</span>
+touch<span class="w"> </span>other_file<span class="o">{</span><span class="m">1</span>..3<span class="o">}</span>
+
+git<span class="w"> </span>status<span class="w"> </span>-s
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overwriting ignore_files/check_ignored_files/.gitignore
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">??</span> .gitignore
+<span class=" -Color -Color-Red">??</span> other_file1
+<span class=" -Color -Color-Red">??</span> other_file2
+<span class=" -Color -Color-Red">??</span> other_file3
 </pre></div>
 </div>
 </div>
 </div>
-<p>So lets see how it looks. In the following cell I create some files, some matching <code class="docutils literal notranslate"><span class="pre">file_to_be_ignored</span></code>, some not, and then run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> with and without <code class="docutils literal notranslate"><span class="pre">--ignored</span></code>.</p>
-<p>With the <code class="docutils literal notranslate"><span class="pre">--ignored</span></code> option, you can see the <code class="docutils literal notranslate"><span class="pre">file_to_be_ignored*</span></code> files in the <code class="docutils literal notranslate"><span class="pre">Ignored</span> <span class="pre">files:</span></code> section.</p>
+<p>The result is that the <code class="docutils literal notranslate"><span class="pre">file_to_be_ignored</span></code> group is not represented in the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span> <span class="pre">-s</span></code> output. The following cell runs the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span> <span class="pre">--ignored</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-cd ignore_files/check_ignored_files
-git init &amp;&gt; /dev/null
-
-touch file_to_be_ignored{1..3}
-touch other_file{1..3}
-
-echo &quot;=====git status=====&quot;
-git status
-
-echo
-echo &quot;=====git status --ignored=====&quot;
-git status --ignored
-
-rm -r .git
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====git status=====
-On branch master
-
-No commits yet
-
-Untracked files:
-  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
-	.gitignore
-	other_file1
-	other_file2
-	other_file3
-
-nothing added to commit but untracked files present (use &quot;git add&quot; to track)
-
-=====git status --ignored=====
-On branch master
-
-No commits yet
-
-Untracked files:
-  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
-	.gitignore
-	other_file1
-	other_file2
-	other_file3
-
-Ignored files:
-  (use &quot;git add -f &lt;file&gt;...&quot; to include in what will be committed)
-	file_to_be_ignored1
-	file_to_be_ignored2
-	file_to_be_ignored3
-
-nothing added to commit but untracked files present (use &quot;git add&quot; to track)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="any-entry">
-<h2>Any entry<a class="headerlink" href="#any-entry" title="Link to this heading">#</a></h2>
-<p>Using the syntax <code class="docutils literal notranslate"><span class="pre">*&lt;symbol_combination&gt;*</span></code> you can specify a symbol combination and any file with that symbol combination in the relative filepath will be ignored by git.</p>
-<p>The following example shows:</p>
-<ul class="simple">
-<li><p>Files tree and <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>, which tells git to ignore any file with <code class="docutils literal notranslate"><span class="pre">symb_comb</span></code> in it’s filepath;</p></li>
-<li><p>The results of the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> of a freshly created repository, which helps us understand exactly what files git is ignoring.</p></li>
-</ul>
-<p>There are few important fatures:</p>
-<ul class="simple">
-<li><p>Of course, <code class="docutils literal notranslate"><span class="pre">some_folder2</span></code> doesn’t have <code class="docutils literal notranslate"><span class="pre">symb_comb</span></code> in it’s filepath, but it only has one file and that file should be ignored by git, so to git this folder appears empty;</p></li>
-<li><p>Git ignores files in directories started or ended with <code class="docutils literal notranslate"><span class="pre">symb_comb</span></code>.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-cd ignore_files/any_entry
-git init &amp;&gt; /dev/null
-
-echo &quot;=====FILES TREE=====&quot;
-tree
-
-echo
-echo
-echo &quot;=====.GITIGNORE FILE=====&quot;
-cat .gitignore
-
-
-echo
-echo
-echo &quot;=====GIT STATUS=====&quot;
-git status
-
-rm -r .git
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====FILES TREE=====
-<span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
-├── <span class=" -Color -Color-Bold -Color-Bold-Blue">some_folder</span>
-│   └── some_file
-└── some_random_file
-
-1 directory, 2 files
-
-
-=====.GITIGNORE FILE=====
-*symb_comb*
-
-
-=====GIT STATUS=====
-On branch master
-
-No commits yet
-
-Untracked files:
-  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
-	.gitignore
-	some_folder/
-	some_random_file
-
-nothing added to commit but untracked files present (use &quot;git add&quot; to track)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="gitignore-in-subfolders">
-<h2>.gitignore in subfolders<a class="headerlink" href="#gitignore-in-subfolders" title="Link to this heading">#</a></h2>
-<p>You can add a <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file in any subdirectory of your repository - git will interpret this and ignore all files, and you should describe the files relative to the subdirectory path.</p>
-<p>For example, let’s look at creating a repository based on the <code class="docutils literal notranslate"><span class="pre">ignore_files/subfolder</span></code> folder. Suppose there is also a <code class="docutils literal notranslate"><span class="pre">test_subfolder</span></code> folder, and there is some special work being done there that requires the <code class="docutils literal notranslate"><span class="pre">some_file_in_subfolder</span></code> file to be ignored. So you can just add a <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file to <code class="docutils literal notranslate"><span class="pre">test_subfolder</span></code> and git will automatically ignore any files mentioned in <code class="docutils literal notranslate"><span class="pre">test_subfolder/.gitinore</span></code> from <code class="docutils literal notranslate"><span class="pre">test_subfolder</span></code>.</p>
-<p>In the following cells, this is what happens to the file <code class="docutils literal notranslate"><span class="pre">test_subfolder/some_file_in_subfolder</span></code>, and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span> <span class="pre">--ignored</span></code> shows this file as ignored.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> ignore_files/subfolders/test_subfolder/.gitignore
-<span class="n">some_file_in_subfolder</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overwriting ignore_files/subfolders/test_subfolder/.gitignore
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> ignore_files/subfolders/test_subfolder/some_file_in_subfolder
-<span class="n">test</span> <span class="n">file</span> <span class="n">content</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing ignore_files/subfolders/test_subfolder/some_file_in_subfolder
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-cd ignore_files/subfolders
-git init &amp;&gt; /dev/null
-
-git add --all
-
-git status --ignored
-rm -r .git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status<span class="w"> </span>--ignored
 </pre></div>
 </div>
 </div>
@@ -926,13 +783,110 @@ rm -r .git
 
 No commits yet
 
-Changes to be committed:
-  (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
-	new file:   test_subfolder/.gitignore
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+	<span class=" -Color -Color-Red">.gitignore</span>
+	<span class=" -Color -Color-Red">other_file1</span>
+	<span class=" -Color -Color-Red">other_file2</span>
+	<span class=" -Color -Color-Red">other_file3</span>
 
 Ignored files:
   (use &quot;git add -f &lt;file&gt;...&quot; to include in what will be committed)
-	test_subfolder/some_file_in_subfolder
+	<span class=" -Color -Color-Red">file_to_be_ignored1</span>
+	<span class=" -Color -Color-Red">file_to_be_ignored2</span>
+	<span class=" -Color -Color-Red">file_to_be_ignored3</span>
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+</pre></div>
+</div>
+</div>
+</div>
+<p>There is now a special section <code class="docutils literal notranslate"><span class="pre">Ignored</span> <span class="pre">files</span></code>.</p>
+</section>
+<section id="any-entry">
+<h2>Any entry<a class="headerlink" href="#any-entry" title="Link to this heading">#</a></h2>
+<p>Using the syntax <code class="docutils literal notranslate"><span class="pre">*&lt;symbol_combination&gt;*</span></code> you can specify a symbol combination and any file with that symbol combination in the relative filepath will be ignored by git.</p>
+<hr class="docutils" />
+<p>The following cell defines the the git repo that ignores any path that contains the <code class="docutils literal notranslate"><span class="pre">symb_comb</span></code> entry.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; .gitignore</span>
+<span class="s">*symb_comb*</span>
+<span class="s">EOF</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>regular_file
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>regular_symb_comb_file
+
+mkdir<span class="w"> </span>this_symb_comb_contains
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>this_symb_comb_contains/file
+tree
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
+├── regular_file
+├── regular_symb_comb_file
+└── <span class=" -Color -Color-Bold -Color-Bold-Blue">this_symb_comb_contains</span>
+    └── file
+
+2 directories, 3 files
+</pre></div>
+</div>
+</div>
+</div>
+<p>The project contains a file with <code class="docutils literal notranslate"><span class="pre">symb_comb</span></code> in its name, as well as regular file stored in folder with <code class="docutils literal notranslate"><span class="pre">symb_comb</span></code> in its name. The status of the repo:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status<span class="w"> </span>--ignored<span class="w"> </span>-s
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">??</span> .gitignore
+<span class=" -Color -Color-Red">??</span> regular_file
+<span class=" -Color -Color-Red">!!</span> regular_symb_comb_file
+<span class=" -Color -Color-Red">!!</span> this_symb_comb_contains/
+</pre></div>
+</div>
+</div>
+</div>
+<p>Any path containing the restricted entry in its name is marked as ignored.</p>
+</section>
+<section id="gitignore-in-subfolders">
+<h2>.gitignore in subfolders<a class="headerlink" href="#gitignore-in-subfolders" title="Link to this heading">#</a></h2>
+<p>You can add a <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file in any subdirectory of your repository - <code class="docutils literal notranslate"><span class="pre">git</span></code> will interpret this and ignore all files, and you should describe the files relative to the subdirectory path.</p>
+<hr class="docutils" />
+<p>Consider the example where craeted a <code class="docutils literal notranslate"><span class="pre">subfolder</span></code> and the <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> that bans any name <code class="docutils literal notranslate"><span class="pre">file</span></code> is placed just in it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+touch<span class="w"> </span>file
+
+mkdir<span class="w"> </span>subfolder
+touch<span class="w"> </span>subfolder/file
+
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; subfolder/.gitignore</span>
+<span class="s">*file*</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a result, it marked a <code class="docutils literal notranslate"><span class="pre">file</span></code> as ignored only from the <code class="docutils literal notranslate"><span class="pre">subfolder</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span>-uall<span class="w"> </span>--ignored
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">??</span> file
+<span class=" -Color -Color-Red">??</span> subfolder/.gitignore
+<span class=" -Color -Color-Red">!!</span> subfolder/file
 </pre></div>
 </div>
 </div>
@@ -949,16 +903,16 @@ Ignored files:
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "git"
         },
         kernelOptions: {
-            name: "python3",
+            name: "git",
             path: "./git"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'git'</script>
 
                 </article>
               
@@ -1004,7 +958,7 @@ Ignored files:
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-ignored-files">Check ignored files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-ignored">Get ignored</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#any-entry">Any entry</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gitignore-in-subfolders">.gitignore in subfolders</a></li>
 </ul>

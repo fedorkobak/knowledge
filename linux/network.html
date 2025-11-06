@@ -337,7 +337,12 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../git/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Difference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/stages.html">Stages</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Diff</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/branches/merge.html">Merge</a></li>
@@ -346,7 +351,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/configuration/variables.html">Variables</a></li>
@@ -456,7 +461,7 @@
 <li class="toctree-l2"><a class="reference internal" href="shell/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="shell/environment.html">Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="shell/variables.html">Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="shell/path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell/commands.html">Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="shell/bash.html">Bash</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="shell/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="shell/users_groups/user_management.html">User management</a></li>
@@ -721,6 +726,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netstat">Netstat</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#net-cut">Net cut</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ssh">SSH</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-interfaces">Network interfaces</a></li>
 </ul>
             </nav>
         </div>
@@ -934,6 +940,39 @@ Connection closed by foreign host.
 <li><p>Once configured, you can connect to the server using the command <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">&lt;user&gt;&#64;&lt;ip&gt;</span></code>.</p></li>
 </ul>
 </section>
+<section id="network-interfaces">
+<h2>Network interfaces<a class="headerlink" href="#network-interfaces" title="Link to this heading">#</a></h2>
+<p>Network interfaces is the component of the system through which system communicate with networks.</p>
+<p>There are two types of network interfaces:</p>
+<ul class="simple">
+<li><p><strong>Physical</strong>: represents the piece of hardware that is reponsible for the connection. For example, it could be the wifi adapter or ethernet port.</p></li>
+<li><p><strong>Virtual</strong>: this is some piece of soft ware that behives like physical interface hardware.</p></li>
+</ul>
+<p>You can list your interfaces with <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">addr</span></code> command (<strong>Note.</strong> Install the <code class="docutils literal notranslate"><span class="pre">ip</span></code> utility with <code class="docutils literal notranslate"><span class="pre">iproute2</span></code> package in ubuntu).</p>
+<hr class="docutils" />
+<p>The following cell shows the output of the <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">addr</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ip<span class="w"> </span>addr
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0@if74: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default 
+    link/ether 16:8d:ad:d9:3f:aa brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.3/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1008,6 +1047,7 @@ Connection closed by foreign host.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netstat">Netstat</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#net-cut">Net cut</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ssh">SSH</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-interfaces">Network interfaces</a></li>
 </ul>
   </nav></div>
 

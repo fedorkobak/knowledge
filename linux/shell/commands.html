@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Path &#8212; Knowledge base</title>
+    <title>Commands &#8212; Knowledge base</title>
   
   
   
@@ -57,7 +57,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'linux/shell/path';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'linux/shell/commands';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -337,7 +337,12 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../git/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../git/diff.html">Difference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../git/stages.html">Stages</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/diff.html">Diff</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../git/branches/merge.html">Merge</a></li>
@@ -346,7 +351,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../git/configuration/variables.html">Variables</a></li>
@@ -456,7 +461,7 @@
 <li class="toctree-l2"><a class="reference internal" href="manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environment.html">Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="variables.html">Variables</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Path</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="bash.html">Bash</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="users_groups/user_management.html">User management</a></li>
@@ -621,7 +626,7 @@
       
       
       
-      <li><a href="../../_sources/linux/shell/path.ipynb" target="_blank"
+      <li><a href="../../_sources/linux/shell/commands.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -705,7 +710,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Path</h1>
+    <h1>Commands</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -715,8 +720,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extending">Extending</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-path-which">Find path (<code class="docutils literal notranslate"><span class="pre">which</span></code>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path">Path</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extending">Extending</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#find-path-which">Find path (<code class="docutils literal notranslate"><span class="pre">which</span></code>)</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -728,25 +736,28 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="path">
-<h1>Path<a class="headerlink" href="#path" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="commands">
+<h1>Commands<a class="headerlink" href="#commands" title="Link to this heading">#</a></h1>
+<p>This page explains how linux runs commands.</p>
+<section id="path">
+<h2>Path<a class="headerlink" href="#path" title="Link to this heading">#</a></h2>
 <p>This page explains how Linux determines what to execute when you run any command in it. There is a special environment variable, <code class="docutils literal notranslate"><span class="pre">PATH</span></code>, that specifies where to search for programs to be executed when a command is invoked from the shell. Each path is separated by a colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>). When any command is typed, the system checks all paths listed in <code class="docutils literal notranslate"><span class="pre">PATH</span></code> for a corresponding file. When it finds the appropriate file, it executes it.</p>
 <section id="extending">
-<h2>Extending<a class="headerlink" href="#extending" title="Link to this heading">#</a></h2>
+<h3>Extending<a class="headerlink" href="#extending" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">PATH</span></code> can be extended using the command <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=$PATH:&lt;new</span> <span class="pre">section</span> <span class="pre">of</span> <span class="pre">path&gt;</span></code>, which modifies the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable by appending a new section to it.</p>
 <hr class="docutils" />
 <p>The following cell creates a new script that prints <code class="docutils literal notranslate"><span class="pre">Hello,</span> <span class="pre">World!</span></code> to the standard output and makes it executable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span>/tmp/path_extending/<span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-r<span class="w"> </span>/tmp/path_extending
-mkdir<span class="w"> </span>/tmp/path_extending
-<span class="nb">cd</span><span class="w"> </span>/tmp/path_extending
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">path_extending</span><span class="o">/</span> <span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">rm</span> <span class="o">-</span><span class="n">r</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">path_extending</span>
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">path_extending</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">path_extending</span>
 
-cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; show_me</span>
-<span class="s">echo &quot;Hello world&quot;</span>
-<span class="s">EOF</span>
+<span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">show_me</span>
+<span class="n">echo</span> <span class="s2">&quot;Hello world&quot;</span>
+<span class="n">EOF</span>
 
-chmod<span class="w"> </span>+x<span class="w"> </span>show_me
+<span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">show_me</span>
 </pre></div>
 </div>
 </div>
@@ -754,7 +765,7 @@ chmod<span class="w"> </span>+x<span class="w"> </span>show_me
 <p>You can easily run it by specifying a direct path.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./show_me
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">show_me</span>
 </pre></div>
 </div>
 </div>
@@ -767,15 +778,15 @@ chmod<span class="w"> </span>+x<span class="w"> </span>show_me
 <p>But after adding the appropriate path to the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable, you can run the command from any path you like. Following cells show the thing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/tmp/path_extending
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">path_extending</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/
-show_me
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span>
+<span class="n">show_me</span>
 </pre></div>
 </div>
 </div>
@@ -787,13 +798,13 @@ show_me
 </div>
 </section>
 <section id="find-path-which">
-<h2>Find path (<code class="docutils literal notranslate"><span class="pre">which</span></code>)<a class="headerlink" href="#find-path-which" title="Link to this heading">#</a></h2>
+<h3>Find path (<code class="docutils literal notranslate"><span class="pre">which</span></code>)<a class="headerlink" href="#find-path-which" title="Link to this heading">#</a></h3>
 <p>Sometimes it’s useful to retrieve the path of a command available in the shell. This can be done using the <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">&lt;command&gt;</span></code> syntax. Use <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">-a</span> <span class="pre">&lt;command&gt;</span></code> to display all paths to a given command.</p>
 <hr class="docutils" />
 <p>The following cell applies the <code class="docutils literal notranslate"><span class="pre">which</span></code> command to the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>ls
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">which</span> <span class="n">ls</span>
 </pre></div>
 </div>
 </div>
@@ -806,7 +817,7 @@ show_me
 <p>To guarantee that the result is correct, let’s copy the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command and name it <code class="docutils literal notranslate"><span class="pre">hello</span></code>. As a result, <code class="docutils literal notranslate"><span class="pre">hello</span></code> should behave just like <code class="docutils literal notranslate"><span class="pre">ls</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>/usr/bin/ls<span class="w"> </span>/usr/bin/hello
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ls</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">hello</span>
 </pre></div>
 </div>
 </div>
@@ -814,7 +825,7 @@ show_me
 <p>The following cell invokes <code class="docutils literal notranslate"><span class="pre">hello</span> <span class="pre">/tmp</span></code>, and the result looks just like the files available in the <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> folder.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hello<span class="w"> </span>/tmp
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hello</span> <span class="o">/</span><span class="n">tmp</span>
 </pre></div>
 </div>
 </div>
@@ -845,7 +856,7 @@ vscode-ssh-auth-d6916203-e4d1-40f2-9ef2-1135c4ff3e04.sock
 <p>You can even find the path to the <code class="docutils literal notranslate"><span class="pre">which</span></code> command itself.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>which
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">which</span> <span class="n">which</span>
 </pre></div>
 </div>
 </div>
@@ -858,9 +869,9 @@ vscode-ssh-auth-d6916203-e4d1-40f2-9ef2-1135c4ff3e04.sock
 <p>The next cell creates the file <code class="docutils literal notranslate"><span class="pre">/tmp/second_ls/ls</span></code> and adds it to <code class="docutils literal notranslate"><span class="pre">PATH</span></code> to demonstrate how <code class="docutils literal notranslate"><span class="pre">which</span></code> behaves in this case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>/tmp/second_ls
-touch<span class="w"> </span>/tmp/second_ls/ls
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/tmp/second_ls/
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">second_ls</span>
+<span class="n">touch</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">second_ls</span><span class="o">/</span><span class="n">ls</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">second_ls</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
@@ -868,7 +879,7 @@ touch<span class="w"> </span>/tmp/second_ls/ls
 <p>By simply invoking <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">ls</span></code>, it shows only one path to the original <code class="docutils literal notranslate"><span class="pre">ls</span></code>, as it appears first in <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>ls
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">which</span> <span class="n">ls</span>
 </pre></div>
 </div>
 </div>
@@ -881,7 +892,7 @@ touch<span class="w"> </span>/tmp/second_ls/ls
 <p>But <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">-a</span> <span class="pre">ls</span></code> shows both pathes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>-a<span class="w"> </span>ls
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">which</span> <span class="o">-</span><span class="n">a</span> <span class="n">ls</span>
 </pre></div>
 </div>
 </div>
@@ -894,6 +905,7 @@ touch<span class="w"> </span>/tmp/second_ls/ls
 </div>
 </section>
 </section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -904,16 +916,16 @@ touch<span class="w"> </span>/tmp/second_ls/ls
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "python"
         },
         kernelOptions: {
-            name: "bash",
+            name: "python3",
             path: "./linux/shell"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'python3'</script>
 
                 </article>
               
@@ -959,8 +971,11 @@ touch<span class="w"> </span>/tmp/second_ls/ls
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extending">Extending</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-path-which">Find path (<code class="docutils literal notranslate"><span class="pre">which</span></code>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path">Path</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extending">Extending</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#find-path-which">Find path (<code class="docutils literal notranslate"><span class="pre">which</span></code>)</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

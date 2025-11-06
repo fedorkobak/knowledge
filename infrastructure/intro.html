@@ -337,7 +337,12 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../git/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Difference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/stages.html">Stages</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Diff</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/branches/merge.html">Merge</a></li>
@@ -346,7 +351,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/configuration/variables.html">Variables</a></li>
@@ -456,7 +461,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/environment.html">Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/variables.html">Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../linux/shell/path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/shell/commands.html">Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/bash.html">Bash</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../linux/shell/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../linux/shell/users_groups/user_management.html">User management</a></li>
@@ -717,6 +722,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#devops">DevOps</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continious-integration">Continious integration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continious-delivery-deployment">Continious delivery/deployment</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-frameworks">Testing frameworks</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iac">IaC</a></li>
 </ul>
@@ -745,13 +751,18 @@ document.write(`
 <ul class="simple">
 <li><p>Version Control: all versions of the code have to be kept in the VCS (Version Control System).</p></li>
 <li><p>Continious Intergration(CI) and Continious Testing: Assumes that code merging, testing and acquiring artefacts must be done as early as possible.</p></li>
-<li><p>Continious Delivery (CD) automates the process of passing the components of the different software components from developers to the consumers.</p></li>
+<li><p>Continious Delivery/Deployment (CD) automates the process of passing the components of the different software components from developers to the consumers.</p></li>
 <li><p>Continuous monitoring requires setting up the automated collection of the information about the system, including: logs, telemetry and the properties of the underlying infrastructure.</p></li>
 <li><p>Infrastructure as a Code: requires that all infrastructure have to be described in some kind of scripts that can be used for deployment.</p></li>
 </ul>
 <section id="continious-integration">
 <h3>Continious integration<a class="headerlink" href="#continious-integration" title="Link to this heading">#</a></h3>
 <p>Continuous integration is an approach to adding changes to the software. Each feature is developed in a separate branch, and the changes are then added to the main code base. During the merge attempt the unit tests are applied to the code base with the implemented changes. If the tests pass successfully, the new feature is merged into the main code base.</p>
+</section>
+<section id="continious-delivery-deployment">
+<h3>Continious delivery/deployment<a class="headerlink" href="#continious-delivery-deployment" title="Link to this heading">#</a></h3>
+<p><strong>Continious delivery</strong> is a process of latest software release transition through several environments, which are dedicated, for exmaple, to user acceptance testing, staging, and production.</p>
+<p>Continious delivery involves some manual phases, whereas the <strong>continious deployment</strong> supposes process to be fully autonomous.</p>
 </section>
 <section id="testing-frameworks">
 <h3>Testing frameworks<a class="headerlink" href="#testing-frameworks" title="Link to this heading">#</a></h3>
@@ -865,6 +876,7 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#devops">DevOps</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continious-integration">Continious integration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continious-delivery-deployment">Continious delivery/deployment</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-frameworks">Testing frameworks</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iac">IaC</a></li>
 </ul>

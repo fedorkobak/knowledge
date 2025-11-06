@@ -337,7 +337,12 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../git/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Difference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/stages.html">Stages</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Diff</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/branches/merge.html">Merge</a></li>
@@ -346,7 +351,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/configuration/variables.html">Variables</a></li>
@@ -456,7 +461,7 @@
 <li class="toctree-l2"><a class="reference internal" href="shell/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="shell/environment.html">Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="shell/variables.html">Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="shell/path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell/commands.html">Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="shell/bash.html">Bash</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="shell/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="shell/users_groups/user_management.html">User management</a></li>
@@ -717,6 +722,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manage-input-ouput">Manage input/ouput</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment">Environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">Commands</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exit-status">Exit status</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bash">Bash</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#users-groups">Users &amp; groups</a></li>
@@ -877,6 +883,76 @@ document.write(`
 </div>
 <p>Check more details in the <a class="reference internal" href="shell/environment.html"><span class="std std-doc">Environment</span></a> page.</p>
 </section>
+<section id="commands">
+<h2>Commands<a class="headerlink" href="#commands" title="Link to this heading">#</a></h2>
+<p>Consider how the shell runs different commands. Linux tries to find and execute anything you type into terminal. Some commands are built into shell (for example <code class="docutils literal notranslate"><span class="pre">cd</span></code>). However, the most of them are the binaries or scripts somewhere in the system. There are important details to know:</p>
+<ul class="simple">
+<li><p>Simply specifying the path of the file will cause it to be attempted to be executed.</p></li>
+<li><p>To run a file from relative path, you must specify the relative path explicitly.</p></li>
+<li><p>If the command that cannot be interpreted as a file path, the system will look in the directories specified in <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable.</p></li>
+<li><p>You can specify the interpreter for interpretable scripts using the pattern <code class="docutils literal notranslate"><span class="pre">#/path/to/the/interpreter</span></code>.</p></li>
+<li><p>Don’t confuse the executing and sourcing.</p></li>
+</ul>
+<p>For more details check the <a class="reference internal" href="shell/commands.html"><span class="std std-doc">Commands</span></a></p>
+<hr class="docutils" />
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">bash</span></code> command is just a binary file located somewhere in the system. The following cell shows the path to actual file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>bash<span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/bin/bash
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell shows a piece of content.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>bash<span class="k">)</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c1-10
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<pre class="output stream literal-block">ELF6NL
+�0�I���u�
+�0&#64;A
+��&#64;
+ �AA�%�
+�!
+�Xq�&#64;�
+BdH�(0
+</pre>
+</div>
+</div>
+<p>There is nothing special about this file except that it can be executed. For example, the following cell defines a bash script and grants it the necessary permissions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/script.sh</span>
+<span class="s">echo &quot;hello script&quot;</span>
+<span class="s">EOF</span>
+
+chmod<span class="w"> </span>+x<span class="w"> </span>/tmp/script.sh
+</pre></div>
+</div>
+</div>
+</div>
+<p>The script can be run as as regular binary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/tmp/script.sh
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello script
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="exit-status">
 <h2>Exit status<a class="headerlink" href="#exit-status" title="Link to this heading">#</a></h2>
 <p>When your program exits, it returns a number that describes the circumstances under which the program finished. This output is stored in the <code class="docutils literal notranslate"><span class="pre">$?</span></code> variable, allowing you to check the state of the command.</p>
@@ -931,8 +1007,8 @@ document.write(`
 <p>The basic case is when a program finishes successfully, resulting in <code class="docutils literal notranslate"><span class="pre">0</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;hello world&quot;</span>
-<span class="n">echo</span> <span class="err">$?</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello world&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span>
 </pre></div>
 </div>
 </div>
@@ -946,8 +1022,8 @@ document.write(`
 <p>In cases where a command is passed a parameter it cannot handle, such as with the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command, it returns a status code of <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">w</span>
-<span class="n">echo</span> <span class="err">$?</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-w
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span>
 </pre></div>
 </div>
 </div>
@@ -962,8 +1038,8 @@ Try &#39;ls --help&#39; for more information.
 <p>An example of invoking a <code class="docutils literal notranslate"><span class="pre">Command</span> <span class="pre">not</span> <span class="pre">found</span></code> exception.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">this_command_doesnt_exist</span>
-<span class="n">echo</span> <span class="err">$?</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>this_command_doesnt_exist
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span>
 </pre></div>
 </div>
 </div>
@@ -983,14 +1059,14 @@ Find out more on the <a class="reference internal" href="shell/bash.html"><span 
 <p>The following example shows how to extract raw JSON using the <code class="docutils literal notranslate"><span class="pre">curl</span></code> command, format it nicely with the <code class="docutils literal notranslate"><span class="pre">jp</span></code> tool, and transform it to YAML format using the <code class="docutils literal notranslate"><span class="pre">yp</span></code> tool. To perform all this, we use just two Bash command operators: <code class="docutils literal notranslate"><span class="pre">|</span></code> and <code class="docutils literal notranslate"><span class="pre">$</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">itd</span> <span class="o">--</span><span class="n">name</span> <span class="n">temp_http</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">p</span> <span class="mi">80</span><span class="p">:</span><span class="mi">80</span> <span class="n">kennethreitz</span><span class="o">/</span><span class="n">httpbin</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-itd<span class="w"> </span>--name<span class="w"> </span>temp_http<span class="w"> </span>--rm<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>:80<span class="w"> </span>kennethreitz/httpbin
 
-<span class="n">json_output</span><span class="o">=</span><span class="err">$</span><span class="p">(</span><span class="n">curl</span> <span class="o">-</span><span class="n">s</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">80</span><span class="o">/</span><span class="n">json</span><span class="p">)</span>
-<span class="n">echo</span> <span class="err">$</span><span class="n">json_output</span> <span class="o">|</span> <span class="n">jq</span>
-<span class="n">echo</span> <span class="s2">&quot;============================================================&quot;</span>
-<span class="n">echo</span> <span class="s2">&quot;$json_output&quot;</span> <span class="o">|</span> <span class="n">jq</span> <span class="s1">&#39;.&#39;</span> <span class="o">|</span> <span class="n">yq</span> <span class="o">-</span><span class="n">P</span>
+<span class="nv">json_output</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span>localhost:80/json<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$json_output</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;============================================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$json_output</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span>-P
 
-<span class="n">docker</span> <span class="n">stop</span> <span class="n">temp_http</span>
+docker<span class="w"> </span>stop<span class="w"> </span>temp_http
 </pre></div>
 </div>
 </div>
@@ -1050,7 +1126,7 @@ temp_http
 <p>The following cell uses the <code class="docutils literal notranslate"><span class="pre">useradd</span></code> command to add users to the system:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="n">fedor</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>useradd<span class="w"> </span>fedor
 </pre></div>
 </div>
 </div>
@@ -1058,7 +1134,7 @@ temp_http
 <p>Now by running <code class="docutils literal notranslate"><span class="pre">cat</span></code> on <code class="docutils literal notranslate"><span class="pre">/etc/passwd</span></code> you can check the available users in the system:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>/etc/passwd
 </pre></div>
 </div>
 </div>
@@ -1093,8 +1169,8 @@ fedor:x:1001:1001::/home/fedor:/bin/sh
 <p>There is a user we just created. Try the <code class="docutils literal notranslate"><span class="pre">userdel</span></code> command to delete <code class="docutils literal notranslate"><span class="pre">fedor</span></code> from the system. The following cell deletes the user and lists available users:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">userdel</span> <span class="n">fedor</span>
-<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>userdel<span class="w"> </span>fedor
+cat<span class="w"> </span>/etc/passwd
 </pre></div>
 </div>
 </div>
@@ -1139,16 +1215,16 @@ polkitd:x:996:996:polkit:/nonexistent:/usr/sbin/nologin
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./linux"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -1196,6 +1272,7 @@ polkitd:x:996:996:polkit:/nonexistent:/usr/sbin/nologin
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manage-input-ouput">Manage input/ouput</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment">Environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">Commands</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exit-status">Exit status</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bash">Bash</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#users-groups">Users &amp; groups</a></li>

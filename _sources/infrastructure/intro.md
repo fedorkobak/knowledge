@@ -8,13 +8,19 @@ DevOps is a set of practices:
 
 - Version Control: all versions of the code have to be kept in the VCS (Version Control System).
 - Continious Intergration(CI) and Continious Testing: Assumes that code merging, testing and acquiring artefacts must be done as early as possible.
-- Continious Delivery (CD) automates the process of passing the components of the different software components from developers to the consumers.
+- Continious Delivery/Deployment (CD) automates the process of passing the components of the different software components from developers to the consumers.
 - Continuous monitoring requires setting up the automated collection of the information about the system, including: logs, telemetry and the properties of the underlying infrastructure.
 - Infrastructure as a Code: requires that all infrastructure have to be described in some kind of scripts that can be used for deployment.
 
 ### Continious integration
 
 Continuous integration is an approach to adding changes to the software. Each feature is developed in a separate branch, and the changes are then added to the main code base. During the merge attempt the unit tests are applied to the code base with the implemented changes. If the tests pass successfully, the new feature is merged into the main code base.
+
+### Continious delivery/deployment
+
+**Continious delivery** is a process of latest software release transition through several environments, which are dedicated, for exmaple, to user acceptance testing, staging, and production.
+
+Continious delivery involves some manual phases, whereas the **continious deployment** supposes process to be fully autonomous.
 
 ### Testing frameworks
 

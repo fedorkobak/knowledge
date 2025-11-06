@@ -337,7 +337,12 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../git/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Difference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/stages.html">Stages</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Diff</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/branches/merge.html">Merge</a></li>
@@ -346,7 +351,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">How git ignore works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/configuration/variables.html">Variables</a></li>
@@ -456,7 +461,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/manage_input_output.html">Manage input/output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/environment.html">Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/variables.html">Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../linux/shell/path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/shell/commands.html">Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/shell/bash.html">Bash</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../linux/shell/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../linux/shell/users_groups/user_management.html">User management</a></li>
@@ -721,6 +726,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#volumes">Volumes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#networks">Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authentification">Authentification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter">Filter</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docker-in-docker">Docker in docker</a></li>
 </ul>
             </nav>
@@ -1021,6 +1027,74 @@ NETWORK ID     NAME       DRIVER    SCOPE
 </ul>
 <p>The login information is stored in the <code class="docutils literal notranslate"><span class="pre">~/.docker/config.json</span></code>.</p>
 </section>
+<section id="filter">
+<h2>Filter<a class="headerlink" href="#filter" title="Link to this heading">#</a></h2>
+<p>You can filter the output of the Docker commands using the <code class="docutils literal notranslate"><span class="pre">-f</span></code> (<code class="docutils literal notranslate"><span class="pre">--filter</span></code>) argument.</p>
+<p>The input of the argument is a <code class="docutils literal notranslate"><span class="pre">&lt;key&gt;=&lt;value&gt;</span></code> pair. The <code class="docutils literal notranslate"><span class="pre">&lt;key&gt;</span></code> is <em>filter</em> sepcific for the command, and the <code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code> is a pattern to which the values of the <code class="docutils literal notranslate"><span class="pre">&lt;key&gt;</span></code> will correspond. To apply multiple filters, simply pass the <code class="docutils literal notranslate"><span class="pre">-f</span></code> argument multiple times.</p>
+<p>This argument is ususally available for the commands that display resources or prunning commands. You can find a list of available filters in the documentation section corresponding to the <code class="docutils literal notranslate"><span class="pre">-f</span></code> description of the particular command. Some of the commands with reference to the documentation are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span></code> (alias for <a class="reference external" href="https://docs.docker.com/reference/cli/docker/container/ls/#filter"><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">container</span> <span class="pre">ls</span></code></a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code> / <a class="reference external" href="https://docs.docker.com/reference/cli/docker/image/ls/#filter"><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span> <span class="pre">ls</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">volume</span> <span class="pre">ls</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">network</span> <span class="pre">ls</span></code>.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell creates some containers from which we’ll make filtering.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>wow_python<span class="w"> </span>python:latest<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>wow_alpine<span class="w"> </span>alpine:latest<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>hey_nginx<span class="w"> </span>nginx:latest<span class="w"> </span>bash<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell searches for containers based on the <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code> image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;ancestor=nginx:latest&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                          PORTS     NAMES
+5be9c3d9a5ba   nginx:latest   &quot;/docker-entrypoint.…&quot;   About a minute ago   Exited (0) About a minute ago             hey_nginx
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell searches for the containers whose name starts with <code class="docutils literal notranslate"><span class="pre">wow</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;name=^wow&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CONTAINER ID   IMAGE           COMMAND     CREATED          STATUS                      PORTS     NAMES
+6ff3e0557d44   alpine:latest   &quot;/bin/sh&quot;   23 seconds ago   Exited (0) 22 seconds ago             wow_alpine
+4e1fe78118e2   python:latest   &quot;python3&quot;   23 seconds ago   Exited (0) 23 seconds ago             wow_python
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s an unusual way to release resources, just for extra example. For <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rm</span></code> command passed outputs of the search based on the several filters.</p>
+<p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">-f</span></code> for the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rm</span></code> have different meaning: the force removal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>ps<span class="w"> </span>-q<span class="w"> </span>-a<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;name=wow_python&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;name=wow_alpine&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;name=hey_nginx&quot;</span><span class="k">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5be9c3d9a5ba
+6ff3e0557d44
+4e1fe78118e2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="docker-in-docker">
 <h2>Docker in docker<a class="headerlink" href="#docker-in-docker" title="Link to this heading">#</a></h2>
 <p>It is typical for this resource to show some examples on clean <code class="docutils literal notranslate"><span class="pre">docker</span></code>. It’s convenient to use docker in docker to demonstrate such cases. The following cell shows docker in docker dockerfile, which is used for such cases. It installs tools that allow you to run bash code in Jupyter. You can connect to it (e.g. using vscode <a class="reference external" href="https://code.visualstudio.com/docs/devcontainers/containers">dev container extension</a>) and use it as a regular docker.</p>
@@ -1128,6 +1202,7 @@ RUN pip3 install --break-system-packages bash_kernel &amp;&amp; python -m bash_k
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#volumes">Volumes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#networks">Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authentification">Authentification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter">Filter</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docker-in-docker">Docker in docker</a></li>
 </ul>
   </nav></div>
