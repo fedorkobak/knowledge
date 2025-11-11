@@ -1,7 +1,7 @@
 """
 An extension over the bash_kernel that allows hidden commands to be run
 """
-from typing import Callable
+from typing import Callable, Self
 from bash_kernel.kernel import BashKernel
 
 
@@ -16,7 +16,7 @@ class CommandKernel(BashKernel):
     - `no_commands_run`: method you can define the behaviour that will be
     excuted if there is no commands provided in the input content.
     """
-    commands_dict: dict[str, Callable[['CommandKernel', str], str]]
+    commands_dict: dict[str, Callable[[Self, str], str]]
 
     def always_runs(self, code: str) -> str:
         return code
