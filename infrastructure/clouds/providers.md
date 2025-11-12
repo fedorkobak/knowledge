@@ -67,7 +67,12 @@ In order to deploy your solution to production, you may need to create an endpoi
 
 ### Azure AI Foundry
 
-In Azure AI Foundry, you must create a **hub**: is a workspace that organises and connects all the resources, tools, and services you use to build AI solutions. Within the hub, you can define **projects**, which provide more specific access to model and agents development.
+In [Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/), you must create a **hub**: is a workspace that organises and connects all the resources, tools, and services you use to build AI solutions. Within the hub, you can define **projects**, which provide more specific access to model and agents development.
+
+Azure IA Foundly includes:
+
+- [AI search](https://learn.microsoft.com/en-us/azure/search/) is a scalable search infrastructure that indexes heterogeneous content (i.e. the kind of data has no specific structure) and allows to performs searches to be performed via an API. It can also be integrated with agents.
+
 
 ## GCP
 
