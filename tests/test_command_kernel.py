@@ -25,6 +25,10 @@ class CommandsHeir(Commands):
     replace_method2._command = "key2"
 
 
+class Heir2(CommandsHeir):
+    pass
+
+
 class TestCommandMeta(TestCase):
     def test_added_methods(self):
         """
@@ -52,5 +56,16 @@ class TestCommandMeta(TestCase):
         """
         self.assertEqual(
             CommandsHeir._commands["key2"],
+            CommandsHeir.replace_method2
+        )
+
+    def test_order(self):
+        """
+        If command defined several times selects correct method.
+        If `Heir2` takes the method from the latest ancestor `CommandHeir`,
+        not from `Commands`.
+        """
+        self.assertEqual(
+            Heir2._commands["key2"],
             CommandsHeir.replace_method2
         )
