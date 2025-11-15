@@ -5,6 +5,19 @@ from typing import Callable, Self
 from bash_kernel.kernel import BashKernel
 
 
+class CommandMeta(type):
+    '''
+    Meta class that stores methods with the specified `_command` attribute in
+    the `_commands` dictionary.
+    '''
+    def __init__(cls, name, bases, namespace):
+        super().__init__(name, bases, namespace)
+        cls._commands = dict[str, Callable]()
+
+        for base in bases:
+            pass
+
+
 class CommandKernel(BashKernel):
     """
     You can define child classes where you implement additional functionality
