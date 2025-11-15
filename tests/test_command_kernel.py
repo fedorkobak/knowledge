@@ -32,7 +32,7 @@ class TestCommandMeta(TestCase):
         """
         exp = {
             "key1": Commands.method1,
-            "key2": Commands.method1
+            "key2": Commands.method2
         }
         self.assertEqual(Commands._commands, exp)
 

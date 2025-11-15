@@ -15,7 +15,12 @@ class CommandMeta(type):
         cls._commands = dict[str, Callable]()
 
         for base in bases:
-            pass
+            if hasattr(base, "_commands"):
+                cls._commands.update(base._commands)
+
+        for attribute in namespace.values():
+            if hasattr(attribute, "_command"):
+                cls._commands[attribute._command] = attribute
 
 
 class CommandKernel(BashKernel):
