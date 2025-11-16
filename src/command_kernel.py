@@ -1,7 +1,7 @@
 """
 An extension over the bash_kernel that allows hidden commands to be run
 """
-from typing import Callable, Self
+from typing import Callable, Self, Any
 from bash_kernel.kernel import BashKernel
 
 
@@ -21,6 +21,19 @@ class CommandMeta(type):
         for attribute in namespace.values():
             if hasattr(attribute, "_command"):
                 cls._commands[attribute._command] = attribute
+
+
+def command(command: str) -> Callable[
+    [Callable[[Any, str], str]],
+    Callable[[Any, str]]
+]:
+    """
+    The decorator adds the `_command` attribute to the decorated method.
+    """
+    def fun(method: Callable[[Any, str], str]) -> Callable[[Any, str]]:
+        method._command = command
+        return method
+    return fun
 
 
 class CommandKernel(BashKernel):
