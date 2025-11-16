@@ -48,19 +48,26 @@ class CommandKernel(BashKernel, metaclass=CommandMeta):
     - `no_commands_run`: method you can define the behaviour that will be
     excuted if there is no commands provided in the input content.
     """
-    def always_runs(self, code: str) -> str:
+    def always(self, code: str) -> str:
         return code
 
-    def no_commands_run(self, code: str) -> str:
+    def no_commands(self, code: str) -> str:
         return code
 
     def _run_commands(self, code: str) -> str:
+        """
+        It pops the first line of `code` if it matches a command executes,
+        that command passing the remaining `code`, and replaces `code` with
+        the command's return value.
+        The `always_runs` executes before all commands.
+        If no commands found `no_commands_run` executes.
+        """
         return code
 
     def do_execute(
         self,
         code: str,
-        silent,
+        silent=True,
         store_history=True,
         user_expressions=None,
         allow_stdin=False
