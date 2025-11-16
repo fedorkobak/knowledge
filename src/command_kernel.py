@@ -54,7 +54,20 @@ class CommandKernel(BashKernel, metaclass=CommandMeta):
     def no_commands(self, code: str) -> str:
         return code
 
-    def _run_commands(self, code: str) -> str:
+    def _pop_command(self, code: str) -> tuple[str, str]:
+        """
+        Pops potential command.
+
+        Returns
+        -------
+        - First line of the input.
+        - The remining input. Empty string if there is only one line in passed
+        code.
+        """
+        ans = code.split("\n", 1)
+        return (ans[0], ans[1]) if len(ans) > 1 else (ans[0], "")
+
+    def _run_commands(self, code: str):
         """
         It pops the first line of `code` if it matches a command executes,
         that command passing the remaining `code`, and replaces `code` with
@@ -62,7 +75,23 @@ class CommandKernel(BashKernel, metaclass=CommandMeta):
         The `always_runs` executes before all commands.
         If no commands found `no_commands_run` executes.
         """
-        return code
+        self.always(code=code)
+        first = True
+        while True:
+            command, remaining = self._pop_command(code=code)
+
+            if command in self._commands:
+                # code = self._commands[command](self, remaining) Wrong
+                # the method bounded to the command have to runned as attibute
+                method = self._commands[command]
+                method = getattr(self, method.__name__)
+                code = method(remaining)
+            else:
+                if first:
+                    self.no_commands(code)
+                break
+
+            first = False
 
     def do_execute(
         self,
@@ -72,4 +101,8 @@ class CommandKernel(BashKernel, metaclass=CommandMeta):
         user_expressions=None,
         allow_stdin=False
     ):
-        pass
+        self._run_commands(code)
+        return super().do_execute(
+            code, silent, store_history,
+            user_expressions, allow_stdin
+        )

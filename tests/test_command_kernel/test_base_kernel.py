@@ -7,7 +7,7 @@ from src.command_kernel import CommandKernel, command
 
 
 class Kernel(CommandKernel):
-    @command('comand1')
+    @command('command1')
     def command1(self, code: str) -> str:
         return code
 
@@ -25,8 +25,8 @@ executed_code = dedent("""
 kernel = Kernel()
 
 
-@patch.object(kernel, attribute="command1", wraps=kernel.command1)
 @patch.object(kernel, attribute="command2", wraps=kernel.command2)
+@patch.object(kernel, attribute="command1", wraps=kernel.command1)
 class TestCommandsCall(TestCase):
     '''
     Test if commands called correctly.
