@@ -1,5 +1,5 @@
 from pathlib import Path
-from src.command_kernel import CommandKernel, command
+from command_kernel import CommandKernel, command
 from jinja2 import Environment, FileSystemLoader
 
 
