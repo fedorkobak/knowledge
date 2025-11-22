@@ -47,8 +47,8 @@ class TestCommandsCall(TestCase):
 
         ans_order = recorder.mock_calls
         exp_order = [
-            call.c1(),
-            call.c2()
+            call.c1("command2\n" + executed_code),
+            call.c2(executed_code)
         ]
         self.assertEqual(ans_order, exp_order)
 
@@ -78,7 +78,7 @@ class TestSpecialMethods(TestCase):
     Test `always`: method that runned before any command.
     """
     @patch.object(kernel, attribute="command1", wraps=kernel.command2)
-    def test_order(self, always: MagicMock, command1: MagicMock):
+    def test_order(self, command1: MagicMock, always: MagicMock):
         '''
         Test if `always` is executed before command.
         '''
@@ -88,7 +88,7 @@ class TestSpecialMethods(TestCase):
 
         kernel.do_execute(code="command1")
 
-        exp_order = [call.ar(), call.c1()]
+        exp_order = [call.ar(code="command1"), call.c1('')]
         ans_order = recorder.mock_calls
         self.assertEqual(exp_order, ans_order)
 
@@ -98,7 +98,7 @@ class TestSpecialMethods(TestCase):
         '''
         code = ("command1\n" + "command2\n" + executed_code)
         kernel.do_execute(code=code)
-        always.assert_called_once_with(code)
+        always.assert_called_once_with(code=code)
 
 
 @patch.object(kernel, attribute="no_commands", wraps=kernel.command1)
