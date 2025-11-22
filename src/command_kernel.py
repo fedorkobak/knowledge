@@ -67,7 +67,7 @@ class CommandKernel(BashKernel, metaclass=CommandMeta):
         ans = code.split("\n", 1)
         return (ans[0], ans[1]) if len(ans) > 1 else (ans[0], "")
 
-    def _run_commands(self, code: str):
+    def _run_commands(self, code: str) -> str:
         """
         It pops the first line of `code` if it matches a command executes,
         that command passing the remaining `code`, and replaces `code` with
@@ -88,10 +88,11 @@ class CommandKernel(BashKernel, metaclass=CommandMeta):
                 code = method(remaining)
             else:
                 if first:
-                    self.no_commands(code)
+                    code = self.no_commands(code)
                 break
 
             first = False
+        return code
 
     def do_execute(
         self,
@@ -101,7 +102,7 @@ class CommandKernel(BashKernel, metaclass=CommandMeta):
         user_expressions=None,
         allow_stdin=False
     ):
-        self._run_commands(code)
+        code = self._run_commands(code)
         return super().do_execute(
             code, silent, store_history,
             user_expressions, allow_stdin
