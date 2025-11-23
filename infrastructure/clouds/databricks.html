@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -553,6 +553,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../other/data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/elastic_search.html">Elastic search</a></li>
@@ -720,6 +721,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fondation-models">Fondation models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-store">Feature store</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jobs-workflows">Jobs&amp;Workflows</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks-communication">Tasks communication</a></li>
@@ -727,6 +730,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli">CLI</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assets-bundles">Assets bundles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai-ml">AI&amp;ML</a></li>
 </ul>
             </nav>
         </div>
@@ -741,6 +745,93 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="databricks">
 <h1>Databricks<a class="headerlink" href="#databricks" title="Link to this heading">#</a></h1>
 <p>Databricks is a platform for manipulating data and data related processes: analitics and ML.</p>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h2>
+<p>Consider how databricks keeps data. There are:</p>
+<ul class="simple">
+<li><p><strong>Catalogs</strong>: top level container, containing schemas.</p></li>
+<li><p><strong>Schemas</strong>: or databases: Contains data objects.</p></li>
+<li><p><strong>Data objects</strong> can be: <strong>Volume</strong>, <strong>Table</strong>, <strong>View</strong>, <strong>Function</strong> or <strong>Model</strong>.</p></li>
+</ul>
+<p>Check the:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.databricks.com/aws/en/database-objects/">Database objects in Databricks</a>.</p></li>
+</ul>
+</section>
+<section id="fondation-models">
+<h2>Fondation models<a class="headerlink" href="#fondation-models" title="Link to this heading">#</a></h2>
+<p>Fondation models are LLMs that provided by Databricks. There are popular models from major vendors. You can find the foundry models available to you in the “serving” section of your Databricks deployment.</p>
+<hr class="docutils" />
+<p>The following cell uses the llmama 3 model, which is available on my Databricks account.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">env</span><span class="o">=</span><span class="k">$(</span>databricks<span class="w"> </span>auth<span class="w"> </span>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.env&quot;</span><span class="k">)</span>
+<span class="nv">host</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$env</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;.DATABRICKS_HOST&quot;</span><span class="k">)</span>
+<span class="nv">token</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$env</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;.DATABRICKS_TOKEN&quot;</span><span class="k">)</span>
+
+<span class="nv">ans</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span><span class="nv">$host</span>/serving-endpoints/databricks-meta-llama-3-3-70b-instruct/invocations<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$token</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">      &quot;messages&quot;: [</span>
+<span class="s1">        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;What is the capital of France?&quot;}</span>
+<span class="s1">      ]</span>
+<span class="s1">    }&#39;</span>
+<span class="k">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The API response is represented in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$ans</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;id&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;chatcmpl_5bad7112-c429-4370-9c73-1ef6d3b64fa7&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;object&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;chat.completion&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;created&quot;</span><span class=" -Color -Color-Bold">: </span>1763045738<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;model&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;meta-llama-3.3-70b-instruct-121024&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;choices&quot;</span><span class=" -Color -Color-Bold">: [</span>
+<span class=" -Color -Color-Bold">    {</span>
+<span class=" -Color -Color-Bold">      </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;index&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">      </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;message&quot;</span><span class=" -Color -Color-Bold">: {</span>
+<span class=" -Color -Color-Bold">        </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;role&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;assistant&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">        </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;content&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;The capital of France is Paris.&quot;</span>
+<span class=" -Color -Color-Bold">      },</span>
+<span class=" -Color -Color-Bold">      </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;finish_reason&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;stop&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">      </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;logprobs&quot;</span><span class=" -Color -Color-Bold">: </span>null
+<span class=" -Color -Color-Bold">    }</span>
+<span class=" -Color -Color-Bold">  ],</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;usage&quot;</span><span class=" -Color -Color-Bold">: {</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;prompt_tokens&quot;</span><span class=" -Color -Color-Bold">: </span>17<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;completion_tokens&quot;</span><span class=" -Color -Color-Bold">: </span>8<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;total_tokens&quot;</span><span class=" -Color -Color-Bold">: </span>25
+<span class=" -Color -Color-Bold">  }</span>
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Or, more specifically, the response of the model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$ans</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.choices.[0].message&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;role&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;assistant&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;content&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;The capital of France is Paris.&quot;</span>
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="feature-store">
 <h2>Feature store<a class="headerlink" href="#feature-store" title="Link to this heading">#</a></h2>
 <p>You can manipulate the feature store using the databricks Python SDK, module: <code class="docutils literal notranslate"><span class="pre">databricks.feature_engineering</span></code>. This is not provided with the Databricks Python SDK out of the box - install the separatre <a class="reference external" href="https://pypi.org/project/databricks-feature-engineering/">PyPI published package</a>.</p>
@@ -971,6 +1062,15 @@ Compute
 <p>After these manipulations, you have to have the corresponding folder in the <code class="docutils literal notranslate"><span class="pre">.bundles</span></code> folder of your db environment. And <code class="docutils literal notranslate"><span class="pre">hello-job</span></code> will be listed in the jobs list.</p>
 <p>To delete the bundle (only in the databricks environment) use the <code class="docutils literal notranslate"><span class="pre">databricks</span> <span class="pre">bundle</span> <span class="pre">destroy</span></code>.</p>
 </section>
+<section id="ai-ml">
+<h2>AI&amp;ML<a class="headerlink" href="#ai-ml" title="Link to this heading">#</a></h2>
+<p>Databricks provides a range of tools for building and deploying machine learning solutions. Check the <a class="reference external" href="https://docs.databricks.com/aws/en/machine-learning/">AI and machine learning on Databricks</a> page for more information.</p>
+<p>The most usefull services are:</p>
+<ul class="simple">
+<li><p>Databricks provides <strong>OpenAI-compatible models</strong> endpoints, so you can access some models using only your databricks credentials. Check more <a class="reference external" href="https://docs.databricks.com/aws/en/large-language-models/llm-serving-intro">Get started querying LLMs on Databricks</a>.</p></li>
+<li><p>The <a class="reference external" href="https://docs.databricks.com/aws/en/vector-search/vector-search">Mozaic AI Vector Search</a> for embeddings retrieval.</p></li>
+</ul>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -984,16 +1084,16 @@ Compute
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "git"
         },
         kernelOptions: {
-            name: "bash",
+            name: "git",
             path: "./infrastructure/clouds"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'git'</script>
 
                 </article>
               
@@ -1039,6 +1139,8 @@ Compute
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fondation-models">Fondation models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-store">Feature store</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jobs-workflows">Jobs&amp;Workflows</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks-communication">Tasks communication</a></li>
@@ -1046,6 +1148,7 @@ Compute
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli">CLI</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assets-bundles">Assets bundles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai-ml">AI&amp;ML</a></li>
 </ul>
   </nav></div>
 

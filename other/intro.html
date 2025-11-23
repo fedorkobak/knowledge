@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -553,6 +553,7 @@
 <li class="toctree-l2"><a class="reference internal" href="data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elastic_search.html">Elastic search</a></li>
@@ -626,7 +627,7 @@
       
       
       
-      <li><a href="../_sources/other/intro.md" target="_blank"
+      <li><a href="../_sources/other/intro.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -636,7 +637,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -730,6 +731,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#http">HTTP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#http-message">HTTP message</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
 </ul>
             </nav>
         </div>
@@ -867,6 +873,159 @@ document.write(`
 <p><a class="reference external" href="https://google.com">Reference-stype link</a>.</p>
 </section>
 </section>
+<section id="http">
+<h2>HTTP<a class="headerlink" href="#http" title="Link to this heading">#</a></h2>
+<p>The <strong>HyperText Transfer Protocol</strong> is a standard for data transmission on the web.</p>
+<ul class="simple">
+<li><p><strong>MIME</strong> stands for Multipurpose Internet Mail Expressions. They are the system of labels used to describe a multimedia content. Check the <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types">Common media types</a> page. According to the HTTP protocol, they are served in the <code class="docutils literal notranslate"><span class="pre">Content-type:</span></code> header of the message.</p></li>
+<li><p><strong>URI</strong> stands for uniform reource indentifier. There are two types of URI:</p>
+<ul>
+<li><p><strong>URL</strong>: uniform resource locator. Describe the specific location of a resource on a particular server.</p></li>
+<li><p><strong>URN</strong>: uniform resource name. The name of the specific resouce. Have a format <code class="docutils literal notranslate"><span class="pre">urn:&lt;Namespace&gt;.&lt;Entity</span> <span class="pre">Type&gt;.&lt;Id&gt;</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Methods</strong>. The method tells the server what action to perform:</p>
+<ul>
+<li><p><em>GET</em>: Send named resource from the server to client.</p></li>
+<li><p><em>PUT</em>: Store data from client into a named server resource.</p></li>
+<li><p><em>DELETE</em>: Delete the named resource from a server.</p></li>
+<li><p><em>POST</em>: Send client data into a server gateway application.</p></li>
+<li><p><em>HEAD</em>: Send just the HTTP headers from the response for the named resource.</p></li>
+</ul>
+</li>
+<li><p>An <strong>HTTP message</strong> is a regular text message consisting of three blocks:</p>
+<ul>
+<li><p><strong>Start Line</strong>: The first line of the message is the start line, indicating what to do for a request or what happened for a response.</p></li>
+<li><p><strong>Header fields</strong>: Set of key/value pairs separated by a colon (:). Headers end with a blank line indicating tha body begins.</p></li>
+<li><p><strong>Body</strong>: Optional section containing any kind of data.</p></li>
+</ul>
+</li>
+</ul>
+<section id="http-message">
+<h3>HTTP message<a class="headerlink" href="#http-message" title="Link to this heading">#</a></h3>
+<p>HTTP message consists of 3 blocks the:</p>
+<ul class="simple">
+<li><p><strong>Start Line</strong>: The first line of the message is the start line, indicating what to do for a request or what happened for a response.</p></li>
+<li><p><strong>Header fields</strong>: Set of key/value pairs separated by a colon (:). Headers end with a blank line indicating tha body begins.</p></li>
+<li><p><strong>Body</strong>: Optional section containing any kind of data.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell starts the process of listening for the socket related to port 9000 and redirecting all the information to the <code class="docutils literal notranslate"><span class="pre">/tmp/val</span></code> file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc<span class="w"> </span>-l<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="m">9000</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/val<span class="w"> </span><span class="p">&amp;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 55660
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell sends an HTTP request <code class="docutils literal notranslate"><span class="pre">localhost:9000</span></code> using <code class="docutils literal notranslate"><span class="pre">curl</span></code>. <strong>Note</strong> that a custom header and data are specified.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>--max-time<span class="w"> </span><span class="m">1</span><span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;my:header&quot;</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;some data&quot;</span><span class="w"> </span>localhost:9000<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1]+  Done                    nc -l 127.0.0.1 9000 &gt; /tmp/val
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can observe how the http message looks in the physical level.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>/tmp/val
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>POST / HTTP/1.1
+Host: localhost:9000
+User-Agent: curl/8.5.0
+Accept: */*
+my:header
+Content-Length: 9
+Content-Type: application/x-www-form-urlencoded
+
+some data
+</pre></div>
+</div>
+</div>
+</div>
+<p>As specified in <code class="docutils literal notranslate"><span class="pre">curl</span></code>, among the headers there is <code class="docutils literal notranslate"><span class="pre">my:header</span></code> and <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">data</span></code>, which are separated from the headers by a line.</p>
+</section>
+</section>
+<section id="json-schema">
+<h2>JSON schema<a class="headerlink" href="#json-schema" title="Link to this heading">#</a></h2>
+<p>JSON schema is a declarative protocol to specify the format of the JSON documents.</p>
+<p>For more check:</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://json-schema.org/">Official website</a>.</p></li>
+<li><p>For implemetations of JSON schema visit <a class="reference external" href="https://json-schema.org/tools?query=&amp;amp;sortBy=name&amp;amp;sortOrder=ascending&amp;amp;groupBy=toolingTypes&amp;amp;licenses=&amp;amp;languages=&amp;amp;drafts=&amp;amp;toolingTypes=&amp;amp;environments=&amp;amp;showObsolete=false&amp;amp;supportsBowtie=false">tools</a>:</p>
+<ul>
+<li><p>The python implementation is <a class="reference external" href="https://github.com/python-jsonschema/jsonschema">jsonschema</a> package.</p></li>
+</ul>
+</li>
+<li><p>The <a class="reference internal" href="json_schema.html"><span class="std std-doc">JSON Schema</span></a> page.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell specifies a schema in JSON format with the attributes “price” and “name”. The “price” attribute must be an integer value, and “name” is declared to be a string.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;object&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;properties&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;price&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="o">{</span><span class="s2">&quot;type&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;number&quot;</span><span class="o">}</span>,
+<span class="w">        </span><span class="s2">&quot;name&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="o">{</span><span class="s2">&quot;type&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="o">}</span>,
+<span class="w">    </span><span class="o">}</span>,
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">jsonshcema.validate</span></code> function checks if the <code class="docutils literal notranslate"><span class="pre">instance</span></code> argument conforms to the schema specified in the <code class="docutils literal notranslate"><span class="pre">schema</span></code> argument.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>from<span class="w"> </span>jsonschema<span class="w"> </span>import<span class="w"> </span>validate
+validate<span class="o">(</span>
+<span class="w">    </span><span class="nv">instance</span><span class="o">={</span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Eggs&quot;</span>,<span class="w"> </span><span class="s2">&quot;price&quot;</span>:<span class="w"> </span><span class="m">43</span>.99<span class="o">}</span>,
+<span class="w">    </span><span class="nv">schema</span><span class="o">=</span>schema
+<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Validation is successful. However, the attempt to pass a number as a string to the <code class="docutils literal notranslate"><span class="pre">price</span></code> in the following cell fails.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>try:
+<span class="w">    </span>validate<span class="o">(</span>
+<span class="w">        </span><span class="nv">instance</span><span class="o">={</span><span class="s2">&quot;name&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;Eggs&quot;</span>,<span class="w"> </span><span class="s2">&quot;price&quot;</span><span class="w"> </span>:<span class="w"> </span><span class="s2">&quot;34.99&quot;</span><span class="o">}</span>,
+<span class="w">        </span><span class="nv">schema</span><span class="o">=</span>schema
+<span class="w">    </span><span class="o">)</span>
+except<span class="w"> </span>Exception<span class="w"> </span>as<span class="w"> </span>e:
+<span class="w">    </span>print<span class="o">(</span>e<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;34.99&#39; is not of type &#39;number&#39;
+
+Failed validating &#39;type&#39; in schema[&#39;properties&#39;][&#39;price&#39;]:
+    {&#39;type&#39;: &#39;number&#39;}
+
+On instance[&#39;price&#39;]:
+    &#39;34.99&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -878,16 +1037,16 @@ document.write(`
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./other"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -943,6 +1102,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#http">HTTP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#http-message">HTTP message</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
 </ul>
   </nav></div>
 

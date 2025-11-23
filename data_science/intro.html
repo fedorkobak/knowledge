@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -555,6 +555,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../other/data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/elastic_search.html">Elastic search</a></li>
@@ -736,14 +737,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-mechanisms">DL mechanisms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-vision">Computer Vision</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nlp">NLP</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-deployment">Model deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-search">Vector search</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mlops">MLOps</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#components">Components</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#principles">Principles</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practices">Practices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practices">Practices</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#achitecture">Achitecture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-deployment">Model deployment</a></li>
 </ul>
 </li>
 </ul>
@@ -873,41 +873,17 @@ document.write(`
 </ul>
 <p>For more details, check the <a class="reference internal" href="nlp.html"><span class="std std-doc">NLP</span></a> page.</p>
 </section>
-<section id="model-deployment">
-<h2>Model deployment<a class="headerlink" href="#model-deployment" title="Link to this heading">#</a></h2>
-<p>There are a few methods for machine learning model deployment. The following table lists and describes them:</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Deployment Method</p></th>
-<th class="head"><p>Throughput</p></th>
-<th class="head"><p>Latency</p></th>
-<th class="head"><p>Example Application</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Batch</p></td>
-<td><p>High</p></td>
-<td><p>High (hours to days)</p></td>
-<td><p>Periodic customer churn prediction</p></td>
-</tr>
-<tr class="row-odd"><td><p>Streaming</p></td>
-<td><p>Moderate</p></td>
-<td><p>Moderate (seconds to minutes)</p></td>
-<td><p>Dynamic pricing application</p></td>
-</tr>
-<tr class="row-even"><td><p>Real-time</p></td>
-<td><p>Low</p></td>
-<td><p>Low (milliseconds)</p></td>
-<td><p>Recommendation systems &amp; Chatbot</p></td>
-</tr>
-<tr class="row-odd"><td><p>Edge/Embedded</p></td>
-<td><p>Low</p></td>
-<td><p>Low (Dependent on device processing power)</p></td>
-<td><p>IoT Applications. Farm sensor for detecting humidity</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+<section id="vector-search">
+<h2>Vector search<a class="headerlink" href="#vector-search" title="Link to this heading">#</a></h2>
+<p><strong>Vector search</strong> is an information retrieval approach that transforms data into vectors representing original objects in a compact numerical form. The process of transforming raw data into vectors is called <strong>emdeddings</strong>. The embedding process is designed so that similar objects (according to a chosen notion of similarity) are located close to each other in the resulting vector space. As a result, vector search allows finding similar objects based on properties that are difficult to describe with strict, rule-based methods.</p>
+<p>There are different types of vector embeddings, depending on the type of data to which they are applied:</p>
+<ul class="simple">
+<li><p><strong>Word embeddigns</strong>: Typically used for capturing semantic relationship between words (such as antonyms and synonums), and contextual usage in tasks like language languate translation and modeling, word similarity, synonyms generation, and sentiment analysis.</p></li>
+<li><p><strong>Sentence/documents embeddings</strong>: Captures the general sence of entire text.</p></li>
+<li><p><strong>Graph embeddings</strong>.</p></li>
+<li><p><strong>Image embeddings</strong>: Used for content based recommendations, imange and object recognition, and image search systems.</p></li>
+<li><p><strong>Audio embeddings</strong>: Represent a different features of audio signals, such as the rhythm, tone, and pitch. They are used for emotion detection, voice recognition, and recomendation systems.</p></li>
+</ul>
 </section>
 <section id="mlops">
 <h2>MLOps<a class="headerlink" href="#mlops" title="Link to this heading">#</a></h2>
@@ -964,9 +940,8 @@ document.write(`
 </li>
 </ul>
 </section>
-</section>
 <section id="practices">
-<h2>Practices<a class="headerlink" href="#practices" title="Link to this heading">#</a></h2>
+<h3>Practices<a class="headerlink" href="#practices" title="Link to this heading">#</a></h3>
 <p>The MLOps is a set of practices that simplifies the machine learnig model lifecycle. There are following practices:</p>
 <ul class="simple">
 <li><p><strong>Automation and CI/CD/CT</strong>:</p>
@@ -1006,6 +981,7 @@ document.write(`
 </ul>
 </li>
 </ul>
+</section>
 <section id="achitecture">
 <h3>Achitecture<a class="headerlink" href="#achitecture" title="Link to this heading">#</a></h3>
 <p>Your MLOps Architecture have to complete following goals:</p>
@@ -1027,6 +1003,42 @@ document.write(`
 </ul>
 <p><strong>Organiztion of MLOps infrastructure:</strong></p>
 <p><img alt="" src="../_images/MLOps.svg" /></p>
+</section>
+<section id="model-deployment">
+<h3>Model deployment<a class="headerlink" href="#model-deployment" title="Link to this heading">#</a></h3>
+<p>There are a few methods for machine learning model deployment. The following table lists and describes them:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Deployment Method</p></th>
+<th class="head"><p>Throughput</p></th>
+<th class="head"><p>Latency</p></th>
+<th class="head"><p>Example Application</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Batch</p></td>
+<td><p>High</p></td>
+<td><p>High (hours to days)</p></td>
+<td><p>Periodic customer churn prediction</p></td>
+</tr>
+<tr class="row-odd"><td><p>Streaming</p></td>
+<td><p>Moderate</p></td>
+<td><p>Moderate (seconds to minutes)</p></td>
+<td><p>Dynamic pricing application</p></td>
+</tr>
+<tr class="row-even"><td><p>Real-time</p></td>
+<td><p>Low</p></td>
+<td><p>Low (milliseconds)</p></td>
+<td><p>Recommendation systems &amp; Chatbot</p></td>
+</tr>
+<tr class="row-odd"><td><p>Edge/Embedded</p></td>
+<td><p>Low</p></td>
+<td><p>Low (Dependent on device processing power)</p></td>
+<td><p>IoT Applications. Farm sensor for detecting humidity</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 </section>
 </section>
@@ -1109,14 +1121,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dl-mechanisms">DL mechanisms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computer-vision">Computer Vision</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nlp">NLP</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-deployment">Model deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-search">Vector search</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mlops">MLOps</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#components">Components</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#principles">Principles</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practices">Practices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practices">Practices</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#achitecture">Achitecture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-deployment">Model deployment</a></li>
 </ul>
 </li>
 </ul>

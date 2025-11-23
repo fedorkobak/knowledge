@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -553,6 +553,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../other/data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other/elastic_search.html">Elastic search</a></li>
@@ -730,6 +731,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#targets">Targets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jobs">Jobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#registered-model">Registered model</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a><ul class="nav section-nav flex-column">
@@ -762,7 +764,7 @@ document.write(`
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
 <p>The bundle’s configuration of the bundle is defined in the <code class="docutils literal notranslate"><span class="pre">databricks.yml</span></code> file. Consider the configuration options for the bundle. Check the official desriptions in the <a class="reference external" href="https://docs.databricks.com/aws/en/dev-tools/bundles/settings">Databricks Asset Bundle configuration</a>.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">bundle</span></code>: Specifies the Databricks environment and the bundle’s basic proerpties.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bundle</span></code>: Specifies the Databricks environment and the bundle’s basic properties.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">include</span></code>: allows to specify other configuration files. When configuration is relatively complex, it’s convenient to keep some configurations in the other files.</p></li>
 <li><p><a class="reference external" href="https://docs.databricks.com/aws/en/dev-tools/bundles/settings#scripts"><code class="docutils literal notranslate"><span class="pre">scripts</span></code></a>: Define a script to be run in the local environemt. But the configuration specific to the Databricks environemnt that corresponds to the bunlde will be applied. You can use a command like <code class="docutils literal notranslate"><span class="pre">databricks</span> <span class="pre">bundle</span> <span class="pre">run</span> <span class="pre">&lt;name</span> <span class="pre">specified</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">script&gt;</span></code>.</p></li>
 <li><p><a class="reference external" href="https://docs.databricks.com/aws/en/dev-tools/bundles/settings#sync"><code class="docutils literal notranslate"><span class="pre">sync</span></code></a>: Specifies which files will be pushed to the Databricks environemtn during <code class="docutils literal notranslate"><span class="pre">databricks</span> <span class="pre">bundle</span> <span class="pre">deploy</span></code>.</p></li>
@@ -774,7 +776,10 @@ document.write(`
 <section id="artifacts">
 <h3>Artifacts<a class="headerlink" href="#artifacts" title="Link to this heading">#</a></h3>
 <p>Consider the simpliest possible <code class="docutils literal notranslate"><span class="pre">artifact</span></code> usage. The following code specifies the artifact as the <code class="docutils literal notranslate"><span class="pre">result</span></code> file.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artifacts</span><span class="p">:</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">bundle</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knowledge</span>
+
+<span class="nt">artifacts</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">default</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;this is new configuration&quot; &gt; result</span>
 </pre></div>
@@ -966,6 +971,25 @@ My<span class="w"> </span>target<span class="w"> </span>is<span class="w"> </spa
 <span class="w">  </span><span class="nt">jobs</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">job1</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">job1</span>
+</pre></div>
+</div>
+</section>
+<section id="registered-model">
+<h3>Registered model<a class="headerlink" href="#registered-model" title="Link to this heading">#</a></h3>
+<p>A registered model is an a model registered in the MLFlow inside Databricks.</p>
+<p>Check more in <a class="reference external" href="https://docs.databricks.com/aws/en/dev-tools/bundles/resources#registered_model-unity-catalog">registered_model</a> reference in the Databricks documentation.</p>
+<hr class="docutils" />
+<p>For example, the following configuration creates a model with named “example” the “knowledge” catalog in the <code class="docutils literal notranslate"><span class="pre">knowledge</span></code> schema.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">bundle</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knowledge</span>
+
+<span class="nt">resources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">registered_models</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="w">      </span><span class="nt">catalog_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knowledge</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">schema_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knowledge</span>
+<span class="w">      </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Registered model in Unity Catalog for ${bundle.target} deployment target</span>
 </pre></div>
 </div>
 </section>
@@ -1189,6 +1213,7 @@ Deployment<span class="w"> </span>complete!
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#targets">Targets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jobs">Jobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#registered-model">Registered model</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a><ul class="nav section-nav flex-column">

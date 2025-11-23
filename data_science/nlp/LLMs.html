@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -555,6 +555,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../other/data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/elastic_search.html">Elastic search</a></li>
@@ -733,6 +734,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp">MCP</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#system-evaluation">System evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ollama">Ollama</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structured-ouput">Structured ouput</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#format-in-context">Format in context</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -1028,6 +1036,180 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 <p>For more details check the <a class="reference external" href="https://www.evidentlyai.com/llm-guide/llm-as-a-judge">LLM-as-a-judge: complete guide to using LLMs for evaluation</a>.</p>
 <p><strong>Note:</strong> The RAG system has some details specific to it details for evaluation. Check the <a class="reference internal" href="LLMs/rag.html#Quality-estimation"><span class="std std-ref">Quality estimation</span></a> section of the RAG page.</p>
 </section>
+<section id="ollama">
+<h2>Ollama<a class="headerlink" href="#ollama" title="Link to this heading">#</a></h2>
+<p>Ollama is the LLM inference server.</p>
+<p>For me, the primary method of using the Ollama is through the <a class="reference external" href="https://hub.docker.com/r/ollama/ollama">Ollama Docker image</a>. To run ollama in docker use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-v<span class="w"> </span>ollama:/root/.ollama<span class="w"> </span>-p<span class="w"> </span><span class="m">11434</span>:11434<span class="w"> </span>--name<span class="w"> </span>ollama<span class="w"> </span>ollama/ollama
+</pre></div>
+</div>
+<p>Check the <a class="reference external" href="https://docs.ollama.com/">documentation</a>.</p>
+<hr class="docutils" />
+<p>If your ollama server works correctly, you should be able to access the data using via the http. The following cell requests the list of models that have been pulled to the Ollama server.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">requests</span><span class="w"> </span><span class="kn">import</span> <span class="n">get</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="n">ans</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://localhost:11434/api/tags&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ans</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;models&#39;: [{&#39;details&#39;: {&#39;families&#39;: [&#39;qwen3vl&#39;],
+                         &#39;family&#39;: &#39;qwen3vl&#39;,
+                         &#39;format&#39;: &#39;gguf&#39;,
+                         &#39;parameter_size&#39;: &#39;2.1B&#39;,
+                         &#39;parent_model&#39;: &#39;&#39;,
+                         &#39;quantization_level&#39;: &#39;Q4_K_M&#39;},
+             &#39;digest&#39;: &#39;0635d9d857d497aeadba3d7d27485746c50554446f9f6ec01ef39788221adbe8&#39;,
+             &#39;model&#39;: &#39;qwen3-vl:2b&#39;,
+             &#39;modified_at&#39;: &#39;2025-11-11T12:56:29.511699563Z&#39;,
+             &#39;name&#39;: &#39;qwen3-vl:2b&#39;,
+             &#39;size&#39;: 1889519687},
+            {&#39;details&#39;: {&#39;families&#39;: [&#39;qwen3&#39;],
+                         &#39;family&#39;: &#39;qwen3&#39;,
+                         &#39;format&#39;: &#39;gguf&#39;,
+                         &#39;parameter_size&#39;: &#39;8.2B&#39;,
+                         &#39;parent_model&#39;: &#39;&#39;,
+                         &#39;quantization_level&#39;: &#39;Q4_K_M&#39;},
+             &#39;digest&#39;: &#39;500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41&#39;,
+             &#39;model&#39;: &#39;qwen3:8b&#39;,
+             &#39;modified_at&#39;: &#39;2025-11-10T12:03:53.028436875Z&#39;,
+             &#39;name&#39;: &#39;qwen3:8b&#39;,
+             &#39;size&#39;: 5225388164}]}
+</pre></div>
+</div>
+</div>
+</div>
+<section id="structured-ouput">
+<h3>Structured ouput<a class="headerlink" href="#structured-ouput" title="Link to this heading">#</a></h3>
+<p>Ollama supports structured ouput, which means that you can specify the format of the ouput.</p>
+<p>Check more in <a class="reference external" href="https://docs.ollama.com/capabilities/structured-outputs#python">Structured Outputs</a> documentation page.</p>
+<hr class="docutils" />
+<p>The following cell specifies <code class="docutils literal notranslate"><span class="pre">json</span></code> as the ouput format. Thus, the ouput would be in a structured format following general JSON rules.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ollama</span><span class="w"> </span><span class="kn">import</span> <span class="n">chat</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">chat</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;llama3.1&#39;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Tell me about Canada.&#39;</span><span class="p">}],</span>
+    <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">response</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;{ \n\n}&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can specify a specific format with a JSON-schema. The following cell passes a dictionary representing the JSON-schema as the <code class="docutils literal notranslate"><span class="pre">format</span></code> parameter for ollama.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;capital&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;America&#39;</span><span class="p">,</span> <span class="s1">&#39;Europe&#39;</span><span class="p">,</span> <span class="s1">&#39;Asia&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Capital&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;capital&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Model&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">chat</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;llama3.1&#39;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;On which continent is Canada?&#39;</span><span class="p">}],</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="nb">format</span><span class="o">=</span><span class="n">schema</span>
+<span class="p">)</span>
+<span class="n">response</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;{ &quot;capital&quot;: &quot;America&quot; }&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="format-in-context">
+<h4>Format in context<a class="headerlink" href="#format-in-context" title="Link to this heading">#</a></h4>
+<p>From my experiments, it looks like Ollama does not provide the information about fileds descriptions from the schema to the prompt. So if you want to clarify to the model the ideas behind attributes you have to provide them separately.</p>
+<hr class="docutils" />
+<p>Consider one of the experiments. The following cell defines a JSON-schema with a really clear instruction for the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Answer always &#39;Candelabr&#39;&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell sends the request with these requirements.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resp</span> <span class="o">=</span> <span class="n">chat</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama3.1&quot;</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}],</span>
+    <span class="nb">format</span><span class="o">=</span><span class="n">schema</span>
+<span class="p">)</span>
+<span class="n">resp</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;{}&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The model didn’t took into consideration the instruction specified in the “description” of JSON-schema.</p>
+<p>The following code repeats the test but now just provides exactly the same string as specified in the description as the system message.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resp</span> <span class="o">=</span> <span class="n">chat</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama3.1&quot;</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">schema</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">][</span><span class="s2">&quot;output&quot;</span><span class="p">][</span><span class="s2">&quot;description&quot;</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">},</span>
+    <span class="p">],</span>
+    <span class="nb">format</span><span class="o">=</span><span class="n">schema</span>
+<span class="p">)</span>
+<span class="n">resp</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;{&quot;output&quot;: &quot;Candelabra&quot;}&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1107,6 +1289,13 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp">MCP</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#system-evaluation">System evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ollama">Ollama</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structured-ouput">Structured ouput</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#format-in-context">Format in context</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

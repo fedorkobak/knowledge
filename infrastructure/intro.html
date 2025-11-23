@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -553,6 +553,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../other/data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/elastic_search.html">Elastic search</a></li>
@@ -626,7 +627,7 @@
       
       
       
-      <li><a href="../_sources/infrastructure/intro.md" target="_blank"
+      <li><a href="../_sources/infrastructure/intro.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -636,7 +637,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -731,6 +732,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes">Kubernetes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform">Terraform</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clouds">Clouds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keycloak">Keycloak</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#service-account">Service account</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -808,6 +813,66 @@ document.write(`
 <p>Maintaining your own hardware can be really expencive; some vendors provide the infrastructure to run your application. This could be just the hardware, or it could include configurable services that provide additional functionality. Those groups of services are called <strong>clouds</strong>. This section covers the services provided in the clouds and ways to manage them.</p>
 <p>Check more in the <a class="reference internal" href="clouds.html"><span class="std std-doc">Clouds</span></a> page.</p>
 </section>
+<section id="keycloak">
+<h2>Keycloak<a class="headerlink" href="#keycloak" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://www.keycloak.org/">Keycloak</a> is the opensource user identification tool that can be integrated into your application.</p>
+<p>The usefull references related to Keycloak:</p>
+<ul class="simple">
+<li><p>For general overview of the Kyecloak check the <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html">Server Administration Guide</a>.</p></li>
+<li><p>Some kind of <a class="reference external" href="https://wjw465150.gitbooks.io/keycloak-documentation/content/index.html">Keycloak documentation</a> hosted on gitbook.</p></li>
+</ul>
+<p>There are <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html#core-concepts-and-terms">core concepts and terms</a> of Keycloak you should know:</p>
+<ul class="simple">
+<li><p><strong>User</strong> is entity that is able to log into your system.</p></li>
+<li><p><strong>Role</strong> is an identity type or category of the user that can have special opportunities in the system.</p></li>
+<li><p><strong>Realm</strong> is a namspace that allows you to manage all your metadata and configurations.</p></li>
+<li><p><strong>Clients</strong> are entities that can request Keycloak to authenticate a user.</p></li>
+<li><p><strong>Client scope</strong> is a set of the settings for the client. This allows you to easily apply common settings to specific users.</p></li>
+</ul>
+<hr class="docutils" />
+<p>Start and configure you Keycloak in <a class="reference external" href="https://www.keycloak.org/getting-started/getting-started-docker">Docker</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>keycloak<span class="se">\</span>
+<span class="w">    </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:8080:8080<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">KC_BOOTSTRAP_ADMIN_USERNAME</span><span class="o">=</span>admin<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">KC_BOOTSTRAP_ADMIN_PASSWORD</span><span class="o">=</span>admin<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>quay.io/keycloak/keycloak:26.4.5<span class="w"> </span>start-dev
+</pre></div>
+</div>
+<section id="service-account">
+<h3>Service account<a class="headerlink" href="#service-account" title="Link to this heading">#</a></h3>
+<p>Service account is used to configure the authentification of other services in the resources protected by Keycloak.</p>
+<p>Check more in <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html#_service_accounts">Using a service account</a> sectoin of the documentation.</p>
+<hr class="docutils" />
+<p>The following cell show the request to the token for the service token. Follow the <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html#_service_accounts">Using a service account</a> guide to properly configure the client client.</p>
+<p>The following cell shows the ouput of the <code class="docutils literal notranslate"><span class="pre">/realms/&lt;realm&gt;/protocol/openid-connect/token</span></code> request if everything configured properly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">client_id</span><span class="o">=</span>knowledge-client
+<span class="nv">client_secret</span><span class="o">=</span>Oo8HDBfguVLX5PNAg7T0qO52qeP7d4hU
+
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;grant_type=client_credentials&quot;</span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;client_id=</span><span class="nv">$client_id</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;client_secret=</span><span class="nv">$client_secret</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>http://localhost:8080/realms/master/protocol/openid-connect/token<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;access_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZQW80a0FtQ1Riek5aZGFvQWs1b1VGTDJ5UzExM2c1MGsyMVhGOXp3cVFNIn0.eyJleHAiOjE3NjM5MzcwMjksImlhdCI6MTc2MzkzNjk2OSwianRpIjoidHJydGNjOmM5NjFiYjE4LWMzNDAtZGQzMS0xNzViLWZiMDgyYjA3OGM1MiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImIzNDk2YmYxLTlhN2YtNGIwYS04ZmQ3LTIxZDQzNWQzZWViNyIsInR5cCI6IkJlYXJlciIsImF6cCI6Imtub3dsZWRnZS1jbGllbnQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxNzIuMTcuMC4xIiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWtub3dsZWRnZS1jbGllbnQiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjE3LjAuMSIsImNsaWVudF9pZCI6Imtub3dsZWRnZS1jbGllbnQifQ.v-PPHBMk5d9ubaCI2XLzLlTPRXhvKhj2XxoFwYkU07TVgRrMshzxcDAnvXQB2EaWsnqPt9phctiLkn-uwkpf9O3C1j2gl6YeKlwt8_Nc8itdSsUpKHUskD3rCWKOfFWgvZRhkYQcOiL2c1wP-5HFkXuGfRg-j7qGJuwkeM85Ijd9IL6xKrT4QHkEFHM3jC2IrniV0ENofifYUGkS3cdMCJmdO7-Vv8f_bA_qWO4SB32E-FIk0tg178tlkrd4ZTYjg6PcPbcL_VOrSn2auj9e9OMRdo1jW8DqNxo5Ku41g2UEe5H-2yEGzhzL_Iuviiw7GWXqvLr2-JDsnu4A2BTQCw&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>60<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;token_type&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;Bearer&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;not-before-policy&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;scope&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;email profile&quot;</span>
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -819,16 +884,16 @@ document.write(`
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./infrastructure"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -885,6 +950,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes">Kubernetes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform">Terraform</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clouds">Clouds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keycloak">Keycloak</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#service-account">Service account</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

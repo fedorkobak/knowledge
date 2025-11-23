@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -553,6 +553,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../other/data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/elastic_search.html">Elastic search</a></li>
@@ -725,6 +726,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heredoc-delimiting-identifier">Heredoc (&lt;&lt; delimiting_identifier)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clipboard">Clipboard</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-run">Background run</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stdout-arguments">Stdout arguments</a></li>
 </ul>
             </nav>
         </div>
@@ -994,6 +996,90 @@ Line 5
 </div>
 </div>
 </section>
+<section id="stdout-arguments">
+<h2>Stdout arguments<a class="headerlink" href="#stdout-arguments" title="Link to this heading">#</a></h2>
+<p>You can interprete the output of one command as arguments for other command. There are a few ways to do this:</p>
+<ul class="simple">
+<li><p>Substitution the output using the syntax <code class="docutils literal notranslate"><span class="pre">$(&lt;code&gt;)</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">xargs</span></code> command which is designed to add the stdout to the arguments of the specified command and allows to overcome some of the limitations of substitution approach.</p></li>
+</ul>
+<hr class="docutils" />
+<p>Consider a few examples. The following cell saves to the <code class="docutils literal notranslate"><span class="pre">values</span></code> “hello1”, “hello2”, “hello3”. And subpresses it</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">values</span><span class="o">=</span><span class="k">$(for</span><span class="w"> </span><span class="o">((</span><span class="nv">i</span><span class="o">=</span><span class="m">1</span><span class="p">;</span><span class="w"> </span>i&lt;<span class="o">=</span><span class="m">3</span><span class="p">;</span><span class="w"> </span>i++<span class="k">)</span><span class="o">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello</span><span class="nv">$i</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="p">;</span><span class="o">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello1 hello2 hello3
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s really common use case with the echo command. Considers the following less common case: the following cell creates files named <code class="docutils literal notranslate"><span class="pre">hello7...hello10</span></code> by substituting the output of the cycle for the <code class="docutils literal notranslate"><span class="pre">touch</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span>/tmp/my_args<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>mkdir<span class="w"> </span>/tmp/my_args<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/tmp/my_args
+touch<span class="w"> </span><span class="k">$(for</span><span class="w"> </span><span class="o">((</span><span class="nv">i</span><span class="o">=</span><span class="m">7</span><span class="p">;</span><span class="w"> </span>i&lt;<span class="o">=</span><span class="m">10</span><span class="p">;</span><span class="w"> </span>i++<span class="k">)</span><span class="o">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello</span><span class="nv">$i</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="p">;</span><span class="o">)</span>
+ls
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hello10  hello7  hello8  hello9
+</pre></div>
+</div>
+</div>
+</div>
+<p>As each program processes the input differently, there is no issue with substituting named arguments:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">args</span><span class="o">=</span><span class="s2">&quot;-m cowsay -t hello&quot;</span>
+python3<span class="w"> </span><span class="nv">$args</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  _____
+| hello |
+  =====
+     \
+      \
+        ^__^
+        (oo)\_______
+        (__)\       )\/\
+            ||----w |
+            ||     ||
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell uses <code class="docutils literal notranslate"><span class="pre">xargs</span></code> to pass arguments to Python.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">args</span><span class="o">=</span><span class="s2">&quot;-m cowsay -t xargs&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$args</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>python3<span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  _____
+| xargs |
+  =====
+     \
+      \
+        ^__^
+        (oo)\_______
+        (__)\       )\/\
+            ||----w |
+            ||     ||
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1065,6 +1151,7 @@ Line 5
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heredoc-delimiting-identifier">Heredoc (&lt;&lt; delimiting_identifier)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clipboard">Clipboard</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-run">Background run</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stdout-arguments">Stdout arguments</a></li>
 </ul>
   </nav></div>
 

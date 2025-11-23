@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -553,6 +553,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../other/data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/elastic_search.html">Elastic search</a></li>
@@ -948,8 +949,33 @@ Connection closed by foreign host.
 <li><p><strong>Physical</strong>: represents the piece of hardware that is reponsible for the connection. For example, it could be the wifi adapter or ethernet port.</p></li>
 <li><p><strong>Virtual</strong>: this is some piece of soft ware that behives like physical interface hardware.</p></li>
 </ul>
-<p>You can list your interfaces with <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">addr</span></code> command (<strong>Note.</strong> Install the <code class="docutils literal notranslate"><span class="pre">ip</span></code> utility with <code class="docutils literal notranslate"><span class="pre">iproute2</span></code> package in ubuntu).</p>
+<p>The basic tools to work with network interfaces are:</p>
+<ul class="simple">
+<li><p>To view folders containing all information about corresponding network interfaces, check the virtual folder created by the system as <code class="docutils literal notranslate"><span class="pre">/sys/class/net</span></code>.</p></li>
+<li><p>Use command <code class="docutils literal notranslate"><span class="pre">ip</span></code> to get summaries information on your network interfaces (<strong>Note.</strong> Install the <code class="docutils literal notranslate"><span class="pre">ip</span></code> utility with <code class="docutils literal notranslate"><span class="pre">iproute2</span></code> package in ubuntu):</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">link</span></code> shows general information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">addr</span></code> shows information about ip addresses allocated to the network interfaces.</p></li>
+</ul>
+</li>
+</ul>
 <hr class="docutils" />
+<p>The ouput of the <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">link</span></code> command is presented in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ip<span class="w"> </span>link
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0@if15: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP mode DEFAULT group default 
+    link/ether 1e:eb:9b:77:58:6f brd ff:ff:ff:ff:ff:ff link-netnsid 0
+</pre></div>
+</div>
+</div>
+</div>
 <p>The following cell shows the output of the <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">addr</span></code> command.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

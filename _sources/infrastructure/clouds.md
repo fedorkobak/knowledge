@@ -86,8 +86,6 @@ Before spark declarative pipelines was used **dlt (Delta Live Tables)** for the 
 - *Silver*: Data from the Bronze layer undergoes significant transformation, validation, and cleaning. This layer provides a reliable, single source of truth for enterprise data product.
 - *Gold*: This layer contains highly refined, aggregated, and enriched data that is ready for business intelligence and machine learning applications. It is desined for specific business use cases and provides analytics-ready datasets.
 
-Databricks provides **OpenAI-compatible models** endpoints, so you can access some models using only your databricks credentials. Check more [Get started querying LLMs on Databricks](https://docs.databricks.com/aws/en/large-language-models/llm-serving-intro).
-
 **Jobs & workflows** allows you to create a automated pipelines. Each job consists of tasks. These tasks can be ralted one another.
 
 Find out more in the [Databricks](clouds/databricks.md) page.

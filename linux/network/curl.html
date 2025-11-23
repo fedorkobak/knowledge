@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -553,6 +553,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../other/data_brokers/mongo_db.html">Mongo DB</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/go_templates.html">Go templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/elastic_search.html">Elastic search</a></li>
@@ -722,6 +723,8 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pass-headers">Pass headers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-headers">Get headers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-data">Send data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verbose">Verbose</a></li>
 </ul>
             </nav>
         </div>
@@ -735,7 +738,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="curl">
 <h1>Curl<a class="headerlink" href="#curl" title="Link to this heading">#</a></h1>
-<p>This page is a specific guide to the <code class="docutils literal notranslate"><span class="pre">curl</span></code> Linux utility. The following cell starts the docker container with httpbin - http requests mirror, that we’ll use to play with curl.</p>
+<p>This page is a specific guide to the <code class="docutils literal notranslate"><span class="pre">curl</span></code> Linux utility. The <code class="docutils literal notranslate"><span class="pre">curl</span></code> is a tool for transfering data from or to serving using URLs. It supports there protocols: DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. Check more on <code class="docutils literal notranslate"><span class="pre">curl</span></code> in the <a class="reference external" href="https://curl.se/docs/manpage.html">curl man page</a>.</p>
+<hr class="docutils" />
+<p>The following cell starts the docker container with httpbin - http requests mirror, that we’ll use to play with curl.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-itd<span class="w"> </span>--name<span class="w"> </span>example_server<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>:80<span class="w"> </span>kennethreitz/httpbin
@@ -743,7 +748,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>17bb3c56ab5ec3a3877a6dd84b871cf2f6b690e736f814ab312a19856d2acdf1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cdd6ff6e0e03dd4045042fdac1cf8910c2111e195c977f5b02823093d378d15f
 </pre></div>
 </div>
 </div>
@@ -919,6 +924,98 @@ Access-Control-Allow-Credentials: true
 </div>
 </div>
 </section>
+<section id="send-data">
+<h2>Send data<a class="headerlink" href="#send-data" title="Link to this heading">#</a></h2>
+<p>Send the data using the <code class="docutils literal notranslate"><span class="pre">-d</span></code> key. Typically, you should pass JSON-like text.</p>
+<hr class="docutils" />
+<p>The following cell sends some JSON data to the locally deployed httpbin.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-X<span class="w"> </span>POST<span class="w"> </span>localhost:80/anything<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;key2&quot;: &quot;hello&quot;, &quot;key2&quot;: &quot;world&quot;}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{
+  &quot;args&quot;: {}, 
+  &quot;data&quot;: &quot;&quot;, 
+  &quot;files&quot;: {}, 
+  &quot;form&quot;: {
+    &quot;{\&quot;key2\&quot;: \&quot;hello\&quot;, \&quot;key2\&quot;: \&quot;world\&quot;}&quot;: &quot;&quot;
+  }, 
+  &quot;headers&quot;: {
+    &quot;Accept&quot;: &quot;*/*&quot;, 
+    &quot;Content-Length&quot;: &quot;34&quot;, 
+    &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;, 
+    &quot;Host&quot;: &quot;localhost&quot;, 
+    &quot;User-Agent&quot;: &quot;curl/8.5.0&quot;
+  }, 
+  &quot;json&quot;: null, 
+  &quot;method&quot;: &quot;POST&quot;, 
+  &quot;origin&quot;: &quot;172.17.0.1&quot;, 
+  &quot;url&quot;: &quot;http://localhost/anything&quot;
+}
+</pre></div>
+</div>
+</div>
+</div>
+<p>The data appears in the <code class="docutils literal notranslate"><span class="pre">&quot;form&quot;</span></code> attribute of the mirror.</p>
+</section>
+<section id="verbose">
+<h2>Verbose<a class="headerlink" href="#verbose" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">-v</span></code> option in <code class="docutils literal notranslate"><span class="pre">curl</span></code> allows to view infromation about the <code class="docutils literal notranslate"><span class="pre">curl</span></code> request. This is usefull for debugging. There is a system to separete different kinds of information:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">*</span></code> means additional information provided by <code class="docutils literal notranslate"><span class="pre">curl</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> means information sent to the server.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> means information received from server.</p></li>
+</ul>
+<p>Check detailed description in the <a class="reference external" href="https://curl.se/docs/manpage.html#--verbose"><code class="docutils literal notranslate"><span class="pre">-v</span></code>, <code class="docutils literal notranslate"><span class="pre">--verbose</span></code></a> section of the documentation.</p>
+<hr class="docutils" />
+<p>The following cell shows the ouputs for the <code class="docutils literal notranslate"><span class="pre">http</span></code> request.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-sv<span class="w"> </span>http://localhost:80/get
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>* Host localhost:80 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+*   Trying [::1]:80...
+* Connected to localhost (::1) port 80
+&gt; GET /get HTTP/1.1
+&gt; Host: localhost
+&gt; User-Agent: curl/8.5.0
+&gt; Accept: */*
+&gt; 
+&lt; HTTP/1.1 200 OK
+&lt; Server: gunicorn/19.9.0
+&lt; Date: Sun, 23 Nov 2025 22:50:16 GMT
+&lt; Connection: keep-alive
+&lt; Content-Type: application/json
+&lt; Content-Length: 178
+&lt; Access-Control-Allow-Origin: *
+&lt; Access-Control-Allow-Credentials: true
+&lt; 
+{
+  &quot;args&quot;: {}, 
+  &quot;headers&quot;: {
+    &quot;Accept&quot;: &quot;*/*&quot;, 
+    &quot;Host&quot;: &quot;localhost&quot;, 
+    &quot;User-Agent&quot;: &quot;curl/8.5.0&quot;
+  }, 
+  &quot;origin&quot;: &quot;172.17.0.1&quot;, 
+  &quot;url&quot;: &quot;http://localhost/get&quot;
+}
+* Connection #0 to host localhost left intact
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -987,6 +1084,8 @@ Access-Control-Allow-Credentials: true
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pass-headers">Pass headers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-headers">Get headers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-data">Send data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verbose">Verbose</a></li>
 </ul>
   </nav></div>
 
