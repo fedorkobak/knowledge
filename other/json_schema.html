@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -722,6 +722,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type">Type</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modularity">Modularity</a></li>
 </ul>
             </nav>
         </div>
@@ -738,25 +740,12 @@ document.write(`
 <p>A JSON schema declares the expected format of a JSON document.</p>
 <p>Regular JSON is human-readable, but it doesn’t include any context or metadata. JSON Schema enables information about the meanings of the keys and the possible values they can take.</p>
 <p>It is a popular method for documenting and validating JSON files.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jsonschema</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">validate_q</span><span class="p">(</span><span class="n">instance</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">validate</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">instance</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>For more check the <a class="reference external" href="https://json-schema.org/docs">documentation</a> of JSON schema.</p>
 <p>A JSON Schema is a standard used to define and validate the structure and data types of a JSON document (the instance). It is itself a JSON document where the structure and constraints for each <strong>property</strong> are described using predefined <strong>schema keywords</strong> (e.g., type, properties).</p>
 <p>For examples chema:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">}</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;type&quot;: &quot;number&quot;}&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/schema.json
 </pre></div>
 </div>
 </div>
@@ -764,7 +753,14 @@ document.write(`
 <p>Specifies the the root level of the JSON should be a number, e.g. JSON by itself a number.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">validate_q</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="m">10</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
 </pre></div>
 </div>
 </div>
@@ -772,16 +768,24 @@ document.write(`
 <p>The following cell specifies that the root object is a mapping. The available attributes of the root mapping are specified in the <code class="docutils literal notranslate"><span class="pre">properties</span></code> of the JSON schema.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;properties&quot;</span><span class="p">:</span>
-    <span class="p">{</span>
-        <span class="s2">&quot;wow&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="n">validate_q</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;wow&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">},</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
+<span class="s">{</span>
+<span class="s">    &quot;type&quot;: &quot;object&quot;,</span>
+<span class="s">    &quot;properties&quot;:</span>
+<span class="s">    {</span>
+<span class="s">        &quot;wow&quot;: {</span>
+<span class="s">            &quot;type&quot;: &quot;string&quot;</span>
+<span class="s">        }</span>
+<span class="s">    }</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;wow&quot;: &quot;value&quot;}&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
 </pre></div>
 </div>
 </div>
@@ -794,7 +798,7 @@ document.write(`
 <p>The following cell indicates that the root element of the JSON should be a string.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;type&quot;: &quot;string&quot;}&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/schema.json
 </pre></div>
 </div>
 </div>
@@ -802,7 +806,14 @@ document.write(`
 <p>Specifying a string works fine.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">validate_q</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="s2">&quot;some string&quot;</span><span class="p">)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;&quot;some string&quot;&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
 </pre></div>
 </div>
 </div>
@@ -810,22 +821,133 @@ document.write(`
 <p>However, any other object, such as number, will result in the corresponding error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">validate_q</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="m">10</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 is not of type &#39;object&#39;
-
-Failed validating &#39;type&#39; in schema:
-    {&#39;type&#39;: &#39;object&#39;, &#39;wow&#39;: {&#39;type&#39;: &#39;string&#39;}}
-
-On instance:
-    10
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
+  <span class=" -Color -Color-Yellow">/tmp/object.json::$</span>: 10 is not of type &#39;string&#39;
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="arrays">
+<h2>Arrays<a class="headerlink" href="#arrays" title="Link to this heading">#</a></h2>
+<p>An array is used to list elements. Find out more about arrays in JSON schemas on the <a class="reference external" href="https://json-schema.org/understanding-json-schema/reference/array">Array</a> reference page.</p>
+<p>Use the following schema keywords to define what the items array can contain:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://json-schema.org/understanding-json-schema/reference/array#items"><code class="docutils literal notranslate"><span class="pre">items</span></code></a>: This sepecifies the schema to which each item in the list must correspond. Such approach is called <strong>List validation</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prefixItems</span></code>: peforms the <a class="reference external" href="https://json-schema.org/understanding-json-schema/reference/array#tupleValidation">tuple validation</a> where the order of items is important and each item has a different schema.</p></li>
+<li><p><a class="reference external" href="https://json-schema.org/understanding-json-schema/reference/array#contains"><code class="docutils literal notranslate"><span class="pre">contains</span></code></a>: specifies the rule to which at least one element of the array have to correspond.</p></li>
+</ul>
+<p><strong>Note</strong>: You can combine items with different specifications for the same array.</p>
+<hr class="docutils" />
+<p>The following cell defines the schema for array for which:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">items</span></code>: sets up that array can contains only numbers 1, 2, 3.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contains</span></code>: defines that it have to contain at least one entrance of 2.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
+<span class="s">{</span>
+<span class="s">    &quot;type&quot;: &quot;array&quot;,</span>
+<span class="s">    &quot;items&quot;: {</span>
+<span class="s">        &quot;enum&quot;: [1, 2, 3]</span>
+<span class="s">    },</span>
+<span class="s">    &quot;contains&quot;: {</span>
+<span class="s">        &quot;const&quot;: 2</span>
+<span class="s">    }</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The array <code class="docutils literal notranslate"><span class="pre">[3,</span> <span class="pre">3,</span> <span class="pre">2]</span></code> is fine because it contains elements defined in the <code class="docutils literal notranslate"><span class="pre">contains</span></code> and does not contain elements that are not mentioned in the <code class="docutils literal notranslate"><span class="pre">items</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[3, 3, 2]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
+</pre></div>
+</div>
+</div>
+</div>
+<p>The case where the item <code class="docutils literal notranslate"><span class="pre">2</span></code> is not present is validated in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 1, 1, 3]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
+  <span class=" -Color -Color-Yellow">/tmp/object.json::$</span>: [1, 1, 1, 3] does not contain items matching the given schema
+</pre></div>
+</div>
+</div>
+</div>
+<p>The case where the array under consideration contains a value that is not mentioned in the <code class="docutils literal notranslate"><span class="pre">items</span></code> is represented in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 4, 2]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
+  <span class=" -Color -Color-Yellow">/tmp/object.json::$[1]</span>: 4 is not one of [1, 2, 3]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="modularity">
+<h2>Modularity<a class="headerlink" href="#modularity" title="Link to this heading">#</a></h2>
+<p>The JSON Schema syntax enables reusable JSON structures to be specified and referenced by other structures. These structures can be defined in external JSON Schema files or within the same file.</p>
+<p>The following keys are used to define and reference other schemas:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">$id</span></code>: Defines the URI used to identify this root schema.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$anchor</span></code>: Defines a specific subschema location that can be referenced by a fragment identifier.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$defs</span></code>: A mapping key where other subschemas are defined so they can be referenced.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$ref</span></code>: Indicates that the current element should be validated against the schema at the specific URI provided in the value.</p></li>
+</ul>
+<p>Learn more on the <a class="reference external" href="https://json-schema.org/understanding-json-schema/structuring">Modular JSON Schema Validation</a> page.</p>
+<hr class="docutils" />
+<p>The following cell defines the JSON schema that defines <code class="docutils literal notranslate"><span class="pre">&quot;PC&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Server&quot;</span></code> attributes both of which require one of <code class="docutils literal notranslate"><span class="pre">&quot;windows&quot;,</span> <span class="pre">&quot;linux&quot;,</span> <span class="pre">&quot;freeBSD&quot;</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
+<span class="s">{</span>
+<span class="s">    &quot;type&quot;: &quot;object&quot;,</span>
+<span class="s">    &quot;properties&quot;: {</span>
+<span class="s">        &quot;PC&quot;: {&quot;$ref&quot;: &quot;#/$defs/system&quot;},</span>
+<span class="s">        &quot;Server&quot;: {&quot;$ref&quot;: &quot;#/$defs/system&quot;}</span>
+<span class="s">    },</span>
+<span class="s">    &quot;$defs&quot;: {</span>
+<span class="s">        &quot;system&quot;: {&quot;enum&quot;: [&quot;windows&quot;, &quot;linux&quot;, &quot;freeBSD&quot;]}</span>
+<span class="s">    }</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note:</strong> for some reason, <code class="docutils literal notranslate"><span class="pre">check-jsonschema</span></code> doesn’t work with references. Try using the <a class="reference external" href="https://www.jsonschemavalidator.net/">JSON schema validator</a>.</p>
 </section>
 </section>
 
@@ -838,16 +960,16 @@ On instance:
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./other"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -894,6 +1016,8 @@ On instance:
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type">Type</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modularity">Modularity</a></li>
 </ul>
   </nav></div>
 
