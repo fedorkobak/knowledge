@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -536,7 +536,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vs_code.html">VS Code</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="coding_tools.html">Coding tools</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="coding_tools/vs_code.html">VS Code</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="python_apache.html">Python with apache</a></li>
 
 
@@ -722,8 +725,15 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type">Type</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modularity">Modularity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set">Set</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#composition">Composition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean">Boolean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modularity">Modularity</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -915,9 +925,212 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 </div>
 </div>
 </div>
+<section id="set">
+<h3>Set<a class="headerlink" href="#set" title="Link to this heading">#</a></h3>
+<p>It is a typical requirement to specify an array containing all the elements from a given set of elements and not others. To specify such a combination use:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">items</span></code> to specify set of the available items.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contains</span></code> for each element joined in the <code class="docutils literal notranslate"><span class="pre">&quot;allOf&quot;</span></code> boolean composition: to specify that each element must appear in the input at least once.</p></li>
+</ul>
+<p>Unlike the <code class="docutils literal notranslate"><span class="pre">prefixItems</span></code>, such approach allows to ignore the order of the elements.</p>
+<hr class="docutils" />
+<p>The following cell specifies the JSON schema specifies the array that contains elements <code class="docutils literal notranslate"><span class="pre">{1,</span> <span class="pre">2,</span> <span class="pre">3}</span></code> items and only them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
+<span class="s">{</span>
+<span class="s">  &quot;type&quot;: &quot;array&quot;,</span>
+<span class="s">  &quot;items&quot;: { &quot;enum&quot;: [1, 2, 3] },</span>
+<span class="s">  &quot;allOf&quot;: [</span>
+<span class="s">    { &quot;contains&quot;: { &quot;const&quot;: 1 } },</span>
+<span class="s">    { &quot;contains&quot;: { &quot;const&quot;: 2 } },</span>
+<span class="s">    { &quot;contains&quot;: { &quot;const&quot;: 3 } }</span>
+<span class="s">  ]</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cells show that the order of the elements in the array does not matter if the objects are present.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[2, 3, 1]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
+</pre></div>
+</div>
+</div>
+</div>
+<p>The validation error if some elements are missing:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 2]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
+  <span class=" -Color -Color-Yellow">/tmp/object.json::$</span>: [1, 2] does not contain items matching the given schema
+</pre></div>
+</div>
+</div>
+</div>
+<p>If there is unexpected element:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 2, 3, 4]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
+  <span class=" -Color -Color-Yellow">/tmp/object.json::$[3]</span>: 4 is not one of [1, 2, 3]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong> this approach doesn’t take into account duplicates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 2, 2, 3]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="composition">
+<h2>Composition<a class="headerlink" href="#composition" title="Link to this heading">#</a></h2>
+<p>You can combine different schemas to create a complex validation algorithms. There are two concepts:</p>
+<ul class="simple">
+<li><p><strong>Modular</strong>: allows to reuse defined schemas in other schemas.</p></li>
+<li><p><strong>Boolean</strong>: you can specify a schema that validates the input against several schemas joined by logical operations.</p></li>
+</ul>
+<p>Check more in <a class="reference external" href="https://json-schema.org/understanding-json-schema/reference/composition">Schema Composition</a> page.</p>
+<section id="boolean">
+<h3>Boolean<a class="headerlink" href="#boolean" title="Link to this heading">#</a></h3>
+<p>Boolean compositions allow you to validate input against multiple sub-schemas and define the rules for how the data must satisfy those schemas. A set of keywords that allows to validation logic to be defined:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">allOf</span></code>: the input have to satisfy all composed schemas (AND).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">anyOf</span></code>: the input have to satisfy <em>at least one</em> of composed schemas (OR).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oneOf</span></code>: the input have to satisfy <em>exactly one</em> of composed schemas (XOR).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">not</span></code>: the input have to not satisfy the given input.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell defines the schema that inusres the input is an <code class="docutils literal notranslate"><span class="pre">object</span></code> with exactly specified values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
+<span class="s">{</span>
+<span class="s">    &quot;type&quot;: &quot;object&quot;,</span>
+<span class="s">    &quot;anyOf&quot;: [</span>
+<span class="s">        {</span>
+<span class="s">            &quot;properties&quot;: {</span>
+<span class="s">                &quot;user&quot;: {&quot;const&quot;: &quot;Fedor&quot;},</span>
+<span class="s">                &quot;job&quot;: {&quot;const&quot;: &quot;Programmer&quot;}</span>
+<span class="s">            },</span>
+<span class="s">            &quot;required&quot;: [&quot;user&quot;, &quot;job&quot;]</span>
+<span class="s">        },</span>
+<span class="s">        {</span>
+<span class="s">            &quot;properties&quot;: {</span>
+<span class="s">                &quot;user&quot;: {&quot;const&quot;: &quot;Natalia&quot;},</span>
+<span class="s">                &quot;job&quot;: {&quot;const&quot;: &quot;Chemist&quot;}</span>
+<span class="s">            },</span>
+<span class="s">            &quot;required&quot;: [&quot;user&quot;, &quot;job&quot;]</span>
+<span class="s">        }</span>
+<span class="s">    ]</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Everything goes fine when you specify mappings mentioned in <code class="docutils literal notranslate"><span class="pre">anyOf</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/object.json</span>
+<span class="s">{</span>
+<span class="s">    &quot;user&quot;: &quot;Fedor&quot;,</span>
+<span class="s">    &quot;job&quot;: &quot;Programmer&quot;</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/object.json</span>
+<span class="s">{</span>
+<span class="s">    &quot;user&quot;: &quot;Natalia&quot;,</span>
+<span class="s">    &quot;job&quot;: &quot;Chemist&quot; </span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, validation will fail if you specify a different object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/object.json</span>
+<span class="s">{</span>
+<span class="s">    &quot;user&quot;: &quot;Igor&quot;,</span>
+<span class="s">    &quot;job&quot;: &quot;Physicist&quot; </span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
+  <span class=" -Color -Color-Yellow">/tmp/object.json::$</span>: {&#39;user&#39;: &#39;Igor&#39;, &#39;job&#39;: &#39;Physicist&#39;} is not valid under any of the given schemas
+  Underlying errors caused this.
+
+  Best Match:
+    <span class=" -Color -Color-Yellow">$.user</span>: &#39;Fedor&#39; was expected
+
+  <span class=" -Color -Color-Yellow">3</span> other errors were produced. Use &#39;--verbose&#39; to see all errors.
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="modularity">
-<h2>Modularity<a class="headerlink" href="#modularity" title="Link to this heading">#</a></h2>
+<h3>Modularity<a class="headerlink" href="#modularity" title="Link to this heading">#</a></h3>
 <p>The JSON Schema syntax enables reusable JSON structures to be specified and referenced by other structures. These structures can be defined in external JSON Schema files or within the same file.</p>
 <p>The following keys are used to define and reference other schemas:</p>
 <ul class="simple">
@@ -948,6 +1161,7 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 </div>
 </div>
 <p><strong>Note:</strong> for some reason, <code class="docutils literal notranslate"><span class="pre">check-jsonschema</span></code> doesn’t work with references. Try using the <a class="reference external" href="https://www.jsonschemavalidator.net/">JSON schema validator</a>.</p>
+</section>
 </section>
 </section>
 
@@ -1016,8 +1230,15 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type">Type</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modularity">Modularity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set">Set</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#composition">Composition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean">Boolean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modularity">Modularity</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

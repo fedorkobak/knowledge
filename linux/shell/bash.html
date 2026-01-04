@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -536,7 +536,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../other/intro.html">Intro</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../other/vs_code.html">VS Code</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/coding_tools.html">Coding tools</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/coding_tools/vs_code.html">VS Code</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
 
 
@@ -722,6 +725,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operators">Operators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#completions">Completions</a></li>
 </ul>
             </nav>
         </div>
@@ -783,6 +787,64 @@ document.write(`
 </table>
 </div>
 </section>
+<section id="completions">
+<h2>Completions<a class="headerlink" href="#completions" title="Link to this heading">#</a></h2>
+<p>The Bash offers a competion tool that completes the commands you have typed into the shell. While most of packages add their completions automatically, some do not. Here, we’ll look at how you can add competions to your Bash environment.</p>
+<p>Consider the basics of this tool:</p>
+<ul class="simple">
+<li><p>Bash completions are provided by a separate package. Installation using apt: <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">install</span> <span class="pre">bash-completion</span></code>.</p></li>
+<li><p>Completions is a collection of bash scripts. The collection for whole system is represented in the <code class="docutils literal notranslate"><span class="pre">/usr/share/bash-completion/completions</span></code> folder.</p></li>
+<li><p>In order to use the completions, you must <code class="docutils literal notranslate"><span class="pre">source</span></code> the corresponding bash scirpt. It is typically done automatically done by the <code class="docutils literal notranslate"><span class="pre">~./.bashrc</span></code> configuration script.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell shows the contents of the <code class="docutils literal notranslate"><span class="pre">bash-completion</span></code> folder.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-l<span class="w"> </span>/usr/share/bash-completion/
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 116
+-rw-r--r-- 1 root root 77084 Apr  3  2022 bash_completion
+drwxr-xr-x 1 root root 32768 Dec 25 11:19 completions
+drwxr-xr-x 2 root root  4096 Dec 25 11:19 helpers
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">complete</span> <span class="pre">-p</span></code> command to view the completions currenly available.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">complete</span><span class="w"> </span>-p
+</pre></div>
+</div>
+</div>
+</div>
+<p>For now, there is nothing here. The following cell <code class="docutils literal notranslate"><span class="pre">sources</span></code> the completions for the <code class="docutils literal notranslate"><span class="pre">git</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>/usr/share/bash-completion/completions/git
+</pre></div>
+</div>
+</div>
+</div>
+<p>After sourcing the correspoinding script the <code class="docutils literal notranslate"><span class="pre">complete</span></code> is able to find some details about packages.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">complete</span><span class="w"> </span>-p
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>complete -o bashdefault -o default -o nospace -F __git_wrap__gitk_main gitk
+complete -o bashdefault -o default -o nospace -F __git_wrap__git_main git
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pressing the &lt;TAB&gt; key while typing the <code class="docutils literal notranslate"><span class="pre">git</span></code> subcommands will provide the corresponding completions.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -794,16 +856,16 @@ document.write(`
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "python3",
+            name: "bash",
             path: "./linux/shell"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -850,6 +912,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operators">Operators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#completions">Completions</a></li>
 </ul>
   </nav></div>
 

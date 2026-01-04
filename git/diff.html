@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -536,7 +536,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../other/intro.html">Intro</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../other/vs_code.html">VS Code</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../other/coding_tools.html">Coding tools</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/coding_tools/vs_code.html">VS Code</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/python_apache.html">Python with apache</a></li>
 
 
@@ -759,7 +762,7 @@ document.write(`
 <p>The following example show the output of the command for just one file created.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;some text&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>test_file
 git<span class="w"> </span>diff
 </pre></div>
@@ -776,8 +779,7 @@ git<span class="w"> </span>diff
 <p>Main point of the next cell is to add line <code class="docutils literal notranslate"><span class="pre">&quot;second</span> <span class="pre">line&quot;</span></code> to the file commited before. In <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span></code> results it’ll look like <code class="docutils literal notranslate"><span class="pre">+second</span> <span class="pre">line</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%%bash
-mkdir<span class="w"> </span>diff_example
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>diff_example
 <span class="nb">cd</span><span class="w"> </span>diff_example
 
 git<span class="w"> </span>init<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
@@ -795,13 +797,13 @@ rm<span class="w"> </span>-r<span class="w"> </span>diff_example
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>diff --git a/test_file b/test_file
-index 08fe272..06fcdd7 100644
---- a/test_file
-+++ b/test_file
-@@ -1 +1,2 @@
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">diff --git a/test_file b/test_file</span>
+<span class=" -Color -Color-Bold">index 08fe272..06fcdd7 100644</span>
+<span class=" -Color -Color-Bold">--- a/test_file</span>
+<span class=" -Color -Color-Bold">+++ b/test_file</span>
+<span class=" -Color -Color-Cyan">@@ -1 +1,2 @@</span>
  first line
-+second line
+<span class=" -Color -Color-Green">+second line</span>
 </pre></div>
 </div>
 </div>
@@ -812,8 +814,7 @@ index 08fe272..06fcdd7 100644
 <p>In this case I created files with two lines <code class="docutils literal notranslate"><span class="pre">&quot;first</span> <span class="pre">line&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;second</span> <span class="pre">line&quot;</span></code>. After committing, I save the new version of the file without the <code class="docutils literal notranslate"><span class="pre">second</span> <span class="pre">line</span></code>. Gid diff shows it as <code class="docutils literal notranslate"><span class="pre">-second</span> <span class="pre">line</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%%bash
-mkdir<span class="w"> </span>diff_example
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>diff_example
 <span class="nb">cd</span><span class="w"> </span>diff_example
 git<span class="w"> </span>init<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 
@@ -831,17 +832,6 @@ git<span class="w"> </span>diff
 
 <span class="nb">cd</span><span class="w"> </span>..
 rm<span class="w"> </span>-r<span class="w"> </span>diff_example
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>diff --git a/test_file b/test_file
-index 06fcdd7..08fe272 100644
---- a/test_file
-+++ b/test_file
-@@ -1,2 +1 @@
- first line
--second line
 </pre></div>
 </div>
 </div>

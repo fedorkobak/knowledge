@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="VS Code" href="vs_code.html" />
+    <link rel="next" title="Coding tools" href="coding_tools.html" />
     <link rel="prev" title="Assets bundles" href="../infrastructure/clouds/databricks/assets_bundles.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -536,7 +536,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Intro</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vs_code.html">VS Code</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="coding_tools.html">Coding tools</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="coding_tools/vs_code.html">VS Code</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="python_apache.html">Python with apache</a></li>
 
 
@@ -738,9 +741,9 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regex">Regex</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyterlab">Jupyterlab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-tools">Coding tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tavily">Tavily</a></li>
 </ul>
             </nav>
         </div>
@@ -978,52 +981,6 @@ some data
 </section>
 </section>
 </section>
-<section id="regex">
-<h2>Regex<a class="headerlink" href="#regex" title="Link to this heading">#</a></h2>
-<p>A regular expression, or ‘regex’ for short, is a popular language used to specify patterns in text. Different tools use specific modifications of the regex syntax. The most basic and common features are considered here.</p>
-<hr class="docutils" />
-<p>Consider the application of the Linux <code class="docutils literal notranslate"><span class="pre">grep</span></code> utility. With the <code class="docutils literal notranslate"><span class="pre">-P</span></code> flag, you can instruct <code class="docutils literal notranslate"><span class="pre">grep</span></code> to use a regular expression.</p>
-<p>For example, consider the case in which you need to retrieve all lines containing the symbols <code class="docutils literal notranslate"><span class="pre">!</span></code> or <code class="docutils literal notranslate"><span class="pre">?</span></code>. Simply specifying them to <code class="docutils literal notranslate"><span class="pre">grep</span></code> would not work because it would search exactly <code class="docutils literal notranslate"><span class="pre">?!</span></code> symbols together:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF | grep &quot;?!&quot;</span>
-<span class="s">a!bcdef</span>
-<span class="s">test?</span>
-<span class="s">moprst</span>
-<span class="s">both?! are here</span>
-<span class="s">EOF</span>
-<span class="nb">true</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>both<span class=" -Color -Color-Bold -Color-Bold-Red">?!</span> are here
-</pre></div>
-</div>
-</div>
-</div>
-<p>To search for lines containing at least one of the specifyed symbols, you must enter the corresponding regular expression:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF | grep -P &quot;[\?\!]&quot;</span>
-<span class="s">a!bcdef</span>
-<span class="s">test?</span>
-<span class="s">moprst</span>
-<span class="s">both?! are here</span>
-<span class="s">EOF</span>
-<span class="nb">true</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a<span class=" -Color -Color-Bold -Color-Bold-Red">!</span>bcdef
-test<span class=" -Color -Color-Bold -Color-Bold-Red">?</span>
-both<span class=" -Color -Color-Bold -Color-Bold-Red">?!</span> are here
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 <section id="json-schema">
 <h2>JSON schema<a class="headerlink" href="#json-schema" title="Link to this heading">#</a></h2>
 <p>JSON schema is a declarative protocol to specify the format of the JSON documents.</p>
@@ -1078,7 +1035,6 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <span class="s">{&quot;name&quot; : &quot;Eggs&quot;, &quot;price&quot; : &quot;34.99&quot;}</span>
 <span class="s">EOF</span>
 check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
 </pre></div>
 </div>
 </div>
@@ -1087,17 +1043,52 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
   <span class=" -Color -Color-Yellow">/tmp/object.json::$.price</span>: &#39;34.99&#39; is not of type &#39;number&#39;
 </pre></div>
 </div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </div>
 </div>
 </section>
-<section id="jupyterlab">
-<h2>Jupyterlab<a class="headerlink" href="#jupyterlab" title="Link to this heading">#</a></h2>
-<p>JupyterLab is an EDA-like tool that focuses on Jupyter notebooks.</p>
-<p>Usefull <strong>extensions</strong> are:</p>
+<section id="coding-tools">
+<h2>Coding tools<a class="headerlink" href="#coding-tools" title="Link to this heading">#</a></h2>
+<p>Coding tools are really specific for each developer, so you have to know how to use the tools you’re working with. This section is about it.</p>
+<p>The ones I using are:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/jupyterlab-contrib/jupyterlab-vim">jupyterlab-vim</a> vim key buindings implementation.</p></li>
-<li><p><a class="reference external" href="https://github.com/jupyter-lsp/jupyterlab-lsp">jupyterlab-lsp</a> language server protocol implementation.</p></li>
+<li><p>Nvim: the main editor, minimalist and extendable.</p></li>
+<li><p>Jupyter/JupyterLab: As a data scientist, I work with jupyter notebook a lot. There are no better options than the original implementation yet.</p></li>
+<li><p>VSCode: some new developer tools that are supposed to be integrated into your IDE. They appear in vim infrastructure with a delay, so I use VSCode because it gets all the modern updates first.</p></li>
 </ul>
+</section>
+<section id="tavily">
+<h2>Tavily<a class="headerlink" href="#tavily" title="Link to this heading">#</a></h2>
+<p>Tavily is a service that provides the API for web search.</p>
+<p><strong>Note:</strong> access from some countries is denied without any warning message.</p>
+<p>Find out more on <a class="reference external" href="https://www.tavily.com/">Tavily website</a>.</p>
+<hr class="docutils" />
+<p>The following sends search request to the tavily. And shows the most relevant search result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://api.tavily.com/search<span class="w"> </span><span class="se">\</span>
+-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="si">${</span><span class="nv">TAVILY_API_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;query&quot;: &quot;What is the capital of Belarus?&quot;</span>
+<span class="s1">}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.results.[0]&#39;</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;url&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;https://www.youtube.com/watch?v=DQXYOm-7xsg&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;title&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;How to Pronounce Minsk, Belarus? (CORRECTLY)&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;content&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;Minsk Capital of Belarus Minsk is the capital and largest city of Belarus, located on the Svislač and the Nyamiha Rivers. As the capital&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;score&quot;</span><span class=" -Color -Color-Bold">: </span>0.9993538<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;raw_content&quot;</span><span class=" -Color -Color-Bold">: </span>null
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -1110,16 +1101,16 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "bash_kernel"
         },
         kernelOptions: {
-            name: "bash",
+            name: "bash_kernel",
             path: "./other"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'bash_kernel'</script>
 
                 </article>
               
@@ -1141,11 +1132,11 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
       </div>
     </a>
     <a class="right-next"
-       href="vs_code.html"
+       href="coding_tools.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">VS Code</p>
+        <p class="prev-next-title">Coding tools</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1182,9 +1173,9 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regex">Regex</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyterlab">Jupyterlab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-tools">Coding tools</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tavily">Tavily</a></li>
 </ul>
   </nav></div>
 

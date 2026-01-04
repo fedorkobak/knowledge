@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -536,7 +536,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../other/intro.html">Intro</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../other/vs_code.html">VS Code</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../other/coding_tools.html">Coding tools</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/coding_tools/vs_code.html">VS Code</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/python_apache.html">Python with apache</a></li>
 
 
@@ -750,6 +753,7 @@ document.write(`
 <li><p>A developer’s computer. The entire porject history is stored on each developer’s computer. If needed, they can upload local changes to the hosting server or download changes contributed by other developers.</p></li>
 </ul>
 <p>This is an entry page containing basic information you need to know to start working with <code class="docutils literal notranslate"><span class="pre">git</span></code>. Some sections refer to specific pages that provide more detailed descriptions of various <code class="docutils literal notranslate"><span class="pre">git</span></code> concepts with more advanced examples.</p>
+<p><strong>Note</strong>: This section uses a special kernel that automates the initialisation of the Git repository. The <code class="docutils literal notranslate"><span class="pre">#init</span></code> command creates a temporary directory and initialises the git respository there.</p>
 <section id="repository">
 <h2>Repository<a class="headerlink" href="#repository" title="Link to this heading">#</a></h2>
 <p>This section discusses what a <code class="docutils literal notranslate"><span class="pre">git</span></code> repository is and what a typical folder needs to have to be considered a <code class="docutils literal notranslate"><span class="pre">git</span></code> repository.</p>
@@ -789,10 +793,10 @@ Initialized empty Git repository in /tmp/git_init/.git/
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 20
-drwxrwxr-x  3 fedor fedor  4096 Jan  8 18:47 <span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
-drwxrwxrwt 43 root  root  12288 Jan  8 18:50 <span class=" -Color -Color-Black -Color-Black-BGGreen">..</span>
-drwxrwxr-x  7 fedor fedor  4096 Jan  8 18:47 <span class=" -Color -Color-Bold -Color-Bold-Blue">.git</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 28
+drwxrwxr-x  3 fedor fedor  4096 Nov 29 22:57 <span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
+drwxrwxrwt 45 root  root  20480 Nov 29 22:57 <span class=" -Color -Color-Black -Color-Black-BGGreen">..</span>
+drwxrwxr-x  7 fedor fedor  4096 Nov 29 22:57 <span class=" -Color -Color-Bold -Color-Bold-Blue">.git</span>
 </pre></div>
 </div>
 </div>
@@ -857,7 +861,7 @@ drwxrwxr-x  7 fedor fedor  4096 Jan  8 18:47 <span class=" -Color -Color-Bold -C
 <p>The following cell creates the, files that have different stages.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>modified
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>modified_staged
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;initial&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>modified_staged_modified
@@ -951,7 +955,7 @@ Untracked files:
 <p>The following cell adds <code class="docutils literal notranslate"><span class="pre">file</span></code> to the <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content2&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file2
@@ -989,7 +993,7 @@ nothing added to commit but untracked files present (use &quot;git add&quot; to 
 <p>The following code shows the output of applying the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span></code> command to a the file that was modified after initial staging.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>%init
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;content&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file
 git<span class="w"> </span>add<span class="w"> </span>--all
 
