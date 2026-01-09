@@ -43,8 +43,10 @@ Here is my config:
     "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace",
     "python.analysis.typeCheckingMode": "strict",
     "notebook.lineNumbers": "on", 
+    "workbench.externalBrowser": "/usr/bin/firefox",
+
     "vim.langmap": "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz",
-    "workbench.externalBrowser": "/usr/bin/firefox"
+    "vim.useSystemClipboard": true,
 }
 ```
 
