@@ -18,8 +18,7 @@ class JsonSchemaKernel(TempDirKernel):
         super()._init_dir()
         return self._heredoc_to_file(self.schema_filename, code)
 
-    @command('#check')
-    def _check(self, code: str = '') -> str:
+    def no_commands(self, code: str = '') -> str:
         commands = ''
         if code.strip():
             commands = self._heredoc_to_file(self.object_filename, code)
