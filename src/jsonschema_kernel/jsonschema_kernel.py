@@ -24,6 +24,9 @@ class JsonSchemaKernel(TempDirKernel):
         if code.strip():
             commands = self._heredoc_to_file(self.object_filename, code)
         commands += self._check_command()
+        # If schema validation failed the jsonschema returns status code 1
+        # `true` at the end of the command subpresses the output
+        commands += "\n true"
         return commands
 
     def __init__(self, **kwargs):
