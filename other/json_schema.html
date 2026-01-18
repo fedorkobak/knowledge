@@ -755,7 +755,8 @@ document.write(`
 <p>For examples chema:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;type&quot;: &quot;number&quot;}&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/schema.json
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#schema</span>
+<span class="o">{</span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;number&quot;</span><span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -763,9 +764,7 @@ document.write(`
 <p>Specifies the the root level of the JSON should be a number, e.g. JSON by itself a number.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="m">10</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">10</span>
 </pre></div>
 </div>
 </div>
@@ -778,24 +777,29 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The following cell specifies that the root object is a mapping. The available attributes of the root mapping are specified in the <code class="docutils literal notranslate"><span class="pre">properties</span></code> of the JSON schema.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
-<span class="s">{</span>
-<span class="s">    &quot;type&quot;: &quot;object&quot;,</span>
-<span class="s">    &quot;properties&quot;:</span>
-<span class="s">    {</span>
-<span class="s">        &quot;wow&quot;: {</span>
-<span class="s">            &quot;type&quot;: &quot;string&quot;</span>
-<span class="s">        }</span>
-<span class="s">    }</span>
-<span class="s">}</span>
-<span class="s">EOF</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;wow&quot;: &quot;value&quot;}&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#schema</span>
+<span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;object&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;properties&quot;</span>:
+<span class="w">    </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;wow&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">{</span><span class="s2">&quot;wow&quot;</span>:<span class="w"> </span><span class="s2">&quot;value&quot;</span><span class="o">}</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
+  <span class=" -Color -Color-Yellow">object.json::$</span>: {&#39;wow&#39;: &#39;value&#39;} is not of type &#39;number&#39;
 </pre></div>
 </div>
 </div>
@@ -808,7 +812,8 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The following cell indicates that the root element of the JSON should be a string.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;type&quot;: &quot;string&quot;}&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/schema.json
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#schema</span>
+<span class="o">{</span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -816,9 +821,7 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>Specifying a string works fine.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;&quot;some string&quot;&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;some string&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -831,15 +834,13 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>However, any other object, such as number, will result in the corresponding error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="m">10</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">10</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
-  <span class=" -Color -Color-Yellow">/tmp/object.json::$</span>: 10 is not of type &#39;string&#39;
+  <span class=" -Color -Color-Yellow">object.json::$</span>: 10 is not of type &#39;string&#39;
 </pre></div>
 </div>
 </div>
@@ -863,17 +864,16 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
-<span class="s">{</span>
-<span class="s">    &quot;type&quot;: &quot;array&quot;,</span>
-<span class="s">    &quot;items&quot;: {</span>
-<span class="s">        &quot;enum&quot;: [1, 2, 3]</span>
-<span class="s">    },</span>
-<span class="s">    &quot;contains&quot;: {</span>
-<span class="s">        &quot;const&quot;: 2</span>
-<span class="s">    }</span>
-<span class="s">}</span>
-<span class="s">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#schema</span>
+<span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;array&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;items&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;enum&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span><span class="o">]</span>
+<span class="w">    </span><span class="o">}</span>,
+<span class="w">    </span><span class="s2">&quot;contains&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="m">2</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -881,9 +881,7 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The array <code class="docutils literal notranslate"><span class="pre">[3,</span> <span class="pre">3,</span> <span class="pre">2]</span></code> is fine because it contains elements defined in the <code class="docutils literal notranslate"><span class="pre">contains</span></code> and does not contain elements that are not mentioned in the <code class="docutils literal notranslate"><span class="pre">items</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[3, 3, 2]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">3</span>,<span class="w"> </span><span class="m">3</span>,<span class="w"> </span><span class="m">2</span><span class="o">]</span>
 </pre></div>
 </div>
 </div>
@@ -896,15 +894,13 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The case where the item <code class="docutils literal notranslate"><span class="pre">2</span></code> is not present is validated in the following cell.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 1, 1, 3]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">3</span><span class="o">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
-  <span class=" -Color -Color-Yellow">/tmp/object.json::$</span>: [1, 1, 1, 3] does not contain items matching the given schema
+  <span class=" -Color -Color-Yellow">object.json::$</span>: [1, 1, 1, 3] does not contain items matching the given schema
 </pre></div>
 </div>
 </div>
@@ -912,15 +908,13 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The case where the array under consideration contains a value that is not mentioned in the <code class="docutils literal notranslate"><span class="pre">items</span></code> is represented in the following cell.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 4, 2]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">4</span>,<span class="w"> </span><span class="m">2</span><span class="o">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
-  <span class=" -Color -Color-Yellow">/tmp/object.json::$[1]</span>: 4 is not one of [1, 2, 3]
+  <span class=" -Color -Color-Yellow">object.json::$[1]</span>: 4 is not one of [1, 2, 3]
 </pre></div>
 </div>
 </div>
@@ -937,17 +931,16 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The following cell specifies the JSON schema specifies the array that contains elements <code class="docutils literal notranslate"><span class="pre">{1,</span> <span class="pre">2,</span> <span class="pre">3}</span></code> items and only them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
-<span class="s">{</span>
-<span class="s">  &quot;type&quot;: &quot;array&quot;,</span>
-<span class="s">  &quot;items&quot;: { &quot;enum&quot;: [1, 2, 3] },</span>
-<span class="s">  &quot;allOf&quot;: [</span>
-<span class="s">    { &quot;contains&quot;: { &quot;const&quot;: 1 } },</span>
-<span class="s">    { &quot;contains&quot;: { &quot;const&quot;: 2 } },</span>
-<span class="s">    { &quot;contains&quot;: { &quot;const&quot;: 3 } }</span>
-<span class="s">  ]</span>
-<span class="s">}</span>
-<span class="s">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#schema</span>
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;array&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;items&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;enum&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span><span class="o">]</span><span class="w"> </span><span class="o">}</span>,
+<span class="w">  </span><span class="s2">&quot;allOf&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;contains&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="o">}</span>,
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;contains&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="o">}</span>,
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;contains&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="o">}</span>
+<span class="w">  </span><span class="o">]</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -955,9 +948,7 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The following cells show that the order of the elements in the array does not matter if the objects are present.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[2, 3, 1]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span>,<span class="w"> </span><span class="m">1</span><span class="o">]</span>
 </pre></div>
 </div>
 </div>
@@ -970,15 +961,13 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The validation error if some elements are missing:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 2]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">2</span><span class="o">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
-  <span class=" -Color -Color-Yellow">/tmp/object.json::$</span>: [1, 2] does not contain items matching the given schema
+  <span class=" -Color -Color-Yellow">object.json::$</span>: [1, 2] does not contain items matching the given schema
 </pre></div>
 </div>
 </div>
@@ -986,15 +975,13 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>If there is unexpected element:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 2, 3, 4]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span>,<span class="w"> </span><span class="m">4</span><span class="o">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
-  <span class=" -Color -Color-Yellow">/tmp/object.json::$[3]</span>: 4 is not one of [1, 2, 3]
+  <span class=" -Color -Color-Yellow">object.json::$[3]</span>: 4 is not one of [1, 2, 3]
 </pre></div>
 </div>
 </div>
@@ -1002,9 +989,7 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p><strong>Note</strong> this approach doesn’t take into account duplicates.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[1, 2, 2, 3]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/object.json
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span><span class="o">]</span>
 </pre></div>
 </div>
 </div>
@@ -1037,27 +1022,26 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The following cell defines the schema that inusres the input is an <code class="docutils literal notranslate"><span class="pre">object</span></code> with exactly specified values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
-<span class="s">{</span>
-<span class="s">    &quot;type&quot;: &quot;object&quot;,</span>
-<span class="s">    &quot;anyOf&quot;: [</span>
-<span class="s">        {</span>
-<span class="s">            &quot;properties&quot;: {</span>
-<span class="s">                &quot;user&quot;: {&quot;const&quot;: &quot;Fedor&quot;},</span>
-<span class="s">                &quot;job&quot;: {&quot;const&quot;: &quot;Programmer&quot;}</span>
-<span class="s">            },</span>
-<span class="s">            &quot;required&quot;: [&quot;user&quot;, &quot;job&quot;]</span>
-<span class="s">        },</span>
-<span class="s">        {</span>
-<span class="s">            &quot;properties&quot;: {</span>
-<span class="s">                &quot;user&quot;: {&quot;const&quot;: &quot;Natalia&quot;},</span>
-<span class="s">                &quot;job&quot;: {&quot;const&quot;: &quot;Chemist&quot;}</span>
-<span class="s">            },</span>
-<span class="s">            &quot;required&quot;: [&quot;user&quot;, &quot;job&quot;]</span>
-<span class="s">        }</span>
-<span class="s">    ]</span>
-<span class="s">}</span>
-<span class="s">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#schema</span>
+<span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;object&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;anyOf&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="o">{</span>
+<span class="w">            </span><span class="s2">&quot;properties&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="s2">&quot;user&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="s2">&quot;Fedor&quot;</span><span class="o">}</span>,
+<span class="w">                </span><span class="s2">&quot;job&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="s2">&quot;Programmer&quot;</span><span class="o">}</span>
+<span class="w">            </span><span class="o">}</span>,
+<span class="w">            </span><span class="s2">&quot;required&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;user&quot;</span>,<span class="w"> </span><span class="s2">&quot;job&quot;</span><span class="o">]</span>
+<span class="w">        </span><span class="o">}</span>,
+<span class="w">        </span><span class="o">{</span>
+<span class="w">            </span><span class="s2">&quot;properties&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="s2">&quot;user&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="s2">&quot;Natalia&quot;</span><span class="o">}</span>,
+<span class="w">                </span><span class="s2">&quot;job&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="s2">&quot;Chemist&quot;</span><span class="o">}</span>
+<span class="w">            </span><span class="o">}</span>,
+<span class="w">            </span><span class="s2">&quot;required&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;user&quot;</span>,<span class="w"> </span><span class="s2">&quot;job&quot;</span><span class="o">]</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">]</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1065,14 +1049,10 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>Everything goes fine when you specify mappings mentioned in <code class="docutils literal notranslate"><span class="pre">anyOf</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/object.json</span>
-<span class="s">{</span>
-<span class="s">    &quot;user&quot;: &quot;Fedor&quot;,</span>
-<span class="s">    &quot;job&quot;: &quot;Programmer&quot;</span>
-<span class="s">}</span>
-<span class="s">EOF</span>
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;user&quot;</span>:<span class="w"> </span><span class="s2">&quot;Fedor&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;job&quot;</span>:<span class="w"> </span><span class="s2">&quot;Programmer&quot;</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1084,14 +1064,10 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/object.json</span>
-<span class="s">{</span>
-<span class="s">    &quot;user&quot;: &quot;Natalia&quot;,</span>
-<span class="s">    &quot;job&quot;: &quot;Chemist&quot; </span>
-<span class="s">}</span>
-<span class="s">EOF</span>
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;user&quot;</span>:<span class="w"> </span><span class="s2">&quot;Natalia&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;job&quot;</span>:<span class="w"> </span><span class="s2">&quot;Chemist&quot;</span><span class="w"> </span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1104,20 +1080,16 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>However, validation will fail if you specify a different object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/object.json</span>
-<span class="s">{</span>
-<span class="s">    &quot;user&quot;: &quot;Igor&quot;,</span>
-<span class="s">    &quot;job&quot;: &quot;Physicist&quot; </span>
-<span class="s">}</span>
-<span class="s">EOF</span>
-check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp/schema.json<span class="w"> </span>/tmp/object.json
-<span class="nb">true</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;user&quot;</span>:<span class="w"> </span><span class="s2">&quot;Igor&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;job&quot;</span>:<span class="w"> </span><span class="s2">&quot;Physicist&quot;</span><span class="w"> </span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
-  <span class=" -Color -Color-Yellow">/tmp/object.json::$</span>: {&#39;user&#39;: &#39;Igor&#39;, &#39;job&#39;: &#39;Physicist&#39;} is not valid under any of the given schemas
+  <span class=" -Color -Color-Yellow">object.json::$</span>: {&#39;user&#39;: &#39;Igor&#39;, &#39;job&#39;: &#39;Physicist&#39;} is not valid under any of the given schemas
   Underlying errors caused this.
 
   Best Match:
@@ -1144,18 +1116,17 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <p>The following cell defines the JSON schema that defines <code class="docutils literal notranslate"><span class="pre">&quot;PC&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Server&quot;</span></code> attributes both of which require one of <code class="docutils literal notranslate"><span class="pre">&quot;windows&quot;,</span> <span class="pre">&quot;linux&quot;,</span> <span class="pre">&quot;freeBSD&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/schema.json</span>
-<span class="s">{</span>
-<span class="s">    &quot;type&quot;: &quot;object&quot;,</span>
-<span class="s">    &quot;properties&quot;: {</span>
-<span class="s">        &quot;PC&quot;: {&quot;$ref&quot;: &quot;#/$defs/system&quot;},</span>
-<span class="s">        &quot;Server&quot;: {&quot;$ref&quot;: &quot;#/$defs/system&quot;}</span>
-<span class="s">    },</span>
-<span class="s">    &quot;$defs&quot;: {</span>
-<span class="s">        &quot;system&quot;: {&quot;enum&quot;: [&quot;windows&quot;, &quot;linux&quot;, &quot;freeBSD&quot;]}</span>
-<span class="s">    }</span>
-<span class="s">}</span>
-<span class="s">EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#schema</span>
+<span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;object&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;properties&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;PC&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="s2">&quot;</span><span class="nv">$ref</span><span class="s2">&quot;</span>:<span class="w"> </span><span class="s2">&quot;#/</span><span class="nv">$defs</span><span class="s2">/system&quot;</span><span class="o">}</span>,
+<span class="w">        </span><span class="s2">&quot;Server&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="s2">&quot;</span><span class="nv">$ref</span><span class="s2">&quot;</span>:<span class="w"> </span><span class="s2">&quot;#/</span><span class="nv">$defs</span><span class="s2">/system&quot;</span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>,
+<span class="w">    </span><span class="s2">&quot;</span><span class="nv">$defs</span><span class="s2">&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;system&quot;</span>:<span class="w"> </span><span class="o">{</span><span class="s2">&quot;enum&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;windows&quot;</span>,<span class="w"> </span><span class="s2">&quot;linux&quot;</span>,<span class="w"> </span><span class="s2">&quot;freeBSD&quot;</span><span class="o">]}</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -1174,16 +1145,16 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "jsonschema"
         },
         kernelOptions: {
-            name: "bash",
+            name: "jsonschema",
             path: "./other"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'jsonschema'</script>
 
                 </article>
               

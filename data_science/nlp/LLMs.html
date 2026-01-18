@@ -732,7 +732,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompting-techniques">Prompting techniques</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-compatibility">OpenAI compatibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-compatibility">OpenAI compatibility</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#function-calls">Function calls</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag">RAG</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp">MCP</a></li>
@@ -862,9 +865,11 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 <p>The principles behind openAI’s API have already become the industry standard. If an API OpenAI compatabile, it means you can communicate with it using the same format used by the OpenAI API.</p>
 <hr class="docutils" />
 <p>For example, the following cell sends a request to the Ollama server launched on port 11434 port with the pulled <code class="docutils literal notranslate"><span class="pre">llama3.2:1b</span></code> model.</p>
+<p>The openAI API is documented in the <a class="reference external" href="https://platform.openai.com/docs/overview">OpenAI latform</a> page.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 </pre></div>
 </div>
 </div>
@@ -943,6 +948,99 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 </div>
 </div>
 <p><strong>Note:</strong> The model is not specified for llama.cpp because the endpoint created for the example only serves one model.</p>
+<section id="function-calls">
+<h3>Function calls<a class="headerlink" href="#function-calls" title="Link to this heading">#</a></h3>
+<p>The API protocol implements the way to call the tools, one of the most popular is function calls. In the request body you have to pass the list of tools available to the model. To introduce to the model function tool you have to pass the dictionary:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;function&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;name of the function&gt;&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;Decscirption what tool do&gt;&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&lt;list of the required parameters&gt;&quot;</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;hello&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;types of the parameters&gt;&quot;</span><span class="p">}}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Check more in the corresponding section of the <a class="reference external" href="https://platform.openai.com/docs/guides/function-calling">OpenAPI</a> documentation.</p>
+<hr class="docutils" />
+<p>The following cell shows the request where to model intorduced the function tool “some_tool”, which requires “hello: integer” argument.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ans</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="s2">&quot;http://localhost:11434/v1/chat/completions&quot;</span><span class="p">,</span>
+    <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;llama3.1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Invoke the tool&quot;</span><span class="p">}</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;tools&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;some_tool&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The tool you have to call&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;hello&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">}}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result of the request is published in the cell below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">ans</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;id&#39;: &#39;chatcmpl-620&#39;,
+ &#39;object&#39;: &#39;chat.completion&#39;,
+ &#39;created&#39;: 1768306151,
+ &#39;model&#39;: &#39;llama3.1&#39;,
+ &#39;system_fingerprint&#39;: &#39;fp_ollama&#39;,
+ &#39;choices&#39;: [{&#39;index&#39;: 0,
+   &#39;message&#39;: {&#39;role&#39;: &#39;assistant&#39;,
+    &#39;content&#39;: &#39;&#39;,
+    &#39;tool_calls&#39;: [{&#39;id&#39;: &#39;call_do7xd7bx&#39;,
+      &#39;index&#39;: 0,
+      &#39;type&#39;: &#39;function&#39;,
+      &#39;function&#39;: {&#39;name&#39;: &#39;some_tool&#39;, &#39;arguments&#39;: &#39;{&quot;hello&quot;:1}&#39;}}]},
+   &#39;finish_reason&#39;: &#39;tool_calls&#39;}],
+ &#39;usage&#39;: {&#39;prompt_tokens&#39;: 154, &#39;completion_tokens&#39;: 17, &#39;total_tokens&#39;: 171}}
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell displays the exact output related to the tool call.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;choices&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;message&quot;</span><span class="p">][</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;id&#39;: &#39;call_do7xd7bx&#39;,
+  &#39;index&#39;: 0,
+  &#39;type&#39;: &#39;function&#39;,
+  &#39;function&#39;: {&#39;name&#39;: &#39;some_tool&#39;, &#39;arguments&#39;: &#39;{&quot;hello&quot;:1}&#39;}}]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="rag">
 <h2>RAG<a class="headerlink" href="#rag" title="Link to this heading">#</a></h2>
@@ -1287,7 +1385,10 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompting-techniques">Prompting techniques</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-compatibility">OpenAI compatibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-compatibility">OpenAI compatibility</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#function-calls">Function calls</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag">RAG</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents">Agents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp">MCP</a></li>

@@ -730,14 +730,6 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vs-code">VS Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nvim">NVim</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splits">Splits</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plugins">Plugins</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#file-browser">File browser</a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
             </nav>
         </div>
@@ -808,60 +800,6 @@ Workspaces directory: /home/fedor/.jupyter/lab/workspaces
 <li><p><strong>Vim in VS Code</strong>: the Vim extension supports search with <code class="docutils literal notranslate"><span class="pre">/pattern</span></code> and navigation with <code class="docutils literal notranslate"><span class="pre">n</span></code>/<code class="docutils literal notranslate"><span class="pre">N</span></code>. Global and scoped replacements use <code class="docutils literal notranslate"><span class="pre">:s</span></code> with ranges and flags (e.g., <code class="docutils literal notranslate"><span class="pre">:%s/foo/bar/g</span></code>).</p></li>
 </ul>
 <p>Check more details in the <a class="reference internal" href="coding_tools/vs_code.html"><span class="std std-doc">VS code</span></a> page.</p>
-</section>
-<section id="nvim">
-<h2>NVim<a class="headerlink" href="#nvim" title="Link to this heading">#</a></h2>
-<p>Is a minimalistic, mainly terminal-based text editor that focuses on boositig producitvity by implementing a system of shortcuts ans special commands.</p>
-<p>The <strong>configuration file</strong> is <code class="docutils literal notranslate"><span class="pre">~/.config/nvim/init.lua</span></code>.</p>
-<p>Some basic configuration options:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">vim.cmd(&quot;set</span> <span class="pre">expandtab&quot;)</span></code>: use spaces instead of tab.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">vim.opt.clipboard</span> <span class="pre">=</span> <span class="pre">'unnamedplus'</span></code> to only use the system clipboard and omit the internal vim configuration.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">vim.opt.shiftwidth</span> <span class="pre">=</span> <span class="pre">4</span></code>: amount of spaces to move the selected lines with <code class="docutils literal notranslate"><span class="pre">CTRL+&lt;/&gt;</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">vim.opt.tabstop</span> <span class="pre">=</span> <span class="pre">4</span></code>: amount of spaces to insert when the TAB is pressed in edit mode.</p></li>
-</ul>
-<section id="splits">
-<h3>Splits<a class="headerlink" href="#splits" title="Link to this heading">#</a></h3>
-<p>This section looks at how you can split window in nvim.</p>
-<ul class="simple">
-<li><p><strong>Horizontal</strong>: commands <code class="docutils literal notranslate"><span class="pre">split</span></code>, <code class="docutils literal notranslate"><span class="pre">sp</span></code>. Or <code class="docutils literal notranslate"><span class="pre">CTRL-w</span> <span class="pre">+</span> <span class="pre">s</span></code> short cut.</p></li>
-<li><p><strong>Vertical</strong>: commands <code class="docutils literal notranslate"><span class="pre">vsplit</span></code>, <code class="docutils literal notranslate"><span class="pre">vsp</span></code>. Or <code class="docutils literal notranslate"><span class="pre">CTRL-w</span> <span class="pre">+</span> <span class="pre">v</span></code> short cut.</p></li>
-</ul>
-<p><strong>Note.</strong> You can pass the filename as an argument to commands <code class="docutils literal notranslate"><span class="pre">split</span></code> and <code class="docutils literal notranslate"><span class="pre">vsplit</span></code>. The correspoinding file will be opened in the new split.</p>
-<p>To <strong>switch splits</strong> hold <code class="docutils literal notranslate"><span class="pre">CTRL-w</span></code> and use the typical vim motions buttons to navigate among them.</p>
-<p>To <strong>close</strong> some of the splits you have options:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">close</span></code> (<code class="docutils literal notranslate"><span class="pre">CTRL-w</span> <span class="pre">+</span> <span class="pre">c</span></code>) to close current section.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">only</span></code> (<code class="docutils literal notranslate"><span class="pre">CTRL-w</span> <span class="pre">+</span> <span class="pre">o</span></code>) to leave just current section.</p></li>
-</ul>
-<p>To change size of the split use:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">CTRL-w</span> <span class="pre">+</span> <span class="pre">&quot;+/-&quot;</span></code>: to increase/decrease the size of the current section horizontally.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CTRL-w</span> <span class="pre">+</span> <span class="pre">&quot;&lt;/&gt;&quot;</span></code>: to increase/decrease the size of the current section vertically.</p></li>
-</ul>
-</section>
-<section id="plugins">
-<h3>Plugins<a class="headerlink" href="#plugins" title="Link to this heading">#</a></h3>
-<p>The plagins makes nvim experience really valuable. There are package managers, I’m using <a class="reference external" href="https://lazy.folke.io/">Lazy</a>.</p>
-<p>Check the <a class="reference external" href="https://lazy.folke.io/installation">installation</a> guide.</p>
-<p>In the Lazy configuration file of the lazy (<code class="docutils literal notranslate"><span class="pre">~/.config/nvim/lua/lazy</span></code>), find the line that sets up lazy:</p>
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;lazy&quot;</span><span class="p">).</span><span class="nf">setup</span><span class="p">({</span>
-<span class="w">  </span><span class="nv">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;catppuccin/nvim&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;catppuccin&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">priority</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nv">install</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="nv">checker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
-<span class="p">})</span>
-</pre></div>
-</div>
-<p>You have to list you plugins in the <code class="docutils literal notranslate"><span class="pre">spec</span></code> parameter.</p>
-<section id="file-browser">
-<h4>File browser<a class="headerlink" href="#file-browser" title="Link to this heading">#</a></h4>
-<p>The filebrowser can be added to neovim using <a class="reference external" href="https://github.com/nvim-neo-tree/neo-tree.nvim">neo-tree</a> plugin. To be able to see the icons of the files/folders in the files-tree, you have to specify the special font to your terminal I prefer <a class="reference external" href="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Lekton.zip">Lekton nerd font</a>.</p>
-<p><strong>Note.</strong> To install the font copy it’s <code class="docutils literal notranslate"><span class="pre">.ttf</span></code> files to the <code class="docutils literal notranslate"><span class="pre">~/.local/share/fonts</span></code>.</p>
-<p>To open the file browser use the command <code class="docutils literal notranslate"><span class="pre">:Neotree</span> <span class="pre">filesystem</span> <span class="pre">reveal</span> <span class="pre">left</span></code>. Or add the keymap <code class="docutils literal notranslate"><span class="pre">vim.keymap.set('n',</span> <span class="pre">'&lt;C-b&gt;',</span> <span class="pre">&quot;:Neotree</span> <span class="pre">filesystem</span> <span class="pre">reveal</span> <span class="pre">left&lt;CR&gt;&quot;,</span> <span class="pre">{})</span></code>.</p>
-</section>
-</section>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -937,14 +875,6 @@ Workspaces directory: /home/fedor/.jupyter/lab/workspaces
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vs-code">VS Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nvim">NVim</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splits">Splits</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plugins">Plugins</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#file-browser">File browser</a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
   </nav></div>
 
