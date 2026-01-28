@@ -1,0 +1,9 @@
+# docker in docker
+FROM docker:dind
+
+RUN apk update && apk add bash python3-dev py-pip gcc musl-dev linux-headers
+RUN pip3 install --break-system-packages\
+    bash_kernel\
+    "jupyter_lab_build @ git+https://github.com/fedorkobak/jupyter_lab_build.git"\
+    && python -m bash_kernel.install
+CMD ["jupyter", "lab", "--ip", "0.0.0.0", "--allow-root"]
