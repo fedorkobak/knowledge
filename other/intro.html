@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -540,6 +540,7 @@
 <li class="toctree-l2"><a class="reference internal" href="coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="networks.html">Networks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_apache.html">Python with apache</a></li>
 
 
@@ -734,13 +735,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#networks">Networks</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#http">HTTP</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#http-message">HTTP message</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#networks">Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-tools">Coding tools</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tavily">Tavily</a></li>
@@ -893,93 +888,7 @@ document.write(`
 <li><p>Network-specific link interface: Data link layer.</p></li>
 <li><p>Physical network hardware: Physical layer.</p></li>
 </ul>
-<section id="http">
-<h3>HTTP<a class="headerlink" href="#http" title="Link to this heading">#</a></h3>
-<p>The <strong>HyperText Transfer Protocol</strong> is a standard for data transmission on the web.</p>
-<ul class="simple">
-<li><p><strong>MIME</strong> stands for Multipurpose Internet Mail Expressions. They are the system of labels used to describe a multimedia content. Check the <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types">Common media types</a> page. According to the HTTP protocol, they are served in the <code class="docutils literal notranslate"><span class="pre">Content-type:</span></code> header of the message.</p></li>
-<li><p><strong>URI</strong> stands for uniform reource indentifier. There are two types of URI:</p>
-<ul>
-<li><p><strong>URL</strong>: uniform resource locator. Describe the specific location of a resource on a particular server.</p></li>
-<li><p><strong>URN</strong>: uniform resource name. The name of the specific resouce. Have a format <code class="docutils literal notranslate"><span class="pre">urn:&lt;Namespace&gt;.&lt;Entity</span> <span class="pre">Type&gt;.&lt;Id&gt;</span></code>.</p></li>
-</ul>
-</li>
-<li><p><strong>Methods</strong>. The method tells the server what action to perform:</p>
-<ul>
-<li><p><em>GET</em>: Send named resource from the server to client.</p></li>
-<li><p><em>PUT</em>: Store data from client into a named server resource.</p></li>
-<li><p><em>DELETE</em>: Delete the named resource from a server.</p></li>
-<li><p><em>POST</em>: Send client data into a server gateway application.</p></li>
-<li><p><em>HEAD</em>: Send just the HTTP headers from the response for the named resource.</p></li>
-</ul>
-</li>
-<li><p>An <strong>HTTP message</strong> is a regular text message consisting of three blocks:</p>
-<ul>
-<li><p><strong>Start Line</strong>: The first line of the message is the start line, indicating what to do for a request or what happened for a response.</p></li>
-<li><p><strong>Header fields</strong>: Set of key/value pairs separated by a colon (:). Headers end with a blank line indicating tha body begins.</p></li>
-<li><p><strong>Body</strong>: Optional section containing any kind of data.</p></li>
-</ul>
-</li>
-</ul>
-<section id="http-message">
-<h4>HTTP message<a class="headerlink" href="#http-message" title="Link to this heading">#</a></h4>
-<p>HTTP message consists of 3 blocks the:</p>
-<ul class="simple">
-<li><p><strong>Start Line</strong>: The first line of the message is the start line, indicating what to do for a request or what happened for a response.</p></li>
-<li><p><strong>Header fields</strong>: Set of key/value pairs separated by a colon (:). Headers end with a blank line indicating tha body begins.</p></li>
-<li><p><strong>Body</strong>: Optional section containing any kind of data.</p></li>
-</ul>
-<hr class="docutils" />
-<p>The following cell starts the process of listening for the socket related to port 9000 and redirecting all the information to the <code class="docutils literal notranslate"><span class="pre">/tmp/val</span></code> file.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc<span class="w"> </span>-l<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="m">9000</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/val<span class="w"> </span><span class="p">&amp;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 55660
-</pre></div>
-</div>
-</div>
-</div>
-<p>The following cell sends an HTTP request <code class="docutils literal notranslate"><span class="pre">localhost:9000</span></code> using <code class="docutils literal notranslate"><span class="pre">curl</span></code>. <strong>Note</strong> that a custom header and data are specified.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>--max-time<span class="w"> </span><span class="m">1</span><span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;my:header&quot;</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;some data&quot;</span><span class="w"> </span>localhost:9000<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nb">true</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1]+  Done                    nc -l 127.0.0.1 9000 &gt; /tmp/val
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now we can observe how the http message looks in the physical level.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>/tmp/val
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>POST / HTTP/1.1
-Host: localhost:9000
-User-Agent: curl/8.5.0
-Accept: */*
-my:header
-Content-Length: 9
-Content-Type: application/x-www-form-urlencoded
-
-some data
-</pre></div>
-</div>
-</div>
-</div>
-<p>As specified in <code class="docutils literal notranslate"><span class="pre">curl</span></code>, among the headers there is <code class="docutils literal notranslate"><span class="pre">my:header</span></code> and <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">data</span></code>, which are separated from the headers by a line.</p>
-</section>
-</section>
+<p>Check more in the <a class="reference internal" href="networks.html"><span class="std std-doc">Networks</span></a> page.</p>
 </section>
 <section id="json-schema">
 <h2>JSON schema<a class="headerlink" href="#json-schema" title="Link to this heading">#</a></h2>
@@ -1101,16 +1010,16 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash_kernel"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "bash_kernel",
+            name: "bash",
             path: "./other"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash_kernel'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -1166,13 +1075,7 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#networks">Networks</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#http">HTTP</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#http-message">HTTP message</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#networks">Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-tools">Coding tools</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tavily">Tavily</a></li>

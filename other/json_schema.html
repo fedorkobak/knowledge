@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -540,6 +540,7 @@
 <li class="toctree-l2"><a class="reference internal" href="coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="networks.html">Networks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_apache.html">Python with apache</a></li>
 
 
@@ -725,6 +726,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type">Type</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerated">Enumerated</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literal">Literal</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set">Set</a></li>
 </ul>
@@ -845,6 +850,111 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
+<section id="enumerated">
+<h2>Enumerated<a class="headerlink" href="#enumerated" title="Link to this heading">#</a></h2>
+<p>With the <code class="docutils literal notranslate"><span class="pre">enum</span></code> keyword, you can denote a <strong>set of allowed values</strong>. Each element is interpreted <strong>literally</strong>, so you <strong>cannot embed or apply JSON Schema logic</strong> (such as <code class="docutils literal notranslate"><span class="pre">anyOf</span></code>, <code class="docutils literal notranslate"><span class="pre">allOf</span></code>, or <code class="docutils literal notranslate"><span class="pre">const</span></code>) inside <code class="docutils literal notranslate"><span class="pre">enum</span></code>.</p>
+<p>Check more in the <a class="reference external" href="https://json-schema.org/understanding-json-schema/reference/enum">Enumerated values</a> page of the official documentation.</p>
+<hr class="docutils" />
+<p>The following cell defines a schema that only allows values specified in the enum.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#schema</span>
+<span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;enum&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="m">2</span>,<span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="o">]</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The values mentioned in the <code class="docutils literal notranslate"><span class="pre">enum</span></code> are validated correctly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;hello&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
+</pre></div>
+</div>
+</div>
+</div>
+<p>But any other element fails.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>null
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
+  <span class=" -Color -Color-Yellow">object.json::$</span>: None is not one of [2, &#39;hello&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="literal">
+<h3>Literal<a class="headerlink" href="#literal" title="Link to this heading">#</a></h3>
+<p>The fact that you can only mention literals in the <code class="docutils literal notranslate"><span class="pre">enum</span></code> actually means that it will check for literal ооcorrespondence.</p>
+<hr class="docutils" />
+<p>The following cell defines the enum with a few values, but each element is a JSON schema that allows few literals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#schema</span>
+<span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;enum&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="o">{</span><span class="s2">&quot;anyOf&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">            </span><span class="o">{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="s2">&quot;fedor.kobak&quot;</span><span class="o">}</span>,
+<span class="w">            </span><span class="o">{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="s2">&quot;kobak.fedor&quot;</span><span class="o">}</span>
+<span class="w">        </span><span class="o">]}</span>,
+<span class="w">        </span><span class="o">{</span><span class="s2">&quot;anyOf&quot;</span>:<span class="w"> </span><span class="o">[{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="m">2</span><span class="o">}</span>,<span class="w"> </span><span class="o">{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="m">3</span><span class="o">}]}</span>
+<span class="w">    </span><span class="o">]</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Any literal value you try to pass will fail the validation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;fedor.kobak&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Schema validation errors were encountered.
+  <span class=" -Color -Color-Yellow">object.json::$</span>: &#39;fedor.kobak&#39; is not one of [{&#39;anyOf&#39;: [{&#39;const&#39;: &#39;fedor.kobak&#39;}, {&#39;const&#39;: &#39;kobak.fedor&#39;}]}, {&#39;anyOf&#39;: [{&#39;const&#39;: 2}, {&#39;const&#39;: 3}]}]
+</pre></div>
+</div>
+</div>
+</div>
+<p>But that’s because each element mentioned in the <code class="docutils literal notranslate"><span class="pre">enum</span></code>, is tracked a full-fledged option:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">{</span><span class="s2">&quot;anyOf&quot;</span>:<span class="w"> </span><span class="o">[{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="m">2</span><span class="o">}</span>,<span class="w"> </span><span class="o">{</span><span class="s2">&quot;const&quot;</span>:<span class="w"> </span><span class="m">3</span><span class="o">}]}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">ok</span> -- validation done
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="arrays">
 <h2>Arrays<a class="headerlink" href="#arrays" title="Link to this heading">#</a></h2>
@@ -1201,6 +1311,10 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type">Type</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerated">Enumerated</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literal">Literal</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set">Set</a></li>
 </ul>

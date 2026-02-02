@@ -2,6 +2,8 @@
 
 Fedor Kobak's Knowledge Base
 
+A large portion of this knowledge base related to the Python programming language has been moved to a dedicated site: [Python](https://fedorkobak.github.io/python/intro.html).
+
 ## Development Deployment
 
 This site is primarily built from [Jupyter Notebooks](https://jupyter.org/) converted into a website using the [Jupyter Book](https://jupyterbook.org/en/stable/basics/build.html) tool.
@@ -17,13 +19,18 @@ python -m bash_kernel.install
 To deploy the site in Docker, use:
 
 ```bash
-docker build -t knowledge_dev .
+docker build -t knowledge_dev -f dockerfiles/dockerfile .
 docker run -itd -v ./:/knowledge --name knowledge_dev knowledge_dev
 ```
 
 Some pages require running specifically in a Docker environment because they explore system-level features.
 
-A large portion of this knowledge base related to the Python programming language has been moved to a dedicated site: [Python](https://fedorkobak.github.io/python/intro.html).
+Some pages require docker in docker (did), as they describe some concepts of docker. Build and run did image: 
+
+```bash
+docker build -t knowledge_docker -f dockerfiles/did .
+docker run -d --name knowledge_docker -v ./:/knowledge -p 9999:8888 knowledge_docker
+```
 
 ## Building the Site
 

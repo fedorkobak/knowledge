@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -543,6 +543,7 @@
 <li class="toctree-l2"><a class="reference internal" href="other/coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="other/networks.html">Networks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="other/python_apache.html">Python with apache</a></li>
 
 
@@ -744,6 +745,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="knowledge">
 <h1>Knowledge<a class="headerlink" href="#knowledge" title="Link to this heading">#</a></h1>
 <p>Fedor Kobak’s Knowledge Base</p>
+<p>A large portion of this knowledge base related to the Python programming language has been moved to a dedicated site: <a class="reference external" href="https://fedorkobak.github.io/python/intro.html">Python</a>.</p>
 <section id="development-deployment">
 <h2>Development Deployment<a class="headerlink" href="#development-deployment" title="Link to this heading">#</a></h2>
 <p>This site is primarily built from <a class="reference external" href="https://jupyter.org/">Jupyter Notebooks</a> converted into a website using the <a class="reference external" href="https://jupyterbook.org/en/stable/basics/build.html">Jupyter Book</a> tool.
@@ -754,12 +756,16 @@ python<span class="w"> </span>-m<span class="w"> </span>bash_kernel.install
 </pre></div>
 </div>
 <p>To deploy the site in Docker, use:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>knowledge_dev<span class="w"> </span>.
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>knowledge_dev<span class="w"> </span>-f<span class="w"> </span>dockerfiles/dockerfile<span class="w"> </span>.
 docker<span class="w"> </span>run<span class="w"> </span>-itd<span class="w"> </span>-v<span class="w"> </span>./:/knowledge<span class="w"> </span>--name<span class="w"> </span>knowledge_dev<span class="w"> </span>knowledge_dev
 </pre></div>
 </div>
 <p>Some pages require running specifically in a Docker environment because they explore system-level features.</p>
-<p>A large portion of this knowledge base related to the Python programming language has been moved to a dedicated site: <a class="reference external" href="https://fedorkobak.github.io/python/intro.html">Python</a>.</p>
+<p>Some pages require docker in docker (did), as they describe some concepts of docker. Build and run did image:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>knowledge_docker<span class="w"> </span>-f<span class="w"> </span>dockerfiles/did<span class="w"> </span>.
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>knowledge_docker<span class="w"> </span>-v<span class="w"> </span>./:/knowledge<span class="w"> </span>-p<span class="w"> </span><span class="m">9999</span>:8888<span class="w"> </span>knowledge_docker
+</pre></div>
+</div>
 </section>
 <section id="building-the-site">
 <h2>Building the Site<a class="headerlink" href="#building-the-site" title="Link to this heading">#</a></h2>

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -540,6 +540,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../other/coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/networks.html">Networks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/python_apache.html">Python with apache</a></li>
 
 
@@ -731,7 +732,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#networks">Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authentification">Authentification</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter">Filter</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docker-in-docker">Docker in docker</a></li>
 </ul>
             </nav>
         </div>
@@ -1099,41 +1099,6 @@ docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </sp
 </div>
 </div>
 </section>
-<section id="docker-in-docker">
-<h2>Docker in docker<a class="headerlink" href="#docker-in-docker" title="Link to this heading">#</a></h2>
-<p>It is typical for this resource to show some examples on clean <code class="docutils literal notranslate"><span class="pre">docker</span></code>. It’s convenient to use docker in docker to demonstrate such cases. The following cell shows docker in docker dockerfile, which is used for such cases. It installs tools that allow you to run bash code in Jupyter. You can connect to it (e.g. using vscode <a class="reference external" href="https://code.visualstudio.com/docs/devcontainers/containers">dev container extension</a>) and use it as a regular docker.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>overview_files/dockerfile
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FROM docker:dind
-
-RUN apk update &amp;&amp; apk add bash python3-dev py-pip gcc musl-dev linux-headers
-RUN pip3 install --break-system-packages bash_kernel &amp;&amp; python -m bash_kernel.install
-</pre></div>
-</div>
-</div>
-</div>
-<p>To build it use:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>knowledge_docker<span class="w"> </span>./overview_files/<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
-</div>
-</div>
-</div>
-<p>And from the root direcotry of the repo with:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-itd<span class="w"> </span>--privileged<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>knowledge_docker<span class="w"> </span>-v<span class="w"> </span>./:/knowledge<span class="w"> </span>knowledge_docker<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1207,7 +1172,6 @@ RUN pip3 install --break-system-packages bash_kernel &amp;&amp; python -m bash_k
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#networks">Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#authentification">Authentification</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter">Filter</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docker-in-docker">Docker in docker</a></li>
 </ul>
   </nav></div>
 
