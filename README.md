@@ -28,8 +28,8 @@ Some pages require running specifically in a Docker environment because they exp
 Some pages require docker in docker (did), as they describe some concepts of docker. Build and run did image: 
 
 ```bash
-docker build -t knowledge_docker -f dockerfiles/did .
-docker run -d --name knowledge_docker -v ./:/knowledge -p 9999:8888 knowledge_docker
+docker build -t knowledge_docker dockerfiles/did
+docker run -d --name knowledge_docker --privileged -v ./:/knowledge -p 9999:8888 knowledge_docker
 ```
 
 ## Building the Site
