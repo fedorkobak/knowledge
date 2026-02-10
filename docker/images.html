@@ -727,6 +727,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-interface">Build interface</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multistage">Multistage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-load">Save/load</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-container">Commit container</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dockerfile">Dockerfile</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#history-layers">History (layers)</a></li>
@@ -849,6 +850,57 @@ Deleted: sha256:1615e7501182ca1dc43eb1affa2173af6bc3214c030c5ef0acb4ca96bdb6a916
                           (__)\       )\/\
                               ||----w |
                               ||     ||
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="save-load">
+<h2>Save/load<a class="headerlink" href="#save-load" title="Link to this heading">#</a></h2>
+<p>Practically usefull to be able to save a Docker container as a file and then load it in the different environment.</p>
+<ul class="simple">
+<li><p>To save image use command <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">save</span> <span class="pre">&gt;</span> <span class="pre">&lt;destination_file&gt;</span></code>.</p></li>
+<li><p>To load file as image use <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">load</span> <span class="pre">&lt;</span> <span class="pre">&lt;destination_file&gt;</span></code>.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell pulls the <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> image and displays it in the list of docker images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>hello-world<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+docker<span class="w"> </span>images
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                            <span class=" -Color -Color-Bold -Color-Bold-Black">i</span> Info →  <span class=" -Color -Color-C0 -Color-C0-BGC14"> U </span> In Use
+<span class=" -Color -Color-Bold">IMAGE</span>                <span class=" -Color -Color-Bold">ID</span>             <span class=" -Color -Color-Bold">DISK USAGE</span>   <span class=" -Color -Color-Bold">CONTENT SIZE</span>   <span class=" -Color -Color-Bold">EXTRA</span>
+<span class=" -Color -Color-Bold -Color-Bold-Blue">hello-world:latest</span>   05813aedc15f       25.9kB         9.52kB        
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next cell shows how to use the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">save</span></code> command to remove the image that has just been saved.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>save<span class="w"> </span>hello-world:latest<span class="w"> </span>&gt;<span class="w"> </span>/tmp/hello_world.tar
+docker<span class="w"> </span>rmi<span class="w"> </span>hello-world:latest<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next commands loads the image from the file and confirms that it appears in the list of images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>load<span class="w"> </span>&lt;<span class="w"> </span>/tmp/hello_world.tar
+docker<span class="w"> </span>images
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded image: hello-world:latest
+                                                            <span class=" -Color -Color-Bold -Color-Bold-Black">i</span> Info →  <span class=" -Color -Color-C0 -Color-C0-BGC14"> U </span> In Use
+<span class=" -Color -Color-Bold">IMAGE</span>                <span class=" -Color -Color-Bold">ID</span>             <span class=" -Color -Color-Bold">DISK USAGE</span>   <span class=" -Color -Color-Bold">CONTENT SIZE</span>   <span class=" -Color -Color-Bold">EXTRA</span>
+<span class=" -Color -Color-Bold -Color-Bold-Blue">hello-world:latest</span>   05813aedc15f       25.9kB         9.52kB        
 </pre></div>
 </div>
 </div>
@@ -1190,6 +1242,7 @@ alpine       latest    b0c9d60fc5e3   3 days ago   7.83MB
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-interface">Build interface</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multistage">Multistage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-load">Save/load</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-container">Commit container</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dockerfile">Dockerfile</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#history-layers">History (layers)</a></li>
