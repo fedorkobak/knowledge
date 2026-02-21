@@ -16,21 +16,12 @@ pip install bash_kernel
 python -m bash_kernel.install
 ```
 
-To deploy the site in Docker, use:
+To deploy the site in Docker, use the `docker compose up -d {service_name}`. The service name depends on which tool you want to try:
 
-```bash
-docker build -t knowledge_dev -f dockerfiles/dockerfile .
-docker run -itd -v ./:/knowledge --name knowledge_dev knowledge_dev
-```
+- `base`: for basic version of application.
+- `did`: for version with docker.
 
-Some pages require running specifically in a Docker environment because they explore system-level features.
-
-Some pages require docker in docker (did), as they describe some concepts of docker. Build and run did image: 
-
-```bash
-docker build -t knowledge_docker dockerfiles/did
-docker run -d --name knowledge_docker --privileged -v ./:/knowledge -p 9999:8888 knowledge_docker
-```
+The section or particaul notebook typically introduce the image they are using.
 
 ## Building the Site
 

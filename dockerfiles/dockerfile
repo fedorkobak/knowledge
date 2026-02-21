@@ -3,7 +3,11 @@ FROM python:3.12.8-slim
 COPY ./src /src
 COPY ./pyproject.toml /pyproject.toml
 
-RUN pip install bash_kernel && \
-    python3 -m bash_kernel.install && \
-    apt update && apt install -y jq && \
-    pip install --no-cache-dir --upgrade -e .
+RUN apt update && apt install -y jq git
+RUN pip install \
+    bash_kernel \
+    "jupyter_lab_build @ git+https://github.com/fedorkobak/jupyter_lab_build.git" \
+    -e . && \
+    python3 -m bash_kernel.install
+
+CMD ["jupyter", "lab", "--ip", "0.0.0.0", "--allow-root"]

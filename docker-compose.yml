@@ -1,0 +1,20 @@
+services:
+  base:
+    image: knowledge:latest
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/dockerfile
+    volumes:
+      - ./:/knowledge
+    ports:
+      - 8888:8888
+  did:
+    image: did_knowledge:latest
+    build:
+      context: ./dockerfiles/did
+      dockerfile: ./dockerfile
+    volumes:
+      - ./:/knowledge
+    ports:
+      - 8888:8888
+    privileged: True
