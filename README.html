@@ -535,6 +535,7 @@
 </details></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="infrastructure/keycloak.html">Keycloak</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
@@ -755,17 +756,12 @@ You can clone the repository and run many of the examples yourself.</p>
 python<span class="w"> </span>-m<span class="w"> </span>bash_kernel.install
 </pre></div>
 </div>
-<p>To deploy the site in Docker, use:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>knowledge_dev<span class="w"> </span>-f<span class="w"> </span>dockerfiles/dockerfile<span class="w"> </span>.
-docker<span class="w"> </span>run<span class="w"> </span>-itd<span class="w"> </span>-v<span class="w"> </span>./:/knowledge<span class="w"> </span>--name<span class="w"> </span>knowledge_dev<span class="w"> </span>knowledge_dev
-</pre></div>
-</div>
-<p>Some pages require running specifically in a Docker environment because they explore system-level features.</p>
-<p>Some pages require docker in docker (did), as they describe some concepts of docker. Build and run did image:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>knowledge_docker<span class="w"> </span>dockerfiles/did
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>knowledge_docker<span class="w"> </span>--privileged<span class="w"> </span>-v<span class="w"> </span>./:/knowledge<span class="w"> </span>-p<span class="w"> </span><span class="m">9999</span>:8888<span class="w"> </span>knowledge_docker
-</pre></div>
-</div>
+<p>To deploy the site in Docker, use the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">up</span> <span class="pre">-d</span> <span class="pre">{service_name}</span></code>. The service name depends on which tool you want to try:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">base</span></code>: for basic version of application.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">did</span></code>: for version with docker.</p></li>
+</ul>
+<p>The section or particaul notebook typically introduce the image they are using.</p>
 </section>
 <section id="building-the-site">
 <h2>Building the Site<a class="headerlink" href="#building-the-site" title="Link to this heading">#</a></h2>

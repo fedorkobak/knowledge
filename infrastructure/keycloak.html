@@ -1,0 +1,1329 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Keycloak &#8212; Knowledge base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'infrastructure/keycloak';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Intro" href="../other/intro.html" />
+    <link rel="prev" title="Assets bundles" href="clouds/databricks/assets_bundles.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Knowledge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data science</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../data_science/intro.html">Data science</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_science/gradient_descent.html">Gradient descent</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/model_selection.html">Model selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/model_selection/regularization.html">Regularization</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/metrics/classification.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/confusion_matrix.html">Confusion matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/cross_entropy.html">Cross entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/CAP.html">CAP curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/metrics/classification/GINI.html">GINI coeficient</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/model_interpretation.html">Model interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/pearson_correlation.html">Pearson correlation coefficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/metrics/jaccard_index.html">Jaccard index</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/classic_models.html">Classic models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/classic_models/decision_tree.html">Decision tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/classic_models/arima.html">ARIMA</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/ranking_task.html">Ranking task</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/ranking_task/collaborative_filtering.html">Collaborative filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/collaborative_filtering/prediction_functions.html">Prediction functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/collaborative_filtering/self_made_mem_based.html">Selfmade memory based</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/ranking_task/task_generation.html">Task generation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/ranking_task/metrics.html">Metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/metrics/precision_k.html">precision@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/metrics/recall_k.html">recall@k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/ranking_task/metrics/average_precision.html">AP@k (average precision)</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/nlp.html">NLP</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/nlp/preprocessing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/preprocessing/tokenization.html">Tokenization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/preprocessing/embeddings.html">Embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/preprocessing/tf_idf.html">TF-IDF</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/text_cnn.html">Text CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/recurrent_text_gen.html">Recurrent text gen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/nlp/recurrent_translation.html">Recurrent translations</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data_science/nlp/LLMs.html">LLMs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../data_science/nlp/LLMs/rag.html">RAG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../data_science/nlp/LLMs/rag/imdb_example.html">IMDB example</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/LLMs/agents.html">Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_science/nlp/LLMs/MCP.html">MCP</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_science/dl_mechanisms.html">DL mechanisms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/dl_mechanisms/recurrent.html">Recurrent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/dl_mechanisms/attention.html">Attention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_science/dl_mechanisms/transformer.html">Transformer</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../math/introduction.html">Intorduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../math/geometry.html">Geometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../math/geometry/triangle.html">Triangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/geometry/cone.html">Cone</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../math/trigonometry.html">Trigonometry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../math/trigonometry/identities.html">Identities</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../math/mat_stat.html">MatStat</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../math/mat_stat/probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../math/mat_stat/probability/conditional_probability.html">Сonditional probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/distributions.html">Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/cent_limit_theorem.html">Central limit theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/mat_stat/maximum_likelihood.html">Maximum likelihood</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../math/mat_stat/stat_testing.html">Statistical testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../math/mat_stat/stat_testing/t_test.html">T-test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../math/mat_stat/stat_testing/binomial_test.html">Binomial test</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/latex.html">Latex</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../algorithms/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algorithms/complexity.html">Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algorithms/binary_search.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algorithms/event_sort.html">Event sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../algorithms/data_structures.html">Data structures</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/data_structures/binary_search_trees.html">Binary search trees</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../algorithms/dynamic_prog.html">Dynamic programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algorithms/quick_sort.html">Quick sort</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../algorithms/specific_tasks.html">Specific tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/specific_tasks/emergency_task.html">Emergency task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/specific_tasks/sinking_islands.html">Sinling islands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/specific_tasks/number_reversal.html">Number reversal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Docker</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../docker/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../docker/containers.html">Containers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../docker/containers/run.html">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../docker/containers/execute_in.html">Execute in</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../docker/containers/check_logs.html">Check logs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../docker/images.html">Images</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../docker/images/build_interface.html">Build interface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../docker/images/build_interface/build_context.html">Build context</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../docker/images/build_interface/ignore_files.html">Ignore files</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../docker/images/dockerfile.html">Dockerfile</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../docker/images/dockerfile/execute_with_run.html">Execute with start</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/volumes.html">Volumes</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../docker/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../docker/networks/default_networks.html">Default networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../docker/networks/container_communication.html">Containers communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../docker/networks/local_network.html">Local network</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/access.html">Acesss to containers</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../docker/compose.html">Compose</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../docker/compose/up_down.html">Up/down</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../docker/compose/service_configuration.html">Service configuration</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../git/overview.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/stages.html">Stages</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/commit.html">Commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/file_stages/remove_from_staging.html">Remove from staging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/diff.html">Diff</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/checkout.html">Checkout</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/branches/merge.html">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/branches/remote.html">Remotes</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">Ignore</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../git/configuration/variables.html">Variables</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../sql/intro.html">Intro</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/select/join/join_types.html">Join types</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/sorting.html">Sorting (ORDER BY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/unique_values.html">Unique values (DISTINCT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/empty_values.html">Empty values</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/aggregation_functions.html">Aggregation functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/select/aggregation_functions/collect_array.html">Collect array</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/group_by.html">Group by</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/select/group_by/conditions_on_aggregats.html">Conditions on aggregats (HAVING)</a></li>
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/window_functions.html">Window functions (OVER)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../sql/select/window_functions/functions.html">Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../sql/select/window_functions/functions/value.html">Value</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/expand_array.html">Expand array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/select/performance.html">Performance</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/operating_tables.html">Operating tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sql/operating_tables/tables_properties.html">Tables properties</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/datatypes.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/datatypes/datetime.html">Date and time</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/datatypes/datetime/date_components.html">Date components (DATE_PART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sql/datatypes/datetime/add_period.html">Add period</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/datatypes/json.html">JSON</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/versions_issues.html">Versions issues</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/python_from_container.html">Python from container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/python_on_host.html">Python on host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/create_database.html">Create database</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../layout/terminology.html">Terminology</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../layout/html.html">HTML</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../layout/html/other.html">Other</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../layout/html/text_format.html">Text format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/html/tables.html">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/html/lists.html">List tags</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../layout/html/svg.html">SVG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../layout/html/svg/text.html">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../layout/html/svg/path.html">Path</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../layout/css.html">CSS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/other.html">Other</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/style_application.html">Style application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/margin.html">Margin (out space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/padding.html">Padding (in space)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/overflow.html">Overflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/css/elements_positions.html">Elements position (<code class="docutils literal notranslate"><span class="pre">display</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout/forms.html">Forms</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linux</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../linux/intro.html">Intro</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../linux/shell.html">Shell</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../linux/shell/manage_input_output.html">Manage input/output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/shell/environment.html">Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/shell/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/shell/commands.html">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/shell/bash.html">Bash</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../linux/shell/users_groups.html">Users &amp; groups</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../linux/shell/users_groups/user_management.html">User management</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../linux/filesystem.html">Filesystem</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/files_directories.html">Files and directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/permission%26ownership.html">Permission&amp;Ownership</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/filesystem/archiving.html">Archiving</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/system_information.html">System information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/backup.html">Backup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../linux/network.html">Network</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../linux/network/curl.html">Curl</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../linux/network/ssh.html">SSH</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../linux/network/ssh/generate_key.html">Generate key</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/network/vpn.html">VPN</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/package_management.html">Package management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/cron.html">Cron</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux/gnupg.html">GnuPG</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Infrastructure</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containerization.html">Containerization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="kubernetes.html">Kubernetes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes/minikube.html">Minikube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes/kubectl.html">Kubectl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes/pods.html">Pods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes/pods_controllers.html">Pods controllers</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="nginx.html">Nginx</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="nginx/reverse_proxy.html">Reverse proxy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nginx/reverse_proxy/proxy_pass.html">Proxy pass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nginx/reverse_proxy/cache.html">Cache</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="nginx/variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nginx/server.html">Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nginx/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nginx/logs.html">Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nginx/connections_management.html">Connections management</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="gitlab.html">Gitlab</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="terraform.html">Terraform</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="terraform/configuration_language.html">Configuration language</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="ansible.html">Ansible</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="clouds/providers.html">Providers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="clouds/providers/aws.html">AWS</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="clouds/databricks.html">Databricks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="clouds/databricks/assets_bundles.html">Assets bundles</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Keycloak</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../other/intro.html">Intro</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../other/coding_tools.html">Coding tools</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/coding_tools/vs_code.html">VS Code</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/networks.html">Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/python_apache.html">Python with apache</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../other/data_brokers.html">Data brokers</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../other/data_brokers/redis.html">Redis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../other/data_brokers/redis/zset.html">Zset</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/data_brokers/mongo_db.html">Mongo DB</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/json_schema.html">JSON Schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/java_script.html">Java script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/go_templates.html">Go templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/elastic_search.html">Elastic search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/npm.html">NPM</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/fedorkobak/knowledge" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/infrastructure/keycloak.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Keycloak</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#service-account">Service account</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#admin">Admin</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-client">Creating client</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#users">Users</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sessions">Sessions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#refresh">Refresh</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-session">No session</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="keycloak">
+<h1>Keycloak<a class="headerlink" href="#keycloak" title="Link to this heading">#</a></h1>
+<p>Keycloak is an open-source single sing-on (SSO) system. It is used to build authentication into information systems.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># importing some common operations</span>
+<span class="nb">source</span><span class="w"> </span>./keycloak_files/utils.sh
+</pre></div>
+</div>
+</div>
+</div>
+<section id="service-account">
+<h2>Service account<a class="headerlink" href="#service-account" title="Link to this heading">#</a></h2>
+<p>Service account is used to configure the authentification of other services in the resources protected by Keycloak.</p>
+<p>Check more in <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html#_service_accounts">Using a service account</a> sectoin of the documentation.</p>
+<section id="admin">
+<h3>Admin<a class="headerlink" href="#admin" title="Link to this heading">#</a></h3>
+<p>The admin account by default is bound to the <code class="docutils literal notranslate"><span class="pre">admin-cli</span></code> client by default. This client has “Direct access grants”, it is a service account.</p>
+<hr class="docutils" />
+<p>The following cell shows how to obtain an access token for an admin account.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;grant_type=password&quot;</span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;client_id=admin-cli&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;username=admin&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;password=admin&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>http://localhost:8080/realms/master/protocol/openid-connect/token<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;access_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJscV9OdmVDaUFpanByYTU4YXR2QklCZzM5NVgtb0MyMFo1aW5kN2Z4ZUtVIn0.eyJleHAiOjE3NzE1ODA2NDIsImlhdCI6MTc3MTU4MDU4MiwianRpIjoib25sdHJvOjFkMDJhNzk0LWQzODktMDc5YS1kNDllLWZmMzE0YjY0YzA3NCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYWRtaW4tY2xpIiwic2lkIjoiZjZiNjk0MDQtZDE0MC1kNjIxLTNmNTQtZDBiMjEzOWEzYmE1Iiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIn0.Crmv67fVI_N2oX4kIV-HZZumQUYj9QGL9Mzb2OfVQ7iBh3DbdfQifplkebv-FQFwNlYFW-j400KZwJxaGT_4nRsMAEqhKGXaL_dVvnontkzd461o5fFCKxxT2m1k_Vu4FgwP_uWkTsjINipY0bEWvAl3bdaEbIa4QswmiZvh-fi6mdIAso1wQFpeq96iI6HvqqlB3FcZD0aDJKBNWsNjZ0yGxH3BdrQVNM40-aHS-U9HV-kjrylAcHi3rkB-t4pdIDaUu-juZOgSzCyXYXMEDfey_UXrTej8XmXViv93fkVROcw2ALcoabe1VzuEvjwMNPRFfvfgv7qYM7eRboEbuw&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>60<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>1800<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5YjBjODRkOC0zM2JmLTQwNjMtOTRkNS05Y2IyZTk2MjhmYzQifQ.eyJleHAiOjE3NzE1ODIzODIsImlhdCI6MTc3MTU4MDU4MiwianRpIjoiNDYxYjBjZmItMTZmOS1mOGZmLWNjYmItMmVjZmM2MmVjMDBmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL21hc3RlciIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJhZG1pbi1jbGkiLCJzaWQiOiJmNmI2OTQwNC1kMTQwLWQ2MjEtM2Y1NC1kMGIyMTM5YTNiYTUiLCJzY29wZSI6ImFjciByb2xlcyBiYXNpYyB3ZWItb3JpZ2lucyBlbWFpbCBwcm9maWxlIn0.luo4vGve7wgVRG5_eabUNIF6iGBRwcvqm2-SA-zKdOiJiYYBMVB1zBMUbR_EYfubguT7n9GVatIZM1hmNQBMwg&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;token_type&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;Bearer&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;not-before-policy&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;session_state&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;f6b69404-d140-d621-3f54-d0b2139a3ba5&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;scope&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;email profile&quot;</span>
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>There is a shortcut in utils for this operation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>get_admin_token<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;access_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJscV9OdmVDaUFpanByYTU4YXR2QklCZzM5NVgtb0MyMFo1aW5kN2Z4ZUtVIn0.eyJleHAiOjE3NzE1ODc0NDIsImlhdCI6MTc3MTU4NzM4MiwianRpIjoib25sdHJvOjUxNzg2ZTAyLTVlMGEtYzdkNC05NjYwLWRhNmJkYTI5YjMxNCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYWRtaW4tY2xpIiwic2lkIjoiMTY1MWQ3ZjktNjcyMS1lNWQ4LTgyODctMzE0ZDE2OTE5MmQwIiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIn0.CxHyGNmXNua6Lc4Bnkznc8ZM0NolAodM5PlE0AchLMb6ovTcX5_wmz3NnpNAmdtGsxGU00qwcQQWR5_GYb_4QJjEVStFJErujW9beLpyeSFDLPkulMABl4dk52CBhiihifDeJfBCs6lAuXlWMhLxikGbZBuqrjLUwtPKjNLatWC8UA85kdnnZ45Dyp7w6FwaLcilwAdR2qwtUZVFtL4yQlp61DjkudNb5mQDqvqyjDGyvPyBBQ52Qge_NiOxDKcCNIJ2P_VMj-yFPzoNYq2N2hmgGCZRu4kpaqgsciV9FXKAegyvaWOMTiE2Jh7XiZ0QDU5s4tl5mHxeOLzAdXgTLQ&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>60<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>30<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5YjBjODRkOC0zM2JmLTQwNjMtOTRkNS05Y2IyZTk2MjhmYzQifQ.eyJleHAiOjE3NzE1ODc0MTIsImlhdCI6MTc3MTU4NzM4MiwianRpIjoiMzZkNjM3ZWMtYThlZi0xZjAxLTA3MmQtYmVlNzViN2U2ZjhiIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL21hc3RlciIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJhZG1pbi1jbGkiLCJzaWQiOiIxNjUxZDdmOS02NzIxLWU1ZDgtODI4Ny0zMTRkMTY5MTkyZDAiLCJzY29wZSI6ImFjciByb2xlcyBiYXNpYyB3ZWItb3JpZ2lucyBlbWFpbCBwcm9maWxlIn0.wnP58K-TrscB34_MhagXQrO8mw7EbbXO7vHSoJJqo8sqLXM4s5ke4_mFe4-gJKPHmv4ejxQGC7WjA0iXC_dsAA&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;token_type&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;Bearer&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;not-before-policy&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;session_state&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;1651d7f9-6721-e5d8-8287-314d169192d0&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;scope&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;email profile&quot;</span>
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-client">
+<h3>Creating client<a class="headerlink" href="#creating-client" title="Link to this heading">#</a></h3>
+<p>Consider how to create a new client that uses service account.</p>
+<hr class="docutils" />
+<p>The following cell show the request to the token for the service token. Follow the <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html#_service_accounts">Using a service account</a> guide to properly configure the client client.</p>
+<p>Shortly, you need:</p>
+<ul class="simple">
+<li><p>Create the client.</p></li>
+<li><p>Enable “Client authentification”.</p></li>
+<li><p>Enable “Service accounts roles” in “Authentification flow”.</p></li>
+</ul>
+<p>The following cell shows the ouput of the <code class="docutils literal notranslate"><span class="pre">/realms/&lt;realm&gt;/protocol/openid-connect/token</span></code> request if everything configured properly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">client_id</span><span class="o">=</span>knowledge-client
+<span class="nv">client_secret</span><span class="o">=</span>VCXTbpOZrv5PrlnXPv6FAp8XePszgik6
+
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;grant_type=client_credentials&quot;</span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;client_id=</span><span class="nv">$client_id</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;client_secret=</span><span class="nv">$client_secret</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>http://localhost:8080/realms/master/protocol/openid-connect/token<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;access_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJscV9OdmVDaUFpanByYTU4YXR2QklCZzM5NVgtb0MyMFo1aW5kN2Z4ZUtVIn0.eyJleHAiOjE3NzE1NzU1OTksImlhdCI6MTc3MTU3NTUzOSwianRpIjoidHJydGNjOmFkNzAzM2VlLTVhZjQtZDkxZS1mNzc2LTUwMjYxYWRjYWY4ZiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjA1NDFkMTJjLWQ3OTEtNGM4YS05ZTRhLWFlMzQxNTU1YzBiNCIsInR5cCI6IkJlYXJlciIsImF6cCI6Imtub3dsZWRnZS1jbGllbnQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxNzIuMTcuMC4xIiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWtub3dsZWRnZS1jbGllbnQiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjE3LjAuMSIsImNsaWVudF9pZCI6Imtub3dsZWRnZS1jbGllbnQifQ.S19f7Pt8PqhKttAjsST6X1AWuPUn2qPVRdTr8KeQrPYumSiqMD_76UYYYVBzgG43CgKI2bXjJNoStcD1Fr0CLEYVyL-NBAp-GZn2D_Vy-5yk1Nvwitm2km8_AG9LP9OdMIaj5YeAlquCeJJ_Zdi8AuYyYcLAuuHPkfayFU-lhNtMTw9f1deLbpik0KsAvkbwGYTDx8fZ07K5QEr5_lWrxfGWsStAhZOh99et4z1BskakPWwWPdW3RNgYJ3ZAMk0W1tYTfRnVVX89cqxxl39NigudV1tyM7z_xtHHVRGPQDjFvsEFx5msIyT9at9fQb0J7jdnqKfPA2SGksTw4AmoHQ&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>60<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;token_type&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;Bearer&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;not-before-policy&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;scope&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;email profile&quot;</span>
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="users">
+<h2>Users<a class="headerlink" href="#users" title="Link to this heading">#</a></h2>
+<p>Keycloak handles users. The endpoint that is responsible for retrieving user information is <a class="reference external" href="https://www.keycloak.org/docs-api/latest/rest-api/index.html#_get_adminrealmsrealmusers">/admin/realms/{realm}/users</a>.</p>
+<hr class="docutils" />
+<p>The following cell gets the id of the <code class="docutils literal notranslate"><span class="pre">admin</span></code> user.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">access_token</span><span class="o">=</span><span class="k">$(</span>get_admin_token<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.access_token<span class="k">)</span>
+
+curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;authorization: Bearer </span><span class="nv">$access_token</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>http://localhost:8080/admin/realms/master/users?username<span class="o">=</span>admin<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.<span class="o">[</span><span class="m">0</span><span class="o">]</span>.id
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">&quot;26b93857-83d1-4bc2-9fdf-b39d0ff4efbd&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This notebook uses <code class="docutils literal notranslate"><span class="pre">get_admin_user</span></code> shortcut to access the information about admin user:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>get_admin_user<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{
+  &quot;id&quot;: &quot;26b93857-83d1-4bc2-9fdf-b39d0ff4efbd&quot;,
+  &quot;username&quot;: &quot;admin&quot;,
+  &quot;emailVerified&quot;: false,
+  &quot;attributes&quot;: {
+    &quot;is_temporary_admin&quot;: [
+      &quot;true&quot;
+    ]
+  },
+  &quot;userProfileMetadata&quot;: {
+    &quot;attributes&quot;: [
+      {
+        &quot;name&quot;: &quot;username&quot;,
+        &quot;displayName&quot;: &quot;${username}&quot;,
+        &quot;required&quot;: true,
+        &quot;readOnly&quot;: true,
+        &quot;validators&quot;: {
+          &quot;username-prohibited-characters&quot;: {
+            &quot;ignore.empty.value&quot;: true
+          },
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sessions">
+<h2>Sessions<a class="headerlink" href="#sessions" title="Link to this heading">#</a></h2>
+<p>A session is an entity that stores user login information: the user’s identity, the time the session started and the last access time.</p>
+<ul class="simple">
+<li><p>A session is <strong>created</strong> each time you request an access token. The <code class="docutils literal notranslate"><span class="pre">session_state</span></code> attribute of the token request contains the id of the corresponding session.</p></li>
+<li><p>You can the information about sessions using following:</p>
+<ul>
+<li><p><a class="reference external" href="https://www.keycloak.org/docs-api/latest/rest-api/index.html#_get_adminrealmsrealmusersuser_idsessions">GET <code class="docutils literal notranslate"><span class="pre">/admin/realms/{realm}/users/{user-id}/sessions</span></code></a> sessions of the particular user.</p></li>
+<li><p><a class="reference external" href="https://www.keycloak.org/docs-api/latest/rest-api/index.html#_get_adminrealmsrealmclientsclient_uuiduser_sessions">GET <code class="docutils literal notranslate"><span class="pre">/admin/realms/{realm}/clients/{client-uuid}/user-sessions</span></code></a> sessions of the given client.</p></li>
+</ul>
+</li>
+<li><p>You can delete the given session using <a class="reference external" href="https://www.keycloak.org/docs-api/latest/rest-api/index.html#_delete_adminrealmsrealmsessionssession">DELETE <code class="docutils literal notranslate"><span class="pre">/admin/realms/{realm}/sessions/{sessions}</span></code></a>.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell requests an access token, which creates a new session. The next cell shows the corresponding session ID.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">token_data</span><span class="o">=</span><span class="k">$(</span>get_admin_token<span class="k">)</span>
+<span class="nv">access_token</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$token_data</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.access_token<span class="k">)</span>
+<span class="nv">session_state</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$token_data</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.session_state<span class="k">)</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$session_state</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6618afe5-0a2d-1289-a257-ee9cbd0074d1
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next cell shows a list of sessions for the admin user.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">admin_id</span><span class="o">=</span><span class="k">$(</span>get_admin_user<span class="w"> </span><span class="nv">$access_token</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.id<span class="k">)</span>
+
+curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">&quot;authorization: Bearer </span><span class="nv">$access_token</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>http://localhost:8080/admin/realms/master/users/<span class="si">${</span><span class="nv">admin_id</span><span class="si">}</span>/sessions<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.[0:2]&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span>
+<span class=" -Color -Color-Bold">  {</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;id&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;1a9d6ca4-f41d-d705-4d55-b017b20ca58e&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;username&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;admin&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;userId&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;26b93857-83d1-4bc2-9fdf-b39d0ff4efbd&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;ipAddress&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;172.17.0.1&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;start&quot;</span><span class=" -Color -Color-Bold">: </span>1771592628000<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;lastAccess&quot;</span><span class=" -Color -Color-Bold">: </span>1771592628000<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;rememberMe&quot;</span><span class=" -Color -Color-Bold">: </span>false<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;clients&quot;</span><span class=" -Color -Color-Bold">: {</span>
+<span class=" -Color -Color-Bold">      </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;d0365341-06c4-4eb2-8fc1-776eda64de58&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;admin-cli&quot;</span>
+<span class=" -Color -Color-Bold">    },</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;transientUser&quot;</span><span class=" -Color -Color-Bold">: </span>false
+<span class=" -Color -Color-Bold">  },</span>
+<span class=" -Color -Color-Bold">  {</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;id&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;6618afe5-0a2d-1289-a257-ee9cbd0074d1&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;username&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;admin&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;userId&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;26b93857-83d1-4bc2-9fdf-b39d0ff4efbd&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;ipAddress&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;172.17.0.1&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;start&quot;</span><span class=" -Color -Color-Bold">: </span>1771592654000<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;lastAccess&quot;</span><span class=" -Color -Color-Bold">: </span>1771592654000<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;rememberMe&quot;</span><span class=" -Color -Color-Bold">: </span>false<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;clients&quot;</span><span class=" -Color -Color-Bold">: {</span>
+<span class=" -Color -Color-Bold">      </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;d0365341-06c4-4eb2-8fc1-776eda64de58&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;admin-cli&quot;</span>
+<span class=" -Color -Color-Bold">    },</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;transientUser&quot;</span><span class=" -Color -Color-Bold">: </span>false
+<span class=" -Color -Color-Bold">  }</span>
+<span class=" -Color -Color-Bold">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong> it should be at least one because at the begining script requests an admin token at the begining.</p>
+<p>The following cell deletes the session that corresponds to the token we used for authorization:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w">  </span><span class="se">\</span>
+<span class="w">     </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$access_token</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span><span class="s2">&quot;http://localhost:8080/admin/realms/master/sessions/</span><span class="nv">$session_state</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a result, any request using this token as a credential will fail due to authorization error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;authorization: Bearer </span><span class="nv">$access_token</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>http://localhost:8080/admin/realms/master/users/count
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&quot;error&quot;:&quot;HTTP 401 Unauthorized&quot;}
+</pre></div>
+</div>
+</div>
+</div>
+<section id="refresh">
+<h3>Refresh<a class="headerlink" href="#refresh" title="Link to this heading">#</a></h3>
+<p>There is a special mechanism to prolong the usage of the session token - refresh token. With <code class="docutils literal notranslate"><span class="pre">access_token</span></code> usually provided <code class="docutils literal notranslate"><span class="pre">refresh_token</span></code> which you can use to refresh the session.</p>
+<p>To refresh the token use the same endpoint as to get the session but profide:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;grant_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;refresh_token&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;client_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">clie</span><span class="kc">nt</span><span class="err">_id</span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;refresh_token&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">re</span><span class="kc">fres</span><span class="err">h</span><span class="w"> </span><span class="kc">t</span><span class="err">oke</span><span class="kc">n</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>in the payload.</p>
+<hr class="docutils" />
+<p>The following cell creates the session and save all the important attributes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">token_data</span><span class="o">=</span><span class="k">$(</span>get_admin_token<span class="k">)</span>
+<span class="nv">access_token</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$token_data</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.access_token<span class="k">)</span>
+<span class="nv">session_state</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$token_data</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.session_state<span class="k">)</span>
+<span class="nv">refresh_token</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$token_data</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.refresh_token<span class="k">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell show the information associated with token request.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$token_data</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;access_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJscV9OdmVDaUFpanByYTU4YXR2QklCZzM5NVgtb0MyMFo1aW5kN2Z4ZUtVIn0.eyJleHAiOjE3NzE1OTUwNTQsImlhdCI6MTc3MTU5NDk5NCwianRpIjoib25sdHJvOjAyYjlhZjlhLWNkMjYtZGJmMy05YTg1LWYwY2ExOTVkOTljNiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYWRtaW4tY2xpIiwic2lkIjoiOWQ3ZjYxMjQtNzJkYi1mMWVhLTcxZTQtNzBjY2U3ODRlNGE5Iiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIn0.oXKJ_TwRA9fnyiSZ-Slk17J3a6MRp6RvGvVJzYTLJPZ0pQWEeTYyluBjBqMoK0EiGT5amHkAywgeuZDf_niAHVxCnPG_qxhWDEGIojSlCSJIoBRKohdC5ctCJ70Aa9IgBr_egTvEkaGlnJNK2ORzYzPrQw-4q9iZPK4cLQGkS7d5x-Dj4SYp_DJWmZkBV0AIG25ZK9O_PvW62naTH3stpg6q-tZosj8_q8pTJjdHc_OMGie-s2oaResgXcaBRANgFiQ5UcG9ycS1oGjwPRhTfUila9yBr7LMOOE0NR6oqIvo6jXjuBszz7LpUecqO0QbsV9uNIRS6FovLaC5HLjfwA&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>60<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>30<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5YjBjODRkOC0zM2JmLTQwNjMtOTRkNS05Y2IyZTk2MjhmYzQifQ.eyJleHAiOjE3NzE1OTUwMjQsImlhdCI6MTc3MTU5NDk5NCwianRpIjoiM2I0MWY2ZWYtYzBjZS03NDEzLWU2YWEtZTEyNjlmNzM3NmNjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL21hc3RlciIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJhZG1pbi1jbGkiLCJzaWQiOiI5ZDdmNjEyNC03MmRiLWYxZWEtNzFlNC03MGNjZTc4NGU0YTkiLCJzY29wZSI6ImFjciByb2xlcyBiYXNpYyB3ZWItb3JpZ2lucyBlbWFpbCBwcm9maWxlIn0.yNC0CsJPsHZPdCC_adex_oXHdfWQwid_8mh728pE4n6nXdO1tz76djFjIIYwr4QhJl6PiGY0Fnt4zSssHXCOLg&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;token_type&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;Bearer&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;not-before-policy&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;session_state&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;9d7f6124-72db-f1ea-71e4-70cce784e4a9&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;scope&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;email profile&quot;</span>
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The properties of the created session are displayed in the cell below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">sessions_list</span><span class="o">=</span><span class="k">$(</span>
+<span class="w">    </span>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-H<span class="w"> </span><span class="s2">&quot;authorization: Bearer </span><span class="nv">$access_token</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>http://localhost:8080/admin/realms/master/users/<span class="si">${</span><span class="nv">admin_id</span><span class="si">}</span>/sessions
+<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$sessions_list</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>--arg<span class="w"> </span>sid<span class="w">  </span><span class="s2">&quot;</span><span class="nv">$session_state</span><span class="s2">&quot;</span><span class="w"> </span><span class="s1">&#39;.[] | select(.id == $sid)&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;id&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;9d7f6124-72db-f1ea-71e4-70cce784e4a9&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;username&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;admin&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;userId&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;26b93857-83d1-4bc2-9fdf-b39d0ff4efbd&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;ipAddress&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;172.17.0.1&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;start&quot;</span><span class=" -Color -Color-Bold">: </span>1771594994000<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;lastAccess&quot;</span><span class=" -Color -Color-Bold">: </span>1771594994000<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;rememberMe&quot;</span><span class=" -Color -Color-Bold">: </span>false<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;clients&quot;</span><span class=" -Color -Color-Bold">: {</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;d0365341-06c4-4eb2-8fc1-776eda64de58&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;admin-cli&quot;</span>
+<span class=" -Color -Color-Bold">  },</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;transientUser&quot;</span><span class=" -Color -Color-Bold">: </span>false
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the values “start” and “lastAccess” are the same, as there are no other interactions with this except for its creation.</p>
+<p>The refresh request is displayed in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">refreshed</span><span class="o">=</span><span class="k">$(</span>
+<span class="w">    </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-s<span class="se">\</span>
+<span class="w">        </span>-d<span class="w"> </span><span class="s2">&quot;grant_type=refresh_token&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-d<span class="w"> </span><span class="s2">&quot;client_id=admin-cli&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-d<span class="w"> </span><span class="s2">&quot;refresh_token=</span><span class="nv">$refresh_token</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>http://localhost:8080/realms/master/protocol/openid-connect/token
+<span class="k">)</span>
+<span class="nv">access_token</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$refreshed</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>.access_token<span class="k">)</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$refreshed</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;access_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJscV9OdmVDaUFpanByYTU4YXR2QklCZzM5NVgtb0MyMFo1aW5kN2Z4ZUtVIn0.eyJleHAiOjE3NzE1OTUwNTcsImlhdCI6MTc3MTU5NDk5NywianRpIjoib25sdHJ0OjQ0MzJlMTRmLTNjNjktNmUyNS04ZTFkLTk1N2JlNTMxYTlkNyIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYWRtaW4tY2xpIiwic2lkIjoiOWQ3ZjYxMjQtNzJkYi1mMWVhLTcxZTQtNzBjY2U3ODRlNGE5Iiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIn0.K6xY7WdOtDQGN4tAW9Y1N_9Nm6XmuDnL_JhFCgwGEEU_j21fTRpK1wkMFK07kJVHnxrwHTRhql_fC7gf9bnY73SEHHUP_eNx4w4yD-LDdA0NjF2omqJnczLhnsvJQSJmAlgoad3aGylj7bpSJytw5NnzpfDcMRcNtQ_M2cY5zx5XXHt_33ZAog6rYSi6NIftfUawPBxUlNdtqijXl5F6U8zRIt2RWNGAZltlrEHLbU1YN-GdBvLh9-ZjMYVY-1L6tx-EI76XrY_awWOsnwbrGFpRWJiVzBMghjDw4QlVQeGTR10y5rLxV0yK7YcdtJMavhdpGr2lRq0Lik3SYLrm3A&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>60<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>30<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5YjBjODRkOC0zM2JmLTQwNjMtOTRkNS05Y2IyZTk2MjhmYzQifQ.eyJleHAiOjE3NzE1OTUwMjcsImlhdCI6MTc3MTU5NDk5NywianRpIjoiYzI2MTc5OGEtYmFjMC1mOWVmLWJiNGUtNGZkNWRhZTNiOTVhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL21hc3RlciIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJhZG1pbi1jbGkiLCJzaWQiOiI5ZDdmNjEyNC03MmRiLWYxZWEtNzFlNC03MGNjZTc4NGU0YTkiLCJzY29wZSI6ImFjciByb2xlcyBiYXNpYyB3ZWItb3JpZ2lucyBlbWFpbCBwcm9maWxlIn0.Rezhz1OkV6eIr5Io_aEAwLxMv0I-h_yDfUsFP-NL_O-RwJgdVL875N0TaKpBIFT3AUd5WSpf3qO-jf5bqfPT2A&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;token_type&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;Bearer&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;not-before-policy&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;session_state&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;9d7f6124-72db-f1ea-71e4-70cce784e4a9&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;scope&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;email profile&quot;</span>
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are new <code class="docutils literal notranslate"><span class="pre">access_token</span></code> and <code class="docutils literal notranslate"><span class="pre">refresh_token</span></code>. The following cell displays the information about the session:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">sessions_list</span><span class="o">=</span><span class="k">$(</span>
+<span class="w">    </span>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-H<span class="w"> </span><span class="s2">&quot;authorization: Bearer </span><span class="nv">$access_token</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>http://localhost:8080/admin/realms/master/users/<span class="si">${</span><span class="nv">admin_id</span><span class="si">}</span>/sessions
+<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$sessions_list</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>--arg<span class="w"> </span>sid<span class="w">  </span><span class="s2">&quot;</span><span class="nv">$session_state</span><span class="s2">&quot;</span><span class="w"> </span><span class="s1">&#39;.[] | select(.id == $sid)&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;id&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;9d7f6124-72db-f1ea-71e4-70cce784e4a9&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;username&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;admin&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;userId&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;26b93857-83d1-4bc2-9fdf-b39d0ff4efbd&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;ipAddress&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;172.17.0.1&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;start&quot;</span><span class=" -Color -Color-Bold">: </span>1771594994000<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;lastAccess&quot;</span><span class=" -Color -Color-Bold">: </span>1771594997000<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;rememberMe&quot;</span><span class=" -Color -Color-Bold">: </span>false<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;clients&quot;</span><span class=" -Color -Color-Bold">: {</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;d0365341-06c4-4eb2-8fc1-776eda64de58&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;admin-cli&quot;</span>
+<span class=" -Color -Color-Bold">  },</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;transientUser&quot;</span><span class=" -Color -Color-Bold">: </span>false
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here “start” and “lastAccess” are different because refresh is treated as interaction with the session.</p>
+</section>
+<section id="no-session">
+<h3>No session<a class="headerlink" href="#no-session" title="Link to this heading">#</a></h3>
+<p>There are plenty of cases when a session can be removed during the execution of an operation. One example is when the session is removed by the key cloak due to expiration (i.e. session expiration, not token expiration).</p>
+<p>There are two cases:</p>
+<ul class="simple">
+<li><p>The client tries to perform an operation using an invalid access token that is not valid anymore: results in a 401 response.</p></li>
+<li><p>The client tries to refresh the token an invalid session: results in a 400 response.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell attempts to access the KeyCloak API with an invalid token.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>-s<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;\nStatus: %{http_code}&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;authorization: Bearer some_access_token&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>http://localhost:8080/admin/realms/master/users/count
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&quot;error&quot;:&quot;HTTP 401 Unauthorized&quot;}
+Status: 401
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell attempts to refresh the access token with invalid refresh token.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-s<span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;\nStatus: %{http_code}&quot;</span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;grant_type=refresh_token&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;client_id=admin-cli&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;refresh_token=</span><span class="nv">$token</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>http://localhost:8080/realms/master/protocol/openid-connect/token
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&quot;error&quot;:&quot;invalid_grant&quot;,&quot;error_description&quot;:&quot;Invalid refresh token&quot;}
+Status: 400
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "bash_kernel"
+        },
+        kernelOptions: {
+            name: "bash_kernel",
+            path: "./infrastructure"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'bash_kernel'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="clouds/databricks/assets_bundles.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Assets bundles</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../other/intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Intro</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#service-account">Service account</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#admin">Admin</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-client">Creating client</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#users">Users</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sessions">Sessions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#refresh">Refresh</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-session">No session</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fedor Kobak
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

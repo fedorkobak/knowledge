@@ -532,6 +532,7 @@
 </details></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="keycloak.html">Keycloak</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul class="nav bd-sidenav">
@@ -736,10 +737,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes">Kubernetes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform">Terraform</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clouds">Clouds</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keycloak">Keycloak</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#service-account">Service account</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keycloak">Keycloak</a></li>
 </ul>
             </nav>
         </div>
@@ -824,6 +822,7 @@ document.write(`
 <ul class="simple">
 <li><p>For general overview of the Kyecloak check the <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html">Server Administration Guide</a>.</p></li>
 <li><p>Some kind of <a class="reference external" href="https://wjw465150.gitbooks.io/keycloak-documentation/content/index.html">Keycloak documentation</a> hosted on gitbook.</p></li>
+<li><p>This site ususally uses the REST API to interact with Keycloak. Check the details of the endpoints in the <a class="reference external" href="https://www.keycloak.org/docs-api/latest/rest-api/index.html">Keycloak Admin REST API</a>.</p></li>
 </ul>
 <p>There are <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html#core-concepts-and-terms">core concepts and terms</a> of Keycloak you should know:</p>
 <ul class="simple">
@@ -842,40 +841,6 @@ document.write(`
 <span class="w">    </span>quay.io/keycloak/keycloak:26.4.5<span class="w"> </span>start-dev
 </pre></div>
 </div>
-<section id="service-account">
-<h3>Service account<a class="headerlink" href="#service-account" title="Link to this heading">#</a></h3>
-<p>Service account is used to configure the authentification of other services in the resources protected by Keycloak.</p>
-<p>Check more in <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html#_service_accounts">Using a service account</a> sectoin of the documentation.</p>
-<hr class="docutils" />
-<p>The following cell show the request to the token for the service token. Follow the <a class="reference external" href="https://www.keycloak.org/docs/latest/server_admin/index.html#_service_accounts">Using a service account</a> guide to properly configure the client client.</p>
-<p>The following cell shows the ouput of the <code class="docutils literal notranslate"><span class="pre">/realms/&lt;realm&gt;/protocol/openid-connect/token</span></code> request if everything configured properly.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">client_id</span><span class="o">=</span>knowledge-client
-<span class="nv">client_secret</span><span class="o">=</span>Oo8HDBfguVLX5PNAg7T0qO52qeP7d4hU
-
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;grant_type=client_credentials&quot;</span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;client_id=</span><span class="nv">$client_id</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-d<span class="w"> </span><span class="s2">&quot;client_secret=</span><span class="nv">$client_secret</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>http://localhost:8080/realms/master/protocol/openid-connect/token<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s2">&quot;.&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
-<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;access_token&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZQW80a0FtQ1Riek5aZGFvQWs1b1VGTDJ5UzExM2c1MGsyMVhGOXp3cVFNIn0.eyJleHAiOjE3NjM5MzcwMjksImlhdCI6MTc2MzkzNjk2OSwianRpIjoidHJydGNjOmM5NjFiYjE4LWMzNDAtZGQzMS0xNzViLWZiMDgyYjA3OGM1MiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvbWFzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImIzNDk2YmYxLTlhN2YtNGIwYS04ZmQ3LTIxZDQzNWQzZWViNyIsInR5cCI6IkJlYXJlciIsImF6cCI6Imtub3dsZWRnZS1jbGllbnQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxNzIuMTcuMC4xIiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWtub3dsZWRnZS1jbGllbnQiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjE3LjAuMSIsImNsaWVudF9pZCI6Imtub3dsZWRnZS1jbGllbnQifQ.v-PPHBMk5d9ubaCI2XLzLlTPRXhvKhj2XxoFwYkU07TVgRrMshzxcDAnvXQB2EaWsnqPt9phctiLkn-uwkpf9O3C1j2gl6YeKlwt8_Nc8itdSsUpKHUskD3rCWKOfFWgvZRhkYQcOiL2c1wP-5HFkXuGfRg-j7qGJuwkeM85Ijd9IL6xKrT4QHkEFHM3jC2IrniV0ENofifYUGkS3cdMCJmdO7-Vv8f_bA_qWO4SB32E-FIk0tg178tlkrd4ZTYjg6PcPbcL_VOrSn2auj9e9OMRdo1jW8DqNxo5Ku41g2UEe5H-2yEGzhzL_Iuviiw7GWXqvLr2-JDsnu4A2BTQCw&quot;</span><span class=" -Color -Color-Bold">,</span>
-<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>60<span class=" -Color -Color-Bold">,</span>
-<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;refresh_expires_in&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
-<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;token_type&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;Bearer&quot;</span><span class=" -Color -Color-Bold">,</span>
-<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;not-before-policy&quot;</span><span class=" -Color -Color-Bold">: </span>0<span class=" -Color -Color-Bold">,</span>
-<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;scope&quot;</span><span class=" -Color -Color-Bold">: </span><span class=" -Color -Color-Green">&quot;email profile&quot;</span>
-<span class=" -Color -Color-Bold">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 </section>
 </section>
 
@@ -954,10 +919,7 @@ curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </spa
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kubernetes">Kubernetes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform">Terraform</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clouds">Clouds</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keycloak">Keycloak</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#service-account">Service account</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keycloak">Keycloak</a></li>
 </ul>
   </nav></div>
 
