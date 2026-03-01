@@ -8,12 +8,12 @@ services:
       - ./:/knowledge
     ports:
       - 8888:8888
-    command: ["jupyter", "lab", "--ip", "0.0.0.0", "--allow-root", "--notebook-di=/knowledge"]
+    command: ["jupyter", "lab", "--ip", "0.0.0.0", "--allow-root", "--notebook-dir=/knowledge"]
   did:
     image: did_knowledge:latest
     build:
-      context: ./dockerfiles/did
-      dockerfile: ./dockerfile
+      context: ./
+      dockerfile: ./dockerfiles/did/dockerfile
     volumes:
       - ./:/knowledge
     ports:

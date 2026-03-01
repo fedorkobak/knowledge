@@ -1,13 +1,17 @@
 # docker in docker
 FROM docker:dind
 
+COPY ./src /src
+COPY ./pyproject.toml /pyproject.toml
+
 RUN apk update && apk add bash python3-dev py-pip gcc musl-dev linux-headers
 RUN pip3 install --break-system-packages\
     bash_kernel\
     "jupyter_lab_build @ git+https://github.com/fedorkobak/jupyter_lab_build.git"\
+    -e .\
     && python -m bash_kernel.install
 
-COPY start.sh /usr/local/bin/start.sh
+COPY dockerfiles/did/start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 ENTRYPOINT ["/usr/local/bin/start.sh"]
