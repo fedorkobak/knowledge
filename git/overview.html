@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -728,6 +728,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repository">Repository</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#git-kernel">Git kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remote">Remote</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stages">Stages</a></li>
@@ -807,6 +808,133 @@ drwxrwxr-x  7 fedor fedor  4096 Nov 29 22:57 <span class=" -Color -Color-Bold -C
 <section id="git-kernel">
 <h3>Git kernel<a class="headerlink" href="#git-kernel" title="Link to this heading">#</a></h3>
 <p>This section typically uses a specially created jupyter git kernel. This automatically creates a git repo each time you run a cell with <code class="docutils literal notranslate"><span class="pre">%init</span></code> magic in the first line. Therefore, you can just start witht the git commands avoiding, the boilerplate code to manage the repo.</p>
+</section>
+<section id="remote">
+<h3>Remote<a class="headerlink" href="#remote" title="Link to this heading">#</a></h3>
+<p>In git, a remote is a named reference to another git repository. The local repository can push and fetch changes to the remote registry. Generally it keeps the information about remote’s branches.</p>
+<p>The main commands to manage remotes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">init</span> <span class="pre">--bare</span></code>: to initialise repository that can behave like remote.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">add</span> <span class="pre">&lt;remote_name&gt;</span> <span class="pre">&lt;path&gt;</span></code> to add the remote. Path could be:</p>
+<ul>
+<li><p>File path.</p></li>
+<li><p>HTTP reference <code class="docutils literal notranslate"><span class="pre">http://some.domain/some/resource.git</span></code>. For github it’s typically <code class="docutils literal notranslate"><span class="pre">https://github.com/username/repository_name.git</span></code>, for example the remote reference of this repository is <code class="docutils literal notranslate"><span class="pre">https://github.com/fedorkobak/knowledge.git</span></code>.</p></li>
+<li><p>SSH path <code class="docutils literal notranslate"><span class="pre">user&#64;host:repo/path.git</span></code>. For example the knowledge repo have <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:fedorkobak/knowledge.git</span></code> path.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span></code> just lists available remotes.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell defines the bare repository that we will use as an example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span>/tmp/remote.git
+mkdir<span class="w"> </span>/tmp/remote.git
+git<span class="w"> </span>init<span class="w"> </span>--bare<span class="w"> </span>/tmp/remote.git<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+<p>Adding remote to the local repo:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>my_remote<span class="w"> </span>/tmp/remote.git
+git<span class="w"> </span>remote<span class="w"> </span>-v
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my_remote	/tmp/remote.git (fetch)
+my_remote	/tmp/remote.git (push)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell makes some changes to the local repositry and pushes them to the remote.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>my_file
+git<span class="w"> </span>add<span class="w"> </span>--all
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+git<span class="w"> </span>push<span class="w"> </span>--set-upstream<span class="w"> </span>my_remote<span class="w"> </span>master
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 207 bytes | 207.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To /tmp/remote.git
+ * [new branch]      master -&gt; master
+branch &#39;master&#39; set up to track &#39;my_remote/master&#39;.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next code creates a new local repository and attaches the remote that was created earlier to it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>my_remote<span class="w"> </span>/tmp/remote.git
+git<span class="w"> </span>fetch
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 187 bytes | 93.00 KiB/s, done.
+From /tmp/remote
+ * [new branch]      master     -&gt; my_remote/master
+</pre></div>
+</div>
+</div>
+</div>
+<p>View the remote branches:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>branch<span class="w"> </span>-r
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  <span class=" -Color -Color-Red">my_remote/master</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following command attaches the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch from remote to the local branch and pules the changes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>switch<span class="w"> </span>--track<span class="w"> </span>my_remote/master
+git<span class="w"> </span>pull
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>branch &#39;master&#39; set up to track &#39;my_remote/master&#39;.
+Already on &#39;master&#39;
+Already up to date.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Consequently, the file created in the other repository appears in the local directory of the current repository.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my_file
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="stages">
@@ -1085,6 +1213,7 @@ git<span class="w"> </span>diff
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repository">Repository</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#git-kernel">Git kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remote">Remote</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stages">Stages</a></li>
