@@ -9,4 +9,4 @@ dockerd-entrypoint.sh &
 # for some unknown reason, the docker in container requires this env var
 export DOCKER_HOST=""
 
-exec jupyter lab --ip 0.0.0.0 --allow-root
+exec jupyter lab --ip 0.0.0.0 --allow-root "$@"
