@@ -57,6 +57,8 @@
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/join/join_types';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -409,12 +411,6 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../load_modify.html">Load/Modify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../versions_issues.html">Versions issues</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../python_interaction/python_from_container.html">Python from container</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../python_interaction/python_on_host.html">Python on host</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../python_interaction/create_database.html">Create database</a></li>
-</ul>
-</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -541,7 +537,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../other/coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../other/networks.html">Networks</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../other/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../other/networks/TLS.html">TLS</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other/python_apache.html">Python with apache</a></li>
 
 
@@ -741,39 +740,6 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="join-types">
 <h1>Join types<a class="headerlink" href="#join-types" title="Link to this heading">#</a></h1>
 <p>At this page we’ll consider different join types and their features in clickhouse and postgres.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>jointypes_example_postgres<span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>postgres<span class="se">\</span>
-<span class="w">    </span>postgres:15.4<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>jointypes_example_click<span class="se">\</span>
-<span class="w">    </span>clickhouse/clickhouse-server:24
-sleep<span class="w"> </span><span class="m">5</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4ac26d66b863b8203effa902c975e462493dab89ad5d3b1fd3527bad50508105
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong> don’t forget to clean the environment after you try everything you wanted.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>jointypes_example_postgres<span class="w"> </span>jointypes_example_click
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>jointypes_example_postgres
-jointypes_example_click
-</pre></div>
-</div>
-</div>
-</div>
 <section id="full-join">
 <h2>Full join<a class="headerlink" href="#full-join" title="Link to this heading">#</a></h2>
 <p>A <code class="docutils literal notranslate"><span class="pre">FULL</span> <span class="pre">JOIN</span></code> combines all rows from both tables being joined, including those without matching values in the specified join columns. If a row from either table does not have a corresponding match, the result will contain <code class="docutils literal notranslate"><span class="pre">NULL</span></code> values in the columns of the non-matching table.</p>
@@ -781,77 +747,73 @@ jointypes_example_click
 <p>The following cell demonstrates the application of the <code class="docutils literal notranslate"><span class="pre">FULL</span> <span class="pre">JOIN</span></code> in postgres.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>jointypes_example_postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">WITH</span><span class="w"> </span>
+<span class="n">table1</span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+<span class="n">table2</span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
 
-<span class="s">WITH </span>
-<span class="s">table1(col1) AS (VALUES (1), (2), (3), (4)),</span>
-<span class="s">table2(col1) AS (VALUES (1), (3), (8), (9))</span>
-
-<span class="s">SELECT *</span>
-<span class="s">FROM </span>
-<span class="s">    table1</span>
-<span class="s">    FULL JOIN table2 ON table1.col1=table2.col1</span>
-<span class="s">;</span>
-<span class="s">EOF</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span>
+<span class="w">    </span><span class="n">table1</span>
+<span class="w">    </span><span class="k">FULL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">table1</span><span class="p">.</span><span class="n">col1</span><span class="o">=</span><span class="n">table2</span><span class="p">.</span><span class="n">col1</span>
+<span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | col1 
-------+------
-    1 |    1
-    2 |     
-    3 |    3
-    4 |     
-      |    8
-      |    9
-(6 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th style="text-align: right;">  col1</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td style="text-align: right;">     1</td></tr>
+<tr><td style="text-align: right;">     2</td><td style="text-align: right;">      </td></tr>
+<tr><td style="text-align: right;">     3</td><td style="text-align: right;">     3</td></tr>
+<tr><td style="text-align: right;">     4</td><td style="text-align: right;">      </td></tr>
+<tr><td style="text-align: right;">      </td><td style="text-align: right;">     8</td></tr>
+<tr><td style="text-align: right;">      </td><td style="text-align: right;">     9</td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>The following cell demonstrates the same example in ClickHouse; the result is nearly identical, with the only difference being that it uses zeros instead of NULLs for non-matching rows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>jointypes_example_click<span class="w"> </span>clickhouse-client<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">CREATE TEMPORARY TABLE table1(val Int32) ENGINE = Memory;</span>
-<span class="s2">CREATE TEMPORARY TABLE table2(val Int32) ENGINE = Memory;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">table1</span><span class="p">(</span><span class="n">val</span><span class="w"> </span><span class="n">Int32</span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Memory</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">table2</span><span class="p">(</span><span class="n">val</span><span class="w"> </span><span class="n">Int32</span><span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Memory</span><span class="p">;</span>
 
-<span class="s2">INSERT INTO table1 VALUES</span>
-<span class="s2">    (1), (2), (3), (4);</span>
-<span class="s2">INSERT INTO table2 VALUES</span>
-<span class="s2">    (1), (3), (8), (9);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">9</span><span class="p">);</span>
 
-<span class="s2">SELECT table1.val, table2.val</span>
-<span class="s2">    FROM table1 </span>
-<span class="s2">    FULL JOIN table2 ON table1.val=table2.val</span>
-<span class="s2">FORMAT PRETTY;</span>
-<span class="s2">&quot;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">table1</span><span class="p">.</span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="n">table2</span><span class="p">.</span><span class="n">val</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span>
+<span class="w">    </span><span class="k">FULL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">table1</span><span class="p">.</span><span class="n">val</span><span class="o">=</span><span class="n">table2</span><span class="p">.</span><span class="n">val</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┏━━━━━┳━━━━━━━━━━━━┓
-   ┃ val ┃ table2.val ┃
-   ┡━━━━━╇━━━━━━━━━━━━┩
-1. │   1 │          1 │
-   ├─────┼────────────┤
-2. │   2 │          0 │
-   ├─────┼────────────┤
-3. │   3 │          3 │
-   ├─────┼────────────┤
-4. │   4 │          0 │
-   └─────┴────────────┘
-   ┏━━━━━┳━━━━━━━━━━━━┓
-   ┃ val ┃ table2.val ┃
-   ┡━━━━━╇━━━━━━━━━━━━┩
-5. │   0 │          9 │
-   ├─────┼────────────┤
-6. │   0 │          8 │
-   └─────┴────────────┘
-</pre></div>
-</div>
-</div>
+<div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">      195283</td><td style="text-align: right;">       1051583</td><td>24eb870a-730d-480e-823d-40b0d4995346</td></tr>
+</tbody>
+</table></div><div class="output text_html"></div><div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  val</th><th style="text-align: right;">  table2.val</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">    1</td><td style="text-align: right;">           1</td></tr>
+<tr><td style="text-align: right;">    2</td><td style="text-align: right;">           0</td></tr>
+<tr><td style="text-align: right;">    3</td><td style="text-align: right;">           3</td></tr>
+<tr><td style="text-align: right;">    4</td><td style="text-align: right;">           0</td></tr>
+<tr><td style="text-align: right;">    0</td><td style="text-align: right;">           9</td></tr>
+<tr><td style="text-align: right;">    0</td><td style="text-align: right;">           8</td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 </section>
@@ -865,16 +827,16 @@ jointypes_example_click
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "universal_sql"
         },
         kernelOptions: {
-            name: "bash",
+            name: "universal_sql",
             path: "./sql/select/join"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'universal_sql'</script>
 
                 </article>
               

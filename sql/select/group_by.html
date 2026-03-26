@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/group_by';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -409,12 +411,6 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../load_modify.html">Load/Modify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../versions_issues.html">Versions issues</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../python_interaction/python_from_container.html">Python from container</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../python_interaction/python_on_host.html">Python on host</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../python_interaction/create_database.html">Create database</a></li>
-</ul>
-</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -541,7 +537,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../other/coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../other/networks.html">Networks</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/networks/TLS.html">TLS</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
 
 
@@ -743,110 +742,86 @@ document.write(`
 <h1>Group by<a class="headerlink" href="#group-by" title="Link to this heading">#</a></h1>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> SQL statement allows you to select columns whose unique values will define the groups for aggregation functions.</p>
 <hr class="docutils" />
-<p>The following cell sets up a container with PostgreSQL that will be used for the example demonstrated on this page.</p>
+<p>The following cell sets up a table that would be used as the example for this page.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-d<span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>postgres<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>groupby_examples<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>postgres:15.4<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-sleep<span class="w"> </span><span class="m">5</span>
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>groupby_examples<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">CREATE TABLE aggregation_table(</span>
-<span class="s">    col1 TEXT,</span>
-<span class="s">    col2 INT</span>
-<span class="s">);</span>
-<span class="s">INSERT INTO aggregation_table(col1, col2) VALUES</span>
-<span class="s">(&#39;A&#39;, 5),</span>
-<span class="s">(&#39;A&#39;, 1),</span>
-<span class="s">(&#39;B&#39;, 2),</span>
-<span class="s">(&#39;B&#39;, 1),</span>
-<span class="s">(&#39;C&#39;, 3),</span>
-<span class="s">(&#39;C&#39;, 4);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">aggregation_table</span><span class="p">(</span>
+<span class="w">    </span><span class="n">col1</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">col2</span><span class="w"> </span><span class="nb">INT</span>
+<span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">aggregation_table</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
 
-<span class="s">SELECT * FROM aggregation_table;</span>
-<span class="s">EOF</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">aggregation_table</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CREATE TABLE
-INSERT 0 6
- col1 | col2 
-------+------
- A    |    5
- A    |    1
- B    |    2
- B    |    1
- C    |    3
- C    |    4
-(6 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>col1  </th><th style="text-align: right;">  col2</th></tr>
+</thead>
+<tbody>
+<tr><td>A     </td><td style="text-align: right;">     5</td></tr>
+<tr><td>A     </td><td style="text-align: right;">     1</td></tr>
+<tr><td>B     </td><td style="text-align: right;">     2</td></tr>
+<tr><td>B     </td><td style="text-align: right;">     1</td></tr>
+<tr><td>C     </td><td style="text-align: right;">     3</td></tr>
+<tr><td>C     </td><td style="text-align: right;">     4</td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>By using <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code>, we can explicitly state that we want to partition the table based on unique values of <code class="docutils literal notranslate"><span class="pre">col1</span></code> and then apply the sum function to the values of <code class="docutils literal notranslate"><span class="pre">col2</span></code> within each separate partition.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>groupby_examples<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-
-<span class="s">SELECT col1, SUM(col2)</span>
-<span class="s">FROM aggregation_table</span>
-<span class="s">GROUP BY col1;</span>
-
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">col2</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">aggregation_table</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">col1</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | sum 
-------+-----
- B    |   3
- C    |   7
- A    |   6
-(3 rows)
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong> don’t forget to stop the container.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>groupby_examples
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>groupby_examples
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>col1  </th><th style="text-align: right;">  sum</th></tr>
+</thead>
+<tbody>
+<tr><td>B     </td><td style="text-align: right;">    3</td></tr>
+<tr><td>C     </td><td style="text-align: right;">    7</td></tr>
+<tr><td>A     </td><td style="text-align: right;">    6</td></tr>
+</tbody>
+</table></div></div>
 </div>
 <section id="conditions-on-aggregats-having">
 <h2>Conditions on aggregats (HAVING)<a class="headerlink" href="#conditions-on-aggregats-having" title="Link to this heading">#</a></h2>
 <p>For scenarios where you need to apply a filter on the aggregated results, SQL provides the special keyword <code class="docutils literal notranslate"><span class="pre">HAVING</span></code>.  For more details on using <code class="docutils literal notranslate"><span class="pre">HAVING</span></code>, please refer to the <a class="reference internal" href="group_by/conditions_on_aggregats.html"><span class="std std-doc">specific page</span></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>groupby_examples<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-
-<span class="s">SELECT col1, SUM(col2)</span>
-<span class="s">FROM aggregation_table</span>
-<span class="s">GROUP BY col1</span>
-<span class="s">HAVING SUM(col2) &gt; 5;</span>
-
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">col2</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">aggregation_table</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">col1</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">col2</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | sum 
-------+-----
- C    |   7
- A    |   6
-(2 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>col1  </th><th style="text-align: right;">  sum</th></tr>
+</thead>
+<tbody>
+<tr><td>C     </td><td style="text-align: right;">    7</td></tr>
+<tr><td>A     </td><td style="text-align: right;">    6</td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="conditions-in-aggregats-filter">
@@ -856,27 +831,27 @@ INSERT 0 6
 <p>Let’s say you need to count the occurrences of specific values in <code class="docutils literal notranslate"><span class="pre">col2</span></code> within each group defined by <code class="docutils literal notranslate"><span class="pre">col1</span></code>. This can be accomplished using the query shown in the following cell.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>groupby_examples<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT</span>
-<span class="s">    col1,</span>
-<span class="s">    COUNT(col2) FILTER (WHERE col2=1) &quot;col2=1&quot;,</span>
-<span class="s">    COUNT(col2) FILTER (WHERE col2=2) &quot;col2=2&quot;</span>
-<span class="s">FROM aggregation_table</span>
-<span class="s">GROUP BY col1;</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">col1</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="n">col2</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="n">col2</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="ss">&quot;col2=1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="n">col2</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="n">col2</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="ss">&quot;col2=2&quot;</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">aggregation_table</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">col1</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | col2=1 | col2=2 
-------+--------+--------
- B    |      1 |      1
- C    |      0 |      0
- A    |      1 |      0
-(3 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>col1  </th><th style="text-align: right;">  col2=1</th><th style="text-align: right;">  col2=2</th></tr>
+</thead>
+<tbody>
+<tr><td>B     </td><td style="text-align: right;">       1</td><td style="text-align: right;">       1</td></tr>
+<tr><td>C     </td><td style="text-align: right;">       0</td><td style="text-align: right;">       0</td></tr>
+<tr><td>A     </td><td style="text-align: right;">       1</td><td style="text-align: right;">       0</td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <div class="toctree-wrapper compound">
@@ -892,16 +867,16 @@ INSERT 0 6
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "universal_sql"
         },
         kernelOptions: {
-            name: "bash",
+            name: "universal_sql",
             path: "./sql/select"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'universal_sql'</script>
 
                 </article>
               

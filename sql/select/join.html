@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/join';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -409,12 +411,6 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../load_modify.html">Load/Modify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../versions_issues.html">Versions issues</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../python_interaction/python_from_container.html">Python from container</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../python_interaction/python_on_host.html">Python on host</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../python_interaction/create_database.html">Create database</a></li>
-</ul>
-</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -541,7 +537,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../other/coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../other/networks.html">Networks</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/networks/TLS.html">TLS</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
 
 
@@ -749,38 +748,7 @@ document.write(`
 <h1>JOIN<a class="headerlink" href="#join" title="Link to this heading">#</a></h1>
 <p>Join is a keyword that allows you to combine information from different tables. It’s really important, but sometimes it’s hard to understand, so this whole page is about features and usecases of joins in Postgres SQL.</p>
 <p>In the following cell, I’m creating a database that will be used for all the examples on this page.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>join_example_postgres<span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>postgres<span class="se">\</span>
-<span class="w">    </span>postgres:15.4<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>join_example_click<span class="se">\</span>
-<span class="w">    </span>clickhouse/clickhouse-server:24
-sleep<span class="w"> </span><span class="m">5</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1c7078e249c4d2fd392a6063c9bcf20334edd8589b457849f49756cf76540f54
-</pre></div>
-</div>
-</div>
-</div>
 <p><strong>Note</strong> Remember to close the container when you have finished playing with the examples.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>join_example_postgres<span class="w"> </span>join_example_click
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>join_example_postgres
-</pre></div>
-</div>
-</div>
-</div>
 <section id="join-types">
 <h2>Join types<a class="headerlink" href="#join-types" title="Link to this heading">#</a></h2>
 <p>This diagram describes the different types of joins available in SQL.</p>
@@ -794,43 +762,43 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>The following cell shows how tables <code class="docutils literal notranslate"><span class="pre">table1</span></code> and <code class="docutils literal notranslate"><span class="pre">table2</span></code>, aliased as <code class="docutils literal notranslate"><span class="pre">t1</span></code> and <code class="docutils literal notranslate"><span class="pre">t2</span></code> respectively, are joined and used in a query.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>join_example_postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">WITH</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">WITH</span>
 
-<span class="s">table1(col1, col2) AS (</span>
-<span class="s">    VALUES</span>
-<span class="s">    (1, &#39;a&#39;),</span>
-<span class="s">    (2, &#39;b&#39;),</span>
-<span class="s">    (3, &#39;c&#39;),</span>
-<span class="s">    (4, &#39;d&#39;)</span>
-<span class="s">),</span>
-<span class="s">table2(col1, col2) AS (</span>
-<span class="s">    VALUES</span>
-<span class="s">    (1, &#39;A&#39;),</span>
-<span class="s">    (2, &#39;B&#39;),</span>
-<span class="s">    (3, &#39;C&#39;),</span>
-<span class="s">    (4, &#39;D&#39;)</span>
-<span class="s">)</span>
+<span class="n">table1</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;b&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;c&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="p">),</span>
+<span class="n">table2</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;A&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
+<span class="p">)</span>
 
-<span class="s">SELECT * </span>
-<span class="s">FROM </span>
-<span class="s">    table1 t1 JOIN table2 t2 </span>
-<span class="s">    ON (t1.col1=t2.col1);</span>
-<span class="s">EOF</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span>
+<span class="w">    </span><span class="n">table1</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">t1</span><span class="p">.</span><span class="n">col1</span><span class="o">=</span><span class="n">t2</span><span class="p">.</span><span class="n">col1</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | col2 | col1 | col2 
-------+------+------+------
-    1 | a    |    1 | A
-    2 | b    |    2 | B
-    3 | c    |    3 | C
-    4 | d    |    4 | D
-(4 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th>col2  </th><th style="text-align: right;">  col1</th><th>col2  </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td>a     </td><td style="text-align: right;">     1</td><td>A     </td></tr>
+<tr><td style="text-align: right;">     2</td><td>b     </td><td style="text-align: right;">     2</td><td>B     </td></tr>
+<tr><td style="text-align: right;">     3</td><td>c     </td><td style="text-align: right;">     3</td><td>C     </td></tr>
+<tr><td style="text-align: right;">     4</td><td>d     </td><td style="text-align: right;">     4</td><td>D     </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="several-tables">
@@ -840,32 +808,31 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>In the following example, all information is combined into a single query using multiple joins.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>join_example_postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">WITH</span><span class="w"> </span>
+<span class="n">table1</span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+<span class="n">table2</span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+<span class="n">table3</span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
 
-<span class="s">WITH </span>
-<span class="s">table1(col1) AS (VALUES (1), (2), (3)),</span>
-<span class="s">table2(col1) AS (VALUES (1), (3), (2)),</span>
-<span class="s">table3(col1) AS (VALUES (3), (1), (7))</span>
-
-<span class="s">SELECT *</span>
-<span class="s">FROM </span>
-<span class="s">    table1</span>
-<span class="s">    JOIN table2 ON table1.col1=table2.col1</span>
-<span class="s">    JOIN table3 ON table1.col1=table3.col1</span>
-<span class="s">;</span>
-<span class="s">EOF</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span>
+<span class="w">    </span><span class="n">table1</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">table1</span><span class="p">.</span><span class="n">col1</span><span class="o">=</span><span class="n">table2</span><span class="p">.</span><span class="n">col1</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table3</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">table1</span><span class="p">.</span><span class="n">col1</span><span class="o">=</span><span class="n">table3</span><span class="p">.</span><span class="n">col1</span>
+<span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | col1 | col1 
-------+------+------
-    1 |    1 |    1
-    3 |    3 |    3
-(2 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th style="text-align: right;">  col1</th><th style="text-align: right;">  col1</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td style="text-align: right;">     1</td><td style="text-align: right;">     1</td></tr>
+<tr><td style="text-align: right;">     3</td><td style="text-align: right;">     3</td><td style="text-align: right;">     3</td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="accumulating-all-cases">
@@ -873,75 +840,65 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>Consider a specific case: suppose you have different values for a key across several tables, and you need to join all possible cases from different sources. The following cell creates an abstract example that we’ll use to illustrate this case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>join_example_postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">tab1</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">tab1</span><span class="p">(</span><span class="n">val1</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">);</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">tab2</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">tab2</span><span class="p">(</span><span class="n">val2</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">);</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">tab3</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">tab3</span><span class="p">(</span><span class="n">val3</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">);</span>
 
-<span class="s">DROP TABLE IF EXISTS tab1;</span>
-<span class="s">CREATE TABLE tab1(val1 TEXT);</span>
-<span class="s">DROP TABLE IF EXISTS tab2;</span>
-<span class="s">CREATE TABLE tab2(val2 TEXT);</span>
-<span class="s">DROP TABLE IF EXISTS tab3;</span>
-<span class="s">CREATE TABLE tab3(val3 TEXT);</span>
-
-<span class="s">INSERT INTO tab1(val1) VALUES</span>
-<span class="s">(&#39;a&#39;), (&#39;d&#39;), (&#39;c&#39;);</span>
-<span class="s">INSERT INTO tab2(val2) VALUES</span>
-<span class="s">(&#39;a&#39;), (&#39;b&#39;), (&#39;d&#39;);</span>
-<span class="s">INSERT INTO tab3(val3) VALUES</span>
-<span class="s">(&#39;a&#39;), (&#39;b&#39;), (&#39;e&#39;);</span>
-
-<span class="s">EOF</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">tab1</span><span class="p">(</span><span class="n">val1</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">tab2</span><span class="p">(</span><span class="n">val2</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">tab3</span><span class="p">(</span><span class="n">val3</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DROP TABLE
-CREATE TABLE
-DROP TABLE
-CREATE TABLE
-DROP TABLE
-CREATE TABLE
-INSERT 0 3
-INSERT 0 3
-INSERT 0 3
-</pre></div>
-</div>
 </div>
 </div>
 <p>In three tables <code class="docutils literal notranslate"><span class="pre">tab1</span></code>, <code class="docutils literal notranslate"><span class="pre">tab2</span></code> and <code class="docutils literal notranslate"><span class="pre">tab3</span></code> there are <code class="docutils literal notranslate"><span class="pre">val</span></code> column. Tables are showen in the following cell:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>join_example_postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT * FROM tab1;</span>
-<span class="s">SELECT * FROM tab2;</span>
-<span class="s">SELECT * FROM tab3;</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab1</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab2</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab3</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> val1 
-------
- a
- d
- c
-(3 rows)
-
- val2 
-------
- a
- b
- d
-(3 rows)
-
- val3 
-------
- a
- b
- e
-(3 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>val1  </th></tr>
+</thead>
+<tbody>
+<tr><td>a     </td></tr>
+<tr><td>d     </td></tr>
+<tr><td>c     </td></tr>
+</tbody>
+</table></div><div class="output text_html"><table>
+<thead>
+<tr><th>val2  </th></tr>
+</thead>
+<tbody>
+<tr><td>a     </td></tr>
+<tr><td>b     </td></tr>
+<tr><td>d     </td></tr>
+</tbody>
+</table></div><div class="output text_html"><table>
+<thead>
+<tr><th>val3  </th></tr>
+</thead>
+<tbody>
+<tr><td>a     </td></tr>
+<tr><td>b     </td></tr>
+<tr><td>e     </td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>Suppose we want to join records from different tables - each unique value from each table should appear uniquely in the result. The result should look like:</p>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -988,36 +945,36 @@ INSERT 0 3
 <p>The following cell demonstrates the implementation of the solution for the case under consideration.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>join_example_postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">WITH full_values AS (</span>
-<span class="s">    SELECT val1 AS val FROM tab1</span>
-<span class="s">    UNION</span>
-<span class="s">    SELECT val2 FROM tab2</span>
-<span class="s">    UNION</span>
-<span class="s">    SELECT val3 FROM tab3</span>
-<span class="s">)</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">full_values</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">val1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab1</span>
+<span class="w">    </span><span class="k">UNION</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">val2</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab2</span>
+<span class="w">    </span><span class="k">UNION</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">val3</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab3</span>
+<span class="p">)</span>
 
-<span class="s">SELECT * </span>
-<span class="s">FROM full_values</span>
-<span class="s">LEFT JOIN tab1 ON (full_values.val = tab1.val1)</span>
-<span class="s">LEFT JOIN tab2 ON (full_values.val = tab2.val2)</span>
-<span class="s">LEFT JOIN tab3 ON (full_values.val = tab3.val3);</span>
-<span class="s">EOF</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">full_values</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">tab1</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">full_values</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tab1</span><span class="p">.</span><span class="n">val1</span><span class="p">)</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">tab2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">full_values</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tab2</span><span class="p">.</span><span class="n">val2</span><span class="p">)</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">tab3</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">full_values</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tab3</span><span class="p">.</span><span class="n">val3</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> val | val1 | val2 | val3 
------+------+------+------
- a   | a    | a    | a
- b   |      | b    | b
- c   | c    |      | 
- d   | d    | d    | 
- e   |      |      | e
-(5 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>val  </th><th>val1  </th><th>val2  </th><th>val3  </th></tr>
+</thead>
+<tbody>
+<tr><td>a    </td><td>a     </td><td>a     </td><td>a     </td></tr>
+<tr><td>b    </td><td>      </td><td>b     </td><td>b     </td></tr>
+<tr><td>c    </td><td>c     </td><td>      </td><td>      </td></tr>
+<tr><td>d    </td><td>d     </td><td>d     </td><td>      </td></tr>
+<tr><td>e    </td><td>      </td><td>      </td><td>e     </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="wrong-options">
@@ -1025,44 +982,57 @@ INSERT 0 3
 <p>Consider option to join at first <code class="docutils literal notranslate"><span class="pre">tab2</span></code> to <code class="docutils literal notranslate"><span class="pre">tab1</span></code> and then <code class="docutils literal notranslate"><span class="pre">tab3</span></code> to <code class="docutils literal notranslate"><span class="pre">tab1</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>join_example_postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT </span>
-<span class="s">    COALESCE(tab1.val1, tab2.val2, tab3.val3) AS val, *</span>
-<span class="s">FROM tab1</span>
-<span class="s">FULL OUTER JOIN tab2 ON (tab1.val1=tab2.val2)</span>
-<span class="s">FULL OUTER JOIN tab3 ON (tab1.val1=tab3.val3);</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="k">COALESCE</span><span class="p">(</span><span class="n">tab1</span><span class="p">.</span><span class="n">val1</span><span class="p">,</span><span class="w"> </span><span class="n">tab2</span><span class="p">.</span><span class="n">val2</span><span class="p">,</span><span class="w"> </span><span class="n">tab3</span><span class="p">.</span><span class="n">val3</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">tab1</span>
+<span class="k">FULL</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">tab2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">tab1</span><span class="p">.</span><span class="n">val1</span><span class="o">=</span><span class="n">tab2</span><span class="p">.</span><span class="n">val2</span><span class="p">)</span>
+<span class="k">FULL</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">tab3</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">tab1</span><span class="p">.</span><span class="n">val1</span><span class="o">=</span><span class="n">tab3</span><span class="p">.</span><span class="n">val3</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> val | val1 | val2 | val3 
------+------+------+------
- a   | a    | a    | a
- b   |      |      | b
- c   | c    |      | 
- d   | d    | d    | 
- b   |      | b    | 
- e   |      |      | e
-(6 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>val  </th><th>val1  </th><th>val2  </th><th>val3  </th></tr>
+</thead>
+<tbody>
+<tr><td>a    </td><td>a     </td><td>a     </td><td>a     </td></tr>
+<tr><td>b    </td><td>      </td><td>      </td><td>b     </td></tr>
+<tr><td>c    </td><td>c     </td><td>      </td><td>      </td></tr>
+<tr><td>d    </td><td>d     </td><td>d     </td><td>      </td></tr>
+<tr><td>b    </td><td>      </td><td>b     </td><td>      </td></tr>
+<tr><td>e    </td><td>      </td><td>      </td><td>e     </td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>This approach doesn’t work because there is an option <code class="docutils literal notranslate"><span class="pre">b</span></code> that exists only in <code class="docutils literal notranslate"><span class="pre">tab2</span></code> and <code class="docutils literal notranslate"><span class="pre">tab3</span></code>. Since the query doesn’t set any condition to relate <code class="docutils literal notranslate"><span class="pre">tab2</span></code> and <code class="docutils literal notranslate"><span class="pre">tab3</span></code>, the result is joined to the ‘empty’ slot of <code class="docutils literal notranslate"><span class="pre">tab1</span></code> twice.</p>
 <p>It seems that changing the join condition could resolve the issue. The following cell attempts this approach, but it results in a subtle PostgreSQL error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>join_example_postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-d<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT * FROM tab1</span>
-<span class="s">FULL OUTER JOIN tab2 ON (tab1.val1=tab2.val2)</span>
-<span class="s">FULL OUTER JOIN tab3 ON (tab1.val1=tab3.val3 OR tab2.val2=tab3.val3);</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab1</span>
+<span class="k">FULL</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">tab2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">tab1</span><span class="p">.</span><span class="n">val1</span><span class="o">=</span><span class="n">tab2</span><span class="p">.</span><span class="n">val2</span><span class="p">)</span>
+<span class="k">FULL</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">tab3</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">tab1</span><span class="p">.</span><span class="n">val1</span><span class="o">=</span><span class="n">tab3</span><span class="p">.</span><span class="n">val3</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">tab2</span><span class="p">.</span><span class="n">val2</span><span class="o">=</span><span class="n">tab3</span><span class="p">.</span><span class="n">val3</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR:  FULL JOIN is only supported with merge-joinable or hash-joinable join conditions
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+  File &quot;/home/fedor/Documents/code/knowledge/src/sql_kernel/kernel.py&quot;, line 116, in do_execute
+    self._execute_sql(code=code)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File &quot;/home/fedor/Documents/code/knowledge/src/sql_kernel/kernel.py&quot;, line 84, in _execute_sql
+    messages, tables = runner.execute(code)
+                       ~~~~~~~~~~~~~~^^^^^^
+  File &quot;/home/fedor/Documents/code/knowledge/src/sql_kernel/runners/runners.py&quot;, line 73, in execute
+    raise e
+  File &quot;/home/fedor/Documents/code/knowledge/src/sql_kernel/runners/runners.py&quot;, line 70, in execute
+    cursor.execute(code.encode())
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File &quot;/home/fedor/.virtualenvironments/knowledge/lib/python3.13/site-packages/psycopg/cursor.py&quot;, line 97, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.FeatureNotSupported: FULL JOIN is only supported with merge-joinable or hash-joinable join conditions
 </pre></div>
 </div>
 </div>
@@ -1082,16 +1052,16 @@ INSERT 0 3
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "universal_sql"
         },
         kernelOptions: {
-            name: "bash",
+            name: "universal_sql",
             path: "./sql/select"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'universal_sql'</script>
 
                 </article>
               

@@ -409,12 +409,6 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/load_modify.html">Load/Modify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/versions_issues.html">Versions issues</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/python_from_container.html">Python from container</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/python_on_host.html">Python on host</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/create_database.html">Create database</a></li>
-</ul>
-</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -541,7 +535,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../other/coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../other/networks.html">Networks</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../other/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/networks/TLS.html">TLS</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/python_apache.html">Python with apache</a></li>
 
 
@@ -734,6 +731,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-management">Package management</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cron">Cron</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gnupg">GnuPG</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logrotate">logrotate</a></li>
 </ul>
             </nav>
         </div>
@@ -1542,6 +1540,104 @@ sub   cv25519 2024-12-15 [E] [expires: 2027-12-15]
 </div>
 </div>
 </section>
+<section id="logrotate">
+<h2>logrotate<a class="headerlink" href="#logrotate" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">logrotate</span></code> is linux utility to manipulate logs. Check the <a class="reference external" href="https://linux.die.net/man/8/logrotate">logrotate</a> man page.</p>
+<hr class="docutils" />
+<p>Chec the global configuration file in the <code class="docutils literal notranslate"><span class="pre">/etc/logrotate.conf</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>/etc/logrotate.conf
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># see &quot;man logrotate&quot; for details
+
+# global options do not affect preceding include directives
+
+# rotate log files weekly
+weekly
+
+# keep 4 weeks worth of backlogs
+rotate 4
+
+# create new (empty) log files after rotating old ones
+create
+
+# use date as a suffix of the rotated file
+#dateext
+
+# uncomment this if you want your log files compressed
+#compress
+
+# packages drop log rotation information into this directory
+include /etc/logrotate.d
+
+# system-specific logs may also be configured here.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Consider the example how you can trigger logrotate functionality. The following cell creates the test log file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span>/tmp/logs_folder
+mkdir<span class="w"> </span>/tmp/logs_folder
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;some data&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/logs_folder/log
+ls<span class="w"> </span>/tmp/logs_folder
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>log
+</pre></div>
+</div>
+</div>
+</div>
+<p>The folder contains only <code class="docutils literal notranslate"><span class="pre">log</span></code> file yet.</p>
+<p>The next code creates a logrotate configuration that rotates the file <code class="docutils literal notranslate"><span class="pre">/tmp/logs_folder/log</span></code> as soon as it reaches a size of 10 MB size. The <code class="docutils literal notranslate"><span class="pre">logrotate</span></code> is triggered using <code class="docutils literal notranslate"><span class="pre">-f</span></code> option.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF &gt; /tmp/experimental_log.conf</span>
+<span class="s">/tmp/logs_folder/log {</span>
+<span class="s">    rotate 5</span>
+<span class="s">    size 1</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+
+logrotate<span class="w"> </span>-f<span class="w"> </span>/tmp/experimental_log.conf
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is that in the <code class="docutils literal notranslate"><span class="pre">/tmp/logs_folder</span></code> log is rotated to the <code class="docutils literal notranslate"><span class="pre">log.1</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>/tmp/logs_folder
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>log.1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>/tmp/logs_folder/log.1
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>some data
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1616,6 +1712,7 @@ sub   cv25519 2024-12-15 [E] [expires: 2027-12-15]
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-management">Package management</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cron">Cron</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gnupg">GnuPG</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logrotate">logrotate</a></li>
 </ul>
   </nav></div>
 

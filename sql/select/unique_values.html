@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/unique_values';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -409,12 +411,6 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../load_modify.html">Load/Modify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../versions_issues.html">Versions issues</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../python_interaction/python_from_container.html">Python from container</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../python_interaction/python_on_host.html">Python on host</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../python_interaction/create_database.html">Create database</a></li>
-</ul>
-</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -541,7 +537,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../other/coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../other/networks.html">Networks</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/networks/TLS.html">TLS</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/python_apache.html">Python with apache</a></li>
 
 
@@ -746,90 +745,75 @@ document.write(`
 <p>In the next cell, I create everything I need for the examples in this page.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker run --rm -d\
-    -e POSTGRES_PASSWORD=postgres \
-    --name sql_DISTINCT_examples \
-    postgres:15.4 &amp;&gt; /dev/null
-sleep 5
-docker exec -i sql_DISTINCT_examples psql -U postgres -d postgres
-
-\set QUIET on
-CREATE TABLE non_unique_values(
-    col1 TEXT,
-    col2 TEXT
-);
-INSERT INTO non_unique_values(col1, col2) VALUES
-(&#39;A&#39;, &#39;Z&#39;),
-(&#39;A&#39;, &#39;X&#39;),
-(&#39;A&#39;, &#39;Y&#39;),
-(&#39;A&#39;, &#39;X&#39;),
-(&#39;B&#39;, &#39;X&#39;),
-(&#39;B&#39;, &#39;Z&#39;),
-(&#39;C&#39;, &#39;Z&#39;),
-(&#39;C&#39;, &#39;Y&#39;),
-(&#39;C&#39;, &#39;Y&#39;);
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">non_unique_values</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">non_unique_values</span><span class="p">(</span>
+<span class="w">    </span><span class="n">col1</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">col2</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">non_unique_values</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Z&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;X&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Z&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Z&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <p>The next cell shows the table I will use for examples in this section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i sql_DISTINCT_examples psql -U postgres -d postgres
-
-SELECT * FROM non_unique_values;
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">non_unique_values</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | col2 
-------+------
- A    | Z
- A    | X
- A    | Y
- A    | X
- B    | X
- B    | Z
- C    | Z
- C    | Y
- C    | Y
-(9 rows)
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong> don’t forget to stop the container when you finish playing with examples.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>docker<span class="w"> </span>stop<span class="w"> </span>sql_DISTINCT_examples<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>col1  </th><th>col2  </th></tr>
+</thead>
+<tbody>
+<tr><td>A     </td><td>Z     </td></tr>
+<tr><td>A     </td><td>X     </td></tr>
+<tr><td>A     </td><td>Y     </td></tr>
+<tr><td>A     </td><td>X     </td></tr>
+<tr><td>B     </td><td>X     </td></tr>
+<tr><td>B     </td><td>Z     </td></tr>
+<tr><td>C     </td><td>Z     </td></tr>
+<tr><td>C     </td><td>Y     </td></tr>
+<tr><td>C     </td><td>Y     </td></tr>
+</tbody>
+</table></div></div>
 </div>
 <section id="specific-column">
 <h2>Specific column<a class="headerlink" href="#specific-column" title="Link to this heading">#</a></h2>
 <p>If you use only one column as the result of a <code class="docutils literal notranslate"><span class="pre">SELECT</span></code>, the unique values of that column will be retrieved.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i sql_DISTINCT_examples psql -U postgres -d postgres
-
-SELECT DISTINCT col1 FROM non_unique_values;
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">col1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">non_unique_values</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 
-------
- B
- C
- A
-(3 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>col1  </th></tr>
+</thead>
+<tbody>
+<tr><td>B     </td></tr>
+<tr><td>C     </td></tr>
+<tr><td>A     </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="columns-combination">
@@ -837,27 +821,26 @@ SELECT DISTINCT col1 FROM non_unique_values;
 <p>If you use multiple columns as the result of a SELECT, you will get every possible combination of values in the columns once.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i sql_DISTINCT_examples psql -U postgres -d postgres
-
-SELECT DISTINCT col1, col2 FROM non_unique_values;
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">non_unique_values</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | col2 
-------+------
- A    | Z
- C    | Z
- B    | X
- A    | Y
- A    | X
- C    | Y
- B    | Z
-(7 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>col1  </th><th>col2  </th></tr>
+</thead>
+<tbody>
+<tr><td>A     </td><td>Z     </td></tr>
+<tr><td>C     </td><td>Z     </td></tr>
+<tr><td>B     </td><td>X     </td></tr>
+<tr><td>A     </td><td>Y     </td></tr>
+<tr><td>A     </td><td>X     </td></tr>
+<tr><td>C     </td><td>Y     </td></tr>
+<tr><td>B     </td><td>Z     </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="unique-on-specific-column">
@@ -868,26 +851,25 @@ SELECT DISTINCT col1, col2 FROM non_unique_values;
 <p>So in the following example I just use <code class="docutils literal notranslate"><span class="pre">col1</span></code> as <code class="docutils literal notranslate"><span class="pre">(expression)</span></code>. As a result we have only unique values in <code class="docutils literal notranslate"><span class="pre">col1</span></code> but uniqueness for <code class="docutils literal notranslate"><span class="pre">col2</span></code> but uniqueness for <code class="docutils literal notranslate"><span class="pre">col2</span></code> was not a concern for the query. Note that <code class="docutils literal notranslate"><span class="pre">col2</span></code> only takes values that match the first entry in <code class="docutils literal notranslate"><span class="pre">col1</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i sql_DISTINCT_examples psql -U postgres -d postgres
-
-SELECT DISTINCT ON (col1) 
-    col1, col2 
-FROM 
-    non_unique_values;
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span>
+<span class="w">    </span><span class="n">non_unique_values</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> col1 | col2 
-------+------
- A    | Z
- B    | X
- C    | Z
-(3 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>col1  </th><th>col2  </th></tr>
+</thead>
+<tbody>
+<tr><td>A     </td><td>Z     </td></tr>
+<tr><td>B     </td><td>X     </td></tr>
+<tr><td>C     </td><td>Z     </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 </section>
@@ -901,16 +883,16 @@ FROM
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "universal_sql"
         },
         kernelOptions: {
-            name: "python3",
+            name: "universal_sql",
             path: "./sql/select"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'universal_sql'</script>
 
                 </article>
               

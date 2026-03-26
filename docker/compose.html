@@ -409,12 +409,6 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/load_modify.html">Load/Modify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/versions_issues.html">Versions issues</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/python_interaction.html">Python interaction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/python_from_container.html">Python from container</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/python_on_host.html">Python on host</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sql/python_interaction/create_database.html">Create database</a></li>
-</ul>
-</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -541,7 +535,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../other/coding_tools/vs_code.html">VS Code</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../other/networks.html">Networks</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../other/networks.html">Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/networks/TLS.html">TLS</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/python_apache.html">Python with apache</a></li>
 
 
@@ -728,6 +725,10 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#up-down">Up/down</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#service-configuration">Service configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametrization">Parametrization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dot-env">Dot env</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -951,6 +952,74 @@ rm<span class="w"> </span>compose.yml
 <li><p><a class="reference external" href="https://docs.docker.com/reference/compose-file/services/">Corresponding page</a> of the offical documentation.</p></li>
 </ul>
 </section>
+<section id="parametrization">
+<h2>Parametrization<a class="headerlink" href="#parametrization" title="Link to this heading">#</a></h2>
+<p>You can use syntax such as <code class="docutils literal notranslate"><span class="pre">${&lt;VARIABLE_NAME&gt;}</span></code> to parametrize your docker compose file. The <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span></code> command inserts the values of the environment variables with the corresponding names.</p>
+<hr class="docutils" />
+<p>The following cell builds a docker compose file that uses the value of an environment variable as the printed result of the container.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init</span>
+<span class="c1"># file compose.yml</span>
+services:
+<span class="w">  </span>test:
+<span class="w">    </span>image:<span class="w"> </span>alpine:latest
+<span class="w">    </span>command:<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">SOME_VALUE</span><span class="si">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell adds the variable to the environment and runs the compose project.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">SOME_VALUE</span><span class="o">=</span><span class="s2">&quot;hello world&quot;</span>
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test-1 exited with code 0
+<span class=" -Color -Color-Cyan">test-1  | </span>hello world
+</pre></div>
+</div>
+</div>
+</div>
+<section id="dot-env">
+<h3>Dot env<a class="headerlink" href="#dot-env" title="Link to this heading">#</a></h3>
+<p>If some variables are not defined in the environment, the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span></code> will look for them in the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.</p>
+<hr class="docutils" />
+<p>The following cell defines a docker compose file that uses <code class="docutils literal notranslate"><span class="pre">SOME_VALUE</span></code> variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init</span>
+<span class="c1"># file compose.yml</span>
+services:
+<span class="w">  </span>test:
+<span class="w">    </span>image:<span class="w"> </span>alpine:latest
+<span class="w">    </span>command:<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">SOME_VALUE</span><span class="si">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next code explicitly removes the <code class="docutils literal notranslate"><span class="pre">SOME_VALUE</span></code> from the environment, but keeps it in the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">unset</span><span class="w"> </span>SOME_VALUE
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;SOME_VALUE=\&quot;value from .env\&quot;&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>.env
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test-1 exited with code 0
+<span class=" -Color -Color-Cyan">test-1  | </span>value from .env
+</pre></div>
+</div>
+</div>
+</div>
+<p>The docker compose uses the corresponding variable value.</p>
+</section>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1021,6 +1090,10 @@ rm<span class="w"> </span>compose.yml
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#up-down">Up/down</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#service-configuration">Service configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametrization">Parametrization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dot-env">Dot env</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
