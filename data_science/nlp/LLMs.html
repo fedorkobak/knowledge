@@ -63,7 +63,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="RAG" href="LLMs/rag.html" />
+    <link rel="next" title="Prompt engineering" href="LLMs/prompt_engineering.html" />
     <link rel="prev" title="Recurrent translations" href="recurrent_translation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -234,6 +234,7 @@
 <li class="toctree-l2"><a class="reference internal" href="recurrent_text_gen.html">Recurrent text gen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="recurrent_translation.html">Recurrent translations</a></li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">LLMs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="LLMs/prompt_engineering.html">Prompt engineering</a></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="LLMs/rag.html">RAG</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="LLMs/rag/imdb_example.html">IMDB example</a></li>
 </ul>
@@ -726,11 +727,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat templates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-engineering">Prompt engineering</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#token-sampling">Token sampling</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompting-techniques">Prompting techniques</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-engineering">Prompt engineering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-compatibility">OpenAI compatibility</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#function-calls">Function calls</a></li>
 </ul>
@@ -833,31 +830,7 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
 </ul>
 </li>
 </ul>
-<section id="token-sampling">
-<h3>Token sampling<a class="headerlink" href="#token-sampling" title="Link to this heading">#</a></h3>
-<p>At each step of the generation process, the model generates the next token by classifying it based on previous tokens. Thus, at some point, the model’s predictions resemble the probabilities of the next token:</p>
-<p><span class="math notranslate nohighlight">\(\left(p_1, p_2, \ldots, p_n\right), \sum_{i=1}^n p_i =1\)</span></p>
-<p>Where <span class="math notranslate nohighlight">\(n\)</span> is a vocabulary of the model.</p>
-<p><strong>The temperature</strong> regulates the randomness of the selected tokens. A value of 0 results in deterministic model outputs. The higher the value,a the more creative the model’s output will be.</p>
-<p><strong>Top-k</strong> specifies the model that selects the next token from among the <span class="math notranslate nohighlight">\(k\)</span> tokens with the highest probability.</p>
-<p><strong>Top-p</strong> it considers the smallest possible set of tokens whose cumulative probability exceeds a predefined threshold, <span class="math notranslate nohighlight">\(p\)</span>.</p>
-</section>
-<section id="prompting-techniques">
-<h3>Prompting techniques<a class="headerlink" href="#prompting-techniques" title="Link to this heading">#</a></h3>
-<p>There are different approaches associated to providing model information about the structure of required output:</p>
-<ul class="simple">
-<li><p><strong>Zero shot</strong>: general prompting technique, just query to the model without providing any additional information.</p></li>
-<li><p><strong>One shot &amp; Zero shot</strong>: to explain the model the structure of the output you expect from it.</p></li>
-</ul>
-<p>There are following options when specifying the general patterns of the model behaviour:</p>
-<ul class="simple">
-<li><p><strong>System prompting</strong> sets the overall context and purpose for the language model.</p></li>
-<li><p><strong>Contextual prompting</strong> provides specific details or background information relevant to the current convecrsation task.</p></li>
-<li><p><strong>Role prompting</strong> assigning the a specific character or identity for the language model</p></li>
-</ul>
-<p><strong>Step-back prompting</strong>: Two prompts are provided: a spefic prompt and a more general prompt. The more general prompt ussually asks about typical approaches to the issue described in the specific prompt. The second prompt includes the model’s answer to the general prompt as context and the specific prompt as the taks.</p>
-<p><strong>Chain of Thought (CoT)</strong>: A technique in which the model is asked to solve a task step by step. In the most basic implementation, the prompt literally asks the model to solve the problem “step by step”.</p>
-</section>
+<p>Checkmore in the <a class="reference internal" href="LLMs/prompt_engineering.html"><span class="std std-doc">prompt engineering</span></a> page.</p>
 </section>
 <section id="openai-compatibility">
 <h2>OpenAI compatibility<a class="headerlink" href="#openai-compatibility" title="Link to this heading">#</a></h2>
@@ -1354,11 +1327,11 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
       </div>
     </a>
     <a class="right-next"
-       href="LLMs/rag.html"
+       href="LLMs/prompt_engineering.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">RAG</p>
+        <p class="prev-next-title">Prompt engineering</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1379,11 +1352,7 @@ Hi human, what can help you with ?&lt;|im_end|&gt;
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chat-templates">Chat templates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-engineering">Prompt engineering</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#token-sampling">Token sampling</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompting-techniques">Prompting techniques</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-engineering">Prompt engineering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-compatibility">OpenAI compatibility</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#function-calls">Function calls</a></li>
 </ul>
