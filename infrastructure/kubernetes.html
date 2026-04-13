@@ -347,7 +347,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../git/checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/branches/merge.html">Merge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../git/branches/remote.html">Remotes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/branches/remote.html">Remote</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
@@ -480,6 +480,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/vpn.html">VPN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/network/openssl.html">OpenSSL</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux/package_management.html">Package management</a></li>
@@ -739,6 +740,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods">Pods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods-contorllers">Pods contorllers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#namespaces">Namespaces</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling-update">Rolling update</a></li>
 </ul>
             </nav>
@@ -1059,6 +1061,68 @@ pod &quot;ubuntu-pod&quot; deleted from default namespace
 </ul>
 <p>Check more in <a class="reference internal" href="kubernetes/pods_controllers.html"><span class="std std-doc">Pods controllers</span></a> page.</p>
 </section>
+<section id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Link to this heading">#</a></h2>
+<p>In k8s, a namespace is a virtual cluster that is deployed on top of a physical cluster.</p>
+<p>The operations with namespaces are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">ns</span></code>: to list craeted namespaces.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">create</span> <span class="pre">namespace</span> <span class="pre">&lt;namespace</span> <span class="pre">name&gt;</span></code>: to create a namespace.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">delete</span> <span class="pre">namespace</span> <span class="pre">&lt;namespace</span> <span class="pre">name&gt;</span></code>: to delete the namespace.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell shows the results of running the <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">nc</span></code> command:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>ns
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAME              STATUS   AGE
+default           Active   145m
+kube-node-lease   Active   145m
+kube-public       Active   145m
+kube-system       Active   145m
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are only default namespaces awailable in k8s from scratch.</p>
+<p>The next code creates a new namespace and lists all the namespaces again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>some-namespace
+kubectl<span class="w"> </span>get<span class="w"> </span>ns
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>namespace/some-namespace created
+NAME              STATUS   AGE
+default           Active   145m
+kube-node-lease   Active   145m
+kube-public       Active   145m
+kube-system       Active   145m
+some-namespace    Active   0s
+</pre></div>
+</div>
+</div>
+</div>
+<p>Deleting of created earlier namespace:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>some-namespace
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>namespace &quot;some-namespace&quot; deleted
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="rolling-update">
 <h2>Rolling update<a class="headerlink" href="#rolling-update" title="Link to this heading">#</a></h2>
 <p>If you update the configuration of a Deployment, DaemonSets or StatefulSets, you’re supposed to run a process that will deploy new configuration. K8s have for that <strong>rolling update</strong> strategy: it keeps old replica set until it ensures that new version of the application is healthy and only after that it moves the payload to the freashly deployed version.</p>
@@ -1243,6 +1307,7 @@ some-deployment-8fb6f4fcb    2         2         2       14s
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods">Pods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pods-contorllers">Pods contorllers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#namespaces">Namespaces</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling-update">Rolling update</a></li>
 </ul>
   </nav></div>

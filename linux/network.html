@@ -347,7 +347,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../git/checkout.html">Checkout</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/branches.html">Branches</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../git/branches/merge.html">Merge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../git/branches/remote.html">Remotes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../git/branches/remote.html">Remote</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
@@ -480,6 +480,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="network/vpn.html">VPN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network/openssl.html">OpenSSL</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="package_management.html">Package management</a></li>
@@ -731,6 +732,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#net-cut">Net cut</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ssh">SSH</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-interfaces">Network interfaces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openssl">OpenSSL</a></li>
 </ul>
             </nav>
         </div>
@@ -1002,6 +1004,119 @@ Connection closed by foreign host.
 </div>
 </div>
 </section>
+<section id="openssl">
+<h2>OpenSSL<a class="headerlink" href="#openssl" title="Link to this heading">#</a></h2>
+<p>OpenSSL is an open-source software library of used for secure communication over networks. You can access its functionality on linux using the CLI tool <code class="docutils literal notranslate"><span class="pre">openssl</span></code>. This section mainly focuses on the aspecs of using the CLI tool.</p>
+<p>The following cell shows the most command and importand <code class="docutils literal notranslate"><span class="pre">openssl</span></code> subcommands.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Subcommand</p></th>
+<th class="head"><p>Purpose</p></th>
+<th class="head"><p>Typical Use Case</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">version</span></code></p></td>
+<td><p>Show OpenSSL version</p></td>
+<td><p>Debug environment</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">version</span> <span class="pre">-a</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">genpkey</span></code></p></td>
+<td><p>Generate private key (modern)</p></td>
+<td><p>RSA / EC key generation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">genpkey</span> <span class="pre">-algorithm</span> <span class="pre">RSA</span> <span class="pre">-out</span> <span class="pre">key.pem</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pkey</span></code></p></td>
+<td><p>Inspect/convert private keys</p></td>
+<td><p>View or transform keys</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">pkey</span> <span class="pre">-in</span> <span class="pre">key.pem</span> <span class="pre">-text</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rsa</span></code></p></td>
+<td><p>Work with RSA keys (legacy)</p></td>
+<td><p>Inspect RSA-specific keys</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">rsa</span> <span class="pre">-in</span> <span class="pre">key.pem</span> <span class="pre">-text</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ec</span></code></p></td>
+<td><p>Work with EC keys</p></td>
+<td><p>Inspect EC keys</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">ec</span> <span class="pre">-in</span> <span class="pre">key.pem</span> <span class="pre">-text</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">req</span></code></p></td>
+<td><p>Create CSR (certificate signing request)</p></td>
+<td><p>Request TLS certificate</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">req</span> <span class="pre">-new</span> <span class="pre">-key</span> <span class="pre">key.pem</span> <span class="pre">-out</span> <span class="pre">req.csr</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x509</span></code></p></td>
+<td><p>Work with certificates</p></td>
+<td><p>Inspect / convert certs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">x509</span> <span class="pre">-in</span> <span class="pre">cert.pem</span> <span class="pre">-text</span> <span class="pre">-noout</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">verify</span></code></p></td>
+<td><p>Verify certificate chain</p></td>
+<td><p>Check trust chain</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">verify</span> <span class="pre">cert.pem</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">s_client</span></code></p></td>
+<td><p>Connect to TLS server</p></td>
+<td><p>Debug TLS handshake</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">s_client</span> <span class="pre">-connect</span> <span class="pre">example.com:443</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">s_server</span></code></p></td>
+<td><p>Run local TLS server</p></td>
+<td><p>Testing TLS setups</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">s_server</span> <span class="pre">-cert</span> <span class="pre">cert.pem</span> <span class="pre">-key</span> <span class="pre">key.pem</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dgst</span></code></p></td>
+<td><p>Compute hash / sign / verify</p></td>
+<td><p>Signature verification</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">dgst</span> <span class="pre">-sha256</span> <span class="pre">-verify</span> <span class="pre">pub.pem</span> <span class="pre">-signature</span> <span class="pre">sig.bin</span> <span class="pre">file</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">enc</span></code></p></td>
+<td><p>Encrypt/decrypt files</p></td>
+<td><p>Symmetric encryption</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">enc</span> <span class="pre">-aes-256-cbc</span> <span class="pre">-in</span> <span class="pre">file</span> <span class="pre">-out</span> <span class="pre">file.enc</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rand</span></code></p></td>
+<td><p>Generate random bytes</p></td>
+<td><p>Keys, tokens</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">rand</span> <span class="pre">-hex</span> <span class="pre">16</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">base64</span></code></p></td>
+<td><p>Encode/decode base64</p></td>
+<td><p>Data formatting</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">base64</span> <span class="pre">-in</span> <span class="pre">file</span> <span class="pre">-out</span> <span class="pre">file.b64</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pkcs12</span></code></p></td>
+<td><p>Work with <code class="docutils literal notranslate"><span class="pre">.p12/.pfx</span></code> bundles</p></td>
+<td><p>Import/export cert+key</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">pkcs12</span> <span class="pre">-in</span> <span class="pre">bundle.p12</span> <span class="pre">-info</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pkcs8</span></code></p></td>
+<td><p>Convert private key formats</p></td>
+<td><p>Standardize keys</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">pkcs8</span> <span class="pre">-topk8</span> <span class="pre">-in</span> <span class="pre">key.pem</span> <span class="pre">-out</span> <span class="pre">key8.pem</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">asn1parse</span></code></p></td>
+<td><p>Parse ASN.1 structures</p></td>
+<td><p>Debug certs / signatures</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">asn1parse</span> <span class="pre">-in</span> <span class="pre">cert.pem</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">crl</span></code></p></td>
+<td><p>Work with revocation lists</p></td>
+<td><p>Check revoked certs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">crl</span> <span class="pre">-in</span> <span class="pre">crl.pem</span> <span class="pre">-text</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ocsp</span></code></p></td>
+<td><p>Query OCSP responder</p></td>
+<td><p>Real-time cert status</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">ocsp</span> <span class="pre">-issuer</span> <span class="pre">issuer.pem</span> <span class="pre">-cert</span> <span class="pre">cert.pem</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For more check the dedicated <a class="reference internal" href="network/openssl.html"><span class="std std-doc">OpenSSL</span></a> page.</p>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1015,16 +1130,16 @@ Connection closed by foreign host.
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash_kernel"
+            mode: "bash"
         },
         kernelOptions: {
-            name: "bash_kernel",
+            name: "bash",
             path: "./linux"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash_kernel'</script>
+    <script>kernelName = 'bash'</script>
 
                 </article>
               
@@ -1077,6 +1192,7 @@ Connection closed by foreign host.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#net-cut">Net cut</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ssh">SSH</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-interfaces">Network interfaces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openssl">OpenSSL</a></li>
 </ul>
   </nav></div>
 

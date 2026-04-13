@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Remotes &#8212; Knowledge base</title>
+    <title>Remote &#8212; Knowledge base</title>
   
   
   
@@ -347,7 +347,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../checkout.html">Checkout</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../branches.html">Branches</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="merge.html">Merge</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Remotes</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Remote</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../log.html">Log</a></li>
@@ -480,6 +480,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../linux/network/vpn.html">VPN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../linux/network/openssl.html">OpenSSL</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux/package_management.html">Package management</a></li>
@@ -714,7 +715,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Remotes</h1>
+    <h1>Remote</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -724,10 +725,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up">Set up</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show-remotes">Show remotes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-remove-remote">Add/remove remote</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-url">Set url</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-remove">Add/remove</a></li>
 </ul>
             </nav>
         </div>
@@ -739,199 +737,82 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="remotes">
-<h1>Remotes<a class="headerlink" href="#remotes" title="Link to this heading">#</a></h1>
-<p>Consider features of working with remotes in git. Check corresponding section in <a class="reference external" href="https://git-scm.com/book/ms/v2/Git-Basics-Working-with-Remotes">git documentation</a>.</p>
-<section id="set-up">
-<h2>Set up<a class="headerlink" href="#set-up" title="Link to this heading">#</a></h2>
-<p>Obviously, we need remotes for this section. To avoid repetitive manual operations like creating and deleting repositories in Git storage providers, we’ll need a specific setup.</p>
-<p>The following cell shows a Dockerfile that creates an image for containers acting as toy servers. Learn more about setting up a Git daemon in the <a class="reference external" href="https://git-scm.com/book/en/v2/Git-on-the-Server-Git-Daemon">special section</a> of the official documentation.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>remote_files/dockerfile
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FROM debian:bullseye-slim
-
-# Install git (including git-daemon)
-RUN apt-get update &amp;&amp; apt-get install -y git &amp;&amp; apt-get clean
-
-# Create a directory for repositories and initialize a bare repository
-RUN mkdir -p /git/project.git &amp;&amp; git init --bare /git/project.git
-
-# Add a file to allow git-daemon to serve the repository
-RUN touch /git/project.git/git-daemon-export-ok
-
-# Expose the Git protocol port
-EXPOSE 9418
-
-# Start git-daemon to serve repositories
-CMD [&quot;git&quot;, &quot;daemon&quot;, &quot;--verbose&quot;, &quot;--export-all&quot;, &quot;--base-path=/git&quot;, &quot;/git&quot;]
-</pre></div>
-</div>
-</div>
-</div>
-<p>This dockerfile installs all the required packages on Debian Linux and creates an empty git repository, which we will basically use as an example.</p>
-<p>Build image:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>remote_files/dockerfile<span class="w"> </span>-t<span class="w"> </span>git-daemon<span class="w"> </span>.<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
-</div>
-</div>
-</div>
-<p>Running container:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-itd<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>git-daemon<span class="w"> </span>-p<span class="w"> </span><span class="m">9418</span>:9418<span class="w"> </span>git-daemon
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>92c52918a77da98d2a1221841c9af4bc90a2bc71beec3ce4e2dd2b5012eb448d
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now you can clone the repository into a local folder. The following code performs the cloning and displays the result of a Git commit from the repository.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>git://localhost:9418/project.git<span class="w"> </span>/tmp/remote
-<span class="nb">cd</span><span class="w"> </span>/tmp/remote
-git<span class="w"> </span>status
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cloning into &#39;/tmp/remote&#39;...
-warning: You appear to have cloned an empty repository.
-On branch master
-
-No commits yet
-
-nothing to commit (create/copy files and use &quot;git add&quot; to track)
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note:</strong> Don’t forget to clean up the environment when you’re done.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>git-daemon
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>git-daemon
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="show-remotes">
-<h2>Show remotes<a class="headerlink" href="#show-remotes" title="Link to this heading">#</a></h2>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span></code> command to list the short names of remotes you’re dealing with. With <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remove</span> <span class="pre">-v</span></code> you can show specific urls.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="remote">
+<h1>Remote<a class="headerlink" href="#remote" title="Link to this heading">#</a></h1>
+<p>This page considers the options to manipulate with branches on remote from local git repository. Check corresponding section in <a class="reference external" href="https://git-scm.com/book/ms/v2/Git-Basics-Working-with-Remotes">git documentation</a>.</p>
+<section id="add-remove">
+<h2>Add/remove<a class="headerlink" href="#add-remove" title="Link to this heading">#</a></h2>
+<p>Consider adding and deleting the branches from the git remote.</p>
+<p>To push the local branch to the remote use: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--set-upstream</span> <span class="pre">&lt;remote</span> <span class="pre">name&gt;</span> <span class="pre">&lt;branch</span> <span class="pre">name&gt;</span></code>.</p>
+<p>To delete the branch from the remote <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">&lt;remote</span> <span class="pre">name&gt;</span> <span class="pre">--delete</span> <span class="pre">&lt;branch</span> <span class="pre">name&gt;</span></code>.</p>
 <hr class="docutils" />
-<p>The following cell shows the result of the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span></code> command.</p>
+<p>The following cell set up the repository and remote for it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span>/tmp/remote/.git
+mkdir<span class="w"> </span>/tmp/remote/.git
+git<span class="w"> </span>init<span class="w"> </span>--bare<span class="w"> </span>/tmp/remote/.git<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init</span>
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>my_remote<span class="w"> </span>/tmp/remote/.git
+
+git<span class="w"> </span>commit<span class="w"> </span>--allow-empty<span class="w"> </span>-m<span class="w"> </span>initial_commit
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>new_branch
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>origin
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[master (root-commit) cda9b49] initial_commit
+Switched to a new branch &#39;new_branch&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">origin</span></code> is default name of the remote gitven by <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>.</p>
-<p>The following command shows the result of the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remove</span> <span class="pre">-v</span></code> command.</p>
+<p>The next code attempts to display the branches in the repositore. <strong>Note</strong> that the <code class="docutils literal notranslate"><span class="pre">--git-dir</span></code> and <code class="docutils literal notranslate"><span class="pre">--work-tree</span></code> options force git to operate with the bare repository, which we consider to be the remote.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>-v
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>--git-dir<span class="o">=</span>/tmp/remote/.git<span class="w"> </span>--work-tree<span class="o">=</span>/tmp/remote<span class="w"> </span>branch
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is that the output is empty: there are no branches in the remote repository. After running the <code class="docutils literal notranslate"><span class="pre">--set-upstream</span></code>, the branch appear:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>--set-upstream<span class="w"> </span>my_remote<span class="w"> </span>new_branch<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+git<span class="w"> </span>--git-dir<span class="o">=</span>/tmp/remote/.git<span class="w"> </span>--work-tree<span class="o">=</span>/tmp/remote<span class="w"> </span>branch
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>origin	git://localhost:9418/project.git (fetch)
-origin	git://localhost:9418/project.git (push)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  new_branch
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now for remote consideration specified fetch and pull URLs.</p>
-</section>
-<section id="add-remove-remote">
-<h2>Add/remove remote<a class="headerlink" href="#add-remove-remote" title="Link to this heading">#</a></h2>
-<p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">add</span> <span class="pre">&lt;remote_name&gt;</span> <span class="pre">&lt;remote_url&gt;</span></code> to add new remote to the git repository. Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">remove</span> <span class="pre">&lt;remote_name&gt;</span></code> to remove remote.</p>
-<hr class="docutils" />
-<p>The following cell adds remote to the git repository.</p>
+<p>The following cell deletes the <code class="docutils literal notranslate"><span class="pre">new_branch</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>new_remote<span class="w"> </span>git://localhost:9418/newremote
-git<span class="w"> </span>remote<span class="w"> </span>-v
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>my_remote<span class="w"> </span>--delete<span class="w"> </span>new_branch<span class="w"> </span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>new_remote	git://localhost:9418/newremote (fetch)
-new_remote	git://localhost:9418/newremote (push)
-origin	git://localhost:9418/project.git (fetch)
-origin	git://localhost:9418/project.git (push)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>To /tmp/remote/.git
+ - [deleted]         new_branch
 </pre></div>
 </div>
 </div>
 </div>
-<p>The output of <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">-v</span></code> have an extra remote.</p>
-<p>The following cell removes the previously added remote.</p>
+<p>And it disappears in the list of branches for remote:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>remove<span class="w"> </span>new_remote
-git<span class="w"> </span>remote<span class="w"> </span>-v
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>origin	git://localhost:9418/project.git (fetch)
-origin	git://localhost:9418/project.git (push)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="set-url">
-<h2>Set url<a class="headerlink" href="#set-url" title="Link to this heading">#</a></h2>
-<p>You can update url remote refers to by using command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">set-url</span> <span class="pre">&lt;remote</span> <span class="pre">name&gt;</span> <span class="pre">&lt;new</span> <span class="pre">url&gt;</span></code>.</p>
-<hr class="docutils" />
-<p>The following cell changes ulr for an <code class="docutils literal notranslate"><span class="pre">origin</span></code> url that doesn’t exist - <code class="docutils literal notranslate"><span class="pre">broken.git</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>set-url<span class="w"> </span>origin<span class="w"> </span>borken.git
-git<span class="w"> </span>remote<span class="w"> </span>-v
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>origin	borken.git (fetch)
-origin	borken.git (push)
-</pre></div>
-</div>
-</div>
-</div>
-<p>The following cell applies <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">set-url</span></code> again to fix remote url.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>set-url<span class="w"> </span>origin<span class="w"> </span>git://localhost:9418/project.git
-git<span class="w"> </span>remote<span class="w"> </span>-v
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>origin	git://localhost:9418/project.git (fetch)
-origin	git://localhost:9418/project.git (push)
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>--git-dir<span class="o">=</span>/tmp/remote/.git<span class="w"> </span>--work-tree<span class="o">=</span>/tmp/remote<span class="w"> </span>branch
 </pre></div>
 </div>
 </div>
@@ -948,16 +829,16 @@ origin	git://localhost:9418/project.git (push)
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "git"
         },
         kernelOptions: {
-            name: "bash",
+            name: "git",
             path: "./git/branches"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'git'</script>
 
                 </article>
               
@@ -1003,10 +884,7 @@ origin	git://localhost:9418/project.git (push)
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up">Set up</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show-remotes">Show remotes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-remove-remote">Add/remove remote</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-url">Set url</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-remove">Add/remove</a></li>
 </ul>
   </nav></div>
 

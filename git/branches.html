@@ -347,7 +347,7 @@
 <li class="toctree-l1"><a class="reference internal" href="checkout.html">Checkout</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Branches</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="branches/merge.html">Merge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="branches/remote.html">Remotes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="branches/remote.html">Remote</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="log.html">Log</a></li>
@@ -480,6 +480,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/netcat_nc.html">Netcat (<code class="docutils literal notranslate"><span class="pre">nc</span></code>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linux/network/vpn.html">VPN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linux/network/openssl.html">OpenSSL</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux/package_management.html">Package management</a></li>
@@ -726,6 +727,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#navigation">Navigation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging">Merging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes">Remotes</a></li>
 </ul>
             </nav>
         </div>
@@ -753,7 +755,8 @@ document.write(`
 <p>A newly created repository will only contain the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch. The next cell shows the <code class="docutils literal notranslate"><span class="pre">log</span></code> of the repo after the first commit.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;some text&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>some_files
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;some text&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>some_files
 git<span class="w"> </span>add<span class="w"> </span>--all
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;first commit&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 git<span class="w"> </span>log<span class="w"> </span>--decorate
@@ -891,6 +894,68 @@ git<span class="w"> </span>log<span class="w"> </span>--all<span class="w"> </sp
 </ul>
 <p>For more check the <a class="reference internal" href="branches/merge.html"><span class="std std-doc">Merge</span></a> page.</p>
 </section>
+<section id="remotes">
+<h2>Remotes<a class="headerlink" href="#remotes" title="Link to this heading">#</a></h2>
+<p>Branches are ususally linked to a branch on the remote, so the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> commands synchronise the local branch with the same branch on the remote. This section considers the aspects of managing the remote branches.</p>
+<p>Check more in the <a class="reference internal" href="branches/remote.html"><span class="std std-doc">Remote</span></a> page.</p>
+<hr class="docutils" />
+<p>Consider how the fact that branch is linked to the remote looks like in the <code class="docutils literal notranslate"><span class="pre">git</span></code>. The following cells create and initialises the repository.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span>/tmp/remote.git
+mkdir<span class="w"> </span>/tmp/remote.git
+git<span class="w"> </span>init<span class="w"> </span>--bare<span class="w"> </span>/tmp/remote.git<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init</span>
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>my_remote<span class="w"> </span>/tmp/remote.git
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>f
+git<span class="w"> </span>add<span class="w"> </span>--all
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span>initial_commit
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[master (root-commit) 6c400b0] initial_commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 f
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">-vv</span></code> returns the detailed information about the branches in repo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>branch<span class="w"> </span>-vv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>* <span class=" -Color -Color-Green">master</span> 6c400b0 initial_commit
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the same command after setting upstream to the <code class="docutils literal notranslate"><span class="pre">my_remote</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>--set-upstream<span class="w"> </span>my_remote<span class="w"> </span>master<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+git<span class="w"> </span>branch<span class="w"> </span>-vv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>* <span class=" -Color -Color-Green">master</span> 6c400b0 [<span class=" -Color -Color-Blue">my_remote/master</span>] initial_commit
+</pre></div>
+</div>
+</div>
+</div>
+<p>The information in the square brackets is new and indicates the name of remote brach to which <code class="docutils literal notranslate"><span class="pre">main</span></code> is linked.</p>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -961,6 +1026,7 @@ git<span class="w"> </span>log<span class="w"> </span>--all<span class="w"> </sp
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#navigation">Navigation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging">Merging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#remotes">Remotes</a></li>
 </ul>
   </nav></div>
 
