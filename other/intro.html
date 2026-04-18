@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -410,6 +410,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/load_modify.html">Load/Modify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/versions_issues.html">Versions issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/postgre_sql.html">PostgreSQL</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -560,8 +561,10 @@
 <li class="toctree-l1"><a class="reference internal" href="json_schema.html">JSON Schema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="java_script.html">Java script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="go_templates.html">Go templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jinja_templates.html">Jinja Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="npm.html">NPM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbt.html">DBT</a></li>
 </ul>
 
     </div>
@@ -739,6 +742,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-tools">Coding tools</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tavily">Tavily</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unicode">Unicode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layers-of-character">Layers of character</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-forms">Normalization forms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-build-tool">Data build tool</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jinja-templates">Jinja Templates</a></li>
 </ul>
             </nav>
         </div>
@@ -999,6 +1009,269 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 </div>
 </div>
 </section>
+<section id="unicode">
+<h2>Unicode<a class="headerlink" href="#unicode" title="Link to this heading">#</a></h2>
+<p>UTF-8 is the most popular method for representing text on computer. UTF-8 encoding is usually written as <code class="docutils literal notranslate"><span class="pre">U+uvwxyz</span></code>, where <code class="docutils literal notranslate"><span class="pre">uvwxyz</span></code> is 6-digit hex number.</p>
+<p>Depending on how far the symbol if from the beginning of the table, it can take from one to four bytes.</p>
+<p>Check the <a class="reference external" href="https://unicode.org/reports/tr41/tr41-36.html">Common References for Unicode Standard</a>. It contains various technical details about the Unicode specification. This sidte considers the features of the latest unicode standard if other is not mentioned specifically.</p>
+<p>Sometimes it can be usefull to find the specific character and data related to it. Check the <a class="reference external" href="https://www.unicode.org/ucd/">Unicode Character Database</a>.</p>
+<hr class="docutils" />
+<p>The <code class="docutils literal notranslate"><span class="pre">uniname</span></code> utility in the <code class="docutils literal notranslate"><span class="pre">uniutils</span></code> package displays information about the encoding of a given string in table form. The following cell shows the output for a few of the first Latin symbols.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">LINES</span><span class="o">=</span><span class="m">100</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;abcde&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniname<span class="w"> </span>-A
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>character  byte       UTF-32   encoded as     glyph   name
+        0          0  000061   61             a      LATIN SMALL LETTER A
+        1          1  000062   62             b      LATIN SMALL LETTER B
+        2          2  000063   63             c      LATIN SMALL LETTER C
+        3          3  000064   64             d      LATIN SMALL LETTER D
+        4          4  000065   65             e      LATIN SMALL LETTER E
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell shows the outputs of the <code class="docutils literal notranslate"><span class="pre">uniname</span></code> for some cirilic letters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;абвгд&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>uniname<span class="w"> </span>-A
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>character  byte       UTF-32   encoded as     glyph   name
+        0          0  000430   D0 B0          а      CYRILLIC SMALL LETTER A
+        1          2  000431   D0 B1          б      CYRILLIC SMALL LETTER BE
+        2          4  000432   D0 B2          в      CYRILLIC SMALL LETTER VE
+        3          6  000433   D0 B3          г      CYRILLIC SMALL LETTER GHE
+        4          8  000434   D0 B4          д      CYRILLIC SMALL LETTER DE
+</pre></div>
+</div>
+</div>
+</div>
+<p>To check which character that corresponds to a specific unicode point, you can use the <code class="docutils literal notranslate"><span class="pre">pringf</span></code> bash command with the <code class="docutils literal notranslate"><span class="pre">\U</span></code> modifier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\u0061&quot;</span>
+<span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\U007A&quot;</span>
+
+<span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\U0001F600&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>z
+a
+😀
+</pre></div>
+</div>
+</div>
+</div>
+<section id="layers-of-character">
+<h3>Layers of character<a class="headerlink" href="#layers-of-character" title="Link to this heading">#</a></h3>
+<p>There are three layers that defines each character in unicode:</p>
+<ul class="simple">
+<li><p><strong>Abstract character</strong>: the single piece of information. The concept itself.</p></li>
+<li><p><strong>Code point</strong>: the numerical value assigned to that concept.</p></li>
+<li><p><strong>Glyph</strong>: the spefic “image” that represents the code point. Each font have it’s own glyphes.</p></li>
+</ul>
+<hr class="docutils" />
+<p>For example, consider the case where to the same abstract character “latin small letter e with acute” has two representations:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\u00E9&quot;</span>
+<span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\u0065\u0301&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>é
+é
+</pre></div>
+</div>
+</div>
+</div>
+<p>First uses just code point <code class="docutils literal notranslate"><span class="pre">U+00E9</span></code>, second is composed from <code class="docutils literal notranslate"><span class="pre">U+0065</span></code> and <code class="docutils literal notranslate"><span class="pre">U+0301</span></code>, but the abstract character is the same:лллл</p>
+<p>The following example illustrates the case in which two code point have the same abstract character due to compatibilities issues:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\u212B&quot;</span>
+<span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\u00C5&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Å
+Å
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="normalization-forms">
+<h3>Normalization forms<a class="headerlink" href="#normalization-forms" title="Link to this heading">#</a></h3>
+<p>The same human-readable text can be represented in Unicode in variety of ways. There are normal forms of Unicode text that define a single way for text to be represented.</p>
+<p>Check more in the <a class="reference external" href="https://unicode.org/reports/tr15/">Unicode normalization forms</a>.</p>
+<hr class="docutils" />
+<p>The following cell shows how the same symbols that can be encoded differently in Unicode.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\u00C7&quot;</span>
+<span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\u0043\U0327&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ç
+Ç
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-build-tool">
+<h2>Data build tool<a class="headerlink" href="#data-build-tool" title="Link to this heading">#</a></h2>
+<p>Data Build Tool (dbt) automates and standartises the project associated with transforming data.</p>
+<p>In DBT, a project is a set of configuration files that define how data should be processed.</p>
+<p>A dbt project cab be run in different ways, but the most of these are wrappers around the CLI. There are two CLIs:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dbt-core</span></code> python package.</p></li>
+<li><p>dbt fustion (<code class="docutils literal notranslate"><span class="pre">dbtf</span></code>) the modern interface that is distributed as system package. Check the <a class="reference external" href="https://docs.getdbt.com/docs/local/install-dbt?version=2.0#installation">installation guide</a>.</p></li>
+</ul>
+<p>The dbt works with a specific data storage system like: snowflake, postgres, clickhouse ect. You can define the credentials required to access the system in the “profile”. The profiles are defined in the file <code class="docutils literal notranslate"><span class="pre">/.dbt/profiles.yml</span></code>.</p>
+<p>For more check the dedicated <a class="reference internal" href="dbt.html"><span class="std std-doc">DBT</span></a> page.</p>
+<hr class="docutils" />
+<p>To create the project, simply run the <code class="docutils literal notranslate"><span class="pre">dbtf</span> <span class="pre">init</span></code>. The interface will then prompt you for all the necessary configuration inputs.</p>
+<p>As this site’s structure follows the style of a Jupyter notebook, it is not possible to display the command-line interface (CLI) prompts. However, you can create the profile manually and build a project based on it.</p>
+<p>For example profile may look like this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">knowledge</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>
+<span class="w">  </span><span class="nt">outputs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">dev</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5432</span>
+<span class="w">      </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
+<span class="w">      </span><span class="nt">schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">public</span>
+<span class="w">      </span><span class="nt">threads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+<span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost</span>
+<span class="w">      </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
+<span class="w">      </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
+</pre></div>
+</div>
+<p>The process of creating the project:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span>/tmp/new_data<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>mkdir<span class="w"> </span>/tmp/new_data
+<span class="nb">cd</span><span class="w"> </span>/tmp/new_data
+
+dbtf<span class="w"> </span>init<span class="w"> </span>--project-name<span class="w"> </span>knowledge<span class="w"> </span>--profile<span class="w"> </span>knowledge
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">Installing</span> dbt project and profile setup
+<span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Created .vscode/extensions.json with dbt extension recommendation
+<span class=" -Color -Color-Bold -Color-Bold-Green">Success</span> Project created successfully!
+<span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project name: knowledge
+<span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project directory: knowledge
+<span class=" -Color -Color-Bold -Color-Bold-Green">Validating</span> profile inputs, adapters, and connection
+
+<span class=" -Color -Color-Bold -Color-Bold-Green">dbt-fusion</span> 2.0.0-preview.171
+<span class=" -Color -Color-Bold -Color-Bold-Green">   Loading</span> ~/.dbt/profiles.yml
+<span class=" -Color -Color-Bold -Color-Bold-Green"> Debugging</span> profile: dev
+<span class=" -Color -Color-Bold -Color-Bold-Green"> Debugging</span> dbt version: 2.0.0-preview.171
+<span class=" -Color -Color-Bold -Color-Bold-Green"> Debugging</span> platform: linux x86_64 (unix)
+<span class=" -Color -Color-Bold -Color-Bold-Green"> Debugging</span> adapter type: postgres (remote)
+<span class=" -Color -Color-Bold -Color-Bold-Green"> Debugging</span> dependencies:
+  git: OK
+<span class=" -Color -Color-Bold -Color-Bold-Green"> Debugging</span> connection:
+  &quot;port&quot;: 5432,
+  &quot;database&quot;: &quot;postgres&quot;,
+  &quot;schema&quot;: &quot;public&quot;,
+  &quot;host&quot;: &quot;localhost&quot;,
+  &quot;user&quot;: &quot;postgres&quot;
+<span class=" -Color -Color-Bold -Color-Bold-Green"> Debugging</span> connection test: OK
+<span class=" -Color -Color-Bold -Color-Bold-Green">  Debugged</span> All checks passed!
+<span class=" -Color -Color-Bold -Color-Bold-Green">New version available</span> 2.0.0-preview.172 (run `dbt system update`)
+
+<span class=" -Color -Color-Faint">============================== Execution Summary ===============================</span>
+Finished &#39;<span class=" -Color -Color-Bold -Color-Bold-White">init</span>&#39; <span class=" -Color -Color-Bold -Color-Bold-Green">successfully</span> for target &#39;<span class=" -Color -Color-Bold -Color-Bold-White">dev</span>&#39; <span class=" -Color -Color-Faint">[564ms]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong>: you must start the postgreSQL database using correct credentials.</p>
+<p>The following cell shows the files and folders created using <code class="docutils literal notranslate"><span class="pre">dbtf</span> <span class="pre">init</span></code> command - the structure of the dbt project.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>knowledge<span class="w"> </span>-la
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 56
+drwxrwxr-x 9 user user 4096 kwi 16 09:10 <span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
+drwxrwxr-x 4 user user 4096 kwi 16 09:09 <span class=" -Color -Color-Bold -Color-Bold-Blue">..</span>
+drwxrwxr-x 3 user user 4096 kwi 16 09:10 <span class=" -Color -Color-Bold -Color-Bold-Blue">dbt_packages</span>
+-rw-rw-r-- 1 user user  430 kwi 16 09:09 dbt_project.yml
+-rw-rw-r-- 1 user user   56 kwi 16 09:09 .gitignore
+drwxrwxr-x 2 user user 4096 kwi 16 09:10 <span class=" -Color -Color-Bold -Color-Bold-Blue">logs</span>
+drwxrwxr-x 2 user user 4096 kwi 16 09:09 <span class=" -Color -Color-Bold -Color-Bold-Blue">macros</span>
+drwxrwxr-x 4 user user 4096 kwi 16 09:09 <span class=" -Color -Color-Bold -Color-Bold-Blue">models</span>
+-rw-rw-r-- 1 user user  127 kwi 16 09:10 package-lock.yml
+-rw-rw-r-- 1 user user   65 kwi 16 09:09 packages.yml
+-rw-rw-r-- 1 user user  680 kwi 16 09:09 README.md
+drwxrwxr-x 2 user user 4096 kwi 16 09:09 <span class=" -Color -Color-Bold -Color-Bold-Blue">seeds</span>
+drwxrwxr-x 4 user user 4096 kwi 16 09:10 <span class=" -Color -Color-Bold -Color-Bold-Blue">target</span>
+drwxrwxr-x 2 user user 4096 kwi 16 09:09 <span class=" -Color -Color-Bold -Color-Bold-Blue">.vscode</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="jinja-templates">
+<h2>Jinja Templates<a class="headerlink" href="#jinja-templates" title="Link to this heading">#</a></h2>
+<p>Jinja Templates is a special tool for organising document creation from templates. It has a flexible and powerful syntax for parameterising documents and “rendering” specific document for particular use.</p>
+<p>Jinja is implemented as a python package check the <a class="reference external" href="https://jinja.palletsprojects.com/en/stable/">documentation</a> but is used as templating tool in various tools like dbt.</p>
+<p>This section focuses on <a class="reference external" href="https://jinja.palletsprojects.com/en/stable/templates/">jinja syntax</a> not on python api to use jinja.</p>
+<p>Check the <a class="reference internal" href="jinja_templates.html"><span class="std std-doc">Jinja Templates</span></a> page for more details.</p>
+<hr class="docutils" />
+<p>The following cell creates the template in file <code class="docutils literal notranslate"><span class="pre">jinja2_example.j2</span></code> and the data applied to this file in <code class="docutils literal notranslate"><span class="pre">jinja_example.json</span></code>. Both are passed to the <a class="reference external" href="https://pypi.org/project/jinja-cli/"><code class="docutils literal notranslate"><span class="pre">jinja2-cli</span></code></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/jinja2_example.j2</span>
+<span class="s">The values are passed:</span>
+<span class="s">{% for i in items -%}</span>
+<span class="s">- {{ i }}</span>
+<span class="s">{% endfor %}</span>
+<span class="s">EOF</span>
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/jinja_example.json</span>
+<span class="s">{</span>
+<span class="s">    &quot;items&quot;: [&quot;val1&quot;, &quot;val2&quot;, &quot;val3&quot;]</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+
+jinja2<span class="w"> </span>/tmp/jinja2_example.j2<span class="w"> </span>/tmp/jinja_example.json
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The values are passed:
+- val1
+- val2
+- val3
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is a document generated from a template using data provided in the Jinja template.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1079,6 +1352,13 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-tools">Coding tools</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tavily">Tavily</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unicode">Unicode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layers-of-character">Layers of character</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-forms">Normalization forms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-build-tool">Data build tool</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jinja-templates">Jinja Templates</a></li>
 </ul>
   </nav></div>
 
