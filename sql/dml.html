@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Load/Modify &#8212; Knowledge base</title>
+    <title>DML &#8212; Knowledge base</title>
   
   
   
@@ -57,7 +57,7 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'sql/load_modify';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sql/dml';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -408,7 +408,7 @@
 <li class="toctree-l2"><a class="reference internal" href="datatypes/json.html">JSON</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Load/Modify</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="postgre_sql.html">PostgreSQL</a></li>
 </ul>
@@ -634,7 +634,7 @@
       
       
       
-      <li><a href="../_sources/sql/load_modify.ipynb" target="_blank"
+      <li><a href="../_sources/sql/dml.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -718,7 +718,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Load/Modify</h1>
+    <h1>DML</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -741,17 +741,17 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="load-modify">
-<h1>Load/Modify<a class="headerlink" href="#load-modify" title="Link to this heading">#</a></h1>
-<p>This section discusses options for loading data into databases and ways to modify tables if necessary.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="dml">
+<h1>DML<a class="headerlink" href="#dml" title="Link to this heading">#</a></h1>
+<p>The Data Manipulation Language (DML) is a subset of SQL commands used to work with data. This page considers the commands belonging to DML and their typical features, independently of spefic dialect.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>load_modify_examples_pg<span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>postgres<span class="se">\</span>
-<span class="w">    </span>postgres:15.4
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="c1">--rm\</span>
+<span class="w">    </span><span class="c1">--name load_modify_examples_pg\</span>
+<span class="w">    </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">POSTGRES_PASSWORD</span><span class="o">=</span><span class="n">postgres</span><span class="err">\</span>
+<span class="w">    </span><span class="n">postgres</span><span class="p">:</span><span class="mi">15</span><span class="p">.</span><span class="mi">4</span>
 
-sleep<span class="w"> </span><span class="m">5</span>
+<span class="n">sleep</span><span class="w"> </span><span class="mi">5</span>
 </pre></div>
 </div>
 </div>
@@ -774,13 +774,13 @@ sleep<span class="w"> </span><span class="m">5</span>
 <p>The following cell creates a table that we’ll use as an example for crud operations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>load_modify_examples_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">-- creating table</span>
-<span class="s">DROP TABLE IF EXISTS crud_table;</span>
-<span class="s">CREATE TABLE crud_table (</span>
-<span class="s">    col1 INT, col2 VARCHAR(20)</span>
-<span class="s">);</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<span class="c1">-- creating table</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">crud_table</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">crud_table</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">col1</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -794,15 +794,15 @@ CREATE TABLE
 <p>The following cell shows how to use the <code class="docutils literal notranslate"><span class="pre">INSERT</span></code> operation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>load_modify_examples_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">INSERT INTO crud_table(col1, col2)</span>
-<span class="s">VALUES</span>
-<span class="s">    (1, &#39;one&#39;),</span>
-<span class="s">    (2, &#39;two&#39;),</span>
-<span class="s">    (3, &#39;three&#39;);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">crud_table</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">)</span>
+<span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;one&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;two&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;three&#39;</span><span class="p">);</span>
 
-<span class="s">SELECT * FROM crud_table;</span>
-<span class="s">EOF</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">crud_table</span><span class="p">;</span>
+<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -821,10 +821,10 @@ CREATE TABLE
 <p>To update values in the table, use the <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> statement.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>load_modify_examples_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">UPDATE crud_table SET col2=&#39;modified&#39; WHERE col1=2;</span>
-<span class="s">SELECT * FROM crud_table;</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">crud_table</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">col2</span><span class="o">=</span><span class="s1">&#39;modified&#39;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">col1</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">crud_table</span><span class="p">;</span>
+<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -843,10 +843,10 @@ CREATE TABLE
 <p>Finally drop records by using <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> keyword.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>load_modify_examples_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">DELETE FROM crud_table WHERE col1=3;</span>
-<span class="s">SELECT * FROM crud_table;</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">crud_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">col1</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">crud_table</span><span class="p">;</span>
+<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -875,27 +875,27 @@ CREATE TABLE
 <p>The following cell creates a CSV file in the container and reads it into the database.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>load_modify_examples_pg<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;cat &gt; /test.csv&quot;</span><span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">20,Riga</span>
-<span class="s">30,Vilnus</span>
-<span class="s">4,Minsk</span>
-<span class="s">43,Warsaw</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">sh</span><span class="w"> </span><span class="o">-</span><span class="k">c</span><span class="w"> </span><span class="ss">&quot;cat &gt; /test.csv&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<span class="mi">20</span><span class="p">,</span><span class="n">Riga</span>
+<span class="mi">30</span><span class="p">,</span><span class="n">Vilnus</span>
+<span class="mi">4</span><span class="p">,</span><span class="n">Minsk</span>
+<span class="mi">43</span><span class="p">,</span><span class="n">Warsaw</span>
+<span class="n">EOF</span>
 
 
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>load_modify_examples_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">-- creating table</span>
-<span class="s">DROP TABLE IF EXISTS csv_example;</span>
-<span class="s">CREATE TABLE csv_example (</span>
-<span class="s">    value REAL, city VARCHAR(20)</span>
-<span class="s">);</span>
+<span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<span class="c1">-- creating table</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">csv_example</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">csv_example</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">value</span><span class="w"> </span><span class="nb">REAL</span><span class="p">,</span><span class="w"> </span><span class="n">city</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">);</span>
 
-<span class="s">-- loading csv table to created table</span>
-<span class="s">COPY csv_example(value, city)</span>
-<span class="s">FROM &#39;/test.csv&#39;</span>
-<span class="s">DELIMITER &#39;,&#39;</span>
-<span class="s">CSV;</span>
-<span class="s">EOF</span>
+<span class="c1">-- loading csv table to created table</span>
+<span class="k">COPY</span><span class="w"> </span><span class="n">csv_example</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">city</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s1">&#39;/test.csv&#39;</span>
+<span class="k">DELIMITER</span><span class="w"> </span><span class="s1">&#39;,&#39;</span>
+<span class="n">CSV</span><span class="p">;</span>
+<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -911,9 +911,9 @@ COPY 4
 <p>Now let’s check the obtained results:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>load_modify_examples_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT * FROM csv_example LIMIT 10;</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">csv_example</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -941,16 +941,16 @@ COPY 4
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "universal_sql"
         },
         kernelOptions: {
-            name: "bash",
+            name: "universal_sql",
             path: "./sql"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'universal_sql'</script>
 
                 </article>
               

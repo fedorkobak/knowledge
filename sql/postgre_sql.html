@@ -410,7 +410,7 @@
 <li class="toctree-l2"><a class="reference internal" href="datatypes/json.html">JSON</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dml.html">DML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">PostgreSQL</a></li>
 </ul>
@@ -731,7 +731,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databases">Databases</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schema">Schema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schema">Schema</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -797,6 +800,42 @@ document.write(`
 </tbody>
 </table></div></div>
 </div>
+<section id="tables">
+<h3>Tables<a class="headerlink" href="#tables" title="Link to this heading">#</a></h3>
+<p>To view the tables belonging to a given schema, use command <code class="docutils literal notranslate"><span class="pre">\dt</span> <span class="pre">schema_name.*</span></code>, or query the <code class="docutils literal notranslate"><span class="pre">information_schema.tables</span></code> and filter by <code class="docutils literal notranslate"><span class="pre">table_schema</span></code> field.</p>
+<hr class="docutils" />
+<p>The following cell shows the tables belonging to the <code class="docutils literal notranslate"><span class="pre">information_schema</span></code> schema.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">table_name</span><span class="p">,</span><span class="w"> </span><span class="n">table_type</span><span class="p">,</span><span class="w"> </span><span class="n">table_schema</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;information_schema&#39;</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">table_name</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>table_name                       </th><th>table_type  </th><th>table_schema      </th></tr>
+</thead>
+<tbody>
+<tr><td>_pg_foreign_data_wrappers        </td><td>VIEW        </td><td>information_schema</td></tr>
+<tr><td>_pg_foreign_servers              </td><td>VIEW        </td><td>information_schema</td></tr>
+<tr><td>_pg_foreign_table_columns        </td><td>VIEW        </td><td>information_schema</td></tr>
+<tr><td>_pg_foreign_tables               </td><td>VIEW        </td><td>information_schema</td></tr>
+<tr><td>_pg_user_mappings                </td><td>VIEW        </td><td>information_schema</td></tr>
+<tr><td>administrable_role_authorizations</td><td>VIEW        </td><td>information_schema</td></tr>
+<tr><td>applicable_roles                 </td><td>VIEW        </td><td>information_schema</td></tr>
+<tr><td>attributes                       </td><td>VIEW        </td><td>information_schema</td></tr>
+<tr><td>character_sets                   </td><td>VIEW        </td><td>information_schema</td></tr>
+<tr><td>check_constraint_routine_usage   </td><td>VIEW        </td><td>information_schema</td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -865,7 +904,10 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databases">Databases</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schema">Schema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schema">Schema</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

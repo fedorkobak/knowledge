@@ -407,7 +407,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../sql/datatypes/json.html">JSON</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../sql/load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/dml.html">DML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/postgre_sql.html">PostgreSQL</a></li>
 </ul>
@@ -728,6 +728,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation">Compilation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show">Show</a></li>
 </ul>
             </nav>
         </div>
@@ -742,13 +744,13 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="dbt">
 <h1>DBT<a class="headerlink" href="#dbt" title="Link to this heading">#</a></h1>
 <p>The Data Build Tool (DBT) is a popular framework for building data manipulation systems.</p>
+<p>It’s really usefull to check sometimes the <a class="reference external" href="https://docs.getdbt.com/reference/dbt-commands">reference to the <code class="docutils literal notranslate"><span class="pre">dbt</span></code> CLI</a>.</p>
 <section id="compilation">
 <h2>Compilation<a class="headerlink" href="#compilation" title="Link to this heading">#</a></h2>
 <p>Compilation is a proccess of converting DBT language into scripts specific to the target.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">dbtf</span> <span class="pre">compile</span></code> initiates the compilation. It produces the outputs to the <code class="docutils literal notranslate"><span class="pre">target</span></code> folderлл.</p>
 <hr class="docutils" />
-<p>ооо
-The following cell inititalises the example project.</p>
+<p>The following cell inititalises the example project.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
@@ -884,6 +886,142 @@ CREATE<span class="w"> </span>TABLE<span class="w"> </span>
 </div>
 </div>
 </section>
+<section id="run">
+<h2>Run<a class="headerlink" href="#run" title="Link to this heading">#</a></h2>
+<p>To run dbt models use the commands <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">dbtf</span> <span class="pre">run</span></code>. DBT automatically wraps your models in the required DDL (data definition language) and creates the corresponding table or view for each one.</p>
+<hr class="docutils" />
+<p>Consider the example of running a dbt project. Following cell creates a project and defies the simple model in it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+dbtf<span class="w"> </span>init<span class="w"> </span>--project-name<span class="w"> </span>knowledge<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+<span class="nb">cd</span><span class="w"> </span>knowledge
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Created .vscode/extensions.json with dbt extension recommendation
+<span class=" -Color -Color-Bold -Color-Bold-Green">Success</span> Project created successfully!
+<span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project name: knowledge
+<span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project directory: knowledge
+<span class=" -Color -Color-Bold -Color-Bold-Green">Validating</span> profile inputs, adapters, and connection
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># file knowledge/models/script.sql</span>
+SELECT<span class="w"> </span>val1,<span class="w"> </span>val2
+FROM<span class="w"> </span><span class="o">(</span>
+<span class="w">    </span>VALUES<span class="w"> </span>
+<span class="w">    </span><span class="o">(</span><span class="m">10</span>,<span class="w"> </span><span class="m">20</span><span class="o">)</span>,
+<span class="w">    </span><span class="o">(</span><span class="m">30</span>,<span class="w"> </span><span class="m">40</span><span class="o">)</span>
+<span class="o">)</span><span class="w"> </span>AS<span class="w"> </span>temp<span class="o">(</span>val1,<span class="w"> </span>val2<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Running:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbtf<span class="w"> </span>run<span class="w"> </span>--select<span class="w"> </span>script<span class="w"> </span>-q
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">   Running</span> [<span class=" -Color -Color-Cyan">━━━━━━━━━━━━━━━━━━━━</span>] 1/1                                           
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong>: <code class="docutils literal notranslate"><span class="pre">--select</span></code> is used to specify which model have to be used.</p>
+<p>The following cell shows the database we are using as an example now have corresponding data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PGPASSWORD</span><span class="o">=</span>postgres<span class="w"> </span>psql<span class="w"> </span>-h<span class="w"> </span>localhost<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;SELECT * FROM public.script&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> val1 | val2 
+------+------
+   10 |   20
+   30 |   40
+(2 rows)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="show">
+<h2>Show<a class="headerlink" href="#show" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">show</span></code> command allows you to preview the output of a given dbt model.</p>
+<p>Check description in the <a class="reference external" href="https://docs.getdbt.com/reference/commands/show?version=2.0">About dbt show commannd</a>.</p>
+<hr class="docutils" />
+<p>The following cells create a sample project and some model in it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+dbtf<span class="w"> </span>init<span class="w"> </span>--project-name<span class="w"> </span>knowledge<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+<span class="nb">cd</span><span class="w"> </span>knowledge
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Created .vscode/extensions.json with dbt extension recommendation
+<span class=" -Color -Color-Bold -Color-Bold-Green">Success</span> Project created successfully!
+<span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project name: knowledge
+<span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project directory: knowledge
+<span class=" -Color -Color-Bold -Color-Bold-Green">Validating</span> profile inputs, adapters, and connection
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># file knowledge/models/script.sql</span>
+SELECT<span class="w"> </span><span class="s1">&#39;some data&#39;</span><span class="w"> </span>AS<span class="w"> </span>col
+</pre></div>
+</div>
+</div>
+</div>
+<p>The output of the <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">show</span></code> for the model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>show<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>script.sql
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>| col       |
+| --------- |
+| some data |
+</pre></div>
+</div>
+</div>
+</div>
+<p>Fusion supports the <code class="docutils literal notranslate"><span class="pre">show</span></code> command as well:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbtf<span class="w"> </span>show<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>script.sql
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Blue">Query</span> <span class=" -Color -Color-Bold">show_model_knowledge_script</span>] 1/1                                           
+┌───────────┐
+│<span class=" -Color -Color-Bold"> col       </span>│
+╞═══════════╡
+│ some data │
+└───────────┘
+1 rows.
+m<span class=" -Color -Color-Bold">   Running</span> [<span class=" -Color -Color-Cyan">━━━━━━━━━━━━━━━━━━━━</span>] 1/1                                           
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -942,6 +1080,8 @@ CREATE<span class="w"> </span>TABLE<span class="w"> </span>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation">Compilation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show">Show</a></li>
 </ul>
   </nav></div>
 

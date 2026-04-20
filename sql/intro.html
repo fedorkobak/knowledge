@@ -408,7 +408,7 @@
 <li class="toctree-l2"><a class="reference internal" href="datatypes/json.html">JSON</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="load_modify.html">Load/Modify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dml.html">DML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="postgre_sql.html">PostgreSQL</a></li>
 </ul>
@@ -729,6 +729,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Intro</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dml">DML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ddl">DDL</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres">Postgres</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#server">Server</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">Commands</a></li>
@@ -762,7 +764,19 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="intro">
 <h1>Intro<a class="headerlink" href="#intro" title="Link to this heading">#</a></h1>
-<p>In this section, there are many examples, most of which are run in Docker. This page shows typical tricks used to run and manipulate SQL servers from a Docker container.</p>
+<p>Structured Query Language (SQL) is a popular language used across different tools to manipulate with data. There are a many SQL dialects, which differ slightly depending on the database system begin used.</p>
+<section id="dml">
+<h2>DML<a class="headerlink" href="#dml" title="Link to this heading">#</a></h2>
+<p>The Data Manipulation Language (DML) is a subset of SQL consisting of commands for manipulating data.</p>
+<p>The most popular and complex DML command is the <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> command. Due to its complexity and variety of usage scenarios, it will be considered in a dedicated section.</p>
+<p>Other important command are <code class="docutils literal notranslate"><span class="pre">INSERT</span></code>, <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code>, <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>, <code class="docutils literal notranslate"><span class="pre">MERGE/UPSET</span></code>.</p>
+<p>Check more about in the <a class="reference internal" href="dml.html"><span class="std std-doc">DML</span></a> page.</p>
+</section>
+<section id="ddl">
+<h2>DDL<a class="headerlink" href="#ddl" title="Link to this heading">#</a></h2>
+<p>The Data Definition Language (DDL) is a subset of SQL commands that is used to define the structure of the database.</p>
+<p>The typical commands of DDL begins with: <code class="docutils literal notranslate"><span class="pre">CREATE</span></code>, <code class="docutils literal notranslate"><span class="pre">ALTER</span></code>, <code class="docutils literal notranslate"><span class="pre">DROP</span></code>, <code class="docutils literal notranslate"><span class="pre">TRUNKATE</span></code> and <code class="docutils literal notranslate"><span class="pre">RENAME</span></code>.</p>
+</section>
 <section id="postgres">
 <h2>Postgres<a class="headerlink" href="#postgres" title="Link to this heading">#</a></h2>
 <p>Postgres is popular relational database. This is relatively universal database system which could be used in numerous cases. This page considers the aspects of working with postgres.</p>
@@ -774,10 +788,10 @@ document.write(`
 <p>After running the following cell, you’ll have a Docker container named <code class="docutils literal notranslate"><span class="pre">intro_example_pg</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-d<span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>postgres<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>intro_example_pg<span class="se">\</span>
-<span class="w">    </span>postgres:15.4<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="c1">--rm -d\</span>
+<span class="w">    </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">POSTGRES_PASSWORD</span><span class="o">=</span><span class="n">postgres</span><span class="err">\</span>
+<span class="w">    </span><span class="c1">--name intro_example_pg\</span>
+<span class="w">    </span><span class="n">postgres</span><span class="p">:</span><span class="mi">15</span><span class="p">.</span><span class="mi">4</span><span class="w"> </span><span class="o">&amp;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="k">null</span>
 </pre></div>
 </div>
 </div>
@@ -785,7 +799,7 @@ document.write(`
 <p><strong>Note</strong>: Don’t forget to stop the containers afterward.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>intro_example_pg
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">intro_example_pg</span>
 </pre></div>
 </div>
 </div>
@@ -803,10 +817,10 @@ document.write(`
 <p>The following cell demonstrates how to execute SELECT statements in the newly created containers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>intro_example_pg<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
-<span class="s">SELECT 10 v10, 20 v20, 30 v30, 40 v40;</span>
-<span class="s">SELECT 10 v10, 20 v20, 30 v30, 40 v40;</span>
-<span class="s">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">intro_example_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">v10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="n">v20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="n">v30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="n">v40</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">v10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="n">v20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="n">v30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="n">v40</span><span class="p">;</span>
+<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
@@ -833,17 +847,17 @@ document.write(`
 <code class="docutils literal notranslate"><span class="pre">create_table.sql</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-d<span class="se">\</span>
-<span class="w">    </span>-v<span class="w"> </span>./build_container/initialisation_scripts:/docker-entrypoint-initdb.d<span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>docker_app<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>init_scripts_example<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>postgres:15.4<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="c1">--rm -d\</span>
+<span class="w">    </span><span class="o">-</span><span class="n">v</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="n">build_container</span><span class="o">/</span><span class="n">initialisation_scripts</span><span class="p">:</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">entrypoint</span><span class="o">-</span><span class="n">initdb</span><span class="p">.</span><span class="n">d</span><span class="err">\</span>
+<span class="w">    </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">POSTGRES_PASSWORD</span><span class="o">=</span><span class="n">docker_app</span><span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="c1">--name init_scripts_example \</span>
+<span class="w">    </span><span class="n">postgres</span><span class="p">:</span><span class="mi">15</span><span class="p">.</span><span class="mi">4</span><span class="w"> </span><span class="o">&amp;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="k">null</span>
 
-sleep<span class="w"> </span><span class="m">5</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;=====CHECK TABLE=====&quot;</span>
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>init_scripts_example<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;psql -U postgres -d postgres -c \&quot;\dt\&quot;&quot;</span>
+<span class="n">sleep</span><span class="w"> </span><span class="mi">5</span>
+<span class="n">echo</span><span class="w"> </span><span class="ss">&quot;=====CHECK TABLE=====&quot;</span>
+<span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">init_scripts_example</span><span class="w"> </span><span class="n">bash</span><span class="w"> </span><span class="o">-</span><span class="k">c</span><span class="w"> </span><span class="ss">&quot;psql -U postgres -d postgres -c \&quot;</span><span class="err">\</span><span class="n">dt</span><span class="err">\</span><span class="ss">&quot;&quot;</span>
 
-docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<span class="n">docker</span><span class="w"> </span><span class="n">stop</span><span class="w">  </span><span class="n">init_scripts_example</span><span class="w"> </span><span class="o">&amp;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="k">null</span>
 </pre></div>
 </div>
 </div>
@@ -869,9 +883,9 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 <p>The following cell creates a new Docker container named <code class="docutils literal notranslate"><span class="pre">intro_example_click</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="se">\</span>
-<span class="w">    </span>--name<span class="w"> </span>intro_example_click<span class="se">\</span>
-<span class="w">    </span>clickhouse/clickhouse-server:24
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="c1">--rm\</span>
+<span class="w">    </span><span class="c1">--name intro_example_click\</span>
+<span class="w">    </span><span class="n">clickhouse</span><span class="o">/</span><span class="n">clickhouse</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="mi">24</span>
 </pre></div>
 </div>
 </div>
@@ -884,7 +898,7 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 <p><strong>Note</strong>: Don’t forget to stop the container afterward.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>intro_example_click
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">intro_example_click</span>
 </pre></div>
 </div>
 </div>
@@ -902,10 +916,10 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 <p>The following cell shows how to execute commands in ClickHouse through Docker.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>intro_example_click<span class="w"> </span>clickhouse-client<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
-<span class="s2">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
-<span class="s2">&quot;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">intro_example_click</span><span class="w"> </span><span class="n">clickhouse</span><span class="o">-</span><span class="n">client</span><span class="w"> </span><span class="o">-</span><span class="n">q</span><span class="w"> </span><span class="ss">&quot;</span>
+<span class="ss">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
+<span class="ss">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
+<span class="ss">&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -933,7 +947,7 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 <p>To run <code class="docutils literal notranslate"><span class="pre">sqlite</span></code> container we are using <code class="docutils literal notranslate"><span class="pre">keinos/sqlite</span></code> image.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-itd<span class="w"> </span>--name<span class="w"> </span>intro_example_sqlite<span class="w"> </span>keinos/sqlite3
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="c1">--rm -itd --name intro_example_sqlite keinos/sqlite3</span>
 </pre></div>
 </div>
 </div>
@@ -946,7 +960,7 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 <p><strong>Note</strong>: Don’t forget to stop the container afterward.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>intro_example_sqlite
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">intro_example_sqlite</span>
 </pre></div>
 </div>
 </div>
@@ -964,7 +978,7 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 <p>The following cell shows the execution of the <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">'Hello</span> <span class="pre">world'</span></code> query.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>intro_example_sqlite<span class="w"> </span>sqlite3<span class="w"> </span>-cmd<span class="w"> </span><span class="s2">&quot;SELECT &#39;Hello world&#39;;&quot;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">intro_example_sqlite</span><span class="w"> </span><span class="n">sqlite3</span><span class="w"> </span><span class="o">-</span><span class="n">cmd</span><span class="w"> </span><span class="ss">&quot;SELECT &#39;Hello world&#39;;&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -979,19 +993,19 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 <p>The following cell shows creating and querying a table in SQLite:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>intro_example_sqlite<span class="w"> </span>sqlite3<span class="w"> </span>-box<span class="w"> </span>-cmd<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">CREATE TABLE IF NOT EXISTS tab (</span>
-<span class="s2">    var1 TEXT,</span>
-<span class="s2">    var2 TEXT</span>
-<span class="s2">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">intro_example_sqlite</span><span class="w"> </span><span class="n">sqlite3</span><span class="w"> </span><span class="o">-</span><span class="n">box</span><span class="w"> </span><span class="o">-</span><span class="n">cmd</span><span class="w"> </span><span class="ss">&quot;</span>
+<span class="ss">CREATE TABLE IF NOT EXISTS tab (</span>
+<span class="ss">    var1 TEXT,</span>
+<span class="ss">    var2 TEXT</span>
+<span class="ss">);</span>
 
-<span class="s2">INSERT INTO tab (var1, var2) VALUES</span>
-<span class="s2">(NULL, &#39;world&#39;),</span>
-<span class="s2">(&#39;hello&#39;, NULL),</span>
-<span class="s2">(NULL, &#39;test line&#39;);</span>
+<span class="ss">INSERT INTO tab (var1, var2) VALUES</span>
+<span class="ss">(NULL, &#39;world&#39;),</span>
+<span class="ss">(&#39;hello&#39;, NULL),</span>
+<span class="ss">(NULL, &#39;test line&#39;);</span>
 
-<span class="s2">SELECT * FROM tab;</span>
-<span class="s2">&quot;</span>
+<span class="ss">SELECT * FROM tab;</span>
+<span class="ss">&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -1017,7 +1031,7 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 <p>The following cell demonstrates how to run a toy hive in docker.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>hive_experiments<span class="w"> </span>--env<span class="w"> </span><span class="nv">SERVICE_NAME</span><span class="o">=</span>hiveserver2<span class="w"> </span>--rm<span class="w"> </span>apache/hive:4.1.0
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="c1">--name hive_experiments --env SERVICE_NAME=hiveserver2 --rm apache/hive:4.1.0</span>
 </pre></div>
 </div>
 </div>
@@ -1034,7 +1048,7 @@ docker<span class="w"> </span>stop<span class="w">  </span>init_scripts_example<
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>hive_experiments<span class="w"> </span>beeline<span class="w"> </span>-u<span class="w"> </span><span class="s2">&quot;jdbc:hive2://localhost:10000&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;SHOW DATABASES;&quot;</span><span class="w"> </span><span class="m">2</span>&gt;<span class="w"> </span>/dev/null
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">hive_experiments</span><span class="w"> </span><span class="n">beeline</span><span class="w"> </span><span class="o">-</span><span class="n">u</span><span class="w"> </span><span class="ss">&quot;jdbc:hive2://localhost:10000&quot;</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="ss">&quot;SHOW DATABASES;&quot;</span><span class="w"> </span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="k">null</span>
 </pre></div>
 </div>
 </div>
@@ -1067,16 +1081,16 @@ See https://logging.apache.org/log4j/2.x/faq.html#package-scanning for details.
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash"
+            mode: "universal_sql"
         },
         kernelOptions: {
-            name: "bash",
+            name: "universal_sql",
             path: "./sql"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash'</script>
+    <script>kernelName = 'universal_sql'</script>
 
                 </article>
               
@@ -1123,6 +1137,8 @@ See https://logging.apache.org/log4j/2.x/faq.html#package-scanning for details.
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Intro</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dml">DML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ddl">DDL</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres">Postgres</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#server">Server</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">Commands</a></li>
