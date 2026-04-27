@@ -19,12 +19,10 @@ All the terminals that you run in vscode and jupyter notebooks will have defined
 
 ## Settings
 
-You can configure your VSCode with editing the `settings.json` file. There are separate `settings.json` for user and for workspace.
+You can configure your VSCode with editing the `settings.json` file. There are separate `settings.json` for user and for workspace. The locations are:
 
-Look for `settings.json` in `./.vscode` folder for workspace.
-
-Check information on the `settiongs.json` for the user [here](https://code.visualstudio.com/docs/configure/settings#_user-settingsjson-location). For linux, it's typically in `~/.config/Code/User/settings.json`.
-
+- For the **local workspace**: `./.vscode/settings.json`
+- For the linux **system user**: `~/.config/Code/User/settings.json`. Check for other systems [here](https://code.visualstudio.com/docs/configure/settings#_user-settingsjson-location). 
 
 You can list all available attributes that you can specify as settings using `defaultSettings.json` - a read only file that can be opened using the VSCode command `Preferences: OpenDefaultSettings (JSON)`. There are no other source, like official page where listed all settings with description: [Default VSCode settings](https://code.visualstudio.com/docs/reference/default-settings).
 
