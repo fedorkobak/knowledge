@@ -28,6 +28,8 @@ You can list all available attributes that you can specify as settings using `de
 
 VSCode extensions usually have their own settings.
 
+The hotkeys (shortcuts, keybindings) are usually defined in the file `~/.config/Code/User/keybindings.json`.
+
 ### My config
 
 
@@ -55,6 +57,19 @@ This is useful for being able to copy/paste it into various configurations.
 
 **Note** for some environments, especially data science setups, the practically useful option is `"python.analysis.typeCheckingMode": "basic"`: This makes Pylance less strict.
 
+### Keybindings
+
+These are keybindings that I typically use for vscode:
+
+```json
+[
+    {
+        "key": "ctrl+enter",
+        "command": "sqltools.executeCurrentQuery",
+        "when": "editorTextFocus"
+    }
+]
+```
 
 ## Debug
 
