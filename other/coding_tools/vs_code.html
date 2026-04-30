@@ -354,7 +354,7 @@
 
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../sql/select/join/join_types.html">Join types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/select/join/types.html">Types</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../sql/select/sorting.html">Sorting (ORDER BY)</a></li>
@@ -380,6 +380,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../sql/select/expand_array.html">Expand array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../sql/select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/select/cte_with.html">CTE (WITH)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../sql/select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../sql/select/performance.html">Performance</a></li>
 </ul>
@@ -398,8 +399,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sql/dml.html">DML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sql/versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sql/postgre_sql.html">PostgreSQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/clickhouse.html">Clickhouse</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -720,6 +723,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#settings">Settings</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#my-config">My config</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keybindings">Keybindings</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debug">Debug</a><ul class="nav section-nav flex-column">
@@ -755,11 +759,14 @@ code<span class="w"> </span>.
 </section>
 <section id="settings">
 <h2>Settings<a class="headerlink" href="#settings" title="Link to this heading">#</a></h2>
-<p>You can configure your VSCode with editing the <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> file. There are separate <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> for user and for workspace.</p>
-<p>Look for <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> in <code class="docutils literal notranslate"><span class="pre">./.vscode</span></code> folder for workspace.</p>
-<p>Check information on the <code class="docutils literal notranslate"><span class="pre">settiongs.json</span></code> for the user <a class="reference external" href="https://code.visualstudio.com/docs/configure/settings#_user-settingsjson-location">here</a>. For linux, it’s typically in <code class="docutils literal notranslate"><span class="pre">~/.config/Code/User/settings.json</span></code>.</p>
+<p>You can configure your VSCode with editing the <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> file. There are separate <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> for user and for workspace. The locations are:</p>
+<ul class="simple">
+<li><p>For the <strong>local workspace</strong>: <code class="docutils literal notranslate"><span class="pre">./.vscode/settings.json</span></code></p></li>
+<li><p>For the linux <strong>system user</strong>: <code class="docutils literal notranslate"><span class="pre">~/.config/Code/User/settings.json</span></code>. Check for other systems <a class="reference external" href="https://code.visualstudio.com/docs/configure/settings#_user-settingsjson-location">here</a>.</p></li>
+</ul>
 <p>You can list all available attributes that you can specify as settings using <code class="docutils literal notranslate"><span class="pre">defaultSettings.json</span></code> - a read only file that can be opened using the VSCode command <code class="docutils literal notranslate"><span class="pre">Preferences:</span> <span class="pre">OpenDefaultSettings</span> <span class="pre">(JSON)</span></code>. There are no other source, like official page where listed all settings with description: <a class="reference external" href="https://code.visualstudio.com/docs/reference/default-settings">Default VSCode settings</a>.</p>
 <p>VSCode extensions usually have their own settings.</p>
+<p>The hotkeys (shortcuts, keybindings) are usually defined in the file <code class="docutils literal notranslate"><span class="pre">~/.config/Code/User/keybindings.json</span></code>.</p>
 <section id="my-config">
 <h3>My config<a class="headerlink" href="#my-config" title="Link to this heading">#</a></h3>
 <p>Here is my config:</p>
@@ -780,6 +787,19 @@ code<span class="w"> </span>.
 <p>This is useful for being able to copy/paste it into various configurations.</p>
 <p><strong>Note</strong>: The <code class="docutils literal notranslate"><span class="pre">&quot;editor.fontFamily&quot;</span></code> attribute takes the same value as in the default settings. I’ve tried a few options, and the default VSCode font is the best for me. It is listed in the <code class="docutils literal notranslate"><span class="pre">configuration.json</span></code> file just as a reminder that it was purposely selected.</p>
 <p><strong>Note</strong> for some environments, especially data science setups, the practically useful option is <code class="docutils literal notranslate"><span class="pre">&quot;python.analysis.typeCheckingMode&quot;:</span> <span class="pre">&quot;basic&quot;</span></code>: This makes Pylance less strict.</p>
+</section>
+<section id="keybindings">
+<h3>Keybindings<a class="headerlink" href="#keybindings" title="Link to this heading">#</a></h3>
+<p>These are keybindings that I typically use for vscode:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ctrl+enter&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sqltools.executeCurrentQuery&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;when&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;editorTextFocus&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="debug">
@@ -903,6 +923,7 @@ code<span class="w"> </span>.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#settings">Settings</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#my-config">My config</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keybindings">Keybindings</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debug">Debug</a><ul class="nav section-nav flex-column">

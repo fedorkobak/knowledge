@@ -60,12 +60,14 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/records_range';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Performance" href="performance.html" />
-    <link rel="prev" title="Conditional (CASE)" href="conditional.html" />
+    <link rel="prev" title="CTE (WITH)" href="cte_with.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -354,7 +356,7 @@
 
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../select.html">Select</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="join/join_types.html">Join types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="join/types.html">Types</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="sorting.html">Sorting (ORDER BY)</a></li>
@@ -380,6 +382,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="expand_array.html">Expand array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cte_with.html">CTE (WITH)</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Records range (OFFSET/LIMIT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="performance.html">Performance</a></li>
 </ul>
@@ -398,8 +401,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../dml.html">DML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../postgre_sql.html">PostgreSQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clickhouse.html">Clickhouse</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -741,116 +746,96 @@
 <p>Consider example here is some people and they order of registration in some service.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker run --rm -d\
-    -e POSTGRES_PASSWORD=docker_app \
-    --name records_range_example \
-    postgres:15.4 &amp;&gt; /dev/null
-sleep 5
-docker exec -i records_range_example psql -U postgres -d postgres
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">tab</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">registration_index</span><span class="w"> </span><span class="nb">SERIAL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
 
-CREATE TABLE tab (
-    registration_index SERIAL,
-    name TEXT
-);
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;Emma&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Olivia&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Ava&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Isabella&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Sophia&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Mia&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Charlotte&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Amelia&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Harper&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Evelyn&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Abigail&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Emily&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Elizabeth&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Mila&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Ella&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Avery&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Sofia&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Camila&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Aria&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Scarlett&#39;</span><span class="p">);</span>
 
-INSERT INTO tab (name) VALUES
-(&#39;Emma&#39;),
-(&#39;Olivia&#39;),
-(&#39;Ava&#39;),
-(&#39;Isabella&#39;),
-(&#39;Sophia&#39;),
-(&#39;Mia&#39;),
-(&#39;Charlotte&#39;),
-(&#39;Amelia&#39;),
-(&#39;Harper&#39;),
-(&#39;Evelyn&#39;),
-(&#39;Abigail&#39;),
-(&#39;Emily&#39;),
-(&#39;Elizabeth&#39;),
-(&#39;Mila&#39;),
-(&#39;Ella&#39;),
-(&#39;Avery&#39;),
-(&#39;Sofia&#39;),
-(&#39;Camila&#39;),
-(&#39;Aria&#39;),
-(&#39;Scarlett&#39;);
-
-SELECT * FROM tab;
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CREATE TABLE
-INSERT 0 20
- registration_index |   name    
---------------------+-----------
-                  1 | Emma
-                  2 | Olivia
-                  3 | Ava
-                  4 | Isabella
-                  5 | Sophia
-                  6 | Mia
-                  7 | Charlotte
-                  8 | Amelia
-                  9 | Harper
-                 10 | Evelyn
-                 11 | Abigail
-                 12 | Emily
-                 13 | Elizabeth
-                 14 | Mila
-                 15 | Ella
-                 16 | Avery
-                 17 | Sofia
-                 18 | Camila
-                 19 | Aria
-                 20 | Scarlett
-(20 rows)
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong> Don’t forget to stop the docker container when you’re finished playing.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>docker<span class="w"> </span>stop<span class="w"> </span>records_range_example
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>records_range_example
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  registration_index</th><th>name     </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">                   1</td><td>Emma     </td></tr>
+<tr><td style="text-align: right;">                   2</td><td>Olivia   </td></tr>
+<tr><td style="text-align: right;">                   3</td><td>Ava      </td></tr>
+<tr><td style="text-align: right;">                   4</td><td>Isabella </td></tr>
+<tr><td style="text-align: right;">                   5</td><td>Sophia   </td></tr>
+<tr><td style="text-align: right;">                   6</td><td>Mia      </td></tr>
+<tr><td style="text-align: right;">                   7</td><td>Charlotte</td></tr>
+<tr><td style="text-align: right;">                   8</td><td>Amelia   </td></tr>
+<tr><td style="text-align: right;">                   9</td><td>Harper   </td></tr>
+<tr><td style="text-align: right;">                  10</td><td>Evelyn   </td></tr>
+<tr><td style="text-align: right;">                  11</td><td>Abigail  </td></tr>
+<tr><td style="text-align: right;">                  12</td><td>Emily    </td></tr>
+<tr><td style="text-align: right;">                  13</td><td>Elizabeth</td></tr>
+<tr><td style="text-align: right;">                  14</td><td>Mila     </td></tr>
+<tr><td style="text-align: right;">                  15</td><td>Ella     </td></tr>
+<tr><td style="text-align: right;">                  16</td><td>Avery    </td></tr>
+<tr><td style="text-align: right;">                  17</td><td>Sofia    </td></tr>
+<tr><td style="text-align: right;">                  18</td><td>Camila   </td></tr>
+<tr><td style="text-align: right;">                  19</td><td>Aria     </td></tr>
+<tr><td style="text-align: right;">                  20</td><td>Scarlett </td></tr>
+</tbody>
+</table></div></div>
 </div>
 <section id="offset">
 <h2>OFFSET<a class="headerlink" href="#offset" title="Link to this heading">#</a></h2>
 <p>Let’s examine the <code class="docutils literal notranslate"><span class="pre">OFFSET</span></code> command individually. By utilizing the <code class="docutils literal notranslate"><span class="pre">OFFSET</span> <span class="pre">10</span></code> within the query, we instruct it to disregard the first 10 records in the output.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i records_range_example psql -U postgres -d postgres
-SELECT * FROM tab OFFSET 10;
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="k">OFFSET</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> registration_index |   name    
---------------------+-----------
-                 11 | Abigail
-                 12 | Emily
-                 13 | Elizabeth
-                 14 | Mila
-                 15 | Ella
-                 16 | Avery
-                 17 | Sofia
-                 18 | Camila
-                 19 | Aria
-                 20 | Scarlett
-(10 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  registration_index</th><th>name     </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">                  11</td><td>Abigail  </td></tr>
+<tr><td style="text-align: right;">                  12</td><td>Emily    </td></tr>
+<tr><td style="text-align: right;">                  13</td><td>Elizabeth</td></tr>
+<tr><td style="text-align: right;">                  14</td><td>Mila     </td></tr>
+<tr><td style="text-align: right;">                  15</td><td>Ella     </td></tr>
+<tr><td style="text-align: right;">                  16</td><td>Avery    </td></tr>
+<tr><td style="text-align: right;">                  17</td><td>Sofia    </td></tr>
+<tr><td style="text-align: right;">                  18</td><td>Camila   </td></tr>
+<tr><td style="text-align: right;">                  19</td><td>Aria     </td></tr>
+<tr><td style="text-align: right;">                  20</td><td>Scarlett </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="limit">
@@ -858,29 +843,29 @@ SELECT * FROM tab OFFSET 10;
 <p>Let’s discuss the <code class="docutils literal notranslate"><span class="pre">LIMIT</span></code> command separately. By applying <code class="docutils literal notranslate"><span class="pre">LIMIT</span> <span class="pre">10</span></code> to the query, we instruct it to return only the first 10 records.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i records_range_example psql -U postgres -d postgres
-SELECT * FROM tab LIMIT 10;
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> registration_index |   name    
---------------------+-----------
-                  1 | Emma
-                  2 | Olivia
-                  3 | Ava
-                  4 | Isabella
-                  5 | Sophia
-                  6 | Mia
-                  7 | Charlotte
-                  8 | Amelia
-                  9 | Harper
-                 10 | Evelyn
-(10 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  registration_index</th><th>name     </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">                   1</td><td>Emma     </td></tr>
+<tr><td style="text-align: right;">                   2</td><td>Olivia   </td></tr>
+<tr><td style="text-align: right;">                   3</td><td>Ava      </td></tr>
+<tr><td style="text-align: right;">                   4</td><td>Isabella </td></tr>
+<tr><td style="text-align: right;">                   5</td><td>Sophia   </td></tr>
+<tr><td style="text-align: right;">                   6</td><td>Mia      </td></tr>
+<tr><td style="text-align: right;">                   7</td><td>Charlotte</td></tr>
+<tr><td style="text-align: right;">                   8</td><td>Amelia   </td></tr>
+<tr><td style="text-align: right;">                   9</td><td>Harper   </td></tr>
+<tr><td style="text-align: right;">                  10</td><td>Evelyn   </td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="range">
@@ -888,29 +873,29 @@ SELECT * FROM tab LIMIT 10;
 <p>Finally, by using <code class="docutils literal notranslate"><span class="pre">OFFSET</span> <span class="pre">3</span> <span class="pre">LIMIT</span> <span class="pre">10</span></code>, we retrieve records from the output order within the range of 4 to 13. This range is determined by adding an offset of 3 to the starting record number (1+<strong>3</strong>=4) and limiting the result to a maximum of 10 records (3+<strong>10</strong>=13).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
-docker exec -i records_range_example psql -U postgres -d postgres
-SELECT * FROM tab OFFSET 3 LIMIT 10;
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="k">OFFSET</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> registration_index |   name    
---------------------+-----------
-                  4 | Isabella
-                  5 | Sophia
-                  6 | Mia
-                  7 | Charlotte
-                  8 | Amelia
-                  9 | Harper
-                 10 | Evelyn
-                 11 | Abigail
-                 12 | Emily
-                 13 | Elizabeth
-(10 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  registration_index</th><th>name     </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">                   4</td><td>Isabella </td></tr>
+<tr><td style="text-align: right;">                   5</td><td>Sophia   </td></tr>
+<tr><td style="text-align: right;">                   6</td><td>Mia      </td></tr>
+<tr><td style="text-align: right;">                   7</td><td>Charlotte</td></tr>
+<tr><td style="text-align: right;">                   8</td><td>Amelia   </td></tr>
+<tr><td style="text-align: right;">                   9</td><td>Harper   </td></tr>
+<tr><td style="text-align: right;">                  10</td><td>Evelyn   </td></tr>
+<tr><td style="text-align: right;">                  11</td><td>Abigail  </td></tr>
+<tr><td style="text-align: right;">                  12</td><td>Emily    </td></tr>
+<tr><td style="text-align: right;">                  13</td><td>Elizabeth</td></tr>
+</tbody>
+</table></div></div>
 </div>
 </section>
 </section>
@@ -924,16 +909,16 @@ SELECT * FROM tab OFFSET 3 LIMIT 10;
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "universal_sql"
         },
         kernelOptions: {
-            name: "python3",
+            name: "universal_sql",
             path: "./sql/select"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'universal_sql'</script>
 
                 </article>
               
@@ -946,12 +931,12 @@ SELECT * FROM tab OFFSET 3 LIMIT 10;
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="conditional.html"
+       href="cte_with.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Conditional (CASE)</p>
+        <p class="prev-next-title">CTE (WITH)</p>
       </div>
     </a>
     <a class="right-next"

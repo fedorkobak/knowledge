@@ -356,7 +356,7 @@
 
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Select</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="select/join/join_types.html">Join types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select/join/types.html">Types</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="select/sorting.html">Sorting (ORDER BY)</a></li>
@@ -382,6 +382,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="select/expand_array.html">Expand array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="select/cte_with.html">CTE (WITH)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="select/performance.html">Performance</a></li>
 </ul>
@@ -400,8 +401,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="dml.html">DML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="postgre_sql.html">PostgreSQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clickhouse.html">Clickhouse</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -724,12 +727,15 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empty-values">Empty values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-case">Conditional (CASE)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-expanding">Array expanding</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cte-with">CTE (WITH)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple">Multiple</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cte-with">CTE (WITH)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distinct">Distinct</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union">Union</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exists">Exists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in">IN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#null-behaviour">NULL behaviour</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-unpivot">Pivot/unpivot</a></li>
 </ul>
             </nav>
         </div>
@@ -889,7 +895,7 @@
 </section>
 <section id="cte-with">
 <h2>CTE (WITH)<a class="headerlink" href="#cte-with" title="Link to this heading">#</a></h2>
-<p><em>C</em>ommon <em>T</em>able <em>E</em>xpressions (CTE) allow complex SQL query to be broked down into smaller pieces, providing greater flexibility and making the query easier to manage.</p>
+<p><em>C</em>ommon <em>T</em>able <em>E</em>xpressions (CTE) allow complex SQL query to be broken down into smaller pieces, providing greater flexibility and making the query easier to manage.</p>
 <p>All the sql dialects I am familiar with implement common table expressions similar to the following:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">WITH</span><span class="w"> </span><span class="n">cte_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">some_data</span>
@@ -897,6 +903,7 @@
 </pre></div>
 </div>
 <p>And you can reuse CTE inn other select statement.</p>
+<p>Check more details in the <a class="reference internal" href="select/cte_with.html"><span class="std std-doc">CTE (WITH)</span></a> page.</p>
 <hr class="docutils" />
 <p>The following cell shows the simple CTE in postgreSQL.</p>
 <div class="cell docutils container">
@@ -925,61 +932,6 @@
 </tbody>
 </table></div></div>
 </div>
-<section id="multiple">
-<h3>Multiple<a class="headerlink" href="#multiple" title="Link to this heading">#</a></h3>
-<p>You can define several CTE’s in one query. The syntax have to be like this:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">WITH</span>
-<span class="n">name_one</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="o">&lt;</span><span class="n">query</span><span class="o">&gt;</span><span class="p">)</span>
-<span class="n">name_two</span><span class="w"> </span><span class="k">As</span><span class="w"> </span><span class="p">(</span><span class="o">&lt;</span><span class="n">query</span><span class="o">&gt;</span><span class="p">)</span>
-
-<span class="k">SELECT</span><span class="w"> </span><span class="p">...</span>
-</pre></div>
-</div>
-<hr class="docutils" />
-<p>The following cell defines two CTEs and joins them in the final query.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
-<span class="k">WITH</span>
-<span class="n">population</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="k">VALUES</span>
-<span class="w">        </span><span class="p">(</span><span class="s1">&#39;Belarus&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span>
-<span class="w">        </span><span class="p">(</span><span class="s1">&#39;Poland&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="p">),</span>
-<span class="w">        </span><span class="p">(</span><span class="s1">&#39;Ukraine&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">54</span><span class="p">)</span>
-<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temp</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">population</span><span class="p">)</span>
-<span class="p">),</span>
-<span class="n">capitals</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="k">VALUES</span>
-<span class="w">        </span><span class="p">(</span><span class="s1">&#39;Belarus&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Minsk&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">(</span><span class="s1">&#39;Poland&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Warsaw&#39;</span><span class="p">),</span>
-<span class="w">        </span><span class="p">(</span><span class="s1">&#39;Ukraine&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Kiev&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">temp</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">capital</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="k">SELECT</span>
-<span class="w">    </span><span class="k">c</span><span class="p">.</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">population</span><span class="p">,</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">capital</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">population</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">p</span>
-<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">capitals</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">c</span>
-<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">country</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-<thead>
-<tr><th>country  </th><th style="text-align: right;">  population</th><th>capital  </th></tr>
-</thead>
-<tbody>
-<tr><td>Belarus  </td><td style="text-align: right;">          10</td><td>Minsk    </td></tr>
-<tr><td>Poland   </td><td style="text-align: right;">          44</td><td>Warsaw   </td></tr>
-<tr><td>Ukraine  </td><td style="text-align: right;">          54</td><td>Kiev     </td></tr>
-</tbody>
-</table></div></div>
-</div>
-</section>
 </section>
 <section id="distinct">
 <h2>Distinct<a class="headerlink" href="#distinct" title="Link to this heading">#</a></h2>
@@ -1098,6 +1050,258 @@
 </table></div></div>
 </div>
 </section>
+<section id="exists">
+<h2>Exists<a class="headerlink" href="#exists" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">EXISTS</span></code> operator takes a <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> query and returns <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> if the subquery contains at least one row, otherwise <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>. The <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">EXISTS</span></code> operator works in the oposite way.</p>
+<p>Operator can be used in the:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">WHERE</span></code> block.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CASE</span> <span class="pre">...</span> <span class="pre">WHEN</span></code> opetor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HAVING</span></code> block.</p></li>
+</ul>
+<p>The input <code class="docutils literal notranslate"><span class="pre">(NOT)</span> <span class="pre">EXISTS</span></code> operator only supports <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> queries.</p>
+<hr class="docutils" />
+<p>The following cell shows few cases of using <code class="docutils literal notranslate"><span class="pre">EXISTS</span></code> opertor.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">exists_true</span></code> column, the query under <code class="docutils literal notranslate"><span class="pre">EXISTS</span></code> returns a single row, meaning that the <code class="docutils literal notranslate"><span class="pre">CASE</span></code> statetemnt outputs the value corresponding to the <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> input. The <code class="docutils literal notranslate"><span class="pre">exists_false</span></code> column, on the other hand, defines the query that doesn’t return a single row within the <code class="docutils literal notranslate"><span class="pre">EXISTS</span></code> statement, as the result column takes “NOT!” value.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">not_exists_false</span></code> and <code class="docutils literal notranslate"><span class="pre">not_exists_true</span></code> columns illustrate the same concept, but for the <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">EXISTS</span></code> operator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="k">CASE</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;FOUND!&#39;</span>
+<span class="w">        </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;NOT!&#39;</span>
+<span class="w">        </span><span class="k">END</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">exists_true</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="k">CASE</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="mi">0</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;FOUND!&#39;</span>
+<span class="w">        </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;NOT!&#39;</span>
+<span class="w">        </span><span class="k">END</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">exists_false</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="k">CASE</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;NOT!&#39;</span>
+<span class="w">        </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;FOUND!&#39;</span>
+<span class="w">        </span><span class="k">END</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">not_exists_false</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="k">CASE</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="mi">0</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;NOT!&#39;</span>
+<span class="w">        </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;FOUND!&#39;</span>
+<span class="w">        </span><span class="k">END</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">not_exists_true</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>exists_true  </th><th>exists_false  </th><th>not_exists_false  </th><th>not_exists_true  </th></tr>
+</thead>
+<tbody>
+<tr><td>FOUND!       </td><td>NOT!          </td><td>FOUND!            </td><td>NOT!             </td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
+<section id="in">
+<h2>IN<a class="headerlink" href="#in" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">(NOT)</span> <span class="pre">IN</span></code> conditional operator that allows you to check whether a value is present in an array. The general syntax is <code class="docutils literal notranslate"><span class="pre">&lt;val&gt;</span> <span class="pre">(NOT)</span> <span class="pre">IN</span> <span class="pre">&lt;array</span> <span class="pre">or</span> <span class="pre">query&gt;</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">IN</span></code> checks whether an expression equals at least one value in a given list or subquery result set.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">IN</span></code> checks whether an expression equals none of those values.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell demonstrates how to use the <code class="docutils literal notranslate"><span class="pre">IN</span></code> operator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="n">true_val</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="n">false_val</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>true_val  </th><th>false_val  </th></tr>
+</thead>
+<tbody>
+<tr><td>True      </td><td>False      </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The same example but with <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">IN</span></code> operator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="n">false_val</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="n">true_val</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>false_val  </th><th>true_val  </th></tr>
+</thead>
+<tbody>
+<tr><td>False      </td><td>False     </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<section id="null-behaviour">
+<h3>NULL behaviour<a class="headerlink" href="#null-behaviour" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">NULL</span></code> behaviour is generally typical. If there is a <code class="docutils literal notranslate"><span class="pre">NULL</span></code> value at any part of an expression, an unknown value marked is returned. <code class="docutils literal notranslate"><span class="pre">NULL</span></code> is the unknown marker for postgreSQL.</p>
+<p>The main issue is that there can be non-obvious behavior when <code class="docutils literal notranslate"><span class="pre">NULL</span></code> appears in the set of values used by the <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">IN</span></code> operator. In that case, the predicate may evaluate to <code class="docutils literal notranslate"><span class="pre">UNKNOWN</span></code> for all rows, which means no rows will be selected when <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">IN</span></code> is used in a filtering condition.</p>
+<hr class="docutils" />
+<p>The following table shows the results of applying the <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">IN</span></code> to an array that contains and doesn’t <code class="docutils literal notranslate"><span class="pre">NULL</span></code> value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">no_null</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">with_null</span><span class="p">;</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>no_null  </th><th>with_null  </th></tr>
+</thead>
+<tbody>
+<tr><td>True     </td><td>           </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>Pay attention that the output of the <code class="docutils literal notranslate"><span class="pre">with_null</span></code> is empty, even through it is obvious that there is no <code class="docutils literal notranslate"><span class="pre">3</span></code> in the array <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">NULL)</span></code>.</p>
+<p>The following two cell demonstrate how such an occasion can affect the queries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">tab</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">col1</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th style="text-align: right;">  col2</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     3</td><td style="text-align: right;">     5</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">tab</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">col1</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">NULL</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr></tr>
+</thead>
+<tbody>
+</tbody>
+</table></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">NULL</span></code> in the <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">IN</span></code> operator array eliminates the second row of the input.</p>
+</section>
+</section>
+<section id="pivot-unpivot">
+<h2>Pivot/unpivot<a class="headerlink" href="#pivot-unpivot" title="Link to this heading">#</a></h2>
+<p><strong>Pivot</strong> is an operation that takes the unique values of a given column and uses them as the new columns. The values are an aggregations of the other information within the original column.</p>
+<p><strong>Unpivot</strong> transforms columns into the rows. Each pivoted column produces a row containing the values from each row of the original table.</p>
+<p>Some SQL dialects contain a special <code class="docutils literal notranslate"><span class="pre">PIVOT/UNPIVOT</span></code> keywords that implement the pivoting; others do not. However, there is a universal approach to performing pivots and unpivots:</p>
+<ul class="simple">
+<li><p>Perform pivoting by creating columns that aggregates some values depending on value of the other column: <code class="docutils literal notranslate"><span class="pre">aggregation(CASE</span> <span class="pre">WHEN</span> <span class="pre">pivot_column=&lt;pivot_category&gt;</span> <span class="pre">THEN</span> <span class="pre">value</span> <span class="pre">END)</span> <span class="pre">AS</span> <span class="pre">&lt;new_column_name&gt;</span></code>.</p></li>
+<li><p>Unpivoting could be achieved using a <code class="docutils literal notranslate"><span class="pre">CROSS</span> <span class="pre">JOIN</span></code> of the values dedicated to the columns to be unpivoted with the original table.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell shows the sum pivoting of the table by <code class="docutils literal notranslate"><span class="pre">category</span></code> column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">WITH</span>
+<span class="n">temp_table</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">150</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">category</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">A</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">category</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">B</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">temp_table</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  a</th><th style="text-align: right;">  b</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">250</td><td style="text-align: right;">450</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>As a result, only the columns corresponding to the unique values in the <code class="docutils literal notranslate"><span class="pre">category</span></code> column are displayed. The table’s content is aggregated by the unique values in the <code class="docutils literal notranslate"><span class="pre">category</span></code> column.</p>
+<p>The following cell shows the unpivotation of the table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">WITH</span>
+<span class="n">temp_table</span><span class="p">(</span><span class="n">original_column</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w"> </span><span class="mi">450</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">temp_table</span><span class="p">.</span><span class="n">original_column</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">val</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">temp_table</span>
+<span class="k">CROSS</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="k">LATERAL</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">temp_table</span><span class="p">.</span><span class="n">a</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">temp_table</span><span class="p">.</span><span class="n">b</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>original_column  </th><th>category  </th><th style="text-align: right;">  val</th></tr>
+</thead>
+<tbody>
+<tr><td>x                </td><td>a         </td><td style="text-align: right;">  250</td></tr>
+<tr><td>x                </td><td>b         </td><td style="text-align: right;">  450</td></tr>
+<tr><td>y                </td><td>a         </td><td style="text-align: right;">  400</td></tr>
+<tr><td>y                </td><td>b         </td><td style="text-align: right;">  500</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The result is that each unpivoted column is combined with each row of the input column.</p>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1173,12 +1377,15 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empty-values">Empty values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-case">Conditional (CASE)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-expanding">Array expanding</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cte-with">CTE (WITH)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple">Multiple</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cte-with">CTE (WITH)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distinct">Distinct</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union">Union</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exists">Exists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in">IN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#null-behaviour">NULL behaviour</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-unpivot">Pivot/unpivot</a></li>
 </ul>
   </nav></div>
 

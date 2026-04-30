@@ -66,7 +66,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Terminology" href="../layout/terminology.html" />
+    <link rel="next" title="Clickhouse" href="clickhouse.html" />
     <link rel="prev" title="Versions issues" href="versions_issues.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -356,7 +356,7 @@
 
 <li class="toctree-l1 has-children"><a class="reference internal" href="select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="select/join/join_types.html">Join types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select/join/types.html">Types</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="select/sorting.html">Sorting (ORDER BY)</a></li>
@@ -382,6 +382,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="select/expand_array.html">Expand array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="select/conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="select/cte_with.html">CTE (WITH)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="select/records_range.html">Records range (OFFSET/LIMIT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="select/performance.html">Performance</a></li>
 </ul>
@@ -400,8 +401,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="dml.html">DML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">PostgreSQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clickhouse.html">Clickhouse</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -724,6 +727,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-series">Generate series</a></li>
 </ul>
             </nav>
         </div>
@@ -826,6 +830,56 @@
 </div>
 </section>
 </section>
+<section id="generate-series">
+<h2>Generate series<a class="headerlink" href="#generate-series" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">generate_series</span></code> function is a set-returning function that returns values from a selected range.</p>
+<p>The semantics is really similar for such types of funtions: <code class="docutils literal notranslate"><span class="pre">genereate_series(start,</span> <span class="pre">end,</span> <span class="pre">[step])</span></code>.</p>
+<p>Check the <a class="reference external" href="https://www.postgresql.org/docs/current/functions-srf.html">Set Returning Functions</a> for the description of this function.</p>
+<hr class="docutils" />
+<p>The following cell uses the <code class="docutils literal notranslate"><span class="pre">generate_series</span></code> function to generate the column from 1 to 5.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">generate_series</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  generate_series</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">                0</td></tr>
+<tr><td style="text-align: right;">                1</td></tr>
+<tr><td style="text-align: right;">                2</td></tr>
+<tr><td style="text-align: right;">                3</td></tr>
+<tr><td style="text-align: right;">                4</td></tr>
+<tr><td style="text-align: right;">                5</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The following cell shows the same example, but defines the step for generating the inversed series.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">generate_series</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  generate_series</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">                0</td></tr>
+<tr><td style="text-align: right;">               -2</td></tr>
+<tr><td style="text-align: right;">               -4</td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -868,11 +922,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="../layout/terminology.html"
+       href="clickhouse.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Terminology</p>
+        <p class="prev-next-title">Clickhouse</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -899,6 +953,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-series">Generate series</a></li>
 </ul>
   </nav></div>
 

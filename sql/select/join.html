@@ -66,7 +66,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Join types" href="join/join_types.html" />
+    <link rel="next" title="Types" href="join/types.html" />
     <link rel="prev" title="Select" href="../select.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -356,7 +356,7 @@
 
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../select.html">Select</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">JOIN</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="join/join_types.html">Join types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="join/types.html">Types</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="sorting.html">Sorting (ORDER BY)</a></li>
@@ -382,6 +382,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="expand_array.html">Expand array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cte_with.html">CTE (WITH)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="records_range.html">Records range (OFFSET/LIMIT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="performance.html">Performance</a></li>
 </ul>
@@ -400,8 +401,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../dml.html">DML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../postgre_sql.html">PostgreSQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clickhouse.html">Clickhouse</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -719,9 +722,12 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#join-types">Join types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aliases">Aliases</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-clause">ON clause</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-clause">ON clause</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-idea">Matching idea</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-tables">Several tables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accumulating-all-cases">Accumulating all cases</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">Solution</a></li>
@@ -744,11 +750,11 @@
 <p>Join is a keyword that allows you to combine information from different tables. It’s really important, but sometimes it’s hard to understand, so this whole page is about features and usecases of joins in Postgres SQL.</p>
 <p>In the following cell, I’m creating a database that will be used for all the examples on this page.</p>
 <p><strong>Note</strong> Remember to close the container when you have finished playing with the examples.</p>
-<section id="join-types">
-<h2>Join types<a class="headerlink" href="#join-types" title="Link to this heading">#</a></h2>
+<section id="types">
+<h2>Types<a class="headerlink" href="#types" title="Link to this heading">#</a></h2>
 <p>This diagram describes the different types of joins available in SQL.</p>
 <p><img alt="join types" src="../../_images/join_types.png" /></p>
-<p>Find out more in the <a class="reference internal" href="join/join_types.html"><span class="std std-doc">sepcific page</span></a>.</p>
+<p>Find out more in the <a class="reference internal" href="join/types.html"><span class="std std-doc">sepcific page</span></a>.</p>
 </section>
 <section id="aliases">
 <h2>Aliases<a class="headerlink" href="#aliases" title="Link to this heading">#</a></h2>
@@ -839,6 +845,92 @@
 </tbody>
 </table></div></div>
 </div>
+<section id="matching-idea">
+<h3>Matching idea<a class="headerlink" href="#matching-idea" title="Link to this heading">#</a></h3>
+<p><strong>Note:</strong> Despite the conditions written in the <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> and <code class="docutils literal notranslate"><span class="pre">ON</span></code> clauses can produce the same result, generally the output differes.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ON</span></code> speficifes matching while <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> filtering. Therefore, if condition is applied to the left right table in the left join the result could be different.</p>
+<p>If the condition is specified in the <code class="docutils literal notranslate"><span class="pre">ON</span></code> block, all rows in the left table will remain in the result. However, the values that do not correspond to the condition applied to the right table would not match.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> condition filters the joined table, meaning that if a row does not correspond to the condition, both left and right parts of the row will be excluded from the result.</p>
+<hr class="docutils" />
+<p>Consider the example where the same condition written in the <code class="docutils literal notranslate"><span class="pre">ON</span></code> and <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> blocks would produce the different outputs. The following cell creates some example tables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="k">names</span><span class="p">;</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">jobs</span><span class="p">;</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">names</span><span class="w"> </span><span class="p">(</span><span class="n">user_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">));</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="k">names</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">)</span>
+<span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Fedor&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Maksim&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Nikita&#39;</span><span class="p">);</span>
+
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">jobs</span><span class="w"> </span><span class="p">(</span><span class="n">user_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">));</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">jobs</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">job</span><span class="p">)</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Immokise&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;FDI&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Immovise&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Bank&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>The following cell applies the matching condtion to <code class="docutils literal notranslate"><span class="pre">job</span></code> not to be “bank”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span>
+<span class="w">    </span><span class="k">names</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">jobs</span><span class="w"> </span><span class="n">j</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">user_id</span><span class="o">=</span><span class="n">j</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">j</span><span class="p">.</span><span class="n">job</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s1">&#39;Bank&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  user_id</th><th>name  </th><th style="text-align: right;">  user_id</th><th>job     </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">        1</td><td>Fedor </td><td style="text-align: right;">        1</td><td>Immokise</td></tr>
+<tr><td style="text-align: right;">        1</td><td>Fedor </td><td style="text-align: right;">        1</td><td>FDI     </td></tr>
+<tr><td style="text-align: right;">        2</td><td>Maksim</td><td style="text-align: right;">        2</td><td>Immovise</td></tr>
+<tr><td style="text-align: right;">        3</td><td>Nikita</td><td style="text-align: right;">         </td><td>        </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>As a result there is <code class="docutils literal notranslate"><span class="pre">Nikita</span></code> in the output, even though he only worked at the bank - “bank” was excluded before joining.</p>
+<p>By contrast, the following cell specifies the same condition but within the <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> block.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span>
+<span class="w">    </span><span class="k">names</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">jobs</span><span class="w"> </span><span class="n">j</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">user_id</span><span class="o">=</span><span class="n">j</span><span class="p">.</span><span class="n">user_id</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">j</span><span class="p">.</span><span class="n">job</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s1">&#39;Bank&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  user_id</th><th>name  </th><th style="text-align: right;">  user_id</th><th>job     </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">        1</td><td>Fedor </td><td style="text-align: right;">        1</td><td>Immokise</td></tr>
+<tr><td style="text-align: right;">        1</td><td>Fedor </td><td style="text-align: right;">        1</td><td>FDI     </td></tr>
+<tr><td style="text-align: right;">        2</td><td>Maksim</td><td style="text-align: right;">        2</td><td>Immovise</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>There are no rows associated with the job in the bank.</p>
+</section>
 </section>
 <section id="several-tables">
 <h2>Several tables<a class="headerlink" href="#several-tables" title="Link to this heading">#</a></h2>
@@ -1122,11 +1214,11 @@ psycopg.errors.FeatureNotSupported: FULL JOIN is only supported with merge-joina
       </div>
     </a>
     <a class="right-next"
-       href="join/join_types.html"
+       href="join/types.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Join types</p>
+        <p class="prev-next-title">Types</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1148,9 +1240,12 @@ psycopg.errors.FeatureNotSupported: FULL JOIN is only supported with merge-joina
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#join-types">Join types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aliases">Aliases</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-clause">ON clause</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-clause">ON clause</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-idea">Matching idea</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-tables">Several tables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accumulating-all-cases">Accumulating all cases</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">Solution</a></li>

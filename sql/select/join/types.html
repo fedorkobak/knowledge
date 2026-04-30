@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Join types &#8212; Knowledge base</title>
+    <title>Types &#8212; Knowledge base</title>
   
   
   
@@ -62,7 +62,7 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/join/join_types';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sql/select/join/types';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -356,7 +356,7 @@
 
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../select.html">Select</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../join.html">JOIN</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">Join types</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Types</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../sorting.html">Sorting (ORDER BY)</a></li>
@@ -382,6 +382,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../expand_array.html">Expand array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../conditional.html">Conditional (CASE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cte_with.html">CTE (WITH)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../records_range.html">Records range (OFFSET/LIMIT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../performance.html">Performance</a></li>
 </ul>
@@ -400,8 +401,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../dml.html">DML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../postgre_sql.html">PostgreSQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clickhouse.html">Clickhouse</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Layout</span></p>
 <ul class="nav bd-sidenav">
@@ -633,7 +636,7 @@
       
       
       
-      <li><a href="../../../_sources/sql/select/join/join_types.ipynb" target="_blank"
+      <li><a href="../../../_sources/sql/select/join/types.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -709,7 +712,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Join types</h1>
+    <h1>Types</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -720,6 +723,8 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-outer">Full (outer)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross">Cross</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self">Self</a></li>
 </ul>
             </nav>
         </div>
@@ -731,8 +736,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="join-types">
-<h1>Join types<a class="headerlink" href="#join-types" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="types">
+<h1>Types<a class="headerlink" href="#types" title="Link to this heading">#</a></h1>
 <p>At this page we’ll consider different join types and their features in clickhouse and postgres.</p>
 <section id="full-outer">
 <h2>Full (outer)<a class="headerlink" href="#full-outer" title="Link to this heading">#</a></h2>
@@ -815,6 +820,80 @@
 </table></div></div>
 </div>
 </section>
+<section id="cross">
+<h2>Cross<a class="headerlink" href="#cross" title="Link to this heading">#</a></h2>
+<p>A cross join results in the Cartesian product of the input tables (rus. декартово произведение): each combination of rows from the input tables rows is included in the output. This type of join doesn’t require the condition a to be specified in <code class="docutils literal notranslate"><span class="pre">ON</span></code> clause.</p>
+<hr class="docutils" />
+<p>The following cell displays the results of the cross-joining two arrays of numbers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">WITH</span><span class="w"> </span>
+<span class="n">table1</span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+<span class="n">table2</span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span>
+<span class="w">    </span><span class="n">table1</span>
+<span class="w">    </span><span class="k">CROSS</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th style="text-align: right;">  col1</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td style="text-align: right;">     1</td></tr>
+<tr><td style="text-align: right;">     1</td><td style="text-align: right;">     3</td></tr>
+<tr><td style="text-align: right;">     1</td><td style="text-align: right;">     8</td></tr>
+<tr><td style="text-align: right;">     1</td><td style="text-align: right;">     9</td></tr>
+<tr><td style="text-align: right;">     2</td><td style="text-align: right;">     1</td></tr>
+<tr><td style="text-align: right;">     2</td><td style="text-align: right;">     3</td></tr>
+<tr><td style="text-align: right;">     2</td><td style="text-align: right;">     8</td></tr>
+<tr><td style="text-align: right;">     2</td><td style="text-align: right;">     9</td></tr>
+<tr><td style="text-align: right;">     3</td><td style="text-align: right;">     1</td></tr>
+<tr><td style="text-align: right;">     3</td><td style="text-align: right;">     3</td></tr>
+<tr><td style="text-align: right;">     3</td><td style="text-align: right;">     8</td></tr>
+<tr><td style="text-align: right;">     3</td><td style="text-align: right;">     9</td></tr>
+<tr><td style="text-align: right;">     4</td><td style="text-align: right;">     1</td></tr>
+<tr><td style="text-align: right;">     4</td><td style="text-align: right;">     3</td></tr>
+<tr><td style="text-align: right;">     4</td><td style="text-align: right;">     8</td></tr>
+<tr><td style="text-align: right;">     4</td><td style="text-align: right;">     9</td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
+<section id="self">
+<h2>Self<a class="headerlink" href="#self" title="Link to this heading">#</a></h2>
+<p>A self join is a type of join that joins a table with itself.</p>
+<hr class="docutils" />
+<p>The cell defines the example table and joins each row with another row whose value is exactly one less.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">WITH</span><span class="w"> </span>
+<span class="n">example</span><span class="p">(</span><span class="n">col1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">col1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">col1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th style="text-align: right;">  col1</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     2</td><td style="text-align: right;">     1</td></tr>
+<tr><td style="text-align: right;">     3</td><td style="text-align: right;">     2</td></tr>
+<tr><td style="text-align: right;">     4</td><td style="text-align: right;">     3</td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -884,6 +963,8 @@
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-outer">Full (outer)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross">Cross</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self">Self</a></li>
 </ul>
   </nav></div>
 
