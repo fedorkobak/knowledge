@@ -418,6 +418,11 @@
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Clickhouse</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="clickhouse/databases.html">Databases</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clickhouse/data_types.html">Data types</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="clickhouse/functions/regular.html">Regular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clickhouse/functions/aggregation.html">Aggregation</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 </ul>
@@ -743,11 +748,14 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describe">Describe</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databases">Databases</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parts">Parts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mergetree">MergeTree</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-key">Primary key</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-join">Array Join</a></li>
 </ul>
             </nav>
         </div>
@@ -804,7 +812,7 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">DROP</span> <span class="pre">DATABASE</span> <span class="pre">&lt;name&gt;</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">USE</span> <span class="pre">DATABASE</span></code>: to select the context, all subsequent queries will automatilly will refer to the essesnces of the specific database.</p></li>
 </ul>
-<p>Check more in <a class="reference internal" href="#clickhouse/databases.ipyng"><span class="xref myst">Databases</span></a> page.</p>
+<p>Check more in <a class="reference internal" href="clickhouse/databases.html"><span class="std std-doc">Databases</span></a> page.</p>
 <hr class="docutils" />
 <p>The following cell show the initial list of available databases.</p>
 <div class="cell docutils container">
@@ -980,6 +988,16 @@ document.write(`
 </tbody>
 </table></div></div>
 </div>
+</section>
+<section id="mergetree">
+<h2>MergeTree<a class="headerlink" href="#mergetree" title="Link to this heading">#</a></h2>
+<p>The <strong>MergeTree</strong> is the most popular engine in clickhouse that determines how ClickHouse operates with data.</p>
+<p>There are different variations of the MergeTree engines that implement different features, they all follow same data organization idea.</p>
+<p>For more check:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://habr.com/ru/articles/1001054/">ClickHouse: deepdive into MergeTree</a>(rus) page.</p></li>
+<li><p>The <a class="reference external" href="https://clickhouse.com/docs/engines/table-engines/mergetree-family">MergeTree engine family</a> page.</p></li>
+</ul>
 </section>
 <section id="primary-key">
 <h2>Primary key<a class="headerlink" href="#primary-key" title="Link to this heading">#</a></h2>
@@ -1169,6 +1187,123 @@ Peak memory usage: 165.52 KiB.
 </table></div></div>
 </div>
 </section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
+<p>There is a set of prebuilt functions in ClickHouse.</p>
+<p>Generally clickhouse have the same group of functions as any other dialect:</p>
+<ul class="simple">
+<li><p>Regular Functions: Whose result for each row is independent from other rows.</p></li>
+<li><p>Aggregate Functions: Functions that accumulate a set of values across rows.</p></li>
+<li><p>Table Functions: Methods for constructing tables.</p></li>
+<li><p>Window Functions: Functions which let you perform calculations across a set of rows that are related to the current row.</p></li>
+</ul>
+<p>Check more in the:</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://clickhouse.com/docs/sql-reference/functions">Functions Overview</a> page.</p></li>
+<li><p>The <a class="reference internal" href="clickhouse/functions.html"><span class="std std-doc">Functions</span></a> page.</p></li>
+</ul>
+</section>
+<section id="array-join">
+<h2>Array Join<a class="headerlink" href="#array-join" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ARRAY</span> <span class="pre">JOIN</span></code> clause is a unique to the ClickHouse dialect. It creates a column containing all the unique elements of the array from column of arrays, while all the other elements of the row are duplicated.</p>
+<p>Check more about this clause in the <a class="reference external" href="https://clickhouse.com/docs/sql-reference/statements/select/array-join">ARRAY JOIN Clause</a> page of the reference.</p>
+<p>Two types of <code class="docutils literal notranslate"><span class="pre">ARRAY</span> <span class="pre">JOIN</span></code> are supported:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ARRAY</span> <span class="pre">JOIN</span></code>: records with empty arrays are excluded from the result. This can be interpreted as an <code class="docutils literal notranslate"><span class="pre">INNER</span></code> join, meaning that items with empty arrays are not matched with values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LEFT</span> <span class="pre">ARRAY</span> <span class="pre">JOIN</span></code>: garantees that all items of the original table (LEFT) are included to the output.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell creates the table containing the array column that we’ll use as an example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">arrays</span><span class="p">;</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">arrays</span>
+<span class="p">(</span>
+<span class="w">    </span><span class="n">idx</span><span class="w"> </span><span class="n">UInt8</span><span class="p">,</span>
+<span class="w">    </span><span class="n">arr</span><span class="w"> </span><span class="nb">Array</span><span class="p">(</span><span class="n">UInt8</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Memory</span><span class="p">;</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">arrays</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">]),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[]);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">arrays</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">     2347791</td><td style="text-align: right;">       1051935</td><td>3c50c79c-db37-4b4b-86ea-a56ce4e23e34</td></tr>
+</tbody>
+</table></div><div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  idx</th><th>arr   </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">    1</td><td>[1, 2]</td></tr>
+<tr><td style="text-align: right;">    2</td><td>[3, 4]</td></tr>
+<tr><td style="text-align: right;">    3</td><td>[]    </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The output of the <code class="docutils literal notranslate"><span class="pre">ARRAY</span> <span class="pre">JOIN</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="n">joined</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">arrays</span>
+<span class="nb">ARRAY</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">joined</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  idx</th><th>arr   </th><th style="text-align: right;">  joined</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">    1</td><td>[1, 2]</td><td style="text-align: right;">       1</td></tr>
+<tr><td style="text-align: right;">    1</td><td>[1, 2]</td><td style="text-align: right;">       2</td></tr>
+<tr><td style="text-align: right;">    2</td><td>[3, 4]</td><td style="text-align: right;">       3</td></tr>
+<tr><td style="text-align: right;">    2</td><td>[3, 4]</td><td style="text-align: right;">       4</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p><strong>Note</strong> that the output loses one row that corresnding to the empty array.</p>
+<p>If the column with empty array needed to be included to the output use <code class="docutils literal notranslate"><span class="pre">LEFT</span> <span class="pre">ARRAY</span> <span class="pre">JOIN</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="n">joined</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">arrays</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="nb">ARRAY</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">joined</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  idx</th><th>arr   </th><th style="text-align: right;">  joined</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">    1</td><td>[1, 2]</td><td style="text-align: right;">       1</td></tr>
+<tr><td style="text-align: right;">    1</td><td>[1, 2]</td><td style="text-align: right;">       2</td></tr>
+<tr><td style="text-align: right;">    2</td><td>[3, 4]</td><td style="text-align: right;">       3</td></tr>
+<tr><td style="text-align: right;">    2</td><td>[3, 4]</td><td style="text-align: right;">       4</td></tr>
+<tr><td style="text-align: right;">    3</td><td>[]    </td><td style="text-align: right;">       0</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">joined</span></code> value corresponding to the empty array casted to default value for <code class="docutils literal notranslate"><span class="pre">UInt8</span></code>.</p>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1240,11 +1375,14 @@ Peak memory usage: 165.52 KiB.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describe">Describe</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databases">Databases</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parts">Parts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mergetree">MergeTree</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-key">Primary key</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-join">Array Join</a></li>
 </ul>
   </nav></div>
 
