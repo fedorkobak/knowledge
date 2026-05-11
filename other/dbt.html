@@ -417,10 +417,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/databases.html">Databases</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/data_types.html">Data types</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/functions/regular.html">Regular</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../sql/clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../sql/clickhouse/functions/regular/array.html">Array</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/materialized_view.html">Materialized view</a></li>
 </ul>
 </details></li>
 </ul>
@@ -744,7 +748,12 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli">CLI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structure">Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-layers">Data layers</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#models">Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
 </ul>
             </nav>
         </div>
@@ -773,9 +782,32 @@ document.write(`
 <li><p><a class="reference internal" href="dbt/cli.html"><span class="std std-doc">CLI</span></a> page.</p></li>
 </ul>
 </section>
+<section id="structure">
+<h2>Structure<a class="headerlink" href="#structure" title="Link to this heading">#</a></h2>
+<p>The DBT project suposes some kind of structure. There are corresponding directories/files:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/models</span></code>: the sql or python files that define what have to be done in the dbt project.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/seeds</span></code>: CSV-files, containing some additional information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/tests</span></code>: unit-tests of the dbt project.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/maros</span></code>: reusable jinja templates.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/analysis</span></code>: files for Adhoc queries.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dbt_project.yml</span></code>: the main files for prject configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">profies.yml</span></code>: file that describes the credentials to connect to the database.</p></li>
+</ul>
+<section id="data-layers">
+<h3>Data layers<a class="headerlink" href="#data-layers" title="Link to this heading">#</a></h3>
+<p>The dbt recommends organizing your transformation into three layers:</p>
+<ul class="simple">
+<li><p><strong>Staging</strong>: the raw data received from datasources.</p></li>
+<li><p><strong>Intermediate</strong>: calculations layer.</p></li>
+<li><p><strong>Marts</strong>: for data marts (рус. Витрины данных).</p></li>
+</ul>
+<p>Check more on project sctucture and naming conventions in the <a class="reference external" href="https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview?version=1.12">How we structure out dbt prjects</a> guide from the dbt team.</p>
+</section>
+</section>
 <section id="models">
 <h2>Models<a class="headerlink" href="#models" title="Link to this heading">#</a></h2>
-<p>In dbt, models are SQL scripts with Jinja templates. During execution of the project, they <strong>materialize</strong> (produce) the essences (tables, views, materizlized views, etc.) in the target database systems.</p>
+<p>In DBT, models are SQL scripts containing Jinja templates. DBT compiles these scripts into corresponding SQL code and then executes them. The results of the queries are wrapped in the corresponding DDL/DML and the results are put into the target database.</p>
 <hr class="docutils" />
 <p>The following cell initialise the project.</p>
 <div class="cell docutils container">
@@ -832,6 +864,57 @@ SELECT<span class="w"> </span><span class="s1">&#39;some data&#39;</span><span c
 -----------+----------
  some data | new data
 (1 row)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">#</a></h2>
+<p>You can invoke one dbt object from another. This can be achieved using the <code class="docutils literal notranslate"><span class="pre">ref</span></code> function. Where the SQL syntax requires the data source, you can use the Jinja template <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">ref('name.sql')</span> <span class="pre">}}</span></code>. The dbt will generate the corresponding dialect specific sql code.</p>
+<hr class="docutils" />
+<p>The following cells define the project and the <code class="docutils literal notranslate"><span class="pre">model_a.sql</span></code> file we will reference as an example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+dbt<span class="w"> </span>init<span class="w"> </span>knowledge<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+<span class="nb">cd</span><span class="w"> </span>knowledge
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#file knowledge/models/model_a.sql</span>
+SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </span><span class="o">(</span>
+VALUES
+<span class="w">    </span><span class="o">(</span><span class="s1">&#39;hello&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span>,
+<span class="w">    </span><span class="o">(</span><span class="s1">&#39;world&#39;</span>,<span class="w"> </span><span class="m">2</span><span class="o">)</span>
+<span class="o">)</span><span class="w"> </span>AS<span class="w"> </span>tab<span class="o">(</span>col1,<span class="w"> </span>col2<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell generates the <code class="docutils literal notranslate"><span class="pre">model_b.sql</span></code> that uses <code class="docutils literal notranslate"><span class="pre">ref('model_a')</span></code> as the datasource.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#file knowledge/models/model_b.sql</span>
+SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </span><span class="o">{{</span><span class="w"> </span>ref<span class="o">(</span><span class="s1">&#39;model_a&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">}}</span><span class="w"> </span>WHERE<span class="w"> </span><span class="nv">col2</span><span class="o">=</span><span class="m">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The data generated by <code class="docutils literal notranslate"><span class="pre">model_b</span></code> corresponds to a subset of the <code class="docutils literal notranslate"><span class="pre">model_a</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>show<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>model_b.sql
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>| col1  | col2 |
+| ----- | ---- |
+| world |    2 |
 </pre></div>
 </div>
 </div>
@@ -906,7 +989,12 @@ SELECT<span class="w"> </span><span class="s1">&#39;some data&#39;</span><span c
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cli">CLI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structure">Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-layers">Data layers</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#models">Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
 </ul>
   </nav></div>
 

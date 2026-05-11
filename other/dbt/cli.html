@@ -416,10 +416,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../sql/clickhouse/databases.html">Databases</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../sql/clickhouse/data_types.html">Data types</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../sql/clickhouse/functions/regular.html">Regular</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../sql/clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../sql/clickhouse/functions/regular/array.html">Array</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3"><a class="reference internal" href="../../sql/clickhouse/functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/clickhouse/materialized_view.html">Materialized view</a></li>
 </ul>
 </details></li>
 </ul>
@@ -742,6 +746,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">Initialization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation">Compilation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show">Show</a></li>
@@ -759,6 +764,109 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="cli">
 <h1>CLI<a class="headerlink" href="#cli" title="Link to this heading">#</a></h1>
 <p>This page looks at the commands available via <code class="docutils literal notranslate"><span class="pre">dbt-core</span></code> and <code class="docutils literal notranslate"><span class="pre">dbtf</span></code>. They are the primary ways to manipulate the dbt project.</p>
+<section id="initialization">
+<h2>Initialization<a class="headerlink" href="#initialization" title="Link to this heading">#</a></h2>
+<p>You can initialise the project (create all necessary for dbt strcutures) by using the <code class="docutils literal notranslate"><span class="pre">dbt(f)</span> <span class="pre">init</span></code> command. There are slightly different interfaces for <code class="docutils literal notranslate"><span class="pre">dbt-core</span></code> and fusion.</p>
+<p>In general, you can simply <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">init</span></code> or <code class="docutils literal notranslate"><span class="pre">dbtf</span> <span class="pre">init</span></code> and CLI will ask you promt you for all the necessary parameters. However, due to restrictions in the Jupyter notebook, the project name and profile must be specified explicetely.</p>
+<hr class="docutils" />
+<p>The following cell initialises the <code class="docutils literal notranslate"><span class="pre">dbt-core</span></code> project.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+dbt<span class="w"> </span>init<span class="w"> </span>init_example<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+tree
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
+├── <span class=" -Color -Color-Bold -Color-Bold-Blue">init_example</span>
+│   ├── <span class=" -Color -Color-Bold -Color-Bold-Blue">analyses</span>
+│   ├── dbt_project.yml
+│   ├── <span class=" -Color -Color-Bold -Color-Bold-Blue">macros</span>
+│   ├── <span class=" -Color -Color-Bold -Color-Bold-Blue">models</span>
+│   │   └── <span class=" -Color -Color-Bold -Color-Bold-Blue">example</span>
+│   │       ├── my_first_dbt_model.sql
+│   │       ├── my_second_dbt_model.sql
+│   │       └── schema.yml
+│   ├── README.md
+│   ├── <span class=" -Color -Color-Bold -Color-Bold-Blue">seeds</span>
+│   ├── <span class=" -Color -Color-Bold -Color-Bold-Blue">snapshots</span>
+│   └── <span class=" -Color -Color-Bold -Color-Bold-Blue">tests</span>
+└── <span class=" -Color -Color-Bold -Color-Bold-Blue">logs</span>
+    └── dbt.log
+
+10 directories, 6 files
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next code show the same operation but for fustion. <strong>Note</strong> unlike the <code class="docutils literal notranslate"><span class="pre">dbt-core</span></code>, fusion requires name of the project to be specified with named argument <code class="docutils literal notranslate"><span class="pre">--project-name</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+dbtf<span class="w"> </span>init<span class="w"> </span>--project-name<span class="w"> </span>knowledge<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+tree
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Created .vscode/extensions.json with dbt extension recommendation
+<span class=" -Color -Color-Bold -Color-Bold-Green">Success</span> Project created successfully!
+<span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project name: knowledge
+<span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project directory: knowledge
+<span class=" -Color -Color-Bold -Color-Bold-Green">Validating</span> profile inputs, adapters, and connection
+
+m<span class=" -Color -Color-Bold"> Debugging</span> <span class=" -Color -Color-Bold -Color-Bold-Green">⠁</span> [0s]                                                               
+<span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
+├── <span class=" -Color -Color-Bold -Color-Bold-Blue">knowledge</span>
+│   ├── dbt_project.yml
+│   ├── <span class=" -Color -Color-Bold -Color-Bold-Blue">macros</span>
+│   │   └── cents_to_dollars.sql
+│   ├── <span class=" -Color -Color-Bold -Color-Bold-Blue">models</span>
+│   │   ├── <span class=" -Color -Color-Bold -Color-Bold-Blue">marts</span>
+│   │   │   ├── customers.sql
+│   │   │   ├── customers.yml
+│   │   │   ├── locations.sql
+│   │   │   ├── order_items.sql
+│   │   │   ├── order_items.yml
+│   │   │   ├── orders.sql
+│   │   │   ├── orders.yml
+│   │   │   ├── products.sql
+│   │   │   └── supplies.sql
+│   │   └── <span class=" -Color -Color-Bold -Color-Bold-Blue">staging</span>
+│   │       ├── __sources.yml
+│   │       ├── stg_customers.sql
+│   │       ├── stg_customers.yml
+│   │       ├── stg_locations.sql
+│   │       ├── stg_locations.yml
+│   │       ├── stg_order_items.sql
+│   │       ├── stg_order_items.yml
+│   │       ├── stg_orders.sql
+│   │       ├── stg_orders.yml
+│   │       ├── stg_products.sql
+│   │       ├── stg_products.yml
+│   │       ├── stg_supplies.sql
+│   │       └── stg_supplies.yml
+│   ├── packages.yml
+│   ├── README.md
+│   └── <span class=" -Color -Color-Bold -Color-Bold-Blue">seeds</span>
+│       ├── raw_customers.csv
+│       ├── raw_items.csv
+│       ├── raw_orders.csv
+│       ├── raw_products.csv
+│       ├── raw_stores.csv
+│       └── raw_supplies.csv
+└── <span class=" -Color -Color-Bold -Color-Bold-Blue">logs</span>
+    ├── dbt.log
+    └── query_log.sql
+
+8 directories, 34 files
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="compilation">
 <h2>Compilation<a class="headerlink" href="#compilation" title="Link to this heading">#</a></h2>
 <p>Compilation is a proccess of converting DBT language into scripts specific to the target.</p>
@@ -1047,16 +1155,16 @@ m<span class=" -Color -Color-Bold">   Running</span> [<span class=" -Color -Colo
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "bash_kernel"
+            mode: "tempdir"
         },
         kernelOptions: {
-            name: "bash_kernel",
+            name: "tempdir",
             path: "./other/dbt"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'bash_kernel'</script>
+    <script>kernelName = 'tempdir'</script>
 
                 </article>
               
@@ -1093,6 +1201,7 @@ m<span class=" -Color -Color-Bold">   Running</span> [<span class=" -Color -Colo
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">Initialization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation">Compilation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show">Show</a></li>

@@ -419,10 +419,14 @@
 <li class="toctree-l2"><a class="reference internal" href="databases.html">Databases</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_types.html">Data types</a></li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Fucntions</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="functions/regular.html">Regular</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions/regular/array.html">Array</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3"><a class="reference internal" href="functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2"><a class="reference internal" href="materialized_view.html">Materialized view</a></li>
 </ul>
 </details></li>
 </ul>
@@ -763,8 +767,12 @@ document.write(`
 <p>This page considers fucntions awailable in clickhouse.</p>
 <section id="regular">
 <h2>Regular<a class="headerlink" href="#regular" title="Link to this heading">#</a></h2>
-<p>The regular functions transform the fileds of the table to produce new fields. They could be separated into several groups by the meaning:</p>
-<p><strong>Array functions</strong> works with fields that contain arrays:</p>
+<p>The regular functions transform the fileds of the table to produce new fields. They could be separated into several groups by the meaning. The following cell lists some groups of functions and gives them general description:</p>
+<ul class="simple">
+<li><p><strong>Array functions</strong> works with fields that contain arrays.</p></li>
+<li><p><strong>Conditional</strong> allows to produce value depending on value of ther fields.</p></li>
+<li><p><strong>Other</strong> the important fucntions doesn’t belonging to a specific group.</p></li>
+</ul>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Function</p></th>
@@ -773,86 +781,6 @@ document.write(`
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>arrayMap(f, arr)</p></td>
-<td><p>Applies function <code class="docutils literal notranslate"><span class="pre">f</span></code> to each element of array</p></td>
-<td><p>Vectorized transformations</p></td>
-</tr>
-<tr class="row-odd"><td><p>arrayFilter(f, arr)</p></td>
-<td><p>Filters array elements by condition</p></td>
-<td><p>Array filtering</p></td>
-</tr>
-<tr class="row-even"><td><p>arrayReduce(agg, arr)</p></td>
-<td><p>Applies aggregation function to array</p></td>
-<td><p>Aggregate inside arrays</p></td>
-</tr>
-<tr class="row-odd"><td><p>arrayJoin(arr)</p></td>
-<td><p>Expands array into multiple rows</p></td>
-<td><p>Explode arrays (like UNNEST)</p></td>
-</tr>
-<tr class="row-even"><td><p>arrayZip(arr1, arr2, …)</p></td>
-<td><p>Combines arrays element-wise into tuples</p></td>
-<td><p>Align multiple arrays</p></td>
-</tr>
-<tr class="row-odd"><td><p>arrayEnumerate(arr)</p></td>
-<td><p>Returns indices of array elements</p></td>
-<td><p>Position tracking</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>Conditional</strong> allows to produce value depending on value of ther fields:</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Typical Use Case</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>if(cond, a, b)</p></td>
-<td><p>Conditional expression</p></td>
-<td><p>Faster alternative to CASE</p></td>
-</tr>
-<tr class="row-odd"><td><p>multiIf(cond1, val1, …, else)</p></td>
-<td><p>Multiple conditions</p></td>
-<td><p>Compact CASE replacement</p></td>
-</tr>
-<tr class="row-even"><td><p>greatest(a, b, …)</p></td>
-<td><p>Maximum of values</p></td>
-<td><p>Comparisons</p></td>
-</tr>
-<tr class="row-odd"><td><p>least(a, b, …)</p></td>
-<td><p>Minimum of values</p></td>
-<td><p>Comparisons</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>Other</strong> the important fucntions doesn’t belonging to a specific group:</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Function</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Typical Use Case</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>map(key1, val1, …)</p></td>
-<td><p>Creates a map (key-value structure)</p></td>
-<td><p>Structured data</p></td>
-</tr>
-<tr class="row-odd"><td><p>mapKeys(map)</p></td>
-<td><p>Returns keys of map</p></td>
-<td><p>Inspect map</p></td>
-</tr>
-<tr class="row-even"><td><p>mapValues(map)</p></td>
-<td><p>Returns values of map</p></td>
-<td><p>Inspect map</p></td>
-</tr>
-<tr class="row-odd"><td><p>mapGet(map, key)</p></td>
-<td><p>Returns value for key</p></td>
-<td><p>Lookup in map</p></td>
-</tr>
 <tr class="row-even"><td><p>tuple(x, y, …)</p></td>
 <td><p>Creates tuple</p></td>
 <td><p>Multi-value expressions</p></td>

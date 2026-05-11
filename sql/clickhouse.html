@@ -419,10 +419,14 @@
 <li class="toctree-l2"><a class="reference internal" href="clickhouse/databases.html">Databases</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clickhouse/data_types.html">Data types</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="clickhouse/functions/regular.html">Regular</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="clickhouse/functions/regular/array.html">Array</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3"><a class="reference internal" href="clickhouse/functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2"><a class="reference internal" href="clickhouse/materialized_view.html">Materialized view</a></li>
 </ul>
 </details></li>
 </ul>
@@ -756,6 +760,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-join">Array Join</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materialized-view">Materialized view</a></li>
 </ul>
             </nav>
         </div>
@@ -1304,6 +1309,95 @@ Peak memory usage: 165.52 KiB.
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">joined</span></code> value corresponding to the empty array casted to default value for <code class="docutils literal notranslate"><span class="pre">UInt8</span></code>.</p>
 </section>
+<section id="materialized-view">
+<h2>Materialized view<a class="headerlink" href="#materialized-view" title="Link to this heading">#</a></h2>
+<p>A materialized view (MV) is a special type of object that uses a chosen query to periodically update some data. In ClickHouse there are two types of MVs:</p>
+<ul class="simple">
+<li><p><strong>Incremental</strong> adds the information written to the source tables to the target table.</p></li>
+<li><p><strong>Refreshable</strong> works as a cron job, that automatically rerunning the query and rewriting the information in the target.</p></li>
+</ul>
+<p>For more check:</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://clickhouse.com/docs/materialized-views">Materialized views</a> section of the documentation.</p></li>
+<li><p>The <a class="reference internal" href="clickhouse/materialized_view.html"><span class="std std-doc">Materialized view</span></a> page.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell defines the <code class="docutils literal notranslate"><span class="pre">source</span></code> table and materialized view (it’s incremental by default) that selects only data with <code class="docutils literal notranslate"><span class="pre">category</span> <span class="pre">=</span> <span class="pre">'target'</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">data_source</span><span class="p">;</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">target_category</span><span class="p">;</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">data_source</span>
+<span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">Int8</span><span class="p">,</span>
+<span class="w">    </span><span class="n">category</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="n">MATERIALIZED</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">target_category</span><span class="w"> </span><span class="k">AS</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">data_source</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">category</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">      309631</td><td style="text-align: right;">       1050807</td><td>0eeda369-e4ee-42be-9f8f-a492131c9b2a</td></tr>
+</tbody>
+</table></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">     4792794</td><td style="text-align: right;">       1114551</td><td>f0b7ce96-59b6-43b3-9c30-06909f604f57</td></tr>
+</tbody>
+</table></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">     5823056</td><td style="text-align: right;">       1215303</td><td>e3b6c4f2-3e39-46a5-8d59-de3d910eac2b</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The following code inserts the data into <code class="docutils literal notranslate"><span class="pre">data_source</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">data_source</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;target&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;some other&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;target&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div></div>
+</div>
+<p>The records with corresponding category appears in the corresponding <code class="docutils literal notranslate"><span class="pre">target_category</span></code> table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">target_category</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  id</th><th>category  </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">   1</td><td>target    </td></tr>
+<tr><td style="text-align: right;">   3</td><td>target    </td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1383,6 +1477,7 @@ Peak memory usage: 165.52 KiB.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-join">Array Join</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materialized-view">Materialized view</a></li>
 </ul>
   </nav></div>
 
