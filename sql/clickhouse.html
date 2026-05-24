@@ -16,41 +16,44 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -67,6 +70,7 @@
     <link rel="prev" title="PostgreSQL" href="postgre_sql.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -82,19 +86,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -102,7 +95,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -110,8 +102,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -127,7 +119,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -157,21 +150,17 @@
     
     
     <img src="../_static/logo.jpg" class="logo__image only-light" alt="Knowledge base - Home"/>
-    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="Knowledge base - Home"/>`);</script>
+    <img src="../_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="Knowledge base - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -364,7 +353,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
-
 <li class="toctree-l1 has-children"><a class="reference internal" href="select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="select/join/types.html">Types</a></li>
@@ -427,6 +415,7 @@
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="clickhouse/materialized_view.html">Materialized view</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clickhouse/statements.html">Statements</a></li>
 </ul>
 </details></li>
 </ul>
@@ -594,9 +583,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -694,7 +688,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -708,25 +702,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -752,14 +738,17 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describe">Describe</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databases">Databases</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parts">Parts</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mergetree">MergeTree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mergetree">MergeTree</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#replacing">Replacing</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-key">Primary key</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-join">Array Join</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statements">Statements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materialized-view">Materialized view</a></li>
 </ul>
             </nav>
@@ -998,11 +987,112 @@ document.write(`
 <h2>MergeTree<a class="headerlink" href="#mergetree" title="Link to this heading">#</a></h2>
 <p>The <strong>MergeTree</strong> is the most popular engine in clickhouse that determines how ClickHouse operates with data.</p>
 <p>There are different variations of the MergeTree engines that implement different features, they all follow same data organization idea.</p>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="https://clickhouse.com/docs/engines/table-engines/mergetree-family/mergetree">MergeTree</a></strong>: classical option without additional features.</p></li>
+<li><p><strong><a class="reference external" href="https://clickhouse.com/docs/engines/table-engines/mergetree-family/replacingmergetree">ReplacingMergeTree</a></strong>: replaces the rows with same values for order by key.</p></li>
+</ul>
 <p>For more check:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://habr.com/ru/articles/1001054/">ClickHouse: deepdive into MergeTree</a>(rus) page.</p></li>
 <li><p>The <a class="reference external" href="https://clickhouse.com/docs/engines/table-engines/mergetree-family">MergeTree engine family</a> page.</p></li>
 </ul>
+<section id="replacing">
+<h3>Replacing<a class="headerlink" href="#replacing" title="Link to this heading">#</a></h3>
+<p>The ReplacingMergeTree engine specifies that the table should have only one combination of the order-by key. Deduplication happens during parts merging in the ClickHouse background. The merging process cannot be controlled; apply the <code class="docutils literal notranslate"><span class="pre">OPTIMIZE</span></code> to the table to force ClickHouse to perform deduplication.</p>
+<p>As the argument of the engine constructor, specify the name tha would be interpreted as version column. If there are two records with the same order-by values, the merging algorithm will keep the one with the highest value in the <code class="docutils literal notranslate"><span class="pre">version</span></code> column.</p>
+<p>Check more in the:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://clickhouse.com/docs/engines/table-engines/mergetree-family/replacingmergetree">ReplacingMergeTree table engine</a> reference.</p></li>
+<li><p><a class="reference external" href="https://clickhouse.com/docs/guides/replacing-merge-tree">Working with the ReplacingMergeTree engine</a> tutorial.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell defines the table that uses <code class="docutils literal notranslate"><span class="pre">ReplacingMergeTree</span></code> engine:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">id</span></code> column is the order-by key, specifies unique elements.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">version</span></code> column is the column that specifies the version of the record.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">temp_table</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">temp_table</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="n">UInt8</span><span class="p">,</span>
+<span class="w">    </span><span class="k">version</span><span class="w"> </span><span class="n">UInt8</span>
+<span class="p">)</span>
+<span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReplacingMergeTree</span><span class="p">(</span><span class="k">version</span><span class="p">)</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">     8390857</td><td style="text-align: right;">       1118511</td><td>d1089d9b-4c08-4b34-a452-8258a2bc9e6c</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The following cell insert some values into the table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">temp_table</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div></div>
+</div>
+<p>The other records with same ids but different verions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">temp_table</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">temp_table</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  id</th><th style="text-align: right;">  version</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">   1</td><td style="text-align: right;">        2</td></tr>
+<tr><td style="text-align: right;">   2</td><td style="text-align: right;">        1</td></tr>
+<tr><td style="text-align: right;">   1</td><td style="text-align: right;">        1</td></tr>
+<tr><td style="text-align: right;">   2</td><td style="text-align: right;">        2</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>Just after insert all rows are present in the table. The following cell show the table after <code class="docutils literal notranslate"><span class="pre">OPTIMIZE</span></code> applied to it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="n">OPTIMIZE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">temp_table</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">temp_table</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  id</th><th style="text-align: right;">  version</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">   1</td><td style="text-align: right;">        2</td></tr>
+<tr><td style="text-align: right;">   2</td><td style="text-align: right;">        2</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The output now only includes rows with unique id and greates version.</p>
+</section>
 </section>
 <section id="primary-key">
 <h2>Primary key<a class="headerlink" href="#primary-key" title="Link to this heading">#</a></h2>
@@ -1208,106 +1298,14 @@ Peak memory usage: 165.52 KiB.
 <li><p>The <a class="reference internal" href="clickhouse/functions.html"><span class="std std-doc">Functions</span></a> page.</p></li>
 </ul>
 </section>
-<section id="array-join">
-<h2>Array Join<a class="headerlink" href="#array-join" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">ARRAY</span> <span class="pre">JOIN</span></code> clause is a unique to the ClickHouse dialect. It creates a column containing all the unique elements of the array from column of arrays, while all the other elements of the row are duplicated.</p>
-<p>Check more about this clause in the <a class="reference external" href="https://clickhouse.com/docs/sql-reference/statements/select/array-join">ARRAY JOIN Clause</a> page of the reference.</p>
-<p>Two types of <code class="docutils literal notranslate"><span class="pre">ARRAY</span> <span class="pre">JOIN</span></code> are supported:</p>
+<section id="statements">
+<h2>Statements<a class="headerlink" href="#statements" title="Link to this heading">#</a></h2>
+<p>ClickHouse is really specific SQL dialect. This section considers the features of the statements in the ClickHouse.</p>
+<p>For more check the:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ARRAY</span> <span class="pre">JOIN</span></code>: records with empty arrays are excluded from the result. This can be interpreted as an <code class="docutils literal notranslate"><span class="pre">INNER</span></code> join, meaning that items with empty arrays are not matched with values.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">LEFT</span> <span class="pre">ARRAY</span> <span class="pre">JOIN</span></code>: garantees that all items of the original table (LEFT) are included to the output.</p></li>
+<li><p><a class="reference external" href="https://clickhouse.com/docs/sql-reference/statements">ClickHouse SQL Statements</a> reference page.</p></li>
+<li><p><a class="reference internal" href="clickhouse/statements.html"><span class="std std-doc">Statements</span></a> page.</p></li>
 </ul>
-<hr class="docutils" />
-<p>The following cell creates the table containing the array column that we’ll use as an example.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">arrays</span><span class="p">;</span>
-
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">arrays</span>
-<span class="p">(</span>
-<span class="w">    </span><span class="n">idx</span><span class="w"> </span><span class="n">UInt8</span><span class="p">,</span>
-<span class="w">    </span><span class="n">arr</span><span class="w"> </span><span class="nb">Array</span><span class="p">(</span><span class="n">UInt8</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="n">ENGINE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Memory</span><span class="p">;</span>
-
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">arrays</span><span class="w"> </span><span class="k">VALUES</span>
-<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]),</span>
-<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">]),</span>
-<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[]);</span>
-
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">arrays</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"></div><div class="output text_html"><table>
-<thead>
-<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">     2347791</td><td style="text-align: right;">       1051935</td><td>3c50c79c-db37-4b4b-86ea-a56ce4e23e34</td></tr>
-</tbody>
-</table></div><div class="output text_html"></div><div class="output text_html"><table>
-<thead>
-<tr><th style="text-align: right;">  idx</th><th>arr   </th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align: right;">    1</td><td>[1, 2]</td></tr>
-<tr><td style="text-align: right;">    2</td><td>[3, 4]</td></tr>
-<tr><td style="text-align: right;">    3</td><td>[]    </td></tr>
-</tbody>
-</table></div></div>
-</div>
-<p>The output of the <code class="docutils literal notranslate"><span class="pre">ARRAY</span> <span class="pre">JOIN</span></code>:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="n">joined</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">arrays</span>
-<span class="nb">ARRAY</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">joined</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-<thead>
-<tr><th style="text-align: right;">  idx</th><th>arr   </th><th style="text-align: right;">  joined</th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align: right;">    1</td><td>[1, 2]</td><td style="text-align: right;">       1</td></tr>
-<tr><td style="text-align: right;">    1</td><td>[1, 2]</td><td style="text-align: right;">       2</td></tr>
-<tr><td style="text-align: right;">    2</td><td>[3, 4]</td><td style="text-align: right;">       3</td></tr>
-<tr><td style="text-align: right;">    2</td><td>[3, 4]</td><td style="text-align: right;">       4</td></tr>
-</tbody>
-</table></div></div>
-</div>
-<p><strong>Note</strong> that the output loses one row that corresnding to the empty array.</p>
-<p>If the column with empty array needed to be included to the output use <code class="docutils literal notranslate"><span class="pre">LEFT</span> <span class="pre">ARRAY</span> <span class="pre">JOIN</span></code>:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="n">joined</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">arrays</span>
-<span class="k">LEFT</span><span class="w"> </span><span class="nb">ARRAY</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">joined</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-<thead>
-<tr><th style="text-align: right;">  idx</th><th>arr   </th><th style="text-align: right;">  joined</th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align: right;">    1</td><td>[1, 2]</td><td style="text-align: right;">       1</td></tr>
-<tr><td style="text-align: right;">    1</td><td>[1, 2]</td><td style="text-align: right;">       2</td></tr>
-<tr><td style="text-align: right;">    2</td><td>[3, 4]</td><td style="text-align: right;">       3</td></tr>
-<tr><td style="text-align: right;">    2</td><td>[3, 4]</td><td style="text-align: right;">       4</td></tr>
-<tr><td style="text-align: right;">    3</td><td>[]    </td><td style="text-align: right;">       0</td></tr>
-</tbody>
-</table></div></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">joined</span></code> value corresponding to the empty array casted to default value for <code class="docutils literal notranslate"><span class="pre">UInt8</span></code>.</p>
 </section>
 <section id="materialized-view">
 <h2>Materialized view<a class="headerlink" href="#materialized-view" title="Link to this heading">#</a></h2>
@@ -1457,26 +1455,31 @@ Peak memory usage: 165.52 KiB.
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describe">Describe</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databases">Databases</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parts">Parts</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mergetree">MergeTree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mergetree">MergeTree</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#replacing">Replacing</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-key">Primary key</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-join">Array Join</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statements">Statements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materialized-view">Materialized view</a></li>
 </ul>
   </nav></div>
@@ -1526,8 +1529,8 @@ By Fedor Kobak
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
