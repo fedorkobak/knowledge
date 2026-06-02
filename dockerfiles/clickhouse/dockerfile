@@ -1,0 +1,8 @@
+FROM base
+
+WORKDIR /clickhouse
+COPY ./dockerfiles/clickhouse/install.sh /clickhouse/install.sh
+COPY ./dockerfiles/clickhouse/start.sh /clickhouse/start.sh
+
+RUN ./install.sh
+ENTRYPOINT ["/clickhouse/start.sh"]

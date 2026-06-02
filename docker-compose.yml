@@ -8,6 +8,7 @@ services:
     ports:
       - 8888:8888
     command: ["jupyter", "lab", "--ip", "0.0.0.0", "--allow-root", "--notebook-dir=/knowledge"]
+
   did:
     image: did_knowledge:latest
     build:
@@ -18,4 +19,16 @@ services:
     ports:
       - 8888:8888
     privileged: True
+    command: ["--notebook-dir=/knowledge"]
+
+  clickhouse:
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/clickhouse/dockerfile
+      additional_contexts:
+          base: service:base
+    volumes:
+      - ./:/knowledge
+    ports:
+      - 8888:8888
     command: ["--notebook-dir=/knowledge"]
