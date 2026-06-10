@@ -401,8 +401,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../sql/ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/postgre_sql.html">PostgreSQL</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/clickhouse.html">Clickhouse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/databases.html">Databases</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/clickhouse.html">ClickHouse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/data_organisation.html">Data organisation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_organisation/databases.html">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_organisation/materialized_view.html">Materialized view</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/data_types.html">Data types</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../sql/clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -412,8 +416,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/materialized_view.html">Materialized view</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/statements.html">Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/configuration.html">Configuration</a></li>
 </ul>
 </details></li>
 </ul>
@@ -571,6 +575,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/npm.html">NPM</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../other/dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/dbt/cli.html">CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/dbt/models.html">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/dbt/jinja.html">Jinja</a></li>
 </ul>
 </details></li>
 </ul>
@@ -743,6 +749,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#status">Status</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore">Ignore</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diff">Diff</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hooks">Hooks</a></li>
 </ul>
             </nav>
         </div>
@@ -1152,6 +1159,72 @@ git<span class="w"> </span>diff
 </div>
 </div>
 </section>
+<section id="hooks">
+<h2>Hooks<a class="headerlink" href="#hooks" title="Link to this heading">#</a></h2>
+<p>Hooks are scripts that are executed before some certain git actions. They allow to automate processes associated with the various stages of working with a git project. By default, hooks are stored in <code class="docutils literal notranslate"><span class="pre">$GIT_DIR/hooks</span></code>, by default this is <strong><code class="docutils literal notranslate"><span class="pre">.git/hooks</span></code></strong>.</p>
+<hr class="docutils" />
+<p>The following cell shows the default content of the <code class="docutils literal notranslate"><span class="pre">hooks</span></code> directory.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+ls<span class="w"> </span>-la<span class="w"> </span>.git/hooks
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 72
+drwxrwxr-x 2 fedor fedor 4096 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Blue">.</span>
+drwxrwxr-x 7 fedor fedor 4096 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Blue">..</span>
+-rwxrwxr-x 1 fedor fedor  478 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">applypatch-msg.sample</span>
+-rwxrwxr-x 1 fedor fedor  896 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">commit-msg.sample</span>
+-rwxrwxr-x 1 fedor fedor 4726 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">fsmonitor-watchman.sample</span>
+-rwxrwxr-x 1 fedor fedor  189 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">post-update.sample</span>
+-rwxrwxr-x 1 fedor fedor  424 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">pre-applypatch.sample</span>
+-rwxrwxr-x 1 fedor fedor 1643 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">pre-commit.sample</span>
+-rwxrwxr-x 1 fedor fedor  416 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">pre-merge-commit.sample</span>
+-rwxrwxr-x 1 fedor fedor 1492 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">prepare-commit-msg.sample</span>
+-rwxrwxr-x 1 fedor fedor 1374 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">pre-push.sample</span>
+-rwxrwxr-x 1 fedor fedor 4898 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">pre-rebase.sample</span>
+-rwxrwxr-x 1 fedor fedor  544 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">pre-receive.sample</span>
+-rwxrwxr-x 1 fedor fedor 2783 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">push-to-checkout.sample</span>
+-rwxrwxr-x 1 fedor fedor 2308 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">sendemail-validate.sample</span>
+-rwxrwxr-x 1 fedor fedor 3650 Jun 10 21:59 <span class=" -Color -Color-Bold -Color-Bold-Green">update.sample</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">*.sample</span></code> files is the are examples of hooks.</p>
+<p>The following cell creates the <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> hook and sets it to print some message to the stdout.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt;&gt; .git/hooks/pre-commit</span>
+<span class="s">echo &#39;the message from precommit&#39;</span>
+<span class="s">EOF</span>
+chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>.git/hooks/pre-commit
+</pre></div>
+</div>
+</div>
+</div>
+<p>The attempt to commit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>hello_world<span class="w"> </span>&gt;<span class="w"> </span>some_file
+git<span class="w"> </span>add<span class="w"> </span>--all
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span>initial_commit
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>the message from precommit
+[master (root-commit) bd7a6eb] initial_commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 some_file
+</pre></div>
+</div>
+</div>
+</div>
+<p>The corresponding message is printed.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1230,6 +1303,7 @@ git<span class="w"> </span>diff
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#status">Status</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore">Ignore</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diff">Diff</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hooks">Hooks</a></li>
 </ul>
   </nav></div>
 

@@ -67,7 +67,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Fucntions" href="functions.html" />
-    <link rel="prev" title="Databases" href="databases.html" />
+    <link rel="prev" title="Materialized view" href="data_organisation/materialized_view.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -403,8 +403,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../postgre_sql.html">PostgreSQL</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../clickhouse.html">Clickhouse</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="databases.html">Databases</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../clickhouse.html">ClickHouse</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="data_organisation.html">Data organisation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_organisation/databases.html">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_organisation/materialized_view.html">Materialized view</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Data types</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -414,8 +418,8 @@
 <li class="toctree-l3"><a class="reference internal" href="functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="materialized_view.html">Materialized view</a></li>
 <li class="toctree-l2"><a class="reference internal" href="statements.html">Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
 </ul>
 </details></li>
 </ul>
@@ -573,6 +577,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../other/npm.html">NPM</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../other/dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../other/dbt/cli.html">CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/dbt/models.html">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/dbt/jinja.html">Jinja</a></li>
 </ul>
 </details></li>
 </ul>
@@ -735,7 +741,11 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-t">Array(T)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datetime">DateTime</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-t">Array(T)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetical-operators">Arithmetical operators</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuple-t1-t2">Tuple(T1, T2, …)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-k-v">Map(K, V)</a></li>
 </ul>
@@ -752,6 +762,93 @@
   <section class="tex2jax_ignore mathjax_ignore" id="data-types">
 <h1>Data types<a class="headerlink" href="#data-types" title="Link to this heading">#</a></h1>
 <p>This page considers the data types in clickhouse.</p>
+<section id="datetime">
+<h2>DateTime<a class="headerlink" href="#datetime" title="Link to this heading">#</a></h2>
+<p>The dates in clickhouse there are types that allows to represent time in clickhouse:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Storage</p></th>
+<th class="head"><p>Range</p></th>
+<th class="head"><p>Precision</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Date</span></code></p></td>
+<td><p>2 bytes</p></td>
+<td><p>1970-01-01 – 2149-06-06</p></td>
+<td><p>Day</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Date32</span></code></p></td>
+<td><p>4 bytes</p></td>
+<td><p>1900-01-01 – 2299-12-31</p></td>
+<td><p>Day</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DateTime</span></code></p></td>
+<td><p>4 bytes</p></td>
+<td><p>1970-01-01 – 2106-02-07</p></td>
+<td><p>Second</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DateTime64(p)</span></code></p></td>
+<td><p>8 bytes</p></td>
+<td><p>1900-01-01 – 2299-12-31</p></td>
+<td><p>Up to nanoseconds (<code class="docutils literal notranslate"><span class="pre">p=0–9</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Time</span></code></p></td>
+<td><p>4 bytes</p></td>
+<td><p>00:00:00 – 23:59:59</p></td>
+<td><p>Second</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Time64(p)</span></code></p></td>
+<td><p>8 bytes</p></td>
+<td><p>00:00:00 – 23:59:59.999999999</p></td>
+<td><p>Up to nanoseconds (<code class="docutils literal notranslate"><span class="pre">p=0–9</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://clickhouse.com/docs/sql-reference/data-types/special-data-types/interval">Interval type family</a></p></td>
+<td><p>8 bytes</p></td>
+<td><p>±9,223,372,036,854,775,807</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The most usefull functions/operators to work with dates:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">toDate</span></code> function converts a string literar in the format <code class="docutils literal notranslate"><span class="pre">&quot;yyyy-mm-dd&quot;</span></code> into a <code class="docutils literal notranslate"><span class="pre">Date</span></code> object.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">dateDiff</span></code> function allows to count the period between two dates in the selected units. The minus operator <code class="docutils literal notranslate"><span class="pre">&lt;date1&gt;</span> <span class="pre">-</span> <span class="pre">&lt;date2&gt;</span></code> is not documented, but it appears to works in the same way as the <code class="docutils literal notranslate"><span class="pre">dateDiff('days',</span> <span class="pre">&lt;date2&gt;,</span> <span class="pre">&lt;date1&gt;)</span></code> function.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">INTERVAL</span> <span class="pre">&lt;number&gt;</span> <span class="pre">&lt;SECOND</span> <span class="pre">|</span> <span class="pre">MINUTE</span> <span class="pre">|</span> <span class="pre">HOUR</span> <span class="pre">...&gt;</span></code> allows to create a special interval object that could be added to the date.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">now()</span></code> function return <code class="docutils literal notranslate"><span class="pre">DateTime</span></code> object that corresponds to current datetime.</p></li>
+</ul>
+<p>May find usefull:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://clickhouse.com/docs/sql-reference/operators#operators-for-working-with-dates-and-times">Operators for Working with Dates and Times</a>.</p></li>
+</ul>
+<hr class="docutils" />
+<p>Here are the example of usage of the most usable facilities associated with dates in clickhouse:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">toDate</span><span class="p">(</span><span class="s1">&#39;2025-08-01&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">date1</span><span class="p">,</span>
+<span class="w">    </span><span class="n">toDate</span><span class="p">(</span><span class="s1">&#39;2025-07-01&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">date2</span><span class="p">,</span>
+<span class="w">    </span><span class="n">date1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">date2</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">diff</span><span class="p">,</span>
+<span class="w">    </span><span class="n">dateDiff</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">date2</span><span class="p">,</span><span class="w"> </span><span class="n">date1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">months</span><span class="p">,</span>
+<span class="w">    </span><span class="n">date1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">DAY</span><span class="w"> </span><span class="n">add_interval</span><span class="p">,</span>
+<span class="w">    </span><span class="n">now</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>date1     </th><th>date2     </th><th style="text-align: right;">  diff</th><th style="text-align: right;">  months</th><th>add_interval  </th><th>now()              </th></tr>
+</thead>
+<tbody>
+<tr><td>2025-08-01</td><td>2025-07-01</td><td style="text-align: right;">    31</td><td style="text-align: right;">      31</td><td>2025-08-11    </td><td>2026-06-08 19:06:43</td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
 <section id="array-t">
 <h2>Array(T)<a class="headerlink" href="#array-t" title="Link to this heading">#</a></h2>
 <p>Array in clickhouse is a set of objects of the same type.</p>
@@ -788,6 +885,61 @@
 </tbody>
 </table></div></div>
 </div>
+<section id="arithmetical-operators">
+<h3>Arithmetical operators<a class="headerlink" href="#arithmetical-operators" title="Link to this heading">#</a></h3>
+<p>The use of the arithmetic operators with arrays as arguments is not documented. But in fact the <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code> operartors work as a regular element-wise applition of the corresponding operators. Other operators, such as <code class="docutils literal notranslate"><span class="pre">*</span></code> or <code class="docutils literal notranslate"><span class="pre">/</span></code> cause the clickhouse error.</p>
+<hr class="docutils" />
+<p>The following cell show the result of the <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code> operators with numerical arrays as arguments:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>minus([1, 2, 3], [3, 2, 1])  </th><th>plus([1, 2, 3], [3, 2, 1])  </th></tr>
+</thead>
+<tbody>
+<tr><td>[-2, 0, 2]                   </td><td>[4, 4, 4]                   </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The example for nested arrays:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">]</span>
+<span class="w">    </span><span class="p">]</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">matrix1</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">]</span>
+<span class="w">    </span><span class="p">]</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">matrix2</span><span class="p">,</span>
+<span class="w">    </span><span class="n">matrix1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">matrix2</span><span class="p">,</span>
+<span class="w">    </span><span class="n">matrix2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">matrix1</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>matrix1                          </th><th>matrix2                          </th><th>plus(matrix1, matrix2)               </th><th>minus(matrix2, matrix1)               </th></tr>
+</thead>
+<tbody>
+<tr><td>[[1, 2, 3], [4, 5, 6], [7, 8, 9]]</td><td>[[6, 2, 1], [7, 9, 3], [0, 2, 8]]</td><td>[[7, 4, 4], [11, 14, 9], [7, 10, 17]]</td><td>[[5, 0, -2], [3, 4, -3], [-7, -6, -1]]</td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
 </section>
 <section id="tuple-t1-t2">
 <h2>Tuple(T1, T2, …)<a class="headerlink" href="#tuple-t1-t2" title="Link to this heading">#</a></h2>
@@ -886,12 +1038,12 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="databases.html"
+       href="data_organisation/materialized_view.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Databases</p>
+        <p class="prev-next-title">Materialized view</p>
       </div>
     </a>
     <a class="right-next"
@@ -921,7 +1073,11 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-t">Array(T)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datetime">DateTime</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-t">Array(T)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetical-operators">Arithmetical operators</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuple-t1-t2">Tuple(T1, T2, …)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-k-v">Map(K, V)</a></li>
 </ul>

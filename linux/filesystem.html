@@ -401,8 +401,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../sql/ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/postgre_sql.html">PostgreSQL</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/clickhouse.html">Clickhouse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/databases.html">Databases</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/clickhouse.html">ClickHouse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/data_organisation.html">Data organisation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_organisation/databases.html">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_organisation/materialized_view.html">Materialized view</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/data_types.html">Data types</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../sql/clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -412,8 +416,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/materialized_view.html">Materialized view</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/statements.html">Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/configuration.html">Configuration</a></li>
 </ul>
 </details></li>
 </ul>
@@ -571,6 +575,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/npm.html">NPM</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../other/dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/dbt/cli.html">CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/dbt/models.html">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/dbt/jinja.html">Jinja</a></li>
 </ul>
 </details></li>
 </ul>
@@ -1127,7 +1133,14 @@ rm<span class="w"> </span>/tmp/wow
 </section>
 <section id="symbolic-links">
 <h2>Symbolic links<a class="headerlink" href="#symbolic-links" title="Link to this heading">#</a></h2>
-<p>Symbolic link is a file that points to the other file or directory, in fact, it is just another name for some file. You can manipulate with symbolic links with the <code class="docutils literal notranslate"><span class="pre">ln</span></code> command.</p>
+<p><strong>soft links</strong>, <strong>symlinks</strong></p>
+<p>Symbolic link is a file that points to the other file or directory, in fact, it is just another name for some file.</p>
+<p>You can manipulate with symbolic links with the <code class="docutils literal notranslate"><span class="pre">ln</span></code> command.</p>
+<p>Check the symbolic links in the output of the <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-la</span></code> command by:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">l</span></code> symbol in the first digint of file model.</p></li>
+<li><p>The notation <code class="docutils literal notranslate"><span class="pre">&lt;link_name&gt;</span> <span class="pre">-&gt;</span> <span class="pre">&lt;destination&gt;</span></code> in the filename attribute.</p></li>
+</ul>
 <hr class="docutils" />
 <p>As an example, consider the process of creating a symbolik link. The following cell creates an experimental folder and file to which symbolic link will point.</p>
 <div class="cell docutils container">
@@ -1166,7 +1179,11 @@ lrwxrwxrwx 1 fedor fedor 13 Mar 30 12:19 <span class=" -Color -Color-Bold -Color
 </div>
 </div>
 </div>
-<p>As a result the created <code class="docutils literal notranslate"><span class="pre">symb_link</span></code> file have a special color and it points (<code class="docutils literal notranslate"><span class="pre">-&gt;</span></code>) to the original file.</p>
+<p>The features that allows to <strong>identify the symbolik</strong> links are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">l</span></code> as the first symbol of the filemode.</p></li>
+<li><p>The notation <code class="docutils literal notranslate"><span class="pre">link</span> <span class="pre">-&gt;</span> <span class="pre">destination</span></code> is the filename attribute.</p></li>
+</ul>
 <p>The following cell shows the contents of the <code class="docutils literal notranslate"><span class="pre">symb_link</span></code> file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

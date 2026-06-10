@@ -64,6 +64,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Models" href="models.html" />
     <link rel="prev" title="DBT" href="../dbt.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -400,8 +401,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../../sql/ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sql/versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sql/postgre_sql.html">PostgreSQL</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/clickhouse.html">Clickhouse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../sql/clickhouse/databases.html">Databases</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/clickhouse.html">ClickHouse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/clickhouse/data_organisation.html">Data organisation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/clickhouse/data_organisation/databases.html">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/clickhouse/data_organisation/materialized_view.html">Materialized view</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../sql/clickhouse/data_types.html">Data types</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../sql/clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -411,8 +416,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../../sql/clickhouse/functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../../sql/clickhouse/materialized_view.html">Materialized view</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../sql/clickhouse/statements.html">Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sql/clickhouse/configuration.html">Configuration</a></li>
 </ul>
 </details></li>
 </ul>
@@ -570,6 +575,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../npm.html">NPM</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../dbt.html">DBT</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja.html">Jinja</a></li>
 </ul>
 </details></li>
 </ul>
@@ -735,7 +742,11 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">Initialization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation">Compilation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show">Show</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show">Show</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inline">Inline</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list">List</a></li>
 </ul>
             </nav>
         </div>
@@ -1129,6 +1140,128 @@ m<span class=" -Color -Color-Bold">   Running</span> [<span class=" -Color -Colo
 </div>
 </div>
 </div>
+<section id="inline">
+<h3>Inline<a class="headerlink" href="#inline" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">--inline</span></code> flag is sometimes relly usefull as it allows you to run a specified query in the target database.</p>
+<hr class="docutils" />
+<p>The following cell initialises the DBT project and displays the databases of the PostgreSQL instanace that profiles points to with inline show.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+dbt<span class="w"> </span>init<span class="w"> </span>knowledge<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+<span class="nb">cd</span><span class="w"> </span>knowledge
+dbt<span class="w"> </span>show<span class="w"> </span>--inline<span class="w"> </span><span class="s2">&quot;select * from pg_database&quot;</span><span class="w"> </span>-q
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>| oid | datname   | datdba | encoding | datlocprovider | datistemplate | ... |
+| --- | --------- | ------ | -------- | -------------- | ------------- | --- |
+|   5 | postgres  |     10 |        6 | c              |         False | ... |
+|   1 | template1 |     10 |        6 | c              |          True | ... |
+|   4 | template0 |     10 |        6 | c              |          True | ... |
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="list">
+<h2>List<a class="headerlink" href="#list" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">ls</span></code> (<code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">list</span></code>) command enables you to check the resources defined in the project.</p>
+<p>The following features are available in the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--select</span></code> option to specify the model/group of models you want to check.</p></li>
+<li><p>Specifying <code class="docutils literal notranslate"><span class="pre">+</span></code> before or after allow you to view models that depend on your model and that your model depends on.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell creates a dbt project and few models in it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+dbt<span class="w"> </span>init<span class="w"> </span>knowledge<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+<span class="nb">cd</span><span class="w"> </span>knowledge
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># file knowledge/models/model_a.sql</span>
+<span class="k">select</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Model <code class="docutils literal notranslate"><span class="pre">base_b</span></code> depends on the <code class="docutils literal notranslate"><span class="pre">base_a</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#file knowledge/models/model_b.sql</span>
+<span class="k">select</span><span class="w"> </span><span class="o">{{</span><span class="w"> </span>ref<span class="o">(</span><span class="s1">&#39;model_a&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">}}</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">model_c</span></code> depends on all previous models:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># file knowledge/models/model_c.sql</span>
+<span class="k">select</span><span class="w"> </span>*<span class="w"> </span>from<span class="w"> </span><span class="o">{{</span><span class="w"> </span>ref<span class="o">(</span><span class="s1">&#39;model_b&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">}}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The output of the raw <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">ls</span></code> command:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>ls<span class="w"> </span>-q
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>knowledge.model_a
+knowledge.model_b
+knowledge.model_c
+knowledge.example.my_first_dbt_model
+knowledge.example.my_second_dbt_model
+knowledge.example.not_null_my_first_dbt_model_id
+knowledge.example.not_null_my_second_dbt_model_id
+knowledge.example.unique_my_first_dbt_model_id
+knowledge.example.unique_my_second_dbt_model_id
+</pre></div>
+</div>
+</div>
+</div>
+<p>The models that somehow related to the <code class="docutils literal notranslate"><span class="pre">model_c</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>ls<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>+model_b+
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>knowledge.model_a
+knowledge.model_b
+knowledge.model_c
+</pre></div>
+</div>
+</div>
+</div>
+<p>All models that <code class="docutils literal notranslate"><span class="pre">model_c</span></code> depends on:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>ls<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>+model_c
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>knowledge.model_a
+knowledge.model_b
+knowledge.model_c
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -1171,6 +1304,15 @@ m<span class=" -Color -Color-Bold">   Running</span> [<span class=" -Color -Colo
         <p class="prev-next-title">DBT</p>
       </div>
     </a>
+    <a class="right-next"
+       href="models.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1192,7 +1334,11 @@ m<span class=" -Color -Color-Bold">   Running</span> [<span class=" -Color -Colo
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">Initialization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation">Compilation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show">Show</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#show">Show</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inline">Inline</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list">List</a></li>
 </ul>
   </nav></div>
 

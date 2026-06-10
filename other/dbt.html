@@ -401,8 +401,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../sql/ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/postgre_sql.html">PostgreSQL</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/clickhouse.html">Clickhouse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/databases.html">Databases</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sql/clickhouse.html">ClickHouse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/data_organisation.html">Data organisation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_organisation/databases.html">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_organisation/materialized_view.html">Materialized view</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/data_types.html">Data types</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../sql/clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -412,8 +416,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/materialized_view.html">Materialized view</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/statements.html">Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/configuration.html">Configuration</a></li>
 </ul>
 </details></li>
 </ul>
@@ -571,6 +575,8 @@
 <li class="toctree-l1"><a class="reference internal" href="npm.html">NPM</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">DBT</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="dbt/cli.html">CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dbt/models.html">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dbt/jinja.html">Jinja</a></li>
 </ul>
 </details></li>
 </ul>
@@ -739,10 +745,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#models">Models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jinja">Jinja</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jinja">Jinja</a></li>
 </ul>
             </nav>
         </div>
@@ -797,6 +800,11 @@
 <section id="models">
 <h2>Models<a class="headerlink" href="#models" title="Link to this heading">#</a></h2>
 <p>In DBT, models are SQL scripts containing Jinja templates. DBT compiles these scripts into corresponding SQL code and then executes them. The results of the queries are wrapped in the corresponding DDL/DML and the results are put into the target database.</p>
+<p>Check more in:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.getdbt.com/docs/build/enhance-your-models?version=1.12">Enhance your models</a> page of the official documentation.</p></li>
+<li><p><a class="reference internal" href="dbt/models.html"><span class="std std-doc">Models</span></a> dedicated page.</p></li>
+</ul>
 <hr class="docutils" />
 <p>The following cell initialise the project.</p>
 <div class="cell docutils container">
@@ -813,6 +821,8 @@ dbtf<span class="w"> </span>init<span class="w"> </span>--project-name<span clas
 <span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project name: knowledge
 <span class=" -Color -Color-Bold -Color-Bold-Green">Info</span> Project directory: knowledge
 <span class=" -Color -Color-Bold -Color-Bold-Green">Validating</span> profile inputs, adapters, and connection
+
+m<span class=" -Color -Color-Bold"> Debugging</span> <span class=" -Color -Color-Bold -Color-Bold-Green">⠁</span> [0s]                                                               
 </pre></div>
 </div>
 </div>
@@ -829,30 +839,23 @@ SELECT<span class="w"> </span><span class="s1">&#39;some data&#39;</span><span c
 <p>This “model” simply selects hard-coded values from the database.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbtf<span class="w"> </span>run<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>script
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Cyan">   Running</span> [<span class=" -Color -Color-Cyan">                    </span>] 0/1 <span class=" -Color -Color-Faint">1 in-progress</span>                             
-<span class=" -Color -Color-Bold -Color-Bold-Cyan">   Running</span> [<span class=" -Color -Color-Cyan">━━━━━━━━━━━━━━━━━━━━</span>] 1/1             
-   model:script [0.0s]                                                          
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>run<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>script
 </pre></div>
 </div>
 </div>
 </div>
 <p>The table with same name then appears in the target PostgreSQL database.</p>
+<p><strong>PS.</strong> <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">show</span> <span class="pre">--inline</span></code> allows to run command in the target database:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PGPASSWORD</span><span class="o">=</span>postgres<span class="w"> </span>psql<span class="w"> </span>-h<span class="w"> </span>localhost<span class="w"> </span>-U<span class="w"> </span>postgres<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;select * from public.script&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>show<span class="w"> </span>-q<span class="w"> </span>--inline<span class="w"> </span><span class="s2">&quot;select * from public.script&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    col    |   col2   
------------+----------
- some data | new data
-(1 row)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>| col       | col2     |
+| --------- | -------- |
+| some data | new data |
 </pre></div>
 </div>
 </div>
@@ -896,7 +899,11 @@ SELECT<span class="w"> </span><span class="s1">&#39;some data&#39;</span><span c
 </tbody>
 </table>
 </div>
-<p>Check the <a class="reference external" href="https://docs.getdbt.com/category/jinja-reference?version=1.12">Jinja reference</a> page of the official documentation.</p>
+<p>Check the :</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.getdbt.com/category/jinja-reference?version=1.12">Jinja reference</a> page of the official documentation</p></li>
+<li><p><a class="reference internal" href="dbt/jinja.html"><span class="std std-doc">Jinja</span></a> page in this site.</p></li>
+</ul>
 <hr class="docutils" />
 <p>Consider dbt project for example:</p>
 <div class="cell docutils container">
@@ -931,57 +938,6 @@ dbt<span class="w"> </span>init<span class="w"> </span>knowledge<span class="w">
 </div>
 </div>
 </div>
-<section id="reference">
-<h3>Reference<a class="headerlink" href="#reference" title="Link to this heading">#</a></h3>
-<p>You can invoke one dbt object from another. This can be achieved using the <code class="docutils literal notranslate"><span class="pre">ref</span></code> function. Where the SQL syntax requires the data source, you can use the Jinja template <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">ref('name.sql')</span> <span class="pre">}}</span></code>. The dbt will generate the corresponding dialect specific sql code.</p>
-<hr class="docutils" />
-<p>The following cells define the project and the <code class="docutils literal notranslate"><span class="pre">model_a.sql</span></code> file we will reference as an example.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
-dbt<span class="w"> </span>init<span class="w"> </span>knowledge<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
-<span class="nb">cd</span><span class="w"> </span>knowledge
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#file knowledge/models/model_a.sql</span>
-SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </span><span class="o">(</span>
-VALUES
-<span class="w">    </span><span class="o">(</span><span class="s1">&#39;hello&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span>,
-<span class="w">    </span><span class="o">(</span><span class="s1">&#39;world&#39;</span>,<span class="w"> </span><span class="m">2</span><span class="o">)</span>
-<span class="o">)</span><span class="w"> </span>AS<span class="w"> </span>tab<span class="o">(</span>col1,<span class="w"> </span>col2<span class="o">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The following cell generates the <code class="docutils literal notranslate"><span class="pre">model_b.sql</span></code> that uses <code class="docutils literal notranslate"><span class="pre">ref('model_a')</span></code> as the datasource.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#file knowledge/models/model_b.sql</span>
-SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </span><span class="o">{{</span><span class="w"> </span>ref<span class="o">(</span><span class="s1">&#39;model_a&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">}}</span><span class="w"> </span>WHERE<span class="w"> </span><span class="nv">col2</span><span class="o">=</span><span class="m">2</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The data generated by <code class="docutils literal notranslate"><span class="pre">model_b</span></code> corresponds to a subset of the <code class="docutils literal notranslate"><span class="pre">model_a</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>show<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>model_b.sql
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>| col1  | col2 |
-| ----- | ---- |
-| world |    2 |
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -1059,10 +1015,7 @@ SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </sp
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#models">Models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jinja">Jinja</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jinja">Jinja</a></li>
 </ul>
   </nav></div>
 

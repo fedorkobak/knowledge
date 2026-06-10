@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Clickhouse &#8212; Knowledge base</title>
+    <title>ClickHouse &#8212; Knowledge base</title>
   
   
   
@@ -66,7 +66,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Databases" href="clickhouse/databases.html" />
+    <link rel="next" title="Data organisation" href="clickhouse/data_organisation.html" />
     <link rel="prev" title="PostgreSQL" href="postgre_sql.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -403,8 +403,12 @@
 <li class="toctree-l1"><a class="reference internal" href="ddl.html">DDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="versions_issues.html">Versions issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="postgre_sql.html">PostgreSQL</a></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Clickhouse</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="clickhouse/databases.html">Databases</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">ClickHouse</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="clickhouse/data_organisation.html">Data organisation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="clickhouse/data_organisation/databases.html">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clickhouse/data_organisation/materialized_view.html">Materialized view</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="clickhouse/data_types.html">Data types</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -414,8 +418,8 @@
 <li class="toctree-l3"><a class="reference internal" href="clickhouse/functions/aggregation.html">Aggregation</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="clickhouse/materialized_view.html">Materialized view</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clickhouse/statements.html">Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clickhouse/configuration.html">Configuration</a></li>
 </ul>
 </details></li>
 </ul>
@@ -573,6 +577,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../other/npm.html">NPM</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../other/dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/dbt/cli.html">CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/dbt/models.html">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/dbt/jinja.html">Jinja</a></li>
 </ul>
 </details></li>
 </ul>
@@ -725,7 +731,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Clickhouse</h1>
+    <h1>ClickHouse</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -735,8 +741,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describe">Describe</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databases">Databases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-organisation">Data organisation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parts">Parts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mergetree">MergeTree</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#replacing">Replacing</a></li>
@@ -749,7 +754,6 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statements">Statements</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materialized-view">Materialized view</a></li>
 </ul>
             </nav>
         </div>
@@ -762,118 +766,19 @@
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="clickhouse">
-<h1>Clickhouse<a class="headerlink" href="#clickhouse" title="Link to this heading">#</a></h1>
+<h1>ClickHouse<a class="headerlink" href="#clickhouse" title="Link to this heading">#</a></h1>
 <p>Clickhouse is an open-source OLAP DBMS. This DBMS specialises in processing large ammounts of data and is primarily used by analytics and ML teams to extract data from huge datasets.</p>
-<section id="describe">
-<h2>Describe<a class="headerlink" href="#describe" title="Link to this heading">#</a></h2>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">TABLE</span> <span class="pre">DESCRIBE</span></code> command to view the properties of the table. This is practcally useful for identifing the names and types of the columns.</p>
-<p>Check more in the page <a class="reference external" href="https://clickhouse.com/docs/sql-reference/statements/describe-table">DESCRIBE TABLE</a>.</p>
-<hr class="docutils" />
-<p>The following cell shows the example of <code class="docutils literal notranslate"><span class="pre">DESCRIBE</span> <span class="pre">TABLE</span></code> usage.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">DESCRIBE</span><span class="w"> </span><span class="k">TABLE</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
-<span class="k">FROM</span><span class="w"> </span><span class="k">VALUES</span><span class="p">(</span>
-<span class="w">    </span><span class="s1">&#39;id UInt32, name String&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Alice&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Bob&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Carol&#39;</span><span class="p">)</span>
-<span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-<thead>
-<tr><th>name  </th><th>type  </th><th>default_type  </th><th>default_expression  </th><th>comment  </th><th>codec_expression  </th><th>ttl_expression  </th></tr>
-</thead>
-<tbody>
-<tr><td>id    </td><td>UInt32</td><td>              </td><td>                    </td><td>         </td><td>                  </td><td>                </td></tr>
-<tr><td>name  </td><td>String</td><td>              </td><td>                    </td><td>         </td><td>                  </td><td>                </td></tr>
-</tbody>
-</table></div></div>
-</div>
-</section>
-<section id="databases">
-<h2>Databases<a class="headerlink" href="#databases" title="Link to this heading">#</a></h2>
-<p>Most essences in clickhouse are separated by databases. The database can contain: tables, views, dictionaries and functions.</p>
-<p>Important commands to handle databases:</p>
+<section id="data-organisation">
+<h2>Data organisation<a class="headerlink" href="#data-organisation" title="Link to this heading">#</a></h2>
+<p>This section describes the ideas, features and syntax of data organisation in ClickHouse</p>
+<p>There are following essesnces important to know:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">DATABASES</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">DATABASE</span> <span class="pre">&lt;name&gt;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">DROP</span> <span class="pre">DATABASE</span> <span class="pre">&lt;name&gt;</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">USE</span> <span class="pre">DATABASE</span></code>: to select the context, all subsequent queries will automatilly will refer to the essesnces of the specific database.</p></li>
+<li><p><strong>Tables</strong>.</p></li>
+<li><p><strong>Databases</strong>.</p></li>
+<li><p><strong>Views</strong>.</p></li>
 </ul>
-<p>Check more in <a class="reference internal" href="clickhouse/databases.html"><span class="std std-doc">Databases</span></a> page.</p>
-<hr class="docutils" />
-<p>The following cell show the initial list of available databases.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">SHOW</span><span class="w"> </span><span class="n">DATABASES</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-<thead>
-<tr><th>name              </th></tr>
-</thead>
-<tbody>
-<tr><td>INFORMATION_SCHEMA</td></tr>
-<tr><td>default           </td></tr>
-<tr><td>information_schema</td></tr>
-<tr><td>system            </td></tr>
-</tbody>
-</table></div></div>
-</div>
-<p>After <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">DATABASE</span></code> there is a new database with the corresponding name:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">test_database</span><span class="p">;</span>
-<span class="k">SHOW</span><span class="w"> </span><span class="n">DATABASES</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"></div><div class="output text_html"><table>
-<thead>
-<tr><th>name              </th></tr>
-</thead>
-<tbody>
-<tr><td>INFORMATION_SCHEMA</td></tr>
-<tr><td>default           </td></tr>
-<tr><td>information_schema</td></tr>
-<tr><td>system            </td></tr>
-<tr><td>test_database     </td></tr>
-</tbody>
-</table></div></div>
-</div>
-<p>After <code class="docutils literal notranslate"><span class="pre">DROP</span> <span class="pre">DATABASE</span></code> the database is removed.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">DROP</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">test_database</span><span class="p">;</span>
-<span class="k">SHOW</span><span class="w"> </span><span class="n">DATABASES</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"></div><div class="output text_html"><table>
-<thead>
-<tr><th>name              </th></tr>
-</thead>
-<tbody>
-<tr><td>INFORMATION_SCHEMA</td></tr>
-<tr><td>default           </td></tr>
-<tr><td>information_schema</td></tr>
-<tr><td>system            </td></tr>
-</tbody>
-</table></div></div>
-</div>
+<p><strong>Note</strong> in clickhouse there is <strong>no schemas</strong>, in post external tools the databases are considered as schemas.</p>
+<p>Check more in the <a class="reference internal" href="clickhouse/data_organisation.html"><span class="std std-doc">Data organisation</span></a>.</p>
 </section>
 <section id="parts">
 <h2>Parts<a class="headerlink" href="#parts" title="Link to this heading">#</a></h2>
@@ -1301,100 +1206,94 @@ Peak memory usage: 165.52 KiB.
 <section id="statements">
 <h2>Statements<a class="headerlink" href="#statements" title="Link to this heading">#</a></h2>
 <p>ClickHouse is really specific SQL dialect. This section considers the features of the statements in the ClickHouse.</p>
+<p>The following table shows a few ClickHouse statements that may feel different from traditional sql dialects:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature / Statement</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LIMIT</span> <span class="pre">BY</span></code></p></td>
+<td><p>Top-N rows per group</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ARRAY</span> <span class="pre">JOIN</span></code></p></td>
+<td><p>Explode arrays into rows</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PREWHERE</span></code></p></td>
+<td><p>Early filtering optimization</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SAMPLE</span></code></p></td>
+<td><p>Read subset of data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FINAL</span></code></p></td>
+<td><p>Force merge/deduplication</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">FORMAT</span></code></p></td>
+<td><p>Output formatting</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SETTINGS</span></code></p></td>
+<td><p>Per-query engine settings</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">WITH</span> <span class="pre">FILL</span></code></p></td>
+<td><p>Fill missing time-series gaps</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QUALIFY</span></code></p></td>
+<td><p>Filter after window functions</p></td>
+</tr>
+<tr class="row-odd"><td><p>Lambda syntax</p></td>
+<td><p>Functional array processing</p></td>
+</tr>
+<tr class="row-even"><td><p>Tuple access</p></td>
+<td><p>Access tuple elements</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ANY</span> <span class="pre">JOIN</span></code></p></td>
+<td><p>Keep one matching row</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ASOF</span> <span class="pre">JOIN</span></code></p></td>
+<td><p>Nearest-time join</p></td>
+</tr>
+<tr class="row-odd"><td><p>Aggregate combinators</p></td>
+<td><p>Conditional aggregation</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ENGINE</span></code></p></td>
+<td><p>Storage engine definition</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PARTITION</span> <span class="pre">BY</span></code></p></td>
+<td><p>Physical partitioning</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code> in DDL</p></td>
+<td><p>Sorting key definition</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TTL</span></code></p></td>
+<td><p>Automatic data expiration</p></td>
+</tr>
+<tr class="row-even"><td><p>Materialized views</p></td>
+<td><p>Insert-trigger pipelines</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dictionaries</p></td>
+<td><p>External key-value lookups</p></td>
+</tr>
+<tr class="row-even"><td><p>Table functions</p></td>
+<td><p>Virtual/generated tables</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">INTO</span> <span class="pre">FUNCTION</span></code></p></td>
+<td><p>Export/query external sinks</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OPTIMIZE</span> <span class="pre">TABLE</span></code></p></td>
+<td><p>Force part merges</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SHOW</span> </code></p></td>
+<td><p>Show some kind of entities</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>For more check the:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://clickhouse.com/docs/sql-reference/statements">ClickHouse SQL Statements</a> reference page.</p></li>
 <li><p><a class="reference internal" href="clickhouse/statements.html"><span class="std std-doc">Statements</span></a> page.</p></li>
 </ul>
-</section>
-<section id="materialized-view">
-<h2>Materialized view<a class="headerlink" href="#materialized-view" title="Link to this heading">#</a></h2>
-<p>A materialized view (MV) is a special type of object that uses a chosen query to periodically update some data. In ClickHouse there are two types of MVs:</p>
-<ul class="simple">
-<li><p><strong>Incremental</strong> adds the information written to the source tables to the target table.</p></li>
-<li><p><strong>Refreshable</strong> works as a cron job, that automatically rerunning the query and rewriting the information in the target.</p></li>
-</ul>
-<p>For more check:</p>
-<ul class="simple">
-<li><p>The <a class="reference external" href="https://clickhouse.com/docs/materialized-views">Materialized views</a> section of the documentation.</p></li>
-<li><p>The <a class="reference internal" href="clickhouse/materialized_view.html"><span class="std std-doc">Materialized view</span></a> page.</p></li>
-</ul>
-<hr class="docutils" />
-<p>The following cell defines the <code class="docutils literal notranslate"><span class="pre">source</span></code> table and materialized view (it’s incremental by default) that selects only data with <code class="docutils literal notranslate"><span class="pre">category</span> <span class="pre">=</span> <span class="pre">'target'</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">data_source</span><span class="p">;</span>
-<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">target_category</span><span class="p">;</span>
-
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">data_source</span>
-<span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">Int8</span><span class="p">,</span>
-<span class="w">    </span><span class="n">category</span><span class="w"> </span><span class="nb">TEXT</span>
-<span class="p">);</span>
-
-<span class="k">CREATE</span><span class="w"> </span><span class="n">MATERIALIZED</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">target_category</span><span class="w"> </span><span class="k">AS</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">data_source</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">category</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"></div><div class="output text_html"><table>
-<thead>
-<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">      309631</td><td style="text-align: right;">       1050807</td><td>0eeda369-e4ee-42be-9f8f-a492131c9b2a</td></tr>
-</tbody>
-</table></div><div class="output text_html"><table>
-<thead>
-<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">     4792794</td><td style="text-align: right;">       1114551</td><td>f0b7ce96-59b6-43b3-9c30-06909f604f57</td></tr>
-</tbody>
-</table></div><div class="output text_html"><table>
-<thead>
-<tr><th style="text-align: right;">  read_rows</th><th style="text-align: right;">  read_bytes</th><th style="text-align: right;">  written_rows</th><th style="text-align: right;">  written_bytes</th><th style="text-align: right;">  total_rows_to_read</th><th style="text-align: right;">  result_rows</th><th style="text-align: right;">  result_bytes</th><th style="text-align: right;">  elapsed_ns</th><th style="text-align: right;">  memory_usage</th><th>query_id                            </th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align: right;">          0</td><td style="text-align: right;">           0</td><td style="text-align: right;">             0</td><td style="text-align: right;">              0</td><td style="text-align: right;">                   0</td><td style="text-align: right;">            0</td><td style="text-align: right;">             0</td><td style="text-align: right;">     5823056</td><td style="text-align: right;">       1215303</td><td>e3b6c4f2-3e39-46a5-8d59-de3d910eac2b</td></tr>
-</tbody>
-</table></div></div>
-</div>
-<p>The following code inserts the data into <code class="docutils literal notranslate"><span class="pre">data_source</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">data_source</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span>
-<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;target&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;some other&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;target&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"></div></div>
-</div>
-<p>The records with corresponding category appears in the corresponding <code class="docutils literal notranslate"><span class="pre">target_category</span></code> table.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">target_category</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-<thead>
-<tr><th style="text-align: right;">  id</th><th>category  </th></tr>
-</thead>
-<tbody>
-<tr><td style="text-align: right;">   1</td><td>target    </td></tr>
-<tr><td style="text-align: right;">   3</td><td>target    </td></tr>
-</tbody>
-</table></div></div>
-</div>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -1440,11 +1339,11 @@ Peak memory usage: 165.52 KiB.
       </div>
     </a>
     <a class="right-next"
-       href="clickhouse/databases.html"
+       href="clickhouse/data_organisation.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Databases</p>
+        <p class="prev-next-title">Data organisation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1466,8 +1365,7 @@ Peak memory usage: 165.52 KiB.
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describe">Describe</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#databases">Databases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-organisation">Data organisation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parts">Parts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mergetree">MergeTree</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#replacing">Replacing</a></li>
@@ -1480,7 +1378,6 @@ Peak memory usage: 165.52 KiB.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statements">Statements</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materialized-view">Materialized view</a></li>
 </ul>
   </nav></div>
 
