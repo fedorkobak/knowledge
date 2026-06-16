@@ -575,6 +575,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../../other/jinja_templates.html">Jinja Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/elastic_search.html">Elastic search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/npm.html">NPM</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../other/lua.html">Lua</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/lua/flow_control.html">Flow control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/lua/functions.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/lua/tables.html">Tables</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../other/dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../other/dbt/cli.html">CLI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../other/dbt/models.html">Models</a></li>
@@ -748,6 +754,14 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuple-t1-t2">Tuple(T1, T2, …)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-k-v">Map(K, V)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic">Dynamic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#casting">Casting</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json">JSON</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-paths">Reading paths</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -1005,6 +1019,261 @@
 </table></div></div>
 </div>
 </section>
+<section id="dynamic">
+<h2>Dynamic<a class="headerlink" href="#dynamic" title="Link to this heading">#</a></h2>
+<p>The <a class="reference external" href="https://clickhouse.com/docs/sql-reference/data-types/dynamic"><code class="docutils literal notranslate"><span class="pre">Dynamic</span></code></a> is a datatype to store the objects without knowing their specific datatype.</p>
+<p>Typically <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code> could be result of some operation with undefined output type. For example, extracting attributes from json produces <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code> object.</p>
+<hr class="docutils" />
+<p>The following cell defines the table with column <code class="docutils literal notranslate"><span class="pre">a</span></code> denoted as <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">dynamic_example</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="k">Dynamic</span><span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">dynamic_example</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="k">NULL</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">toTypeName</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dynamic_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div><div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th>a     </th><th>toTypeName(a)  </th></tr>
+</thead>
+<tbody>
+<tr><td>      </td><td>Dynamic        </td></tr>
+<tr><td>10    </td><td>Dynamic        </td></tr>
+<tr><td>string</td><td>Dynamic        </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">dymanicType</span></code> function to find out what type is actually hiding behind each value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">dynamicType</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dynamic_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>dynamicType(a)  </th></tr>
+</thead>
+<tbody>
+<tr><td>None            </td></tr>
+<tr><td>Int64           </td></tr>
+<tr><td>String          </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>So it can keep the objects with various datatypes.</p>
+<section id="casting">
+<h3>Casting<a class="headerlink" href="#casting" title="Link to this heading">#</a></h3>
+<p>When working with <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code>, it is crucial to know how the actual data could be extracted. There are several options:</p>
+<ul class="simple">
+<li><p>Casting: <code class="docutils literal notranslate"><span class="pre">cast</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;column&gt;::&lt;type&gt;</span></code> syntax will attempt to transform all the values to the specified datatype.</p></li>
+<li><p>Extracting nested types: <code class="docutils literal notranslate"><span class="pre">&lt;dynamic_column&gt;.&lt;type&gt;</span></code>. All values belonging to the specific will be included in the result, the others will have a <code class="docutils literal notranslate"><span class="pre">NULL</span></code> value.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell casts the <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code> column to the string:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="k">cast</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;String&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">casted_to_string</span><span class="p">,</span>
+<span class="w">    </span><span class="n">toTypeName</span><span class="p">(</span><span class="n">casted_to_string</span><span class="p">)</span>
+<span class="k">from</span><span class="w"> </span><span class="n">dynamic_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>casted_to_string  </th><th>toTypeName(casted_to_string)  </th></tr>
+</thead>
+<tbody>
+<tr><td>                  </td><td>String                        </td></tr>
+<tr><td>10                </td><td>String                        </td></tr>
+<tr><td>string            </td><td>String                        </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>All goes well - originally integer <code class="docutils literal notranslate"><span class="pre">10</span></code> is represented as a <code class="docutils literal notranslate"><span class="pre">String</span></code> type. But, as value <code class="docutils literal notranslate"><span class="pre">string</span></code> could not be converted to the integer, a corresponding error would be caused:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">cast</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Int64&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">casted_to_string</span><span class="p">,</span>
+<span class="w">    </span><span class="n">toTypeName</span><span class="p">(</span><span class="n">casted_to_string</span><span class="p">)</span>
+<span class="k">from</span><span class="w"> </span><span class="n">dynamic_example</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">raise</span> <span class="n">OperationalError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span> <span class="k">if</span> <span class="n">retried</span> <span class="k">else</span> <span class="n">DatabaseError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+<span class="n">clickhouse_connect</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">DatabaseError</span><span class="p">:</span> <span class="n">Received</span> <span class="n">ClickHouse</span> <span class="n">exception</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="n">server</span> <span class="n">response</span><span class="p">:</span> <span class="n">Code</span><span class="p">:</span> <span class="mf">6.</span> <span class="n">DB</span><span class="p">::</span><span class="ne">Exception</span><span class="p">:</span> <span class="n">Cannot</span> <span class="n">parse</span> <span class="n">string</span> <span class="s1">&#39;string&#39;</span> <span class="k">as</span> <span class="n">UInt8</span><span class="p">:</span> <span class="n">syntax</span> <span class="n">error</span> <span class="n">at</span> <span class="n">begin</span> <span class="n">of</span> <span class="n">string</span><span class="o">.</span> <span class="n">Note</span><span class="p">:</span> <span class="n">there</span> <span class="n">are</span> <span class="n">toUInt8OrZero</span> <span class="ow">and</span> <span class="n">toUInt8OrNull</span> <span class="n">functions</span><span class="p">,</span> <span class="n">which</span> <span class="n">returns</span> <span class="n">zero</span><span class="o">/</span><span class="n">NULL</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">throwing</span> <span class="n">exception</span><span class="p">:</span> <span class="k">while</span> <span class="n">executing</span> <span class="s1">&#39;FUNCTION CAST(__table1.a :: 3, &#39;</span><span class="n">UInt8</span><span class="s1">&#39;_String :: 1) -&gt; CAST(__table1.a, &#39;</span><span class="n">UInt8</span><span class="s1">&#39;_String) UInt8 : 0&#39;</span><span class="o">.</span> <span class="p">(</span><span class="n">CANNOT_PARSE_TEXT</span><span class="p">)</span> <span class="p">(</span><span class="k">for</span> <span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">55873</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternagive approach is to specify the type after the <code class="docutils literal notranslate"><span class="pre">.</span></code> operator. The following cell applies the <code class="docutils literal notranslate"><span class="pre">.</span></code> operator with different types:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">Int64</span><span class="p">,</span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">String</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">dynamic_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  a.Int64</th><th>a.String  </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">         </td><td>          </td></tr>
+<tr><td style="text-align: right;">       10</td><td>          </td></tr>
+<tr><td style="text-align: right;">         </td><td>string    </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>If the values have a corresponding type, the value is extracted. Otherwise, the <code class="docutils literal notranslate"><span class="pre">NULL</span></code> is the output.</p>
+<p><strong>Note</strong> you have to specify the exact type. Different accuracy representations of the same type would be interpreted as <code class="docutils literal notranslate"><span class="pre">NULL</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="nb">Int8</span><span class="p">,</span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">UInt64</span><span class="p">,</span>
+<span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">Int64</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">dynamic_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>a.Int8  </th><th>a.UInt64  </th><th style="text-align: right;">  a.Int64</th></tr>
+</thead>
+<tbody>
+<tr><td>        </td><td>          </td><td style="text-align: right;">         </td></tr>
+<tr><td>        </td><td>          </td><td style="text-align: right;">       10</td></tr>
+<tr><td>        </td><td>          </td><td style="text-align: right;">         </td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
+</section>
+<section id="json">
+<h2>JSON<a class="headerlink" href="#json" title="Link to this heading">#</a></h2>
+<p>ClickHouse natively supports the JSON data type. There are:</p>
+<ul class="simple">
+<li><p>Corresponding operators and functions for processing JSON data in ClickHouse.</p></li>
+<li><p>There are plenty options for creating a JSON dtype in the query.</p></li>
+<li><p>A lot of options to declare the JSON datatype column.</p></li>
+</ul>
+<p>Check more in the <a class="reference external" href="https://clickhouse.com/docs/sql-reference/data-types/newjson">JSON Data Type</a> manual page.</p>
+<hr class="docutils" />
+<p>The definition of the table with JSON column and inserting some data the:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">json_example</span><span class="w"> </span><span class="p">(</span><span class="n">col</span><span class="w"> </span><span class="n">JSON</span><span class="p">);</span><span class="w"> </span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">json_example</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;{&quot;a&quot;: {&quot;b&quot;: 10}}&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;{&quot;c&quot;: [1, 2, 3]}&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="n">toTypeName</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">json_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"></div><div class="output text_html"></div><div class="output text_html"><table>
+<thead>
+<tr><th>col             </th><th>toTypeName(col)  </th></tr>
+</thead>
+<tbody>
+<tr><td>{&#x27;a&#x27;: {&#x27;b&#x27;: 10}}</td><td>JSON             </td></tr>
+<tr><td>{&#x27;c&#x27;: [1, 2, 3]}</td><td>JSON             </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>You can refer to the columns really natively by simply specifying them as sub-columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="n">a</span><span class="p">.</span><span class="n">b</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">json_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col.a.b</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">       10</td></tr>
+<tr><td style="text-align: right;">         </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<section id="reading-paths">
+<h3>Reading paths<a class="headerlink" href="#reading-paths" title="Link to this heading">#</a></h3>
+<p>The most common task is to loading values stored under sertaing columns in JSON.</p>
+<p>To extract values by JSON path refer to path with subcolumns: <code class="docutils literal notranslate"><span class="pre">&lt;column</span> <span class="pre">name&gt;.&lt;attribute</span> <span class="pre">1&gt;.&lt;attribute</span> <span class="pre">2&gt;.&lt;...&gt;</span></code>. If the type is not specified in the column declaration, the output <strong>always</strong> will be of type <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code>.</p>
+<p><strong>Note</strong> there are <a class="reference external" href="https://clickhouse.com/docs/sql-reference/functions/json-functions#jsonextract-functions"><code class="docutils literal notranslate"><span class="pre">JSONExtract</span></code> functions</a> but they are designed to extract values from string formatted as JSON.</p>
+<p><strong>Note</strong> refering to the paths that are JSONs by themselves resutls in <code class="docutils literal notranslate"><span class="pre">NULL</span></code> wrapped in <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code>.</p>
+<hr class="docutils" />
+<p>The following cell shows how the paths are parsed from the JSON attributes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">json</span><span class="p">,</span>
+<span class="w">    </span><span class="n">json</span><span class="p">.</span><span class="n">a</span><span class="p">,</span>
+<span class="w">    </span><span class="n">JSONExtract</span><span class="p">(</span><span class="n">json</span><span class="p">::</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;UInt8&#39;</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="k">values</span><span class="p">(</span>
+<span class="w">    </span><span class="s1">&#39;json JSON&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;{&quot;a&quot;: 10}&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;{&quot;a&quot;: 20, &quot;b&quot;: &quot;string&quot;}&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;{&quot;a&quot;: 40}&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>json                    </th><th style="text-align: right;">  json.a</th><th style="text-align: right;">  JSONExtract(CAST(json, &#x27;String&#x27;), &#x27;a&#x27;, &#x27;UInt8&#x27;)</th></tr>
+</thead>
+<tbody>
+<tr><td>{&#x27;a&#x27;: 10}               </td><td style="text-align: right;">      10</td><td style="text-align: right;">                                               10</td></tr>
+<tr><td>{&#x27;a&#x27;: 20, &#x27;b&#x27;: &#x27;string&#x27;}</td><td style="text-align: right;">      20</td><td style="text-align: right;">                                               20</td></tr>
+<tr><td>{&#x27;a&#x27;: 40}               </td><td style="text-align: right;">      40</td><td style="text-align: right;">                                               40</td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The following example shows the parsing in the case of paths with complex structure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="s1">&#39;{&quot;a&quot;: [10, 20, 30], &quot;b&quot;: {&quot;c&quot;: &quot;value&quot;}}&#39;</span><span class="p">::</span><span class="n">JSON</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">inp_col</span><span class="p">,</span>
+<span class="w">    </span><span class="n">inp_col</span><span class="p">.</span><span class="n">a</span><span class="p">,</span>
+<span class="w">    </span><span class="n">toTypeName</span><span class="p">(</span><span class="n">inp_col</span><span class="p">.</span><span class="n">a</span><span class="p">),</span>
+<span class="w">    </span><span class="n">dynamicType</span><span class="p">(</span><span class="n">inp_col</span><span class="p">.</span><span class="n">a</span><span class="p">),</span>
+<span class="w">    </span><span class="n">inp_col</span><span class="p">.</span><span class="n">b</span><span class="p">,</span>
+<span class="w">    </span><span class="n">toTypeName</span><span class="p">(</span><span class="n">inp_col</span><span class="p">.</span><span class="n">b</span><span class="p">),</span>
+<span class="w">    </span><span class="n">dynamicType</span><span class="p">(</span><span class="n">inp_col</span><span class="p">.</span><span class="n">b</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>inp_col                                 </th><th>inp_col.a   </th><th>toTypeName(inp_col.a)  </th><th>dynamicType(inp_col.a)  </th><th>inp_col.b  </th><th>toTypeName(inp_col.b)  </th><th>dynamicType(inp_col.b)  </th></tr>
+</thead>
+<tbody>
+<tr><td>{&#x27;a&#x27;: [10, 20, 30], &#x27;b&#x27;: {&#x27;c&#x27;: &#x27;value&#x27;}}</td><td>[10, 20, 30]</td><td>Dynamic                </td><td>Array(Nullable(Int64))  </td><td>           </td><td>Dynamic                </td><td>None                    </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">inp_col.b</span></code> is not parsed correctly.</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1080,6 +1349,14 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuple-t1-t2">Tuple(T1, T2, …)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-k-v">Map(K, V)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic">Dynamic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#casting">Casting</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json">JSON</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-paths">Reading paths</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
