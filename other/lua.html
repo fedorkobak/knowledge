@@ -415,7 +415,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_organisation/materialized_view.html">Materialized view</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/data_types.html">Data types</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/data_types.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_types/json.html">JSON</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../sql/clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../sql/clickhouse/functions/regular/array.html">Array</a></li>
@@ -763,6 +766,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-control">Flow control</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#patterns">Patterns</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-library">Standard library</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#searchpath">Searchpath</a></li>
@@ -942,6 +949,79 @@ document.write(`
 </table>
 </div>
 <p>Check mode detailed explanation with some examples in the dedicated <a class="reference internal" href="lua/flow_control.html"><span class="std std-doc">Flow control</span></a> page.</p>
+</section>
+<section id="string">
+<h2>String<a class="headerlink" href="#string" title="Link to this heading">#</a></h2>
+<p>Here is a of the most basic things about the basic string dtype in lua:</p>
+<ul class="simple">
+<li><p><strong>Creation</strong> - Strings can be created with single quotes (<code class="docutils literal notranslate"><span class="pre">'...'</span></code>), double quotes (<code class="docutils literal notranslate"><span class="pre">&quot;...&quot;</span></code>), or long bracket syntax (<code class="docutils literal notranslate"><span class="pre">[[...]]</span></code>) for multiline text.</p></li>
+<li><p><strong>Immutable</strong> - Strings cannot be modified in place; any operation that changes a string returns a new one.</p></li>
+<li><p><strong>Concatenation</strong> - Use the <code class="docutils literal notranslate"><span class="pre">..</span></code> operator to join strings together.</p></li>
+<li><p><strong>Length</strong> - The <code class="docutils literal notranslate"><span class="pre">#</span></code> operator returns the string length in <strong>bytes</strong>, not Unicode characters.</p></li>
+<li><p><strong>String library</strong> - Most operations are provided by the <code class="docutils literal notranslate"><span class="pre">string</span></code> library (<code class="docutils literal notranslate"><span class="pre">sub</span></code>, <code class="docutils literal notranslate"><span class="pre">find</span></code>, <code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">gsub</span></code>, <code class="docutils literal notranslate"><span class="pre">format</span></code>, etc.).</p></li>
+</ul>
+<p>Check section <a class="reference external" href="https://www.lua.org/manual/5.5/manual.html#6.5">6.5 - String Manipulation</a> for description of features and standard library functions.</p>
+<hr class="docutils" />
+<p>The following cell writes to the <code class="docutils literal notranslate"><span class="pre">multiline</span></code> multiline string literal. It also shows the length of the given string variable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">multiline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[[</span>
+<span class="s">The text</span>
+<span class="s">to check</span>
+<span class="s">]]</span>
+<span class="o">#</span><span class="nv">multiline</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18
+</pre></div>
+</div>
+</div>
+</div>
+<section id="patterns">
+<h3>Patterns<a class="headerlink" href="#patterns" title="Link to this heading">#</a></h3>
+<p>There is a special language for defining string patterns. It looks similar to regular expression syntax, but actually simpler and supports a smaller feature set.</p>
+<p>For more check the <a class="reference external" href="https://www.lua.org/manual/5.5/manual.html#6.5.1">6.5.1 - Patterns</a> section of the documentation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[[</span>
+<span class="s">    indent1</span>
+<span class="s">        indent2</span>
+<span class="s">    indent1</span>
+<span class="s">        imdent2</span>
+<span class="s">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">str</span><span class="p">:</span><span class="nf">match</span><span class="p">(</span><span class="s2">&quot;[ </span><span class="se">\t</span><span class="s2">]+&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">#</span><span class="nv">indent</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">s</span><span class="p">:</span><span class="nf">match</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">([ </span><span class="se">\t</span><span class="s2">]+)&quot;</span><span class="p">)</span>
+<span class="nv">indent</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="standard-library">
 <h2>Standard library<a class="headerlink" href="#standard-library" title="Link to this heading">#</a></h2>
@@ -1211,6 +1291,10 @@ nil no file &#39;./lua_files/example&#39;
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-control">Flow control</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#patterns">Patterns</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-library">Standard library</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#searchpath">Searchpath</a></li>

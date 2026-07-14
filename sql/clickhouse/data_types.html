@@ -63,7 +63,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Fucntions" href="functions.html" />
+    <link rel="next" title="JSON" href="data_types/json.html" />
     <link rel="prev" title="Materialized view" href="data_organisation/materialized_view.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -417,7 +417,10 @@
 <li class="toctree-l3"><a class="reference internal" href="data_organisation/materialized_view.html">Materialized view</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Data types</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Data types</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_types/json.html">JSON</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="functions/regular/array.html">Array</a></li>
@@ -773,10 +776,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#casting">Casting</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json">JSON</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-paths">Reading paths</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json">JSON</a></li>
 </ul>
             </nav>
         </div>
@@ -1183,7 +1183,11 @@ document.write(`
 <li><p>There are plenty options for creating a JSON dtype in the query.</p></li>
 <li><p>A lot of options to declare the JSON datatype column.</p></li>
 </ul>
-<p>Check more in the <a class="reference external" href="https://clickhouse.com/docs/sql-reference/data-types/newjson">JSON Data Type</a> manual page.</p>
+<p>Check more in the:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://clickhouse.com/docs/sql-reference/data-types/newjson">JSON Data Type</a> manual page.</p></li>
+<li><p>Dedicated <a class="reference internal" href="#datatypes/json.ipynb"><span class="xref myst">JSON</span></a> page.</p></li>
+</ul>
 <hr class="docutils" />
 <p>The definition of the table with JSON column and inserting some data the:</p>
 <div class="cell docutils container">
@@ -1225,70 +1229,9 @@ document.write(`
 </tbody>
 </table></div></div>
 </div>
-<section id="reading-paths">
-<h3>Reading paths<a class="headerlink" href="#reading-paths" title="Link to this heading">#</a></h3>
-<p>The most common task is to loading values stored under sertaing columns in JSON.</p>
-<p>To extract values by JSON path refer to path with subcolumns: <code class="docutils literal notranslate"><span class="pre">&lt;column</span> <span class="pre">name&gt;.&lt;attribute</span> <span class="pre">1&gt;.&lt;attribute</span> <span class="pre">2&gt;.&lt;...&gt;</span></code>. If the type is not specified in the column declaration, the output <strong>always</strong> will be of type <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code>.</p>
-<p><strong>Note</strong> there are <a class="reference external" href="https://clickhouse.com/docs/sql-reference/functions/json-functions#jsonextract-functions"><code class="docutils literal notranslate"><span class="pre">JSONExtract</span></code> functions</a> but they are designed to extract values from string formatted as JSON.</p>
-<p><strong>Note</strong> refering to the paths that are JSONs by themselves resutls in <code class="docutils literal notranslate"><span class="pre">NULL</span></code> wrapped in <code class="docutils literal notranslate"><span class="pre">Dynamic</span></code>.</p>
-<hr class="docutils" />
-<p>The following cell shows how the paths are parsed from the JSON attributes:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">SELECT</span>
-<span class="w">    </span><span class="n">json</span><span class="p">,</span>
-<span class="w">    </span><span class="n">json</span><span class="p">.</span><span class="n">a</span><span class="p">,</span>
-<span class="w">    </span><span class="n">JSONExtract</span><span class="p">(</span><span class="n">json</span><span class="p">::</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;UInt8&#39;</span><span class="p">)</span>
-<span class="k">FROM</span><span class="w"> </span><span class="k">values</span><span class="p">(</span>
-<span class="w">    </span><span class="s1">&#39;json JSON&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">(</span><span class="s1">&#39;{&quot;a&quot;: 10}&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="p">(</span><span class="s1">&#39;{&quot;a&quot;: 20, &quot;b&quot;: &quot;string&quot;}&#39;</span><span class="p">),</span>
-<span class="w">    </span><span class="p">(</span><span class="s1">&#39;{&quot;a&quot;: 40}&#39;</span><span class="p">)</span>
-<span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-<thead>
-<tr><th>json                    </th><th style="text-align: right;">  json.a</th><th style="text-align: right;">  JSONExtract(CAST(json, &#x27;String&#x27;), &#x27;a&#x27;, &#x27;UInt8&#x27;)</th></tr>
-</thead>
-<tbody>
-<tr><td>{&#x27;a&#x27;: 10}               </td><td style="text-align: right;">      10</td><td style="text-align: right;">                                               10</td></tr>
-<tr><td>{&#x27;a&#x27;: 20, &#x27;b&#x27;: &#x27;string&#x27;}</td><td style="text-align: right;">      20</td><td style="text-align: right;">                                               20</td></tr>
-<tr><td>{&#x27;a&#x27;: 40}               </td><td style="text-align: right;">      40</td><td style="text-align: right;">                                               40</td></tr>
-</tbody>
-</table></div></div>
-</div>
-<p>The following example shows the parsing in the case of paths with complex structure.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--ClickHouse</span>
-<span class="k">SELECT</span>
-<span class="w">    </span><span class="s1">&#39;{&quot;a&quot;: [10, 20, 30], &quot;b&quot;: {&quot;c&quot;: &quot;value&quot;}}&#39;</span><span class="p">::</span><span class="n">JSON</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">inp_col</span><span class="p">,</span>
-<span class="w">    </span><span class="n">inp_col</span><span class="p">.</span><span class="n">a</span><span class="p">,</span>
-<span class="w">    </span><span class="n">toTypeName</span><span class="p">(</span><span class="n">inp_col</span><span class="p">.</span><span class="n">a</span><span class="p">),</span>
-<span class="w">    </span><span class="n">dynamicType</span><span class="p">(</span><span class="n">inp_col</span><span class="p">.</span><span class="n">a</span><span class="p">),</span>
-<span class="w">    </span><span class="n">inp_col</span><span class="p">.</span><span class="n">b</span><span class="p">,</span>
-<span class="w">    </span><span class="n">toTypeName</span><span class="p">(</span><span class="n">inp_col</span><span class="p">.</span><span class="n">b</span><span class="p">),</span>
-<span class="w">    </span><span class="n">dynamicType</span><span class="p">(</span><span class="n">inp_col</span><span class="p">.</span><span class="n">b</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><table>
-<thead>
-<tr><th>inp_col                                 </th><th>inp_col.a   </th><th>toTypeName(inp_col.a)  </th><th>dynamicType(inp_col.a)  </th><th>inp_col.b  </th><th>toTypeName(inp_col.b)  </th><th>dynamicType(inp_col.b)  </th></tr>
-</thead>
-<tbody>
-<tr><td>{&#x27;a&#x27;: [10, 20, 30], &#x27;b&#x27;: {&#x27;c&#x27;: &#x27;value&#x27;}}</td><td>[10, 20, 30]</td><td>Dynamic                </td><td>Array(Nullable(Int64))  </td><td>           </td><td>Dynamic                </td><td>None                    </td></tr>
-</tbody>
-</table></div></div>
-</div>
-<p>Note that <code class="docutils literal notranslate"><span class="pre">inp_col.b</span></code> is not parsed correctly.</p>
 </section>
-</section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1331,11 +1274,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="functions.html"
+       href="data_types/json.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Fucntions</p>
+        <p class="prev-next-title">JSON</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1366,10 +1309,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#casting">Casting</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json">JSON</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-paths">Reading paths</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json">JSON</a></li>
 </ul>
   </nav></div>
 

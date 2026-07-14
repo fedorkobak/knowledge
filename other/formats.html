@@ -415,7 +415,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_organisation/materialized_view.html">Materialized view</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../sql/clickhouse/data_types.html">Data types</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/data_types.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sql/clickhouse/data_types/json.html">JSON</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../sql/clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../sql/clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../sql/clickhouse/functions/regular/array.html">Array</a></li>
@@ -765,7 +768,16 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json">JSON</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jq">jq</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#keys">Keys</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#yaml">YAML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datetime">DateTime</a></li>
 </ul>
             </nav>
         </div>
@@ -874,8 +886,16 @@ document.write(`
 <p><a class="reference external" href="https://google.com">Reference-stype link</a>.</p>
 </section>
 </section>
+<section id="json">
+<h2>JSON<a class="headerlink" href="#json" title="Link to this heading">#</a></h2>
+<p>JSON (JavaScript Object Notation) is a lightweight, text-based data interchange format designed to be easy for both humans to read and machines to parse. It represents data using objects (key–value pairs), arrays (ordered lists), strings, numbers, booleans, and the <code class="docutils literal notranslate"><span class="pre">null</span></code> value. JSON has a simple, language-independent syntax originally derived from JavaScript object literals, but it is supported by virtually every modern programming language. The format is formally standardized in <strong>ECMA-404</strong> (syntax) and <strong>RFC 8259</strong> (Internet interoperability and recommended practices). JSON is widely used for configuration files, REST APIs, data serialization, and communication between distributed systems.</p>
+<p>There are a lot of tooling for JSON, but for me important were:</p>
+<ul class="simple">
+<li><p>A JSON schema is a special format based on a JSON itself. It allows to declare the format of json object, so JSON documents could be validated against schemas.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">jq</span></code> is command-line utility that parses JSON documents. Knowing the basics of this tool is extremely useful, as it allows you to immediately fetch useful information from JSON documents, which sometimes can be extremely large.</p></li>
+</ul>
 <section id="json-schema">
-<h2>JSON schema<a class="headerlink" href="#json-schema" title="Link to this heading">#</a></h2>
+<h3>JSON schema<a class="headerlink" href="#json-schema" title="Link to this heading">#</a></h3>
 <p>JSON schema is a declarative protocol to specify the format of the JSON documents.</p>
 <p>For more check:</p>
 <ul class="simple">
@@ -941,6 +961,213 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 </div>
 </div>
 </div>
+</section>
+<section id="jq">
+<h3>jq<a class="headerlink" href="#jq" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">jq</span></code> is simple but powerfull utility to process the JSON documents directry from the command line.</p>
+<p>The following table shows the main features of the language used by <code class="docutils literal notranslate"><span class="pre">jq</span></code> to define the transformations:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Purpose</p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Field access</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.user.name</span></code></p></td>
+<td><p>Read values from objects.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Array indexing</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.[0]</span></code>, <code class="docutils literal notranslate"><span class="pre">.[1:3]</span></code></p></td>
+<td><p>Access array elements and slices.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Iteration</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.[]</span></code></p></td>
+<td><p>Process each element of an array or object.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Filtering</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">select(.age</span> <span class="pre">&gt;</span> <span class="pre">18)</span></code></p></td>
+<td><p>Keep only matching values.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Mapping</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">map(.name)</span></code></p></td>
+<td><p>Transform every element of an array.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Object/array construction</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{name:</span> <span class="pre">.name}</span></code>, <code class="docutils literal notranslate"><span class="pre">[.a,</span> <span class="pre">.b]</span></code></p></td>
+<td><p>Build new JSON structures.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Functions</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">keys</span></code>, <code class="docutils literal notranslate"><span class="pre">length</span></code>, <code class="docutils literal notranslate"><span class="pre">sort</span></code>, <code class="docutils literal notranslate"><span class="pre">unique</span></code>, <code class="docutils literal notranslate"><span class="pre">group_by</span></code></p></td>
+<td><p>Analyze and manipulate data.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Variables</p></td>
+<td><p>`. as $x</p></td>
+<td><p>…`</p></td>
+<td><p>Store intermediate results.</p></td>
+</tr>
+<tr class="row-even"><td><p>Pipelines</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.users[]</span> <span class="pre">|</span> <span class="pre">.name</span></code></p></td>
+<td><p>Compose multiple transformations.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Recursion</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">recurse</span></code>, <code class="docutils literal notranslate"><span class="pre">walk</span></code></p></td>
+<td><p>Traverse nested JSON.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Updates</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.count</span> <span class="pre">+=</span> <span class="pre">1</span></code></p></td>
+<td><p>Modify existing JSON.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Control flow</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">then</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code>, <code class="docutils literal notranslate"><span class="pre">try</span></code>, <code class="docutils literal notranslate"><span class="pre">//</span></code></p></td>
+<td><p>Implement conditional logic and defaults.</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>User-defined functions</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">twice:</span> <span class="pre">.</span> <span class="pre">*</span> <span class="pre">2;</span></code></p></td>
+<td><p>Create reusable filters.</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Check official website <a class="reference external" href="https://jqlang.org/">jq</a> for details.</p>
+<hr class="docutils" />
+<p>The following cell passes to <code class="docutils literal notranslate"><span class="pre">jq</span></code> the plain JSON document. This document is displayed in a more readable format - each nested level is below the previous one:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jq<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">{&quot;hello&quot;: 10, &quot;value&quot;: {&quot;new value&quot;: 4, &quot;some list&quot;: [1, 2, 3, 4]}}</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">{</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;hello&quot;</span><span class=" -Color -Color-Bold">: </span>10<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;value&quot;</span><span class=" -Color -Color-Bold">: {</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;new value&quot;</span><span class=" -Color -Color-Bold">: </span>4<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">    </span><span class=" -Color -Color-Bold -Color-Bold-Blue">&quot;some list&quot;</span><span class=" -Color -Color-Bold">: [</span>
+<span class=" -Color -Color-Bold">      </span>1<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">      </span>2<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">      </span>3<span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">      </span>4
+<span class=" -Color -Color-Bold">    ]</span>
+<span class=" -Color -Color-Bold">  }</span>
+<span class=" -Color -Color-Bold">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Alternatively, you can use special selector syntax to load a specific field. The following cell loads the second element from the nested list:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jq<span class="w"> </span><span class="s">&lt;&lt; EOF &#39;.value.&quot;some list&quot;.[2]&#39;</span>
+<span class="s">{&quot;hello&quot;: 10, &quot;value&quot;: {&quot;new value&quot;: 4, &quot;some list&quot;: [1, 2, &quot;pick me&quot;, 4]}}</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">&quot;pick me&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="keys">
+<h4>Keys<a class="headerlink" href="#keys" title="Link to this heading">#</a></h4>
+<p>There is a special syntax for extracting keys from some JSON structure. The <code class="docutils literal notranslate"><span class="pre">keys</span></code> in the filter specifies that the keys of a given document must be retriewed.</p>
+<hr class="docutils" />
+<p>The following cell the fetches keys of the object under the ‘inner’ key:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jq<span class="w"> </span><span class="s">&lt;&lt; EOF &#39;.inner | keys&#39;</span>
+<span class="s">{&quot;hello&quot;: 10, &quot;inner&quot;: {&quot;value&quot;: 10, &quot;some_new&quot;: 20, &quot;value&quot;: 10}}</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Green">&quot;some_new&quot;</span><span class=" -Color -Color-Bold">,</span>
+<span class=" -Color -Color-Bold">  </span><span class=" -Color -Color-Green">&quot;value&quot;</span>
+<span class=" -Color -Color-Bold">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="yaml">
+<h2>YAML<a class="headerlink" href="#yaml" title="Link to this heading">#</a></h2>
+<p>YAML or YML is human-readable computer format. The format provides simple, minimalistic syntax that is easy for humans to read. It’s main niche is configuration files for systems.</p>
+<p>The main features of the format:</p>
+<ul class="simple">
+<li><p><strong>Hierarchical structure</strong> - Naturally represents nested maps and lists.</p></li>
+<li><p><strong>Key-value mappings</strong> - Supports dictionaries/objects.</p></li>
+<li><p><strong>Sequences (lists)</strong> - Uses - for ordered collections.</p></li>
+<li><p><strong>Scalars</strong> - Supports strings, numbers, booleans, null, dates, and more.</p></li>
+<li><p><strong>Comments</strong> - <code class="docutils literal notranslate"><span class="pre">#</span></code> introduces comments.</p></li>
+<li><p><strong>Multiple documents</strong> - a single file can contain multiple documents separated by —.</p></li>
+<li><p><strong>Anchors and aliases</strong> - reuse data with <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>anchor and <code class="docutils literal notranslate"><span class="pre">*</span></code>alias.</p></li>
+<li><p><strong>Merge keys</strong> - Combine mappings with <code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code>.</p></li>
+<li><p><strong>Block and flow styles</strong> - Collections can be written in multiline or JSON-like inline syntax.</p></li>
+<li><p><strong>Multiline strings</strong> - Literal (<code class="docutils literal notranslate"><span class="pre">|</span></code>) and folded (<code class="docutils literal notranslate"><span class="pre">&gt;</span></code>) block scalars.</p></li>
+<li><p><strong>Explicit typing</strong> (optional) - Type tags such as <code class="docutils literal notranslate"><span class="pre">!!str</span></code> or custom tags.</p></li>
+<li><p><strong>JSON superset</strong> - Valid JSON is also valid YAML (YAML 1.2).</p></li>
+<li><p><strong>Extensible</strong> - Applications can define custom tags and schemas.</p></li>
+</ul>
+<p>Check the <a class="reference external" href="https://yaml.org/spec/">YAML Specification Index</a> for official reference to the format.</p>
+<hr class="docutils" />
+<p>The parsing of <code class="docutils literal notranslate"><span class="pre">yml</span></code> files provides the <code class="docutils literal notranslate"><span class="pre">yq</span></code> utility - analog of the <code class="docutils literal notranslate"><span class="pre">jq</span></code> for <code class="docutils literal notranslate"><span class="pre">yml</span></code> fomat. We will use this to demonstrate format’s features.</p>
+<p>The following cell shows hwo to extract the first element of the list under the <code class="docutils literal notranslate"><span class="pre">lst</span></code> key:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yq<span class="w"> </span><span class="s1">&#39;.lst[0]&#39;</span><span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">lst:</span>
+<span class="s">    - val1</span>
+<span class="s">    - val2</span>
+<span class="s">    - val3</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">&quot;val1&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="datetime">
+<h2>DateTime<a class="headerlink" href="#datetime" title="Link to this heading">#</a></h2>
+<p>There are two main groups to represent a date in a computer:</p>
+<ul class="simple">
+<li><p><strong>Positional</strong>: separate numbers for each unit of time (year, month, day, hour, second).</p></li>
+<li><p><strong>Timestamp</strong>: This represents the date as an integer number of units passed from a point in time. It typically represents the number of microseconds passed since 1 January 1970, but other options for the unit and start point are possible.</p></li>
+</ul>
+<p><strong>Time zones</strong> are typically represented as +/-number of hours in UTC. <strong>UTC</strong> is (Coordinated Universal Time) corresponds to the time in GMT, and is typically used in computer systems to measure time in order to avoid issues relating to timezones.</p>
+<p><strong>ISO-8601</strong> is a most popular way to write some date as a text. It’s a bit funny that there is no open publication of the standard, you have to pay for it. Check the corresponding <a class="reference external" href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO page</a>.</p>
+<p>The most important of the ISO-8601:</p>
+<ul class="simple">
+<li><p>Date have format <code class="docutils literal notranslate"><span class="pre">yyyy-mm-dd</span></code>, for example <code class="docutils literal notranslate"><span class="pre">1991-12-08</span></code>.</p></li>
+<li><p>Time have format <code class="docutils literal notranslate"><span class="pre">hh:mm:ss</span></code>, for example <code class="docutils literal notranslate"><span class="pre">24:55:43</span></code>.</p></li>
+<li><p>The datetime joins date and time reprsentation though <code class="docutils literal notranslate"><span class="pre">T</span></code> symbol - <code class="docutils literal notranslate"><span class="pre">yyyy-mm-ddThh:mm:ss</span></code>, for example <code class="docutils literal notranslate"><span class="pre">2000-10-05T16:10:22</span></code>.</p></li>
+<li><p>To specify the time zone for a time value, use a time zone offset after the time in the format <code class="docutils literal notranslate"><span class="pre">[+-]HH:MM</span></code>. The offset indicates how much time should be added to or subtracted from UTC to obtain the local time. For example, datetime <code class="docutils literal notranslate"><span class="pre">1941-06-22T04:00:00+03:00</span></code> specifies time in Belarus.</p></li>
+</ul>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -1015,7 +1242,16 @@ check-jsonschema<span class="w"> </span>--schemafile<span class="w"> </span>/tmp
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#json">JSON</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#json-schema">JSON schema</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jq">jq</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#keys">Keys</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#yaml">YAML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datetime">DateTime</a></li>
 </ul>
   </nav></div>
 

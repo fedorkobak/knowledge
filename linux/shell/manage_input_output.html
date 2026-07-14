@@ -415,7 +415,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../../sql/clickhouse/data_organisation/materialized_view.html">Materialized view</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../../sql/clickhouse/data_types.html">Data types</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/clickhouse/data_types.html">Data types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../sql/clickhouse/data_types/json.html">JSON</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/clickhouse/functions.html">Fucntions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../sql/clickhouse/functions/regular.html">Regular</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../sql/clickhouse/functions/regular/array.html">Array</a></li>
@@ -762,7 +765,10 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stdout">Stdout</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grep">Grep</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heredoc-delimiting-identifier">Heredoc (&lt;&lt; delimiting_identifier)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heredoc-delimiting-identifier">Heredoc (&lt;&lt; delimiting_identifier)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-stdout">Processing stdout</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clipboard">Clipboard</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-run">Background run</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stdout-arguments">Stdout arguments</a></li>
@@ -966,6 +972,51 @@ Line 5
 </div>
 </div>
 </div>
+<section id="processing-stdout">
+<h3>Processing stdout<a class="headerlink" href="#processing-stdout" title="Link to this heading">#</a></h3>
+<p>The heredoc syntax allows to pass the multiple line input to command, but it is common to process the output using another utility. Specify the code that processes the output of the command just on the same line that the command is invoked, after the heredoc parameter, just as with a usual parameter.</p>
+<hr class="docutils" />
+<p>The following cell shows, probably the most common usage: redirecting to the file the multiline input of the <code class="docutils literal notranslate"><span class="pre">cat</span></code> command.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; /tmp/some_file.json</span>
+<span class="s">{</span>
+<span class="s">    &quot;value&quot;: 10,</span>
+<span class="s">    &quot;value2&quot;: 20</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+cat<span class="w"> </span>/tmp/some_file.json
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{
+    &quot;value&quot;: 10,
+    &quot;value2&quot;: 20
+}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Or another example, passing to the pipe the ouput of the <code class="docutils literal notranslate"><span class="pre">cat</span></code> with heredoc input:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF | jq &#39;.value&#39;</span>
+<span class="s">{</span>
+<span class="s">    &quot;value&quot;: 10,</span>
+<span class="s">    &quot;value2&quot;: 20</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="clipboard">
 <h2>Clipboard<a class="headerlink" href="#clipboard" title="Link to this heading">#</a></h2>
@@ -1187,7 +1238,10 @@ python3<span class="w"> </span><span class="nv">$args</span>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stdout">Stdout</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grep">Grep</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heredoc-delimiting-identifier">Heredoc (&lt;&lt; delimiting_identifier)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heredoc-delimiting-identifier">Heredoc (&lt;&lt; delimiting_identifier)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-stdout">Processing stdout</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clipboard">Clipboard</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-run">Background run</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stdout-arguments">Stdout arguments</a></li>
