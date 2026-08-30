@@ -5,4 +5,7 @@ COPY ./dockerfiles/clickhouse/install.sh /clickhouse/install.sh
 COPY ./dockerfiles/clickhouse/start.sh /clickhouse/start.sh
 
 RUN ./install.sh
+COPY ./dockerfiles/clickhouse/users.xml /etc/clickhouse-server/users.xml
+COPY ./dockerfiles/clickhouse/config.d /etc/clickhouse-server/config.d
+
 ENTRYPOINT ["/clickhouse/start.sh"]
