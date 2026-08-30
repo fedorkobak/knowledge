@@ -352,6 +352,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/remote.html">Remote</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -362,6 +363,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../sql/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/dbmss.html">DBMSs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../sql/select/join/types.html">Types</a></li>
@@ -596,7 +598,10 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../dbt.html">DBT</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">CLI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="models.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="models/incremental.html">Incremental</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="jinja.html">Jinja</a></li>
 </ul>
 </details></li>
@@ -772,7 +777,10 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list">List</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parse">Parse</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-selection">Resources selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-resources">Specifying resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#packages">Packages</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -1102,6 +1110,7 @@ FROM<span class="w"> </span><span class="o">(</span>
 <section id="show">
 <h2>Show<a class="headerlink" href="#show" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">show</span></code> command allows you to preview the output of a given dbt model.</p>
+<p><strong>Note</strong> the <code class="docutils literal notranslate"><span class="pre">dbt</span> <span class="pre">show</span></code> executes the query and displays the output, <strong>not the data of the materialised model</strong>.</p>
 <p>Check description in the <a class="reference external" href="https://docs.getdbt.com/reference/commands/show?version=2.0">About dbt show commannd</a>.</p>
 <hr class="docutils" />
 <p>The following cells create a sample project and some model in it.</p>
@@ -1356,8 +1365,8 @@ Compilation Error in model some_model (models/some_model.sql)
 </div>
 </div>
 </section>
-<section id="resources-selection">
-<h2>Resources selection<a class="headerlink" href="#resources-selection" title="Link to this heading">#</a></h2>
+<section id="specifying-resources">
+<h2>Specifying resources<a class="headerlink" href="#specifying-resources" title="Link to this heading">#</a></h2>
 <p>Many dbt commands assume that they can be applied to a subset of the project resources, such as models, seeds, tests.</p>
 <p>dbt provides univeresal syntax to select the subset of the resources. To provide to commands those patterns there are special CLI arguments:</p>
 <ul class="simple">
@@ -1366,11 +1375,95 @@ Compilation Error in model some_model (models/some_model.sql)
 </ul>
 <p>dbt provides the following tools todefine the set of models:</p>
 <ul class="simple">
-<li><p><strong>Selection methods</strong> allows to filter models by some properties <code class="docutils literal notranslate"><span class="pre">tag</span></code>, <code class="docutils literal notranslate"><span class="pre">path</span></code>, <code class="docutils literal notranslate"><span class="pre">config</span></code> etc.</p></li>
+<li><p><strong>Selection methods</strong> allows to filter models by some properties <code class="docutils literal notranslate"><span class="pre">tag</span></code>, <code class="docutils literal notranslate"><span class="pre">path</span></code>, <code class="docutils literal notranslate"><span class="pre">config</span></code>, <code class="docutils literal notranslate"><span class="pre">package</span></code> etc.</p></li>
 <li><p><strong>Graph operators</strong> allows to use relations of the nodes in graph to specify the set of nodes.</p></li>
 <li><p><strong>Set operators</strong> allow you to combine other selection rules. It provides operations such as unions, intersections and exclusions</p></li>
 </ul>
 <p>The commands that support this features are predictable: <code class="docutils literal notranslate"><span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">test</span></code>, <code class="docutils literal notranslate"><span class="pre">seed</span></code>, <code class="docutils literal notranslate"><span class="pre">snapshot</span></code>, <code class="docutils literal notranslate"><span class="pre">ls</span></code>, <code class="docutils literal notranslate"><span class="pre">compile</span></code>, <code class="docutils literal notranslate"><span class="pre">freshness</span></code>, <code class="docutils literal notranslate"><span class="pre">build</span></code>, <code class="docutils literal notranslate"><span class="pre">docs</span> <span class="pre">generate</span></code>.</p>
+<p>Check more in the:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.getdbt.com/reference/node-selection/syntax?version=2.0#specifying-resources">Specifying resources</a> page of the documentation.</p></li>
+<li><p><a class="reference external" href="https://docs.getdbt.com/reference/node-selection/methods?version=2.0#selector">Node selector methods</a> for syntax used to declare resources.</p></li>
+</ul>
+<section id="packages">
+<h3>Packages<a class="headerlink" href="#packages" title="Link to this heading">#</a></h3>
+<p>To specify that models from the specific package have to be seleted declare the <code class="docutils literal notranslate"><span class="pre">package</span></code> selection method. The dot notation can be used to inform packages and even specify the path to specific resources within a package.</p>
+<p>The <a class="reference external" href="https://docs.getdbt.com/reference/node-selection/methods?version=2.0#package">official description</a>.</p>
+<hr class="docutils" />
+<p>Consider the example how the resources of the package can be specified in the selector. Following cells specify the packages that would be used as example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#init</span>
+dbt<span class="w"> </span>init<span class="w"> </span>project1<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+dbt<span class="w"> </span>init<span class="w"> </span>project2<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+
+rm<span class="w"> </span>-r<span class="w"> </span>project1/models/example
+mkdir<span class="w"> </span>project1/models/folder
+<span class="nb">cd</span><span class="w"> </span>project2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#file project2/packages.yml</span>
+packages:
+<span class="w">    </span>-<span class="w"> </span>local:<span class="w"> </span>../project1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>deps<span class="w"> </span>-q
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#file project1/models/outer_model.sql</span>
+<span class="k">select</span><span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#file project1/models/folder/inner_model.sql</span>
+<span class="k">select</span><span class="w"> </span><span class="m">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is an example of a specific package declaration. All of the package’s models are invoked.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>ls<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>package:project1<span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>project1.folder.inner_model
+project1.outer_model
+</pre></div>
+</div>
+</div>
+</div>
+<p>To specify the subset of the models in package, specify the project as the first section of the dot notation, followed by the path to the specific folder:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>ls<span class="w"> </span>-q<span class="w"> </span>--select<span class="w"> </span>project1.folder
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>project1.folder.inner_model
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -1447,7 +1540,10 @@ Compilation Error in model some_model (models/some_model.sql)
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list">List</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parse">Parse</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-selection">Resources selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-resources">Specifying resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#packages">Packages</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

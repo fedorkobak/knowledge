@@ -57,6 +57,8 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sql/dml';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -352,6 +354,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/remote.html">Remote</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -362,6 +365,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbmss.html">DBMSs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="select/join/types.html">Types</a></li>
@@ -596,7 +600,10 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../other/dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/dbt/cli.html">CLI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../other/dbt/models.html">Models</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../other/dbt/models.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../other/dbt/models/incremental.html">Incremental</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../other/dbt/jinja.html">Jinja</a></li>
 </ul>
 </details></li>
@@ -764,6 +771,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crud">CRUD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delete">Delete</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-from-csv">Loading from csv</a></li>
 </ul>
             </nav>
@@ -779,23 +787,6 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="dml">
 <h1>DML<a class="headerlink" href="#dml" title="Link to this heading">#</a></h1>
 <p>The Data Manipulation Language (DML) is a subset of SQL commands used to work with data. This page considers the commands belonging to DML and their typical features, independently of spefic dialect.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="c1">--rm\</span>
-<span class="w">    </span><span class="c1">--name load_modify_examples_pg\</span>
-<span class="w">    </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">POSTGRES_PASSWORD</span><span class="o">=</span><span class="n">postgres</span><span class="err">\</span>
-<span class="w">    </span><span class="n">postgres</span><span class="p">:</span><span class="mi">15</span><span class="p">.</span><span class="mi">4</span>
-
-<span class="n">sleep</span><span class="w"> </span><span class="mi">5</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>535ec2a21e1ab2fd79d791b7c8c6ce1b91b69519fff0a9216c34017dfbb32650
-</pre></div>
-</div>
-</div>
-</div>
 <section id="crud">
 <h2>CRUD<a class="headerlink" href="#crud" title="Link to this heading">#</a></h2>
 <p>As a database, any system supports <strong>C</strong>reate, <strong>R</strong>ead, <strong>U</strong>pdate, and <strong>D</strong>elete operations. In this section, we review how to perform such operations on table rows:</p>
@@ -809,27 +800,21 @@ document.write(`
 <p>The following cell creates a table that we’ll use as an example for crud operations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
-<span class="c1">-- creating table</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
 <span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">crud_table</span><span class="p">;</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">crud_table</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">col1</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 <span class="p">);</span>
-<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DROP TABLE
-CREATE TABLE
-</pre></div>
-</div>
 </div>
 </div>
 <p>The following cell shows how to use the <code class="docutils literal notranslate"><span class="pre">INSERT</span></code> operation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">crud_table</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">)</span>
 <span class="k">VALUES</span>
 <span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;one&#39;</span><span class="p">),</span>
@@ -837,64 +822,158 @@ CREATE TABLE
 <span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;three&#39;</span><span class="p">);</span>
 
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">crud_table</span><span class="p">;</span>
-<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INSERT 0 3
- col1 | col2  
-------+-------
-    1 | one
-    2 | two
-    3 | three
-(3 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th>col2  </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td>one   </td></tr>
+<tr><td style="text-align: right;">     2</td><td>two   </td></tr>
+<tr><td style="text-align: right;">     3</td><td>three </td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>To update values in the table, use the <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> statement.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
 <span class="k">UPDATE</span><span class="w"> </span><span class="n">crud_table</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">col2</span><span class="o">=</span><span class="s1">&#39;modified&#39;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">col1</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">crud_table</span><span class="p">;</span>
-<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>UPDATE 1
- col1 |   col2   
-------+----------
-    1 | one
-    3 | three
-    2 | modified
-(3 rows)
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th>col2    </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td>one     </td></tr>
+<tr><td style="text-align: right;">     3</td><td>three   </td></tr>
+<tr><td style="text-align: right;">     2</td><td>modified</td></tr>
+</tbody>
+</table></div></div>
 </div>
 <p>Finally drop records by using <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> keyword.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">load_modify_examples_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
 <span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">crud_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">col1</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">crud_table</span><span class="p">;</span>
-<span class="n">EOF</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DELETE 1
- col1 |   col2   
-------+----------
-    1 | one
-    2 | modified
-(2 rows)
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th>col2    </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td>one     </td></tr>
+<tr><td style="text-align: right;">     2</td><td>modified</td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
+<section id="delete">
+<h2>Delete<a class="headerlink" href="#delete" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> command removes rows from the table. The general syntax is:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="err">{</span><span class="k">table</span><span class="err">}</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="err">{</span><span class="n">conditions</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="k">rows</span><span class="err">}</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>To delete <strong>all rows</strong> just ommit <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> condition.</p>
+<p>To delete rows using the condition based on <strong>other tables</strong> there is typcally a specific syntax. Most of the DBMSs have different implementation of this syntax.</p>
+<hr class="docutils" />
+<p>Consider the funtamental features of the <code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">FROM</span></code> syntax. The following cell defines the example table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">drop_example</span><span class="p">;</span><span class="w"> </span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">drop_example</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">col1</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">drop_example</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">)</span>
+<span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;one&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;two&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;three&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;four&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;five&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>The most common usage is to define rows to be deleted whith <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> condition:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">drop_example</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">col2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;four&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">drop_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th>col2  </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td>one   </td></tr>
+<tr><td style="text-align: right;">     2</td><td>two   </td></tr>
+<tr><td style="text-align: right;">     3</td><td>three </td></tr>
+<tr><td style="text-align: right;">     5</td><td>five  </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The syntax for table-based deletes varies between SQL dialects. Here, postgreSQL is used as an exampmle:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">drop_example</span>
+<span class="k">USING</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;three&#39;</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="s1">&#39;two&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">bases_on</span><span class="p">(</span><span class="n">col2</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">drop_example</span><span class="p">.</span><span class="n">col2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bases_on</span><span class="p">.</span><span class="n">col2</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">drop_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th>col2  </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td>one   </td></tr>
+<tr><td style="text-align: right;">     5</td><td>five  </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>Finally, if no conditions are specified, all rows will be removed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">drop_example</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">drop_example</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr></tr>
+</thead>
+<tbody>
+</tbody>
+</table></div></div>
 </div>
 </section>
 <section id="loading-from-csv">
@@ -1032,6 +1111,7 @@ COPY 4
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crud">CRUD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delete">Delete</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-from-csv">Loading from csv</a></li>
 </ul>
   </nav></div>

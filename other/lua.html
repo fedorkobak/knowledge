@@ -352,6 +352,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/remote.html">Remote</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -362,6 +363,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../sql/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/dbmss.html">DBMSs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../sql/select/join/types.html">Types</a></li>
@@ -596,7 +598,10 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="dbt/cli.html">CLI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dbt/models.html">Models</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="dbt/models.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="dbt/models/incremental.html">Incremental</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="dbt/jinja.html">Jinja</a></li>
 </ul>
 </details></li>
@@ -764,7 +769,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating">Iterating</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-control">Flow control</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#patterns">Patterns</a></li>
@@ -898,6 +906,65 @@ document.write(`
 </div>
 </div>
 </div>
+<section id="iterating">
+<h3>Iterating<a class="headerlink" href="#iterating" title="Link to this heading">#</a></h3>
+<p>To iterate through tables, there are two functions that transform a table into interator:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pairs</span></code>: iterates over all elements of table.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ipairs</span></code>: interates only over list elements of the table.</p></li>
+</ul>
+<hr class="docutils" />
+<p>The following cell creates the <code class="docutils literal notranslate"><span class="pre">some_table</span></code> that will be used to demonstrate the ways to iterate over table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">some_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">key1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;value1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">key2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;value2&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;obj1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;obj2&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;obj3&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The output of <code class="docutils literal notranslate"><span class="pre">pairs</span></code> contains both list-based and key-value elements of the table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">for</span><span class="w"> </span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">pairs</span><span class="p">(</span><span class="nv">some_table</span><span class="p">)</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 obj1 nil
+2 obj2 nil
+3 obj3 nil
+key1 value1 nil
+key2 value2 nil
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">ipairs</span></code> output contains only list-based values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">for</span><span class="w"> </span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">ipairs</span><span class="p">(</span><span class="nv">some_table</span><span class="p">)</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 obj1
+2 obj2
+3 obj3
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="flow-control">
 <h2>Flow control<a class="headerlink" href="#flow-control" title="Link to this heading">#</a></h2>
@@ -1289,7 +1356,10 @@ nil no file &#39;./lua_files/example&#39;
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating">Iterating</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-control">Flow control</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#patterns">Patterns</a></li>

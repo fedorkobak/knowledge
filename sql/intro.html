@@ -63,7 +63,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Select" href="select.html" />
+    <link rel="next" title="DBMSs" href="dbmss.html" />
     <link rel="prev" title="Variables" href="../git/configuration/variables.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -354,6 +354,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/remote.html">Remote</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -364,6 +365,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbmss.html">DBMSs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="select/join/types.html">Types</a></li>
@@ -598,7 +600,10 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../other/dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/dbt/cli.html">CLI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../other/dbt/models.html">Models</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../other/dbt/models.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../other/dbt/models/incremental.html">Incremental</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../other/dbt/jinja.html">Jinja</a></li>
 </ul>
 </details></li>
@@ -769,23 +774,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ddl">DDL</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tcl">TCL</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-value-constructor">Table <strong>value</strong> constructor</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres">Postgres</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#server">Server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">Commands</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialisation-scripts">Initialisation scripts</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clickhouse">Clickhouse</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Commands</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sqlite">Sqlite</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-command">Run command</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hive">Hive</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbmss">DBMSs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sqlfluff">SQLFluff</a></li>
 </ul>
             </nav>
@@ -928,300 +917,67 @@ document.write(`
 </table></div></div>
 </div>
 </section>
-<section id="postgres">
-<h2>Postgres<a class="headerlink" href="#postgres" title="Link to this heading">#</a></h2>
-<p>Postgres is popular relational database. This is relatively universal database system which could be used in numerous cases. This page considers the aspects of working with postgres.</p>
-<p>Check more in <a class="reference internal" href="#postgres.ipynb"><span class="xref myst">dedicated page</span></a>.</p>
-<section id="server">
-<h3>Server<a class="headerlink" href="#server" title="Link to this heading">#</a></h3>
-<p>A key feature of running a PostgreSQL container is that you must pass the <code class="docutils literal notranslate"><span class="pre">POSTGRES_PASSWORD</span></code> environment variable. Find out more on the <a class="reference external" href="https://hub.docker.com/_/postgres">PostgreSQL page on Docker Hub</a>.</p>
-<hr class="docutils" />
-<p>After running the following cell, you’ll have a Docker container named <code class="docutils literal notranslate"><span class="pre">intro_example_pg</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="c1">--rm -d\</span>
-<span class="w">    </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">POSTGRES_PASSWORD</span><span class="o">=</span><span class="n">postgres</span><span class="err">\</span>
-<span class="w">    </span><span class="c1">--name intro_example_pg\</span>
-<span class="w">    </span><span class="n">postgres</span><span class="p">:</span><span class="mi">15</span><span class="p">.</span><span class="mi">4</span><span class="w"> </span><span class="o">&amp;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="k">null</span>
-</pre></div>
+<section id="dbmss">
+<h2>DBMSs<a class="headerlink" href="#dbmss" title="Link to this heading">#</a></h2>
+<p><strong>D</strong>ata<strong>b</strong>ase <strong>M</strong>anagement <strong>S</strong>systems (DBMSs) are software that provides an interface for manipulating data.</p>
+<p>There are many different types of DBMSs. Some solve different tasks, while others provide slightly different interfaces.</p>
+<p>The following cell shows a quick overview of major databases:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Popular DBMSs</p></th>
+<th class="head"><p>Typical Use Cases</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Relational (SQL / OLTP)</strong></p></td>
+<td><p>PostgreSQL, MySQL, MariaDB, SQLite, Microsoft SQL Server, Oracle Database</p></td>
+<td><p>Web applications, enterprise systems, transactional workloads</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Analytical (OLAP / Data Warehouse)</strong></p></td>
+<td><p>ClickHouse, Snowflake, BigQuery, Amazon Redshift, DuckDB</p></td>
+<td><p>Analytics, BI, data warehousing</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Document Stores</strong></p></td>
+<td><p>MongoDB, Couchbase</p></td>
+<td><p>Flexible-schema applications</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Key–Value Stores</strong></p></td>
+<td><p>Redis, Amazon DynamoDB</p></td>
+<td><p>Caching, sessions, high-speed lookups</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Wide-Column Stores</strong></p></td>
+<td><p>Apache Cassandra, Apache HBase</p></td>
+<td><p>Large-scale distributed storage</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Graph Databases</strong></p></td>
+<td><p>Neo4j</p></td>
+<td><p>Relationship-heavy data, recommendations, fraud detection</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Time-Series Databases</strong></p></td>
+<td><p>InfluxDB, TimescaleDB</p></td>
+<td><p>Metrics, monitoring, IoT, financial data</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Search Engines / Search Databases</strong></p></td>
+<td><p>Elasticsearch, OpenSearch</p></td>
+<td><p>Full-text search, log analytics, observability</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Vector Databases</strong></p></td>
+<td><p>Milvus, Qdrant, Pinecone</p></td>
+<td><p>Semantic search, Retrieval-Augmented Generation (RAG), AI applications</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Multi-Model Databases</strong></p></td>
+<td><p>ArangoDB, Azure Cosmos DB</p></td>
+<td><p>Applications requiring multiple data models</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Distributed SQL (NewSQL)</strong></p></td>
+<td><p>CockroachDB, TiDB, YugabyteDB</p></td>
+<td><p>Globally distributed SQL databases, cloud-native applications</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-</div>
-<p><strong>Note</strong>: Don’t forget to stop the containers afterward.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">intro_example_pg</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>intro_example_pg
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="commands">
-<h3>Commands<a class="headerlink" href="#commands" title="Link to this heading">#</a></h3>
-<p>In the case of PostgreSQL, to communicate with the container, you have to use the <code class="docutils literal notranslate"><span class="pre">psql</span></code> tool. It requires specifying the user with the <code class="docutils literal notranslate"><span class="pre">-U</span></code> option. The <code class="docutils literal notranslate"><span class="pre">exec</span></code> command must be called in interactive mode (using the <code class="docutils literal notranslate"><span class="pre">-i</span></code> option). To run scripts with multiple commands, you can use heredoc syntax.</p>
-<hr class="docutils" />
-<p>The following cell demonstrates how to execute SELECT statements in the newly created containers.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="n">intro_example_pg</span><span class="w"> </span><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">postgres</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">v10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="n">v20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="n">v30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="n">v40</span><span class="p">;</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">v10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="n">v20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="n">v30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="n">v40</span><span class="p">;</span>
-<span class="n">EOF</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> v10 | v20 | v30 | v40 
------+-----+-----+-----
-  10 |  20 |  30 |  40
-(1 row)
-
- v10 | v20 | v30 | v40 
------+-----+-----+-----
-  10 |  20 |  30 |  40
-(1 row)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="initialisation-scripts">
-<h3>Initialisation scripts<a class="headerlink" href="#initialisation-scripts" title="Link to this heading">#</a></h3>
-<p>If you need to organise the initialisation at container startup, you can mount a folder containing <code class="docutils literal notranslate"><span class="pre">*.sql</span></code> and <code class="docutils literal notranslate"><span class="pre">*.sh</span></code> initialisation scripts on <code class="docutils literal notranslate"><span class="pre">/docker-entrypoint-initdb.d</span></code>. This will execute the files in <code class="docutils literal notranslate"><span class="pre">/docker-entrypoint-initdb.d</span></code>.</p>
-<hr class="docutils" />
-<p>In the following example, I start the docker container with the folder mounted as <code class="docutils literal notranslate"><span class="pre">/docker-entrypoint-initdb.d</span></code>. This folder only contains a <a class="reference download internal" download="" href="../_downloads/c6ea9b011d77d6aab27ad725d0edaee9/create_table.sql"><span class="xref download myst">create_table.sql</span></a> which creates an empty <code class="docutils literal notranslate"><span class="pre">main_table</span></code>. Then I check the existence of the table that should be created by
-<code class="docutils literal notranslate"><span class="pre">create_table.sql</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="c1">--rm -d\</span>
-<span class="w">    </span><span class="o">-</span><span class="n">v</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="n">build_container</span><span class="o">/</span><span class="n">initialisation_scripts</span><span class="p">:</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">entrypoint</span><span class="o">-</span><span class="n">initdb</span><span class="p">.</span><span class="n">d</span><span class="err">\</span>
-<span class="w">    </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">POSTGRES_PASSWORD</span><span class="o">=</span><span class="n">docker_app</span><span class="w"> </span><span class="err">\</span>
-<span class="w">    </span><span class="c1">--name init_scripts_example \</span>
-<span class="w">    </span><span class="n">postgres</span><span class="p">:</span><span class="mi">15</span><span class="p">.</span><span class="mi">4</span><span class="w"> </span><span class="o">&amp;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="k">null</span>
-
-<span class="n">sleep</span><span class="w"> </span><span class="mi">5</span>
-<span class="n">echo</span><span class="w"> </span><span class="ss">&quot;=====CHECK TABLE=====&quot;</span>
-<span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">init_scripts_example</span><span class="w"> </span><span class="n">bash</span><span class="w"> </span><span class="o">-</span><span class="k">c</span><span class="w"> </span><span class="ss">&quot;psql -U postgres -d postgres -c \&quot;</span><span class="err">\</span><span class="n">dt</span><span class="err">\</span><span class="ss">&quot;&quot;</span>
-
-<span class="n">docker</span><span class="w"> </span><span class="n">stop</span><span class="w">  </span><span class="n">init_scripts_example</span><span class="w"> </span><span class="o">&amp;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="k">null</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=====CHECK TABLE=====
-           List of relations
- Schema |    Name    | Type  |  Owner   
---------+------------+-------+----------
- public | main_table | table | postgres
-(1 row)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="clickhouse">
-<h2>Clickhouse<a class="headerlink" href="#clickhouse" title="Link to this heading">#</a></h2>
-<p>Clickhouse is an open-source OLAP DBMS. This DBMS specialises in processing large ammounts of data and is primarily used by analytics and ML teams to extract data from huge datasets.</p>
-<p>Check more in <a class="reference internal" href="clickhouse.html"><span class="std std-doc">Clickhouse</span></a> page.</p>
-<section id="id1">
-<h3>Server<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
-<p>Creating a ClickHouse server is really straightforward.</p>
-<hr class="docutils" />
-<p>The following cell creates a new Docker container named <code class="docutils literal notranslate"><span class="pre">intro_example_click</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="c1">--rm\</span>
-<span class="w">    </span><span class="c1">--name intro_example_click\</span>
-<span class="w">    </span><span class="n">clickhouse</span><span class="o">/</span><span class="n">clickhouse</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="mi">24</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60c105781eeb22399d5446ef8e7114ee86d0da60008f6b2dc37b676287737874
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong>: Don’t forget to stop the container afterward.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">intro_example_click</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>intro_example_click
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="id2">
-<h3>Commands<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
-<p>In the case of ClickHouse, access to the database is achieved through the <code class="docutils literal notranslate"><span class="pre">clickhouse-client</span></code> tool. To pass a command to it, you need to use the <code class="docutils literal notranslate"><span class="pre">-q</span></code> option, followed by a string literal that defines the script to be executed.</p>
-<hr class="docutils" />
-<p>The following cell shows how to execute commands in ClickHouse through Docker.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">intro_example_click</span><span class="w"> </span><span class="n">clickhouse</span><span class="o">-</span><span class="n">client</span><span class="w"> </span><span class="o">-</span><span class="n">q</span><span class="w"> </span><span class="ss">&quot;</span>
-<span class="ss">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
-<span class="ss">SELECT 10 v10, 20 v20, 30 v30, 40 v40 FORMAT Pretty;</span>
-<span class="ss">&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┏━━━━━┳━━━━━┳━━━━━┳━━━━━┓
-   ┃ v10 ┃ v20 ┃ v30 ┃ v40 ┃
-   ┡━━━━━╇━━━━━╇━━━━━╇━━━━━┩
-1. │  10 │  20 │  30 │  40 │
-   └─────┴─────┴─────┴─────┘
-   ┏━━━━━┳━━━━━┳━━━━━┳━━━━━┓
-   ┃ v10 ┃ v20 ┃ v30 ┃ v40 ┃
-   ┡━━━━━╇━━━━━╇━━━━━╇━━━━━┩
-1. │  10 │  20 │  30 │  40 │
-   └─────┴─────┴─────┴─────┘
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="sqlite">
-<h2>Sqlite<a class="headerlink" href="#sqlite" title="Link to this heading">#</a></h2>
-<section id="id3">
-<h3>Server<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
-<p>To run <code class="docutils literal notranslate"><span class="pre">sqlite</span></code> container we are using <code class="docutils literal notranslate"><span class="pre">keinos/sqlite</span></code> image.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="c1">--rm -itd --name intro_example_sqlite keinos/sqlite3</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0b43efc7499e85dad2b4814d94a78b815651a14129d042929fead95c3d3af7ce
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note</strong>: Don’t forget to stop the container afterward.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">intro_example_sqlite</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>intro_example_sqlite
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="run-command">
-<h3>Run command<a class="headerlink" href="#run-command" title="Link to this heading">#</a></h3>
-<p>To run a command from the terminal in SQLite, use the <code class="docutils literal notranslate"><span class="pre">-cmd</span></code> parameter and pass the query to it.</p>
-<hr class="docutils" />
-<p>The following cell shows the execution of the <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">'Hello</span> <span class="pre">world'</span></code> query.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">intro_example_sqlite</span><span class="w"> </span><span class="n">sqlite3</span><span class="w"> </span><span class="o">-</span><span class="n">cmd</span><span class="w"> </span><span class="ss">&quot;SELECT &#39;Hello world&#39;;&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hello world
-</pre></div>
-</div>
-</div>
-</div>
-<p>It’s convenient to specify the <code class="docutils literal notranslate"><span class="pre">-box</span></code> option with the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> command — the results of the queries will be printed in a more readable format.</p>
-<hr class="docutils" />
-<p>The following cell shows creating and querying a table in SQLite:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">intro_example_sqlite</span><span class="w"> </span><span class="n">sqlite3</span><span class="w"> </span><span class="o">-</span><span class="n">box</span><span class="w"> </span><span class="o">-</span><span class="n">cmd</span><span class="w"> </span><span class="ss">&quot;</span>
-<span class="ss">CREATE TABLE IF NOT EXISTS tab (</span>
-<span class="ss">    var1 TEXT,</span>
-<span class="ss">    var2 TEXT</span>
-<span class="ss">);</span>
-
-<span class="ss">INSERT INTO tab (var1, var2) VALUES</span>
-<span class="ss">(NULL, &#39;world&#39;),</span>
-<span class="ss">(&#39;hello&#39;, NULL),</span>
-<span class="ss">(NULL, &#39;test line&#39;);</span>
-
-<span class="ss">SELECT * FROM tab;</span>
-<span class="ss">&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌───────┬───────────┐
-│ var1  │   var2    │
-├───────┼───────────┤
-│       │ world     │
-│ hello │           │
-│       │ test line │
-└───────┴───────────┘
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="hive">
-<h2>Hive<a class="headerlink" href="#hive" title="Link to this heading">#</a></h2>
-<p>Hive is a sql like system based on hadoop.</p>
-<hr class="docutils" />
-<p>The following cell demonstrates how to run a toy hive in docker.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="c1">--name hive_experiments --env SERVICE_NAME=hiveserver2 --rm apache/hive:4.1.0</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>03f9aedbcde6e1b6117b5f5bde60c41dbb1dd00b8a47e596393c1a64d38e2d33
-</pre></div>
-</div>
-</div>
-</div>
-<p>The CLI interface for hive is <code class="docutils literal notranslate"><span class="pre">beeline</span></code>. It is preinstalled in the docker container that was started earlier. The following cell uses <code class="docutils literal notranslate"><span class="pre">beeline</span></code> for running a sql command:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-u</span></code>: Specifies the url of hive backend.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-e</span></code>: Specifies the command to be executed. Without this option, it will simply enter the beeline CLI.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="n">hive_experiments</span><span class="w"> </span><span class="n">beeline</span><span class="w"> </span><span class="o">-</span><span class="n">u</span><span class="w"> </span><span class="ss">&quot;jdbc:hive2://localhost:10000&quot;</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="ss">&quot;SHOW DATABASES;&quot;</span><span class="w"> </span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="k">null</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2025-09-01T11:37:54.063368669Z main WARN The use of package scanning to locate Log4j plugins is deprecated.
-Please remove the `packages` attribute from your configuration file.
-See https://logging.apache.org/log4j/2.x/faq.html#package-scanning for details.
-2025-09-01T11:37:54.162820431Z main INFO Starting configuration org.apache.logging.log4j.core.config.properties.PropertiesConfiguration@436c81a3...
-2025-09-01T11:37:54.163057205Z main INFO Start watching for changes to jar:file:/opt/hive/lib/hive-beeline-4.1.0.jar!/beeline-log4j2.properties every 0 seconds
-2025-09-01T11:37:54.163222497Z main INFO Configuration org.apache.logging.log4j.core.config.properties.PropertiesConfiguration@436c81a3 started.
-2025-09-01T11:37:54.165793919Z main INFO Stopping configuration org.apache.logging.log4j.core.config.DefaultConfiguration@2df9b86...
-2025-09-01T11:37:54.166167699Z main INFO Configuration org.apache.logging.log4j.core.config.DefaultConfiguration@2df9b86 stopped.
-+----------------+
-| database_name  |
-+----------------+
-| default        |
-+----------------+
-</pre></div>
-</div>
-</div>
-</div>
+<p>Check more in the corresponding <a class="reference internal" href="dbmss.html"><span class="std std-doc">DBMSs</span></a> page.</p>
 </section>
 <section id="sqlfluff">
 <h2>SQLFluff<a class="headerlink" href="#sqlfluff" title="Link to this heading">#</a></h2>
@@ -1287,11 +1043,11 @@ See https://logging.apache.org/log4j/2.x/faq.html#package-scanning for details.
       </div>
     </a>
     <a class="right-next"
-       href="select.html"
+       href="dbmss.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Select</p>
+        <p class="prev-next-title">DBMSs</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1315,23 +1071,7 @@ See https://logging.apache.org/log4j/2.x/faq.html#package-scanning for details.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ddl">DDL</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tcl">TCL</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-value-constructor">Table <strong>value</strong> constructor</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postgres">Postgres</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#server">Server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">Commands</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialisation-scripts">Initialisation scripts</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clickhouse">Clickhouse</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Commands</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sqlite">Sqlite</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Server</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-command">Run command</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hive">Hive</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbmss">DBMSs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sqlfluff">SQLFluff</a></li>
 </ul>
   </nav></div>

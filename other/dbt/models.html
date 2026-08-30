@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Jinja" href="jinja.html" />
+    <link rel="next" title="Incremental" href="models/incremental.html" />
     <link rel="prev" title="CLI" href="cli.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -352,6 +352,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../git/remote.html">Remote</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -362,6 +363,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../sql/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sql/dbmss.html">DBMSs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../sql/select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../sql/select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../sql/select/join/types.html">Types</a></li>
@@ -596,7 +598,10 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../dbt.html">DBT</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="cli.html">CLI</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Models</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="models/incremental.html">Incremental</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="jinja.html">Jinja</a></li>
 </ul>
 </details></li>
@@ -769,6 +774,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materialization">Materialization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incremental">Incremental</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aliases">Aliases</a></li>
 </ul>
             </nav>
         </div>
@@ -939,11 +945,16 @@ models:
 <p>The incremental model was created as a table in the database. However, different runs of the same model only update the records that require an update.</p>
 <p>The incremental materialization can be implemeted using different database mechanisms, so there are different incremental strategies:</p>
 <ul class="simple">
-<li><p>Append.</p></li>
-<li><p>Delete + Insert.</p></li>
+<li><p>Append: add the result of the query to the materialised model.</p></li>
+<li><p>Delete+Insert: replaces the records that have the same <code class="docutils literal notranslate"><span class="pre">unique_key</span></code> values.</p></li>
+<li><p>Microbatch: separates the query into batches based on the given datetime column and runs each incrementally.</p></li>
 </ul>
 <p><strong>Note</strong> you can implement a custom strategy as well.</p>
-<p>Check <a class="reference external" href="https://docs.getdbt.com/docs/build/incremental-models-overview?version=1.12">About incremental models</a> page of the dbt documentation.</p>
+<p>Check:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.getdbt.com/docs/build/incremental-models-overview?version=1.12">About incremental models</a> page of the dbt documentation.</p></li>
+<li><p>The dedicated <a class="reference internal" href="models/incremental.html"><span class="std std-doc">Incremental</span></a> page.</p></li>
+</ul>
 <hr class="docutils" />
 <p>Consider a simple example of the materialization. The incremental model loads data from the seed but only takes data only with new categories.</p>
 <p>The following cells initializes the project with the corresponding seeds:</p>
@@ -1052,6 +1063,54 @@ dbt<span class="w"> </span>show<span class="w"> </span>-q<span class="w"> </span
 </div>
 <p>The model materialization only included records with a category that wasn’t represented in the previous insert, which is according to the logic of the incremental model.</p>
 </section>
+<section id="aliases">
+<h2>Aliases<a class="headerlink" href="#aliases" title="Link to this heading">#</a></h2>
+<p>Aliases for models determines with which name model would be materialised in database.</p>
+<p>Check the <a class="reference external" href="https://docs.getdbt.com/docs/build/custom-aliases?version=2.0">Custom aliases</a> section of the dbt documentation.</p>
+<hr class="docutils" />
+<p>The following cells create dbt project with a model that have <code class="docutils literal notranslate"><span class="pre">alias</span></code> option specified.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init</span>
+dbt<span class="w"> </span>init<span class="w"> </span>aliases<span class="w"> </span>--profile<span class="w"> </span>knowledge<span class="w"> </span>-q
+<span class="nb">cd</span><span class="w"> </span>aliases<span class="w"> </span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># file aliases/models/model1.sql</span>
+<span class="o">{{</span>
+<span class="w">    </span>config<span class="o">(</span>
+<span class="w">        </span><span class="nv">alias</span><span class="o">=</span><span class="s1">&#39;the_materilised_name&#39;</span>,
+<span class="w">        </span><span class="nv">schema</span><span class="o">=</span><span class="s2">&quot;alias_example&quot;</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="o">}}</span>
+<span class="k">select</span><span class="w"> </span><span class="s1">&#39;somedata&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The run of the model results that in database appears the view with the corresponding name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dbt<span class="w"> </span>run<span class="w"> </span>--select<span class="w"> </span>model1<span class="w"> </span>-q
+dbt<span class="w"> </span>show<span class="w"> </span>-q<span class="w"> </span>--inline<span class="w"> </span><span class="s2">&quot;select * from pg_views where schemaname=&#39;public_alias_example&#39;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>| schemaname           | viewname             | viewowner | definition           |
+| -------------------- | -------------------- | --------- | -------------------- |
+| public_alias_example | the_materilised_name | postgres  |  SELECT &#39;somedata... |
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1094,11 +1153,11 @@ dbt<span class="w"> </span>show<span class="w"> </span>-q<span class="w"> </span
       </div>
     </a>
     <a class="right-next"
-       href="jinja.html"
+       href="models/incremental.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Jinja</p>
+        <p class="prev-next-title">Incremental</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1124,6 +1183,7 @@ dbt<span class="w"> </span>show<span class="w"> </span>-q<span class="w"> </span
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materialization">Materialization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#incremental">Incremental</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aliases">Aliases</a></li>
 </ul>
   </nav></div>
 

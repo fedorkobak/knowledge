@@ -57,6 +57,8 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'sql/ddl';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -352,6 +354,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/log.html">Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/previous_commit.html">Previous commit <code class="docutils literal notranslate"><span class="pre">~</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git/remote.html">Remote</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/ignore.html">Ignore</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../git/stash.html">Stash</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../git/configuration.html">Configuration</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -362,6 +365,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">SQL</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbmss.html">DBMSs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="select.html">Select</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="select/join.html">JOIN</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="select/join/types.html">Types</a></li>
@@ -596,7 +600,10 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../other/dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/dbt/cli.html">CLI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../other/dbt/models.html">Models</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../other/dbt/models.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../other/dbt/models/incremental.html">Incremental</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../other/dbt/jinja.html">Jinja</a></li>
 </ul>
 </details></li>
@@ -764,6 +771,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keys">Keys</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#default-values">Default values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alter-table">Alter table</a></li>
 </ul>
             </nav>
         </div>
@@ -850,6 +859,145 @@ DETAIL:  Key (user_id)=(1) is not present in table &quot;users&quot;.
 </div>
 </div>
 </section>
+<section id="default-values">
+<h2>Default values<a class="headerlink" href="#default-values" title="Link to this heading">#</a></h2>
+<p>When defining a table in SQL, the default value can be specified. Typically, the keyword <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> indicates that the default value will follow. If values for columns with a default are not specified when inserting, the deafults will be used.</p>
+<hr class="docutils" />
+<p>The following cell creates table with default specified to both columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">table_with_default</span><span class="p">;</span><span class="w"> </span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">table_with_default</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">col1</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">    </span><span class="n">col2</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="s1">&#39;default&#39;</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>The following cell makes two inserts: the first specifies only <code class="docutils literal notranslate"><span class="pre">col1</span></code>, the second only <code class="docutils literal notranslate"><span class="pre">col2</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table_with_default</span><span class="w"> </span><span class="p">(</span><span class="n">col1</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table_with_default</span><span class="w"> </span><span class="p">(</span><span class="n">col2</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">table_with_default</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th style="text-align: right;">  col1</th><th>col2   </th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: right;">     1</td><td>default</td></tr>
+<tr><td style="text-align: right;">    10</td><td>hello  </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>Consequently, the rows for those columns that are not specified are filled with default values.</p>
+</section>
+<section id="alter-table">
+<h2>Alter table<a class="headerlink" href="#alter-table" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> is a command to change the definition of the existing table. The popular sematics for most SQL dialects is:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">table_name</span>
+<span class="w">    </span><span class="p">[[</span><span class="k">ADD</span><span class="o">|</span><span class="k">DROP</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="k">COLUMN</span><span class="o">|</span><span class="k">CONSTRAINT</span><span class="p">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">COLUMN</span><span class="p">]</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>The following cell creates the table with some columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">some_table</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">AS</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">VALUES</span><span class="w"> </span>
+<span class="w">        </span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;hello&#39;</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;new value&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">col2</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Some properties of the columns of the table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="k">column_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">column_default</span><span class="p">,</span>
+<span class="w">    </span><span class="n">is_nullable</span><span class="p">,</span>
+<span class="w">    </span><span class="n">data_type</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;some_table&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>column_name  </th><th>column_default  </th><th>is_nullable  </th><th>data_type  </th></tr>
+</thead>
+<tbody>
+<tr><td>col1         </td><td>                </td><td>YES          </td><td>integer    </td></tr>
+<tr><td>col2         </td><td>                </td><td>YES          </td><td>text       </td></tr>
+</tbody>
+</table></div></div>
+</div>
+<p>The following cell uses <code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> command to:</p>
+<ul class="simple">
+<li><p>Add new column with name <code class="docutils literal notranslate"><span class="pre">new_col</span></code>.</p></li>
+<li><p>Make the column <code class="docutils literal notranslate"><span class="pre">col1</span></code> not nullable.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">new_col</span><span class="w"> </span><span class="nb">INT</span><span class="p">;</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">ALTER</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">col1</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>The corresponding changes appear in the <code class="docutils literal notranslate"><span class="pre">information_schema.columns</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">--postgreSQL</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="k">column_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">column_default</span><span class="p">,</span>
+<span class="w">    </span><span class="n">is_nullable</span><span class="p">,</span>
+<span class="w">    </span><span class="n">data_type</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;some_table&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table>
+<thead>
+<tr><th>column_name  </th><th>column_default  </th><th>is_nullable  </th><th>data_type  </th></tr>
+</thead>
+<tbody>
+<tr><td>col1         </td><td>                </td><td>NO           </td><td>integer    </td></tr>
+<tr><td>new_col      </td><td>                </td><td>YES          </td><td>integer    </td></tr>
+<tr><td>col2         </td><td>                </td><td>YES          </td><td>text       </td></tr>
+</tbody>
+</table></div></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -917,6 +1065,8 @@ DETAIL:  Key (user_id)=(1) is not present in table &quot;users&quot;.
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keys">Keys</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#default-values">Default values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alter-table">Alter table</a></li>
 </ul>
   </nav></div>
 
