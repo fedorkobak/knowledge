@@ -335,6 +335,7 @@ The important builtin facilities to manupulate with modules:
 
 - The `package` table contains the attributes that determine module-related behaviour.
 - The `require` function loads the module.
+- The `dofile` function imedately executes the given file.
 
 The module is simply a lua file that returns a value. Typically, this is table
 named `M` that contains references to all the objects the module provides.
@@ -456,51 +457,6 @@ end
 2	function: 0x563464bb5950
 3	function: 0x563464bb5990
 4	function: 0x563464bb59d0
-
-```
-<!-- md-runner-output:end -->
-
-### Searchpath
-
-The `packages.searchpath(name, path [, sep [, rep]])` function searches for a
-specified files.
-
-The `name` determines the names of the file.
-
-The `path` determines set of patterns where `name` would be substituted separted
-by the `;`.
-
-The first case in which the value of the `name` is substitued into the value of
-the variable path, resulting in a path to an existing file that can be ingested,
-returns the path to this file.
-
----
-
-The following cell roughly shows how lua searches for the `.lua` files.
-
-```lua
-print(package.searchpath('example', './other/lua_files/?.lua'))
-```
-
-<!-- md-runner-output:start -->
-```text
-./other/lua_files/example.lua
-
-```
-<!-- md-runner-output:end -->
-
-If the name or pattern are incorrect, the `nil` value and a message describing
-the issue are returned.
-
-```lua
-print(package.searchpath('some_other', 'other/lua_files/?.lua'))
-print(package.searchpath('example', 'other/lua_files/?'))
-```
-
-<!-- md-runner-output:start -->
-```text
-nil	no file 'other/lua_files/some_other.lua'
-nil	no file 'other/lua_files/example'
 
 ```
 <!-- md-runner-output:end -->
