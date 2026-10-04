@@ -86,14 +86,13 @@ end
 
 <!-- md-runner-output:start -->
 ```text
-table: 0x5f1ef8268c80
+table: 0x5715b54489f0
 1	the first element
-key2	value2
 key1	value1
+key2	value2
 
 ```
 <!-- md-runner-output:end -->
-
 
 Here are table that contains:
 
@@ -101,8 +100,8 @@ Here are table that contains:
 - Under the `key1` hides value `value1`.
 - Under the `key2` hides value `value2`.
 
-By accessing the first index of the table, you retrieve value that is defined as an element of the table:
-
+By accessing the first index of the table, you retrieve value that is defined as
+an element of the table:
 
 ```lua
 print(tab[1])
@@ -115,13 +114,7 @@ the first element
 ```
 <!-- md-runner-output:end -->
 
-
-
-
-
-
 There are different ways to access the values under the mapping:
-
 
 ```lua
 print(tab['key1'], tab['key2'])
@@ -134,23 +127,16 @@ value1	value2
 ```
 <!-- md-runner-output:end -->
 
-
-
-    value1
-
-
-
-
 ```lua
-table1.key2
+print(tab.key2)
 ```
 
+<!-- md-runner-output:start -->
+```text
+value2
 
-
-
-    value2
-
-
+```
+<!-- md-runner-output:end -->
 
 ### Iterating
 
