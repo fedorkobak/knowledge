@@ -50,7 +50,9 @@ Consider the typical operations associated with list elements of the table.
   - `table.insert(tab, value)` inserts the `value` as last elment.
   - `table.insert(tab, ind, value)` inserts value in `ind` position and shifts
     all others.
-- `table.remove`: to remote the element.
+- `table.remove`: to remove the element.
+  - `table.remove(tab)` removes the last list element.
+  - `rable.remove(tab, ind)` removes the element with index `ind`.
 
 These functions save the order of the elements
 
@@ -106,6 +108,78 @@ for k, v in ipairs(tab) do print(k, v) end
 <!-- md-runner-output:start -->
 ```text
 1	first
+
+```
+<!-- md-runner-output:end -->
+
+### Holes
+
+If some of the list elements do not follow the sequence, omit them from the end
+\- such situation is called hole elements (or spared table).
+
+These elements are not considered as list elements in the table until the
+missing elemnts are completed. As the result, function that are suposed to rely
+on sequence behave differently with such elements.
+
+---
+
+The following code creates a table with a 3-rd hole-element.
+
+```lua
+tab = {'first', 'second', [4] = 'fourth'}
+```
+
+The behaviour of the `#` operator and `iparis` function ignoes 4-th element.
+
+```lua
+print('length', #tab)
+print()
+for k, v in ipairs(tab) do print(k, v) end
+```
+
+<!-- md-runner-output:start -->
+```text
+length	2
+
+1	first
+2	second
+
+```
+<!-- md-runner-output:end -->
+
+The `table.insert` inserts the element in the 3-rd position without shifting the
+fourth.
+
+```lua
+table.insert(tab, 'third')
+for k, v in ipairs(tab) do print(k, v) end
+```
+
+<!-- md-runner-output:start -->
+```text
+1	first
+2	second
+3	third
+4	fourth
+
+```
+<!-- md-runner-output:end -->
+
+Note that the last `ipairs` call included the 4-th element, which now is
+considered as the element of the list:
+
+```lua
+table.insert(tab, 'fifth')
+for k, v in ipairs(tab) do print(k, v) end
+```
+
+<!-- md-runner-output:start -->
+```text
+1	first
+2	second
+3	third
+4	fourth
+5	fifth
 
 ```
 <!-- md-runner-output:end -->
