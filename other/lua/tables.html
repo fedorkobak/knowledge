@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -50,7 +50,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="DBT" href="../dbt.html" />
+    <link rel="next" title="Sequences" href="tables/sequences.html" />
     <link rel="prev" title="Functions" href="functions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -593,7 +593,11 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../lua.html">Lua</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="flow_control.html">Flow control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html">Functions</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Tables</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Tables</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="tables/sequences.html">Sequences</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -674,7 +678,7 @@
       
       
       
-      <li><a href="../../_sources/other/lua/tables.ipynb" target="_blank"
+      <li><a href="../../_sources/other/lua/tables.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -684,7 +688,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -768,7 +772,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#length">Length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequences">Sequences</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-tables">Meta tables</a></li>
 </ul>
@@ -782,36 +786,39 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="tables">
+  <!-- md-runner
+{
+  "executors": {
+    "lua": {
+      "module": "md_runner.executors.lua",
+      "params": {
+        "lua": "lua"
+      }
+    }
+  }
+}
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="tables">
 <h1>Tables<a class="headerlink" href="#tables" title="Link to this heading">#</a></h1>
-<p>The table is the only datastructure available in lua. You are supposed to use it to build all kind of abstractions, from sequences to inherited classes.</p>
-<section id="length">
-<h2>Length<a class="headerlink" href="#length" title="Link to this heading">#</a></h2>
-<p>To get the length of the lua table use <code class="docutils literal notranslate"><span class="pre">#</span></code> operator.</p>
-<p><strong>Note</strong> it only counts sequential elements of the table; it ignores mappings.</p>
-<hr class="docutils" />
-<p>The following cell defines a table containing two sequential elements and one mapping pair:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">length_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="s1">&#39;value1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;value2&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">[</span><span class="s1">&#39;map_key1&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;map value1&#39;</span>
-<span class="p">}</span>
-
-<span class="o">#</span><span class="nv">length_table</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
-</pre></div>
-</div>
-</div>
-</div>
+<p>The table is the only datastructure available in lua. You are supposed to use
+it to build all kind of abstractions, from sequences to inherited classes.</p>
+<section id="sequences">
+<h2>Sequences<a class="headerlink" href="#sequences" title="Link to this heading">#</a></h2>
+<p>The set of elements with positive integer indices from 1 to given n without holes
+is called - sequence. In lua sequences have a lot of usefull properties which
+are considered in this section.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">table.insert</span></code>: to add the element.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">table.remove</span></code>: to remove the element.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&lt;table_name&gt;</span></code>: to get the length of list elements in table.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iparis</span></code>: function iterates only over list elements</p></li>
+</ul>
+<p>Check more in the <a class="reference internal" href="tables/sequences.html"><span class="std std-doc">corresponding page</span></a>.</p>
 </section>
 <section id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Link to this heading">#</a></h2>
-<p>There is no such thing as a ‘method’ in lua. However, you can store functions in the tables and pass the table itself to them as an argument.</p>
+<p>There is no such thing as a ‘method’ in lua. However, you can store functions in
+the tables and pass the table itself to them as an argument.</p>
 <p>Lua has a special operator for this: column <code class="docutils literal notranslate"><span class="pre">:</span></code>:</p>
 <p><strong>Define the method</strong> using syntax:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span><span class="w"> </span><span class="nc">table_name</span><span class="p">:</span><span class="nf">method_name</span><span class="p">(</span><span class="nv">param1</span><span class="p">,</span><span class="w"> </span><span class="nv">param2</span><span class="p">,</span><span class="w"> </span><span class="nv">param3</span><span class="p">)</span>
@@ -819,9 +826,13 @@ document.write(`
 <span class="kr">end</span>
 </pre></div>
 </div>
-<p>The key feature of the method is that it automatically  defines the <code class="docutils literal notranslate"><span class="pre">self</span></code> parameter, which you can use in the function body.</p>
-<p>In Lua’s logic, it is formally still a function with an implicitly defined <code class="docutils literal notranslate"><span class="pre">self</span></code> parameter. Therefore, if you call in the usual way using the <code class="docutils literal notranslate"><span class="pre">.</span></code> operator, you must implicitly an argument for <code class="docutils literal notranslate"><span class="pre">self</span></code>. To simplify that <code class="docutils literal notranslate"><span class="pre">:</span></code> can be used to assign to the method of the table:</p>
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">table_name</span><span class="p">:</span><span class="nf">method_name</span><span class="p">(</span><span class="nv">arg1</span><span class="p">,</span><span class="w"> </span><span class="nv">arg2</span><span class="p">,</span><span class="w"> </span><span class="nv">arg3</span><span class="p">)</span>
+<p>The key feature of the method is that it automatically defines the <code class="docutils literal notranslate"><span class="pre">self</span></code>
+parameter, which you can use in the function body.</p>
+<p>In Lua’s logic, it is formally still a function with an implicitly defined <code class="docutils literal notranslate"><span class="pre">self</span></code>
+parameter. Therefore, if you call in the usual way using the <code class="docutils literal notranslate"><span class="pre">.</span></code> operator, you
+must implicitly an argument for <code class="docutils literal notranslate"><span class="pre">self</span></code>. To simplify that <code class="docutils literal notranslate"><span class="pre">:</span></code> can be used to
+assign to the method of the table:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">table_name</span><span class="p">:</span><span class="nf">method_name</span><span class="p">(</span><span class="nv">arg1</span><span class="p">,</span><span class="w"> </span><span class="nv">arg2</span><span class="p">,</span><span class="w"> </span><span class="nv">arg3</span><span class="p">)</span>
 </pre></div>
 </div>
 <hr class="docutils" />
@@ -831,75 +842,66 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">regular_functions</span></code> defined through <code class="docutils literal notranslate"><span class="pre">.</span></code> operator.</p></li>
 </ul>
 <p>Both of them are trying to print the <code class="docutils literal notranslate"><span class="pre">self</span></code> object.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">some_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;the value&#39;</span><span class="w"> </span><span class="p">}</span>
 
 <span class="kr">function</span><span class="w"> </span><span class="nc">some_table</span><span class="p">:</span><span class="nf">column_method</span><span class="p">()</span>
-<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">self</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">self</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">        </span><span class="kr">for</span><span class="w"> </span><span class="nv">i</span><span class="p">,</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">pairs</span><span class="p">(</span><span class="nv">self</span><span class="p">)</span><span class="w"> </span><span class="kr">do</span><span class="w"> </span><span class="nb">print</span><span class="p">(</span><span class="nv">i</span><span class="p">,</span><span class="w"> </span><span class="nv">v</span><span class="p">)</span><span class="w"> </span><span class="kr">end</span>
+<span class="w">    </span><span class="kr">else</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;the self is nil&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="kr">end</span>
 
 <span class="kr">function</span><span class="w"> </span><span class="nc">some_table</span><span class="p">.</span><span class="nf">regular_function</span><span class="p">()</span>
-<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">self</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">self</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">        </span><span class="kr">for</span><span class="w"> </span><span class="nv">i</span><span class="p">,</span><span class="w"> </span><span class="nv">v</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">pairs</span><span class="p">(</span><span class="nv">self</span><span class="p">)</span><span class="w"> </span><span class="kr">do</span><span class="w"> </span><span class="nb">print</span><span class="p">(</span><span class="nv">i</span><span class="p">,</span><span class="w"> </span><span class="nv">v</span><span class="p">)</span><span class="w"> </span><span class="kr">end</span>
+<span class="w">    </span><span class="kr">else</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;the self is nil&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="kr">end</span>
 </pre></div>
 </div>
-</div>
-</div>
 <p>First, assign to the <code class="docutils literal notranslate"><span class="pre">column_method</span></code> through <code class="docutils literal notranslate"><span class="pre">:</span></code>:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">some_table</span><span class="p">:</span><span class="nf">column_method</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{ 
-  column_method = [[function]],
-  regular_function = [[function]],
-  value = the value 
-}
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>column_method	function: 0x629463689d60
+value	the value
+regular_function	function: 0x629463681040
 </pre></div>
 </div>
-</div>
-</div>
-<p>This is the regular behaviour of the method. The <code class="docutils literal notranslate"><span class="pre">self</span></code> simply refers to the <code class="docutils literal notranslate"><span class="pre">some_table</span></code> itself.</p>
+<!-- md-runner-output:end -->
+<p>This is the regular behaviour of the method. The <code class="docutils literal notranslate"><span class="pre">self</span></code> simply refers to the
+<code class="docutils literal notranslate"><span class="pre">some_table</span></code> itself.</p>
 <p>However, the same result could be achieved explicitly:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">some_table</span><span class="p">.</span><span class="nf">column_method</span><span class="p">(</span><span class="nv">some_table</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{ 
-  column_method = [[function]],
-  regular_function = [[function]],
-  value = the value 
-}
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>column_method	function: 0x629463689d60
+value	the value
+regular_function	function: 0x629463681040
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <p>And an attempt to call the <code class="docutils literal notranslate"><span class="pre">regular_function</span></code> through the <code class="docutils literal notranslate"><span class="pre">:</span></code> operator:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">some_table</span><span class="p">:</span><span class="nf">regular_function</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>nil
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>the self is nil
 </pre></div>
 </div>
-</div>
-</div>
-<p>Even though the function was called with the <code class="docutils literal notranslate"><span class="pre">:</span></code> operator, the <code class="docutils literal notranslate"><span class="pre">self</span></code> argument cannot be accessed in the function body as it was not defined.</p>
+<!-- md-runner-output:end -->
+<p>Even though the function was called with the <code class="docutils literal notranslate"><span class="pre">:</span></code> operator, the <code class="docutils literal notranslate"><span class="pre">self</span></code> argument
+cannot be accessed in the function body as it was not defined.</p>
 </section>
 <section id="meta-tables">
 <h2>Meta tables<a class="headerlink" href="#meta-tables" title="Link to this heading">#</a></h2>
 <p>Metatables allow you to define how a table behaves in specific cases.</p>
-<p>You can define a special table where defined the methods with special names which determine the behaviour of the tableale. The basic special methods:</p>
+<p>You can define a special table where defined the methods with special names
+which determine the behaviour of the tableale. The basic special methods:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Metamethod</p></th>
@@ -964,11 +966,11 @@ document.write(`
 </tbody>
 </table>
 </div>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">setmetatable(&lt;arbitray_table&gt;,</span> <span class="pre">&lt;metatable&gt;)</span></code> function to inherit the special methods from the <code class="docutils literal notranslate"><span class="pre">metatable</span></code> to the <code class="docutils literal notranslate"><span class="pre">arbitrary_table</span></code>.</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">setmetatable(&lt;arbitray_table&gt;,</span> <span class="pre">&lt;metatable&gt;)</span></code> function to inherit the
+special methods from the <code class="docutils literal notranslate"><span class="pre">metatable</span></code> to the <code class="docutils literal notranslate"><span class="pre">arbitrary_table</span></code>.</p>
 <hr class="docutils" />
-<p>The following cell defines the <code class="docutils literal notranslate"><span class="pre">mt</span></code> metatable, which redfines the table’s indexing logic.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<p>The following cell defines the <code class="docutils literal notranslate"><span class="pre">mt</span></code> metatable, which redfines the table’s
+indexing logic.</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">mt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
 
 <span class="kr">function</span><span class="w"> </span><span class="nc">mt</span><span class="p">:</span><span class="nf">__index</span><span class="p">(</span><span class="nv">i</span><span class="p">)</span>
@@ -980,26 +982,22 @@ document.write(`
 <span class="kr">end</span>
 </pre></div>
 </div>
-</div>
-</div>
 <p>Setting the <code class="docutils literal notranslate"><span class="pre">mt</span></code> as metatable for the new <code class="docutils literal notranslate"><span class="pre">table1</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">table1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">setmetatable</span><span class="p">({</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nv">mt</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nv">table1</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="nv">table1</span><span class="p">[</span><span class="mi">40</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>10
 no such element
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <p>As the result <code class="docutils literal notranslate"><span class="pre">table1</span></code> indexing logic behaves like specified in the <code class="docutils literal notranslate"><span class="pre">mt</span></code>.</p>
 </section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1011,16 +1009,16 @@ no such element
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "xlua"
+            mode: "python"
         },
         kernelOptions: {
-            name: "xlua",
+            name: "python3",
             path: "./other/lua"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'xlua'</script>
+    <script>kernelName = 'python3'</script>
 
                 </article>
               
@@ -1042,11 +1040,11 @@ no such element
       </div>
     </a>
     <a class="right-next"
-       href="../dbt.html"
+       href="tables/sequences.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">DBT</p>
+        <p class="prev-next-title">Sequences</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1066,7 +1064,7 @@ no such element
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#length">Length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sequences">Sequences</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-tables">Meta tables</a></li>
 </ul>

@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -50,7 +50,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -593,7 +593,11 @@
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Lua</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="lua/flow_control.html">Flow control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lua/functions.html">Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lua/tables.html">Tables</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lua/tables.html">Tables</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="lua/tables/sequences.html">Sequences</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="lua/modules.html">Modules</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -674,7 +678,7 @@
       
       
       
-      <li><a href="../_sources/other/lua.ipynb" target="_blank"
+      <li><a href="../_sources/other/lua.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -684,7 +688,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -779,8 +783,9 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-library">Standard library</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#searchpath">Searchpath</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreter">Interpreter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cli-arguments">CLI arguments</a></li>
 </ul>
 </li>
 </ul>
@@ -794,17 +799,36 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lua">
+  <!-- md-runner
+{
+  "executors": {
+    "lua": {
+      "module": "md_runner.executors.lua",
+      "params": {
+        "lua": "lua"
+      }
+    },
+    "bash": {
+      "module": "md_runner.executors.bash"
+    },
+    "text": {
+      "module": "md_runner.executors.file"
+    }
+  }
+}
+-->
+<section class="tex2jax_ignore mathjax_ignore" id="lua">
 <h1>Lua<a class="headerlink" href="#lua" title="Link to this heading">#</a></h1>
-<p>Lus is an interpreted programming language that is popular to be language for creating plugins for different software.</p>
+<p>Lua is an interpreted programming language that is popular to be language for
+creating plugins for different software.</p>
 <p>This notebook uses <a class="reference external" href="https://github.com/jupyter-xeus/xeus-lua">xeus-lua</a> kernel to show the aspects of lua.</p>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
-<p>The functions in lua are really intuitive. However, there are some important details to be aware of. Check the <a class="reference internal" href="lua/functions.html"><span class="std std-doc">Functions</span></a> page.</p>
+<p>The functions in lua are really intuitive. However, there are some important
+details to be aware of. Check the <a class="reference internal" href="lua/functions.html"><span class="std std-doc">Functions</span></a> page.</p>
 <hr class="docutils" />
-<p>There are two syntaxes for defining a function, both of which are represented in the following example:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<p>There are two syntaxes for defining a function, both of which are represented in
+the following example:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">function</span><span class="w"> </span><span class="nf">hello</span><span class="p">(</span><span class="nv">name</span><span class="p">)</span>
 <span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">name</span><span class="p">)</span>
 <span class="kr">end</span>
@@ -812,15 +836,11 @@ document.write(`
 <span class="nf">hello</span><span class="p">(</span><span class="s2">&quot;Lua&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hello! Lua
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Hello!	Lua
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<!-- md-runner-output:end -->
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">hello2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">name</span><span class="p">)</span>
 <span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">name</span><span class="p">)</span>
 <span class="kr">end</span>
@@ -828,84 +848,72 @@ document.write(`
 <span class="nf">hello2</span><span class="p">(</span><span class="s2">&quot;Lua2&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hello! Lua2
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Hello!	Lua2
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 </section>
 <section id="tables">
 <h2>Tables<a class="headerlink" href="#tables" title="Link to this heading">#</a></h2>
-<p>Lua offers the <code class="docutils literal notranslate"><span class="pre">table</span></code> datatype to store data. This object can represent both sequences and mappings.</p>
-<p>Check more details in the specific <a class="reference internal" href="lua/tables.html"><span class="std std-doc">tables</span></a> page.</p>
+<p>Lua offers the <code class="docutils literal notranslate"><span class="pre">table</span></code> datatype to store data. This object can represent both
+sequences and mappings.</p>
+<p>Check more details in the specific <a class="reference internal" href="#lua/tables.ipynb"><span class="xref myst">tables</span></a> page.</p>
 <hr class="docutils" />
 <p>The following cell defines the <code class="docutils literal notranslate"><span class="pre">table1</span></code> as table:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">table1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">tab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="s1">&#39;the first element&#39;</span><span class="p">,</span>
 <span class="w">    </span><span class="nv">key1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;value1&#39;</span><span class="p">,</span>
 <span class="w">    </span><span class="p">[</span><span class="s1">&#39;key2&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;value2&#39;</span>
 <span class="p">}</span>
-<span class="nv">table1</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">tab</span><span class="p">)</span>
+
+<span class="kr">for</span><span class="w"> </span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">pairs</span><span class="p">(</span><span class="nv">tab</span><span class="p">)</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{ the first element, 
-  key1 = value1,
-  key2 = value2 
-}
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>table: 0x5715b54489f0
+1	the first element
+key1	value1
+key2	value2
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <p>Here are table that contains:</p>
 <ul class="simple">
 <li><p>The “the first element” string as the first element of the sequence.</p></li>
 <li><p>Under the <code class="docutils literal notranslate"><span class="pre">key1</span></code> hides value <code class="docutils literal notranslate"><span class="pre">value1</span></code>.</p></li>
 <li><p>Under the <code class="docutils literal notranslate"><span class="pre">key2</span></code> hides value <code class="docutils literal notranslate"><span class="pre">value2</span></code>.</p></li>
 </ul>
-<p>By accessing the first index of the table, you retrieve value that is defined as an element of the table:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">table1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<p>By accessing the first index of the table, you retrieve value that is defined as
+an element of the table:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nv">tab</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>the first element
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>the first element
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <p>There are different ways to access the values under the mapping:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">table1</span><span class="p">[</span><span class="s2">&quot;key1&quot;</span><span class="p">]</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nv">tab</span><span class="p">[</span><span class="s1">&#39;key1&#39;</span><span class="p">],</span><span class="w"> </span><span class="nv">tab</span><span class="p">[</span><span class="s1">&#39;key2&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>value1
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>value1	value2
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">table1</span><span class="p">.</span><span class="py">key2</span>
+<!-- md-runner-output:end -->
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nv">tab</span><span class="p">.</span><span class="py">key2</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>value2
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>value2
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <section id="iterating">
 <h3>Iterating<a class="headerlink" href="#iterating" title="Link to this heading">#</a></h3>
 <p>To iterate through tables, there are two functions that transform a table into interator:</p>
@@ -914,9 +922,8 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">ipairs</span></code>: interates only over list elements of the table.</p></li>
 </ul>
 <hr class="docutils" />
-<p>The following cell creates the <code class="docutils literal notranslate"><span class="pre">some_table</span></code> that will be used to demonstrate the ways to iterate over table.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<p>The following cell creates the <code class="docutils literal notranslate"><span class="pre">some_table</span></code> that will be used to demonstrate the
+ways to iterate over table.</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">some_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nv">key1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;value1&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nv">key2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;value2&quot;</span><span class="p">,</span>
@@ -926,44 +933,34 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-</div>
 <p>The output of <code class="docutils literal notranslate"><span class="pre">pairs</span></code> contains both list-based and key-value elements of the table:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">for</span><span class="w"> </span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">pairs</span><span class="p">(</span><span class="nv">some_table</span><span class="p">)</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span>
 <span class="kr">end</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 obj1 nil
-2 obj2 nil
-3 obj3 nil
-key1 value1 nil
-key2 value2 nil
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>1	obj1
+2	obj2
+3	obj3
+key2	value2
+key1	value1
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <p>The <code class="docutils literal notranslate"><span class="pre">ipairs</span></code> output contains only list-based values:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">for</span><span class="w"> </span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">ipairs</span><span class="p">(</span><span class="nv">some_table</span><span class="p">)</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span>
 <span class="kr">end</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 obj1
-2 obj2
-3 obj3
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>1	obj1
+2	obj2
+3	obj3
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 </section>
 </section>
 <section id="flow-control">
@@ -1015,79 +1012,70 @@ key2 value2 nil
 </tbody>
 </table>
 </div>
-<p>Check mode detailed explanation with some examples in the dedicated <a class="reference internal" href="lua/flow_control.html"><span class="std std-doc">Flow control</span></a> page.</p>
+<p>Check mode detailed explanation with some examples in the dedicated
+<a class="reference internal" href="lua/flow_control.html"><span class="std std-doc">Flow control</span></a> page.</p>
 </section>
 <section id="string">
 <h2>String<a class="headerlink" href="#string" title="Link to this heading">#</a></h2>
 <p>Here is a of the most basic things about the basic string dtype in lua:</p>
 <ul class="simple">
-<li><p><strong>Creation</strong> - Strings can be created with single quotes (<code class="docutils literal notranslate"><span class="pre">'...'</span></code>), double quotes (<code class="docutils literal notranslate"><span class="pre">&quot;...&quot;</span></code>), or long bracket syntax (<code class="docutils literal notranslate"><span class="pre">[[...]]</span></code>) for multiline text.</p></li>
-<li><p><strong>Immutable</strong> - Strings cannot be modified in place; any operation that changes a string returns a new one.</p></li>
+<li><p><strong>Creation</strong> - Strings can be created with single quotes (<code class="docutils literal notranslate"><span class="pre">'...'</span></code>), double
+quotes (<code class="docutils literal notranslate"><span class="pre">&quot;...&quot;</span></code>), or long bracket syntax (<code class="docutils literal notranslate"><span class="pre">[[...]]</span></code>) for multiline text.</p></li>
+<li><p><strong>Immutable</strong> - Strings cannot be modified in place; any operation that changes
+a string returns a new one.</p></li>
 <li><p><strong>Concatenation</strong> - Use the <code class="docutils literal notranslate"><span class="pre">..</span></code> operator to join strings together.</p></li>
-<li><p><strong>Length</strong> - The <code class="docutils literal notranslate"><span class="pre">#</span></code> operator returns the string length in <strong>bytes</strong>, not Unicode characters.</p></li>
-<li><p><strong>String library</strong> - Most operations are provided by the <code class="docutils literal notranslate"><span class="pre">string</span></code> library (<code class="docutils literal notranslate"><span class="pre">sub</span></code>, <code class="docutils literal notranslate"><span class="pre">find</span></code>, <code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">gsub</span></code>, <code class="docutils literal notranslate"><span class="pre">format</span></code>, etc.).</p></li>
+<li><p><strong>Length</strong> - The <code class="docutils literal notranslate"><span class="pre">#</span></code> operator returns the string length in <strong>bytes</strong>, not
+Unicode characters.</p></li>
+<li><p><strong>String library</strong> - Most operations are provided by the <code class="docutils literal notranslate"><span class="pre">string</span></code> library
+(<code class="docutils literal notranslate"><span class="pre">sub</span></code>, <code class="docutils literal notranslate"><span class="pre">find</span></code>, <code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">gsub</span></code>, <code class="docutils literal notranslate"><span class="pre">format</span></code>, etc.).</p></li>
 </ul>
-<p>Check section <a class="reference external" href="https://www.lua.org/manual/5.5/manual.html#6.5">6.5 - String Manipulation</a> for description of features and standard library functions.</p>
+<p>Check section <a class="reference external" href="https://www.lua.org/manual/5.5/manual.html#6.5">6.5 - String Manipulation</a>
+for description of features and standard library functions.</p>
 <hr class="docutils" />
-<p>The following cell writes to the <code class="docutils literal notranslate"><span class="pre">multiline</span></code> multiline string literal. It also shows the length of the given string variable:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<p>The following cell writes to the <code class="docutils literal notranslate"><span class="pre">multiline</span></code> multiline string literal. It also
+shows the length of the given string variable:</p>
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">multiline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[[</span>
 <span class="s">The text</span>
 <span class="s">to check</span>
 <span class="s">]]</span>
-<span class="o">#</span><span class="nv">multiline</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">#</span><span class="nv">multiline</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>18
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <section id="patterns">
 <h3>Patterns<a class="headerlink" href="#patterns" title="Link to this heading">#</a></h3>
-<p>There is a special language for defining string patterns. It looks similar to regular expression syntax, but actually simpler and supports a smaller feature set.</p>
+<p>There is a special language for defining string patterns. It looks similar to
+regular expression syntax, but actually simpler and supports a smaller feature set.</p>
 <p>For more check the <a class="reference external" href="https://www.lua.org/manual/5.5/manual.html#6.5.1">6.5.1 - Patterns</a> section of the documentation.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[[</span>
 <span class="s">    indent1</span>
 <span class="s">        indent2</span>
 <span class="s">    indent1</span>
 <span class="s">        imdent2</span>
 <span class="s">]]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">str</span><span class="p">:</span><span class="nf">match</span><span class="p">(</span><span class="s2">&quot;[ </span><span class="se">\t</span><span class="s2">]+&quot;</span><span class="p">)</span>
+
+<span class="nv">indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">str</span><span class="p">:</span><span class="nf">match</span><span class="p">(</span><span class="s2">&quot;[ </span><span class="se">\t</span><span class="s2">]+&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="o">#</span><span class="nv">indent</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>4
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">s</span><span class="p">:</span><span class="nf">match</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">([ </span><span class="se">\t</span><span class="s2">]+)&quot;</span><span class="p">)</span>
-<span class="nv">indent</span>
+<!-- md-runner-output:end -->
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">str</span><span class="p">:</span><span class="nf">match</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">([ </span><span class="se">\t</span><span class="s2">]+)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">#</span><span class="nv">indent</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>8
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 </section>
 </section>
 <section id="standard-library">
@@ -1141,8 +1129,10 @@ key2 value2 nil
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">package</span></code> table contains the attributes that determine module-related behaviour.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">require</span></code> function loads the module.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">dofile</span></code> function imedately executes the given file.</p></li>
 </ul>
-<p>The module is simply a lua file that returns a value. Typically, this is table named <code class="docutils literal notranslate"><span class="pre">M</span></code> that contains references to all the objects the module provides.</p>
+<p>The module is simply a lua file that returns a value. Typically, this is table
+named <code class="docutils literal notranslate"><span class="pre">M</span></code> that contains references to all the objects the module provides.</p>
 <p>Check more in the <a class="reference external" href="https://www.lua.org/manual/5.5/manual.html#6.4">Modules</a> section of the lua manual.</p>
 <hr class="docutils" />
 <p>Consider the module <code class="docutils literal notranslate"><span class="pre">lua_files/example.lua</span></code>:</p>
@@ -1156,135 +1146,133 @@ key2 value2 nil
 </pre></div>
 </div>
 <p>The code that imports that module:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">example_module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;lua_files.example&quot;</span><span class="p">)</span>
-<span class="nv">example_module</span>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">example_module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;other.lua_files.example&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nv">example_module</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">example_module</span><span class="p">[</span><span class="s1">&#39;some_function&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{ 
-  some_function = [[function]] 
-}
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>table: 0x563464bc2a20
+function: 0x563464bbb490
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <p>The usage of <code class="docutils literal notranslate"><span class="pre">some_function</span></code> has the expected behaviour:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">example_module</span><span class="p">.</span><span class="nf">some_function</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This is function from module
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This is function from module
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <p>Now consider the <code class="docutils literal notranslate"><span class="pre">package</span></code> table:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nv">package</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>table
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>table
 </pre></div>
 </div>
-</div>
-</div>
+<!-- md-runner-output:end -->
 <p>As key-values it contains all the modules that have been loaded into the environment:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">for</span><span class="w"> </span><span class="nv">k</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">pairs</span><span class="p">(</span><span class="nb">package.loaded</span><span class="p">)</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">k</span><span class="p">)</span>
 <span class="kr">end</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>table
-string
-debug
-lua_files.example
-base
-io
-package
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>package
 os
+string
+_G
+other.lua_files.example
 math
-table
 coroutine
+utf8
+debug
+table
+io
 </pre></div>
 </div>
-</div>
-</div>
-<p>For example, the file <code class="docutils literal notranslate"><span class="pre">lua_files.example</span></code> that was imported manually. The following cell accesses the module through <code class="docutils literal notranslate"><span class="pre">package.loaded</span></code> table:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">package.loaded</span><span class="p">[</span><span class="s2">&quot;lua_files.example&quot;</span><span class="p">]</span>
+<!-- md-runner-output:end -->
+<p>For example, the file <code class="docutils literal notranslate"><span class="pre">lua_files.example</span></code> that was imported manually. The
+following cell accesses the module through <code class="docutils literal notranslate"><span class="pre">package.loaded</span></code> table:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">for</span><span class="w"> </span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">pairs</span><span class="p">(</span><span class="nb">package.loaded</span><span class="p">[</span><span class="s2">&quot;other.lua_files.example&quot;</span><span class="p">])</span><span class="w"> </span><span class="kr">do</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{ 
-  some_function = [[function]] 
-}
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>some_function	function: 0x563464bbb490
 </pre></div>
 </div>
-</div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">searchers</span></code> attribute of the <code class="docutils literal notranslate"><span class="pre">package</span></code> contains a set of functions that an be used to search for modules. Consequently, you can implement your own module-looking strategy simply by adding a new functions to this table:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">package.searchers</span>
+<!-- md-runner-output:end -->
+<p>The <code class="docutils literal notranslate"><span class="pre">searchers</span></code> attribute of the <code class="docutils literal notranslate"><span class="pre">package</span></code> contains a set of functions that an
+be used to search for modules. Consequently, you can implement your own
+module-looking strategy simply by adding a new functions to this table:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">for</span><span class="w"> </span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nb">pairs</span><span class="p">(</span><span class="nb">package.searchers</span><span class="p">)</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{ [[function]], [[function]], [[function]], [[function]] }
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>1	function: 0x563464bb5910
+2	function: 0x563464bb5950
+3	function: 0x563464bb5990
+4	function: 0x563464bb59d0
 </pre></div>
 </div>
-</div>
-</div>
-<section id="searchpath">
-<h3>Searchpath<a class="headerlink" href="#searchpath" title="Link to this heading">#</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">packages.searchpath(name,</span> <span class="pre">path</span> <span class="pre">[,</span> <span class="pre">sep</span> <span class="pre">[,</span> <span class="pre">rep]])</span></code> function searches for a specified files.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">name</span></code> determines the names of the file.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">path</span></code> determines set of patterns where <code class="docutils literal notranslate"><span class="pre">name</span></code> would be substituted separted by the <code class="docutils literal notranslate"><span class="pre">;</span></code>.</p>
-<p>The first case in which the value of the <code class="docutils literal notranslate"><span class="pre">name</span></code> is substitued into the value of the variable path, resulting in a path to an existing file that can be ingested, returns the path to this file.</p>
+<!-- md-runner-output:end -->
+</section>
+<section id="interpreter">
+<h2>Interpreter<a class="headerlink" href="#interpreter" title="Link to this heading">#</a></h2>
+<p>The important features of the lua interpreter are:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">-i</span></code> allows to enter the interactive mode after running a given script.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">-l</span></code> parces and executes the given library.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">-e</span></code> executes code passed through CLI.</p></li>
+<li><p>Any arguments passed to the interpreter are stored in the <code class="docutils literal notranslate"><span class="pre">arg</span></code> global
+variable within the Lua session.</p></li>
+</ul>
 <hr class="docutils" />
-<p>The following cell roughly shows how lua searches for the <code class="docutils literal notranslate"><span class="pre">.lua</span></code> files.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">package.searchpath</span><span class="p">(</span><span class="s1">&#39;example&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;./lua_files/?.lua&#39;</span><span class="p">)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lua<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;print(&quot;hello from lua&quot;)&#39;</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>./lua_files/example.lua
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hello from lua
 </pre></div>
 </div>
-</div>
-</div>
-<p>If the name or pattern are incorrect, the <code class="docutils literal notranslate"><span class="pre">nil</span></code> value and a message describing the issue are returned.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">package.searchpath</span><span class="p">(</span><span class="s1">&#39;some_other&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;./lua_files/?.lua&#39;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">package.searchpath</span><span class="p">(</span><span class="s1">&#39;example&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;./lua_files/?&#39;</span><span class="p">))</span>
+<!-- md-runner-output:end -->
+<section id="cli-arguments">
+<h3>CLI arguments<a class="headerlink" href="#cli-arguments" title="Link to this heading">#</a></h3>
+<p>The lua interpreter stores the information about the CLI call to the global
+<code class="docutils literal notranslate"><span class="pre">arg</span></code> table. The <code class="docutils literal notranslate"><span class="pre">arg</span></code> table is a list table in which index 0 contains the name
+of the script that was invoked with the interpreter. The negative indices
+contain sections of the CLI call belonging to the interpreter configuration.
+The positive indices are the ones that follow the script name and are supposed
+to configure the behaviour of the script.</p>
+<hr class="docutils" />
+<p>Consider the following simple script that outputs the <code class="docutils literal notranslate"><span class="pre">arg</span></code> table:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>for key, value in pairs(arg) do
+    print(key, value)
+end
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>nil no file &#39;./lua_files/some_other.lua&#39;
-nil no file &#39;./lua_files/example&#39;
+<p>The output of the call for the script is a follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lua<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;a = 5 + 5&#39;</span><span class="w"> </span>/tmp/example.lua<span class="w"> </span>specific<span class="w"> </span>param
 </pre></div>
 </div>
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>1	value
+-1	a = 5 + 5
+-3	lua
+-2	-e
+0	/tmp/example.lua
+</pre></div>
 </div>
-</div>
+<!-- md-runner-output:end -->
 </section>
 </section>
 <div class="toctree-wrapper compound">
@@ -1300,16 +1288,16 @@ nil no file &#39;./lua_files/example&#39;
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "xlua"
+            mode: "python"
         },
         kernelOptions: {
-            name: "xlua",
+            name: "python3",
             path: "./other"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'xlua'</script>
+    <script>kernelName = 'python3'</script>
 
                 </article>
               
@@ -1366,8 +1354,9 @@ nil no file &#39;./lua_files/example&#39;
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-library">Standard library</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#searchpath">Searchpath</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreter">Interpreter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cli-arguments">CLI arguments</a></li>
 </ul>
 </li>
 </ul>
