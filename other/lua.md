@@ -6,6 +6,9 @@
       "params": {
         "lua": "lua"
       }
+    },
+    "bash": {
+      "module": "md_runner.executors.bash"
     }
   }
 }
@@ -444,5 +447,25 @@ end
 3	function: 0x563464bb5990
 4	function: 0x563464bb59d0
 
+```
+<!-- md-runner-output:end -->
+
+## Interpreter
+
+The important features of the lua interpreter are:
+
+- The `-i` allows to enter the interactive mode after running a given script.
+- The `-l` parces and executes the given library.
+- The `-e` executes code passed through CLI.
+
+---
+
+```bash
+lua -e 'print("hello from lua")'
+```
+
+<!-- md-runner-output:start -->
+```text
+hello from lua
 ```
 <!-- md-runner-output:end -->
