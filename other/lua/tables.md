@@ -42,6 +42,74 @@ print(#length_table)
 ```
 <!-- md-runner-output:end -->
 
+## List elements
+
+Consider the typical operations associated with list elements of the table.
+
+- `table.insert`: to add the element.
+  - `table.insert(tab, value)` inserts the `value` as last elment.
+  - `table.insert(tab, ind, value)` inserts value in `ind` position and shifts
+    all others.
+- `table.remove`: to remote the element.
+
+These functions save the order of the elements
+
+---
+
+The following example crates creates the empty table and inserts to it some
+values through `table.insert`:
+
+```lua
+tab = {}
+
+table.insert(tab, 'hello')
+table.insert(tab, 'last')
+table.insert(tab, 1, 'first')
+
+for k, v in pairs(tab) do print(k, v) end
+```
+
+<!-- md-runner-output:start -->
+```text
+1	first
+2	hello
+3	last
+
+```
+<!-- md-runner-output:end -->
+
+**Note** that the `first` element inserted in the position `1` and shifts all
+the other elements.
+
+The following code removes the value in the second position.
+
+```lua
+table.remove(tab, 2)
+for k, v in pairs(tab) do print(k, v) end
+```
+
+<!-- md-runner-output:start -->
+```text
+1	first
+2	last
+
+```
+<!-- md-runner-output:end -->
+
+Using the `table.remove` without specifying of the position removes the last element:
+
+```lua
+table.remove(tab)
+for k, v in pairs(tab) do print(k, v) end
+```
+
+<!-- md-runner-output:start -->
+```text
+1	first
+
+```
+<!-- md-runner-output:end -->
+
 ## Methods
 
 There is no such thing as a 'method' in lua. However, you can store functions in
