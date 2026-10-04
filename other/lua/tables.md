@@ -66,7 +66,7 @@ table.insert(tab, 'hello')
 table.insert(tab, 'last')
 table.insert(tab, 1, 'first')
 
-for k, v in pairs(tab) do print(k, v) end
+for k, v in ipairs(tab) do print(k, v) end
 ```
 
 <!-- md-runner-output:start -->
@@ -100,7 +100,7 @@ Using the `table.remove` without specifying of the position removes the last ele
 
 ```lua
 table.remove(tab)
-for k, v in pairs(tab) do print(k, v) end
+for k, v in ipairs(tab) do print(k, v) end
 ```
 
 <!-- md-runner-output:start -->
