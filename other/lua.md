@@ -9,6 +9,9 @@
     },
     "bash": {
       "module": "md_runner.executors.bash"
+    },
+    "text": {
+      "module": "md_runner.executors.file"
     }
   }
 }
@@ -457,6 +460,8 @@ The important features of the lua interpreter are:
 - The `-i` allows to enter the interactive mode after running a given script.
 - The `-l` parces and executes the given library.
 - The `-e` executes code passed through CLI.
+- Any arguments passed to the interpreter are stored in the `arg` global
+  variable within the Lua session.
 
 ---
 
@@ -467,5 +472,41 @@ lua -e 'print("hello from lua")'
 <!-- md-runner-output:start -->
 ```text
 hello from lua
+```
+<!-- md-runner-output:end -->
+
+### CLI arguments
+
+The lua interpreter stores the information about the CLI call to the global
+`arg` table. The `arg` table is a list table in which index 0 contains the name
+of the script that was invoked with the interpreter. The negative indices
+contain sections of the CLI call belonging to the interpreter configuration.
+The positive indices are the ones that follow the script name and are supposed
+to configure the behaviour of the script.
+
+---
+
+Consider the following simple script that outputs the `arg` table:
+
+```text path=/tmp/example.lua
+for key, value in pairs(arg) do
+    print(key, value)
+end
+```
+
+The output of the call for the script is a follows:
+
+```bash
+lua -e 'a = 5 + 5' /tmp/example.lua specific param
+```
+
+<!-- md-runner-output:start -->
+```text
+1	value
+-1	a = 5 + 5
+-3	lua
+-2	-e
+0	/tmp/example.lua
+
 ```
 <!-- md-runner-output:end -->
