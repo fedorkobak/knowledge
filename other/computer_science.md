@@ -12,6 +12,17 @@
 This page covers the topics of general computer science topics, independent of
 any specific tool.
 
+## Numbers represenation
+
+A computer is a machine that can perform operations on number. However, these
+numbers are represented in **binary format**.
+
+Also, a popular way of representing a number is in **hexadecimal** - numering system
+were there are 16 different digits.
+
+Another important concept is the principle of storing floating-point numbers in
+computers. This involves adapting scientific notation to a binary representation.
+
 ## Unicode
 
 UTF-8 is the most popular method for representing text on computer.
