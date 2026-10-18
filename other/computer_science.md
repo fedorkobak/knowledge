@@ -50,6 +50,29 @@ print(0b1010)
 ```
 <!-- md-runner-output:end -->
 
+The next code shows a group of integers converted into binary format.
+
+```python
+for i in range(10):
+    print(i, bin(i))
+```
+
+<!-- md-runner-output:start -->
+```text
+0 0b0
+1 0b1
+2 0b10
+3 0b11
+4 0b100
+5 0b101
+6 0b110
+7 0b111
+8 0b1000
+9 0b1001
+
+```
+<!-- md-runner-output:end -->
+
 ## Unicode
 
 UTF-8 is the most popular method for representing text on computer.
