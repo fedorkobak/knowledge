@@ -3,6 +3,9 @@
   "executors": {
     "bash": {
       "module": "md_runner.executors.bash"
+    },
+    "python": {
+        "module": "md_runner.executors.python"
     }
   }
 }
@@ -22,6 +25,30 @@ were there are 16 different digits.
 
 Another important concept is the principle of storing floating-point numbers in
 computers. This involves adapting scientific notation to a binary representation.
+
+### Binary
+
+In binary format, any number is represented using only digits 0 and 1.
+The widely used notation for binary numbres is `0b<number>`, most programming
+languages and specific use this notation.
+
+---
+
+The following code demonstrates python facilities to convert the number 16 to
+the binary format and support of the corresponding notation.
+
+```python
+print(bin(16))
+print(0b1010)
+```
+
+<!-- md-runner-output:start -->
+```text
+0b10000
+10
+
+```
+<!-- md-runner-output:end -->
 
 ## Unicode
 
