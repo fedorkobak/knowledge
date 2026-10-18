@@ -32,6 +32,8 @@ In binary format, any number is represented using only digits 0 and 1.
 The widely used notation for binary numbres is `0b<number>`, most programming
 languages and specific use this notation.
 
+The digits in a number represented in binary format have a special name: 'bits'.
+
 ---
 
 The following code demonstrates python facilities to convert the number 16 to
@@ -72,6 +74,43 @@ for i in range(10):
 
 ```
 <!-- md-runner-output:end -->
+
+### Hexadecimal
+
+Another popular way of representing number in computer science is hexadecimal.
+
+In hexadecimal represenation each digit can take 16 values
+$\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F\}$.
+
+The decimal number 10 written in hexadecimal format is A, as it follows 9.
+
+It is usefull as it allows relatively short representations of numbers while
+maintaining a **digits correspondance** with the binary representation. Each
+four digits of the binary have one-to-one correspondance with one digit in hexadecimal.
+
+The standard notation for a hexadecimal is `0x<hexadecimal>`.
+
+---
+
+The following code shows the conversion `0xFDC` to the binary:
+
+```python
+print(bin(0xFDC))
+```
+
+<!-- md-runner-output:start -->
+```text
+0b111111011100
+
+```
+<!-- md-runner-output:end -->
+
+In this example, the digit correspondence means:
+
+```text
+1111 1110 1100
+  F    E    D
+```
 
 ## Unicode
 
