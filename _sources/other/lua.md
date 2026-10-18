@@ -453,6 +453,42 @@ end
 ```
 <!-- md-runner-output:end -->
 
+## Standard libraries
+
+The standard libraries included with the lua programming language are listed and
+described in the section [The Standard Libraries](https://www.lua.org/manual/5.4/manual.html#6) of the official lua manual.
+
+The list with short description:
+
+| name      | description                                            |
+|:----------|:-------------------------------------------------------|
+| basic     | Basic functions such as print, type, pairs, and ipairs |
+| coroutine | Manipulate coroutines                                  |
+| package   | Loading and managing modules                           |
+| string    | String manipulation                                    |
+| utf8      | Basic support for UTF-8 encoding                       |
+| table     | Table manipulation                                     |
+| math      | Mathematical functions                                 |
+| io        | File input and output                                  |
+| os        | Operating system facilities                            |
+| debug     | Debugging Lua programs                                 |
+
+---
+
+The following code uses the `math.abs` to find the absolute value of the number,
+and prints the result using the standard `print()` function:
+
+```lua
+print(math.abs(-10))
+```
+
+<!-- md-runner-output:start -->
+```text
+10
+
+```
+<!-- md-runner-output:end -->
+
 ## Interpreter
 
 The important features of the lua interpreter are:
