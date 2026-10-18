@@ -97,3 +97,12 @@ In this example, the digit correspondence means:
   F    E    D
 ```
 
+## Floating point
+
+This involves representing each number as a main part, which describes the
+digits of the original number, and an additional part, which indicates the
+number's magnitude.
+
+Scientific notation is an abstract concept that could be implemeted in different
+ways. The specific format and rules in the memory of computer are specified in
+the [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754) standard.
