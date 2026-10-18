@@ -106,3 +106,35 @@ number's magnitude.
 Scientific notation is an abstract concept that could be implemeted in different
 ways. The specific format and rules in the memory of computer are specified in
 the [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754) standard.
+
+### Scientific notation
+
+Scientific representation of the number consist of two parts:
+
+- **Fraction** (also known as mantissa in older sources): the normalised number
+  that contains all the digits of the original number. Here, normalisation simply
+  involves restricting the number to a specific rage, typically $f \in (1, base]$.
+- **Exponent**: determines the scale of the number by specifying the power of
+  the base.
+
+The final number is simply the product of the fraction and the exponent. The
+computer stores these two numbers in order to represent the number, and converts
+it to regular format for representation.
+
+---
+
+So consider as the example decimal number $52.8$.
+
+The deciaml scientific representation for it is $5.28 \times 10^1$.
+
+In this case the fraction is $5.28$ and exponent is $1$.
+
+The same rules are for binary numbers numbers:
+
+$$52.8_{10} \approx 110100.11001100_{2}$$
+
+The sientific representation in binary format would be:
+
+$$1.1010011001100 \times 2^5$$
+
+Fraction here is $1.1010011001100_{2}$, exponent is $5_{10}$.
