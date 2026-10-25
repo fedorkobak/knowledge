@@ -97,6 +97,58 @@ In this example, the digit correspondence means:
   F    E    D
 ```
 
+### Exponent
+
+Another common way to represent numbers is to use scientific notation.
+In hexadecimal numbers the significan and exponent are separated with `p` letter.
+
+In hexadecimal floating-point notation, the exponent is expressed as
+power of 2 rather than 16.
+
+The notation `'0x<N>p<e>'`, where:
+
+- `N` is the hexadecimal significant.
+- `e` is the binary exponent.
+
+The value of the represented number is calculated as:
+
+$$N \times 2^e$$
+
+---
+
+For example, consider the number `0x5p1` transformed to binary representation:
+
+```python
+print(float.fromhex("0x5p1"))
+```
+
+<!-- md-runner-output:start -->
+```text
+10.0
+
+```
+<!-- md-runner-output:end -->
+
+**Note** python does not support scientific representation of hexadecimal
+numbers, so `float.fromhex` function is used.
+
+What actually happened is $5 \times 2^1 = 10$.
+
+Another example that uses hexadecimal digits:
+
+```python
+print(float.fromhex("0xBp2"))
+```
+
+<!-- md-runner-output:start -->
+```text
+44.0
+
+```
+<!-- md-runner-output:end -->
+
+Similarly: $11 \times 2^2 = 44$.
+
 ## Floating point
 
 This involves representing each number as a main part, which describes the
