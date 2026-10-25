@@ -149,6 +149,31 @@ print(float.fromhex("0xBp2"))
 
 Similarly: $11 \times 2^2 = 44$.
 
+## Integer
+
+An integer can be represented in the memory as a **signed** or **unsigned** number.
+
+In an unsigned integer, all bits are used to represent the number's magnitude.
+
+In a signed integer using two's complement representation, the most significant
+bit (the leftmost bit) has a **negative positional weight** and therefore determines
+whether the number is negative or non-negative.
+
+The negative positional weight for first bit means, that first most significat
+digit conributes negative value to the number accordint ot it position.
+
+---
+
+For example, consider the 8-bit number that stored in computer memory as $10000001$.
+
+If it is interpreted as an unsigned value, it will be converted to a decimal value:
+
+$$1 \times 2^7 + 1 \times 2^0 = 129$$
+
+This is an example of a signed interpretation of the same bit sequence:
+
+$$-1 \times 2^7 + 1 \times 2^0 = -127$$
+
 ## Floating point
 
 This involves representing each number as a main part, which describes the
