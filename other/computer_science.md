@@ -190,3 +190,81 @@ language defined an unofficial convention for escape characters:
 
 Some of the escape sequences are rudimentary as because they were designed at a
 time when the computers were used very differently.
+
+---
+
+Consider examples of using the escape characters in the bash command line.
+
+The most commoon newline:
+
+```bash
+printf 'hello \nworld'
+```
+
+<!-- md-runner-output:start -->
+```text
+hello 
+world
+```
+<!-- md-runner-output:end -->
+
+The 'back space' removes the last character before it:
+
+```bash
+printf 'hello data\b\b'
+```
+
+```text
+hello da
+```
+
+The `\r` returns the cursor to the beginning of the line, meaning that any
+subsequent text will be printed from there.
+
+```bash
+printf 'this is long \roopsk'
+```
+
+```text
+oops
+```
+
+Only text after carriege return is displayed.
+
+Interestingly, python behaves differently. Its print function doesn't remove
+symbols before carriage return; it just rewrites them with the new content:
+
+```python
+print('this is long \roops')
+```
+
+```text
+oops is long 
+
+```
+
+And the tabstop have pretty predictable behaviour:
+
+
+```bash
+printf '\tval1\n\t\tval2'
+```
+
+<!-- md-runner-output:start -->
+```text
+	val1
+		val2
+```
+<!-- md-runner-output:end -->
+
+The vertical tabstop doesn't work in modern terminals as it was designed to behave.
+The emulation in modern gnome terminal looks like this:
+
+```bash
+printf 'val\vval2'
+```
+
+```text
+val
+   val2
+```
