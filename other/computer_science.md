@@ -167,3 +167,26 @@ printf "\u0043\U0327"
 ÇÇ
 ```
 <!-- md-runner-output:end -->
+
+## Escape characters
+
+Escape sequences (or characters) are sequences that have special properties.
+
+Different system can have different implementations. However, the C programming
+language defined an unofficial convention for escape characters:
+
+| Escape sequence | Name            | Description                                                                                               |
+|:----------------|:----------------|:----------------------------------------------------------------------------------------------------------|
+| `\a`            | bell            | Triggers an audible beep or visual alert in the terminal, if supported and enabled.                       |
+| `\b`            | back space      | Moves the cursor one position backward without necessarily deleting the character.                        |
+| `\f`            | form feed       | Historically used to advance a printer to the next page.                                                  |
+| `\n`            | newline         | Moves to a new line.                                                                                      |
+| `\r`            | carriage return | Moves the cursor to the beginin of the current line                                                       |
+| `\t`            | horizontal tab  | Moves the cursor to the next tabstop                                                                      |
+| `\v`            | vertical tab    | Moves the cursor to the verital tabstop                                                                   |
+| `\\`            | backslash       | The backslash is considered as system symbol. If need to use it in literal the double backslash is needed |
+| `\"`            | double quote    | To use dobule quote in literal wrapped with double quote                                                  |
+| `\'`            | single quote    | To use single quote in literal wrapeed with single quote                                                  |
+
+Some of the escape sequences are rudimentary as because they were designed at a
+time when the computers were used very differently.
