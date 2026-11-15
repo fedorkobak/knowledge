@@ -22,7 +22,7 @@
 Lua is an interpreted programming language that is popular to be language for
 creating plugins for different software.
 
-This notebook uses [xeus-lua](https://github.com/jupyter-xeus/xeus-lua) kernel to show the aspects of lua.
+The official [lua manual](https://www.lua.org/manual/5.5/).
 
 ## Functions
 
