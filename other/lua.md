@@ -241,6 +241,8 @@ Here is a of the most basic things about the basic string dtype in lua:
 Check section [6.5 - String Manipulation](https://www.lua.org/manual/5.5/manual.html#6.5)
 for description of features and standard library functions.
 
+Check some practical examples on the dedicated [Strings](lua/strings.md) page.
+
 ---
 
 The following cell writes to the `multiline` multiline string literal. It also
@@ -262,45 +264,6 @@ print(#multiline)
 ```
 <!-- md-runner-output:end -->
 
-### Patterns
-
-There is a special language for defining string patterns. It looks similar to
-regular expression syntax, but actually simpler and supports a smaller feature set.
-
-For more check the [6.5.1 - Patterns](https://www.lua.org/manual/5.5/manual.html#6.5.1) section of the documentation.
-
-```lua
-str = [[
-    indent1
-        indent2
-    indent1
-        imdent2
-]]
-
-indent = str:match("[ \t]+")
-print(#indent)
-```
-
-<!-- md-runner-output:start -->
-```text
-4
-
-```
-<!-- md-runner-output:end -->
-
-
-
-```lua
-indent = str:match("\n([ \t]+)")
-print(#indent)
-```
-
-<!-- md-runner-output:start -->
-```text
-8
-
-```
-<!-- md-runner-output:end -->
 
 ## Standard library
 
