@@ -97,6 +97,83 @@ In this example, the digit correspondence means:
   F    E    D
 ```
 
+### Exponent
+
+Another common way to represent numbers is to use scientific notation.
+In hexadecimal numbers the significan and exponent are separated with `p` letter.
+
+In hexadecimal floating-point notation, the exponent is expressed as
+power of 2 rather than 16.
+
+The notation `'0x<N>p<e>'`, where:
+
+- `N` is the hexadecimal significant.
+- `e` is the binary exponent.
+
+The value of the represented number is calculated as:
+
+$$N \times 2^e$$
+
+---
+
+For example, consider the number `0x5p1` transformed to binary representation:
+
+```python
+print(float.fromhex("0x5p1"))
+```
+
+<!-- md-runner-output:start -->
+```text
+10.0
+
+```
+<!-- md-runner-output:end -->
+
+**Note** python does not support scientific representation of hexadecimal
+numbers, so `float.fromhex` function is used.
+
+What actually happened is $5 \times 2^1 = 10$.
+
+Another example that uses hexadecimal digits:
+
+```python
+print(float.fromhex("0xBp2"))
+```
+
+<!-- md-runner-output:start -->
+```text
+44.0
+
+```
+<!-- md-runner-output:end -->
+
+Similarly: $11 \times 2^2 = 44$.
+
+## Integer
+
+An integer can be represented in the memory as a **signed** or **unsigned** number.
+
+In an unsigned integer, all bits are used to represent the number's magnitude.
+
+In a signed integer using two's complement representation, the most significant
+bit (the leftmost bit) has a **negative positional weight** and therefore determines
+whether the number is negative or non-negative.
+
+The negative positional weight for first bit means, that first most significat
+digit conributes negative value to the number accordint ot it position.
+
+---
+
+For example, consider the 8-bit number that stored in computer memory as $10000001$.
+
+If it is interpreted as an unsigned value, it will be converted to a decimal value:
+
+$$1 \times 2^7 + 1 \times 2^0 = 129$$
+
+This is an example of a signed interpretation of the same bit sequence:
+
+$$-1 \times 2^7 + 1 \times 2^0 = -127$$
+
 ## Floating point
 
 This involves representing each number as a main part, which describes the

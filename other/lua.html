@@ -598,6 +598,7 @@
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="lua/modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lua/strings.html">Strings</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -782,10 +783,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-control">Flow control</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#patterns">Patterns</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-library">Standard library</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-libraries">Standard libraries</a></li>
@@ -826,7 +824,7 @@ document.write(`
 <h1>Lua<a class="headerlink" href="#lua" title="Link to this heading">#</a></h1>
 <p>Lua is an interpreted programming language that is popular to be language for
 creating plugins for different software.</p>
-<p>This notebook uses <a class="reference external" href="https://github.com/jupyter-xeus/xeus-lua">xeus-lua</a> kernel to show the aspects of lua.</p>
+<p>The official <a class="reference external" href="https://www.lua.org/manual/5.5/">lua manual</a>.</p>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <p>The functions in lua are really intuitive. However, there are some important
@@ -1036,6 +1034,7 @@ Unicode characters.</p></li>
 </ul>
 <p>Check section <a class="reference external" href="https://www.lua.org/manual/5.5/manual.html#6.5">6.5 - String Manipulation</a>
 for description of features and standard library functions.</p>
+<p>Check some practical examples on the dedicated <a class="reference internal" href="lua/strings.html"><span class="std std-doc">Strings</span></a> page.</p>
 <hr class="docutils" />
 <p>The following cell writes to the <code class="docutils literal notranslate"><span class="pre">multiline</span></code> multiline string literal. It also
 shows the length of the given string variable:</p>
@@ -1051,37 +1050,6 @@ shows the length of the given string variable:</p>
 </pre></div>
 </div>
 <!-- md-runner-output:end -->
-<section id="patterns">
-<h3>Patterns<a class="headerlink" href="#patterns" title="Link to this heading">#</a></h3>
-<p>There is a special language for defining string patterns. It looks similar to
-regular expression syntax, but actually simpler and supports a smaller feature set.</p>
-<p>For more check the <a class="reference external" href="https://www.lua.org/manual/5.5/manual.html#6.5.1">6.5.1 - Patterns</a> section of the documentation.</p>
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[[</span>
-<span class="s">    indent1</span>
-<span class="s">        indent2</span>
-<span class="s">    indent1</span>
-<span class="s">        imdent2</span>
-<span class="s">]]</span>
-
-<span class="nv">indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">str</span><span class="p">:</span><span class="nf">match</span><span class="p">(</span><span class="s2">&quot;[ </span><span class="se">\t</span><span class="s2">]+&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="o">#</span><span class="nv">indent</span><span class="p">)</span>
-</pre></div>
-</div>
-<!-- md-runner-output:start -->
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>4
-</pre></div>
-</div>
-<!-- md-runner-output:end -->
-<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="nv">indent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">str</span><span class="p">:</span><span class="nf">match</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">([ </span><span class="se">\t</span><span class="s2">]+)&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="o">#</span><span class="nv">indent</span><span class="p">)</span>
-</pre></div>
-</div>
-<!-- md-runner-output:start -->
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>8
-</pre></div>
-</div>
-<!-- md-runner-output:end -->
-</section>
 </section>
 <section id="standard-library">
 <h2>Standard library<a class="headerlink" href="#standard-library" title="Link to this heading">#</a></h2>
@@ -1411,10 +1379,7 @@ end
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-control">Flow control</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#patterns">Patterns</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string">String</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-library">Standard library</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-libraries">Standard libraries</a></li>

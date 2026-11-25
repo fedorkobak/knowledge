@@ -599,6 +599,7 @@
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../lua/modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lua/strings.html">Strings</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -778,7 +779,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary">Binary</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hexadecimal">Hexadecimal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hexadecimal">Hexadecimal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exponent">Exponent</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integer">Integer</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#floating-point">Floating point</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scientific-notation">Scientific notation</a></li>
 </ul>
@@ -870,6 +875,62 @@ four digits of the binary have one-to-one correspondance with one digit in hexad
   F    E    D
 </pre></div>
 </div>
+<section id="exponent">
+<h3>Exponent<a class="headerlink" href="#exponent" title="Link to this heading">#</a></h3>
+<p>Another common way to represent numbers is to use scientific notation.
+In hexadecimal numbers the significan and exponent are separated with <code class="docutils literal notranslate"><span class="pre">p</span></code> letter.</p>
+<p>In hexadecimal floating-point notation, the exponent is expressed as
+power of 2 rather than 16.</p>
+<p>The notation <code class="docutils literal notranslate"><span class="pre">'0x&lt;N&gt;p&lt;e&gt;'</span></code>, where:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">N</span></code> is the hexadecimal significant.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">e</span></code> is the binary exponent.</p></li>
+</ul>
+<p>The value of the represented number is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[N \times 2^e\]</div>
+<hr class="docutils" />
+<p>For example, consider the number <code class="docutils literal notranslate"><span class="pre">0x5p1</span></code> transformed to binary representation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s2">&quot;0x5p1&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>10.0
+</pre></div>
+</div>
+<!-- md-runner-output:end -->
+<p><strong>Note</strong> python does not support scientific representation of hexadecimal
+numbers, so <code class="docutils literal notranslate"><span class="pre">float.fromhex</span></code> function is used.</p>
+<p>What actually happened is <span class="math notranslate nohighlight">\(5 \times 2^1 = 10\)</span>.</p>
+<p>Another example that uses hexadecimal digits:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s2">&quot;0xBp2&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>44.0
+</pre></div>
+</div>
+<!-- md-runner-output:end -->
+<p>Similarly: <span class="math notranslate nohighlight">\(11 \times 2^2 = 44\)</span>.</p>
+</section>
+</section>
+<section id="integer">
+<h2>Integer<a class="headerlink" href="#integer" title="Link to this heading">#</a></h2>
+<p>An integer can be represented in the memory as a <strong>signed</strong> or <strong>unsigned</strong> number.</p>
+<p>In an unsigned integer, all bits are used to represent the number’s magnitude.</p>
+<p>In a signed integer using two’s complement representation, the most significant
+bit (the leftmost bit) has a <strong>negative positional weight</strong> and therefore determines
+whether the number is negative or non-negative.</p>
+<p>The negative positional weight for first bit means, that first most significat
+digit conributes negative value to the number accordint ot it position.</p>
+<hr class="docutils" />
+<p>For example, consider the 8-bit number that stored in computer memory as <span class="math notranslate nohighlight">\(10000001\)</span>.</p>
+<p>If it is interpreted as an unsigned value, it will be converted to a decimal value:</p>
+<div class="math notranslate nohighlight">
+\[1 \times 2^7 + 1 \times 2^0 = 129\]</div>
+<p>This is an example of a signed interpretation of the same bit sequence:</p>
+<div class="math notranslate nohighlight">
+\[-1 \times 2^7 + 1 \times 2^0 = -127\]</div>
 </section>
 <section id="floating-point">
 <h2>Floating point<a class="headerlink" href="#floating-point" title="Link to this heading">#</a></h2>
@@ -963,7 +1024,11 @@ it to regular format for representation.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary">Binary</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hexadecimal">Hexadecimal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hexadecimal">Hexadecimal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exponent">Exponent</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integer">Integer</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#floating-point">Floating point</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scientific-notation">Scientific notation</a></li>
 </ul>

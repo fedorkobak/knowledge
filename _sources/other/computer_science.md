@@ -167,3 +167,104 @@ printf "\u0043\U0327"
 ÇÇ
 ```
 <!-- md-runner-output:end -->
+
+## Escape characters
+
+Escape sequences (or characters) are sequences that have special properties.
+
+Different system can have different implementations. However, the C programming
+language defined an unofficial convention for escape characters:
+
+| Escape sequence | Name            | Description                                                                                               |
+|:----------------|:----------------|:----------------------------------------------------------------------------------------------------------|
+| `\a`            | bell            | Triggers an audible beep or visual alert in the terminal, if supported and enabled.                       |
+| `\b`            | back space      | Moves the cursor one position backward without necessarily deleting the character.                        |
+| `\f`            | form feed       | Historically used to advance a printer to the next page.                                                  |
+| `\n`            | newline         | Moves to a new line.                                                                                      |
+| `\r`            | carriage return | Moves the cursor to the beginin of the current line                                                       |
+| `\t`            | horizontal tab  | Moves the cursor to the next tabstop                                                                      |
+| `\v`            | vertical tab    | Moves the cursor to the verital tabstop                                                                   |
+| `\\`            | backslash       | The backslash is considered as system symbol. If need to use it in literal the double backslash is needed |
+| `\"`            | double quote    | To use dobule quote in literal wrapped with double quote                                                  |
+| `\'`            | single quote    | To use single quote in literal wrapeed with single quote                                                  |
+
+Some of the escape sequences are rudimentary as because they were designed at a
+time when the computers were used very differently.
+
+---
+
+Consider examples of using the escape characters in the bash command line.
+
+The most commoon newline:
+
+```bash
+printf 'hello \nworld'
+```
+
+<!-- md-runner-output:start -->
+```text
+hello 
+world
+```
+<!-- md-runner-output:end -->
+
+The 'back space' removes the last character before it:
+
+```bash
+printf 'hello data\b\b'
+```
+
+```text
+hello da
+```
+
+The `\r` returns the cursor to the beginning of the line, meaning that any
+subsequent text will be printed from there.
+
+```bash
+printf 'this is long \roopsk'
+```
+
+```text
+oops
+```
+
+Only text after carriege return is displayed.
+
+Interestingly, python behaves differently. Its print function doesn't remove
+symbols before carriage return; it just rewrites them with the new content:
+
+```python
+print('this is long \roops')
+```
+
+```text
+oops is long 
+
+```
+
+And the tabstop have pretty predictable behaviour:
+
+
+```bash
+printf '\tval1\n\t\tval2'
+```
+
+<!-- md-runner-output:start -->
+```text
+	val1
+		val2
+```
+<!-- md-runner-output:end -->
+
+The vertical tabstop doesn't work in modern terminals as it was designed to behave.
+The emulation in modern gnome terminal looks like this:
+
+```bash
+printf 'val\vval2'
+```
+
+```text
+val
+   val2
+```

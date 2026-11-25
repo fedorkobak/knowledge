@@ -600,6 +600,7 @@
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="lua/modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lua/strings.html">Strings</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="dbt.html">DBT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -784,6 +785,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-forms">Normalization forms</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#escape-characters">Escape characters</a></li>
 </ul>
             </nav>
         </div>
@@ -931,6 +933,120 @@ Unicode.</p>
 <!-- md-runner-output:end -->
 </section>
 </section>
+<section id="escape-characters">
+<h2>Escape characters<a class="headerlink" href="#escape-characters" title="Link to this heading">#</a></h2>
+<p>Escape sequences (or characters) are sequences that have special properties.</p>
+<p>Different system can have different implementations. However, the C programming
+language defined an unofficial convention for escape characters:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Escape sequence</p></th>
+<th class="head text-left"><p>Name</p></th>
+<th class="head text-left"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\a</span></code></p></td>
+<td class="text-left"><p>bell</p></td>
+<td class="text-left"><p>Triggers an audible beep or visual alert in the terminal, if supported and enabled.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\b</span></code></p></td>
+<td class="text-left"><p>back space</p></td>
+<td class="text-left"><p>Moves the cursor one position backward without necessarily deleting the character.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\f</span></code></p></td>
+<td class="text-left"><p>form feed</p></td>
+<td class="text-left"><p>Historically used to advance a printer to the next page.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\n</span></code></p></td>
+<td class="text-left"><p>newline</p></td>
+<td class="text-left"><p>Moves to a new line.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\r</span></code></p></td>
+<td class="text-left"><p>carriage return</p></td>
+<td class="text-left"><p>Moves the cursor to the beginin of the current line</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\t</span></code></p></td>
+<td class="text-left"><p>horizontal tab</p></td>
+<td class="text-left"><p>Moves the cursor to the next tabstop</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\v</span></code></p></td>
+<td class="text-left"><p>vertical tab</p></td>
+<td class="text-left"><p>Moves the cursor to the verital tabstop</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\\</span></code></p></td>
+<td class="text-left"><p>backslash</p></td>
+<td class="text-left"><p>The backslash is considered as system symbol. If need to use it in literal the double backslash is needed</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\&quot;</span></code></p></td>
+<td class="text-left"><p>double quote</p></td>
+<td class="text-left"><p>To use dobule quote in literal wrapped with double quote</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">\'</span></code></p></td>
+<td class="text-left"><p>single quote</p></td>
+<td class="text-left"><p>To use single quote in literal wrapeed with single quote</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Some of the escape sequences are rudimentary as because they were designed at a
+time when the computers were used very differently.</p>
+<hr class="docutils" />
+<p>Consider examples of using the escape characters in the bash command line.</p>
+<p>The most commoon newline:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;hello \nworld&#39;</span>
+</pre></div>
+</div>
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hello 
+world
+</pre></div>
+</div>
+<!-- md-runner-output:end -->
+<p>The ‘back space’ removes the last character before it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;hello data\b\b&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>hello da
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">\r</span></code> returns the cursor to the beginning of the line, meaning that any
+subsequent text will be printed from there.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;this is long \roopsk&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>oops
+</pre></div>
+</div>
+<p>Only text after carriege return is displayed.</p>
+<p>Interestingly, python behaves differently. Its print function doesn’t remove
+symbols before carriage return; it just rewrites them with the new content:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;this is long </span><span class="se">\r</span><span class="s1">oops&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>oops is long 
+</pre></div>
+</div>
+<p>And the tabstop have pretty predictable behaviour:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;\tval1\n\t\tval2&#39;</span>
+</pre></div>
+</div>
+<!-- md-runner-output:start -->
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>	val1
+		val2
+</pre></div>
+</div>
+<!-- md-runner-output:end -->
+<p>The vertical tabstop doesn’t work in modern terminals as it was designed to behave.
+The emulation in modern gnome terminal looks like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;val\vval2&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>val
+   val2
+</pre></div>
+</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1005,6 +1121,7 @@ Unicode.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-forms">Normalization forms</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#escape-characters">Escape characters</a></li>
 </ul>
   </nav></div>
 
