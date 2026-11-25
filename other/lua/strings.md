@@ -116,3 +116,52 @@ print(#indent)
 ```
 <!-- md-runner-output:end -->
 
+## Substrings and indexing
+
+The typical `[]` operator doesn't work for Lua strings. The unified method is to
+use the `string.sub` function or the method `sub` of the string.
+
+---
+
+The following code shows the usage of the `string.sub` function:
+
+```lua
+value = 'the string'
+
+print(string.sub(value, 1, 5))
+```
+
+<!-- md-runner-output:start -->
+```text
+the s
+
+```
+<!-- md-runner-output:end -->
+
+It's usually more practical to use the `:sub` method of the string. For example
+iterating over the symbols of the string:
+
+```lua
+value = 'the symbols'
+
+for i = 1, #value do
+    print(value:sub(i, i))
+end
+```
+
+<!-- md-runner-output:start -->
+```text
+t
+h
+e
+ 
+s
+y
+m
+b
+o
+l
+s
+
+```
+<!-- md-runner-output:end -->
