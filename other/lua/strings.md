@@ -165,3 +165,32 @@ s
 
 ```
 <!-- md-runner-output:end -->
+
+## Unicode
+
+One of the most significant details of the implmentatioin of strings in Lua is
+that they are considered as sequences of bytes; there is no builtin abstraction
+for the symbol.
+
+Some Unicode symbols are composed of several bytes, so there are a lof of issues
+associated with managing strings containing Unicode symbols in Lua.
+
+---
+
+As the example consider the following string that contains russian symbols that
+are not covered with ACII table:
+
+```lua
+val = 'Привет'
+print(#val)
+```
+
+<!-- md-runner-output:start -->
+```text
+12
+
+```
+<!-- md-runner-output:end -->
+
+The string is twice as long because all symbols are conpose of two bytes.
+However, Lua does not recognise the difference between them.
