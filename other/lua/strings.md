@@ -208,3 +208,92 @@ end
 d0 9f d1 80 d0 b8 d0 b2 d0 b5 d1 82 
 ```
 <!-- md-runner-output:end -->
+
+### utf8 library
+
+There to lua included dedicated [`utf8` package](https://www.lua.org/manual/5.4/manual.html#6.5)
+that allows to implement code to process strings with unicode symbols.
+
+Few functions available in this package are:
+
+| Function / Variable                | Description                                                                          |
+|:-----------------------------------|:-------------------------------------------------------------------------------------|
+| `utf8.len (s [, i [, j [, lax]]])` | Obvious meaming but interprets utf codes as single symbol                            |
+| `charpattern`                      | This is variable that contains lua pattern that corresponds to exatly one utf symbol |
+| `utf8.codes (s [, lax])`           | Iterates over symbols for each returns the position of the first byte and code point |
+| `utf8.offset (s, n [, i])`         | Returns the positions of the first and last bytes in `s` for `n`-th character        |
+
+---
+
+Consider the popular applications for these functions.
+
+The length of string in bytes and characters:
+
+```lua
+val = 'Привет'
+print(#val, utf8.len(val))
+```
+
+<!-- md-runner-output:start -->
+```text
+12	6
+
+```
+<!-- md-runner-output:end -->
+
+The lua pattern that corresponds to the `utf8.charpattern` allows to iterate
+over chars with `gmatch` method of strings:
+
+```lua
+val = 'Привет'
+
+for symb in val:gmatch(utf8.charpattern) do
+    io.write(symb, '|')
+end
+
+```
+
+<!-- md-runner-output:start -->
+```text
+П|р|и|в|е|т|
+```
+<!-- md-runner-output:end -->
+
+To iterate over charcters:
+
+```lua
+val = 'абвгд'
+for p, c in utf8.codes(val) do
+    print(p, c)
+end
+```
+
+<!-- md-runner-output:start -->
+```text
+1	1072
+3	1073
+5	1074
+7	1075
+9	1076
+
+```
+<!-- md-runner-output:end -->
+
+Suppose you want to extract a substring from the 4-th to the 6-th positions. To
+do this, use the `utf8.offset` function the positions of the bytes corresponding
+to the beginning of the the 4-th character and the end of the 6-th. Having this
+osition take substring using `sub` method/function:
+
+```lua
+val = 'Привет это ты?'
+start, _ = utf8.offset(val, 4)
+_, _end = utf8.offset(val, 6)
+print(string.sub(val, start, _end))
+```
+
+<!-- md-runner-output:start -->
+```text
+вет
+
+```
+<!-- md-runner-output:end -->
