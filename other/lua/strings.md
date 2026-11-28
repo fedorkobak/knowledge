@@ -194,3 +194,17 @@ print(#val)
 
 The string is twice as long because all symbols are conpose of two bytes.
 However, Lua does not recognise the difference between them.
+
+Consider tactual codes of the bytes that make up this string:
+
+```lua
+for i = 1, #val do
+    io.write(string.format('%x', val:byte(i)), ' ')
+end
+```
+
+<!-- md-runner-output:start -->
+```text
+d0 9f d1 80 d0 b8 d0 b2 d0 b5 d1 82 
+```
+<!-- md-runner-output:end -->
