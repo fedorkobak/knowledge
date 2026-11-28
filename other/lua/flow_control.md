@@ -43,8 +43,19 @@ it will be executed
 ```
 <!-- md-runner-output:end -->
 
+## Cycles
 
-## Loops
+Lua supports 4 types of cycles:
+
+- Two subtupes of for look:
+  - Numerical: `for Name ‘=’ exp ‘,’ exp [‘,’ exp] do block end`. Iterates over
+    a set range of numbers.
+  - Generic: `for namelist in explist do block end`. Iterates over functions,
+    called iterators.
+- `while exp do block end`.
+- `repeat block until exp`. Repeats the `block` until `exp` is correct.
+
+### For
 
 There are two classical loops in lua: `for` and `while`.
 
@@ -71,16 +82,13 @@ end
 ```
 <!-- md-runner-output:end -->
 
-    1
-    2
-    3
-    4
-    5
+There is another option for the `for` loop. The syntax  
+`for <variables> in <iterator triplet>` could be used. The returns the objects
+at each iteration, which would be assiged to the `variables`.
 
-
-There is another option for the  `for` loop. The syntax `for <variables> in <iterator triplet>` could be used. The returns the objects at each iteration, which would be assiged to the `variables`.
-
-The following cell demonstrates this kind of syntax using the `ipairs` function, which returns the iterator triplet that iterates over the sequence stored in the table:
+The following cell demonstrates this kind of syntax using the `ipairs` function,
+which returns the iterator triplet that iterates over the sequence stored in the
+table:
 
 
 ```lua
@@ -99,12 +107,6 @@ end
 ```
 <!-- md-runner-output:end -->
 
-    1 20
-    2 30
-    3 2
-    4 1
-
-
 The syntax of the while loop is really straight:
 
 
@@ -116,8 +118,12 @@ while i < 5 do
 end
 ```
 
-    1
-    2
-    3
-    4
+<!-- md-runner-output:start -->
+```text
+1
+2
+3
+4
 
+```
+<!-- md-runner-output:end -->

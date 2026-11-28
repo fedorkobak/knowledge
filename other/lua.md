@@ -452,18 +452,6 @@ print(math.abs(-10))
 ```
 <!-- md-runner-output:end -->
 
-## Cycles
-
-Lua supports 4 types of cycles:
-
-- Two subtupes of for look:
-  - Numerical: `for Name ‘=’ exp ‘,’ exp [‘,’ exp] do block end`. Iterates over
-    a set range of numbers.
-  - Generic: `for namelist in explist do block end`. Iterates over functions,
-    called iterators.
-- `while exp do block end`.
-- `repeat block until exp`. Repeats the `block` until `exp` is correct.
-
 ## Interpreter
 
 The important features of the lua interpreter are:
